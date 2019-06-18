@@ -1,0 +1,14 @@
+function foo(tuple: readonly [number, string]) {
+}
+
+function foo(tuple: readonly [number, string, readonly [number, string]]) {
+}
+
+function foo(tuple: readonly [number, string, readonly [number, string]]) {
+}
+
+function foo(tuple: readonly [number, string, readonly [number, string]]) {
+}
+
+function foo(tuple: readonly [number, string, readonly [number, string]]) {
+}

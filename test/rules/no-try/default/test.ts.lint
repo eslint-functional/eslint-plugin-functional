@@ -1,0 +1,10 @@
+try {} catch (e) {}
+~~~~~~~~~~~~~~~~~~~ [failure]
+
+try {} catch (e) {} finally {}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [failure]
+
+try {} finally {}
+~~~~~~~~~~~~~~~~~ [failure]
+
+[failure]: Unexpected try, the try-catch[-finally] and try-finally patterns are not functional.

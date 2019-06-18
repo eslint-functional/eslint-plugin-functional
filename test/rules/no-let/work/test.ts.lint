@@ -1,0 +1,6 @@
+
+function foo() {
+  let x;
+}
+
+[failure]: Unexpected let, use const instead.

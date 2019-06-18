@@ -1,0 +1,8 @@
+{
+  "include": ["rules/*.js"],
+  "exclude": ["rules/index.js"],
+  "extension": [".js"],
+  "reporter": ["json"],
+  "sourceMap": true,
+  "all": true
+}

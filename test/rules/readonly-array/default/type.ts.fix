@@ -1,0 +1,45 @@
+// -- Top-level type declaration
+
+// Should not fail on ReadonlyArray type alias (TypeReferenceNode)
+type Foo = ReadonlyArray<string>;
+
+// Should fail on Array type alias (TypeReferenceNode)
+type Foo = ReadonlyArray<string>;
+
+// Should fail on Array as type member (TypeReferenceNode)
+type Foo = {
+  bar: ReadonlyArray<string>
+}
+
+// -- Local type declaration
+
+function foo() {
+
+  // Should not fail on ReadonlyArray type alias (TypeReferenceNode)
+  type Foo = ReadonlyArray<string>;
+
+  // Should fail on Array type alias (TypeReferenceNode)
+  type Foo = ReadonlyArray<string>;
+
+  // Should fail on Array as type member (TypeReferenceNode)
+  type Foo = {
+    bar: ReadonlyArray<string>
+  }
+
+}
+
+const foo = () => {
+
+  // Should not fail on ReadonlyArray type alias (TypeReferenceNode)
+  type Foo = ReadonlyArray<string>;
+
+  // Should fail on Array type alias (TypeReferenceNode)
+  type Foo = ReadonlyArray<string>;
+
+  // Should fail on Array as type member (TypeReferenceNode)
+  type Foo = {
+    bar: ReadonlyArray<string>
+  }
+
+}
+

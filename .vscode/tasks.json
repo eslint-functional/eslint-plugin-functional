@@ -1,0 +1,36 @@
+{
+  "version": "0.1.0",
+  "tasks": [
+    {
+      "taskName": "tsc",
+      "command": "yarn",
+      "args": [
+        "tsc"
+      ],
+      "isShellCommand": true,
+      "isBackground": true,
+      "isBuildCommand": true,
+      "problemMatcher": "$tsc"
+    },
+    {
+      "taskName": "lint",
+      "command": "yarn",
+      "args": [
+        "lint"
+      ],
+      "isShellCommand": true,
+      "problemMatcher": {
+        "owner": "tslint",
+        "fileLocation": "relative",
+        "severity": "warning",
+        "pattern": {
+          "regexp": "^(\\S.*)\\[(\\d+), (\\d+)\\]:\\s+(.*)$",
+          "file": 1,
+          "line": 2,
+          "column": 3,
+          "message": 4
+        }
+      }
+    }
+  ]
+}

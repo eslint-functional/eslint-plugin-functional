@@ -1,0 +1,29 @@
+language: node_js
+cache:
+  yarn: true
+  directories:
+    - node_modules
+notifications:
+  email: false
+node_js:
+  - "12"
+  - "10"
+  - "8"
+  - "6"
+env:
+  - TSVERSION=next
+  - TSVERSION=latest
+  - TSVERSION=3.0
+  - TSVERSION=2.8
+matrix:
+  allow_failures:
+    - env: TSVERSION=next
+before_install:
+before_script:
+script:
+  - yarn build
+  - yarn lint
+  - yarn add -D typescript@$TSVERSION
+  - yarn coverage
+after_success:
+  - yarn report-coverage

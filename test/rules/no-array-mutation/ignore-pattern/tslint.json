@@ -1,0 +1,6 @@
+{
+  "rulesDirectory": ["../../../../rules"],
+  "rules": {
+    "no-array-mutation": [true, { "ignore-pattern": "**.mutableArray*" }]
+  }
+}

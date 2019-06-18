@@ -1,0 +1,28 @@
+const x = [0, 1, 2];
+const yMutable = [0, 1, 2];
+
+// Disallowed array mutation patterns
+
+x[0] = 4;
+~~~~~~~~ [failure]
+
+delete x[0];
+~~~~~~~~~~~ [failure]
+
+x[0]++;
+~~~~~~ [failure]
+
+++x[0];
+~~~~~~ [failure]
+
+// Allowed suffix
+
+yMutable[0] = 4;
+
+delete yMutable[0];
+
+yMutable[0]++;
+
+++yMutable[0];
+
+[failure]: Mutating an array is not allowed.

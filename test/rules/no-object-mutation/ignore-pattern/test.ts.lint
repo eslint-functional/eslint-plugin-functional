@@ -1,0 +1,40 @@
+const foo = {
+  mutableA: {
+    mutableA: {
+      c: 0
+    },
+    b: {
+      c: 0
+    }
+  },
+  b: {
+    mutableA: {
+      c: 0
+    },
+    b: {
+      c: 0
+    }
+  }
+};
+
+foo.mutableA.mutableA.c = 1;
+foo.mutableA.b.c = 1;
+~~~~~~~~~~~~~~~~~~~~ [failure]
+
+foo.b.mutableA.c = 1;
+foo.b.b.c = 1;
+~~~~~~~~~~~~~ [failure]
+
+foo.mutableA.mutableA = 'a string';
+foo.mutableA.b = 'a string';
+foo.b.mutableA = 'a string';
+~~~~~~~~~~~~~~~~~~~~~~~~~~~ [failure]
+foo.b.b = 'a string';
+~~~~~~~~~~~~~~~~~~~~ [failure]
+
+foo.mutableA = 'a string';
+~~~~~~~~~~~~~~~~~~~~~~~~~ [failure]
+foo.b = 'a string';
+~~~~~~~~~~~~~~~~~~ [failure]
+
+[failure]: Modifying properties of existing object not allowed.

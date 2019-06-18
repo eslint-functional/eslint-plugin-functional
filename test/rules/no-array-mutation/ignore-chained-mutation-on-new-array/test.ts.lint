@@ -1,0 +1,201 @@
+const x = [0, 1, 2];
+const y = [x];
+
+// Allowed array mutation methods to be chained to the creation of an array.
+
+const a = [0, 1, 2].copyWithin(0, 1, 2);
+const b = [0, 1, 2].fill(3);
+const c = [0, 1, 2].pop();
+const d = [0, 1, 2].push(3);
+const e = [0, 1, 2].reverse();
+const f = [0, 1, 2].shift();
+const g = [0, 1, 2].sort();
+const h = [0, 1, 2].splice(0, 1, 9);
+const i = [0, 1, 2].unshift(6);
+
+const a = new Array(5).copyWithin(0, 1, 2);
+const b = new Array(5).fill(3);
+const c = new Array(5).pop();
+const d = new Array(5).push(3);
+const e = new Array(5).reverse();
+const f = new Array(5).shift();
+const g = new Array(5).sort();
+const h = new Array(5).splice(0, 1, 9);
+const i = new Array(5).unshift(6);
+
+// Allowed array mutation methods to be chained to array constructor functions.
+
+const a = Array.of(0, 1, 2).copyWithin(0, 1, 2);
+const b = Array.of(0, 1, 2).fill(3);
+const c = Array.of(0, 1, 2).pop();
+const d = Array.of(0, 1, 2).push(3);
+const e = Array.of(0, 1, 2).reverse();
+const f = Array.of(0, 1, 2).shift();
+const g = Array.of(0, 1, 2).sort();
+const h = Array.of(0, 1, 2).splice(0, 1, 9);
+const i = Array.of(0, 1, 2).unshift(6);
+
+const a = Array.from({ length: 10 }).copyWithin(0, 1, 2);
+const b = Array.from({ length: 10 }).fill(3);
+const c = Array.from({ length: 10 }).pop();
+const d = Array.from({ length: 10 }).push(3);
+const e = Array.from({ length: 10 }).reverse();
+const f = Array.from({ length: 10 }).shift();
+const g = Array.from({ length: 10 }).sort();
+const h = Array.from({ length: 10 }).splice(0, 1, 9);
+const i = Array.from({ length: 10 }).unshift(6);
+
+// Allowed array mutation methods to be chained to array accessor/iteration methods.
+
+x.slice().copyWithin(0, 1, 2);
+x.slice().fill(3);
+x.slice().pop();
+x.slice().push(3);
+x.slice().reverse();
+x.slice().shift();
+x.slice().sort();
+x.slice().splice(0, 1, 9);
+x.slice().unshift(6);
+
+x.concat([1, 2, 3]).copyWithin(0, 1, 2);
+x.concat([1, 2, 3]).fill(3);
+x.concat([1, 2, 3]).pop();
+x.concat([1, 2, 3]).push(3);
+x.concat([1, 2, 3]).reverse();
+x.concat([1, 2, 3]).shift();
+x.concat([1, 2, 3]).sort();
+x.concat([1, 2, 3]).splice(0, 1, 9);
+x.concat([1, 2, 3]).unshift(6);
+
+x.filter(v => v > 1).copyWithin(0, 1, 2);
+x.filter(v => v > 1).fill(3);
+x.filter(v => v > 1).pop();
+x.filter(v => v > 1).push(3);
+x.filter(v => v > 1).reverse();
+x.filter(v => v > 1).shift();
+x.filter(v => v > 1).sort();
+x.filter(v => v > 1).splice(0, 1, 9);
+x.filter(v => v > 1).unshift(6);
+
+x.map(v => v * 2).copyWithin(0, 1, 2);
+x.map(v => v * 2).fill(3);
+x.map(v => v * 2).pop();
+x.map(v => v * 2).push(3);
+x.map(v => v * 2).reverse();
+x.map(v => v * 2).shift();
+x.map(v => v * 2).sort();
+x.map(v => v * 2).splice(0, 1, 9);
+x.map(v => v * 2).unshift(6);
+
+x.reduce((r, v) => [...r, v + 1], []).copyWithin(0, 1, 2);
+x.reduce((r, v) => [...r, v + 1], []).fill(3);
+x.reduce((r, v) => [...r, v + 1], []).pop();
+x.reduce((r, v) => [...r, v + 1], []).push(3);
+x.reduce((r, v) => [...r, v + 1], []).reverse();
+x.reduce((r, v) => [...r, v + 1], []).shift();
+x.reduce((r, v) => [...r, v + 1], []).sort();
+x.reduce((r, v) => [...r, v + 1], []).splice(0, 1, 9);
+x.reduce((r, v) => [...r, v + 1], []).unshift(6);
+
+x.reduceRight((r, v) => [...r, v + 1], []).copyWithin(0, 1, 2);
+x.reduceRight((r, v) => [...r, v + 1], []).fill(3);
+x.reduceRight((r, v) => [...r, v + 1], []).pop();
+x.reduceRight((r, v) => [...r, v + 1], []).push(3);
+x.reduceRight((r, v) => [...r, v + 1], []).reverse();
+x.reduceRight((r, v) => [...r, v + 1], []).shift();
+x.reduceRight((r, v) => [...r, v + 1], []).sort();
+x.reduceRight((r, v) => [...r, v + 1], []).splice(0, 1, 9);
+x.reduceRight((r, v) => [...r, v + 1], []).unshift(6);
+
+// Check that nested arrays also work.
+
+y[0].slice().copyWithin(0, 1, 2);
+y[0].slice().fill(3);
+y[0].slice().pop();
+y[0].slice().push(3);
+y[0].slice().reverse();
+y[0].slice().shift();
+y[0].slice().sort();
+y[0].slice().splice(0, 1, 9);
+y[0].slice().unshift(6);
+
+y[0].concat([1, 2, 3]).copyWithin(0, 1, 2);
+y[0].concat([1, 2, 3]).fill(3);
+y[0].concat([1, 2, 3]).pop();
+y[0].concat([1, 2, 3]).push(3);
+y[0].concat([1, 2, 3]).reverse();
+y[0].concat([1, 2, 3]).shift();
+y[0].concat([1, 2, 3]).sort();
+y[0].concat([1, 2, 3]).splice(0, 1, 9);
+y[0].concat([1, 2, 3]).unshift(6);
+
+y[0].filter(v => v > 1).copyWithin(0, 1, 2);
+y[0].filter(v => v > 1).fill(3);
+y[0].filter(v => v > 1).pop();
+y[0].filter(v => v > 1).push(3);
+y[0].filter(v => v > 1).reverse();
+y[0].filter(v => v > 1).shift();
+y[0].filter(v => v > 1).sort();
+y[0].filter(v => v > 1).splice(0, 1, 9);
+y[0].filter(v => v > 1).unshift(6);
+
+y[0].map(v => v * 2).copyWithin(0, 1, 2);
+y[0].map(v => v * 2).fill(3);
+y[0].map(v => v * 2).pop();
+y[0].map(v => v * 2).push(3);
+y[0].map(v => v * 2).reverse();
+y[0].map(v => v * 2).shift();
+y[0].map(v => v * 2).sort();
+y[0].map(v => v * 2).splice(0, 1, 9);
+y[0].map(v => v * 2).unshift(6);
+
+y[0].reduce((r, v) => [...r, v + 1], []).copyWithin(0, 1, 2);
+y[0].reduce((r, v) => [...r, v + 1], []).fill(3);
+y[0].reduce((r, v) => [...r, v + 1], []).pop();
+y[0].reduce((r, v) => [...r, v + 1], []).push(3);
+y[0].reduce((r, v) => [...r, v + 1], []).reverse();
+y[0].reduce((r, v) => [...r, v + 1], []).shift();
+y[0].reduce((r, v) => [...r, v + 1], []).sort();
+y[0].reduce((r, v) => [...r, v + 1], []).splice(0, 1, 9);
+y[0].reduce((r, v) => [...r, v + 1], []).unshift(6);
+
+y[0].reduceRight((r, v) => [...r, v + 1], []).copyWithin(0, 1, 2);
+y[0].reduceRight((r, v) => [...r, v + 1], []).fill(3);
+y[0].reduceRight((r, v) => [...r, v + 1], []).pop();
+y[0].reduceRight((r, v) => [...r, v + 1], []).push(3);
+y[0].reduceRight((r, v) => [...r, v + 1], []).reverse();
+y[0].reduceRight((r, v) => [...r, v + 1], []).shift();
+y[0].reduceRight((r, v) => [...r, v + 1], []).sort();
+y[0].reduceRight((r, v) => [...r, v + 1], []).splice(0, 1, 9);
+y[0].reduceRight((r, v) => [...r, v + 1], []).unshift(6);
+
+// Disallowed array mutation methods
+
+x.copyWithin(0, 1, 2);
+~~~~~~~~~~~~~~~~~~~~~ [failure]
+
+x.fill(3);
+~~~~~~~~~ [failure]
+
+x.pop();
+~~~~~~~ [failure]
+
+x.push(3);
+~~~~~~~~~ [failure]
+
+x.reverse();
+~~~~~~~~~~~ [failure]
+
+x.shift();
+~~~~~~~~~ [failure]
+
+x.sort();
+~~~~~~~~ [failure]
+
+x.splice(0, 1, 9);
+~~~~~~~~~~~~~~~~~ [failure]
+
+x.unshift(6);
+~~~~~~~~~~~~ [failure]
+
+[failure]: Mutating an array is not allowed.

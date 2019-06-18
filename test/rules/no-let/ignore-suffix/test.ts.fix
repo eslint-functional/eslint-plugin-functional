@@ -1,0 +1,57 @@
+const x;
+
+const x = 0;
+
+
+let xMutable;
+let xMutable = 0;
+
+
+for(const x = 0; x < 1;x++);
+
+for(const x = 0, y = 0; x < 1;x++);
+
+for(const x in y);
+
+for(const x of y);
+
+for(let xMutable = 0; x < 1;x++);
+
+for(const xMutable = 0, y = 0; x < 1;x++);
+
+for(let xMutable = 0, yMutable = 0; x < 1;x++);
+
+for(let xMutable in y);
+
+for(let xMutable of y);
+
+
+function foo() {
+  const x;
+  const x = 0;
+  let xMutable;
+  let xMutable = 0;
+}
+
+const foo = () => {
+  const x;
+  const x = 0;
+  let xMutable;
+  let xMutable = 0;
+}
+
+class Foo {
+
+  // Class members do not use let
+  x;
+  x = 0;
+
+  foo() {
+    const x;
+    const x = 0;
+    let xMutable;
+    let xMutable = 0;
+  }
+
+}
+

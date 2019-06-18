@@ -1,0 +1,6 @@
+var x = 0;
+
+if(i === 1) { x = 2; }
+~~~~~~~~~~~~~~~~~~~~~~ [failure]
+
+[failure]: Unexpected if, use a conditional expression (ternary operator) instead.

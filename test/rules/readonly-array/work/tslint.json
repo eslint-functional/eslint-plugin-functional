@@ -1,0 +1,6 @@
+{
+  "rulesDirectory": ["../../../../rules"],
+  "rules": {
+    "readonly-array": [true, "ignore-local"]
+  }
+}

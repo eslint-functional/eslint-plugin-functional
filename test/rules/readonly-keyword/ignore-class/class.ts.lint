@@ -1,0 +1,12 @@
+class Foo {
+
+  a: number,
+  b: Array<string>,
+  c: () => string,
+  d: { [key: string]: string },
+
+  foo(a: number[]) {
+    return;
+  }
+
+}

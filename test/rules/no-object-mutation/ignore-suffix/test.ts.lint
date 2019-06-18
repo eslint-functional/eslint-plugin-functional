@@ -1,0 +1,50 @@
+const x = {a: 1};
+const yMutable = {a: 1};
+
+// Disallowed object mutation patterns
+
+x.foo = 'bar';
+~~~~~~~~~~~~~ [failure]
+
+x['foo'] = 'bar';
+~~~~~~~~~~~~~~~~ [failure]
+
+delete x.foo;
+~~~~~~~~~~~~ [failure]
+
+x.a++;
+~~~~~ [failure]
+
+++x.a;
+~~~~~ [failure]
+
+// Allowed suffix
+
+yMutable.foo = 'bar';
+
+yMutable['foo'] = 'bar';
+
+delete yMutable.foo;
+
+yMutable.a++;
+
+++yMutable.a;
+
+// Disallow Object.assign() on identifiers.
+
+const value = { msg1: 'hello' };
+const valueMutable = value;
+
+const foo = Object.assign(value, { msg2: 'world' });
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [failure]
+
+const foo = Object.assign(valueMutable, { msg2: 'world' });
+
+// Don't allow mutation of properties on immutable object.
+
+const z = { mutableProp: 1, otherProp: 2 };
+
+z.mutableProp = 3;
+~~~~~~~~~~~~~~~~~ [failure]
+
+[failure]: Modifying properties of existing object not allowed.

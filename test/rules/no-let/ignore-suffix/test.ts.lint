@@ -1,0 +1,72 @@
+let x;
+    ~ [failure]
+
+let x = 0;
+    ~~~~~ [failure]
+
+
+let xMutable;
+let xMutable = 0;
+
+
+for(let x = 0; x < 1;x++);
+        ~~~~~ [failure]
+
+for(let x = 0, y = 0; x < 1;x++);
+        ~~~~~ [failure]
+               ~~~~~ [failure]
+
+for(let x in y);
+        ~ [failure]
+
+for(let x of y);
+        ~ [failure]
+
+for(let xMutable = 0; x < 1;x++);
+
+for(let xMutable = 0, y = 0; x < 1;x++);
+                      ~~~~~ [failure]
+
+for(let xMutable = 0, yMutable = 0; x < 1;x++);
+
+for(let xMutable in y);
+
+for(let xMutable of y);
+
+
+function foo() {
+  let x;
+      ~ [failure]
+  let x = 0;
+      ~~~~~ [failure]
+  let xMutable;
+  let xMutable = 0;
+}
+
+const foo = () => {
+  let x;
+      ~ [failure]
+  let x = 0;
+      ~~~~~ [failure]
+  let xMutable;
+  let xMutable = 0;
+}
+
+class Foo {
+
+  // Class members do not use let
+  x;
+  x = 0;
+
+  foo() {
+    let x;
+        ~ [failure]
+    let x = 0;
+        ~~~~~ [failure]
+    let xMutable;
+    let xMutable = 0;
+  }
+
+}
+
+[failure]: Unexpected let, use const instead.

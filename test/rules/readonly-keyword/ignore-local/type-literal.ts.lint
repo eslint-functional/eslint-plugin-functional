@@ -1,0 +1,76 @@
+// The literal with indexer with readonly modifier should not produce failures
+let foo: {readonly [key: string]: number};
+
+// Type literal with indexer without readonly modifier should produce failures
+let foo: {[key: string]: number};
+          ~~~~~~~~~~~~~~~~~~~~~ [failure]
+
+// Type literal in array template parameter without readonly should produce failures
+type foo = ReadonlyArray<{
+  type: string,
+  ~~~~~~~~~~~~~ [failure]
+  code: string,
+  ~~~~~~~~~~~~~ [failure]
+}>;
+
+// Type literal in array template parameter with readonly should not produce failures
+type foo = ReadonlyArray<{ readonly type: string, readonly code: string }>;
+
+// Type literal with readonly on members should not produce failures
+let foo: {
+  readonly a: number,
+  readonly b: Array<string>,
+  readonly c: () => string,
+  readonly d: { readonly [key: string]: string }
+  readonly [key: string]: string
+};
+
+// Type literal wihtout readonly on members should produce failures
+let foo: {
+  a: number,
+  ~~~~~~~~~~ [failure]
+  b: Array<string>,
+  ~~~~~~~~~~~~~~~~~ [failure]
+  c: () => string,
+  ~~~~~~~~~~~~~~~~[failure]
+  d: { [key: string]: string },
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [failure]
+       ~~~~~~~~~~~~~~~~~~~~~ [failure]
+  [key: string]: string,
+  ~~~~~~~~~~~~~~~~~~~~~~ [failure]
+  // Also verify that nested members are checked
+  readonly d: {
+    a: number,
+    ~~~~~~~~~~ [failure]
+    b: Array<string>,
+    ~~~~~~~~~~~~~~~~~ [failure]
+    c: () => string,
+    ~~~~~~~~~~~~~~~~[failure]
+    d: { [key: string]: string },
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ [failure]
+         ~~~~~~~~~~~~~~~~~~~~~ [failure]
+    [key: string]: string,
+    ~~~~~~~~~~~~~~~~~~~~~~ [failure]
+  }
+};
+
+// Type literal wihtout readonly in within function should not produce failures
+function foo() {
+  let foo: {
+    a: number,
+    b: Array<string>,
+    c: () => string,
+    d: { [key: string]: string },
+    [key: string]: string,
+    // Also verify that nested members are checked
+    readonly d: {
+      a: number,
+      b: Array<string>,
+      c: () => string,
+      d: { [key: string]: string },
+      [key: string]: string,
+    }
+  };
+}
+
+[failure]: A readonly modifier is required.

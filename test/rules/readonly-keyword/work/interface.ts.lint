@@ -1,0 +1,5 @@
+interface Foo {
+  mutableA: number,
+}
+
+[failure]: A readonly modifier is required.

@@ -1,0 +1,23 @@
+// -- Top-level type literal
+
+// Should fail on Array as type literal member (TypeReferenceNode)
+let foo: { bar: Array<string> };
+                ~~~~~~~~~~~~~ [failure]
+
+// -- Local type literal
+
+function foo() {
+
+  // Should not fail on Array as type literal member when local (TypeReferenceNode)
+  let foo: { bar: Array<string> };
+
+}
+
+const foo = () => {
+
+  // Should not fail on Array as type literal member when local (TypeReferenceNode)
+  let foo: { bar: Array<string> };
+
+}
+
+[failure]: Only ReadonlyArray allowed.

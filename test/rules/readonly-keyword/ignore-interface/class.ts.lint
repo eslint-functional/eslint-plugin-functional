@@ -1,0 +1,8 @@
+class Foo {
+
+  foo: number;
+  ~~~~~~~~~~~~ [failure]
+
+}
+
+[failure]: A readonly modifier is required.

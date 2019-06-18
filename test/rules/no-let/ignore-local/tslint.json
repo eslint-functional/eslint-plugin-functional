@@ -1,0 +1,11 @@
+{
+  "rulesDirectory": [
+    "../../../../rules"
+  ],
+  "rules": {
+    "no-let": [
+      true,
+      "ignore-local"
+    ]
+  }
+}

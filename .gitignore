@@ -1,0 +1,8 @@
+.DS_Store
+thumbs.db
+*.log
+node_modules/
+/scripts/**/*.js
+/rules/
+/coverage/
+/.nyc_output
