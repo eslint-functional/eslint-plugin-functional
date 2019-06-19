@@ -9,7 +9,6 @@ import {
 
 type Options = {};
 
-// tslint:disable-next-line:variable-name
 export const Rule = createCheckNodeRule(
   checkNode,
   "Only the same kind of members allowed in interfaces."

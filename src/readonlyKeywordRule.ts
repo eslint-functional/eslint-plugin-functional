@@ -17,7 +17,6 @@ type Options = Ignore.IgnoreLocalOption &
  * This rule checks that the readonly keyword is used in all PropertySignature and
  * IndexerSignature nodes (which are the only places that the readonly keyword can exist).
  */
-// tslint:disable-next-line:variable-name
 export const Rule = createCheckNodeRule(
   Ignore.checkNodeWithIgnore(checkNode),
   "A readonly modifier is required."

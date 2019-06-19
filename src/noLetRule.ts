@@ -10,7 +10,6 @@ import {
 
 type Options = Ignore.IgnoreLocalOption & Ignore.IgnoreOption;
 
-// tslint:disable-next-line:variable-name
 export const Rule = createCheckNodeRule(
   Ignore.checkNodeWithIgnore(checkNode),
   "Unexpected let, use const instead."

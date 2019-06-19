@@ -10,7 +10,6 @@ import * as Ignore from "./shared/ignore";
 
 type Options = Ignore.IgnoreOption;
 
-// tslint:disable-next-line:variable-name
 export const Rule = createCheckNodeRule(
   checkNode,
   "Using expressions to cause side-effects not allowed."

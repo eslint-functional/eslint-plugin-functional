@@ -246,7 +246,7 @@ function isIgnoredPattern(
 
       switch (patternParts[index]) {
         // Match any depth (including 0)?
-        case "**":
+        case "**": {
           const subpattern = patternParts.slice(index + 1);
           for (let offset = index; offset < textParts.length; offset++) {
             const submatch = findMatch(subpattern, textParts.slice(offset));
@@ -255,6 +255,7 @@ function isIgnoredPattern(
             }
           }
           return false;
+        }
 
         // Match anything?
         case "*":

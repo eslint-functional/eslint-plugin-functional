@@ -9,7 +9,6 @@ import {
 
 type Options = {};
 
-// tslint:disable-next-line:variable-name
 export const Rule = createCheckNodeRule(
   checkNode,
   "Unexpected delete, objects should be considered immutable."

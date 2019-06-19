@@ -80,12 +80,10 @@ export function walkTyped<TOptions>(
 export function createCheckNodeRule<TOptions>(
   checkNode: CheckNodeFunction<TOptions>,
   failureString: string,
-  // tslint:disable-next-line:no-any
-  parseOptions: (ruleArguments: any[]) => TOptions = defaultParseOptions
-  // tslint:disable-next-line:no-any
+  parseOptions: (ruleArguments: Array<any>) => TOptions = defaultParseOptions
 ): any {
   return class Rule extends Lint.Rules.AbstractRule {
-    public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
+    public apply(sourceFile: ts.SourceFile): Array<Lint.RuleFailure> {
       return this.applyWithFunction(
         sourceFile,
         (ctx: Lint.WalkContext<TOptions>) =>
@@ -99,15 +97,13 @@ export function createCheckNodeRule<TOptions>(
 export function createCheckNodeTypedRule<TOptions>(
   checkTypedNode: CheckTypedNodeFunction<TOptions>,
   failureString: string,
-  // tslint:disable-next-line:no-any
-  parseOptions: (ruleArguments: any[]) => TOptions = defaultParseOptions
-  // tslint:disable-next-line:no-any
+  parseOptions: (ruleArguments: Array<any>) => TOptions = defaultParseOptions
 ): any {
   return class Rule extends Lint.Rules.TypedRule {
     public applyWithProgram(
       sourceFile: ts.SourceFile,
       program: ts.Program
-    ): Lint.RuleFailure[] {
+    ): Array<Lint.RuleFailure> {
       return this.applyWithFunction(
         sourceFile,
         (ctx: Lint.WalkContext<TOptions>, checker: ts.TypeChecker) =>

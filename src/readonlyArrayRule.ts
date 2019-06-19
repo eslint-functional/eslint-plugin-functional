@@ -17,7 +17,6 @@ type Options = Ignore.IgnoreLocalOption &
   Ignore.IgnoreRestParametersOption &
   Ignore.IgnoreReturnType;
 
-// tslint:disable-next-line:variable-name
 export const Rule = createCheckNodeRule(
   Ignore.checkNodeWithIgnore(checkNode),
   "Only ReadonlyArray allowed."
@@ -221,7 +220,7 @@ function checkTupleType(
 function getReadonlyKeywordFix(
   node: ts.ArrayTypeNode | ts.TupleTypeNode,
   ctx: Lint.WalkContext<Options>
-): Lint.Replacement[] {
+): Array<Lint.Replacement> {
   // Nested shorthand syntax array?
   if (utils.isArrayTypeNode(node.parent)) {
     return [
@@ -235,7 +234,7 @@ function getReadonlyKeywordFix(
 function getReadonlyArrayFix(
   node: ts.ArrayTypeNode,
   ctx: Lint.WalkContext<Options>
-): Lint.Replacement[] {
+): Array<Lint.Replacement> {
   return [
     new Lint.Replacement(node.getStart(ctx.sourceFile), 0, "ReadonlyArray<"),
     new Lint.Replacement(node.end - 2, 2, ">")

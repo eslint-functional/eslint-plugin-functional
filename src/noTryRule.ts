@@ -9,7 +9,6 @@ import {
 
 type Options = {};
 
-// tslint:disable-next-line:variable-name
 export const Rule = createCheckNodeRule(
   checkNode,
   "Unexpected try, the try-catch[-finally] and try-finally patterns are not functional."

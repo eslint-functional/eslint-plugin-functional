@@ -26,7 +26,6 @@ type ArrayConstructorType = ts.Type & {
   };
 };
 
-// tslint:disable-next-line:variable-name
 export const Rule = createCheckNodeTypedRule(
   checkTypedNode,
   "Mutating an array is not allowed."

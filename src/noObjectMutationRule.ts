@@ -13,7 +13,6 @@ import { isAccessExpression } from "./shared/typeguard";
 
 type Options = Ignore.IgnoreOption;
 
-// tslint:disable-next-line:variable-name
 export const Rule = createCheckNodeTypedRule(
   checkNode,
   "Modifying properties of existing object not allowed."

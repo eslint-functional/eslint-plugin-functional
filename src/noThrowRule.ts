@@ -9,7 +9,6 @@ import {
 
 type Options = {};
 
-// tslint:disable-next-line:variable-name
 export const Rule = createCheckNodeRule(
   checkNode,
   "Unexpected throw, throwing exceptions is not functional."

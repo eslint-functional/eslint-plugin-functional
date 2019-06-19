@@ -9,7 +9,6 @@ import {
 
 type Options = {};
 
-// tslint:disable-next-line:variable-name
 export const Rule = createCheckNodeRule(
   checkNode,
   "Method signature is mutable, use property signature with readonly modifier instead."
