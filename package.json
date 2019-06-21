@@ -1,14 +1,14 @@
 {
-  "name": "tslint-immutable",
-  "version": "6.0.0",
-  "description": "TSLint rules to disable mutation in TypeScript.",
+  "name": "eslint-plugin-tslint-immutable",
+  "version": "0.0.0",
+  "description": "ESLint rules to disable mutation in TypeScript.",
   "main": "tslint-immutable.json",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jonaskello/tslint-immutable.git"
   },
   "keywords": [
-    "tslint",
+    "eslint",
     "immutability"
   ],
   "author": "Jonas Kello",
@@ -33,9 +33,12 @@
     "README.md"
   ],
   "dependencies": {
-    "tsutils": "^2.28.0 || ^3.0.0"
+    "@typescript-eslint/experimental-utils": "^1.10.2",
+    "@typescript-eslint/typescript-estree": "^1.10.2"
   },
   "devDependencies": {
+    "@types/eslint": "^4.16.6",
+    "@types/estree": "^0.0.39",
     "@types/glob": "^7.1.1",
     "@types/node": "^8.0.53",
     "@typescript-eslint/eslint-plugin": "^1.10.2",
@@ -51,12 +54,13 @@
     "prettier": "^1.16.4",
     "rimraf": "^2.6.3",
     "shelljs": "^0.8.3",
-    "tslint": "^5.14.0",
     "typescript": "^3.5.2"
   },
   "peerDependencies": {
-    "tslint": "^5.8.0",
-    "typescript": "^2.8.0 || ^3.0.0"
+    "@typescript-eslint/experimental-utils": "^1.10.0",
+    "@typescript-eslint/typescript-estree": "^1.10.0",
+    "eslint": "^5.16.0",
+    "typescript": "^3.4.0"
   },
   "scripts": {
     "compile": "tsc",
@@ -71,7 +75,7 @@
     "postversion": "git push --tags && yarn publish --new-version $npm_package_version && git push && echo \"Successfully released version $npm_package_version!\""
   },
   "lint-staged": {
-    "*.{ts,tsx}": "tslint",
+    "*.{ts,tsx}": "eslint",
     "*.{ts,tsx,json,css}": [
       "prettier --write",
       "git add"
