@@ -13,3 +13,9 @@ export function isMemberExpression(
 export function isIdentifier(node: TSESTree.Node): node is TSESTree.Identifier {
   return node.type === "Identifier";
 }
+
+export function isTSPropertySignature(
+  node: TSESTree.Node
+): node is TSESTree.TSPropertySignature {
+  return node.type === "TSPropertySignature";
+}
