@@ -3,6 +3,6 @@ thumbs.db
 *.log
 node_modules/
 /scripts/**/*.js
-/rules/
+/dist/
 /coverage/
 /.nyc_output

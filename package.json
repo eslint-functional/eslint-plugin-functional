@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/jonaskello/tslint-immutable#readme",
   "files": [
-    "/rules",
+    "/dist",
     "tslint-immutable.json",
     "all.json",
     "package.json",
@@ -64,9 +64,9 @@
   },
   "scripts": {
     "compile": "tsc",
-    "build": "rimraf rules && yarn compile",
+    "build": "rimraf dist && yarn compile",
     "lint": "eslint './{src,scripts}/**/*.ts{,x}' --ext .ts,.tsx",
-    "test": "tslint --test test/rules/**/*",
+    "test": "tslint --test test/dist/**/*",
     "test:work": "yarn build && tslint --test test/rules/readonly-array/work",
     "verify": "yarn build && yarn lint && yarn coverage",
     "coverage": "rimraf coverage .nyc_output && nyc yarn test",
