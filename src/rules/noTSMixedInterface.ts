@@ -49,11 +49,17 @@ function checkTSInterfaceDeclaration(
           : undefined;
 
       if (
+        // Not the first property in the interface.
         prevMemberType !== undefined &&
+        // And different property type to previous property.
         (prevMemberType !== memberType ||
-          prevMemberTypeAnnotation !== memberTypeAnnotation)
+          // Or annotationed with a different type annotation.
+          (prevMemberTypeAnnotation !== memberTypeAnnotation &&
+            // Where one of the properties is a annotationed as a function.
+            (prevMemberTypeAnnotation === AST_NODE_TYPES.TSFunctionType ||
+              memberTypeAnnotation === AST_NODE_TYPES.TSFunctionType)))
       ) {
-        context.report({ node, messageId: "generic" });
+        context.report({ node: member, messageId: "generic" });
       }
 
       prevMemberType = memberType;
