@@ -4,7 +4,7 @@ import { createRule, RuleContext, RuleMetaData } from "../util/rule";
 import { isIdentifier, isMemberExpression } from "../util/typeguard";
 
 // The name of this rule.
-export const name = "no-try" as const;
+export const name = "no-reject" as const;
 
 // The options this rule can take.
 type Options = [];

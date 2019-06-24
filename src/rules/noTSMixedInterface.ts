@@ -5,7 +5,7 @@ import { createRule, RuleContext, RuleMetaData } from "../util/rule";
 import { isTSPropertySignature } from "../util/typeguard";
 
 // The name of this rule.
-export const name = "no-method-signature" as const;
+export const name = "no-mixed-interface" as const;
 
 // The options this rule can take.
 type Options = [];
