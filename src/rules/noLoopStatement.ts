@@ -3,7 +3,7 @@ import { TSESTree } from "@typescript-eslint/typescript-estree";
 import { createRule, RuleContext, RuleMetaData } from "../util/rule";
 
 // The name of this rule.
-export const name = "no-loop" as const;
+export const name = "no-loop-statement" as const;
 
 // The options this rule can take.
 type Options = [];
