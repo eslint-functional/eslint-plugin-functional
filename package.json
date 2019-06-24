@@ -37,6 +37,7 @@
     "@typescript-eslint/typescript-estree": "^1.10.2"
   },
   "devDependencies": {
+    "@types/dedent": "^0.7.0",
     "@types/eslint": "^4.16.6",
     "@types/estree": "^0.0.39",
     "@types/glob": "^7.1.1",
@@ -45,6 +46,7 @@
     "@typescript-eslint/eslint-plugin": "^1.10.2",
     "@typescript-eslint/parser": "^1.10.2",
     "codecov": "^3.2.0",
+    "dedent": "^0.7.0",
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^5.0.0",
     "eslint-plugin-eslint-plugin": "^2.1.0",

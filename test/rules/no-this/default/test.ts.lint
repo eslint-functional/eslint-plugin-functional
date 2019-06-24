@@ -1,8 +1,0 @@
-// Should not produce failures
-let x = 0;
-
-// Should produce failures
-this.x = 0;
-~~~~ [failure]
-
-[failure]: Unexpected this, use functions not classes.

@@ -1,9 +1,9 @@
 /**
- * @fileoverview Tests for no-class
+ * @fileoverview Tests for no-if-statement
  */
 
 import { Rule, RuleTester } from "eslint";
-import { name, rule } from "../../src/rules/noClass";
+import { name, rule } from "../../src/rules/noIfStatement";
 
 const ruleTester = new RuleTester({
   parser: "@typescript-eslint/parser",
@@ -15,22 +15,12 @@ ruleTester.run(name, rule as Rule.RuleModule, {
   valid: [],
   invalid: [
     {
-      code: "class Foo {}",
+      code: "if(i === 1) { x = 2; }",
       errors: [
         {
           messageId: "generic",
           line: 1,
           column: 1
-        }
-      ]
-    },
-    {
-      code: "const klass = class {}",
-      errors: [
-        {
-          messageId: "generic",
-          line: 1,
-          column: 15
         }
       ]
     }

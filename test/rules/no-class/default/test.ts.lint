@@ -1,9 +1,0 @@
-var x = 0;
-
-class Foo {}
-~~~~~~~~~~~~ [failure]
-
-const klass = class {}
-              ~~~~~~~~ [failure]
-
-[failure]: Unexpected class, use functions not classes.

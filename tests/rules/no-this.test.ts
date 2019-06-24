@@ -1,9 +1,9 @@
 /**
- * @fileoverview Tests for no-class
+ * @fileoverview Tests for no-this
  */
 
 import { Rule, RuleTester } from "eslint";
-import { name, rule } from "../../src/rules/noClass";
+import { name, rule } from "../../src/rules/noThis";
 
 const ruleTester = new RuleTester({
   parser: "@typescript-eslint/parser",
@@ -12,25 +12,15 @@ const ruleTester = new RuleTester({
 
 // Run the tests.
 ruleTester.run(name, rule as Rule.RuleModule, {
-  valid: [],
+  valid: [`let x = 0;`],
   invalid: [
     {
-      code: "class Foo {}",
+      code: `this.x = 0;`,
       errors: [
         {
           messageId: "generic",
           line: 1,
           column: 1
-        }
-      ]
-    },
-    {
-      code: "const klass = class {}",
-      errors: [
-        {
-          messageId: "generic",
-          line: 1,
-          column: 15
         }
       ]
     }

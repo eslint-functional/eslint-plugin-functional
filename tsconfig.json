@@ -11,6 +11,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "strictNullChecks": true,
+    "esModuleInterop": true,
     // Output
     "module": "commonjs",
     "target": "es5",

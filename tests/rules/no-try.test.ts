@@ -1,9 +1,9 @@
 /**
- * @fileoverview Tests for no-class
+ * @fileoverview Tests for no-try
  */
 
 import { Rule, RuleTester } from "eslint";
-import { name, rule } from "../../src/rules/noClass";
+import { name, rule } from "../../src/rules/noTry";
 
 const ruleTester = new RuleTester({
   parser: "@typescript-eslint/parser",
@@ -12,10 +12,10 @@ const ruleTester = new RuleTester({
 
 // Run the tests.
 ruleTester.run(name, rule as Rule.RuleModule, {
-  valid: [],
+  valid: [`let x = 0;`],
   invalid: [
     {
-      code: "class Foo {}",
+      code: `try {} catch (e) {}`,
       errors: [
         {
           messageId: "generic",
@@ -25,12 +25,22 @@ ruleTester.run(name, rule as Rule.RuleModule, {
       ]
     },
     {
-      code: "const klass = class {}",
+      code: `try {} catch (e) {} finally {}`,
       errors: [
         {
           messageId: "generic",
           line: 1,
-          column: 15
+          column: 1
+        }
+      ]
+    },
+    {
+      code: `try {} finally {}`,
+      errors: [
+        {
+          messageId: "generic",
+          line: 1,
+          column: 1
         }
       ]
     }

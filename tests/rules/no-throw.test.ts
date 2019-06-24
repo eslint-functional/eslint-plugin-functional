@@ -1,9 +1,10 @@
 /**
- * @fileoverview Tests for no-class
+ * @fileoverview Tests for no-throw
  */
 
+import dedent from "dedent";
 import { Rule, RuleTester } from "eslint";
-import { name, rule } from "../../src/rules/noClass";
+import { name, rule } from "../../src/rules/noThrow";
 
 const ruleTester = new RuleTester({
   parser: "@typescript-eslint/parser",
@@ -15,7 +16,7 @@ ruleTester.run(name, rule as Rule.RuleModule, {
   valid: [],
   invalid: [
     {
-      code: "class Foo {}",
+      code: `throw 'error';`,
       errors: [
         {
           messageId: "generic",
@@ -25,12 +26,24 @@ ruleTester.run(name, rule as Rule.RuleModule, {
       ]
     },
     {
-      code: "const klass = class {}",
+      code: `throw new Error();`,
       errors: [
         {
           messageId: "generic",
           line: 1,
-          column: 15
+          column: 1
+        }
+      ]
+    },
+    {
+      code: dedent`
+        const error = new Error();
+        throw error;`,
+      errors: [
+        {
+          messageId: "generic",
+          line: 2,
+          column: 1
         }
       ]
     }

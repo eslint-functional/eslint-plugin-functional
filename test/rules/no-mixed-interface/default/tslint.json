@@ -1,6 +1,0 @@
-{
-  "rulesDirectory": ["../../../../rules"],
-  "rules": {
-    "no-mixed-interface": true
-  }
-}

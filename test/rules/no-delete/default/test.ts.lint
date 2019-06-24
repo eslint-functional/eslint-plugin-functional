@@ -1,6 +1,0 @@
-object.property = 1;
-
-delete object.property;
-~~~~~~~~~~~~~~~~~~~~~~ [failure]
-
-[failure]: Unexpected delete, objects should be considered immutable.
