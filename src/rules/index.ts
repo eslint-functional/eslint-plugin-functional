@@ -6,7 +6,7 @@ import { name as noDeleteRuleName, rule as noDeleteRule } from "./noDelete";
 import { name as noExpressionStatementRuleName, rule as noExpressionStatementRule } from "./noExpressionStatement";
 import { name as noIfStatementRuleName, rule as noIfStatementRule } from "./noIfStatement";
 import { name as noLetRuleName, rule as noLetRule } from "./noLet";
-import { name as noLoopRuleName, rule as noLoopRule } from "./noLoop";
+import { name as noLoopRuleName, rule as noLoopRule } from "./noLoopStatement";
 import { name as noObjectMutationRuleName, rule as noObjectMutationRule } from "./noObjectMutation";
 import { name as noRejectRuleName, rule as noRejectRule } from "./noReject";
 import { name as noThisRuleName, rule as noThisRule } from "./noThis";
