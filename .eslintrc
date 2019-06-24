@@ -1,12 +1,21 @@
 {
+  "root": true,
   "parser": "@typescript-eslint/parser",
   "plugins": [
+    "eslint-plugin",
     "@typescript-eslint",
+    "jest",
     "prettier"
   ],
+  "env": {
+    "es6": true,
+    "node": true
+  },
   "extends": [
     "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
+    "plugin:eslint-plugin/recommended",
     "plugin:prettier/recommended",
     "prettier/@typescript-eslint"
   ],
@@ -39,5 +48,29 @@
         "typedefs": false
       }
     ]
-  }
+  },
+  "overrides": [
+    {
+      "files": [
+        "tests/**/*.ts"
+      ],
+      "env": {
+        "jest/globals": true
+      },
+      "rules": {
+        "jest/no-disabled-tests": "warn",
+        "jest/no-focused-tests": "error",
+        "jest/no-alias-methods": "error",
+        "jest/no-identical-title": "error",
+        "jest/no-jasmine-globals": "error",
+        "jest/no-jest-import": "error",
+        "jest/no-test-prefixes": "error",
+        "jest/no-test-callback": "error",
+        "jest/no-test-return-statement": "error",
+        "jest/prefer-to-have-length": "warn",
+        "jest/prefer-spy-on": "error",
+        "jest/valid-expect": "error"
+      }
+    }
+  ]
 }
