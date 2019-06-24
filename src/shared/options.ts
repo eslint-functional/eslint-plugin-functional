@@ -33,7 +33,7 @@ function upFirst(word: string): string {
 }
 
 function camelize(text: string): string {
-  let words = text.split(/[-_]/g);
+  const words = text.split(/[-_]/g);
   return (
     words[0].toLowerCase() +
     words
