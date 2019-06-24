@@ -29,12 +29,12 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
 };
 
 /**
- * Check if the given ThrowStatement violates this rule.
+ * Check if the given ThisExpression violates this rule.
  */
-function checkThrowStatement(
+function checkThisExpression(
   context: RuleContext<Options, keyof typeof errorMessages>
 ) {
-  return (node: TSESTree.ThrowStatement) => {
+  return (node: TSESTree.ThisExpression) => {
     // All throw statements violate this rule.
     context.report({ node, messageId: "generic" });
   };
@@ -46,10 +46,10 @@ export const rule = createRule<Options, keyof typeof errorMessages>({
   meta,
   defaultOptions,
   create(context) {
-    const _checkThrowStatement = checkThrowStatement(context);
+    const _checkThisExpression = checkThisExpression(context);
 
     return {
-      ThrowStatement: _checkThrowStatement
+      ThisExpression: _checkThisExpression
     };
   }
 });
