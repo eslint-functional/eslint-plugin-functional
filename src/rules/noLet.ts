@@ -1,18 +1,19 @@
 import { TSESTree } from "@typescript-eslint/typescript-estree";
 import { deepMerge } from "@typescript-eslint/experimental-utils/dist/eslint-utils";
 
-import * as Ignore from "../common/ignoreOptions";
+import * as ignore from "../common/ignoreOptions";
 import { createRule, RuleContext, RuleMetaData } from "../util/rule";
-import { isFunctionLike } from "../util/typeguard";
 
 // The name of this rule.
 export const name = "no-let" as const;
 
 // The options this rule can take.
-type Options = [Ignore.IgnoreLocalOption & Ignore.IgnoreOption];
+type Options = [ignore.IgnoreLocalOption & ignore.IgnoreOption];
 
 // The schema for the rule options.
-const schema = [deepMerge(Ignore.IgnoreLocalSchema, Ignore.IgnoreSchema)];
+const schema = [
+  deepMerge(ignore.ignoreLocalOptionSchema, ignore.ignoreOptionSchema)
+];
 
 // The default options for the rule.
 const defaultOptions: Options = [
@@ -43,22 +44,10 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
  * Check if the given VariableDeclaration violates this rule.
  */
 function checkVariableDeclaration(
-  context: RuleContext<Options, keyof typeof errorMessages>,
-  [ignoreOptions]: Options
+  context: RuleContext<keyof typeof errorMessages, Options>
 ) {
   return (node: TSESTree.VariableDeclaration) => {
     if (node.kind === "let") {
-      // Ignore local declarations?
-      if (ignoreOptions.ignoreLocal) {
-        // Check if in a function like body.
-        let n: TSESTree.Node | undefined = node;
-        while ((n = n.parent)) {
-          if (isFunctionLike(n)) {
-            return;
-          }
-        }
-      }
-
       // Report the error.
       context.report({
         node,
@@ -75,15 +64,14 @@ function checkVariableDeclaration(
 }
 
 // Create the rule.
-export const rule = createRule<Options, keyof typeof errorMessages>({
+export const rule = createRule<keyof typeof errorMessages, Options>({
   name,
   meta,
   defaultOptions,
-  create(context, options) {
-    const _checkVariableDeclaration = checkVariableDeclaration(
-      context,
-      options
-    );
+  create(context, [ignoreOptions, ...otherOptions]) {
+    const _checkVariableDeclaration = ignore.checkNodeWithIgnore(
+      checkVariableDeclaration
+    )(context, ignoreOptions, otherOptions);
 
     return {
       VariableDeclaration: _checkVariableDeclaration

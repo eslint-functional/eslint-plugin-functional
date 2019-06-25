@@ -20,6 +20,12 @@ export function isTSPropertySignature(
   return node.type === "TSPropertySignature";
 }
 
+export function isClassLike(
+  node: TSESTree.Node
+): node is TSESTree.ClassDeclaration | TSESTree.ClassExpression {
+  return node.type === "ClassDeclaration" || node.type === "ClassExpression";
+}
+
 export function isFunctionLike(
   node: TSESTree.Node
 ): node is
