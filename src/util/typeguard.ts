@@ -19,3 +19,16 @@ export function isTSPropertySignature(
 ): node is TSESTree.TSPropertySignature {
   return node.type === "TSPropertySignature";
 }
+
+export function isFunctionLike(
+  node: TSESTree.Node
+): node is
+  | TSESTree.FunctionDeclaration
+  | TSESTree.FunctionExpression
+  | TSESTree.ArrowFunctionExpression {
+  return (
+    node.type === "FunctionDeclaration" ||
+    node.type === "FunctionExpression" ||
+    node.type === "ArrowFunctionExpression"
+  );
+}
