@@ -1,6 +1,0 @@
-{
-  "rulesDirectory": ["../../../../rules"],
-  "rules": {
-    "no-let": [true, { "ignore-suffix": "Mutable" }]
-  }
-}
