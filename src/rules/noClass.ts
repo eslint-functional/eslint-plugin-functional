@@ -31,7 +31,7 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
 /**
  * Check if the given class node violates this rule.
  */
-function checkClass(context: RuleContext<Options, keyof typeof errorMessages>) {
+function checkClass(context: RuleContext<keyof typeof errorMessages, Options>) {
   return (node: TSESTree.ClassDeclaration | TSESTree.ClassExpression) => {
     // All class nodes violate this rule.
     context.report({ node, messageId: "generic" });
@@ -39,7 +39,7 @@ function checkClass(context: RuleContext<Options, keyof typeof errorMessages>) {
 }
 
 // Create the rule.
-export const rule = createRule<Options, keyof typeof errorMessages>({
+export const rule = createRule<keyof typeof errorMessages, Options>({
   name,
   meta,
   defaultOptions,

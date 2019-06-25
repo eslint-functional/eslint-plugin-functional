@@ -35,7 +35,7 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
  * Check if the given TSInterfaceDeclaration violates this rule.
  */
 function checkTSInterfaceDeclaration(
-  context: RuleContext<Options, keyof typeof errorMessages>
+  context: RuleContext<keyof typeof errorMessages, Options>
 ) {
   return (node: TSESTree.TSInterfaceDeclaration) => {
     let prevMemberType: AST_NODE_TYPES | undefined = undefined;
@@ -69,7 +69,7 @@ function checkTSInterfaceDeclaration(
 }
 
 // Create the rule.
-export const rule = createRule<Options, keyof typeof errorMessages>({
+export const rule = createRule<keyof typeof errorMessages, Options>({
   name,
   meta,
   defaultOptions,

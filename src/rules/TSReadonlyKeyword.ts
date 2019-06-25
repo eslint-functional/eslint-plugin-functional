@@ -36,7 +36,7 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
 /**
  * Check if the given TSPropertySignature violates this rule.
  */
-function checkNode(context: RuleContext<Options, keyof typeof errorMessages>) {
+function checkNode(context: RuleContext<keyof typeof errorMessages, Options>) {
   return (node: TSESTree.TSPropertySignature | TSESTree.TSIndexSignature) => {
     if (!node.readonly) {
       context.report({ node, messageId: "generic" });
@@ -45,7 +45,7 @@ function checkNode(context: RuleContext<Options, keyof typeof errorMessages>) {
 }
 
 // Create the rule.
-export const rule = createRule<Options, keyof typeof errorMessages>({
+export const rule = createRule<keyof typeof errorMessages, Options>({
   name,
   meta,
   defaultOptions,

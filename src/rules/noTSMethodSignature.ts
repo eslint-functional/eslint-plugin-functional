@@ -34,7 +34,7 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
  * Check if the given TSMethodSignature violates this rule.
  */
 function checkTSMethodSignature(
-  context: RuleContext<Options, keyof typeof errorMessages>
+  context: RuleContext<keyof typeof errorMessages, Options>
 ) {
   return (node: TSESTree.TSMethodSignature) => {
     // All TS method signatures violate this rule.
@@ -43,7 +43,7 @@ function checkTSMethodSignature(
 }
 
 // Create the rule.
-export const rule = createRule<Options, keyof typeof errorMessages>({
+export const rule = createRule<keyof typeof errorMessages, Options>({
   name,
   meta,
   defaultOptions,

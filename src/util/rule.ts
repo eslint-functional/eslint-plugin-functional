@@ -16,24 +16,24 @@ export type RuleMetaData<MessageIds extends string> = {
 } & Omit<Rule.RuleMetaData<MessageIds>, "docs">;
 
 export type RuleContext<
+  MessageIds extends string,
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-  Options extends Array<any>,
-  MessageIds extends string
+  Options extends Array<any>
 > = Rule.RuleContext<MessageIds, Options>;
 
 /**
  * Create a rule.
  */
 export function createRule<
+  MessageIds extends string,
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-  Options extends Array<any>,
-  MessageIds extends string
+  Options extends Array<any>
 >(data: {
   name: string;
   meta: RuleMetaData<MessageIds>;
   defaultOptions: Options;
   create: (
-    context: RuleContext<Options, MessageIds>,
+    context: RuleContext<MessageIds, Options>,
     optionsWithDefault: Options
   ) => Rule.RuleListener;
 }) {

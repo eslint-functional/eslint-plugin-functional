@@ -32,7 +32,7 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
  * Check if the given ThisExpression violates this rule.
  */
 function checkThisExpression(
-  context: RuleContext<Options, keyof typeof errorMessages>
+  context: RuleContext<keyof typeof errorMessages, Options>
 ) {
   return (node: TSESTree.ThisExpression) => {
     // All throw statements violate this rule.
@@ -41,7 +41,7 @@ function checkThisExpression(
 }
 
 // Create the rule.
-export const rule = createRule<Options, keyof typeof errorMessages>({
+export const rule = createRule<keyof typeof errorMessages, Options>({
   name,
   meta,
   defaultOptions,

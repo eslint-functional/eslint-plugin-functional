@@ -33,7 +33,7 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
  * Check if the given IfStatement violates this rule.
  */
 function checkIfStatement(
-  context: RuleContext<Options, keyof typeof errorMessages>
+  context: RuleContext<keyof typeof errorMessages, Options>
 ) {
   return (node: TSESTree.IfStatement) => {
     // All if statements violate this rule.
@@ -42,7 +42,7 @@ function checkIfStatement(
 }
 
 // Create the rule.
-export const rule = createRule<Options, keyof typeof errorMessages>({
+export const rule = createRule<keyof typeof errorMessages, Options>({
   name,
   meta,
   defaultOptions,
