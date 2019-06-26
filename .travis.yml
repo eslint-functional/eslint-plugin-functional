@@ -12,21 +12,20 @@ node_js:
 env:
   - TSVERSION=next
   - TSVERSION=latest
+  - TSVERSION=3.2.1
   - TSVERSION=3.0
-  - TSVERSION=2.0
 matrix:
   allow_failures:
     - env: TSVERSION=next
-    - env: TSVERSION=2.0
-before_install:
+    - env: TSVERSION=3.0
 before_script:
+  - if [ "$TSVERSION" = 'latest' ] && [ "$TRAVIS_NODE_VERSION" = '12' ]; then TEST_COMPILED=0; else TEST_COMPILED=1; fi
+  - export TEST_COMPILED
 script:
-  - if [ "$TSVERSION" = 'latest' ] && [ "$TRAVIS_NODE_VERSION" = '12' ]; then REPORT=1; else REPORT=0; fi
-  - export REPORT
   - yarn build
   - yarn lint
-  - if [ "$REPORT" -eq 0 ]; then yarn build:tests; fi
+  - if [ "$TEST_COMPILED" -eq 1 ]; then yarn compile-tests; fi
   - yarn add -D typescript@"$TSVERSION"
-  - if [ "$REPORT" -eq 1 ]; then yarn test; else yarn test:compiled; fi
+  - if [ "$TEST_COMPILED" -eq 1 ]; then yarn test-compiled; else yarn test; fi
 after_success:
-  - if [ "$REPORT" -eq 1 ]; then yarn report-coverage; fi
+  - if [ "$TEST_COMPILED" -eq 0 ]; then yarn report-coverage; fi
