@@ -13,10 +13,11 @@ env:
   - TSVERSION=next
   - TSVERSION=latest
   - TSVERSION=3.0
-  - TSVERSION=2.8
+  - TSVERSION=2.0
 matrix:
   allow_failures:
     - env: TSVERSION=next
+    - env: TSVERSION=2.0
 before_install:
 before_script:
 script:
