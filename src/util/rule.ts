@@ -5,7 +5,8 @@ import { ESLintUtils } from "@typescript-eslint/experimental-utils";
 // Note: cannot migrate this to an import statement because it will make TSC
 // copy the package.json to the dist folder.
 /* eslint-disable-next-line @typescript-eslint/no-require-imports, no-undef */
-const version = require("../../package.json").version;
+// const version = require("../../package.json").version;
+import { version } from "../../package.json";
 
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 export type BaseOptions = Array<any>;

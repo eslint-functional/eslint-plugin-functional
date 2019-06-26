@@ -2,7 +2,7 @@
 thumbs.db
 *.log
 node_modules/
-/scripts/**/*.js
+/build/
 /dist/
 /coverage/
 /.nyc_output

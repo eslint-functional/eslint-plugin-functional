@@ -21,9 +21,12 @@ matrix:
 before_install:
 before_script:
 script:
+  - if [ "$TSVERSION" = 'latest' ] && [ "$TRAVIS_NODE_VERSION" = '12' ]; then REPORT=1; else REPORT=0; fi
+  - export REPORT
   - yarn build
   - yarn lint
-  - yarn add -D typescript@$TSVERSION
-  - yarn coverage
+  - if [ "$REPORT" -eq 0 ]; then yarn build:tests; fi
+  - yarn add -D typescript@"$TSVERSION"
+  - if [ "$REPORT" -eq 1 ]; then yarn test; else yarn test:compiled; fi
 after_success:
-  - yarn report-coverage
+  - if [ "$REPORT" -eq 1 ]; then yarn report-coverage; fi
