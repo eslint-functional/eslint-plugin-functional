@@ -58,10 +58,6 @@ const valid: ReadonlyArray<ValidTestCase> = [
     optionsSet: [[{ ignorePrefix: "mutable" }], [{ ignorePattern: "mutable*" }]]
   },
   {
-    code: `for (let mutableX = 0, y = 0; x < 1; x++);`,
-    optionsSet: [[{ ignorePrefix: "mutable" }], [{ ignorePattern: "mutable*" }]]
-  },
-  {
     code: `for (let mutableX in {});`,
     optionsSet: [[{ ignorePrefix: "mutable" }], [{ ignorePattern: "mutable*" }]]
   },
@@ -109,10 +105,6 @@ const valid: ReadonlyArray<ValidTestCase> = [
   },
   {
     code: `for (let xMutable = 0; x < 1; x++);`,
-    optionsSet: [[{ ignoreSuffix: "Mutable" }], [{ ignorePattern: "*Mutable" }]]
-  },
-  {
-    code: `for (let xMutable = 0, y = 0; x < 1; x++);`,
     optionsSet: [[{ ignoreSuffix: "Mutable" }], [{ ignorePattern: "*Mutable" }]]
   },
   {

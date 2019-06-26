@@ -44,23 +44,22 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
  * Check if the given VariableDeclaration violates this rule.
  */
 function checkVariableDeclaration(
+  node: TSESTree.VariableDeclaration,
   context: RuleContext<keyof typeof errorMessages, Options>
-) {
-  return (node: TSESTree.VariableDeclaration) => {
-    if (node.kind === "let") {
-      // Report the error.
-      context.report({
-        node,
-        messageId: "generic",
-        fix(fixer) {
-          return fixer.replaceTextRange(
-            [node.range[0], node.range[0] + node.kind.length],
-            "const"
-          );
-        }
-      });
-    }
-  };
+): void {
+  if (node.kind === "let") {
+    // Report the error.
+    context.report({
+      node,
+      messageId: "generic",
+      fix(fixer) {
+        return fixer.replaceTextRange(
+          [node.range[0], node.range[0] + node.kind.length],
+          "const"
+        );
+      }
+    });
+  }
 }
 
 // Create the rule.
@@ -70,8 +69,11 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
   defaultOptions,
   create(context, [ignoreOptions, ...otherOptions]) {
     const _checkVariableDeclaration = ignore.checkNodeWithIgnore(
-      checkVariableDeclaration
-    )(context, ignoreOptions, otherOptions);
+      checkVariableDeclaration,
+      context,
+      ignoreOptions,
+      otherOptions
+    );
 
     return {
       VariableDeclaration: _checkVariableDeclaration

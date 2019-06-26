@@ -7,6 +7,9 @@ import { ESLintUtils } from "@typescript-eslint/experimental-utils";
 /* eslint-disable-next-line @typescript-eslint/no-require-imports, no-undef */
 const version = require("../../package.json").version;
 
+/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+export type BaseOptions = Array<any>;
+
 // "url" will be set automatically.
 export type RuleMetaDataDocs = Omit<Rule.RuleMetaDataDocs, "url">;
 
@@ -18,7 +21,7 @@ export type RuleMetaData<MessageIds extends string> = {
 export type RuleContext<
   MessageIds extends string,
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-  Options extends Array<any>
+  Options extends BaseOptions
 > = Rule.RuleContext<MessageIds, Options>;
 
 /**
@@ -27,7 +30,7 @@ export type RuleContext<
 export function createRule<
   MessageIds extends string,
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-  Options extends Array<any>
+  Options extends BaseOptions
 >(data: {
   name: string;
   meta: RuleMetaData<MessageIds>;

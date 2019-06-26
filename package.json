@@ -34,7 +34,8 @@
   ],
   "dependencies": {
     "@typescript-eslint/experimental-utils": "^1.10.2",
-    "@typescript-eslint/typescript-estree": "^1.10.2"
+    "@typescript-eslint/typescript-estree": "^1.10.2",
+    "escape-string-regexp": "^2.0.0"
   },
   "devDependencies": {
     "@types/dedent": "^0.7.0",

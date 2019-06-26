@@ -38,3 +38,21 @@ export function isFunctionLike(
     node.type === "ArrowFunctionExpression"
   );
 }
+
+export function isVariableDeclaration(
+  node: TSESTree.Node
+): node is TSESTree.VariableDeclaration {
+  return node.type === "VariableDeclaration";
+}
+
+export function isVariableDeclarator(
+  node: TSESTree.Node
+): node is TSESTree.VariableDeclarator {
+  return node.type === "VariableDeclarator";
+}
+
+export function isTypeAliasDeclaration(
+  node: TSESTree.Node
+): node is TSESTree.TSTypeAliasDeclaration {
+  return node.type === "TSTypeAliasDeclaration";
+}
