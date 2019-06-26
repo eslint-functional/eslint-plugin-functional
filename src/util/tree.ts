@@ -1,7 +1,9 @@
 import { TSESTree } from "@typescript-eslint/typescript-estree";
 
+import { ForXStatement } from "./types";
 import {
   isClassLike,
+  isForXStatement,
   isFunctionLike,
   isTSPropertySignature,
   isVariableDeclaration
@@ -29,7 +31,14 @@ export function inInterface(node: TSESTree.Node): boolean {
 }
 
 /**
- * Get the VariableDeclaration for the given VariableDeclarator.
+ * Test if the given node is in a ForX Statememt.
+ */
+export function getForXStatement(node: TSESTree.Node): ForXStatement | null {
+  return getParentOfType<ForXStatement>(isForXStatement, node);
+}
+
+/**
+ * Get the Variable Declaration for the given Variable Declarator.
  */
 export function getVariableDeclaration(
   node: TSESTree.VariableDeclarator

@@ -21,7 +21,6 @@ export type RuleMetaData<MessageIds extends string> = {
 
 export type RuleContext<
   MessageIds extends string,
-  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   Options extends BaseOptions
 > = Rule.RuleContext<MessageIds, Options>;
 
@@ -30,7 +29,6 @@ export type RuleContext<
  */
 export function createRule<
   MessageIds extends string,
-  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   Options extends BaseOptions
 >(data: {
   name: string;

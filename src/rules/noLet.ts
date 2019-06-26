@@ -3,6 +3,7 @@ import { deepMerge } from "@typescript-eslint/experimental-utils/dist/eslint-uti
 
 import * as ignore from "../common/ignoreOptions";
 import { createRule, RuleContext, RuleMetaData } from "../util/rule";
+import { isForXInitialiser } from "../util/typeguard";
 
 // The name of this rule.
 export const name = "no-let" as const;
@@ -52,12 +53,17 @@ function checkVariableDeclaration(
     context.report({
       node,
       messageId: "generic",
-      fix(fixer) {
-        return fixer.replaceTextRange(
-          [node.range[0], node.range[0] + node.kind.length],
-          "const"
-        );
-      }
+      fix:
+        // Can only fix if all declarations have an initial value (with the
+        // exception of ForOf and ForIn Statement initialisers).
+        node.declarations.every(declaration => declaration.init !== null) ||
+        isForXInitialiser(node)
+          ? fixer =>
+              fixer.replaceTextRange(
+                [node.range[0], node.range[0] + node.kind.length],
+                "const"
+              )
+          : undefined
     });
   }
 }

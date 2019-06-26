@@ -4,6 +4,9 @@
 
 import { TSESTree } from "@typescript-eslint/typescript-estree";
 
+import { getForXStatement } from "./tree";
+import { ForXStatement } from "./types";
+
 export function isMemberExpression(
   node: TSESTree.Node
 ): node is TSESTree.MemberExpression {
@@ -55,4 +58,15 @@ export function isTypeAliasDeclaration(
   node: TSESTree.Node
 ): node is TSESTree.TSTypeAliasDeclaration {
   return node.type === "TSTypeAliasDeclaration";
+}
+
+export function isForXInitialiser(
+  node: TSESTree.Node
+): node is TSESTree.ForInitialiser {
+  const forX = getForXStatement(node);
+  return forX !== null && forX.left === node;
+}
+
+export function isForXStatement(node: TSESTree.Node): node is ForXStatement {
+  return node.type === "ForInStatement" || node.type === "ForOfStatement";
 }

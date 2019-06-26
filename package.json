@@ -33,8 +33,8 @@
     "README.md"
   ],
   "dependencies": {
-    "@typescript-eslint/experimental-utils": "^1.10.2",
-    "@typescript-eslint/typescript-estree": "^1.10.2",
+    "@typescript-eslint/experimental-utils": "^1.11.0",
+    "@typescript-eslint/typescript-estree": "^1.11.0",
     "escape-string-regexp": "^2.0.0"
   },
   "devDependencies": {
@@ -43,48 +43,51 @@
     "@types/estree": "^0.0.39",
     "@types/glob": "^7.1.1",
     "@types/jest": "^24.0.15",
-    "@types/node": "^8.0.53",
-    "@typescript-eslint/eslint-plugin": "^1.10.2",
-    "@typescript-eslint/parser": "^1.10.2",
-    "codecov": "^3.2.0",
+    "@types/node": "^8.10.49",
+    "@typescript-eslint/eslint-plugin": "^1.11.0",
+    "@typescript-eslint/parser": "^1.11.0",
+    "babel-eslint": "^10.0.2",
+    "codecov": "^3.5.0",
     "dedent": "^0.7.0",
-    "eslint": "^5.16.0",
-    "eslint-config-prettier": "^5.0.0",
+    "eslint": "^6.0.1",
+    "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-eslint-plugin": "^2.1.0",
     "eslint-plugin-jest": "^22.7.1",
     "eslint-plugin-prettier": "^3.1.0",
-    "glob": "^7.1.3",
-    "husky": "^1.3.1",
+    "glob": "^7.1.4",
+    "husky": "^2.4.1",
     "jest": "^24.8.0",
-    "lint-staged": "^8.1.5",
-    "prettier": "^1.16.4",
+    "lint-staged": "^8.2.1",
+    "prettier": "^1.18.2",
     "rimraf": "^2.6.3",
     "shelljs": "^0.8.3",
     "ts-jest": "^24.0.2",
     "typescript": "^3.5.2"
   },
   "peerDependencies": {
-    "@typescript-eslint/experimental-utils": "^1.10.0",
-    "@typescript-eslint/typescript-estree": "^1.10.0",
-    "eslint": "^5.16.0",
-    "typescript": "^3.4.0"
+    "eslint": ">=6.0.0",
+    "typescript": ">=3.2.1"
   },
   "scripts": {
     "compile": "tsc",
-    "compile:tests": "tsc -p tsconfig.tests.json",
+    "compile-tests": "tsc -p tsconfig.tests.json",
     "build": "rimraf dist && yarn compile",
-    "build:tests": "rimraf build && yarn compile:tests",
     "lint": "eslint './{src,tests}/**/*.ts' --ext .ts",
     "test": "jest",
-    "test:compiled": "USE_COMPLIED=1 yarn test",
+    "test-compiled": "USE_COMPLIED=1 yarn test",
     "verify": "yarn build && yarn lint && yarn test:compiled",
     "report-coverage": "codecov -f coverage/*.json",
     "preversion": "yarn verify",
     "postversion": "git push --tags && yarn publish --new-version $npm_package_version && git push && echo \"Successfully released version $npm_package_version!\""
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "lint-staged": {
-    "*.{ts,tsx}": "eslint",
-    "*.{ts,tsx,json,css}": [
+    "./{src,tests}/**/*.{ts}": "eslint",
+    "./{src,tests}/**/*.{ts,json}": [
       "prettier --write",
       "git add"
     ]

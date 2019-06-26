@@ -154,7 +154,6 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
       [{ ignoreSuffix: "Mutable" }],
       [{ ignorePattern: "mutable*" }]
     ],
-    output: `const x;`,
     errors: [
       {
         messageId: "generic",
@@ -273,7 +272,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
     ],
     output: dedent`
       function foo() {
-        const x;
+        let x;
         const y = 0;
       }`,
     errors: [
@@ -305,7 +304,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
     ],
     output: dedent`
       const foo = () => {
-        const x;
+        let x;
         const y = 0;
       }`,
     errors: [
@@ -340,7 +339,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
     output: dedent`
       class Foo {
         foo() {
-          const x;
+          let x;
           const y = 0;
         }
       }`,
