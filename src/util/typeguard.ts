@@ -76,3 +76,15 @@ export function isTSIndexSignature(
 ): node is TSESTree.TSIndexSignature {
   return node.type === "TSIndexSignature";
 }
+
+export function isExpressionStatement(
+  node: TSESTree.Node
+): node is TSESTree.ExpressionStatement {
+  return node.type === "ExpressionStatement";
+}
+
+export function isCallExpression(
+  node: TSESTree.Node
+): node is TSESTree.CallExpression {
+  return node.type === "CallExpression";
+}

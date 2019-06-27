@@ -62,7 +62,7 @@ export function checkNode<
   otherOptions: BaseOptions = []
 ): (node: Node) => void {
   return (node: Node) => {
-    if (ignoreOptions && shouldIgnore(node, ignoreOptions)) {
+    if (ignoreOptions && shouldIgnore(node, context, ignoreOptions)) {
       return;
     }
 

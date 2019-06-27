@@ -2,8 +2,11 @@ import { TSESTree } from "@typescript-eslint/typescript-estree";
 import escapeRegExp from "escape-string-regexp";
 import { JSONSchema4 } from "json-schema";
 
+import { BaseOptions, RuleContext } from "../util/rule";
 import { inClass, inFunction, inInterface } from "../util/tree";
 import {
+  isCallExpression,
+  isExpressionStatement,
   isIdentifier,
   isTypeAliasDeclaration,
   isVariableDeclarator,
@@ -130,6 +133,7 @@ export const ignoreNewArrayOptionSchema: JSONSchema4 = {
  */
 export function shouldIgnore(
   node: TSESTree.Node,
+  context: RuleContext<string, BaseOptions>,
   ignoreOptions: AllIgnoreOptions
 ): boolean {
   // Ignore if in a function and ignore-local is set.
@@ -147,45 +151,46 @@ export function shouldIgnore(
     return true;
   }
 
-  const declarations = isVariableDeclaration(node)
-    ? node.declarations
+  const identifiers: ReadonlyArray<string> = (isVariableDeclaration(node)
+    ? node.declarations.map(declaration =>
+        isIdentifier(declaration.id) ? declaration.id.name : undefined
+      )
     : isVariableDeclarator(node) || isTypeAliasDeclaration(node)
-    ? [node]
-    : [];
+    ? isIdentifier(node.id)
+      ? [node.id.name]
+      : []
+    : isExpressionStatement(node)
+    ? isCallExpression(node.expression)
+      ? [context.getSourceCode().getText(node.expression.callee)]
+      : []
+    : []
+  ).filter(name => name !== undefined) as ReadonlyArray<string>;
 
   if (
-    declarations.length > 0 &&
-    declarations.every(declaration => {
+    identifiers.length > 0 &&
+    identifiers.every(identifier => {
+      // Ignore if ignore-pattern is set and the pattern matches.
       if (
-        (isVariableDeclarator(declaration) ||
-          isTypeAliasDeclaration(declaration)) &&
-        isIdentifier(declaration.id)
+        ignoreOptions.ignorePattern &&
+        isIgnoredPattern(identifier, ignoreOptions.ignorePattern)
       ) {
-        const variableText = declaration.id.name;
+        return true;
+      }
 
-        // Ignore if ignore-pattern is set and the pattern matches.
-        if (
-          ignoreOptions.ignorePattern &&
-          isIgnoredPattern(variableText, ignoreOptions.ignorePattern)
-        ) {
-          return true;
-        }
+      // Ignore if ignore-prefix is set and the prefix matches.
+      if (
+        ignoreOptions.ignorePrefix &&
+        isIgnoredPrefix(identifier, ignoreOptions.ignorePrefix)
+      ) {
+        return true;
+      }
 
-        // Ignore if ignore-prefix is set and the prefix matches.
-        if (
-          ignoreOptions.ignorePrefix &&
-          isIgnoredPrefix(variableText, ignoreOptions.ignorePrefix)
-        ) {
-          return true;
-        }
-
-        // Ignore if ignore-suffix is set and the suffix matches.
-        if (
-          ignoreOptions.ignoreSuffix &&
-          isIgnoredSuffix(variableText, ignoreOptions.ignoreSuffix)
-        ) {
-          return true;
-        }
+      // Ignore if ignore-suffix is set and the suffix matches.
+      if (
+        ignoreOptions.ignoreSuffix &&
+        isIgnoredSuffix(identifier, ignoreOptions.ignoreSuffix)
+      ) {
+        return true;
       }
 
       return false;
