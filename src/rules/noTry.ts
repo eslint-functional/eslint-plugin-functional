@@ -1,6 +1,6 @@
 import { TSESTree } from "@typescript-eslint/typescript-estree";
 
-import { createRule, RuleContext, RuleMetaData } from "../util/rule";
+import { createRule, RuleContext, RuleMetaData, checkNode } from "../util/rule";
 
 // The name of this rule.
 export const name = "no-try" as const;
@@ -33,12 +33,11 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
  * Check if the given TryStatement violates this rule.
  */
 function checkTryStatement(
+  node: TSESTree.TryStatement,
   context: RuleContext<keyof typeof errorMessages, Options>
-) {
-  return (node: TSESTree.TryStatement) => {
-    // All try statements violate this rule.
-    context.report({ node, messageId: "generic" });
-  };
+): void {
+  // All try statements violate this rule.
+  context.report({ node, messageId: "generic" });
 }
 
 // Create the rule.
@@ -46,8 +45,8 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
   name,
   meta,
   defaultOptions,
-  create(context) {
-    const _checkTryStatement = checkTryStatement(context);
+  create(context, options) {
+    const _checkTryStatement = checkNode(checkTryStatement, context, options);
 
     return {
       TryStatement: _checkTryStatement

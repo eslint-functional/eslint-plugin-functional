@@ -1,6 +1,6 @@
 import { TSESTree } from "@typescript-eslint/typescript-estree";
 
-import { createRule, RuleContext, RuleMetaData } from "../util/rule";
+import { createRule, RuleContext, RuleMetaData, checkNode } from "../util/rule";
 
 // The name of this rule.
 export const name = "no-array-mutation" as const;
@@ -31,11 +31,12 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
 /**
  * Check if the given node violates this rule.
  */
-function check(context: RuleContext<keyof typeof errorMessages, Options>) {
-  return (node: TSESTree.Node) => {
-    // TODO: port rule.
-    context.report({ node, messageId: "generic" });
-  };
+function check(
+  node: TSESTree.Node,
+  context: RuleContext<keyof typeof errorMessages, Options>
+) {
+  // TODO: port rule.
+  context.report({ node, messageId: "generic" });
 }
 
 // Create the rule.
@@ -43,8 +44,10 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
   name,
   meta,
   defaultOptions,
-  create(context) {
-    check(context);
-    return {};
+  create(context, options) {
+    const _checkNode = checkNode(check, context, options);
+    return {
+      ExpressionStatement: _checkNode
+    };
   }
 });

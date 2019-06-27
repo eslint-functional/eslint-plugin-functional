@@ -1,7 +1,7 @@
 import { TSESTree } from "@typescript-eslint/typescript-estree";
 import { AST_NODE_TYPES } from "@typescript-eslint/typescript-estree/dist/ts-estree/ast-node-types";
 
-import { createRule, RuleContext, RuleMetaData } from "../util/rule";
+import { createRule, RuleContext, RuleMetaData, checkNode } from "../util/rule";
 import { isTSPropertySignature } from "../util/typeguard";
 
 // The name of this rule.
@@ -35,37 +35,36 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
  * Check if the given TSInterfaceDeclaration violates this rule.
  */
 function checkTSInterfaceDeclaration(
+  node: TSESTree.TSInterfaceDeclaration,
   context: RuleContext<keyof typeof errorMessages, Options>
-) {
-  return (node: TSESTree.TSInterfaceDeclaration) => {
-    let prevMemberType: AST_NODE_TYPES | undefined = undefined;
-    let prevMemberTypeAnnotation: AST_NODE_TYPES | undefined = undefined;
+): void {
+  let prevMemberType: AST_NODE_TYPES | undefined = undefined;
+  let prevMemberTypeAnnotation: AST_NODE_TYPES | undefined = undefined;
 
-    for (const member of node.body.body) {
-      const memberType = member.type;
-      const memberTypeAnnotation =
-        isTSPropertySignature(member) && member.typeAnnotation !== undefined
-          ? member.typeAnnotation.typeAnnotation.type
-          : undefined;
+  for (const member of node.body.body) {
+    const memberType = member.type;
+    const memberTypeAnnotation =
+      isTSPropertySignature(member) && member.typeAnnotation !== undefined
+        ? member.typeAnnotation.typeAnnotation.type
+        : undefined;
 
-      if (
-        // Not the first property in the interface.
-        prevMemberType !== undefined &&
-        // And different property type to previous property.
-        (prevMemberType !== memberType ||
-          // Or annotationed with a different type annotation.
-          (prevMemberTypeAnnotation !== memberTypeAnnotation &&
-            // Where one of the properties is a annotationed as a function.
-            (prevMemberTypeAnnotation === AST_NODE_TYPES.TSFunctionType ||
-              memberTypeAnnotation === AST_NODE_TYPES.TSFunctionType)))
-      ) {
-        context.report({ node: member, messageId: "generic" });
-      }
-
-      prevMemberType = memberType;
-      prevMemberTypeAnnotation = memberTypeAnnotation;
+    if (
+      // Not the first property in the interface.
+      prevMemberType !== undefined &&
+      // And different property type to previous property.
+      (prevMemberType !== memberType ||
+        // Or annotationed with a different type annotation.
+        (prevMemberTypeAnnotation !== memberTypeAnnotation &&
+          // Where one of the properties is a annotationed as a function.
+          (prevMemberTypeAnnotation === AST_NODE_TYPES.TSFunctionType ||
+            memberTypeAnnotation === AST_NODE_TYPES.TSFunctionType)))
+    ) {
+      context.report({ node: member, messageId: "generic" });
     }
-  };
+
+    prevMemberType = memberType;
+    prevMemberTypeAnnotation = memberTypeAnnotation;
+  }
 }
 
 // Create the rule.
@@ -73,8 +72,12 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
   name,
   meta,
   defaultOptions,
-  create(context) {
-    const _checkTSInterfaceDeclaration = checkTSInterfaceDeclaration(context);
+  create(context, options) {
+    const _checkTSInterfaceDeclaration = checkNode(
+      checkTSInterfaceDeclaration,
+      context,
+      options
+    );
 
     return {
       TSInterfaceDeclaration: _checkTSInterfaceDeclaration

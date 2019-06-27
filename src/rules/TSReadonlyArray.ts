@@ -1,6 +1,6 @@
 import { TSESTree } from "@typescript-eslint/typescript-estree";
 
-import { createRule, RuleContext, RuleMetaData } from "../util/rule";
+import { createRule, RuleContext, RuleMetaData, checkNode } from "../util/rule";
 
 // The name of this rule.
 export const name = "readonly-array" as const;
@@ -29,13 +29,14 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
 };
 
 /**
- * Check if the given TSPropertySignature violates this rule.
+ * Check if the given node violates this rule.
  */
-function checkNode(context: RuleContext<keyof typeof errorMessages, Options>) {
-  return (node: TSESTree.ArrayPattern | TSESTree.ArrayExpression) => {
-    // TODO: port rule.
-    context.report({ node, messageId: "generic" });
-  };
+function check(
+  node: TSESTree.ArrayPattern | TSESTree.ArrayExpression,
+  context: RuleContext<keyof typeof errorMessages, Options>
+) {
+  // TODO: port rule.
+  context.report({ node, messageId: "generic" });
 }
 
 // Create the rule.
@@ -43,8 +44,8 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
   name,
   meta,
   defaultOptions,
-  create(context) {
-    const _checkNode = checkNode(context);
+  create(context, options) {
+    const _checkNode = checkNode(check, context, options);
 
     return {
       ArrayPattern: _checkNode,

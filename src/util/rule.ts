@@ -1,5 +1,5 @@
 import * as Rule from "@typescript-eslint/experimental-utils/dist/ts-eslint/Rule";
-import { ESLintUtils } from "@typescript-eslint/experimental-utils";
+import { ESLintUtils, TSESTree } from "@typescript-eslint/experimental-utils";
 
 // The version as defined in package.json.
 // Note: cannot migrate this to an import statement because it will make TSC
@@ -43,4 +43,20 @@ export function createRule<
     name =>
       `https://github.com/jonaskello/tslint-immutable/blob/v${version}/README.md#${name}`
   )(data);
+}
+
+/**
+ * Check a node.
+ */
+export function checkNode<
+  Context extends RuleContext<string, BaseOptions>,
+  Node extends TSESTree.Node
+>(
+  check: (node: Node, context: Context, options: BaseOptions) => void,
+  context: Context,
+  options: BaseOptions
+): (node: Node) => void {
+  return (node: Node) => {
+    return check(node, context, options);
+  };
 }

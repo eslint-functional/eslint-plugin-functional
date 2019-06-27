@@ -1,6 +1,6 @@
 import { TSESTree } from "@typescript-eslint/typescript-estree";
 
-import { createRule, RuleContext, RuleMetaData } from "../util/rule";
+import { createRule, RuleContext, RuleMetaData, checkNode } from "../util/rule";
 
 // The name of this rule.
 export const name = "no-class" as const;
@@ -31,11 +31,12 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
 /**
  * Check if the given class node violates this rule.
  */
-function checkClass(context: RuleContext<keyof typeof errorMessages, Options>) {
-  return (node: TSESTree.ClassDeclaration | TSESTree.ClassExpression) => {
-    // All class nodes violate this rule.
-    context.report({ node, messageId: "generic" });
-  };
+function checkClass(
+  node: TSESTree.ClassDeclaration | TSESTree.ClassExpression,
+  context: RuleContext<keyof typeof errorMessages, Options>
+) {
+  // All class nodes violate this rule.
+  context.report({ node, messageId: "generic" });
 }
 
 // Create the rule.
@@ -43,8 +44,8 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
   name,
   meta,
   defaultOptions,
-  create(context) {
-    const _checkClass = checkClass(context);
+  create(context, options) {
+    const _checkClass = checkNode(checkClass, context, options);
 
     return {
       ClassDeclaration: _checkClass,

@@ -1,6 +1,6 @@
 import { TSESTree } from "@typescript-eslint/typescript-estree";
 
-import { createRule, RuleContext, RuleMetaData } from "../util/rule";
+import { createRule, RuleContext, RuleMetaData, checkNode } from "../util/rule";
 
 // The name of this rule.
 export const name = "no-delete" as const;
@@ -32,13 +32,12 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
  * Check if the given UnaryExpression violates this rule.
  */
 function checkUnaryExpression(
+  node: TSESTree.UnaryExpression,
   context: RuleContext<keyof typeof errorMessages, Options>
 ) {
-  return (node: TSESTree.UnaryExpression) => {
-    if (node.operator === "delete") {
-      context.report({ node, messageId: "generic" });
-    }
-  };
+  if (node.operator === "delete") {
+    context.report({ node, messageId: "generic" });
+  }
 }
 
 // Create the rule.
@@ -46,8 +45,12 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
   name,
   meta,
   defaultOptions,
-  create(context) {
-    const _checkUnaryExpression = checkUnaryExpression(context);
+  create(context, options) {
+    const _checkUnaryExpression = checkNode(
+      checkUnaryExpression,
+      context,
+      options
+    );
 
     return {
       UnaryExpression: _checkUnaryExpression

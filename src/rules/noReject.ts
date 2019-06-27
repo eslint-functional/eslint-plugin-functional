@@ -1,6 +1,6 @@
 import { TSESTree } from "@typescript-eslint/typescript-estree";
 
-import { createRule, RuleContext, RuleMetaData } from "../util/rule";
+import { createRule, RuleContext, RuleMetaData, checkNode } from "../util/rule";
 import { isIdentifier, isMemberExpression } from "../util/typeguard";
 
 // The name of this rule.
@@ -33,19 +33,18 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
  * Check if the given CallExpression violates this rule.
  */
 function checkCallExpression(
+  node: TSESTree.CallExpression,
   context: RuleContext<keyof typeof errorMessages, Options>
 ) {
-  return (node: TSESTree.CallExpression) => {
-    if (
-      isMemberExpression(node.callee) &&
-      isIdentifier(node.callee.object) &&
-      isIdentifier(node.callee.property) &&
-      node.callee.object.name === "Promise" &&
-      node.callee.property.name === "reject"
-    ) {
-      context.report({ node, messageId: "generic" });
-    }
-  };
+  if (
+    isMemberExpression(node.callee) &&
+    isIdentifier(node.callee.object) &&
+    isIdentifier(node.callee.property) &&
+    node.callee.object.name === "Promise" &&
+    node.callee.property.name === "reject"
+  ) {
+    context.report({ node, messageId: "generic" });
+  }
 }
 
 // Create the rule.
@@ -53,8 +52,12 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
   name,
   meta,
   defaultOptions,
-  create(context) {
-    const _checkCallExpression = checkCallExpression(context);
+  create(context, options) {
+    const _checkCallExpression = checkNode(
+      checkCallExpression,
+      context,
+      options
+    );
 
     return {
       CallExpression: _checkCallExpression
