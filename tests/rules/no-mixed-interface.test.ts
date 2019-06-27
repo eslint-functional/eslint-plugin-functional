@@ -4,32 +4,49 @@
 
 import dedent from "dedent";
 import { Rule, RuleTester } from "eslint";
+
 import { name, rule } from "../../src/rules/noTSMixedInterface";
+
 import { typescript } from "../configs";
+import {
+  InvalidTestCase,
+  processInvalidTestCase,
+  processValidTestCase,
+  ValidTestCase
+} from "../util";
 
 // Valid test cases.
-const valid: Array<string | RuleTester.ValidTestCase> = [
+const valid: Array<ValidTestCase> = [
   // Only properties should not produce failures.
-  dedent`
-    interface Foo {
-      bar: string;
-      zoo: number;
-    }`,
+  {
+    code: dedent`
+      interface Foo {
+        bar: string;
+        zoo: number;
+      }`,
+    optionsSet: [[]]
+  },
   // Only functions should not produce failures
-  dedent`
-    interface Foo {
-      bar(): string;
-      zoo(): number;
-    }`,
+  {
+    code: dedent`
+      interface Foo {
+        bar: string;
+        zoo: number;
+      }`,
+    optionsSet: [[]]
+  },
   // Only indexer should not produce failures
-  dedent`
-    interface Foo {
-      [key: string]: string;
-    }`
+  {
+    code: dedent`
+      interface Foo {
+        [key: string]: string;
+      }`,
+    optionsSet: [[]]
+  }
 ];
 
 // Invalid test cases.
-const invalid: Array<RuleTester.InvalidTestCase> = [
+const invalid: Array<InvalidTestCase> = [
   // Mixing properties and methods (MethodSignature) should produce failures.
   {
     code: dedent`
@@ -37,9 +54,11 @@ const invalid: Array<RuleTester.InvalidTestCase> = [
         bar: string;
         zoo(): number;
       }`,
+    optionsSet: [[]],
     errors: [
       {
         messageId: "generic",
+        type: "TSMethodSignature",
         line: 3,
         column: 3
       }
@@ -52,9 +71,11 @@ const invalid: Array<RuleTester.InvalidTestCase> = [
         bar: string;
         zoo: () => number;
       }`,
+    optionsSet: [[]],
     errors: [
       {
         messageId: "generic",
+        type: "TSPropertySignature",
         line: 3,
         column: 3
       }
@@ -64,5 +85,8 @@ const invalid: Array<RuleTester.InvalidTestCase> = [
 
 describe("TypeScript", () => {
   const ruleTester = new RuleTester(typescript);
-  ruleTester.run(name, rule as Rule.RuleModule, { valid, invalid });
+  ruleTester.run(name, rule as Rule.RuleModule, {
+    valid: processValidTestCase(valid),
+    invalid: processInvalidTestCase(invalid)
+  });
 });
