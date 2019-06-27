@@ -21,6 +21,17 @@ const valid: ReadonlyArray<ValidTestCase> = [
   {
     code: `var x = [];`,
     optionsSet: [[]]
+  },
+  // Ignored expressions should not cause failures.
+  {
+    code: dedent`
+      console.log("yo");
+      console.error("yo");`,
+    optionsSet: [
+      [{ ignorePrefix: ["console.log", "console.err"] }],
+      [{ ignoreSuffix: ["og", "ror"] }],
+      [{ ignorePattern: "console.*" }]
+    ]
   }
 ];
 
@@ -29,14 +40,29 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
   {
     code: dedent`
       var x = [];
-      x.push(1);
-    `,
+      x.push(1);`,
     optionsSet: [[]],
     errors: [
       {
         messageId: "generic",
         type: "ExpressionStatement",
         line: 2,
+        column: 1
+      }
+    ]
+  },
+  // Unignored expressions should cause failures.
+  {
+    code: `console.trace();`,
+    optionsSet: [
+      [{ ignorePrefix: ["console.log", "console.err"] }],
+      [{ ignoreSuffix: ["og", "ror"] }]
+    ],
+    errors: [
+      {
+        messageId: "generic",
+        type: "ExpressionStatement",
+        line: 1,
         column: 1
       }
     ]
