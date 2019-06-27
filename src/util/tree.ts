@@ -5,7 +5,7 @@ import {
   isClassLike,
   isForXStatement,
   isFunctionLike,
-  isTSPropertySignature,
+  isTSInterfaceBody,
   isVariableDeclaration
 } from "./typeguard";
 
@@ -27,7 +27,7 @@ export function inClass(node: TSESTree.Node): boolean {
  * Test if the given node is in a TS Property Signature.
  */
 export function inInterface(node: TSESTree.Node): boolean {
-  return getParentOfType(isTSPropertySignature, node) !== null;
+  return getParentOfType(isTSInterfaceBody, node) !== null;
 }
 
 /**

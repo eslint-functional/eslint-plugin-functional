@@ -65,6 +65,12 @@ export function isTSIndexSignature(
   return node.type === "TSIndexSignature";
 }
 
+export function isTSInterfaceBody(
+  node: TSESTree.Node
+): node is TSESTree.TSInterfaceBody {
+  return node.type === "TSInterfaceBody";
+}
+
 export function isTSPropertySignature(
   node: TSESTree.Node
 ): node is TSESTree.TSPropertySignature {
