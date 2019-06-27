@@ -1,20 +1,39 @@
 import { TSESTree } from "@typescript-eslint/typescript-estree";
+import { all as deepMerge } from "deepmerge";
 
+import * as ignore from "../common/ignoreOptions";
 import { createRule, RuleContext, RuleMetaData } from "../util/rule";
+import { isTSIndexSignature } from "../util/typeguard";
 
 // The name of this rule.
 export const name = "readonly-keyword" as const;
 
 // The options this rule can take.
-type Options = [];
-// TODO: add options:
-// Ignore.IgnoreLocalOption &
-// Ignore.IgnoreOption &
-// Ignore.IgnoreClassOption &
-// Ignore.IgnoreInterfaceOption;
+type Options = [
+  ignore.IgnoreLocalOption &
+    ignore.IgnoreOption &
+    ignore.IgnoreClassOption &
+    ignore.IgnoreInterfaceOption
+];
+
+// The schema for the rule options.
+const schema = [
+  deepMerge([
+    ignore.ignoreLocalOptionSchema,
+    ignore.ignoreOptionSchema,
+    ignore.ignoreClassOptionSchema,
+    ignore.ignoreInterfaceOptionSchema
+  ])
+];
 
 // The default options for the rule.
-const defaultOptions: Options = [];
+const defaultOptions: Options = [
+  {
+    ignoreClass: false,
+    ignoreInterface: false,
+    ignoreLocal: false
+  }
+];
 
 // The possible error messages.
 const errorMessages = {
@@ -30,18 +49,30 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
     recommended: "error"
   },
   messages: errorMessages,
-  schema: []
+  fixable: "code",
+  schema
 };
 
 /**
- * Check if the given TSPropertySignature violates this rule.
+ * Check if the given node violates this rule.
  */
-function checkNode(context: RuleContext<keyof typeof errorMessages, Options>) {
-  return (node: TSESTree.TSPropertySignature | TSESTree.TSIndexSignature) => {
-    if (!node.readonly) {
-      context.report({ node, messageId: "generic" });
-    }
-  };
+function checkNode(
+  node:
+    | TSESTree.TSPropertySignature
+    | TSESTree.TSIndexSignature
+    | TSESTree.ClassProperty,
+  context: RuleContext<keyof typeof errorMessages, Options>
+) {
+  if (!node.readonly) {
+    const fix = "readonly ";
+    context.report({
+      node,
+      messageId: "generic",
+      fix: isTSIndexSignature(node)
+        ? fixer => fixer.insertTextBefore(node, fix)
+        : fixer => fixer.insertTextBefore(node.key, fix)
+    });
+  }
 }
 
 // Create the rule.
@@ -49,13 +80,18 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
   name,
   meta,
   defaultOptions,
-  create(context) {
-    const _checkNode = checkNode(context);
+  create(context, [ignoreOptions, ...otherOptions]) {
+    const _checkNode = ignore.checkNodeWithIgnore(
+      checkNode,
+      context,
+      ignoreOptions,
+      otherOptions
+    );
 
     return {
-      TSPropertySignature: _checkNode,
+      ClassProperty: _checkNode,
       TSIndexSignature: _checkNode,
-      TSPropertyDeclaration: _checkNode
+      TSPropertySignature: _checkNode
     };
   }
 });

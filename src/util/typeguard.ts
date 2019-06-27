@@ -70,3 +70,9 @@ export function isForXInitialiser(
 export function isForXStatement(node: TSESTree.Node): node is ForXStatement {
   return node.type === "ForInStatement" || node.type === "ForOfStatement";
 }
+
+export function isTSIndexSignature(
+  node: TSESTree.Node
+): node is TSESTree.TSIndexSignature {
+  return node.type === "TSIndexSignature";
+}
