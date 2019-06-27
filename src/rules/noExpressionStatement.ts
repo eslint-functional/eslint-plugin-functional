@@ -1,15 +1,19 @@
 import { TSESTree } from "@typescript-eslint/typescript-estree";
 
+import * as ignore from "../common/ignoreOptions";
 import { checkNode, createRule, RuleContext, RuleMetaData } from "../util/rule";
 
 // The name of this rule.
 export const name = "no-expression-statement" as const;
 
 // The options this rule can take.
-type Options = []; // TODO: add IgnoreOption
+type Options = [ignore.IgnoreOption];
+
+// The schema for the rule options.
+const schema = [ignore.ignoreOptionSchema];
 
 // The default options for the rule.
-const defaultOptions: Options = [];
+const defaultOptions: Options = [{}];
 
 // The possible error messages.
 const errorMessages = {
@@ -25,7 +29,7 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
     recommended: false
   },
   messages: errorMessages,
-  schema: []
+  schema
 };
 
 /**
@@ -44,12 +48,12 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
   name,
   meta,
   defaultOptions,
-  create(context, options) {
+  create(context, [ignoreOptions, ...otherOptions]) {
     const _checkExpressionStatement = checkNode(
       checkExpressionStatement,
       context,
-      undefined,
-      options
+      ignoreOptions,
+      otherOptions
     );
 
     return {
