@@ -1,5 +1,5 @@
 import { TSESTree } from "@typescript-eslint/typescript-estree";
-import { deepMerge } from "@typescript-eslint/experimental-utils/dist/eslint-utils";
+import { all as deepMerge } from "deepmerge";
 
 import * as ignore from "../common/ignoreOptions";
 import { createRule, RuleContext, RuleMetaData } from "../util/rule";
@@ -13,7 +13,7 @@ type Options = [ignore.IgnoreLocalOption & ignore.IgnoreOption];
 
 // The schema for the rule options.
 const schema = [
-  deepMerge(ignore.ignoreLocalOptionSchema, ignore.ignoreOptionSchema)
+  deepMerge([ignore.ignoreLocalOptionSchema, ignore.ignoreOptionSchema])
 ];
 
 // The default options for the rule.

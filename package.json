@@ -35,6 +35,7 @@
   "dependencies": {
     "@typescript-eslint/experimental-utils": "^1.11.0",
     "@typescript-eslint/typescript-estree": "^1.11.0",
+    "deepmerge": "^3.3.0",
     "escape-string-regexp": "^2.0.0"
   },
   "devDependencies": {
