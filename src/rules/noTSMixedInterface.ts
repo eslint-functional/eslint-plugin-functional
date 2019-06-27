@@ -1,7 +1,7 @@
 import { TSESTree } from "@typescript-eslint/typescript-estree";
 import { AST_NODE_TYPES } from "@typescript-eslint/typescript-estree/dist/ts-estree/ast-node-types";
 
-import { createRule, RuleContext, RuleMetaData, checkNode } from "../util/rule";
+import { checkNode, createRule, RuleContext, RuleMetaData } from "../util/rule";
 import { isTSPropertySignature } from "../util/typeguard";
 
 // The name of this rule.
@@ -76,6 +76,7 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
     const _checkTSInterfaceDeclaration = checkNode(
       checkTSInterfaceDeclaration,
       context,
+      undefined,
       options
     );
 

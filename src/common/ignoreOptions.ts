@@ -3,7 +3,6 @@ import escapeRegExp from "escape-string-regexp";
 import { JSONSchema4 } from "json-schema";
 
 import { inClass, inFunction, inInterface } from "../util/tree";
-import { BaseOptions, RuleContext } from "../util/rule";
 import {
   isIdentifier,
   isTypeAliasDeclaration,
@@ -11,7 +10,7 @@ import {
   isVariableDeclaration
 } from "../util/typeguard";
 
-type AllIgnoreOptions = IgnoreLocalOption &
+export type AllIgnoreOptions = IgnoreLocalOption &
   IgnoreOption &
   IgnoreRestParametersOption &
   IgnoreClassOption &
@@ -127,31 +126,9 @@ export const ignoreNewArrayOptionSchema: JSONSchema4 = {
 };
 
 /**
- * Check a node taking into account the ignore options.
- */
-export function checkNodeWithIgnore<
-  Context extends RuleContext<string, [IgnoreOptions]>,
-  IgnoreOptions extends AllIgnoreOptions,
-  Node extends TSESTree.Node
->(
-  check: (node: Node, context: Context, options: BaseOptions) => void,
-  context: Context,
-  ignoreOptions: IgnoreOptions,
-  otherOptions: BaseOptions
-): (node: Node) => void {
-  return (node: Node) => {
-    if (shouldIgnore(node, ignoreOptions)) {
-      return;
-    }
-
-    return check(node, context, [ignoreOptions, ...otherOptions]);
-  };
-}
-
-/**
  * Should the given node be ignored?
  */
-function shouldIgnore(
+export function shouldIgnore(
   node: TSESTree.Node,
   ignoreOptions: AllIgnoreOptions
 ): boolean {

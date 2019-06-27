@@ -2,7 +2,7 @@ import { TSESTree } from "@typescript-eslint/typescript-estree";
 import { all as deepMerge } from "deepmerge";
 
 import * as ignore from "../common/ignoreOptions";
-import { createRule, RuleContext, RuleMetaData } from "../util/rule";
+import { checkNode, createRule, RuleContext, RuleMetaData } from "../util/rule";
 import { isForXInitialiser } from "../util/typeguard";
 
 // The name of this rule.
@@ -74,7 +74,7 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
   meta,
   defaultOptions,
   create(context, [ignoreOptions, ...otherOptions]) {
-    const _checkVariableDeclaration = ignore.checkNodeWithIgnore(
+    const _checkVariableDeclaration = checkNode(
       checkVariableDeclaration,
       context,
       ignoreOptions,

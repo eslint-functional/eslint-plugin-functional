@@ -1,6 +1,6 @@
 import { TSESTree } from "@typescript-eslint/typescript-estree";
 
-import { createRule, RuleContext, RuleMetaData, checkNode } from "../util/rule";
+import { checkNode, createRule, RuleContext, RuleMetaData } from "../util/rule";
 
 // The name of this rule.
 export const name = "no-method-signature" as const;
@@ -50,6 +50,7 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
     const _checkTSMethodSignature = checkNode(
       checkTSMethodSignature,
       context,
+      undefined,
       options
     );
 

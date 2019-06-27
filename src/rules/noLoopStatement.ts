@@ -1,6 +1,6 @@
 import { TSESTree } from "@typescript-eslint/typescript-estree";
 
-import { createRule, RuleContext, RuleMetaData, checkNode } from "../util/rule";
+import { checkNode, createRule, RuleContext, RuleMetaData } from "../util/rule";
 
 // The name of this rule.
 export const name = "no-loop-statement" as const;
@@ -50,7 +50,7 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
   meta,
   defaultOptions,
   create(context, options) {
-    const _checkLoop = checkNode(checkLoop, context, options);
+    const _checkLoop = checkNode(checkLoop, context, undefined, options);
 
     return {
       ForStatement: _checkLoop,

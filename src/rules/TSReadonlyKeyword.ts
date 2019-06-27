@@ -2,7 +2,7 @@ import { TSESTree } from "@typescript-eslint/typescript-estree";
 import { all as deepMerge } from "deepmerge";
 
 import * as ignore from "../common/ignoreOptions";
-import { createRule, RuleContext, RuleMetaData } from "../util/rule";
+import { checkNode, createRule, RuleContext, RuleMetaData } from "../util/rule";
 import { isTSIndexSignature } from "../util/typeguard";
 
 // The name of this rule.
@@ -56,7 +56,7 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
 /**
  * Check if the given node violates this rule.
  */
-function checkNode(
+function check(
   node:
     | TSESTree.TSPropertySignature
     | TSESTree.TSIndexSignature
@@ -81,12 +81,7 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
   meta,
   defaultOptions,
   create(context, [ignoreOptions, ...otherOptions]) {
-    const _checkNode = ignore.checkNodeWithIgnore(
-      checkNode,
-      context,
-      ignoreOptions,
-      otherOptions
-    );
+    const _checkNode = checkNode(check, context, ignoreOptions, otherOptions);
 
     return {
       ClassProperty: _checkNode,

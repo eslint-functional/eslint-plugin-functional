@@ -1,6 +1,6 @@
 import { TSESTree } from "@typescript-eslint/typescript-estree";
 
-import { createRule, RuleContext, RuleMetaData, checkNode } from "../util/rule";
+import { checkNode, createRule, RuleContext, RuleMetaData } from "../util/rule";
 
 // The name of this rule.
 export const name = "no-throw" as const;
@@ -48,6 +48,7 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
     const _checkThrowStatement = checkNode(
       checkThrowStatement,
       context,
+      undefined,
       options
     );
 
