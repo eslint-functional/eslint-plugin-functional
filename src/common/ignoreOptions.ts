@@ -177,6 +177,7 @@ function shouldIgnore(
     : [];
 
   if (
+    declarations.length > 0 &&
     declarations.every(declaration => {
       if (
         (isVariableDeclarator(declaration) ||
