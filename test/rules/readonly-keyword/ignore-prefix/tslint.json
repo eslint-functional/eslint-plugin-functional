@@ -1,6 +1,0 @@
-{
-  "rulesDirectory": ["../../../../rules"],
-  "rules": {
-    "readonly-keyword": [true, {"ignore-prefix": "mutable"}]
-  }
-}

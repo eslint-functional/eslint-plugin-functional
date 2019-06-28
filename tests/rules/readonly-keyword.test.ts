@@ -80,6 +80,83 @@ const valid: Array<ValidTestCase> = [
         readonly [key: string]: string
       };`,
     optionsSet: [[]]
+  },
+  // Ignore Classes.
+  {
+    code: dedent`
+      class Klass {
+        foo: number;
+        private bar: number;
+        static baz: number;
+        private static qux: number;
+      }`,
+    optionsSet: [[{ ignoreClass: true }]]
+  },
+  // Ignore Interfaces.
+  {
+    code: dedent`
+      interface Foo {
+        foo: number,
+        bar: Array<string>,
+        baz: () => string,
+        qux: { [key: string]: string }
+      }`,
+    optionsSet: [[{ ignoreInterface: true }]]
+  },
+  // Ignore Local.
+  {
+    code: dedent`
+      function foo() {
+        let foo: {
+          a: number,
+          b: Array<string>,
+          c: () => string,
+          d: { [key: string]: string },
+          [key: string]: string,
+          readonly d: {
+            a: number,
+            b: Array<string>,
+            c: () => string,
+            d: { [key: string]: string },
+            [key: string]: string,
+          }
+        }
+      };`,
+    optionsSet: [[{ ignoreLocal: true }]]
+  },
+  // Ignore Prefix.
+  {
+    code: dedent`
+      let foo: {
+        mutableA: number,
+        mutableB: Array<string>,
+        mutableC: () => string,
+        mutableD: { readonly [key: string]: string },
+        mutableE: {
+          mutableA: number,
+          mutableB: Array<string>,
+          mutableC: () => string,
+          mutableD: { readonly [key: string]: string },
+        }
+      };`,
+    optionsSet: [[{ ignorePattern: "mutable*" }], [{ ignorePrefix: "mutable" }]]
+  },
+  // Ignore Suffix.
+  {
+    code: dedent`
+      let foo: {
+        aMutable: number,
+        bMutable: Array<string>,
+        cMutable: () => string,
+        dMutable: { readonly [key: string]: string },
+        eMutable: {
+          aMutable: number,
+          bMutable: Array<string>,
+          cMutable: () => string,
+          dMutable: { readonly [key: string]: string },
+        }
+      };`,
+    optionsSet: [[{ ignorePattern: "*Mutable" }], [{ ignoreSuffix: "Mutable" }]]
   }
 ];
 
