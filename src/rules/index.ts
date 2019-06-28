@@ -1,22 +1,43 @@
-// These imports are easier to read when each is one a single line.
-/* eslint-disable prettier/prettier */
-import { name as noArrayMutationRuleName, rule as noArrayMutationRule } from "./noArrayMutation";
+import {
+  name as noArrayMutationRuleName,
+  rule as noArrayMutationRule
+} from "./noArrayMutation";
 import { name as noClassRuleName, rule as noClassRule } from "./noClass";
 import { name as noDeleteRuleName, rule as noDeleteRule } from "./noDelete";
-import { name as noExpressionStatementRuleName, rule as noExpressionStatementRule } from "./noExpressionStatement";
-import { name as noIfStatementRuleName, rule as noIfStatementRule } from "./noIfStatement";
+import {
+  name as noExpressionStatementRuleName,
+  rule as noExpressionStatementRule
+} from "./noExpressionStatement";
+import {
+  name as noIfStatementRuleName,
+  rule as noIfStatementRule
+} from "./noIfStatement";
 import { name as noLetRuleName, rule as noLetRule } from "./noLet";
 import { name as noLoopRuleName, rule as noLoopRule } from "./noLoopStatement";
-import { name as noObjectMutationRuleName, rule as noObjectMutationRule } from "./noObjectMutation";
+import {
+  name as noObjectMutationRuleName,
+  rule as noObjectMutationRule
+} from "./noObjectMutation";
 import { name as noRejectRuleName, rule as noRejectRule } from "./noReject";
 import { name as noThisRuleName, rule as noThisRule } from "./noThis";
 import { name as noThrowRuleName, rule as noThrowRule } from "./noThrow";
 import { name as noTryRuleName, rule as noTryRule } from "./noTry";
-import { name as noMethodSignatureRuleName, rule as noMethodSignatureRule } from "./noTSMethodSignature";
-import { name as noMixedInterfaceRuleName, rule as noMixedInterfaceRule } from "./noTSMixedInterface";
-import { name as readonlyArrayRuleName, rule as readonlyArrayRule } from "./TSReadonlyArray";
-import { name as readonlyKeywordRuleName, rule as readonlyKeywordRule } from "./TSReadonlyKeyword";
-/* eslint-enable prettier/prettier */
+import {
+  name as noMethodSignatureRuleName,
+  rule as noMethodSignatureRule
+} from "./noMethodSignature";
+import {
+  name as noMixedInterfaceRuleName,
+  rule as noMixedInterfaceRule
+} from "./noMixedInterface";
+import {
+  name as readonlyArrayRuleName,
+  rule as readonlyArrayRule
+} from "./readonlyArray";
+import {
+  name as readonlyKeywordRuleName,
+  rule as readonlyKeywordRule
+} from "./readonlyKeyword";
 
 /**
  * All of the custom rules.

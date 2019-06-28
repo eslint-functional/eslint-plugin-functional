@@ -5,7 +5,7 @@
 import dedent from "dedent";
 import { Rule, RuleTester } from "eslint";
 
-import { name, rule } from "../../src/rules/noTSMethodSignature";
+import { name, rule } from "../../src/rules/noMethodSignature";
 
 import { typescript } from "../configs";
 import {

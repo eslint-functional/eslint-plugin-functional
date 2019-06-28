@@ -5,7 +5,7 @@
 import dedent from "dedent";
 import { Rule, RuleTester } from "eslint";
 
-import { name, rule } from "../../src/rules/noTSMixedInterface";
+import { name, rule } from "../../src/rules/noMixedInterface";
 
 import { typescript } from "../configs";
 import {
