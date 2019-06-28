@@ -2,7 +2,7 @@
   "name": "eslint-plugin-tslint-immutable",
   "version": "0.0.0",
   "description": "ESLint rules to disable mutation in TypeScript.",
-  "main": "tslint-immutable.json",
+  "main": "dist/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jonaskello/tslint-immutable.git"
