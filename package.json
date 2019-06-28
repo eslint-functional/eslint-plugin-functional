@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "description": "ESLint rules to disable mutation in TypeScript.",
   "main": "dist/index.js",
+  "module": "dist/index.mjs",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jonaskello/tslint-immutable.git"
@@ -61,6 +62,12 @@
     "lint-staged": "^8.2.1",
     "prettier": "^1.18.2",
     "rimraf": "^2.6.3",
+    "rollup": "^1.16.2",
+    "rollup-plugin-commonjs": "^10.0.1",
+    "rollup-plugin-copy": "^3.0.0",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-node-resolve": "^5.1.0",
+    "rollup-plugin-typescript2": "^0.21.2",
     "shelljs": "^0.8.3",
     "ts-jest": "^24.0.2",
     "typescript": "^3.5.2"
@@ -69,7 +76,7 @@
     "eslint": ">=6.0.0"
   },
   "scripts": {
-    "compile": "tsc",
+    "compile": "rollup -c",
     "compile-tests": "tsc -p tsconfig.tests.json",
     "build": "rimraf dist && yarn compile",
     "lint": "eslint './{src,tests}/**/*.ts' --ext .ts",

@@ -1,16 +1,21 @@
 {
   "editor.formatOnSave": true,
-  "eslint.validate": ["typescript"],
+  "eslint.validate": ["javascript", "typescript"],
   "files.exclude": {
+    ".rpt2_cache": true,
     "coverage": true
   },
   "search.exclude": {
     "**/.git": true,
+    "**/.rpt2_cache": true,
     "**/build": true,
     "**/dist": true,
     "**/node_modules": true,
     ".vscode/**": true,
     "rules/**": true
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"

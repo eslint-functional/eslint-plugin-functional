@@ -6,7 +6,7 @@ import functional from "./configs/functional.json";
 import recommended from "./configs/recommended.json";
 import { rules } from "./rules";
 
-export default {
+const config = {
   rules,
   configs: {
     all,
@@ -17,3 +17,5 @@ export default {
     "eslint-recommended": eslintRecommended
   }
 };
+
+export default config;
