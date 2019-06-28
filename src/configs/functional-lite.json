@@ -1,0 +1,17 @@
+{
+  "extends": "./configs/recommended.json",
+  "rules": {
+    "tslint-immutable/no-this": "error",
+    "tslint-immutable/no-class": "error",
+    "tslint-immutable/no-loop-statement": "error",
+    "tslint-immutable/no-throw": "error"
+  },
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "rules": {
+        "tslint-immutable/no-mixed-interface": "error"
+      }
+    }
+  ]
+}

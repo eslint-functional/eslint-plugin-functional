@@ -1,0 +1,8 @@
+{
+  "extends": "./configs/functional-lite.json",
+  "rules": {
+    "tslint-immutable/no-expression-statement": "error",
+    "tslint-immutable/no-if-statement": "error",
+    "tslint-immutable/no-try": "error"
+  }
+}

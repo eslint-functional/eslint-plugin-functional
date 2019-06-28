@@ -1,0 +1,28 @@
+{
+  "extends": "./configs/base.json",
+  "rules": {
+    "tslint-immutable/no-array-mutation": "error",
+    "tslint-immutable/no-class": "error",
+    "tslint-immutable/no-delete": "error",
+    "tslint-immutable/no-expression-statement": "error",
+    "tslint-immutable/no-if-statement": "error",
+    "tslint-immutable/no-let": "error",
+    "tslint-immutable/no-loop-statement": "error",
+    "tslint-immutable/no-object-mutation": "error",
+    "tslint-immutable/no-reject": "error",
+    "tslint-immutable/no-this": "error",
+    "tslint-immutable/no-throw": "error",
+    "tslint-immutable/no-try": "error"
+  },
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "rules": {
+        "tslint-immutable/no-method-signature": "error",
+        "tslint-immutable/no-mixed-interface": "error",
+        "tslint-immutable/readonly-array": "error",
+        "tslint-immutable/readonly-keyword": "error"
+      }
+    }
+  ]
+}
