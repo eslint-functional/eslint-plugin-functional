@@ -5,8 +5,7 @@ import {
   isClassLike,
   isForXStatement,
   isFunctionLike,
-  isTSInterfaceBody,
-  isVariableDeclaration
+  isTSInterfaceBody
 } from "./typeguard";
 
 /**
@@ -35,18 +34,6 @@ export function inInterface(node: TSESTree.Node): boolean {
  */
 export function getForXStatement(node: TSESTree.Node): ForXStatement | null {
   return getParentOfType<ForXStatement>(isForXStatement, node);
-}
-
-/**
- * Get the Variable Declaration for the given Variable Declarator.
- */
-export function getVariableDeclaration(
-  node: TSESTree.VariableDeclarator
-): TSESTree.VariableDeclaration | null {
-  return getParentOfType<TSESTree.VariableDeclaration>(
-    isVariableDeclaration,
-    node
-  );
 }
 
 /**
