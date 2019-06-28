@@ -1,18 +1,21 @@
-// Place your settings in this file to overwrite default and user settings.
 {
+  "editor.formatOnSave": true,
+  "eslint.validate": ["typescript"],
+  "files.exclude": {
+    "coverage": true
+  },
   "search.exclude": {
     "**/.git": true,
-    "**/node_modules": true,
-    "**/js_out": true,
+    "**/build": true,
     "**/dist": true,
-    ".idea/**": true,
+    "**/node_modules": true,
     ".vscode/**": true,
-    "**/temp": true,
     "rules/**": true
   },
-  "files.exclude": {
-    ".nyc_output": true,
-    "coverage": true,
-    "scripts/**/*.js": true
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
 }
