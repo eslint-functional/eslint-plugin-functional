@@ -83,7 +83,7 @@
     "test": "jest",
     "test-compiled": "USE_COMPLIED=1 yarn test",
     "verify": "yarn build && yarn lint && yarn test-compiled",
-    "report-coverage": "codecov -f coverage/*.json",
+    "report-coverage": "codecov -f coverage/lcov.info",
     "preversion": "yarn verify",
     "postversion": "git push --tags && yarn publish --new-version $npm_package_version && git push && echo \"Successfully released version $npm_package_version!\""
   },
