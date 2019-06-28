@@ -253,57 +253,57 @@ function isIgnoredPattern(
     ? ignorePattern
     : [ignorePattern];
 
-  const findMatch = (
-    patternParts: ReadonlyArray<string>,
-    textParts: ReadonlyArray<string>
-  ): boolean => {
-    let index = 0;
-    for (; index < patternParts.length; index++) {
-      // Out of text?
-      if (index >= textParts.length) {
-        return false;
-      }
-
-      switch (patternParts[index]) {
-        // Match any depth (including 0)?
-        case "**": {
-          const subpattern = patternParts.slice(index + 1);
-          for (let offset = index; offset < textParts.length; offset++) {
-            const submatch = findMatch(subpattern, textParts.slice(offset));
-            if (submatch) {
-              return submatch;
-            }
-          }
-          return false;
-        }
-
-        // Match anything?
-        case "*":
-          continue;
-
-        default:
-          break;
-      }
-
-      // textParts[i] matches patternParts[i]?
-      if (
-        new RegExp(
-          "^" + escapeRegExp(patternParts[index]).replace(/\\\*/g, ".*") + "$"
-        ).test(textParts[index])
-      ) {
-        continue;
-      }
-
-      // No Match.
-      return false;
-    }
-
-    // Match.
-    return textParts.length === index;
-  };
-
   // One or more patterns match?
   return patterns.some(pattern =>
     findMatch(pattern.split("."), text.split("."))
   );
+}
+
+function findMatch(
+  patternParts: ReadonlyArray<string>,
+  textParts: ReadonlyArray<string>
+): boolean {
+  let index = 0;
+  for (; index < patternParts.length; index++) {
+    // Out of text?
+    if (index >= textParts.length) {
+      return false;
+    }
+
+    switch (patternParts[index]) {
+      // Match any depth (including 0)?
+      case "**": {
+        const subpattern = patternParts.slice(index + 1);
+        for (let offset = index; offset < textParts.length; offset++) {
+          const submatch = findMatch(subpattern, textParts.slice(offset));
+          if (submatch) {
+            return submatch;
+          }
+        }
+        return false;
+      }
+
+      // Match anything?
+      case "*":
+        continue;
+
+      default:
+        break;
+    }
+
+    // textParts[i] matches patternParts[i]?
+    if (
+      new RegExp(
+        "^" + escapeRegExp(patternParts[index]).replace(/\\\*/g, ".*") + "$"
+      ).test(textParts[index])
+    ) {
+      continue;
+    }
+
+    // No Match.
+    return false;
+  }
+
+  // Match.
+  return textParts.length === index;
 }
