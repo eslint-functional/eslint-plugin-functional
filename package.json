@@ -66,8 +66,7 @@
     "typescript": "^3.5.2"
   },
   "peerDependencies": {
-    "eslint": ">=6.0.0",
-    "typescript": ">=3.2.1"
+    "eslint": ">=6.0.0"
   },
   "scripts": {
     "compile": "tsc",
