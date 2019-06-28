@@ -8,9 +8,10 @@ import {
   isCallExpression,
   isExpressionStatement,
   isIdentifier,
+  isTSPropertySignature,
   isTypeAliasDeclaration,
-  isVariableDeclarator,
-  isVariableDeclaration
+  isVariableDeclaration,
+  isVariableDeclarator
 } from "../util/typeguard";
 
 export type AllIgnoreOptions = IgnoreLocalOption &
@@ -162,6 +163,10 @@ export function shouldIgnore(
     : isExpressionStatement(node)
     ? isCallExpression(node.expression)
       ? [context.getSourceCode().getText(node.expression.callee)]
+      : []
+    : isTSPropertySignature(node)
+    ? isIdentifier(node.key)
+      ? [node.key.name]
       : []
     : []
   ).filter(name => name !== undefined) as ReadonlyArray<string>;
