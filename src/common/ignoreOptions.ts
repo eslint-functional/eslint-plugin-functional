@@ -15,7 +15,7 @@ import {
 } from "../util/typeguard";
 
 export type AllIgnoreOptions = IgnoreLocalOption &
-  IgnoreOption &
+  IgnorePatternOptions &
   IgnoreClassOption &
   IgnoreInterfaceOption &
   IgnoreNewArrayOption;
@@ -33,12 +33,12 @@ export const ignoreLocalOptionSchema: JSONSchema4 = {
   additionalProperties: false
 };
 
-export interface IgnoreOption {
+export interface IgnorePatternOptions {
   readonly ignorePattern?: string | Array<string>;
   readonly ignorePrefix?: string | Array<string>;
   readonly ignoreSuffix?: string | Array<string>;
 }
-export const ignoreOptionSchema: JSONSchema4 = {
+export const ignorePatternOptionsSchema: JSONSchema4 = {
   type: "object",
   properties: {
     ignorePattern: {

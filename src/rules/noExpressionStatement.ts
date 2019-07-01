@@ -7,10 +7,10 @@ import { checkNode, createRule, RuleContext, RuleMetaData } from "../util/rule";
 export const name = "no-expression-statement" as const;
 
 // The options this rule can take.
-type Options = [ignore.IgnoreOption];
+type Options = [ignore.IgnorePatternOptions];
 
 // The schema for the rule options.
-const schema = [ignore.ignoreOptionSchema];
+const schema = [ignore.ignorePatternOptionsSchema];
 
 // The default options for the rule.
 const defaultOptions: Options = [{}];

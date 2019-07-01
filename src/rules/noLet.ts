@@ -9,11 +9,11 @@ import { isForXInitialiser } from "../util/typeguard";
 export const name = "no-let" as const;
 
 // The options this rule can take.
-type Options = [ignore.IgnoreLocalOption & ignore.IgnoreOption];
+type Options = [ignore.IgnoreLocalOption & ignore.IgnorePatternOptions];
 
 // The schema for the rule options.
 const schema = [
-  deepMerge([ignore.ignoreLocalOptionSchema, ignore.ignoreOptionSchema])
+  deepMerge([ignore.ignoreLocalOptionSchema, ignore.ignorePatternOptionsSchema])
 ];
 
 // The default options for the rule.
