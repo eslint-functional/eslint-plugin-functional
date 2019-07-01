@@ -1,4 +1,4 @@
-# tslint-immutable
+# eslint-plugin-ts-immutable
 
 [![npm version][version-image]][version-url]
 [![travis build][travis-image]][travis-url]
@@ -6,7 +6,7 @@
 [![code style: prettier][prettier-image]][prettier-url]
 [![MIT license][license-image]][license-url]
 
-[TSLint](https://palantir.github.io/tslint/) rules to disable mutation in TypeScript.
+[ESLint](https://eslint.org/) rules to disable mutation in TypeScript.
 
 ## Background
 
@@ -20,40 +20,37 @@ This can be solved by using linting rules. So the aim of this project is to leve
 
 ## Installing
 
-`npm install tslint-immutable --save-dev`
+`npm install eslint-plugin-ts-immutable --save-dev`
 
 See the [example](#sample-configuration-file) tslint.json file for configuration.
 
 ## Compability
 
-* tslint-immutable 5.x.x requires typescript >=2.8, node >=6, and tslint 5.x.x.
-* tslint-immutable 3.x.x requires tslint 5.x.x.
-* tslint-immutable 2.x.x requires tslint 4.x.x.
-* tslint-immutable 1.x.x requires tslint 3.x.x.
+- eslint-plugin-ts-immutable requires typescript >=2.8, node >=6, and tslint 5.x.x.
 
-## TSLint Rules
+## ESLint Rules
 
 In addition to immutable rules this project also contains a few rules for enforcing a functional style of programming. The following rules are available:
 
-* [Immutability rules](#immutability-rules)
-  * [readonly-keyword](#readonly-keyword)
-  * [readonly-array](#readonly-array)
-  * [no-let](#no-let)
-  * [no-array-mutation](#no-array-mutation)
-  * [no-object-mutation](#no-object-mutation)
-  * [no-method-signature](#no-method-signature)
-  * [no-delete](#no-delete)
-* [Functional style rules](#functional-style-rules)
-  * [no-this](#no-this-no-class)
-  * [no-class](#no-this-no-class)
-  * [no-mixed-interface](#no-mixed-interface)
-  * [no-expression-statement](#no-expression-statement)
-  * [no-if-statement](#no-if-statement)
-  * [no-loop-statement](#no-loop-statement)
-  * [no-throw](#no-throw)
-  * [no-try](#no-try)
-  * [no-reject](#no-reject)
-* [Recommended built-in rules](#recommended-built-in-rules)
+- [Immutability rules](#immutability-rules)
+  - [readonly-keyword](#readonly-keyword)
+  - [readonly-array](#readonly-array)
+  - [no-let](#no-let)
+  - [no-array-mutation](#no-array-mutation)
+  - [no-object-mutation](#no-object-mutation)
+  - [no-method-signature](#no-method-signature)
+  - [no-delete](#no-delete)
+- [Functional style rules](#functional-style-rules)
+  - [no-this](#no-this-no-class)
+  - [no-class](#no-this-no-class)
+  - [no-mixed-interface](#no-mixed-interface)
+  - [no-expression-statement](#no-expression-statement)
+  - [no-if-statement](#no-if-statement)
+  - [no-loop-statement](#no-loop-statement)
+  - [no-throw](#no-throw)
+  - [no-try](#no-try)
+  - [no-reject](#no-reject)
+- [Recommended built-in rules](#recommended-built-in-rules)
 
 ## Immutability rules
 
@@ -115,12 +112,12 @@ Yes
 
 #### Options
 
-* [ignore-local](#using-the-ignore-local-option)
-* [ignore-class](#using-the-ignore-class-option)
-* [ignore-interface](#using-the-ignore-interface-option)
-* [ignore-prefix](#using-the-ignore-prefix-option)
-* [ignore-suffix](#using-the-ignore-suffix-option)
-* [ignore-pattern](#using-the-ignore-pattern-option)
+- [ignore-local](#using-the-ignore-local-option)
+- [ignore-class](#using-the-ignore-class-option)
+- [ignore-interface](#using-the-ignore-interface-option)
+- [ignore-prefix](#using-the-ignore-prefix-option)
+- [ignore-suffix](#using-the-ignore-suffix-option)
+- [ignore-pattern](#using-the-ignore-pattern-option)
 
 #### Example config
 
@@ -173,12 +170,12 @@ Yes
 
 #### Options
 
-* [ignore-local](#using-the-ignore-local-option)
-* [ignore-prefix](#using-the-ignore-prefix-option)
-* [ignore-suffix](#using-the-ignore-suffix-option)
-* [ignore-pattern](#using-the-ignore-pattern-option)
-* [ignore-return-type](#using-the-ignore-return-type-option)
-* [ignore-rest-parameters](#using-the-ignore-rest-parameters-option)
+- [ignore-local](#using-the-ignore-local-option)
+- [ignore-prefix](#using-the-ignore-prefix-option)
+- [ignore-suffix](#using-the-ignore-suffix-option)
+- [ignore-pattern](#using-the-ignore-pattern-option)
+- [ignore-return-type](#using-the-ignore-return-type-option)
+- [ignore-rest-parameters](#using-the-ignore-rest-parameters-option)
 
 #### Example config
 
@@ -209,7 +206,9 @@ What about `for` loops? Loops can be replaced with the Array methods like `map`,
 ```typescript
 const SearchResults = ({ results }) => (
   <ul>
-    {results.map(result => <li>result</li>) // <- Who needs let?
+    {results.map(result => (
+      <li>result</li>
+    )) // <- Who needs let?
     }
   </ul>
 );
@@ -221,10 +220,10 @@ Yes
 
 #### Options
 
-* [ignore-local](#using-the-ignore-local-option)
-* [ignore-prefix](#using-the-ignore-prefix-option)
-* [ignore-suffix](#using-the-ignore-suffix-option)
-* [ignore-pattern](#using-the-ignore-pattern-option)
+- [ignore-local](#using-the-ignore-local-option)
+- [ignore-prefix](#using-the-ignore-prefix-option)
+- [ignore-suffix](#using-the-ignore-suffix-option)
+- [ignore-pattern](#using-the-ignore-pattern-option)
 
 #### Example config
 
@@ -260,11 +259,11 @@ No
 
 #### Options
 
-* [ignore-prefix](#using-the-ignore-prefix-option)
-* [ignore-suffix](#using-the-ignore-suffix-option)
-* [ignore-pattern](#using-the-ignore-pattern-option)
-* [ignore-new-array](#using-the-ignore-new-array-option-with-no-array-mutation)
-* ~~ignore-mutation-following-accessor~~ - _deprecated in favor of [ignore-new-array](#using-the-ignore-new-array-option-with-no-array-mutation)_
+- [ignore-prefix](#using-the-ignore-prefix-option)
+- [ignore-suffix](#using-the-ignore-suffix-option)
+- [ignore-pattern](#using-the-ignore-pattern-option)
+- [ignore-new-array](#using-the-ignore-new-array-option-with-no-array-mutation)
+- ~~ignore-mutation-following-accessor~~ - _deprecated in favor of [ignore-new-array](#using-the-ignore-new-array-option-with-no-array-mutation)_
 
 #### Example config
 
@@ -301,9 +300,9 @@ No
 
 #### Options
 
-* [ignore-prefix](#using-the-ignore-prefix-option)
-* [ignore-suffix](#using-the-ignore-suffix-option)
-* [ignore-pattern](#using-the-ignore-pattern-option)
+- [ignore-prefix](#using-the-ignore-prefix-option)
+- [ignore-suffix](#using-the-ignore-suffix-option)
+- [ignore-pattern](#using-the-ignore-pattern-option)
 
 #### Example config
 
@@ -394,7 +393,7 @@ This rule checks that the value of an expression is assigned to a variable and t
 
 #### Options
 
-* [ignore-prefix](#using-the-ignore-prefix-option-with-no-expression-statement)
+- [ignore-prefix](#using-the-ignore-prefix-option-with-no-expression-statement)
 
 #### Example config
 
@@ -574,8 +573,8 @@ For example, the following config would ignore all object mutations for all prop
 
 The following wildcards can be used when specifing a pattern:
 
-* `**` - Match any depth (including zero). Can only be used as a full accessor.
-* `*`  - When used as a full accessor, match the next accessor. When used as part of an accessor, match any characters.
+- `**` - Match any depth (including zero). Can only be used as a full accessor.
+- `*` - When used as a full accessor, match the next accessor. When used as part of an accessor, match any characters.
 
 ### Using the `ignore-prefix` option with `no-expression-statement`
 
@@ -698,13 +697,13 @@ yarn version --major
 
 This work was originally inspired by [eslint-plugin-immutable](https://github.com/jhusain/eslint-plugin-immutable).
 
-[version-image]: https://img.shields.io/npm/v/tslint-immutable.svg?style=flat
-[version-url]: https://www.npmjs.com/package/tslint-immutable
-[travis-image]: https://travis-ci.com/jonaskello/tslint-immutable.svg?branch=master&style=flat
-[travis-url]: https://travis-ci.com/jonaskello/tslint-immutable
-[codecov-image]: https://codecov.io/gh/jonaskello/tslint-immutable/branch/master/graph/badge.svg
-[codecov-url]: https://codecov.io/gh/jonaskello/tslint-immutable
-[license-image]: https://img.shields.io/github/license/jonaskello/tslint-immutable.svg?style=flat
+[version-image]: https://img.shields.io/npm/v/eslint-plugin-ts-immutable.svg?style=flat
+[version-url]: https://www.npmjs.com/packageeslint-plugin-ts-immutable
+[travis-image]: https://travis-ci.com/jonaskello/eslint-plugin-ts-immutable.svg?branch=master&style=flat
+[travis-url]: https://travis-ci.com/jonaskello/eslint-plugin-ts-immutable
+[codecov-image]: https://codecov.io/gh/jonaskello/eslint-plugin-ts-immutable/branch/master/graph/badge.svg
+[codecov-url]: https://codecov.io/gh/jonaskello/eslint-plugin-ts-immutable
+[license-image]: https://img.shields.io/github/license/jonaskello/eslint-plugin-ts-immutable.svg?style=flat
 [license-url]: https://opensource.org/licenses/MIT
 [prettier-image]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat
 [prettier-url]: https://github.com/prettier/prettier
