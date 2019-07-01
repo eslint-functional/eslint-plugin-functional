@@ -20,13 +20,54 @@ This can be solved by using linting rules. So the aim of this project is to leve
 
 ## Installing
 
-`npm install eslint-plugin-ts-immutable --save-dev`
+Make sure you have TypeScript and [@typescript-eslint/parser](https://www.npmjs.com/package/@typescript-eslint/parser) installed, then install the plugin:
 
-See the [example](#sample-configuration-file) tslint.json file for configuration.
+```sh
+npm i eslint-plugin-ts-immutable --save-dev
+```
 
-## Compability
+**Note:** If you installed ESLint globally (using the `-g` flag) then you must also install `@typescript-eslint/eslint-plugin` globally.
 
-- eslint-plugin-ts-immutable requires typescript >=2.8, node >=6, and tslint 5.x.x.
+## Usage
+
+Add `@typescript-eslint/parser` to the `parser` field and `ts-immutable` to the plugins section of your `.eslintrc` configuration file. Then configure the rules you want to use under the rules section.
+
+```json
+{
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["ts-immutable"],
+  "rules": {
+    "@typescript-eslint/rule-name": "error"
+  }
+}
+```
+
+You can also enable all the recommended rules for our plugin:
+
+```json
+{
+  "extends": ["plugin:ts-immutable/recommended"]
+}
+```
+
+If you want to use rules which require type information, you will need to specify a path to your tsconfig.json file in the "project" property of "parserOptions".
+
+```json
+{
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "plugins": ["ts-immutable"],
+  "rules": {
+    "ts-immutable/no-array-mutation": "error"
+  }
+}
+```
+
+See [@typescript-eslint/parser's README.md](../parser/README.md) for more information on the available "parserOptions".
+
+**Note: Make sure to use `eslint --ext .js,.ts` since by [default](https://eslint.org/docs/user-guide/command-line-interface#--ext) `eslint` will only search for .js files.**
 
 ## Supported Rules
 
