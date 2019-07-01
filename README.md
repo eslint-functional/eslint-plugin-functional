@@ -143,6 +143,8 @@ For new features file an issue. For bugs, file an issue and optionally file a PR
 
 To execute the tests first run `yarn test`.
 
+To learn about eslint plugin development se the [relevant section](https://eslint.org/docs/developer-guide/working-with-plugins) of the eslit docs. You can also checkout the [typescript-eslint](https://github.com/typescript-eslint/typescript-eslint) repo which has some more information specific to typescript.
+
 In order to know which AST nodes are created for a snippet of typescript code you can use [ast explorer](https://astexplorer.net/) with options JavaScript and @typescript-eslint/parser.
 
 ## How to publish
