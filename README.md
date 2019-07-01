@@ -26,7 +26,7 @@ Make sure you have TypeScript and [@typescript-eslint/parser](https://www.npmjs.
 npm i eslint-plugin-ts-immutable --save-dev
 ```
 
-**Note:** If you installed ESLint globally (using the `-g` flag) then you must also install `@typescript-eslint/eslint-plugin` globally.
+**Note:** If you installed ESLint globally (using the `-g` flag) then you must also install `eslint-plugin-ts-immutable` globally.
 
 ## Usage
 
