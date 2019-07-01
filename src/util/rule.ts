@@ -43,7 +43,7 @@ export function createRule<
 }) {
   return ESLintUtils.RuleCreator(
     name =>
-      `https://github.com/jonaskello/tslint-immutable/blob/v${version}/README.md#${name}`
+      `https://github.com/jonaskello/eslint-plugin-ts-immutable/blob/v${version}/docs/rules/${name}.md`
   )(data);
 }
 
