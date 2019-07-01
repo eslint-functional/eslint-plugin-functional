@@ -7,7 +7,8 @@ import { checkNode, createRule, RuleContext, RuleMetaData } from "../util/rule";
 import {
   isIdentifier,
   isTSArrayType,
-  isTSTypeOperator
+  isTSTypeOperator,
+  isFunctionLike
 } from "../util/typeguard";
 
 // The name of this rule.
@@ -58,13 +59,18 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
  */
 function checkArrayOrTupleType(
   node: TSESTree.TSArrayType | TSESTree.TSTupleType,
-  context: RuleContext<keyof typeof errorMessages, Options>
+  context: RuleContext<keyof typeof errorMessages, Options>,
+  [options]: Options
 ): void {
   if (
     !node.parent ||
     !isTSTypeOperator(node.parent) ||
     node.parent.operator !== "readonly"
   ) {
+    if (options.ignoreReturnType && isInReturnType(node)) {
+      return;
+    }
+
     context.report({
       node,
       messageId: "generic",
@@ -84,15 +90,37 @@ function checkArrayOrTupleType(
  */
 function checkTypeReference(
   node: TSESTree.TSTypeReference,
-  context: RuleContext<keyof typeof errorMessages, Options>
+  context: RuleContext<keyof typeof errorMessages, Options>,
+  [options]: Options
 ): void {
   if (isIdentifier(node.typeName) && node.typeName.name === "Array") {
+    if (options.ignoreReturnType && isInReturnType(node)) {
+      return;
+    }
+
     context.report({
       node,
       messageId: "generic",
       fix: fixer => fixer.insertTextBefore(node, "Readonly")
     });
   }
+}
+
+/**
+ * Is the given node in the return type.
+ */
+function isInReturnType(node: TSESTree.Node): boolean {
+  let n: TSESTree.Node | undefined = node;
+  while (n && n.parent) {
+    if (isFunctionLike(n.parent)) {
+      if (n.parent.returnType === n) {
+        return true;
+      }
+      return false;
+    }
+    n = n.parent;
+  }
+  return false;
 }
 
 // Create the rule.

@@ -69,6 +69,80 @@ const valid: Array<ValidTestCase> = [
   {
     code: `const foo: ReadonlyArray<string> = [];`,
     optionsSet: [[]]
+  },
+  // Ignore return type.
+  {
+    code: dedent`
+      function foo(...numbers: ReadonlyArray<number>): Array<number> {}
+      function bar(...numbers: readonly number[]): number[] {}`,
+    optionsSet: [[{ ignoreReturnType: true }]]
+  },
+  // Ignore return type.
+  {
+    code: dedent`
+      const foo = function(...numbers: ReadonlyArray<number>): Array<number> {}
+      const bar = function(...numbers: readonly number[]): number[] {}`,
+    optionsSet: [[{ ignoreReturnType: true }]]
+  },
+  // Ignore return type.
+  {
+    code: dedent`
+      const foo = (...numbers: ReadonlyArray<number>): Array<number> =>  {}
+      const bar = (...numbers: readonly number[]): number[] =>  {}`,
+    optionsSet: [[{ ignoreReturnType: true }]]
+  },
+  // Ignore return type.
+  {
+    code: dedent`
+      class Foo {
+        foo(...numbers: ReadonlyArray<number>): Array<number> {
+        }
+      }
+      class Bar {
+        foo(...numbers: readonly number[]): number[] {
+        }
+      }`,
+    optionsSet: [[{ ignoreReturnType: true }]]
+  },
+  // Ignore return type with Type Arguments.
+  {
+    code: dedent`
+      function foo(...numbers: ReadonlyArray<number>): Promise<Array<number>> {}
+      function foo(...numbers: ReadonlyArray<number>): Promise<number[]> {}`,
+    optionsSet: [[{ ignoreReturnType: true }]]
+  },
+  // Ignore return type with deep Type Arguments.
+  {
+    code: dedent`
+      type Foo<T> = { x: T; };
+      function foo(...numbers: ReadonlyArray<number>): Promise<Foo<Array<number>>> {}
+      function foo(...numbers: ReadonlyArray<number>): Promise<Foo<number[]>> {}`,
+    optionsSet: [[{ ignoreReturnType: true }]]
+  },
+  // Ignore return type with Type Arguments in a tuple.
+  {
+    code: dedent`
+      function foo(...numbers: ReadonlyArray<number>): readonly [number, Array<number>, number] {}
+      function foo(...numbers: ReadonlyArray<number>): readonly [number, number[], number] {}`,
+    optionsSet: [[{ ignoreReturnType: true }]]
+  },
+  // Ignore return type with Type Arguments Union.
+  {
+    code: dedent`
+      function foo(...numbers: ReadonlyArray<number>): { a: Array<number> } | { b: string[] } {}`,
+    optionsSet: [[{ ignoreReturnType: true }]]
+  },
+  // Ignore return type with Type Arguments Intersection.
+  {
+    code: dedent`
+      function foo(...numbers: ReadonlyArray<number>): { a: Array<number> } & { b: string[] } {}`,
+    optionsSet: [[{ ignoreReturnType: true }]]
+  },
+  // Ignore return type with Type Arguments Conditional.
+  {
+    code: dedent`
+      function foo<T>(x: T): T extends Array<number> ? string : number[] {}`,
+    optionsSet: [[{ ignoreReturnType: true }]]
   }
 ];
 
@@ -539,6 +613,8 @@ const invalid: Array<InvalidTestCase> = [
   }
   // TODO: Should fail on implicit Array type in variable declaration.
   // - needs type information
+
+  // TODO: Test ignore pattern options.
 ];
 
 describe("TypeScript", () => {
