@@ -30,33 +30,41 @@ See the [example](#sample-configuration-file) tslint.json file for configuration
 
 ## ESLint Rules
 
+## Supported Rules
+
 In addition to immutable rules this project also contains a few rules for enforcing a functional style of programming. The following rules are available:
 
-- [Immutability rules](#immutability-rules)
-  - [readonly-keyword](#readonly-keyword)
-  - [readonly-array](#readonly-array)
-  - [no-let](#no-let)
-  - [no-array-mutation](#no-array-mutation)
-  - [no-object-mutation](#no-object-mutation)
-  - [no-method-signature](#no-method-signature)
-  - [no-delete](#no-delete)
-- [Functional style rules](#functional-style-rules)
-  - [no-this](#no-this-no-class)
-  - [no-class](#no-this-no-class)
-  - [no-mixed-interface](#no-mixed-interface)
-  - [no-expression-statement](#no-expression-statement)
-  - [no-if-statement](#no-if-statement)
-  - [no-loop-statement](#no-loop-statement)
-  - [no-throw](#no-throw)
-  - [no-try](#no-try)
-  - [no-reject](#no-reject)
-- [Recommended built-in rules](#recommended-built-in-rules)
+**Key**: :heavy_check_mark: = recommended, :wrench: = fixable, :thought_balloon: = requires type information
 
-## Immutability rules
+### Immutability rules
 
-## Functional style rules
+| Name                                                                      | Description | :heavy_check_mark: | :wrench: | :thought_balloon: |
+| ------------------------------------------------------------------------- | ----------- | ------------------ | -------- | ----------------- |
+| [`ts-immutable/readonly-keyword`](./docs/rules/readonly-keyword.md)       | WIP         | :heavy_check_mark: |          |                   |
+| [`ts-immutable/readonly-array`](./docs/rules/readonly-array.md)           | WIP         | :heavy_check_mark: | :wrench: |                   |
+| [`ts-immutable/no-let`](./docs/rules/no-let.md)                           | WIP         | :heavy_check_mark: | :wrench: |                   |
+| [`ts-immutable/no-array-mutation`](./docs/rules/no-array-mutation.md)     | WIP         | :heavy_check_mark: | :wrench: |                   |
+| [`ts-immutable/no-object-mutation`](./docs/rules/no-object-mutation.md)   | WIP         | :heavy_check_mark: | :wrench: |                   |
+| [`ts-immutable/no-method-signature`](./docs/rules/no-method-signature.md) | WIP         | :heavy_check_mark: | :wrench: |                   |
+| [`ts-immutable/no-delete`](./docs/rules/no-delete.md)                     | WIP         | :heavy_check_mark: | :wrench: |                   |
 
-## Recommended built-in rules
+### Functional style rules
+
+| Name                                                                              | Description | :heavy_check_mark: | :wrench: | :thought_balloon: |
+| --------------------------------------------------------------------------------- | ----------- | ------------------ | -------- | ----------------- |
+| [`ts-immutable/no-this`](./docs/rules/no-this.md)                                 | WIP         | :heavy_check_mark: |          |                   |
+| [`ts-immutable/no-class`](./docs/rules/no-class.md)                               | WIP         | :heavy_check_mark: |          |                   |
+| [`ts-immutable/no-mixed-interface`](./docs/rules/no-mixed-interface.md)           | WIP         | :heavy_check_mark: |          |                   |
+| [`ts-immutable/no-expression-statement`](./docs/rules/no-expression-statement.md) | WIP         | :heavy_check_mark: |          |                   |
+| [`ts-immutable/no-if-statement`](./docs/rules/no-if-statement.md)                 | WIP         | :heavy_check_mark: |          |                   |
+| [`ts-immutable/no-loop-statement`](./docs/rules/no-loop-statement.md)             | WIP         | :heavy_check_mark: |          |                   |
+| [`ts-immutable/no-throw`](./docs/rules/no-throw.md)                               | WIP         | :heavy_check_mark: |          |                   |
+| [`ts-immutable/no-try`](./docs/rules/no-try.md)                                   | WIP         | :heavy_check_mark: |          |                   |
+| [`ts-immutable/no-reject`](./docs/rules/no-reject.md)                             | WIP         | :heavy_check_mark: |          |                   |
+
+## Recommended standard rules
+
+In addition to the immutability rules above, there are a few standard rules that needs to be enabled to achieve immutability.
 
 ### [no-var-keyword](https://palantir.github.io/tslint/rules/no-var-keyword/)
 
