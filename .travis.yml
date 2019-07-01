@@ -12,20 +12,28 @@ node_js:
 env:
   - TSVERSION=next
   - TSVERSION=latest
-  - TSVERSION=3.2.1
-  - TSVERSION=3.0
+  - TSVERSION=3.4.1 # Our minimum supported version
+  - TSVERSION=3.2.1 # @typescript-eslint minimum supported version
 matrix:
   allow_failures:
     - env: TSVERSION=next
-    - env: TSVERSION=3.0
+    - env: TSVERSION=3.2.1
 before_script:
+  # Test with the compiled tests?
+  # Note: tests must be compiled in order to use them to test different typescript versions.
   - if [ "$TSVERSION" = 'latest' ] && [ "$TRAVIS_NODE_VERSION" = '12' ]; then TEST_COMPILED=0; else TEST_COMPILED=1; fi
   - export TEST_COMPILED
 script:
+  # Ensure the project can be built.
   - yarn build
+  # Run linting tests.
   - yarn lint
+  # If testing with compiled tests, compile them (with the version of typescript specified in yarn.lock).
   - if [ "$TEST_COMPILED" -eq 1 ]; then yarn compile-tests; fi
+  # Add the version of typescript to compile against.
   - yarn add -D typescript@"$TSVERSION"
+  # Run the tests.
   - if [ "$TEST_COMPILED" -eq 1 ]; then yarn test-compiled --ci; else yarn test --ci; fi
 after_success:
+  # Report coverage but only for 1 of the vms - the one that runs the uncompiled tests.
   - if [ "$TEST_COMPILED" -eq 0 ]; then yarn report-coverage; fi
