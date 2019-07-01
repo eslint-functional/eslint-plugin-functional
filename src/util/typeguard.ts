@@ -71,10 +71,22 @@ export function isTSInterfaceBody(
   return node.type === "TSInterfaceBody";
 }
 
+export function isTSArrayType(
+  node: TSESTree.Node
+): node is TSESTree.TSArrayType {
+  return node.type === "TSArrayType";
+}
+
 export function isTSPropertySignature(
   node: TSESTree.Node
 ): node is TSESTree.TSPropertySignature {
   return node.type === "TSPropertySignature";
+}
+
+export function isTSTypeOperator(
+  node: TSESTree.Node
+): node is TSESTree.TSTypeOperator {
+  return node.type === "TSTypeOperator";
 }
 
 export function isTypeAliasDeclaration(
