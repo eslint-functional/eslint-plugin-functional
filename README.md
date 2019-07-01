@@ -77,29 +77,29 @@ In addition to immutable rules this project also contains a few rules for enforc
 
 ### Immutability rules
 
-| Name                                                                      | Description | :heavy_check_mark: | :wrench: | :thought_balloon: |
-| ------------------------------------------------------------------------- | ----------- | ------------------ | -------- | ----------------- |
-| [`ts-immutable/readonly-keyword`](./docs/rules/readonly-keyword.md)       | WIP         | :heavy_check_mark: |          |                   |
-| [`ts-immutable/readonly-array`](./docs/rules/readonly-array.md)           | WIP         | :heavy_check_mark: | :wrench: |                   |
-| [`ts-immutable/no-let`](./docs/rules/no-let.md)                           | WIP         | :heavy_check_mark: | :wrench: |                   |
-| [`ts-immutable/no-array-mutation`](./docs/rules/no-array-mutation.md)     | WIP         | :heavy_check_mark: | :wrench: |                   |
-| [`ts-immutable/no-object-mutation`](./docs/rules/no-object-mutation.md)   | WIP         | :heavy_check_mark: | :wrench: |                   |
-| [`ts-immutable/no-method-signature`](./docs/rules/no-method-signature.md) | WIP         | :heavy_check_mark: | :wrench: |                   |
-| [`ts-immutable/no-delete`](./docs/rules/no-delete.md)                     | WIP         | :heavy_check_mark: | :wrench: |                   |
+| Name                                                                      | Description                                                                | :heavy_check_mark: | :wrench: | :thought_balloon: |
+| ------------------------------------------------------------------------- | -------------------------------------------------------------------------- | ------------------ | -------- | ----------------- |
+| [`ts-immutable/readonly-keyword`](./docs/rules/readonly-keyword.md)       | Enforce readonly modifiers are used where possible.                        | :heavy_check_mark: | :wrench: |                   |
+| [`ts-immutable/readonly-array`](./docs/rules/readonly-array.md)           | Prefer readonly array over mutable arrays.                                 | :heavy_check_mark: | :wrench: |                   |
+| [`ts-immutable/no-let`](./docs/rules/no-let.md)                           | Disallow mutable variables.                                                | :heavy_check_mark: | :wrench: |                   |
+| [`ts-immutable/no-array-mutation`](./docs/rules/no-array-mutation.md)     | Disallow mutating arrays.                                                  | :heavy_check_mark: | :wrench: |                   |
+| [`ts-immutable/no-object-mutation`](./docs/rules/no-object-mutation.md)   | WIP                                                                        | :heavy_check_mark: | :wrench: |                   |
+| [`ts-immutable/no-method-signature`](./docs/rules/no-method-signature.md) | Prefer property signatures with readonly modifiers over method signatures. | :heavy_check_mark: | :wrench: |                   |
+| [`ts-immutable/no-delete`](./docs/rules/no-delete.md)                     | Disallow delete expressions.                                               | :heavy_check_mark: | :wrench: |                   |
 
 ### Functional style rules
 
-| Name                                                                              | Description | :heavy_check_mark: | :wrench: | :thought_balloon: |
-| --------------------------------------------------------------------------------- | ----------- | ------------------ | -------- | ----------------- |
-| [`ts-immutable/no-this`](./docs/rules/no-this.md)                                 | WIP         | :heavy_check_mark: |          |                   |
-| [`ts-immutable/no-class`](./docs/rules/no-class.md)                               | WIP         | :heavy_check_mark: |          |                   |
-| [`ts-immutable/no-mixed-interface`](./docs/rules/no-mixed-interface.md)           | WIP         | :heavy_check_mark: |          |                   |
-| [`ts-immutable/no-expression-statement`](./docs/rules/no-expression-statement.md) | WIP         | :heavy_check_mark: |          |                   |
-| [`ts-immutable/no-if-statement`](./docs/rules/no-if-statement.md)                 | WIP         | :heavy_check_mark: |          |                   |
-| [`ts-immutable/no-loop-statement`](./docs/rules/no-loop-statement.md)             | WIP         | :heavy_check_mark: |          |                   |
-| [`ts-immutable/no-throw`](./docs/rules/no-throw.md)                               | WIP         | :heavy_check_mark: |          |                   |
-| [`ts-immutable/no-try`](./docs/rules/no-try.md)                                   | WIP         | :heavy_check_mark: |          |                   |
-| [`ts-immutable/no-reject`](./docs/rules/no-reject.md)                             | WIP         | :heavy_check_mark: |          |                   |
+| Name                                                                              | Description                                                                       | :heavy_check_mark: | :wrench: | :thought_balloon: |
+| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | ------------------ | -------- | ----------------- |
+| [`ts-immutable/no-this`](./docs/rules/no-this.md)                                 | Disallow this access.                                                             | :heavy_check_mark: |          |                   |
+| [`ts-immutable/no-class`](./docs/rules/no-class.md)                               | Disallow classes.                                                                 | :heavy_check_mark: |          |                   |
+| [`ts-immutable/no-mixed-interface`](./docs/rules/no-mixed-interface.md)           | Restrict interfaces so that only members of the same kind of are allowed in them. | :heavy_check_mark: |          |                   |
+| [`ts-immutable/no-expression-statement`](./docs/rules/no-expression-statement.md) | Using expressions to cause side-effects not allowed.                              | :heavy_check_mark: |          |                   |
+| [`ts-immutable/no-if-statement`](./docs/rules/no-if-statement.md)                 | Disallow if statements.                                                           | :heavy_check_mark: |          |                   |
+| [`ts-immutable/no-loop-statement`](./docs/rules/no-loop-statement.md)             | Disallow imperative loops.                                                        | :heavy_check_mark: |          |                   |
+| [`ts-immutable/no-throw`](./docs/rules/no-throw.md)                               | Disallow throwing exceptions.                                                     | :heavy_check_mark: |          |                   |
+| [`ts-immutable/no-try`](./docs/rules/no-try.md)                                   | Disallow try-catch[-finally] and try-finally patterns.                            | :heavy_check_mark: |          |                   |
+| [`ts-immutable/no-reject`](./docs/rules/no-reject.md)                             | Disallow try-catch[-finally] and try-finally patterns.                            | :heavy_check_mark: |          |                   |
 
 ## Recommended standard rules
 
