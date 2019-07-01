@@ -2,14 +2,14 @@
   "extends": "./configs/base.json",
   "rules": {
     "no-param-reassign": "error",
-    "no-undef": "error",
-    "no-var": "error",
-    "prefer-const": "error"
+    "no-var": "error"
   },
   "overrides": [
     {
       "files": ["*.ts", "*.tsx"],
-      "rules": {}
+      "rules": {
+        "@typescript-eslint/explicit-function-return-type": "warn"
+      }
     }
   ]
 }
