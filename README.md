@@ -28,8 +28,6 @@ See the [example](#sample-configuration-file) tslint.json file for configuration
 
 - eslint-plugin-ts-immutable requires typescript >=2.8, node >=6, and tslint 5.x.x.
 
-## ESLint Rules
-
 ## Supported Rules
 
 In addition to immutable rules this project also contains a few rules for enforcing a functional style of programming. The following rules are available:
