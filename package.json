@@ -26,8 +26,6 @@
   "homepage": "https://github.com/jonaskello/eslint-plugin-ts-immutable#readme",
   "files": [
     "/dist",
-    "tslint-immutable.json",
-    "all.json",
     "package.json",
     "CHANGELOG.md",
     "LICENSE",
