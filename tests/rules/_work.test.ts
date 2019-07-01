@@ -7,7 +7,7 @@ import { Rule, RuleTester } from "eslint";
 
 /*
  * Step 1.
- * Import the rule to test
+ * Import the rule to test.
  */
 import { rule } from "../../src/rules/readonlyArray";
 
@@ -15,7 +15,7 @@ import { typescript } from "../configs";
 
 /*
  * Step 2a.
- * Provide a valid test cases.
+ * Provide a valid test case.
  */
 const valid: Array<string | RuleTester.ValidTestCase> = [
   // {
@@ -28,7 +28,7 @@ const valid: Array<string | RuleTester.ValidTestCase> = [
 
 /*
  * Step 2b.
- * Or provide an invalid test cases.
+ * Or provide an invalid test case.
  */
 const invalid: Array<RuleTester.InvalidTestCase> = [
   // {
