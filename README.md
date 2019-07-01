@@ -131,7 +131,7 @@ For new features file an issue. For bugs, file an issue and optionally file a PR
 
 ## How to develop
 
-To execute the tests first run `yarn test`.
+To execute the tests run `yarn test`.
 
 To learn about eslint plugin development se the [relevant section](https://eslint.org/docs/developer-guide/working-with-plugins) of the eslit docs. You can also checkout the [typescript-eslint](https://github.com/typescript-eslint/typescript-eslint) repo which has some more information specific to typescript.
 
