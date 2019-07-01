@@ -105,23 +105,17 @@ In addition to immutable rules this project also contains a few rules for enforc
 
 In addition to the immutability rules above, there are a few standard rules that needs to be enabled to achieve immutability.
 
-### [no-var-keyword]
-
-> TODO: Check if any existing eslint package has this rule
+### [no-var](https://eslint.org/docs/rules/no-var)
 
 Without this rule, it is still possible to create `var` variables that are mutable.
 
-### [no-parameter-reassignment]
-
-> TODO: Check if any existing eslint package has this rule
+### [no-param-reassign](https://eslint.org/docs/rules/no-param-reassign)
 
 Without this rule, function parameters are mutable.
 
-### [typedef] with call-signature option
+### [@typescript-eslint/explicit-function-return-type](https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/explicit-function-return-type.md)
 
-> TODO: Check if any existing eslint package has this rule
-
-For performance reasons, tslint-immutable does not check implicit return types. So for example this function will return an mutable array but will not be detected (see [#18](https://github.com/jonaskello/tslint-immutable/issues/18) for more info):
+For performance reasons, tslint-immutable does not check implicit return types. So for example this function will return an mutable array but will not be detected:
 
 ```javascript
 function foo() {
@@ -129,11 +123,7 @@ function foo() {
 }
 ```
 
-To avoid this situation you can enable the built in typedef rule like this:
-
-`"typedef": [true, "call-signature"]`
-
-Now the above function is forced to declare the return type becomes this and will be detected.
+To avoid this situation you can enable `@typescript-eslint/explicit-function-return-type`. Now the above function is forced to declare the return type and the mutability will be detected.
 
 ## How to contribute
 
