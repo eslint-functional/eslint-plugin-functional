@@ -1,12 +1,12 @@
 {
-  "name": "eslint-plugin-tslint-immutable",
+  "name": "eslint-plugin-ts-immutable",
   "version": "0.0.0",
   "description": "ESLint rules to disable mutation in TypeScript.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jonaskello/tslint-immutable.git"
+    "url": "git+https://github.com/jonaskello/eslint-plugin-ts-immutable"
   },
   "keywords": [
     "eslint",
@@ -21,9 +21,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jonaskello/tslint-immutable/issues"
+    "url": "https://github.com/jonaskello/eslint-plugin-ts-immutable/issues"
   },
-  "homepage": "https://github.com/jonaskello/tslint-immutable#readme",
+  "homepage": "https://github.com/jonaskello/eslint-plugin-ts-immutable#readme",
   "files": [
     "/dist",
     "tslint-immutable.json",
