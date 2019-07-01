@@ -1,13 +1,7 @@
 import { ESLintUtils, TSESTree } from "@typescript-eslint/experimental-utils";
 import * as Rule from "@typescript-eslint/experimental-utils/dist/ts-eslint/Rule";
 
-// The version as defined in package.json. Note: cannot migrate this to an
-// import statement because it will make TSC copy the package.json to the dist
-// folder.
-/* eslint-disable-next-line @typescript-eslint/no-require-imports, no-undef */
-// const version = require("../../package.json").version;
 import { version } from "../../package.json";
-
 import { AllIgnoreOptions, shouldIgnore } from "../common/ignoreOptions";
 
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
