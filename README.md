@@ -105,15 +105,21 @@ In addition to immutable rules this project also contains a few rules for enforc
 
 In addition to the immutability rules above, there are a few standard rules that needs to be enabled to achieve immutability.
 
-### [no-var-keyword](https://palantir.github.io/tslint/rules/no-var-keyword/)
+### [no-var-keyword]
+
+> TODO: Check if any existing eslint package has this rule
 
 Without this rule, it is still possible to create `var` variables that are mutable.
 
-### [no-parameter-reassignment](https://palantir.github.io/tslint/rules/no-parameter-reassignment/)
+### [no-parameter-reassignment]
+
+> TODO: Check if any existing eslint package has this rule
 
 Without this rule, function parameters are mutable.
 
-### [typedef](https://palantir.github.io/tslint/rules/typedef/) with call-signature option
+### [typedef] with call-signature option
+
+> TODO: Check if any existing eslint package has this rule
 
 For performance reasons, tslint-immutable does not check implicit return types. So for example this function will return an mutable array but will not be detected (see [#18](https://github.com/jonaskello/tslint-immutable/issues/18) for more info):
 
@@ -129,60 +135,15 @@ To avoid this situation you can enable the built in typedef rule like this:
 
 Now the above function is forced to declare the return type becomes this and will be detected.
 
-## Sample Configuration File
-
-Here's a sample TSLint configuration file (tslint.json) that activates all the rules:
-
-```javascript
-{
-  "extends": ["tslint-immutable"],
-  "rules": {
-
-    // Recommended built-in rules
-    "no-var-keyword": true,
-    "no-parameter-reassignment": true,
-    "typedef": [true, "call-signature"],
-
-    // Immutability rules
-    "readonly-keyword": true,
-    "readonly-array": true,
-    "no-let": true,
-    "no-object-mutation": true,
-    "no-delete": true,
-    "no-method-signature": true,
-
-    // Functional style rules
-    "no-this": true,
-    "no-class": true,
-    "no-mixed-interface": true,
-    "no-expression-statement": true,
-    "no-if-statement": true
-
-  }
-}
-```
-
-It is also possible to enable all the rules in tslint-immutable by extending `tslint-immutable/all` like this:
-
-```javascript
-{
-  "extends": ["tslint-immutable/all"]
-}
-```
-
 ## How to contribute
 
 For new features file an issue. For bugs, file an issue and optionally file a PR with a failing test.
 
 ## How to develop
 
-To execute the tests first run `yarn build` and then run `yarn test`.
+To execute the tests first run `yarn test`.
 
-While working on the code you can run `yarn test:work`. This script also builds before running the tests. To run a subset of the tests, change the path for `yarn test:work` in `package.json`.
-
-Please review the [tslint performance tips](https://palantir.github.io/tslint/develop/custom-rules/performance-tips.html) in order to write rules that run efficiently at run-time. For example, note that using `SyntaxWalker` or any subclass thereof like `RuleWalker` is inefficient. Note that tslint requires the use of `class` as an entrypoint, but you can make a very small class that inherits from `AbstractRule` which directly calls `this.applyWithFunction` and from there you can switch to using a more functional programming style.
-
-In order to know which AST nodes are created for a snippet of typescript code you can use [ast explorer](https://astexplorer.net/).
+In order to know which AST nodes are created for a snippet of typescript code you can use [ast explorer](https://astexplorer.net/) with options JavaScript and @typescript-eslint/parser.
 
 ## How to publish
 
