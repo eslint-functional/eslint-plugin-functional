@@ -1,4 +1,0 @@
-// -- Function spread arguments
-
-function foo(...numbers: number[]) {
-}
