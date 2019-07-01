@@ -26,6 +26,6 @@ script:
   - yarn lint
   - if [ "$TEST_COMPILED" -eq 1 ]; then yarn compile-tests; fi
   - yarn add -D typescript@"$TSVERSION"
-  - if [ "$TEST_COMPILED" -eq 1 ]; then yarn test-compiled; else yarn test; fi
+  - if [ "$TEST_COMPILED" -eq 1 ]; then yarn test-compiled --ci; else yarn test --ci; fi
 after_success:
   - if [ "$TEST_COMPILED" -eq 0 ]; then yarn report-coverage; fi
