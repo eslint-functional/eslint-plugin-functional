@@ -16,7 +16,6 @@ import {
 
 export type AllIgnoreOptions = IgnoreLocalOption &
   IgnoreOption &
-  IgnoreRestParametersOption &
   IgnoreClassOption &
   IgnoreInterfaceOption &
   IgnoreNewArrayOption;
@@ -59,19 +58,6 @@ export const ignoreOptionSchema: JSONSchema4 = {
       items: {
         type: "string"
       }
-    }
-  },
-  additionalProperties: false
-};
-
-export interface IgnoreRestParametersOption {
-  readonly ignoreRestParameters?: boolean;
-}
-export const ignoreRestParametersOptionSchema: JSONSchema4 = {
-  type: "object",
-  properties: {
-    ignoreRestParameters: {
-      type: "boolean"
     }
   },
   additionalProperties: false
