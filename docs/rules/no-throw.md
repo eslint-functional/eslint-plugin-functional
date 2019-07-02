@@ -1,6 +1,6 @@
 # Disallow throwing exceptions (no-throw)
 
-This rule disallow the `throw` keyword.
+This rule disallows the `throw` keyword.
 
 ## Rule Details
 
