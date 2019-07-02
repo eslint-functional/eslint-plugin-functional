@@ -1,3 +1,3 @@
-### no-this
+# Disallow this access (no-this)
 
-See the no-class rule for more info.
+See the [no-class](./no-class.md) rule for more info.

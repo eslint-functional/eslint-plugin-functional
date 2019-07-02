@@ -1,4 +1,8 @@
-### no-throw
+# Disallow throwing exceptions (no-throw)
+
+This rule disallows the `throw` keyword.
+
+## Rule Details
 
 Exceptions are not part of functional programming.
 
@@ -25,3 +29,7 @@ async function divide(x: Promise<number>, y: Promise<number>): Promise<number> {
     : xv / yv;
 }
 ```
+
+## Options
+
+The rule does not accept any options.

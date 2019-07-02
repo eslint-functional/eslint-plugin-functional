@@ -1,8 +1,8 @@
-### no-array-mutation
+# Disallow mutating arrays (no-array-mutation)
 
-[![Type Info Required][type-info-badge]][type-info-url]
+This rule prohibits mutating an array via assignment to or deletion of their elements/properties. This rule enforces array immutability without the use of `ReadonlyArray<T>` (as apposed to [readonly-array](./readonly-array.md)).
 
-This rule prohibits mutating an array via assignment to or deletion of their elements/properties. This rule enforces array immutability without the use of `ReadonlyArray<T>` (as apposed to [readonly-array](#readonly-array)).
+## Rule Details
 
 ```typescript
 const x = [0, 1, 2];
@@ -12,28 +12,34 @@ x.length = 1; // <- Mutating an array is not allowed.
 x.push(3); // <- Mutating an array is not allowed.
 ```
 
-#### Has Fixer
+## Options
 
-No
+The rule accepts an options object with the following properties:
 
-#### Options
+```typescript
+type Options = {
+  readonly ignoreNewArray?: boolean;
+  readonly ignorePattern?: string | Array<string>;
+  readonly ignorePrefix?: string | Array<string>;
+  readonly ignoreSuffix?: string | Array<string>;
+};
 
-- [ignore-prefix](#using-the-ignore-prefix-option)
-- [ignore-suffix](#using-the-ignore-suffix-option)
-- [ignore-pattern](#using-the-ignore-pattern-option)
-- [ignore-new-array](#using-the-ignore-new-array-option-with-no-array-mutation)
-- ~~ignore-mutation-following-accessor~~ - _deprecated in favor of [ignore-new-array](#using-the-ignore-new-array-option-with-no-array-mutation)_
-
-#### Example config
-
-```javascript
-"no-array-mutation": true
+const defaults = {
+  ignoreNewArray: false
+};
 ```
 
-```javascript
-"no-array-mutation": [true, {"ignore-prefix": "mutable"}]
+### `ignore-new-array`
+
+This option allows for the use of array mutator methods to be chained to newly created arrays.
+
+For example, an array can be immutably sorted like so:
+
+```typescript
+const original = ["foo", "bar", "baz"];
+const sorted = original.slice().sort((a, b) => a.localeCompare(b)); // This is OK with ignore-new-array - note the use of the `slice` method which returns a copy of the original array.
 ```
 
-```javascript
-"no-array-mutation": [true, "ignore-new-array"]
-```
+### `ignorePattern`
+
+See the [ignorePattern](./options-ignore-pattern.md) docs.
