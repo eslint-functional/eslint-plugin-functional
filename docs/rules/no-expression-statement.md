@@ -1,4 +1,4 @@
-### no-expression-statement
+# Using expressions to cause side-effects not allowed (no-expression-statement)
 
 When you call a function and don’t use it’s return value, chances are high that it is being called for its side effect. e.g.
 
@@ -9,20 +9,20 @@ alert("Hello world!");
 
 This rule checks that the value of an expression is assigned to a variable and thus helps promote side-effect free (pure) functions.
 
-#### Options
+## Options
 
-- [ignore-prefix](#using-the-ignore-prefix-option-with-no-expression-statement)
+The rule accepts an options object with the following properties:
 
-#### Example config
+```typescript
+type Options = {
+  readonly ignorePattern?: string | Array<string>;
+  readonly ignorePrefix?: string | Array<string>;
+  readonly ignoreSuffix?: string | Array<string>;
+};
 
-```javascript
-"no-expression-statement": true
+const defaults = {};
 ```
 
-```javascript
-"no-expression-statement": [true, {"ignore-prefix": "console."}]
-```
+### `ignorePattern`
 
-```javascript
-"no-expression-statement": [true, {"ignore-prefix": ["console.log", "console.error"]}]
-```
+See the [ignorePattern](./options-ignore-pattern.md) docs.
