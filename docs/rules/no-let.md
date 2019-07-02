@@ -1,6 +1,8 @@
-### no-let
+# Disallow mutable variables (no-let)
 
 This rule should be combined with tslint's built-in `no-var-keyword` rule to enforce that all variables are declared as `const`.
+
+## Rule Details
 
 There's no reason to use `let` in a Redux/React application, because all your state is managed by either Redux or React. Use `const` instead, and avoid state bugs altogether.
 
@@ -21,27 +23,27 @@ const SearchResults = ({ results }) => (
 );
 ```
 
-#### Has Fixer
+## Options
 
-Yes
+The rule accepts an options object with the following properties:
 
-#### Options
+```typescript
+type Options = {
+  readonly ignoreLocal?: boolean;
+  readonly ignorePattern?: string | Array<string>;
+  readonly ignorePrefix?: string | Array<string>;
+  readonly ignoreSuffix?: string | Array<string>;
+};
 
-- [ignore-local](#using-the-ignore-local-option)
-- [ignore-prefix](#using-the-ignore-prefix-option)
-- [ignore-suffix](#using-the-ignore-suffix-option)
-- [ignore-pattern](#using-the-ignore-pattern-option)
-
-#### Example config
-
-```javascript
-"no-let": true
+const defaults = {
+  ignoreLocal: false
+};
 ```
 
-```javascript
-"no-let": [true, "ignore-local"]
-```
+### `ignoreLocal`
 
-```javascript
-"no-let": [true, "ignore-local", {"ignore-prefix": "mutable"}]
-```
+See the [ignoreLocal](./options-ignore-local.md) docs.
+
+### `ignorePattern`
+
+See the [ignorePattern](./options-ignore-pattern.md) docs.
