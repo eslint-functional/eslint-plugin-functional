@@ -55,3 +55,11 @@ Yes
 ```javascript
 "readonly-array": [true, "ignore-local", {"ignore-prefix": "mutable"}]
 ```
+
+### Using the `ignore-rest-parameters` option
+
+Doesn't check for `ReadonlyArray` for function rest parameters.
+
+### Using the `ignore-return-type` option
+
+Doesn't check the return type of functions.

@@ -37,3 +37,14 @@ No
 ```javascript
 "no-array-mutation": [true, "ignore-new-array"]
 ```
+
+### Using the `ignore-new-array` option with `no-array-mutation`
+
+This option allows for the use of array mutator methods to be chained to newly created arrays.
+
+For example, an array can be immutably sorted like so:
+
+```typescript
+const original = ["foo", "bar", "baz"];
+const sorted = original.slice().sort((a, b) => a.localeCompare(b)); // This is OK with ignore-new-array - note the use of the `slice` method which returns a copy of the original array.
+```

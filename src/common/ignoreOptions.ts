@@ -23,6 +23,7 @@ export type AllIgnoreOptions = IgnoreLocalOption &
 export type IgnoreLocalOption = {
   readonly ignoreLocal?: boolean;
 };
+
 export const ignoreLocalOptionSchema: JSONSchema4 = {
   type: "object",
   properties: {
@@ -38,6 +39,7 @@ export interface IgnorePatternOptions {
   readonly ignorePrefix?: string | Array<string>;
   readonly ignoreSuffix?: string | Array<string>;
 }
+
 export const ignorePatternOptionsSchema: JSONSchema4 = {
   type: "object",
   properties: {

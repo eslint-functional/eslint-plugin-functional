@@ -1,6 +1,8 @@
-### readonly-keyword
+# Enforce readonly modifiers are used where possible (readonly-keyword)
 
 This rule enforces use of the `readonly` modifier. The `readonly` modifier can appear on property signatures in interfaces, property declarations in classes, and index signatures.
+
+## Rule Details
 
 Below is some information about the `readonly` modifier and the benefits of using it:
 
@@ -50,29 +52,28 @@ const foo: { readonly [key: string]: number } = { a: 1, b: 2 };
 foo["a"] = 3; // Error: Index signature only permits reading
 ```
 
-#### Has Fixer
+## Options
 
-Yes
+### IgnoreLocal
 
-#### Options
+See the [IgnoreLocalOption](IgnoreLocalOption).
 
-- [ignore-local](#using-the-ignore-local-option)
-- [ignore-class](#using-the-ignore-class-option)
-- [ignore-interface](#using-the-ignore-interface-option)
-- [ignore-prefix](#using-the-ignore-prefix-option)
-- [ignore-suffix](#using-the-ignore-suffix-option)
-- [ignore-pattern](#using-the-ignore-pattern-option)
+### IgnorePattern
 
-#### Example config
+See the [IgnorePatternOptions](IgnorePatternOptions).
 
-```javascript
-"readonly-keyword": true
-```
+### IgnoreClass
 
-```javascript
-"readonly-keyword": [true, "ignore-local"]
-```
+See the [IgnoreClassOption](IgnoreClassOption).
 
-```javascript
-"readonly-keyword": [true, "ignore-local", {"ignore-prefix": "mutable"}]
-```
+### IgnoreInterfaceOption
+
+See the [IgnoreInterfaceOption](IgnoreInterfaceOption).
+
+### Using the `ignore-class` option
+
+Doesn't check for `readonly` in classes.
+
+### Using the `ignore-interface` option
+
+Doesn't check for `readonly` in interfaces.
