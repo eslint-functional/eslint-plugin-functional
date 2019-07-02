@@ -4,7 +4,7 @@
 
 import { Rule, RuleTester } from "eslint";
 
-import { name, rule } from "../../src/rules/noIfStatement";
+import { name, rule } from "../../src/rules/no-if-statement";
 
 import { es3, typescript } from "../configs";
 import {

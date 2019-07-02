@@ -5,7 +5,7 @@
 import dedent from "dedent";
 import { Rule, RuleTester } from "eslint";
 
-import { name, rule } from "../../src/rules/noThrow";
+import { name, rule } from "../../src/rules/no-throw";
 
 import { es3, typescript } from "../configs";
 import {

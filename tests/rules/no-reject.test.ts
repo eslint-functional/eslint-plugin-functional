@@ -5,7 +5,7 @@
 import dedent from "dedent";
 import { Rule, RuleTester } from "eslint";
 
-import { name, rule } from "../../src/rules/noReject";
+import { name, rule } from "../../src/rules/no-reject";
 
 import { es6, typescript } from "../configs";
 import {

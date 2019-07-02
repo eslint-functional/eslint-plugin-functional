@@ -6,7 +6,7 @@ import {
 import * as Rule from "@typescript-eslint/experimental-utils/dist/ts-eslint/Rule";
 
 import { version } from "../../package.json";
-import { AllIgnoreOptions, shouldIgnore } from "../common/ignoreOptions";
+import { AllIgnoreOptions, shouldIgnore } from "../common/ignore-options";
 
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 export type BaseOptions = Array<any>;

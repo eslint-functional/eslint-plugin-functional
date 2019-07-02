@@ -4,7 +4,7 @@
 
 import { Rule, RuleTester } from "eslint";
 
-import { name, rule } from "../../src/rules/noClass";
+import { name, rule } from "../../src/rules/no-class";
 
 import { es6, typescript } from "../configs";
 import {
