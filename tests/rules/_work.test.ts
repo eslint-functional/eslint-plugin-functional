@@ -9,7 +9,7 @@ import { Rule, RuleTester } from "eslint";
  * Step 1.
  * Import the rule to test.
  */
-import { rule } from "../../src/rules/readonlyArray";
+import { rule } from "../../src/rules/readonly-array";
 
 import { typescript } from "../configs";
 

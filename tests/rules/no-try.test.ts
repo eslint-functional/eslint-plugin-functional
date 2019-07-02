@@ -4,7 +4,7 @@
 
 import { Rule, RuleTester } from "eslint";
 
-import { name, rule } from "../../src/rules/noTry";
+import { name, rule } from "../../src/rules/no-try";
 
 import { es3, typescript } from "../configs";
 import {

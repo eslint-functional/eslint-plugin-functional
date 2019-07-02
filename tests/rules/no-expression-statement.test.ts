@@ -5,7 +5,7 @@
 import dedent from "dedent";
 import { Rule, RuleTester } from "eslint";
 
-import { name, rule } from "../../src/rules/noExpressionStatement";
+import { name, rule } from "../../src/rules/no-expression-statement";
 
 import { es3, typescript } from "../configs";
 import {

@@ -2,7 +2,7 @@ import { TSESTree } from "@typescript-eslint/typescript-estree";
 import { all as deepMerge } from "deepmerge";
 import { JSONSchema4 } from "json-schema";
 
-import * as ignore from "../common/ignoreOptions";
+import * as ignore from "../common/ignore-options";
 import { checkNode, createRule, RuleContext, RuleMetaData } from "../util/rule";
 import {
   isIdentifier,

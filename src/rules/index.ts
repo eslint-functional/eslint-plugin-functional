@@ -1,43 +1,46 @@
 import {
   name as noArrayMutationRuleName,
   rule as noArrayMutationRule
-} from "./noArrayMutation";
-import { name as noClassRuleName, rule as noClassRule } from "./noClass";
-import { name as noDeleteRuleName, rule as noDeleteRule } from "./noDelete";
+} from "./no-array-mutation";
+import { name as noClassRuleName, rule as noClassRule } from "./no-class";
+import { name as noDeleteRuleName, rule as noDeleteRule } from "./no-delete";
 import {
   name as noExpressionStatementRuleName,
   rule as noExpressionStatementRule
-} from "./noExpressionStatement";
+} from "./no-expression-statement";
 import {
   name as noIfStatementRuleName,
   rule as noIfStatementRule
-} from "./noIfStatement";
-import { name as noLetRuleName, rule as noLetRule } from "./noLet";
-import { name as noLoopRuleName, rule as noLoopRule } from "./noLoopStatement";
+} from "./no-if-statement";
+import { name as noLetRuleName, rule as noLetRule } from "./no-let";
+import {
+  name as noLoopRuleName,
+  rule as noLoopRule
+} from "./no-loop-statement";
 import {
   name as noObjectMutationRuleName,
   rule as noObjectMutationRule
-} from "./noObjectMutation";
-import { name as noRejectRuleName, rule as noRejectRule } from "./noReject";
-import { name as noThisRuleName, rule as noThisRule } from "./noThis";
-import { name as noThrowRuleName, rule as noThrowRule } from "./noThrow";
-import { name as noTryRuleName, rule as noTryRule } from "./noTry";
+} from "./no-object-mutation";
+import { name as noRejectRuleName, rule as noRejectRule } from "./no-reject";
+import { name as noThisRuleName, rule as noThisRule } from "./no-this";
+import { name as noThrowRuleName, rule as noThrowRule } from "./no-throw";
+import { name as noTryRuleName, rule as noTryRule } from "./no-try";
 import {
   name as noMethodSignatureRuleName,
   rule as noMethodSignatureRule
-} from "./noMethodSignature";
+} from "./no-method-signature";
 import {
   name as noMixedInterfaceRuleName,
   rule as noMixedInterfaceRule
-} from "./noMixedInterface";
+} from "./no-mixed-interface";
 import {
   name as readonlyArrayRuleName,
   rule as readonlyArrayRule
-} from "./readonlyArray";
+} from "./readonly-array";
 import {
   name as readonlyKeywordRuleName,
   rule as readonlyKeywordRule
-} from "./readonlyKeyword";
+} from "./readonly-keyword";
 
 /**
  * All of the custom rules.
