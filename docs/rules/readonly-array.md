@@ -1,6 +1,8 @@
-### readonly-array
+# Prefer readonly array over mutable arrays (readonly-array)
 
 This rule enforces use of `ReadonlyArray<T>` or `readonly T[]` instead of `Array<T>` or `T[]`.
+
+## Rule Details
 
 Below is some information about the `ReadonlyArray<T>` type and the benefits of using it:
 
@@ -29,29 +31,39 @@ const points: ReadonlyArray<Point> = [{ x: 23, y: 44 }];
 points.push({ x: 1, y: 2 }); // Unresolved method push()
 ```
 
-#### Has Fixer
+## Options
 
-Yes
+The rule accepts an options object with the following properties:
 
-#### Options
+```typescript
+type Options = {
+  readonly ignoreReturnType?: boolean;
+  readonly ignoreLocal?: boolean;
+  readonly ignorePattern?: string | Array<string>;
+  readonly ignorePrefix?: string | Array<string>;
+  readonly ignoreSuffix?: string | Array<string>;
+};
 
-- [ignore-local](#using-the-ignore-local-option)
-- [ignore-prefix](#using-the-ignore-prefix-option)
-- [ignore-suffix](#using-the-ignore-suffix-option)
-- [ignore-pattern](#using-the-ignore-pattern-option)
-- [ignore-return-type](#using-the-ignore-return-type-option)
-- [ignore-rest-parameters](#using-the-ignore-rest-parameters-option)
-
-#### Example config
-
-```javascript
-"readonly-array": true
+const defaults = {
+  ignoreReturnType: false,
+  ignoreLocal: false
+};
 ```
 
-```javascript
-"readonly-array": [true, "ignore-local"]
-```
+### `ignore-rest-parameters`
 
-```javascript
-"readonly-array": [true, "ignore-local", {"ignore-prefix": "mutable"}]
-```
+TODO: This option does not seem to exist in the code?
+
+Doesn't check for `ReadonlyArray` for function rest parameters.
+
+### `ignoreReturnType`
+
+Doesn't check the return type of functions.
+
+### `ignoreLocal`
+
+See the [ignoreLocal](./options-ignore-local.md) docs.
+
+### `ignorePattern`
+
+See the [ignorePattern](./options-ignore-pattern.md) docs.

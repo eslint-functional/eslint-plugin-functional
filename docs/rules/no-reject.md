@@ -1,4 +1,8 @@
-### no-reject
+# Disallow try-catch[-finally] and try-finally patterns (no-reject)
+
+This rule disallows `Promise.reject()`.
+
+## Rule Details
 
 You can view a `Promise` as a result object with built-in error (something like `{ value: number } | { error: Error }`) in which case a rejected `Promise` can be viewed as a returned result and thus fits with functional programming. You can also view a rejected promise as something similar to an exception and as such something that does not fit with functional programming. If your view is the latter you can use the `no-reject` rule to disallow rejected promises.
 
@@ -18,3 +22,7 @@ async function divide(
   return yv === 0 ? new Error("Cannot divide by zero.") : xv / yv;
 }
 ```
+
+## Options
+
+The rule does not accept any options.

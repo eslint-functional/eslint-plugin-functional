@@ -1,6 +1,8 @@
-### readonly-keyword
+# Enforce readonly modifiers are used where possible (readonly-keyword)
 
 This rule enforces use of the `readonly` modifier. The `readonly` modifier can appear on property signatures in interfaces, property declarations in classes, and index signatures.
+
+## Rule Details
 
 Below is some information about the `readonly` modifier and the benefits of using it:
 
@@ -50,29 +52,79 @@ const foo: { readonly [key: string]: number } = { a: 1, b: 2 };
 foo["a"] = 3; // Error: Index signature only permits reading
 ```
 
-#### Has Fixer
+## Options
 
-Yes
+The rule accepts an options object with the following properties:
 
-#### Options
+```typescript
+type Options = {
+  readonly ignoreClass?: boolean;
+  readonly ignoreInterface?: boolean;
+  readonly ignoreLocal?: boolean;
+  readonly ignorePattern?: string | Array<string>;
+  readonly ignorePrefix?: string | Array<string>;
+  readonly ignoreSuffix?: string | Array<string>;
+};
 
-- [ignore-local](#using-the-ignore-local-option)
-- [ignore-class](#using-the-ignore-class-option)
-- [ignore-interface](#using-the-ignore-interface-option)
-- [ignore-prefix](#using-the-ignore-prefix-option)
-- [ignore-suffix](#using-the-ignore-suffix-option)
-- [ignore-pattern](#using-the-ignore-pattern-option)
-
-#### Example config
-
-```javascript
-"readonly-keyword": true
+const defaults = {
+  ignoreClass: false,
+  ignoreInterface: false,
+  ignoreLocal: false
+};
 ```
 
-```javascript
-"readonly-keyword": [true, "ignore-local"]
+### `ignoreClass`
+
+A boolean to specify if checking for `readonly` should apply to classes. `false` by default.
+
+Examples of **incorrect** code for the `{ "ignoreClass": false }` option:
+
+```ts
+/*eslint ts-immutable/readonly: ["error", { "ignoreClass": false }]*/
+
+class {
+  myprop: string;
+}
 ```
 
-```javascript
-"readonly-keyword": [true, "ignore-local", {"ignore-prefix": "mutable"}]
+Examples of **correct** code for the `{ "ignoreClass": true }` option:
+
+```ts
+/*eslint ts-immutable/readonly: ["error", { "ignoreClass": true }]*/
+
+class {
+  myprop: string;
+}
 ```
+
+### `ignoreInterface`
+
+A boolean to specify if checking for `readonly` should apply to interfaces. `false` by default.
+
+Examples of **incorrect** code for the `{ "ignoreInterface": false }` option:
+
+```ts
+/*eslint ts-immutable/readonly: ["error", { "ignoreInterface": false }]*/
+
+interface {
+  myprop: string;
+}
+```
+
+Examples of **correct** code for the `{ "ignoreInterface": true }` option:
+
+```ts
+/*eslint ts-immutable/readonly: ["error", { "ignoreInterface": true }]*/
+
+interface {
+  myprop: string;
+}
+```
+
+### `ignoreLocal`
+
+See the [ignoreLocal](./options-ignore-local.md) docs.
+
+### `ignorePattern`
+
+See the [ignorePattern](./options-ignore-pattern.md) docs.

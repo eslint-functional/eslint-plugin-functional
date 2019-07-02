@@ -1,4 +1,8 @@
-### no-class
+# Disallow classes (no-class)
+
+Disallow use of the `class` keyword.
+
+## Rule Details
 
 Thanks to libraries like [recompose](https://github.com/acdlite/recompose) and Redux's [React Container components](http://redux.js.org/docs/basics/UsageWithReact.html), there's not much reason to build Components using `React.createClass` or ES6 classes anymore. The `no-this` rule makes this explicit.
 
@@ -30,3 +34,7 @@ const OptimizedMessage = pure(Message);
 // Even more optimized: only updates if specific prop keys have changed
 const HyperOptimizedMessage = onlyUpdateForKeys(["message"], Message);
 ```
+
+## Options
+
+The rule does not accept any options.

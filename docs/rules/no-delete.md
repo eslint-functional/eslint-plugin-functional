@@ -1,6 +1,8 @@
-### no-delete
+# Disallow delete expressions (no-delete)
 
 The delete operator allows for mutating objects by deleting keys. This rule disallows any delete expressions.
+
+## Rule Details
 
 ```typescript
 delete object.property; // Unexpected delete, objects should be considered immutable.
@@ -11,3 +13,7 @@ As an alternative the spread operator can be used to delete a key in an object (
 ```typescript
 const { [action.id]: deletedItem, ...rest } = state;
 ```
+
+## Options
+
+The rule does not accept any options.
