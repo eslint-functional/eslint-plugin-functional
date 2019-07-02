@@ -5,7 +5,7 @@
 import dedent from "dedent";
 import { Rule, RuleTester } from "eslint";
 
-import { name, rule } from "../../src/rules/noArrayMutation";
+import { name, rule } from "../../src/rules/no-array-mutation";
 
 import { typescript } from "../configs";
 import {

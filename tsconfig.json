@@ -16,7 +16,8 @@
     "resolveJsonModule": true,
     "sourceMap": false,
     "strictNullChecks": true,
-    "target": "esnext"
+    "target": "esnext",
+    "outDir": "js_out"
   },
   "include": ["src/**/*.ts"]
 }

@@ -4,7 +4,7 @@
 
 import { Rule, RuleTester } from "eslint";
 
-import { name, rule } from "../../src/rules/noLoopStatement";
+import { name, rule } from "../../src/rules/no-loop-statement";
 
 import { es3, es6, typescript } from "../configs";
 import {

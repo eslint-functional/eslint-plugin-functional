@@ -5,7 +5,7 @@
 import dedent from "dedent";
 import { Rule, RuleTester } from "eslint";
 
-import { name, rule } from "../../src/rules/readonlyArray";
+import { name, rule } from "../../src/rules/readonly-array";
 
 import { typescript } from "../configs";
 import {
