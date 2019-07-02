@@ -1,7 +1,7 @@
 import { TSESTree } from "@typescript-eslint/typescript-estree";
 import { all as deepMerge } from "deepmerge";
 
-import * as ignore from "../common/ignoreOptions";
+import * as ignore from "../common/ignore-options";
 import { checkNode, createRule, RuleContext, RuleMetaData } from "../util/rule";
 import { isTSIndexSignature } from "../util/typeguard";
 
