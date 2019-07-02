@@ -97,7 +97,7 @@ class {
 }
 ```
 
-### `ignore-interface`
+### `ignoreInterface`
 
 A boolean to specify if checking for `readonly` should apply to interfaces. `false` by default.
 
