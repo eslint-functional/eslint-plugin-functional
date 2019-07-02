@@ -58,12 +58,12 @@ The rule accepts an options object with the following properties:
 
 ```typescript
 type Options = {
+  readonly ignoreClass?: boolean;
+  readonly ignoreInterface?: boolean;
   readonly ignoreLocal?: boolean;
   readonly ignorePattern?: string | Array<string>;
   readonly ignorePrefix?: string | Array<string>;
   readonly ignoreSuffix?: string | Array<string>;
-  readonly ignoreClass?: boolean;
-  readonly ignoreInterface?: boolean;
 };
 
 const defaults = {
@@ -121,10 +121,10 @@ interface {
 }
 ```
 
-### `ignore-local`
+### `ignoreLocal`
 
 See the [ignore-local](./options-ignore-local.md) docs.
 
-### IgnorePattern
+### `ignorePattern`
 
 See the [ignore-pattern](./options-ignore-pattern.md) docs.
