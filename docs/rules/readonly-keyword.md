@@ -123,8 +123,8 @@ interface {
 
 ### `ignoreLocal`
 
-See the [ignore-local](./options-ignore-local.md) docs.
+See the [ignoreLocal](./options-ignore-local.md) docs.
 
 ### `ignorePattern`
 
-See the [ignore-pattern](./options-ignore-pattern.md) docs.
+See the [ignorePattern](./options-ignore-pattern.md) docs.
