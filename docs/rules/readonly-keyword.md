@@ -54,26 +54,77 @@ foo["a"] = 3; // Error: Index signature only permits reading
 
 ## Options
 
-### IgnoreLocal
+The rule accepts an options object with the following properties:
 
-See the [IgnoreLocalOption](IgnoreLocalOption).
+```typescript
+type Options = {
+  readonly ignoreLocal?: boolean;
+  readonly ignorePattern?: string | Array<string>;
+  readonly ignorePrefix?: string | Array<string>;
+  readonly ignoreSuffix?: string | Array<string>;
+  readonly ignoreClass?: boolean;
+  readonly ignoreInterface?: boolean;
+};
+
+const defaults = {
+  ignoreClass: false,
+  ignoreInterface: false,
+  ignoreLocal: false
+};
+```
+
+### `ignoreClass`
+
+A boolean to specify if checking for `readonly` should apply to classes. `false` by default.
+
+Examples of **incorrect** code for the `{ "ignoreClass": false }` option:
+
+```ts
+/*eslint ts-immutable/readonly: ["error", { "ignoreClass": false }]*/
+
+class {
+  myprop: string;
+}
+```
+
+Examples of **correct** code for the `{ "ignoreClass": true }` option:
+
+```ts
+/*eslint ts-immutable/readonly: ["error", { "ignoreClass": true }]*/
+
+class {
+  myprop: string;
+}
+```
+
+### `ignore-interface`
+
+A boolean to specify if checking for `readonly` should apply to interfaces. `false` by default.
+
+Examples of **incorrect** code for the `{ "ignoreInterface": false }` option:
+
+```ts
+/*eslint ts-immutable/readonly: ["error", { "ignoreInterface": false }]*/
+
+interface {
+  myprop: string;
+}
+```
+
+Examples of **correct** code for the `{ "ignoreInterface": true }` option:
+
+```ts
+/*eslint ts-immutable/readonly: ["error", { "ignoreInterface": true }]*/
+
+interface {
+  myprop: string;
+}
+```
+
+### `ignore-local`
+
+See the [ignore-local](./options-ignore-local.md) docs.
 
 ### IgnorePattern
 
-See the [IgnorePatternOptions](IgnorePatternOptions).
-
-### IgnoreClass
-
-See the [IgnoreClassOption](IgnoreClassOption).
-
-### IgnoreInterfaceOption
-
-See the [IgnoreInterfaceOption](IgnoreInterfaceOption).
-
-### Using the `ignore-class` option
-
-Doesn't check for `readonly` in classes.
-
-### Using the `ignore-interface` option
-
-Doesn't check for `readonly` in interfaces.
+See the [ignore-pattern](./options-ignore-pattern.md) docs.
