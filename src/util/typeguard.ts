@@ -3,9 +3,36 @@
  */
 
 import { TSESTree } from "@typescript-eslint/typescript-estree";
+import ts from "typescript";
 
 import { getForXStatement } from "./tree";
 import { ForXStatement } from "./types";
+
+/*
+ * TS Types.
+ */
+
+export type ArrayType = ts.Type & {
+  symbol: {
+    name: "Array";
+  };
+};
+
+export type ArrayConstructorType = ts.Type & {
+  symbol: {
+    name: "ArrayConstructor";
+  };
+};
+
+/*
+ * Node type guards.
+ */
+
+export function isArrayExpression(
+  node: TSESTree.Node
+): node is TSESTree.ArrayExpression {
+  return node.type === "ArrayExpression";
+}
 
 export function isCallExpression(
   node: TSESTree.Node
@@ -59,6 +86,12 @@ export function isMemberExpression(
   return node.type === "MemberExpression";
 }
 
+export function isNewExpression(
+  node: TSESTree.Node
+): node is TSESTree.NewExpression {
+  return node.type === "NewExpression";
+}
+
 export function isTSIndexSignature(
   node: TSESTree.Node
 ): node is TSESTree.TSIndexSignature {
@@ -105,4 +138,34 @@ export function isVariableDeclarator(
   node: TSESTree.Node
 ): node is TSESTree.VariableDeclarator {
   return node.type === "VariableDeclarator";
+}
+
+/*
+ * TS types type guards.
+ */
+
+export function isUnionType(type: ts.Type): type is ts.UnionType {
+  return type.flags === ts.TypeFlags.Union;
+}
+
+export function isArrayType(type: ts.Type): type is ArrayType {
+  if (type.symbol && type.symbol.name === "Array") {
+    return true;
+  }
+  if (isUnionType(type)) {
+    return type.types.some(isArrayType);
+  }
+  return false;
+}
+
+export function isArrayConstructorType(
+  type: ts.Type
+): type is ArrayConstructorType {
+  if (type.symbol && type.symbol.name === "ArrayConstructor") {
+    return true;
+  }
+  if (isUnionType(type)) {
+    return type.types.some(isArrayConstructorType);
+  }
+  return false;
 }

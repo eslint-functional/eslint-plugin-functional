@@ -1,4 +1,8 @@
-import { ESLintUtils, TSESTree } from "@typescript-eslint/experimental-utils";
+import {
+  ESLintUtils,
+  ParserServices as UtilParserServices,
+  TSESTree
+} from "@typescript-eslint/experimental-utils";
 import * as Rule from "@typescript-eslint/experimental-utils/dist/ts-eslint/Rule";
 
 import { version } from "../../package.json";
@@ -19,6 +23,10 @@ export type RuleContext<
   MessageIds extends string,
   Options extends BaseOptions
 > = Rule.RuleContext<MessageIds, Options>;
+
+export type ParserServices = {
+  [k in keyof UtilParserServices]: Exclude<UtilParserServices[k], undefined>;
+};
 
 /**
  * Create a rule.
@@ -65,4 +73,27 @@ export function checkNode<
     );
     return check(node, context, options);
   };
+}
+
+/**
+ * Ensure the type info is avaliable.
+ */
+export function getParserServices<
+  Context extends RuleContext<string, BaseOptions>
+>(context: Context) {
+  if (
+    !context.parserServices ||
+    !context.parserServices.program ||
+    !context.parserServices.esTreeNodeToTSNodeMap
+  ) {
+    /**
+     * The user needs to have configured "project" in their parserOptions
+     * for @typescript-eslint/parser
+     */
+    throw new Error(
+      'You have used a rule which requires parserServices to be generated. You must therefore provide a value for the "parserOptions.project" property for @typescript-eslint/parser.'
+    );
+  }
+
+  return context.parserServices as ParserServices;
 }

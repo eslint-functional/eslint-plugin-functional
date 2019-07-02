@@ -3,7 +3,8 @@ import { Linter } from "eslint";
 export const typescript: Linter.Config = {
   parser: require.resolve("@typescript-eslint/parser"),
   parserOptions: {
-    sourceType: "module"
+    sourceType: "module",
+    project: "./tsconfig.json"
   }
 };
 
