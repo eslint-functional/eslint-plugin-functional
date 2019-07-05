@@ -1,3 +1,6 @@
+// Polyfill.
+import "array.prototype.flatmap/auto.js";
+
 import { TSESTree } from "@typescript-eslint/typescript-estree";
 import escapeRegExp from "escape-string-regexp";
 import { JSONSchema4 } from "json-schema";
