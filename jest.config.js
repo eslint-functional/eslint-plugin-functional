@@ -16,5 +16,10 @@ module.exports = {
   collectCoverage: !useCompiled,
   collectCoverageFrom: useCompiled ? ["build/src/**/*.js"] : ["src/**/*.ts"],
   moduleFileExtensions: ["ts", "js", "json", "node"],
-  coverageReporters: ["text-summary", "lcov"]
+  coverageReporters: ["text-summary", "lcov"],
+  globals: {
+    "ts-jest": {
+      tsConfig: "tsconfig.tests.json"
+    }
+  }
 };
