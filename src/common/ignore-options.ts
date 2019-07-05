@@ -1,3 +1,6 @@
+// Polyfill.
+import "array.prototype.flatmap/auto.js";
+
 import { TSESTree } from "@typescript-eslint/typescript-estree";
 import escapeRegExp from "escape-string-regexp";
 import { JSONSchema4 } from "json-schema";
@@ -5,13 +8,15 @@ import { JSONSchema4 } from "json-schema";
 import { BaseOptions, RuleContext } from "../util/rule";
 import { inClass, inFunction, inInterface } from "../util/tree";
 import {
+  isAssignmentExpression,
   isCallExpression,
   isExpressionStatement,
   isIdentifier,
   isTSPropertySignature,
   isTypeAliasDeclaration,
   isVariableDeclaration,
-  isVariableDeclarator
+  isVariableDeclarator,
+  isMemberExpression
 } from "../util/typeguard";
 
 export type AllIgnoreOptions = IgnoreLocalOption &
@@ -140,24 +145,7 @@ export function shouldIgnore(
     return true;
   }
 
-  const identifiers: ReadonlyArray<string> = (isVariableDeclaration(node)
-    ? node.declarations.map(declaration =>
-        isIdentifier(declaration.id) ? declaration.id.name : undefined
-      )
-    : isVariableDeclarator(node) || isTypeAliasDeclaration(node)
-    ? isIdentifier(node.id)
-      ? [node.id.name]
-      : []
-    : isExpressionStatement(node)
-    ? isCallExpression(node.expression)
-      ? [context.getSourceCode().getText(node.expression.callee)]
-      : []
-    : isTSPropertySignature(node)
-    ? isIdentifier(node.key)
-      ? [node.key.name]
-      : []
-    : []
-  ).filter(name => name !== undefined) as ReadonlyArray<string>;
+  const identifiers: ReadonlyArray<string> = getIdentifierNames(node, context);
 
   if (
     identifiers.length > 0 &&
@@ -193,6 +181,48 @@ export function shouldIgnore(
   }
 
   return false;
+}
+
+function getIdentifierNames(
+  node: TSESTree.VariableDeclaration,
+  context: RuleContext<string, BaseOptions>
+): ReadonlyArray<string>;
+function getIdentifierNames(
+  node: Exclude<TSESTree.Node, TSESTree.VariableDeclaration>,
+  context: RuleContext<string, BaseOptions>
+): readonly [string];
+function getIdentifierNames(
+  node: TSESTree.Node,
+  context: RuleContext<string, BaseOptions>
+): ReadonlyArray<string>;
+function getIdentifierNames(
+  node: TSESTree.Node,
+  context: RuleContext<string, BaseOptions>
+): ReadonlyArray<string> {
+  return (isIdentifier(node)
+    ? [node.name]
+    : isVariableDeclaration(node)
+    ? node.declarations.flatMap(declarator =>
+        getIdentifierNames(declarator, context)
+      )
+    : isVariableDeclarator(node) || isTypeAliasDeclaration(node)
+    ? getIdentifierNames(node.id, context)
+    : isExpressionStatement(node) && isCallExpression(node.expression)
+    ? getIdentifierNames(node.expression, context)
+    : isAssignmentExpression(node)
+    ? getIdentifierNames(node.left, context)
+    : isMemberExpression(node)
+    ? [
+        `${getIdentifierNames(node.object, context)[0]}.${
+          getIdentifierNames(node.property, context)[0]
+        }`
+      ]
+    : isCallExpression(node)
+    ? [context.getSourceCode().getText(node.callee)]
+    : isTSPropertySignature(node)
+    ? getIdentifierNames(node.key, context)
+    : []
+  ).filter(name => name !== undefined) as ReadonlyArray<string>;
 }
 
 function isIgnoredPrefix(
@@ -251,10 +281,14 @@ function findMatch(
   patternParts: ReadonlyArray<string>,
   textParts: ReadonlyArray<string>
 ): boolean {
-  let index = 0;
-  for (; index < patternParts.length; index++) {
-    // Out of text?
-    if (index >= textParts.length) {
+  const [maxlength, minlength] =
+    patternParts.length > textParts.length
+      ? [patternParts.length, textParts.length]
+      : [textParts.length, patternParts.length];
+
+  for (let index = 0; index < maxlength; index++) {
+    // Out of text or pattern?
+    if (index >= minlength) {
       return false;
     }
 
@@ -262,8 +296,11 @@ function findMatch(
       // Match any depth (including 0)?
       case "**": {
         const subpattern = patternParts.slice(index + 1);
-        for (let offset = index; offset < textParts.length; offset++) {
-          const submatch = findMatch(subpattern, textParts.slice(offset));
+        for (let offset = 0; offset < textParts.length - index; offset++) {
+          const submatch = findMatch(
+            subpattern,
+            textParts.slice(index + offset)
+          );
           if (submatch) {
             return submatch;
           }
@@ -293,5 +330,5 @@ function findMatch(
   }
 
   // Match.
-  return textParts.length === index;
+  return true;
 }
