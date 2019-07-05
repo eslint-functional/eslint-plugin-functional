@@ -76,13 +76,13 @@ export function createDummyRule(
       description: "Disallow mutable variables.",
       category: "Best Practices",
       recommended: "error",
-      url: null
+      url: ""
     },
     messages: {
       generic: "Error."
     },
     fixable: "code",
-    schema: null
+    schema: {}
   };
 
   return createRule<"generic", Array<any>>({
