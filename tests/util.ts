@@ -1,4 +1,10 @@
 import { RuleTester as ESLintRuleTester } from "eslint";
+import {
+  RuleMetaData,
+  RuleContext,
+  RuleListener
+} from "@typescript-eslint/experimental-utils/dist/ts-eslint";
+import { createRule } from "../src/util/rule";
 
 type OptionsSet = {
   /**
@@ -35,20 +41,54 @@ export function processValidTestCase(
 export function processInvalidTestCase(
   testCases: ReadonlyArray<InvalidTestCase>
 ): Array<ESLintRuleTester.InvalidTestCase> {
-  return testCases.reduce<Array<ESLintRuleTester.InvalidTestCase>>((testCasesCarry, testCase) => {
-    return [
-      ...testCasesCarry,
-      ...testCase.optionsSet.reduce<Array<ESLintRuleTester.InvalidTestCase>>((optionsSetCarry, options) => {
-        const { optionsSet, ...eslintTestCase } = testCase;
-        return [
-          ...optionsSetCarry,
-          {
-            ...eslintTestCase,
-            options
-          }
-        ];
-      }, [])
-    ];
-  }, []);
+  return testCases.reduce<Array<ESLintRuleTester.InvalidTestCase>>(
+    (testCasesCarry, testCase) => {
+      return [
+        ...testCasesCarry,
+        ...testCase.optionsSet.reduce<Array<ESLintRuleTester.InvalidTestCase>>(
+          (optionsSetCarry, options) => {
+            const { optionsSet, ...eslintTestCase } = testCase;
+            return [
+              ...optionsSetCarry,
+              {
+                ...eslintTestCase,
+                options
+              }
+            ];
+          },
+          []
+        )
+      ];
+    },
+    []
+  );
 }
 
+export function createDummyRule(
+  create: (
+    context: RuleContext<"generic", Array<any>>,
+    optionsWithDefault: Array<any>
+  ) => RuleListener
+) {
+  const meta: RuleMetaData<"generic"> = {
+    type: "suggestion",
+    docs: {
+      description: "Disallow mutable variables.",
+      category: "Best Practices",
+      recommended: "error",
+      url: null
+    },
+    messages: {
+      generic: "Error."
+    },
+    fixable: "code",
+    schema: null
+  };
+
+  return createRule<"generic", Array<any>>({
+    name: "dummy",
+    meta,
+    defaultOptions: [],
+    create
+  });
+}
