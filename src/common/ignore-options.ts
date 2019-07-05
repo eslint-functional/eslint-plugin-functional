@@ -5,13 +5,15 @@ import { JSONSchema4 } from "json-schema";
 import { BaseOptions, RuleContext } from "../util/rule";
 import { inClass, inFunction, inInterface } from "../util/tree";
 import {
+  isAssignmentExpression,
   isCallExpression,
   isExpressionStatement,
   isIdentifier,
   isTSPropertySignature,
   isTypeAliasDeclaration,
   isVariableDeclaration,
-  isVariableDeclarator
+  isVariableDeclarator,
+  isMemberExpression
 } from "../util/typeguard";
 
 export type AllIgnoreOptions = IgnoreLocalOption &
@@ -140,24 +142,7 @@ export function shouldIgnore(
     return true;
   }
 
-  const identifiers: ReadonlyArray<string> = (isVariableDeclaration(node)
-    ? node.declarations.map(declaration =>
-        isIdentifier(declaration.id) ? declaration.id.name : undefined
-      )
-    : isVariableDeclarator(node) || isTypeAliasDeclaration(node)
-    ? isIdentifier(node.id)
-      ? [node.id.name]
-      : []
-    : isExpressionStatement(node)
-    ? isCallExpression(node.expression)
-      ? [context.getSourceCode().getText(node.expression.callee)]
-      : []
-    : isTSPropertySignature(node)
-    ? isIdentifier(node.key)
-      ? [node.key.name]
-      : []
-    : []
-  ).filter(name => name !== undefined) as ReadonlyArray<string>;
+  const identifiers: ReadonlyArray<string> = getIdentifierNames(node, context);
 
   if (
     identifiers.length > 0 &&
@@ -193,6 +178,48 @@ export function shouldIgnore(
   }
 
   return false;
+}
+
+function getIdentifierNames(
+  node: TSESTree.VariableDeclaration,
+  context: RuleContext<string, BaseOptions>
+): ReadonlyArray<string>;
+function getIdentifierNames(
+  node: Exclude<TSESTree.Node, TSESTree.VariableDeclaration>,
+  context: RuleContext<string, BaseOptions>
+): readonly [string];
+function getIdentifierNames(
+  node: TSESTree.Node,
+  context: RuleContext<string, BaseOptions>
+): ReadonlyArray<string>;
+function getIdentifierNames(
+  node: TSESTree.Node,
+  context: RuleContext<string, BaseOptions>
+): ReadonlyArray<string> {
+  return (isIdentifier(node)
+    ? [node.name]
+    : isVariableDeclaration(node)
+    ? node.declarations.flatMap(declarator =>
+        getIdentifierNames(declarator, context)
+      )
+    : isVariableDeclarator(node) || isTypeAliasDeclaration(node)
+    ? getIdentifierNames(node.id, context)
+    : isExpressionStatement(node) && isCallExpression(node.expression)
+    ? getIdentifierNames(node.expression, context)
+    : isAssignmentExpression(node)
+    ? getIdentifierNames(node.left, context)
+    : isMemberExpression(node)
+    ? [
+        `${getIdentifierNames(node.object, context)[0]}.${
+          getIdentifierNames(node.property, context)[0]
+        }`
+      ]
+    : isCallExpression(node)
+    ? [context.getSourceCode().getText(node.callee)]
+    : isTSPropertySignature(node)
+    ? getIdentifierNames(node.key, context)
+    : []
+  ).filter(name => name !== undefined) as ReadonlyArray<string>;
 }
 
 function isIgnoredPrefix(

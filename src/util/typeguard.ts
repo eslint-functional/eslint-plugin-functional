@@ -28,6 +28,12 @@ export type ArrayConstructorType = ts.Type & {
  * Node type guards.
  */
 
+export function isAssignmentExpression(
+  node: TSESTree.Node
+): node is TSESTree.AssignmentExpression {
+  return node.type === "AssignmentExpression";
+}
+
 export function isArrayExpression(
   node: TSESTree.Node
 ): node is TSESTree.ArrayExpression {
