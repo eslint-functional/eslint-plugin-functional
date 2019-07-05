@@ -278,10 +278,14 @@ function findMatch(
   patternParts: ReadonlyArray<string>,
   textParts: ReadonlyArray<string>
 ): boolean {
-  let index = 0;
-  for (; index < patternParts.length; index++) {
-    // Out of text?
-    if (index >= textParts.length) {
+  const [maxlength, minlength] =
+    patternParts.length > textParts.length
+      ? [patternParts.length, textParts.length]
+      : [textParts.length, patternParts.length];
+
+  for (let index = 0; index < maxlength; index++) {
+    // Out of text or pattern?
+    if (index >= minlength) {
       return false;
     }
 
@@ -289,8 +293,11 @@ function findMatch(
       // Match any depth (including 0)?
       case "**": {
         const subpattern = patternParts.slice(index + 1);
-        for (let offset = index; offset < textParts.length; offset++) {
-          const submatch = findMatch(subpattern, textParts.slice(offset));
+        for (let offset = 0; offset < textParts.length - index; offset++) {
+          const submatch = findMatch(
+            subpattern,
+            textParts.slice(index + offset)
+          );
           if (submatch) {
             return submatch;
           }
@@ -320,5 +327,5 @@ function findMatch(
   }
 
   // Match.
-  return textParts.length === index;
+  return true;
 }
