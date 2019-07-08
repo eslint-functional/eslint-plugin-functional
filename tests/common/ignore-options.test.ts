@@ -7,7 +7,7 @@ import { typescript } from "../configs";
 
 describe("option: ignore", () => {
   describe("ignoreAccessorPattern", () => {
-    const tests = [
+    const assignmentExpressionTests = [
       // Exact match.
       {
         code: dedent`
@@ -109,14 +109,14 @@ describe("option: ignore", () => {
         };
       }) as Rule.RuleModule,
       {
-        valid: tests,
+        valid: assignmentExpressionTests,
         invalid: []
       }
     );
   });
 
   describe("ignorePattern", () => {
-    const tests = [
+    const assignmentExpressionTests = [
       // Prefix match.
       {
         code: dedent`
@@ -162,7 +162,41 @@ describe("option: ignore", () => {
         };
       }) as Rule.RuleModule,
       {
-        valid: tests,
+        valid: assignmentExpressionTests,
+        invalid: []
+      }
+    );
+
+    const expressionStatementTests = [
+      {
+        code: dedent`
+          const x = 0;`,
+        options: [true, { ignorePattern: "^const x" }]
+      },
+      {
+        code: dedent`
+          const x = 0;`,
+        options: [true, { ignorePattern: "= 0;$" }]
+      },
+      {
+        code: dedent`
+          const x = 0;`,
+        options: [true, { ignorePattern: "^const x = 0;$" }]
+      }
+    ];
+
+    new RuleTester(typescript).run(
+      "ExpressionStatement",
+      createDummyRule(context => {
+        const [ignored, options] = context.options;
+        return {
+          ExpressionStatement: node => {
+            expect(shouldIgnore(node, context, options)).toBe(ignored);
+          }
+        };
+      }) as Rule.RuleModule,
+      {
+        valid: expressionStatementTests,
         invalid: []
       }
     );
