@@ -11,7 +11,7 @@ export const name = "readonly-keyword" as const;
 // The options this rule can take.
 type Options = [
   ignore.IgnoreLocalOption &
-    ignore.IgnorePatternOptions &
+    ignore.IgnorePatternOption &
     ignore.IgnoreClassOption &
     ignore.IgnoreInterfaceOption
 ];
@@ -20,7 +20,7 @@ type Options = [
 const schema = [
   deepMerge([
     ignore.ignoreLocalOptionSchema,
-    ignore.ignorePatternOptionsSchema,
+    ignore.ignorePatternOptionSchema,
     ignore.ignoreClassOptionSchema,
     ignore.ignoreInterfaceOptionSchema
   ])

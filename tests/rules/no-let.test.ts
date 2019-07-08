@@ -47,25 +47,25 @@ const valid: ReadonlyArray<ValidTestCase> = [
     code: dedent`
       let mutable;
       let mutableX`,
-    optionsSet: [[{ ignorePrefix: "mutable" }], [{ ignorePattern: "mutable*" }]]
+    optionsSet: [[{ ignorePattern: "^mutable" }]]
   },
   {
     code: dedent`
       let mutable = 0;
       let mutableX = 0`,
-    optionsSet: [[{ ignorePrefix: "mutable" }], [{ ignorePattern: "mutable*" }]]
+    optionsSet: [[{ ignorePattern: "^mutable" }]]
   },
   {
     code: `for (let mutableX = 0; x < 1; x++);`,
-    optionsSet: [[{ ignorePrefix: "mutable" }], [{ ignorePattern: "mutable*" }]]
+    optionsSet: [[{ ignorePattern: "^mutable" }]]
   },
   {
     code: `for (let mutableX in {});`,
-    optionsSet: [[{ ignorePrefix: "mutable" }], [{ ignorePattern: "mutable*" }]]
+    optionsSet: [[{ ignorePattern: "^mutable" }]]
   },
   {
     code: `for (let mutableX of []);`,
-    optionsSet: [[{ ignorePrefix: "mutable" }], [{ ignorePattern: "mutable*" }]]
+    optionsSet: [[{ ignorePattern: "^mutable" }]]
   },
   {
     code: dedent`
@@ -73,7 +73,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
         let mutableX;
         let mutableY = 0;
       }`,
-    optionsSet: [[{ ignorePrefix: "mutable" }], [{ ignorePattern: "mutable*" }]]
+    optionsSet: [[{ ignorePattern: "^mutable" }]]
   },
   {
     code: dedent`
@@ -81,7 +81,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
         let mutableX;
         let mutableY = 0;
       }`,
-    optionsSet: [[{ ignorePrefix: "mutable" }], [{ ignorePattern: "mutable*" }]]
+    optionsSet: [[{ ignorePattern: "^mutable" }]]
   },
   {
     code: dedent`
@@ -91,31 +91,31 @@ const valid: ReadonlyArray<ValidTestCase> = [
           let mutableY = 0;
         }
       }`,
-    optionsSet: [[{ ignorePrefix: "mutable" }], [{ ignorePattern: "mutable*" }]]
+    optionsSet: [[{ ignorePattern: "^mutable" }]]
   },
   {
     code: dedent`
       let Mutable;
       let xMutable`,
-    optionsSet: [[{ ignoreSuffix: "Mutable" }], [{ ignorePattern: "*Mutable" }]]
+    optionsSet: [[{ ignorePattern: "Mutable$" }]]
   },
   {
     code: dedent`
       let Mutable = 0;
       let xMutable = 0`,
-    optionsSet: [[{ ignoreSuffix: "Mutable" }], [{ ignorePattern: "*Mutable" }]]
+    optionsSet: [[{ ignorePattern: "Mutable$" }]]
   },
   {
     code: `for (let xMutable = 0; x < 1; x++);`,
-    optionsSet: [[{ ignoreSuffix: "Mutable" }], [{ ignorePattern: "*Mutable" }]]
+    optionsSet: [[{ ignorePattern: "Mutable$" }]]
   },
   {
     code: `for (let xMutable in {});`,
-    optionsSet: [[{ ignoreSuffix: "Mutable" }], [{ ignorePattern: "*Mutable" }]]
+    optionsSet: [[{ ignorePattern: "Mutable$" }]]
   },
   {
     code: `for (let xMutable of []);`,
-    optionsSet: [[{ ignoreSuffix: "Mutable" }], [{ ignorePattern: "*Mutable" }]]
+    optionsSet: [[{ ignorePattern: "Mutable$" }]]
   },
   {
     code: dedent`
@@ -123,7 +123,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
         let xMutable;
         let yMutable = 0;
       }`,
-    optionsSet: [[{ ignoreSuffix: "Mutable" }], [{ ignorePattern: "*Mutable" }]]
+    optionsSet: [[{ ignorePattern: "Mutable$" }]]
   },
   {
     code: dedent`
@@ -131,7 +131,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
         let xMutable;
         let yMutable = 0;
       }`,
-    optionsSet: [[{ ignoreSuffix: "Mutable" }], [{ ignorePattern: "*Mutable" }]]
+    optionsSet: [[{ ignorePattern: "Mutable$" }]]
   },
   {
     code: dedent`
@@ -141,7 +141,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
           let yMutable = 0;
         }
       }`,
-    optionsSet: [[{ ignoreSuffix: "Mutable" }], [{ ignorePattern: "*Mutable" }]]
+    optionsSet: [[{ ignorePattern: "Mutable$" }]]
   }
 ];
 
@@ -149,13 +149,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
 const invalid: ReadonlyArray<InvalidTestCase> = [
   {
     code: `let x;`,
-    optionsSet: [
-      [],
-      [{ ignoreLocal: true }],
-      [{ ignorePrefix: "mutable" }],
-      [{ ignoreSuffix: "Mutable" }],
-      [{ ignorePattern: "mutable*" }]
-    ],
+    optionsSet: [[], [{ ignoreLocal: true }], [{ ignorePattern: "^mutable" }]],
     errors: [
       {
         messageId: "generic",
@@ -167,13 +161,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
   },
   {
     code: `let x = 0;`,
-    optionsSet: [
-      [],
-      [{ ignoreLocal: true }],
-      [{ ignorePrefix: "mutable" }],
-      [{ ignoreSuffix: "Mutable" }],
-      [{ ignorePattern: "mutable*" }]
-    ],
+    optionsSet: [[], [{ ignoreLocal: true }], [{ ignorePattern: "^mutable" }]],
     output: `const x = 0;`,
     errors: [
       {
@@ -186,13 +174,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
   },
   {
     code: `for (let x = 0; x < 1; x++);`,
-    optionsSet: [
-      [],
-      [{ ignoreLocal: true }],
-      [{ ignorePrefix: "mutable" }],
-      [{ ignoreSuffix: "Mutable" }],
-      [{ ignorePattern: "mutable*" }]
-    ],
+    optionsSet: [[], [{ ignoreLocal: true }], [{ ignorePattern: "^mutable" }]],
     output: `for (const x = 0; x < 1; x++);`,
     errors: [
       {
@@ -205,13 +187,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
   },
   {
     code: `for (let x = 0, y = 0; x < 1; x++);`,
-    optionsSet: [
-      [],
-      [{ ignoreLocal: true }],
-      [{ ignorePrefix: "mutable" }],
-      [{ ignoreSuffix: "Mutable" }],
-      [{ ignorePattern: "mutable*" }]
-    ],
+    optionsSet: [[], [{ ignoreLocal: true }], [{ ignorePattern: "^mutable" }]],
     output: `for (const x = 0, y = 0; x < 1; x++);`,
     errors: [
       {
@@ -224,13 +200,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
   },
   {
     code: `for (let x in {});`,
-    optionsSet: [
-      [],
-      [{ ignoreLocal: true }],
-      [{ ignorePrefix: "mutable" }],
-      [{ ignoreSuffix: "Mutable" }],
-      [{ ignorePattern: "mutable*" }]
-    ],
+    optionsSet: [[], [{ ignoreLocal: true }], [{ ignorePattern: "^mutable" }]],
     output: `for (const x in {});`,
     errors: [
       {
@@ -243,13 +213,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
   },
   {
     code: `for (let x of []);`,
-    optionsSet: [
-      [],
-      [{ ignoreLocal: true }],
-      [{ ignorePrefix: "mutable" }],
-      [{ ignoreSuffix: "Mutable" }],
-      [{ ignorePattern: "mutable*" }]
-    ],
+    optionsSet: [[], [{ ignoreLocal: true }], [{ ignorePattern: "^mutable" }]],
     output: `for (const x of []);`,
     errors: [
       {
@@ -266,12 +230,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         let x;
         let y = 0;
       }`,
-    optionsSet: [
-      [],
-      [{ ignorePrefix: "mutable" }],
-      [{ ignoreSuffix: "Mutable" }],
-      [{ ignorePattern: "mutable*" }]
-    ],
+    optionsSet: [[], [{ ignorePattern: "^mutable" }]],
     output: dedent`
       function foo() {
         let x;
@@ -298,12 +257,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         let x;
         let y = 0;
       }`,
-    optionsSet: [
-      [],
-      [{ ignorePrefix: "mutable" }],
-      [{ ignoreSuffix: "Mutable" }],
-      [{ ignorePattern: "mutable*" }]
-    ],
+    optionsSet: [[], [{ ignorePattern: "^mutable" }]],
     output: dedent`
       const foo = () => {
         let x;
@@ -332,12 +286,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
           let y = 0;
         }
       }`,
-    optionsSet: [
-      [],
-      [{ ignorePrefix: "mutable" }],
-      [{ ignoreSuffix: "Mutable" }],
-      [{ ignorePattern: "mutable*" }]
-    ],
+    optionsSet: [[], [{ ignorePattern: "^mutable" }]],
     output: dedent`
       class Foo {
         foo() {
