@@ -109,7 +109,7 @@ const constructorFunctions = ["from", "of"];
 function checkAssignmentExpression(
   node: TSESTree.AssignmentExpression,
   context: RuleContext<keyof typeof errorMessages, Options>
-) {
+): void {
   if (isMemberExpression(node.left)) {
     const parserServices = getParserServices(context);
 
@@ -133,7 +133,7 @@ function checkAssignmentExpression(
 function checkUnaryExpression(
   node: TSESTree.UnaryExpression,
   context: RuleContext<keyof typeof errorMessages, Options>
-) {
+): void {
   if (node.operator === "delete" && isMemberExpression(node.argument)) {
     const parserServices = getParserServices(context);
     const type = parserServices.program
@@ -154,7 +154,7 @@ function checkUnaryExpression(
 function checkUpdateExpression(
   node: TSESTree.UpdateExpression,
   context: RuleContext<keyof typeof errorMessages, Options>
-) {
+): void {
   if (
     (node.operator === "++" || node.operator === "--") &&
     isMemberExpression(node.argument)
@@ -182,7 +182,7 @@ function checkCallExpression(
   node: TSESTree.CallExpression,
   context: RuleContext<keyof typeof errorMessages, Options>,
   [options]: Options
-) {
+): void {
   if (
     isMemberExpression(node.callee) &&
     isIdentifier(node.callee.property) &&
