@@ -35,7 +35,7 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
 function checkCallExpression(
   node: TSESTree.CallExpression,
   context: RuleContext<keyof typeof errorMessages, Options>
-) {
+): void {
   if (
     isMemberExpression(node.callee) &&
     isIdentifier(node.callee.object) &&

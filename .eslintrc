@@ -1,12 +1,7 @@
 {
   "root": true,
   "parser": "@typescript-eslint/parser",
-  "plugins": [
-    "eslint-plugin",
-    "@typescript-eslint",
-    "jest",
-    "prettier"
-  ],
+  "plugins": ["eslint-plugin", "@typescript-eslint", "jest", "prettier"],
   "env": {
     "es6": true,
     "node": true
@@ -25,9 +20,19 @@
     "sourceType": "module"
   },
   "rules": {
+    "no-param-reassign": "error",
+    "no-var": "error",
     "@typescript-eslint/array-type": ["error", "generic"],
-    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/explicit-function-return-type": [
+      "error",
+      {
+        "allowExpressions": true,
+        "allowTypedFunctionExpressions": true,
+        "allowHigherOrderFunctions": true
+      }
+    ],
     "@typescript-eslint/prefer-interface": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/no-require-imports": "error",
     "@typescript-eslint/no-unused-vars": [
       "error",
@@ -51,9 +56,7 @@
   },
   "overrides": [
     {
-      "files": [
-        "tests/**/*.ts"
-      ],
+      "files": ["tests/**/*.ts"],
       "env": {
         "jest/globals": true
       },

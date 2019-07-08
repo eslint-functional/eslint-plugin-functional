@@ -34,7 +34,7 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
 function checkUnaryExpression(
   node: TSESTree.UnaryExpression,
   context: RuleContext<keyof typeof errorMessages, Options>
-) {
+): void {
   if (node.operator === "delete") {
     context.report({ node, messageId: "generic" });
   }
