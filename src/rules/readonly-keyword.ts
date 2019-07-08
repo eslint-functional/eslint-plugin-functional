@@ -62,7 +62,7 @@ function check(
     | TSESTree.TSIndexSignature
     | TSESTree.ClassProperty,
   context: RuleContext<keyof typeof errorMessages, Options>
-) {
+): void {
   if (!node.readonly) {
     const fix = "readonly ";
     context.report({

@@ -3,7 +3,13 @@ import {
   ParserServices as UtilParserServices,
   TSESTree
 } from "@typescript-eslint/experimental-utils";
-import * as Rule from "@typescript-eslint/experimental-utils/dist/ts-eslint/Rule";
+import {
+  RuleContext,
+  RuleListener,
+  RuleMetaData,
+  RuleMetaDataDocs,
+  RuleModule
+} from "@typescript-eslint/experimental-utils/dist/ts-eslint";
 
 import { version } from "../../package.json";
 import { AllIgnoreOptions, shouldIgnore } from "../common/ignore-options";
@@ -12,17 +18,17 @@ import { AllIgnoreOptions, shouldIgnore } from "../common/ignore-options";
 export type BaseOptions = Array<any>;
 
 // "url" will be set automatically.
-export type RuleMetaDataDocs = Omit<Rule.RuleMetaDataDocs, "url">;
+export type RuleMetaDataDocs = Omit<RuleMetaDataDocs, "url">;
 
 // "docs.url" will be set automatically.
 export type RuleMetaData<MessageIds extends string> = {
   docs: RuleMetaDataDocs;
-} & Omit<Rule.RuleMetaData<MessageIds>, "docs">;
+} & Omit<RuleMetaData<MessageIds>, "docs">;
 
 export type RuleContext<
   MessageIds extends string,
   Options extends BaseOptions
-> = Rule.RuleContext<MessageIds, Options>;
+> = RuleContext<MessageIds, Options>;
 
 export type ParserServices = {
   [k in keyof UtilParserServices]: Exclude<UtilParserServices[k], undefined>;
@@ -41,8 +47,8 @@ export function createRule<
   create: (
     context: RuleContext<MessageIds, Options>,
     optionsWithDefault: Options
-  ) => Rule.RuleListener;
-}) {
+  ) => RuleListener;
+}): RuleModule<MessageIds, Options, RuleListener> {
   return ESLintUtils.RuleCreator(
     name =>
       `https://github.com/jonaskello/eslint-plugin-ts-immutable/blob/v${version}/docs/rules/${name}.md`
@@ -80,7 +86,7 @@ export function checkNode<
  */
 export function getParserServices<
   Context extends RuleContext<string, BaseOptions>
->(context: Context) {
+>(context: Context): ParserServices {
   if (
     !context.parserServices ||
     !context.parserServices.program ||

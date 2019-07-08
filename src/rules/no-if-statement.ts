@@ -35,7 +35,7 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
 function checkIfStatement(
   node: TSESTree.IfStatement,
   context: RuleContext<keyof typeof errorMessages, Options>
-) {
+): void {
   // All if statements violate this rule.
   context.report({ node, messageId: "generic" });
 }
