@@ -148,25 +148,23 @@ export function shouldIgnore(
     return true;
   }
 
-  // Is ignorePattern set?
-  if (ignoreOptions.ignorePattern !== undefined) {
-    const texts: ReadonlyArray<string> = getNodeTexts(node, context);
+  const texts: ReadonlyArray<string> = getNodeTexts(node, context);
+
+  if (texts.length > 0) {
+    // Ignore if a pattern matches and ignorePattern is set.
     if (
-      texts.length > 0 &&
-      // Ignore if a pattern matches for every text item.
+      ignoreOptions.ignorePattern &&
       texts.every(text => isIgnoredPattern(text, ignoreOptions.ignorePattern!))
     ) {
       return true;
     }
-  }
 
-  // Is ignoreAccessorPattern set?
-  if (ignoreOptions.ignoreAccessorPattern !== undefined) {
-    const accessor = getAccessorName(node);
-    // Ignore if a pattern matches.
+    // Ignore if a pattern matches and ignoreAccessorPattern is set.
     if (
-      accessor &&
-      isIgnoredAccessorPattern(accessor, ignoreOptions.ignoreAccessorPattern!)
+      ignoreOptions.ignoreAccessorPattern &&
+      texts.every(text =>
+        isIgnoredAccessorPattern(text, ignoreOptions.ignoreAccessorPattern!)
+      )
     ) {
       return true;
     }
@@ -180,39 +178,40 @@ function getNodeTexts(
   context: RuleContext<string, BaseOptions>
 ): ReadonlyArray<string> {
   return (isVariableDeclaration(node)
-    ? node.declarations.flatMap(declarator => getNodeTexts(declarator, context))
-    : isVariableDeclarator(node) || isTypeAliasDeclaration(node)
-    ? getNodeTexts(node.id, context)
-    : isTSPropertySignature(node)
-    ? getNodeTexts(node.key, context)
-    : [context.getSourceCode().getText(node)]
+    ? node.declarations.flatMap(declarator => getNodeText(declarator, context))
+    : [getNodeText(node, context)]
   ).filter(name => name !== undefined) as ReadonlyArray<string>;
 }
 
-function getAccessorName(node: TSESTree.Node): string | undefined {
+function getNodeText(
+  node: TSESTree.Node,
+  context: RuleContext<string, BaseOptions>
+): string | undefined {
   return isAssignmentExpression(node)
-    ? getAccessorName(node.left)
+    ? getNodeText(node.left, context)
     : isCallExpression(node)
-    ? getAccessorName(node.callee)
+    ? getNodeText(node.callee, context)
     : isMemberExpression(node)
-    ? getAccessorBaseName(node.object)
-    : getAccessorBaseName(node);
+    ? _getNodeText(node.object, context)
+    : isVariableDeclarator(node) || isTypeAliasDeclaration(node)
+    ? _getNodeText(node.id, context)
+    : isTSPropertySignature(node)
+    ? _getNodeText(node.key, context)
+    : _getNodeText(node, context);
 }
 
-function getAccessorBaseName(
-  node: TSESTree.Identifier | TSESTree.MemberExpression
-): string;
-function getAccessorBaseName(
-  node: Exclude<TSESTree.Node, TSESTree.Identifier & TSESTree.MemberExpression>
-): undefined;
-function getAccessorBaseName(node: TSESTree.Node): string | undefined {
+function _getNodeText(
+  node: TSESTree.Node,
+  context: RuleContext<string, BaseOptions>
+): string {
   return isIdentifier(node)
     ? node.name
     : isMemberExpression(node)
-    ? `${getAccessorBaseName(node.object)}.${getAccessorBaseName(
-        node.property
+    ? `${_getNodeText(node.object, context)}.${_getNodeText(
+        node.property,
+        context
       )}`
-    : undefined;
+    : context.getSourceCode().getText(node);
 }
 
 function isIgnoredPattern(
