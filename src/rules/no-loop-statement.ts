@@ -39,7 +39,7 @@ function checkLoop(
     | TSESTree.WhileStatement
     | TSESTree.DoWhileStatement,
   context: RuleContext<keyof typeof errorMessages, Options>
-) {
+): void {
   // All loops violate this rule.
   context.report({ node, messageId: "generic" });
 }

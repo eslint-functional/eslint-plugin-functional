@@ -2,7 +2,8 @@ import { RuleTester as ESLintRuleTester } from "eslint";
 import {
   RuleMetaData,
   RuleContext,
-  RuleListener
+  RuleListener,
+  RuleModule
 } from "@typescript-eslint/experimental-utils/dist/ts-eslint";
 import { createRule } from "../src/util/rule";
 
@@ -10,6 +11,7 @@ type OptionsSet = {
   /**
    * The set of options this test case should pass for.
    */
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   optionsSet: ReadonlyArray<any>;
 };
 
@@ -21,7 +23,6 @@ export type InvalidTestCase = Omit<
   "options"
 > &
   OptionsSet;
-/* eslint-disable prettier/prettier */
 
 /**
  * Convert our test cases into ones eslint test runner is expecting.
@@ -31,7 +32,7 @@ export function processValidTestCase(
 ): Array<ESLintRuleTester.ValidTestCase> {
   // Ideally these two functions should be merged into 1 but I haven't been able
   // to get the typing information right - so for now they are two functions.
-  /* eslint-disable @typescript-eslint/no-explicit-any */
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   return processInvalidTestCase(testCases as any);
 }
 
@@ -66,10 +67,12 @@ export function processInvalidTestCase(
 
 export function createDummyRule(
   create: (
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     context: RuleContext<"generic", Array<any>>,
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     optionsWithDefault: Array<any>
   ) => RuleListener
-) {
+): RuleModule<"generic", [], RuleListener> {
   const meta: RuleMetaData<"generic"> = {
     type: "suggestion",
     docs: {
@@ -85,6 +88,7 @@ export function createDummyRule(
     schema: {}
   };
 
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   return createRule<"generic", Array<any>>({
     name: "dummy",
     meta,
