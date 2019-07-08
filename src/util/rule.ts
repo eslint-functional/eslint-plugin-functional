@@ -4,10 +4,10 @@ import {
   TSESTree
 } from "@typescript-eslint/experimental-utils";
 import {
-  RuleContext,
+  RuleContext as UtilRuleContext,
   RuleListener,
-  RuleMetaData,
-  RuleMetaDataDocs,
+  RuleMetaData as UtilRuleMetaData,
+  RuleMetaDataDocs as UtilRuleMetaDataDocs,
   RuleModule
 } from "@typescript-eslint/experimental-utils/dist/ts-eslint";
 
@@ -18,17 +18,17 @@ import { AllIgnoreOptions, shouldIgnore } from "../common/ignore-options";
 export type BaseOptions = Array<any>;
 
 // "url" will be set automatically.
-export type RuleMetaDataDocs = Omit<RuleMetaDataDocs, "url">;
+export type RuleMetaDataDocs = Omit<UtilRuleMetaDataDocs, "url">;
 
 // "docs.url" will be set automatically.
 export type RuleMetaData<MessageIds extends string> = {
   docs: RuleMetaDataDocs;
-} & Omit<RuleMetaData<MessageIds>, "docs">;
+} & Omit<UtilRuleMetaData<MessageIds>, "docs">;
 
 export type RuleContext<
   MessageIds extends string,
   Options extends BaseOptions
-> = RuleContext<MessageIds, Options>;
+> = UtilRuleContext<MessageIds, Options>;
 
 export type ParserServices = {
   [k in keyof UtilParserServices]: Exclude<UtilParserServices[k], undefined>;
