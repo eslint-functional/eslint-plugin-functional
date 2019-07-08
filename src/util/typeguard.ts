@@ -52,12 +52,6 @@ export function isClassLike(
   return node.type === "ClassDeclaration" || node.type === "ClassExpression";
 }
 
-export function isExpressionStatement(
-  node: TSESTree.Node
-): node is TSESTree.ExpressionStatement {
-  return node.type === "ExpressionStatement";
-}
-
 export function isForXInitialiser(
   node: TSESTree.Node
 ): node is TSESTree.ForInitialiser {
