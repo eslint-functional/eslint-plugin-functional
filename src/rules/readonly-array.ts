@@ -3,12 +3,20 @@ import { all as deepMerge } from "deepmerge";
 import { JSONSchema4 } from "json-schema";
 
 import * as ignore from "../common/ignore-options";
-import { checkNode, createRule, RuleContext, RuleMetaData } from "../util/rule";
 import {
+  checkNode,
+  createRule,
+  getParserServices,
+  RuleContext,
+  RuleMetaData
+} from "../util/rule";
+import {
+  isArrayType,
+  isAssignmentPattern,
+  isFunctionLike,
   isIdentifier,
   isTSArrayType,
-  isTSTypeOperator,
-  isFunctionLike
+  isTSTypeOperator
 } from "../util/typeguard";
 
 // The name of this rule.
@@ -40,7 +48,8 @@ const defaultOptions: Options = [
 
 // The possible error messages.
 const errorMessages = {
-  generic: "Only ReadonlyArray allowed."
+  generic: "Only readonly arrays allowed.",
+  implicit: "Implicitly a mutable array. Only readonly arrays allowed."
 } as const;
 
 // The meta data for this rule.
@@ -109,6 +118,62 @@ function checkTypeReference(
 }
 
 /**
+ * Check if the given TypeReference violates this rule.
+ */
+function checkImplicitType(
+  node:
+    | TSESTree.VariableDeclaration
+    | TSESTree.FunctionDeclaration
+    | TSESTree.FunctionExpression
+    | TSESTree.ArrowFunctionExpression,
+  context: RuleContext<keyof typeof errorMessages, Options>
+): void {
+  type Declarator = {
+    id: TSESTree.Node;
+    init: TSESTree.Node | null;
+    node: TSESTree.Node;
+  };
+
+  const declarators: ReadonlyArray<Declarator> = isFunctionLike(node)
+    ? (node.params
+        .map(param =>
+          isAssignmentPattern(param)
+            ? { id: param.left, init: param.right, node: param }
+            : undefined
+        )
+        .filter(param => param !== undefined) as ReadonlyArray<Declarator>)
+    : node.declarations.map(declaration => ({
+        id: declaration.id,
+        init: declaration.init,
+        node: declaration
+      }));
+
+  declarators.forEach(declarator => {
+    if (
+      isIdentifier(declarator.id) &&
+      declarator.id.typeAnnotation === undefined &&
+      declarator.init !== null
+    ) {
+      const parserServices = getParserServices(context);
+      const type = parserServices.program
+        .getTypeChecker()
+        .getTypeAtLocation(
+          parserServices.esTreeNodeToTSNodeMap.get(declarator.init)
+        );
+
+      if (isArrayType(type)) {
+        context.report({
+          node: declarator.node,
+          messageId: "implicit",
+          fix: fixer =>
+            fixer.insertTextAfter(declarator.id, ": readonly unknown[]")
+        });
+      }
+    }
+  });
+}
+
+/**
  * Is the given node in the return type.
  */
 function isInReturnType(node: TSESTree.Node): boolean {
@@ -143,11 +208,21 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
       undefined,
       options
     );
+    const _checkImplicitType = checkNode(
+      checkImplicitType,
+      context,
+      undefined,
+      options
+    );
 
     return {
       TSArrayType: _checkArrayOrTupleType,
       TSTupleType: _checkArrayOrTupleType,
-      TSTypeReference: _checkTypeReference
+      TSTypeReference: _checkTypeReference,
+      VariableDeclaration: _checkImplicitType,
+      FunctionDeclaration: _checkImplicitType,
+      FunctionExpression: _checkImplicitType,
+      ArrowFunctionExpression: _checkImplicitType
     };
   }
 });

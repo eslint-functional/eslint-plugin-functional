@@ -143,6 +143,12 @@ const valid: Array<ValidTestCase> = [
     code: dedent`
       function foo<T>(x: T): T extends Array<number> ? string : number[] {}`,
     optionsSet: [[{ ignoreReturnType: true }]]
+  },
+  // Should no fail on implicit ReadonlyArray type in variable declaration.
+  {
+    code: dedent`
+      const foo = [1, 2, 3] as const`,
+    optionsSet: [[]]
   }
 ];
 
@@ -610,11 +616,31 @@ const invalid: Array<InvalidTestCase> = [
         column: 17
       }
     ]
+  },
+  // Should fail on implicit Array type in variable declaration.
+  {
+    code: dedent`
+      const foo = [1, 2, 3]
+      function bar(param = [1, 2, 3]) {}`,
+    optionsSet: [[]],
+    output: dedent`
+      const foo: readonly unknown[] = [1, 2, 3]
+      function bar(param: readonly unknown[] = [1, 2, 3]) {}`,
+    errors: [
+      {
+        messageId: "implicit",
+        type: "VariableDeclarator",
+        line: 1,
+        column: 7
+      },
+      {
+        messageId: "implicit",
+        type: "AssignmentPattern",
+        line: 2,
+        column: 14
+      }
+    ]
   }
-  // TODO: Should fail on implicit Array type in variable declaration.
-  // - needs type information
-
-  // TODO: Test ignore pattern options.
 ];
 
 describe("TypeScript", () => {
