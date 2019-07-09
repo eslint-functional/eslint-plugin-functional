@@ -1,7 +1,13 @@
 {
   "root": true,
   "parser": "@typescript-eslint/parser",
-  "plugins": ["eslint-plugin", "@typescript-eslint", "jest", "prettier"],
+  "plugins": [
+    "eslint-plugin",
+    "@typescript-eslint",
+    "jest",
+    "prettier",
+    "ts-immutable"
+  ],
   "env": {
     "es6": true,
     "node": true
@@ -20,8 +26,28 @@
     "sourceType": "module"
   },
   "rules": {
+    // Built in.
     "no-param-reassign": "error",
     "no-var": "error",
+
+    // Our rules.
+    "ts-immutable/no-let": "error",
+    "ts-immutable/no-array-mutation": "error",
+    "ts-immutable/no-object-mutation": "error",
+    "ts-immutable/no-delete": "error",
+    "ts-immutable/readonly-array": ["error", { "ignoreReturnType": true }],
+    "ts-immutable/readonly-keyword": "error",
+    "ts-immutable/no-method-signature": "error",
+    "ts-immutable/no-this": "error",
+    "ts-immutable/no-class": "error",
+    "ts-immutable/no-loop-statement": "warn",
+    "ts-immutable/no-throw": "warn",
+    "ts-immutable/no-mixed-interface": "error",
+    "ts-immutable/no-expression-statement": "warn",
+    "ts-immutable/no-if-statement": "warn",
+    "ts-immutable/no-try": "warn",
+
+    // Typescript eslint.
     "@typescript-eslint/array-type": ["error", "generic"],
     "@typescript-eslint/explicit-function-return-type": [
       "error",
@@ -55,8 +81,9 @@
     ]
   },
   "overrides": [
+    // Testing Rules.
     {
-      "files": ["tests/**/*.ts"],
+      "files": ["**/*.test.ts"],
       "env": {
         "jest/globals": true
       },
@@ -72,7 +99,9 @@
         "jest/no-test-return-statement": "error",
         "jest/prefer-to-have-length": "warn",
         "jest/prefer-spy-on": "error",
-        "jest/valid-expect": "error"
+        "jest/valid-expect": "error",
+
+        "ts-immutable/no-expression-statement": "off"
       }
     }
   ]

@@ -79,6 +79,7 @@
     "compile-tests": "tsc -p tsconfig.tests.json",
     "build-tests": "rimraf build && yarn compile-tests",
     "build": "rimraf dist && yarn compile",
+    "prelint": "yarn build && yarn link && yarn link 'eslint-plugin-ts-immutable'",
     "lint": "eslint './{src,tests}/**/*.ts' --ext .ts",
     "test": "jest --testPathIgnorePatterns _work.test",
     "test-work": "jest tests/rules/_work.test.ts",
