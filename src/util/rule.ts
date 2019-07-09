@@ -8,7 +8,8 @@ import {
   RuleListener,
   RuleMetaData as UtilRuleMetaData,
   RuleMetaDataDocs as UtilRuleMetaDataDocs,
-  RuleModule
+  RuleModule,
+  ReportDescriptor
 } from "@typescript-eslint/experimental-utils/dist/ts-eslint";
 
 import { version } from "../../package.json";
@@ -29,6 +30,14 @@ export type RuleContext<
   MessageIds extends string,
   Options extends BaseOptions
 > = UtilRuleContext<MessageIds, Options>;
+
+export type RuleResult<
+  MessageIds extends string,
+  Options extends BaseOptions
+> = {
+  context: RuleContext<MessageIds, Options>;
+  descriptors: Array<ReportDescriptor<MessageIds>>;
+};
 
 export type ParserServices = {
   [k in keyof UtilParserServices]: Exclude<UtilParserServices[k], undefined>;
@@ -60,11 +69,16 @@ export function createRule<
  * check.
  */
 export function checkNode<
-  Context extends RuleContext<string, BaseOptions>,
+  MessageIds extends string,
+  Context extends RuleContext<MessageIds, BaseOptions>,
   IgnoreOptions extends AllIgnoreOptions,
   Node extends TSESTree.Node
 >(
-  check: (node: Node, context: Context, options: BaseOptions) => void,
+  check: (
+    node: Node,
+    context: Context,
+    options: BaseOptions
+  ) => RuleResult<MessageIds, BaseOptions>,
   context: Context,
   ignoreOptions?: IgnoreOptions,
   otherOptions: BaseOptions = []
@@ -77,7 +91,9 @@ export function checkNode<
     const options = [ignoreOptions, ...otherOptions].filter(
       option => option !== undefined
     );
-    return check(node, context, options);
+
+    const result = check(node, context, options);
+    result.descriptors.forEach(descriptor => result.context.report(descriptor));
   };
 }
 

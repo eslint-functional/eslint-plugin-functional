@@ -1,6 +1,12 @@
 import { TSESTree } from "@typescript-eslint/typescript-estree";
 
-import { checkNode, createRule, RuleContext, RuleMetaData } from "../util/rule";
+import {
+  checkNode,
+  createRule,
+  RuleContext,
+  RuleMetaData,
+  RuleResult
+} from "../util/rule";
 
 // The name of this rule.
 export const name = "no-method-signature" as const;
@@ -36,9 +42,9 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
 function checkTSMethodSignature(
   node: TSESTree.TSMethodSignature,
   context: RuleContext<keyof typeof errorMessages, Options>
-): void {
+): RuleResult<keyof typeof errorMessages, Options> {
   // All TS method signatures violate this rule.
-  context.report({ node, messageId: "generic" });
+  return { context, descriptors: [{ node, messageId: "generic" }] };
 }
 
 // Create the rule.

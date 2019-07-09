@@ -1,6 +1,12 @@
 import { TSESTree } from "@typescript-eslint/typescript-estree";
 
-import { checkNode, createRule, RuleContext, RuleMetaData } from "../util/rule";
+import {
+  checkNode,
+  createRule,
+  RuleContext,
+  RuleMetaData,
+  RuleResult
+} from "../util/rule";
 import { isIdentifier, isMemberExpression } from "../util/typeguard";
 
 // The name of this rule.
@@ -35,7 +41,7 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
 function checkCallExpression(
   node: TSESTree.CallExpression,
   context: RuleContext<keyof typeof errorMessages, Options>
-): void {
+): RuleResult<keyof typeof errorMessages, Options> {
   if (
     isMemberExpression(node.callee) &&
     isIdentifier(node.callee.object) &&
@@ -43,8 +49,10 @@ function checkCallExpression(
     node.callee.object.name === "Promise" &&
     node.callee.property.name === "reject"
   ) {
-    context.report({ node, messageId: "generic" });
+    return { context, descriptors: [{ node, messageId: "generic" }] };
   }
+
+  return { context, descriptors: [] };
 }
 
 // Create the rule.

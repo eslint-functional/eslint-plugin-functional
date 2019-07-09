@@ -8,7 +8,8 @@ import {
   getParserServices,
   parserServicesAvaliable,
   RuleContext,
-  RuleMetaData
+  RuleMetaData,
+  RuleResult
 } from "../util/rule";
 import { inConstructor } from "../util/tree";
 import {
@@ -52,15 +53,16 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
 function checkAssignmentExpression(
   node: TSESTree.AssignmentExpression,
   context: RuleContext<keyof typeof errorMessages, Options>
-): void {
+): RuleResult<keyof typeof errorMessages, Options> {
   // No assignment with object.property on the left.
   if (
     isMemberExpression(node.left) &&
     // Ignore if in a constructor - allow for field initialization.
     !inConstructor(node)
   ) {
-    context.report({ node, messageId: "generic" });
+    return { context, descriptors: [{ node, messageId: "generic" }] };
   }
+  return { context, descriptors: [] };
 }
 
 /**
@@ -69,11 +71,12 @@ function checkAssignmentExpression(
 function checkUnaryExpression(
   node: TSESTree.UnaryExpression,
   context: RuleContext<keyof typeof errorMessages, Options>
-): void {
+): RuleResult<keyof typeof errorMessages, Options> {
   // No deleting object properties.
   if (node.operator === "delete" && isMemberExpression(node.argument)) {
-    context.report({ node, messageId: "generic" });
+    return { context, descriptors: [{ node, messageId: "generic" }] };
   }
+  return { context, descriptors: [] };
 }
 
 /**
@@ -82,13 +85,14 @@ function checkUnaryExpression(
 function checkUpdateExpression(
   node: TSESTree.UpdateExpression,
   context: RuleContext<keyof typeof errorMessages, Options>
-): void {
+): RuleResult<keyof typeof errorMessages, Options> {
   if (
     (node.operator === "++" || node.operator === "--") &&
     isMemberExpression(node.argument)
   ) {
-    context.report({ node, messageId: "generic" });
+    return { context, descriptors: [{ node, messageId: "generic" }] };
   }
+  return { context, descriptors: [] };
 }
 
 /**
@@ -97,7 +101,7 @@ function checkUpdateExpression(
 function checkCallExpression(
   node: TSESTree.CallExpression,
   context: RuleContext<keyof typeof errorMessages, Options>
-): void {
+): RuleResult<keyof typeof errorMessages, Options> {
   // No Object.assign on identifiers.
   if (
     isMemberExpression(node.callee) &&
@@ -118,7 +122,7 @@ function checkCallExpression(
             )
         )
       ) {
-        context.report({ node, messageId: "generic" });
+        return { context, descriptors: [{ node, messageId: "generic" }] };
       }
     }
     // No type checking avaliable? Just assume "Object" is an ObjectConstructor
@@ -128,10 +132,11 @@ function checkCallExpression(
         isIdentifier(node.callee.object) &&
         node.callee.object.name === "Object"
       ) {
-        context.report({ node, messageId: "generic" });
+        return { context, descriptors: [{ node, messageId: "generic" }] };
       }
     }
   }
+  return { context, descriptors: [] };
 }
 
 // Create the rule.
