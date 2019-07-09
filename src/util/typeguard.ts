@@ -13,20 +13,20 @@ import { ForXStatement } from "./types";
  */
 
 export type ArrayType = ts.Type & {
-  symbol: {
-    name: "Array";
+  readonly symbol: {
+    readonly name: "Array";
   };
 };
 
 export type ArrayConstructorType = ts.Type & {
-  symbol: {
-    name: "ArrayConstructor";
+  readonly symbol: {
+    readonly name: "ArrayConstructor";
   };
 };
 
 export type ObjectConstructorType = ts.Type & {
-  symbol: {
-    name: "ObjectConstructor";
+  readonly symbol: {
+    readonly name: "ObjectConstructor";
   };
 };
 

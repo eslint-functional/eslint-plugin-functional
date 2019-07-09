@@ -16,14 +16,14 @@ import { version } from "../../package.json";
 import { AllIgnoreOptions, shouldIgnore } from "../common/ignore-options";
 
 /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-export type BaseOptions = Array<any>;
+export type BaseOptions = ReadonlyArray<any>;
 
 // "url" will be set automatically.
 export type RuleMetaDataDocs = Omit<UtilRuleMetaDataDocs, "url">;
 
 // "docs.url" will be set automatically.
 export type RuleMetaData<MessageIds extends string> = {
-  docs: RuleMetaDataDocs;
+  readonly docs: RuleMetaDataDocs;
 } & Omit<UtilRuleMetaData<MessageIds>, "docs">;
 
 export type RuleContext<
@@ -35,12 +35,16 @@ export type RuleResult<
   MessageIds extends string,
   Options extends BaseOptions
 > = {
-  context: RuleContext<MessageIds, Options>;
-  descriptors: Array<ReportDescriptor<MessageIds>>;
+  readonly context: RuleContext<MessageIds, Options>;
+  readonly descriptors: ReadonlyArray<ReportDescriptor<MessageIds>>;
 };
 
 export type ParserServices = {
   [k in keyof UtilParserServices]: Exclude<UtilParserServices[k], undefined>;
+};
+
+type Mutable<T> = {
+  -readonly [P in keyof T]: T[P];
 };
 
 /**
@@ -50,12 +54,12 @@ export function createRule<
   MessageIds extends string,
   Options extends BaseOptions
 >(data: {
-  name: string;
-  meta: RuleMetaData<MessageIds>;
-  defaultOptions: Options;
-  create: (
-    context: RuleContext<MessageIds, Options>,
-    optionsWithDefault: Options
+  readonly name: string;
+  readonly meta: RuleMetaData<MessageIds>;
+  readonly defaultOptions: Options;
+  readonly create: (
+    context: RuleContext<MessageIds, Mutable<Options>>,
+    optionsWithDefault: Mutable<Options>
   ) => RuleListener;
 }): RuleModule<MessageIds, Options, RuleListener> {
   return ESLintUtils.RuleCreator(
@@ -84,16 +88,17 @@ export function checkNode<
   otherOptions: BaseOptions = []
 ): (node: Node) => void {
   return (node: Node) => {
-    if (ignoreOptions && shouldIgnore(node, context, ignoreOptions)) {
-      return;
+    if (!ignoreOptions || !shouldIgnore(node, context, ignoreOptions)) {
+      const result = check(
+        node,
+        context,
+        [ignoreOptions, ...otherOptions].filter(option => option !== undefined)
+      );
+
+      result.descriptors.forEach(descriptor =>
+        result.context.report(descriptor)
+      );
     }
-
-    const options = [ignoreOptions, ...otherOptions].filter(
-      option => option !== undefined
-    );
-
-    const result = check(node, context, options);
-    result.descriptors.forEach(descriptor => result.context.report(descriptor));
   };
 }
 

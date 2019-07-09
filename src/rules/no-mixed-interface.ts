@@ -14,7 +14,7 @@ import { isTSPropertySignature } from "../util/typeguard";
 export const name = "no-mixed-interface" as const;
 
 // The options this rule can take.
-type Options = [];
+type Options = readonly [];
 
 // The default options for the rule.
 const defaultOptions: Options = [];

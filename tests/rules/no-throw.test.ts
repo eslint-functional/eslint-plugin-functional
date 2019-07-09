@@ -16,10 +16,10 @@ import {
 } from "../util";
 
 // Valid test cases.
-const valid: Array<ValidTestCase> = [];
+const valid: ReadonlyArray<ValidTestCase> = [];
 
 // Invalid test cases.
-const invalid: Array<InvalidTestCase> = [
+const invalid: ReadonlyArray<InvalidTestCase> = [
   {
     code: `throw 'error';`,
     optionsSet: [[]],
@@ -60,7 +60,7 @@ const invalid: Array<InvalidTestCase> = [
 
 describe("TypeScript", () => {
   const ruleTester = new RuleTester(typescript);
-  ruleTester.run(name, rule as Rule.RuleModule, {
+  ruleTester.run(name, (rule as unknown) as Rule.RuleModule, {
     valid: processValidTestCase(valid),
     invalid: processInvalidTestCase(invalid)
   });
@@ -68,7 +68,7 @@ describe("TypeScript", () => {
 
 describe("JavaScript (es3)", () => {
   const ruleTester = new RuleTester(es3);
-  ruleTester.run(name, rule as Rule.RuleModule, {
+  ruleTester.run(name, (rule as unknown) as Rule.RuleModule, {
     valid: processValidTestCase(valid),
     invalid: processInvalidTestCase(invalid)
   });

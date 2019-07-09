@@ -22,7 +22,7 @@ import {
 export const name = "no-object-mutation" as const;
 
 // The options this rule can take.
-type Options = [ignore.IgnorePatternOptions];
+type Options = readonly [ignore.IgnorePatternOptions];
 
 // The schema for the rule options.
 const schema: JSONSchema4 = [ignore.ignorePatternOptionsSchema];

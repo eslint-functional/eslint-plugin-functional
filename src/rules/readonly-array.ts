@@ -24,7 +24,7 @@ import {
 export const name = "readonly-array" as const;
 
 // The options this rule can take.
-type Options = [
+type Options = readonly [
   ignore.IgnoreLocalOption &
     ignore.IgnorePatternOptions &
     ignore.IgnoreReturnTypeOption
@@ -140,23 +140,23 @@ function checkImplicitType(
   context: RuleContext<keyof typeof errorMessages, Options>
 ): RuleResult<keyof typeof errorMessages, Options> {
   type Declarator = {
-    id: TSESTree.Node;
-    init: TSESTree.Node | null;
-    node: TSESTree.Node;
+    readonly id: TSESTree.Node;
+    readonly init: TSESTree.Node | null;
+    readonly node: TSESTree.Node;
   };
 
   const declarators: ReadonlyArray<Declarator> = isFunctionLike(node)
     ? node.params
         .map(param =>
           isAssignmentPattern(param)
-            ? /* eslint-disable @typescript-eslint/no-object-literal-type-assertion */
+            ? /* eslint-disable-next-line @typescript-eslint/no-object-literal-type-assertion */
               ({ id: param.left, init: param.right, node: param } as Declarator)
             : undefined
         )
         .filter((param): param is Declarator => param !== undefined)
     : node.declarations.map(
         declaration =>
-          /* eslint-disable @typescript-eslint/no-object-literal-type-assertion */
+          /* eslint-disable-next-line @typescript-eslint/no-object-literal-type-assertion */
           ({
             id: declaration.id,
             init: declaration.init,
