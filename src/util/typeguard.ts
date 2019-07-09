@@ -40,6 +40,12 @@ export function isAssignmentExpression(
   return node.type === "AssignmentExpression";
 }
 
+export function isAssignmentPattern(
+  node: TSESTree.Node
+): node is TSESTree.AssignmentPattern {
+  return node.type === "AssignmentPattern";
+}
+
 export function isArrayExpression(
   node: TSESTree.Node
 ): node is TSESTree.ArrayExpression {
