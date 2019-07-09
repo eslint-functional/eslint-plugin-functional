@@ -135,18 +135,21 @@ function checkImplicitType(
   };
 
   const declarators: ReadonlyArray<Declarator> = isFunctionLike(node)
-    ? (node.params
+    ? node.params
         .map(param =>
           isAssignmentPattern(param)
-            ? { id: param.left, init: param.right, node: param }
+            ? ({ id: param.left, init: param.right, node: param } as Declarator)
             : undefined
         )
-        .filter(param => param !== undefined) as ReadonlyArray<Declarator>)
-    : node.declarations.map(declaration => ({
-        id: declaration.id,
-        init: declaration.init,
-        node: declaration
-      }));
+        .filter((param): param is Declarator => param !== undefined)
+    : node.declarations.map(
+        declaration =>
+          ({
+            id: declaration.id,
+            init: declaration.init,
+            node: declaration
+          } as Declarator)
+      );
 
   declarators.forEach(declarator => {
     if (
