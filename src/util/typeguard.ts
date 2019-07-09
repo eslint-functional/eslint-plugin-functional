@@ -24,6 +24,12 @@ export type ArrayConstructorType = ts.Type & {
   };
 };
 
+export type ObjectConstructorType = ts.Type & {
+  symbol: {
+    name: "ObjectConstructor";
+  };
+};
+
 /*
  * Node type guards.
  */
@@ -84,6 +90,12 @@ export function isMemberExpression(
   node: TSESTree.Node
 ): node is TSESTree.MemberExpression {
   return node.type === "MemberExpression";
+}
+
+export function isMethodDefinition(
+  node: TSESTree.Node
+): node is TSESTree.MethodDefinition {
+  return node.type === "MethodDefinition";
 }
 
 export function isNewExpression(
@@ -166,6 +178,18 @@ export function isArrayConstructorType(
   }
   if (isUnionType(type)) {
     return type.types.some(isArrayConstructorType);
+  }
+  return false;
+}
+
+export function isObjectConstructorType(
+  type: ts.Type
+): type is ObjectConstructorType {
+  if (type.symbol && type.symbol.name === "ObjectConstructor") {
+    return true;
+  }
+  if (isUnionType(type)) {
+    return type.types.some(isObjectConstructorType);
   }
   return false;
 }

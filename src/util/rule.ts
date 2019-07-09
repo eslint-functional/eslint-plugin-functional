@@ -84,22 +84,31 @@ export function checkNode<
 /**
  * Ensure the type info is avaliable.
  */
+export function parserServicesAvaliable<
+  Context extends RuleContext<string, BaseOptions>
+>(context: Context): boolean {
+  return (
+    context.parserServices !== undefined &&
+    context.parserServices.program !== undefined &&
+    context.parserServices.esTreeNodeToTSNodeMap !== undefined
+  );
+}
+
+/**
+ * Ensure the type info is avaliable.
+ */
 export function getParserServices<
   Context extends RuleContext<string, BaseOptions>
 >(context: Context): ParserServices {
-  if (
-    !context.parserServices ||
-    !context.parserServices.program ||
-    !context.parserServices.esTreeNodeToTSNodeMap
-  ) {
-    /**
-     * The user needs to have configured "project" in their parserOptions
-     * for @typescript-eslint/parser
-     */
-    throw new Error(
-      'You have used a rule which requires parserServices to be generated. You must therefore provide a value for the "parserOptions.project" property for @typescript-eslint/parser.'
-    );
+  if (parserServicesAvaliable(context)) {
+    return context.parserServices as ParserServices;
   }
 
-  return context.parserServices as ParserServices;
+  /**
+   * The user needs to have configured "project" in their parserOptions
+   * for @typescript-eslint/parser
+   */
+  throw new Error(
+    'You have used a rule which is only avaliable for TypeScript files and requires parserServices to be generated. You must therefore provide a value for the "parserOptions.project" property for @typescript-eslint/parser.'
+  );
 }
