@@ -222,7 +222,7 @@ function getIdentifierNames(
     : isTSPropertySignature(node)
     ? getIdentifierNames(node.key, context)
     : []
-  ).filter(name => name !== undefined) as ReadonlyArray<string>;
+  ).filter((name): name is string => name !== undefined);
 }
 
 function isIgnoredPrefix(
