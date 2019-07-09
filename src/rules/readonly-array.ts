@@ -149,12 +149,14 @@ function checkImplicitType(
     ? node.params
         .map(param =>
           isAssignmentPattern(param)
-            ? ({ id: param.left, init: param.right, node: param } as Declarator)
+            ? /* eslint-disable @typescript-eslint/no-object-literal-type-assertion */
+              ({ id: param.left, init: param.right, node: param } as Declarator)
             : undefined
         )
         .filter((param): param is Declarator => param !== undefined)
     : node.declarations.map(
         declaration =>
+          /* eslint-disable @typescript-eslint/no-object-literal-type-assertion */
           ({
             id: declaration.id,
             init: declaration.init,
