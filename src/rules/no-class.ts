@@ -44,8 +44,8 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
   name,
   meta,
   defaultOptions,
-  create(context, options) {
-    const _checkClass = checkNode(checkClass, context, undefined, options);
+  create(context) {
+    const _checkClass = checkNode(checkClass, context);
 
     return {
       ClassDeclaration: _checkClass,

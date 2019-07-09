@@ -44,13 +44,8 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
   name,
   meta,
   defaultOptions,
-  create(context, options) {
-    const _checkThrowStatement = checkNode(
-      checkThrowStatement,
-      context,
-      undefined,
-      options
-    );
+  create(context) {
+    const _checkThrowStatement = checkNode(checkThrowStatement, context);
 
     return {
       ThrowStatement: _checkThrowStatement

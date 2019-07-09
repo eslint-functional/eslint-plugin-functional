@@ -72,12 +72,10 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
   name,
   meta,
   defaultOptions,
-  create(context, options) {
+  create(context) {
     const _checkTSInterfaceDeclaration = checkNode(
       checkTSInterfaceDeclaration,
-      context,
-      undefined,
-      options
+      context
     );
 
     return {

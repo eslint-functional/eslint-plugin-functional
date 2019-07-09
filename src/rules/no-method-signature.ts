@@ -46,13 +46,8 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
   name,
   meta,
   defaultOptions,
-  create(context, options) {
-    const _checkTSMethodSignature = checkNode(
-      checkTSMethodSignature,
-      context,
-      undefined,
-      options
-    );
+  create(context) {
+    const _checkTSMethodSignature = checkNode(checkTSMethodSignature, context);
 
     return {
       TSMethodSignature: _checkTSMethodSignature

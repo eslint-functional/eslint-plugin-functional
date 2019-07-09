@@ -45,13 +45,8 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
   name,
   meta,
   defaultOptions,
-  create(context, options) {
-    const _checkIfStatement = checkNode(
-      checkIfStatement,
-      context,
-      undefined,
-      options
-    );
+  create(context) {
+    const _checkIfStatement = checkNode(checkIfStatement, context);
 
     return {
       IfStatement: _checkIfStatement
