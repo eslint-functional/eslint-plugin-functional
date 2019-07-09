@@ -195,24 +195,24 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
   name,
   meta,
   defaultOptions,
-  create(context, options) {
+  create(context, [ignoreOptions, ...otherOptions]) {
     const _checkArrayOrTupleType = checkNode(
       checkArrayOrTupleType,
       context,
-      undefined,
-      options
+      ignoreOptions,
+      otherOptions
     );
     const _checkTypeReference = checkNode(
       checkTypeReference,
       context,
-      undefined,
-      options
+      ignoreOptions,
+      otherOptions
     );
     const _checkImplicitType = checkNode(
       checkImplicitType,
       context,
-      undefined,
-      options
+      ignoreOptions,
+      otherOptions
     );
 
     return {

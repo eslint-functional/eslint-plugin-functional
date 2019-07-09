@@ -52,13 +52,8 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
   name,
   meta,
   defaultOptions,
-  create(context, options) {
-    const _checkCallExpression = checkNode(
-      checkCallExpression,
-      context,
-      undefined,
-      options
-    );
+  create(context) {
+    const _checkCallExpression = checkNode(checkCallExpression, context);
 
     return {
       CallExpression: _checkCallExpression

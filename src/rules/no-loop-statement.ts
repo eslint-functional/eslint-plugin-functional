@@ -49,8 +49,8 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
   name,
   meta,
   defaultOptions,
-  create(context, options) {
-    const _checkLoop = checkNode(checkLoop, context, undefined, options);
+  create(context) {
+    const _checkLoop = checkNode(checkLoop, context);
 
     return {
       ForStatement: _checkLoop,

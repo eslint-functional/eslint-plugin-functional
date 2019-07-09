@@ -45,13 +45,8 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
   name,
   meta,
   defaultOptions,
-  create(context, options) {
-    const _checkUnaryExpression = checkNode(
-      checkUnaryExpression,
-      context,
-      undefined,
-      options
-    );
+  create(context) {
+    const _checkUnaryExpression = checkNode(checkUnaryExpression, context);
 
     return {
       UnaryExpression: _checkUnaryExpression
