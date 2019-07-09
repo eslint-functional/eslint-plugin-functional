@@ -9,7 +9,8 @@ import {
   getParserServices,
   ParserServices,
   RuleContext,
-  RuleMetaData
+  RuleMetaData,
+  RuleResult
 } from "../util/rule";
 import {
   isArrayConstructorType,
@@ -104,7 +105,7 @@ const constructorFunctions = ["from", "of"];
 function checkAssignmentExpression(
   node: TSESTree.AssignmentExpression,
   context: RuleContext<keyof typeof errorMessages, Options>
-): void {
+): RuleResult<keyof typeof errorMessages, Options> {
   if (isMemberExpression(node.left)) {
     const parserServices = getParserServices(context);
 
@@ -117,9 +118,11 @@ function checkAssignmentExpression(
           )
       )
     ) {
-      context.report({ node, messageId: "generic" });
+      return { context, descriptors: [{ node, messageId: "generic" }] };
     }
   }
+
+  return { context, descriptors: [] };
 }
 
 /**
@@ -128,7 +131,7 @@ function checkAssignmentExpression(
 function checkUnaryExpression(
   node: TSESTree.UnaryExpression,
   context: RuleContext<keyof typeof errorMessages, Options>
-): void {
+): RuleResult<keyof typeof errorMessages, Options> {
   if (node.operator === "delete" && isMemberExpression(node.argument)) {
     const parserServices = getParserServices(context);
     const type = parserServices.program
@@ -138,9 +141,11 @@ function checkUnaryExpression(
       );
 
     if (isArrayType(type)) {
-      context.report({ node, messageId: "generic" });
+      return { context, descriptors: [{ node, messageId: "generic" }] };
     }
   }
+
+  return { context, descriptors: [] };
 }
 
 /**
@@ -149,7 +154,7 @@ function checkUnaryExpression(
 function checkUpdateExpression(
   node: TSESTree.UpdateExpression,
   context: RuleContext<keyof typeof errorMessages, Options>
-): void {
+): RuleResult<keyof typeof errorMessages, Options> {
   if (
     (node.operator === "++" || node.operator === "--") &&
     isMemberExpression(node.argument)
@@ -165,9 +170,11 @@ function checkUpdateExpression(
           )
       )
     ) {
-      context.report({ node, messageId: "generic" });
+      return { context, descriptors: [{ node, messageId: "generic" }] };
     }
   }
+
+  return { context, descriptors: [] };
 }
 
 /**
@@ -177,7 +184,7 @@ function checkCallExpression(
   node: TSESTree.CallExpression,
   context: RuleContext<keyof typeof errorMessages, Options>,
   [options]: Options
-): void {
+): RuleResult<keyof typeof errorMessages, Options> {
   if (
     isMemberExpression(node.callee) &&
     isIdentifier(node.callee.property) &&
@@ -191,13 +198,8 @@ function checkCallExpression(
     const parserServices = getParserServices(context);
 
     if (
-      options.ignoreNewArray &&
-      isInChainCallAndFollowsNew(node.callee, parserServices)
-    ) {
-      return;
-    }
-
-    if (
+      (!options.ignoreNewArray ||
+        !isInChainCallAndFollowsNew(node.callee, parserServices)) &&
       isArrayType(
         parserServices.program
           .getTypeChecker()
@@ -206,9 +208,11 @@ function checkCallExpression(
           )
       )
     ) {
-      context.report({ node, messageId: "generic" });
+      return { context, descriptors: [{ node, messageId: "generic" }] };
     }
   }
+
+  return { context, descriptors: [] };
 }
 
 /**

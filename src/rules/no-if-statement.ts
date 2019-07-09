@@ -1,6 +1,12 @@
 import { TSESTree } from "@typescript-eslint/typescript-estree";
 
-import { checkNode, createRule, RuleContext, RuleMetaData } from "../util/rule";
+import {
+  checkNode,
+  createRule,
+  RuleContext,
+  RuleMetaData,
+  RuleResult
+} from "../util/rule";
 
 // The name of this rule.
 export const name = "no-if-statement" as const;
@@ -35,9 +41,9 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
 function checkIfStatement(
   node: TSESTree.IfStatement,
   context: RuleContext<keyof typeof errorMessages, Options>
-): void {
+): RuleResult<keyof typeof errorMessages, Options> {
   // All if statements violate this rule.
-  context.report({ node, messageId: "generic" });
+  return { context, descriptors: [{ node, messageId: "generic" }] };
 }
 
 // Create the rule.

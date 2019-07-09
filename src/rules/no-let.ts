@@ -2,7 +2,13 @@ import { TSESTree } from "@typescript-eslint/typescript-estree";
 import { all as deepMerge } from "deepmerge";
 
 import * as ignore from "../common/ignore-options";
-import { checkNode, createRule, RuleContext, RuleMetaData } from "../util/rule";
+import {
+  checkNode,
+  createRule,
+  RuleContext,
+  RuleMetaData,
+  RuleResult
+} from "../util/rule";
 import { isForXInitialiser } from "../util/typeguard";
 
 // The name of this rule.
@@ -47,25 +53,31 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
 function checkVariableDeclaration(
   node: TSESTree.VariableDeclaration,
   context: RuleContext<keyof typeof errorMessages, Options>
-): void {
+): RuleResult<keyof typeof errorMessages, Options> {
   if (node.kind === "let") {
     // Report the error.
-    context.report({
-      node,
-      messageId: "generic",
-      fix:
-        // Can only fix if all declarations have an initial value (with the
-        // exception of ForOf and ForIn Statement initialisers).
-        node.declarations.every(declaration => declaration.init !== null) ||
-        isForXInitialiser(node)
-          ? fixer =>
-              fixer.replaceTextRange(
-                [node.range[0], node.range[0] + node.kind.length],
-                "const"
-              )
-          : undefined
-    });
+    return {
+      context,
+      descriptors: [
+        {
+          node,
+          messageId: "generic",
+          fix:
+            // Can only fix if all declarations have an initial value (with the
+            // exception of ForOf and ForIn Statement initialisers).
+            node.declarations.every(declaration => declaration.init !== null) ||
+            isForXInitialiser(node)
+              ? fixer =>
+                  fixer.replaceTextRange(
+                    [node.range[0], node.range[0] + node.kind.length],
+                    "const"
+                  )
+              : undefined
+        }
+      ]
+    };
   }
+  return { context, descriptors: [] };
 }
 
 // Create the rule.

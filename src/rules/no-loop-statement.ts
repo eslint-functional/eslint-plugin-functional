@@ -1,6 +1,12 @@
 import { TSESTree } from "@typescript-eslint/typescript-estree";
 
-import { checkNode, createRule, RuleContext, RuleMetaData } from "../util/rule";
+import {
+  checkNode,
+  createRule,
+  RuleContext,
+  RuleMetaData,
+  RuleResult
+} from "../util/rule";
 
 // The name of this rule.
 export const name = "no-loop-statement" as const;
@@ -39,9 +45,9 @@ function checkLoop(
     | TSESTree.WhileStatement
     | TSESTree.DoWhileStatement,
   context: RuleContext<keyof typeof errorMessages, Options>
-): void {
+): RuleResult<keyof typeof errorMessages, Options> {
   // All loops violate this rule.
-  context.report({ node, messageId: "generic" });
+  return { context, descriptors: [{ node, messageId: "generic" }] };
 }
 
 // Create the rule.

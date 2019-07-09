@@ -8,7 +8,8 @@ import {
   createRule,
   getParserServices,
   RuleContext,
-  RuleMetaData
+  RuleMetaData,
+  RuleResult
 } from "../util/rule";
 import {
   isArrayType,
@@ -72,28 +73,34 @@ function checkArrayOrTupleType(
   node: TSESTree.TSArrayType | TSESTree.TSTupleType,
   context: RuleContext<keyof typeof errorMessages, Options>,
   [options]: Options
-): void {
+): RuleResult<keyof typeof errorMessages, Options> {
   if (
     !node.parent ||
     !isTSTypeOperator(node.parent) ||
     node.parent.operator !== "readonly"
   ) {
     if (options.ignoreReturnType && isInReturnType(node)) {
-      return;
+      return { context, descriptors: [] };
     }
 
-    context.report({
-      node,
-      messageId: "generic",
-      fix: fixer =>
-        node.parent && isTSArrayType(node.parent)
-          ? [
-              fixer.insertTextBefore(node, "(readonly "),
-              fixer.insertTextAfter(node, ")")
-            ]
-          : fixer.insertTextBefore(node, "readonly ")
-    });
+    return {
+      context,
+      descriptors: [
+        {
+          node,
+          messageId: "generic",
+          fix: fixer =>
+            node.parent && isTSArrayType(node.parent)
+              ? [
+                  fixer.insertTextBefore(node, "(readonly "),
+                  fixer.insertTextAfter(node, ")")
+                ]
+              : fixer.insertTextBefore(node, "readonly ")
+        }
+      ]
+    };
   }
+  return { context, descriptors: [] };
 }
 
 /**
@@ -103,18 +110,22 @@ function checkTypeReference(
   node: TSESTree.TSTypeReference,
   context: RuleContext<keyof typeof errorMessages, Options>,
   [options]: Options
-): void {
+): RuleResult<keyof typeof errorMessages, Options> {
   if (isIdentifier(node.typeName) && node.typeName.name === "Array") {
-    if (options.ignoreReturnType && isInReturnType(node)) {
-      return;
+    if (!options.ignoreReturnType || !isInReturnType(node)) {
+      return {
+        context,
+        descriptors: [
+          {
+            node,
+            messageId: "generic",
+            fix: fixer => fixer.insertTextBefore(node, "Readonly")
+          }
+        ]
+      };
     }
-
-    context.report({
-      node,
-      messageId: "generic",
-      fix: fixer => fixer.insertTextBefore(node, "Readonly")
-    });
   }
+  return { context, descriptors: [] };
 }
 
 /**
@@ -127,7 +138,7 @@ function checkImplicitType(
     | TSESTree.FunctionExpression
     | TSESTree.ArrowFunctionExpression,
   context: RuleContext<keyof typeof errorMessages, Options>
-): void {
+): RuleResult<keyof typeof errorMessages, Options> {
   type Declarator = {
     id: TSESTree.Node;
     init: TSESTree.Node | null;
@@ -151,29 +162,35 @@ function checkImplicitType(
           } as Declarator)
       );
 
-  declarators.forEach(declarator => {
-    if (
-      isIdentifier(declarator.id) &&
-      declarator.id.typeAnnotation === undefined &&
-      declarator.init !== null
-    ) {
-      const parserServices = getParserServices(context);
-      const type = parserServices.program
-        .getTypeChecker()
-        .getTypeAtLocation(
-          parserServices.esTreeNodeToTSNodeMap.get(declarator.init)
-        );
+  return {
+    context,
+    descriptors: declarators.flatMap(declarator => {
+      if (
+        isIdentifier(declarator.id) &&
+        declarator.id.typeAnnotation === undefined &&
+        declarator.init !== null
+      ) {
+        const parserServices = getParserServices(context);
+        const type = parserServices.program
+          .getTypeChecker()
+          .getTypeAtLocation(
+            parserServices.esTreeNodeToTSNodeMap.get(declarator.init)
+          );
 
-      if (isArrayType(type)) {
-        context.report({
-          node: declarator.node,
-          messageId: "implicit",
-          fix: fixer =>
-            fixer.insertTextAfter(declarator.id, ": readonly unknown[]")
-        });
+        if (isArrayType(type)) {
+          return [
+            {
+              node: declarator.node,
+              messageId: "implicit",
+              fix: fixer =>
+                fixer.insertTextAfter(declarator.id, ": readonly unknown[]")
+            }
+          ];
+        }
       }
-    }
-  });
+      return [];
+    })
+  };
 }
 
 /**

@@ -1,7 +1,13 @@
 import { TSESTree } from "@typescript-eslint/typescript-estree";
 import { AST_NODE_TYPES } from "@typescript-eslint/typescript-estree/dist/ts-estree/ast-node-types";
 
-import { checkNode, createRule, RuleContext, RuleMetaData } from "../util/rule";
+import {
+  checkNode,
+  createRule,
+  RuleContext,
+  RuleMetaData,
+  RuleResult
+} from "../util/rule";
 import { isTSPropertySignature } from "../util/typeguard";
 
 // The name of this rule.
@@ -37,7 +43,7 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
 function checkTSInterfaceDeclaration(
   node: TSESTree.TSInterfaceDeclaration,
   context: RuleContext<keyof typeof errorMessages, Options>
-): void {
+): RuleResult<keyof typeof errorMessages, Options> {
   let prevMemberType: AST_NODE_TYPES | undefined = undefined;
   let prevMemberTypeAnnotation: AST_NODE_TYPES | undefined = undefined;
 
@@ -59,12 +65,14 @@ function checkTSInterfaceDeclaration(
           (prevMemberTypeAnnotation === AST_NODE_TYPES.TSFunctionType ||
             memberTypeAnnotation === AST_NODE_TYPES.TSFunctionType)))
     ) {
-      context.report({ node: member, messageId: "generic" });
+      return { context, descriptors: [{ node: member, messageId: "generic" }] };
     }
 
     prevMemberType = memberType;
     prevMemberTypeAnnotation = memberTypeAnnotation;
   }
+
+  return { context, descriptors: [] };
 }
 
 // Create the rule.
