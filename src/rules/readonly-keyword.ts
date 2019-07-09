@@ -1,5 +1,6 @@
 import { TSESTree } from "@typescript-eslint/typescript-estree";
 import { all as deepMerge } from "deepmerge";
+import { JSONSchema4 } from "json-schema";
 
 import * as ignore from "../common/ignore-options";
 import {
@@ -15,7 +16,7 @@ import { isTSIndexSignature } from "../util/typeguard";
 export const name = "readonly-keyword" as const;
 
 // The options this rule can take.
-type Options = [
+type Options = readonly [
   ignore.IgnoreLocalOption &
     ignore.IgnorePatternOptions &
     ignore.IgnoreClassOption &
@@ -23,7 +24,7 @@ type Options = [
 ];
 
 // The schema for the rule options.
-const schema = [
+const schema: JSONSchema4 = [
   deepMerge([
     ignore.ignoreLocalOptionSchema,
     ignore.ignorePatternOptionsSchema,

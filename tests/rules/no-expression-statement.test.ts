@@ -71,7 +71,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
 
 describe("TypeScript", () => {
   const ruleTester = new RuleTester(typescript);
-  ruleTester.run(name, rule as Rule.RuleModule, {
+  ruleTester.run(name, (rule as unknown) as Rule.RuleModule, {
     valid: processValidTestCase(valid),
     invalid: processInvalidTestCase(invalid)
   });
@@ -79,7 +79,7 @@ describe("TypeScript", () => {
 
 describe("JavaScript (es3)", () => {
   const ruleTester = new RuleTester(es3);
-  ruleTester.run(name, rule as Rule.RuleModule, {
+  ruleTester.run(name, (rule as unknown) as Rule.RuleModule, {
     valid: processValidTestCase(valid),
     invalid: processInvalidTestCase(invalid)
   });

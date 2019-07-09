@@ -1,13 +1,19 @@
 import dedent from "dedent";
 import { Rule, RuleTester } from "eslint";
 
-import { shouldIgnore } from "../../src/common/ignore-options";
+import {
+  shouldIgnore,
+  IgnorePatternOptions
+} from "../../src/common/ignore-options";
 import { createDummyRule } from "../util";
 import { typescript } from "../configs";
+import { ValidTestCase } from "@typescript-eslint/experimental-utils/dist/ts-eslint";
 
 describe("option: ignore", () => {
   describe("ignore-pattern", () => {
-    const tests = [
+    const tests: ReadonlyArray<
+      ValidTestCase<readonly [boolean, IgnorePatternOptions]>
+    > = [
       // Exact match.
       {
         code: dedent`
@@ -86,7 +92,7 @@ describe("option: ignore", () => {
         };
       }) as Rule.RuleModule,
       {
-        valid: tests,
+        valid: [...tests],
         invalid: []
       }
     );

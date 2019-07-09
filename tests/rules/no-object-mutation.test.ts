@@ -225,7 +225,7 @@ const es3Invalid: ReadonlyArray<InvalidTestCase> = [
 /**
  * Valid tests that only apply to es6 and above.
  */
-const es6Valid = [
+const es6Valid: ReadonlyArray<ValidTestCase> = [
   ...es3Valid,
   // Allow initialization of class members in constructor
   {
@@ -244,7 +244,7 @@ const es6Valid = [
 /**
  * Invalid tests that only apply to es6 and above.
  */
-const es6Invalid = [
+const es6Invalid: ReadonlyArray<InvalidTestCase> = [
   ...es3Invalid,
   {
     code: dedent`
@@ -296,7 +296,7 @@ const es6Invalid = [
 
 describe("TypeScript", () => {
   const ruleTester = new RuleTester(typescript);
-  ruleTester.run(name, rule as Rule.RuleModule, {
+  ruleTester.run(name, (rule as unknown) as Rule.RuleModule, {
     valid: processValidTestCase(es6Valid),
     invalid: processInvalidTestCase(es6Invalid)
   });
@@ -304,7 +304,7 @@ describe("TypeScript", () => {
 
 describe("JavaScript (es6)", () => {
   const ruleTester = new RuleTester(es6);
-  ruleTester.run(name, rule as Rule.RuleModule, {
+  ruleTester.run(name, (rule as unknown) as Rule.RuleModule, {
     valid: processValidTestCase(es6Valid),
     invalid: processInvalidTestCase(es6Invalid)
   });
@@ -312,7 +312,7 @@ describe("JavaScript (es6)", () => {
 
 describe("JavaScript (es3)", () => {
   const ruleTester = new RuleTester(es3);
-  ruleTester.run(name, rule as Rule.RuleModule, {
+  ruleTester.run(name, (rule as unknown) as Rule.RuleModule, {
     valid: processValidTestCase(es3Valid),
     invalid: processInvalidTestCase(es3Invalid)
   });

@@ -16,7 +16,7 @@ import {
 } from "../util";
 
 // Valid test cases.
-const valid: Array<ValidTestCase> = [
+const valid: ReadonlyArray<ValidTestCase> = [
   // Should not fail on explicit ReadonlyArray parameter.
   {
     code: dedent`
@@ -153,7 +153,7 @@ const valid: Array<ValidTestCase> = [
 ];
 
 // Invalid test cases.
-const invalid: Array<InvalidTestCase> = [
+const invalid: ReadonlyArray<InvalidTestCase> = [
   {
     code: dedent`
       function foo(...numbers: number[]) {
@@ -645,7 +645,7 @@ const invalid: Array<InvalidTestCase> = [
 
 describe("TypeScript", () => {
   const ruleTester = new RuleTester(typescript);
-  ruleTester.run(name, rule as Rule.RuleModule, {
+  ruleTester.run(name, (rule as unknown) as Rule.RuleModule, {
     valid: processValidTestCase(valid),
     invalid: processInvalidTestCase(invalid)
   });

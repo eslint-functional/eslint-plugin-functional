@@ -40,9 +40,9 @@ export const ignoreLocalOptionSchema: JSONSchema4 = {
 };
 
 export interface IgnorePatternOptions {
-  readonly ignorePattern?: string | Array<string>;
-  readonly ignorePrefix?: string | Array<string>;
-  readonly ignoreSuffix?: string | Array<string>;
+  readonly ignorePattern?: string | ReadonlyArray<string>;
+  readonly ignorePrefix?: string | ReadonlyArray<string>;
+  readonly ignoreSuffix?: string | ReadonlyArray<string>;
 }
 
 export const ignorePatternOptionsSchema: JSONSchema4 = {
@@ -227,14 +227,14 @@ function getIdentifierNames(
 
 function isIgnoredPrefix(
   text: string,
-  ignorePrefix: Array<string> | string
+  ignorePrefix: ReadonlyArray<string> | string
 ): boolean {
   if (Array.isArray(ignorePrefix)) {
     if (ignorePrefix.find(pfx => text.indexOf(pfx) === 0)) {
       return true;
     }
   } else {
-    if (text.indexOf(ignorePrefix) === 0) {
+    if (text.indexOf(ignorePrefix as string) === 0) {
       return true;
     }
   }
@@ -243,7 +243,7 @@ function isIgnoredPrefix(
 
 function isIgnoredSuffix(
   text: string,
-  ignoreSuffix: Array<string> | string
+  ignoreSuffix: ReadonlyArray<string> | string
 ): boolean {
   if (Array.isArray(ignoreSuffix)) {
     if (
@@ -256,7 +256,10 @@ function isIgnoredSuffix(
     }
   } else {
     const indexToFindAt = text.length - ignoreSuffix.length;
-    if (indexToFindAt >= 0 && text.indexOf(ignoreSuffix) === indexToFindAt) {
+    if (
+      indexToFindAt >= 0 &&
+      text.indexOf(ignoreSuffix as string) === indexToFindAt
+    ) {
       return true;
     }
   }
@@ -265,9 +268,9 @@ function isIgnoredSuffix(
 
 function isIgnoredPattern(
   text: string,
-  ignorePattern: Array<string> | string
+  ignorePattern: ReadonlyArray<string> | string
 ): boolean {
-  const patterns = Array.isArray(ignorePattern)
+  const patterns: ReadonlyArray<string> = Array.isArray(ignorePattern)
     ? ignorePattern
     : [ignorePattern];
 
@@ -295,7 +298,7 @@ function findMatch(
     switch (patternParts[index]) {
       // Match any depth (including 0)?
       case "**": {
-        const subpattern = patternParts.slice(index + 1);
+        const subpattern: ReadonlyArray<string> = patternParts.slice(index + 1);
         for (let offset = 0; offset < textParts.length - index; offset++) {
           const submatch = findMatch(
             subpattern,

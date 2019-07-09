@@ -12,7 +12,7 @@ import {
 export const name = "no-try" as const;
 
 // The options this rule can take.
-type Options = [];
+type Options = readonly [];
 
 // The default options for the rule.
 const defaultOptions: Options = [];

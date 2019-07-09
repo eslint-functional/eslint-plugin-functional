@@ -26,7 +26,9 @@ import {
 export const name = "no-array-mutation" as const;
 
 // The options this rule can take.
-type Options = [ignore.IgnorePatternOptions & ignore.IgnoreNewArrayOption];
+type Options = readonly [
+  ignore.IgnorePatternOptions & ignore.IgnoreNewArrayOption
+];
 
 // The schema for the rule options.
 const schema: JSONSchema4 = [
@@ -65,7 +67,7 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/prototype#Methods#Mutator_methods
  */
-const mutatorMethods: ReadonlyArray<string> = [
+const mutatorMethods = [
   "copyWithin",
   "fill",
   "pop",
@@ -75,7 +77,7 @@ const mutatorMethods: ReadonlyArray<string> = [
   "sort",
   "splice",
   "unshift"
-];
+] as const;
 
 /**
  * Methods that return a new array without mutating the original.
@@ -83,21 +85,21 @@ const mutatorMethods: ReadonlyArray<string> = [
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/prototype#Methods#Accessor_methods
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/prototype#Iteration_methods
  */
-const newArrayReturningMethods: ReadonlyArray<string> = [
+const newArrayReturningMethods = [
   "concat",
   "slice",
   "filter",
   "map",
   "reduce",
   "reduceRight"
-];
+] as const;
 
 /**
  * Functions that create a new array.
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array#Methods
  */
-const constructorFunctions = ["from", "of"];
+const constructorFunctions = ["from", "of"] as const;
 
 /**
  * Check if the given node violates this rule.
