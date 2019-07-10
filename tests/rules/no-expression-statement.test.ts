@@ -27,11 +27,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
     code: dedent`
       console.log("yo");
       console.error("yo");`,
-    optionsSet: [
-      [{ ignorePrefix: ["console.log", "console.err"] }],
-      [{ ignoreSuffix: ["og", "ror"] }],
-      [{ ignorePattern: "console.*" }]
-    ]
+    optionsSet: [[{ ignorePattern: "^console\\." }]]
   }
 ];
 
@@ -54,10 +50,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
   // Unignored expressions should cause failures.
   {
     code: `console.trace();`,
-    optionsSet: [
-      [{ ignorePrefix: ["console.log", "console.err"] }],
-      [{ ignoreSuffix: ["og", "ror"] }]
-    ],
+    optionsSet: [[{ ignorePattern: "^console\\.log" }]],
     errors: [
       {
         messageId: "generic",
