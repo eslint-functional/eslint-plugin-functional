@@ -40,8 +40,6 @@ type Options = {
   readonly ignoreReturnType?: boolean;
   readonly ignoreLocal?: boolean;
   readonly ignorePattern?: string | Array<string>;
-  readonly ignorePrefix?: string | Array<string>;
-  readonly ignoreSuffix?: string | Array<string>;
 };
 
 const defaults = {

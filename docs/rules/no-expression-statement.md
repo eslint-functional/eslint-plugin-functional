@@ -18,8 +18,6 @@ The rule accepts an options object with the following properties:
 ```typescript
 type Options = {
   readonly ignorePattern?: string | Array<string>;
-  readonly ignorePrefix?: string | Array<string>;
-  readonly ignoreSuffix?: string | Array<string>;
 };
 
 const defaults = {};

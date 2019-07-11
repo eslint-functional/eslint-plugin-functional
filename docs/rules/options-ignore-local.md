@@ -1,4 +1,4 @@
-### Using the `ignore-local` option
+### Using the `ignoreLocal` option
 
 > If a tree falls in the woods, does it make a sound?
 > If a pure function mutates some local data in order to produce an immutable return value, is that ok?
