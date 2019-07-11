@@ -25,4 +25,4 @@ const defaults = {};
 
 ### `ignorePattern`
 
-See the [ignorePattern](./options-ignore-pattern.md) docs.
+See the [ignorePattern](./options/ignore-pattern.md) docs.

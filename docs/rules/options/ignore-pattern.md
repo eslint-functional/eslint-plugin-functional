@@ -1,4 +1,4 @@
-### Using the `ignorePattern` option
+# Using the `ignorePattern` option
 
 This option takes a RegExp string or an array of RegExp strings.
 

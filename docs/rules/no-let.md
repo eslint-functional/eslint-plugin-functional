@@ -40,8 +40,8 @@ const defaults = {
 
 ### `ignoreLocal`
 
-See the [ignoreLocal](./options-ignore-local.md) docs.
+See the [ignoreLocal](./options/ignore-local.md) docs.
 
 ### `ignorePattern`
 
-See the [ignorePattern](./options-ignore-pattern.md) docs.
+See the [ignorePattern](./options/ignore-pattern.md) docs.
