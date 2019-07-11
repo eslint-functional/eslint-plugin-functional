@@ -6,7 +6,7 @@
 [![code style: prettier][prettier-image]][prettier-url]
 [![MIT license][license-image]][license-url]
 
-[ESLint](https://eslint.org/) rules to disable mutation in TypeScript.
+[ESLint](https://eslint.org/) rules to disable mutation in JavaScript and TypeScript.
 
 ## Background
 
@@ -14,35 +14,45 @@ In some applications it is important to not mutate any data, for example when us
 
 I originally used [immutablejs](https://github.com/facebook/immutable-js/) for this purpose. It is a really nice library but I found it had some drawbacks. Specifically when debugging it was hard to see the structure, creating JSON was not straightforward, and passing parameters to other libraries required converting to regular mutable arrays and objects. The [seamless-immutable](https://github.com/rtfeldman/seamless-immutable) project seems to have the same conclusions and they use regular objects and arrays and check for immutability at run-time. This solves all the aformentioned drawbacks but introduces a new drawback of only being enforced at run-time. (Altough you loose the structural sharing feature of immutablejs with this solution so you would have to consider if that is something you need).
 
-Then typescript 2.0 came along and introduced [readonly](https://github.com/Microsoft/TypeScript/wiki/What's-new-in-TypeScript#read-only-properties-and-index-signatures) options for properties, indexers and arrays. This enables us to use regular object and arrays and have the immutability enfored at compile time instead of run-time. Now the only drawback is that there is nothing enforcing the use of readonly in typescript.
+Then TypeScript 2.0 came along and introduced [readonly](https://github.com/Microsoft/TypeScript/wiki/What's-new-in-TypeScript#read-only-properties-and-index-signatures) options for properties, indexers and arrays. TypeScript 3.0 has continued to add support immutability enforcing syntax. This enables us to use regular object and arrays and have the immutability enforced at compile time instead of run-time. Now the only drawback is that there is nothing enforcing the use of readonly in TypeScript.
 
-This can be solved by using linting rules. So the aim of this project is to leverage the type system in typescript to enforce immutability at compile-time while still using regular objects and arrays.
+This can be solved by using linting rules. So the aim of this project is to leverage the type system in TypeScript to enforce immutability at compile-time while still using regular objects and arrays. Additionally, this project will also aim to support vanilla JavaScript where possible.
 
 ## Installing
 
-Make sure you have TypeScript and [@typescript-eslint/parser](https://www.npmjs.com/package/@typescript-eslint/parser) installed, then install the plugin:
-
 ```sh
-npm i eslint-plugin-ts-immutable --save-dev
+npm install eslint eslint-plugin-ts-immutable --save-dev
 ```
 
 **Note:** If you installed ESLint globally (using the `-g` flag) then you must also install `eslint-plugin-ts-immutable` globally.
 
+To use this plugin with TypeScript, additionally install [@typescript-eslint/parser](https://www.npmjs.com/package/@typescript-eslint/parser).
+
+```sh
+npm install eslint @typescript-eslint/parser eslint-plugin-ts-immutable --save-dev
+```
+
 ## Usage
 
-Add `@typescript-eslint/parser` to the `parser` field and `ts-immutable` to the plugins section of your `.eslintrc` configuration file. Then configure the rules you want to use under the rules section.
+Add `ts-immutable` to the plugins section of your `.eslintrc` configuration file. Then configure the rules you want to use under the rules section.
 
 ```json
 {
-  "parser": "@typescript-eslint/parser",
   "plugins": ["ts-immutable"],
   "rules": {
-    "@typescript-eslint/rule-name": "error"
+    "ts-immutable/rule-name": "error"
   }
 }
 ```
 
-You can also enable all the recommended rules for our plugin:
+The following rulesets are provided by this plugin.
+[See bellow](#supported-rules) for what rules are including in each.
+
+- `recommended`
+- `functional-lite`
+- `functional`
+
+You can enable one of these rulesets like so:
 
 ```json
 {
@@ -50,7 +60,23 @@ You can also enable all the recommended rules for our plugin:
 }
 ```
 
-If you want to use rules which require type information, you will need to specify a path to your tsconfig.json file in the "project" property of "parserOptions".
+**Note: Make sure to use `eslint --ext .js,.ts` since by [default](https://eslint.org/docs/user-guide/command-line-interface#--ext) `eslint` will only search for .js files.**
+
+### With TypeScript
+
+`@typescript-eslint/parser` is needed to parse TypeScript code; add `@typescript-eslint/parser` to the "parser" filed in your `.eslintrc` configuration file.
+
+```json
+{
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["ts-immutable"],
+  "rules": {
+    "ts-immutable/rule-name": "error"
+  }
+}
+```
+
+For this plugin to use type information, you will need to specify a path to your tsconfig.json file in the "project" property of "parserOptions".
 
 ```json
 {
@@ -60,14 +86,12 @@ If you want to use rules which require type information, you will need to specif
   },
   "plugins": ["ts-immutable"],
   "rules": {
-    "ts-immutable/no-array-mutation": "error"
+    "ts-immutable/rule-name": "error"
   }
 }
 ```
 
 See [@typescript-eslint/parser's README.md](https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/parser#readme) for more information on the available "parserOptions".
-
-**Note: Make sure to use `eslint --ext .js,.ts` since by [default](https://eslint.org/docs/user-guide/command-line-interface#--ext) `eslint` will only search for .js files.**
 
 ## Supported Rules
 
@@ -150,7 +174,7 @@ To execute the tests run `yarn test`.
 
 To learn about eslint plugin development se the [relevant section](https://eslint.org/docs/developer-guide/working-with-plugins) of the eslit docs. You can also checkout the [typescript-eslint](https://github.com/typescript-eslint/typescript-eslint) repo which has some more information specific to typescript.
 
-In order to know which AST nodes are created for a snippet of typescript code you can use [ast explorer](https://astexplorer.net/) with options JavaScript and @typescript-eslint/parser.
+In order to know which AST nodes are created for a snippet of TypeScript code you can use [ast explorer](https://astexplorer.net/) with options JavaScript and @typescript-eslint/parser.
 
 ## How to publish
 
