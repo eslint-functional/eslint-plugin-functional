@@ -14,10 +14,10 @@ import {
 export const name = "no-expression-statement" as const;
 
 // The options this rule can take.
-type Options = readonly [ignore.IgnorePatternOptions];
+type Options = readonly [ignore.IgnorePatternOption];
 
 // The schema for the rule options.
-const schema: JSONSchema4 = [ignore.ignorePatternOptionsSchema];
+const schema: JSONSchema4 = [ignore.ignorePatternOptionSchema];
 
 // The default options for the rule.
 const defaultOptions: Options = [{}];

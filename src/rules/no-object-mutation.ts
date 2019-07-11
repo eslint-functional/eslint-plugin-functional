@@ -1,4 +1,5 @@
 import { TSESTree } from "@typescript-eslint/typescript-estree";
+import { all as deepMerge } from "deepmerge";
 import { JSONSchema4 } from "json-schema";
 
 import * as ignore from "../common/ignore-options";
@@ -22,10 +23,17 @@ import {
 export const name = "no-object-mutation" as const;
 
 // The options this rule can take.
-type Options = readonly [ignore.IgnorePatternOptions];
+type Options = readonly [
+  ignore.IgnorePatternOption & ignore.IgnoreAccessorPatternOption
+];
 
 // The schema for the rule options.
-const schema: JSONSchema4 = [ignore.ignorePatternOptionsSchema];
+const schema: JSONSchema4 = [
+  deepMerge([
+    ignore.ignorePatternOptionSchema,
+    ignore.ignoreAccessorPatternOptionSchema
+  ])
+];
 
 // The default options for the rule.
 const defaultOptions: Options = [{}];

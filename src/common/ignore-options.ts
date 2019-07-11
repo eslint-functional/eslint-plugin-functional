@@ -10,17 +10,17 @@ import { inClass, inFunction, inInterface } from "../util/tree";
 import {
   isAssignmentExpression,
   isCallExpression,
-  isExpressionStatement,
   isIdentifier,
+  isMemberExpression,
   isTSPropertySignature,
   isTypeAliasDeclaration,
   isVariableDeclaration,
-  isVariableDeclarator,
-  isMemberExpression
+  isVariableDeclarator
 } from "../util/typeguard";
 
 export type AllIgnoreOptions = IgnoreLocalOption &
-  IgnorePatternOptions &
+  IgnorePatternOption &
+  IgnoreAccessorPatternOption &
   IgnoreClassOption &
   IgnoreInterfaceOption &
   IgnoreNewArrayOption;
@@ -39,13 +39,11 @@ export const ignoreLocalOptionSchema: JSONSchema4 = {
   additionalProperties: false
 };
 
-export interface IgnorePatternOptions {
+export interface IgnorePatternOption {
   readonly ignorePattern?: string | ReadonlyArray<string>;
-  readonly ignorePrefix?: string | ReadonlyArray<string>;
-  readonly ignoreSuffix?: string | ReadonlyArray<string>;
 }
 
-export const ignorePatternOptionsSchema: JSONSchema4 = {
+export const ignorePatternOptionSchema: JSONSchema4 = {
   type: "object",
   properties: {
     ignorePattern: {
@@ -53,14 +51,19 @@ export const ignorePatternOptionsSchema: JSONSchema4 = {
       items: {
         type: "string"
       }
-    },
-    ignorePrefix: {
-      type: ["string", "array"],
-      items: {
-        type: "string"
-      }
-    },
-    ignoreSuffix: {
+    }
+  },
+  additionalProperties: false
+};
+
+export interface IgnoreAccessorPatternOption {
+  readonly ignoreAccessorPattern?: string | ReadonlyArray<string>;
+}
+
+export const ignoreAccessorPatternOptionSchema: JSONSchema4 = {
+  type: "object",
+  properties: {
+    ignoreAccessorPattern: {
       type: ["string", "array"],
       items: {
         type: "string"
@@ -130,143 +133,100 @@ export function shouldIgnore(
   context: RuleContext<string, BaseOptions>,
   ignoreOptions: AllIgnoreOptions
 ): boolean {
-  // Ignore if in a function and ignore-local is set.
+  // Ignore if in a function and ignoreLocal is set.
   if (ignoreOptions.ignoreLocal && inFunction(node)) {
     return true;
   }
 
-  // Ignore if in a class and ignore-class is set.
+  // Ignore if in a class and ignoreClass is set.
   if (ignoreOptions.ignoreClass && inClass(node)) {
     return true;
   }
 
-  // Ignore if in an interface and ignore-interface is set.
+  // Ignore if in an interface and ignoreInterface is set.
   if (ignoreOptions.ignoreInterface && inInterface(node)) {
     return true;
   }
 
-  const identifiers: ReadonlyArray<string> = getIdentifierNames(node, context);
+  const texts: ReadonlyArray<string> = getNodeTexts(node, context);
 
-  if (
-    identifiers.length > 0 &&
-    identifiers.every(identifier => {
-      // Ignore if ignore-pattern is set and the pattern matches.
-      if (
-        ignoreOptions.ignorePattern &&
-        isIgnoredPattern(identifier, ignoreOptions.ignorePattern)
-      ) {
-        return true;
-      }
+  if (texts.length > 0) {
+    // Ignore if a pattern matches and ignorePattern is set.
+    if (
+      ignoreOptions.ignorePattern &&
+      texts.every(text => isIgnoredPattern(text, ignoreOptions.ignorePattern!))
+    ) {
+      return true;
+    }
 
-      // Ignore if ignore-prefix is set and the prefix matches.
-      if (
-        ignoreOptions.ignorePrefix &&
-        isIgnoredPrefix(identifier, ignoreOptions.ignorePrefix)
-      ) {
-        return true;
-      }
-
-      // Ignore if ignore-suffix is set and the suffix matches.
-      if (
-        ignoreOptions.ignoreSuffix &&
-        isIgnoredSuffix(identifier, ignoreOptions.ignoreSuffix)
-      ) {
-        return true;
-      }
-
-      return false;
-    })
-  ) {
-    return true;
+    // Ignore if a pattern matches and ignoreAccessorPattern is set.
+    if (
+      ignoreOptions.ignoreAccessorPattern &&
+      texts.every(text =>
+        isIgnoredAccessorPattern(text, ignoreOptions.ignoreAccessorPattern!)
+      )
+    ) {
+      return true;
+    }
   }
 
   return false;
 }
 
-function getIdentifierNames(
-  node: TSESTree.VariableDeclaration,
-  context: RuleContext<string, BaseOptions>
-): ReadonlyArray<string>;
-function getIdentifierNames(
-  node: Exclude<TSESTree.Node, TSESTree.VariableDeclaration>,
-  context: RuleContext<string, BaseOptions>
-): readonly [string];
-function getIdentifierNames(
-  node: TSESTree.Node,
-  context: RuleContext<string, BaseOptions>
-): ReadonlyArray<string>;
-function getIdentifierNames(
+function getNodeTexts(
   node: TSESTree.Node,
   context: RuleContext<string, BaseOptions>
 ): ReadonlyArray<string> {
-  return (isIdentifier(node)
-    ? [node.name]
-    : isVariableDeclaration(node)
-    ? node.declarations.flatMap(declarator =>
-        getIdentifierNames(declarator, context)
-      )
-    : isVariableDeclarator(node) || isTypeAliasDeclaration(node)
-    ? getIdentifierNames(node.id, context)
-    : isExpressionStatement(node) && isCallExpression(node.expression)
-    ? getIdentifierNames(node.expression, context)
-    : isAssignmentExpression(node)
-    ? getIdentifierNames(node.left, context)
-    : isMemberExpression(node)
-    ? [
-        `${getIdentifierNames(node.object, context)[0]}.${
-          getIdentifierNames(node.property, context)[0]
-        }`
-      ]
+  return (isVariableDeclaration(node)
+    ? node.declarations.flatMap(declarator => getNodeText(declarator, context))
+    : [getNodeText(node, context)]
+  ).filter(name => name !== undefined) as ReadonlyArray<string>;
+}
+
+function getNodeText(
+  node: TSESTree.Node,
+  context: RuleContext<string, BaseOptions>
+): string | undefined {
+  return isAssignmentExpression(node)
+    ? getNodeText(node.left, context)
     : isCallExpression(node)
-    ? [context.getSourceCode().getText(node.callee)]
+    ? getNodeText(node.callee, context)
+    : isMemberExpression(node)
+    ? _getNodeText(node.object, context)
+    : isVariableDeclarator(node) || isTypeAliasDeclaration(node)
+    ? _getNodeText(node.id, context)
     : isTSPropertySignature(node)
-    ? getIdentifierNames(node.key, context)
-    : []
-  ).filter((name): name is string => name !== undefined);
+    ? _getNodeText(node.key, context)
+    : _getNodeText(node, context);
 }
 
-function isIgnoredPrefix(
-  text: string,
-  ignorePrefix: ReadonlyArray<string> | string
-): boolean {
-  if (Array.isArray(ignorePrefix)) {
-    if (ignorePrefix.find(pfx => text.indexOf(pfx) === 0)) {
-      return true;
-    }
-  } else {
-    if (text.indexOf(ignorePrefix as string) === 0) {
-      return true;
-    }
-  }
-  return false;
-}
-
-function isIgnoredSuffix(
-  text: string,
-  ignoreSuffix: ReadonlyArray<string> | string
-): boolean {
-  if (Array.isArray(ignoreSuffix)) {
-    if (
-      ignoreSuffix.find(sfx => {
-        const indexToFindAt = text.length - sfx.length;
-        return indexToFindAt >= 0 && text.indexOf(sfx) === indexToFindAt;
-      })
-    ) {
-      return true;
-    }
-  } else {
-    const indexToFindAt = text.length - ignoreSuffix.length;
-    if (
-      indexToFindAt >= 0 &&
-      text.indexOf(ignoreSuffix as string) === indexToFindAt
-    ) {
-      return true;
-    }
-  }
-  return false;
+function _getNodeText(
+  node: TSESTree.Node,
+  context: RuleContext<string, BaseOptions>
+): string {
+  return isIdentifier(node)
+    ? node.name
+    : isMemberExpression(node)
+    ? `${_getNodeText(node.object, context)}.${_getNodeText(
+        node.property,
+        context
+      )}`
+    : context.getSourceCode().getText(node);
 }
 
 function isIgnoredPattern(
+  text: string,
+  ignorePattern: ReadonlyArray<string> | string
+): boolean {
+  const patterns: ReadonlyArray<string> = Array.isArray(ignorePattern)
+    ? ignorePattern
+    : [ignorePattern];
+
+  // One or more patterns match?
+  return patterns.some(pattern => new RegExp(pattern).test(text));
+}
+
+function isIgnoredAccessorPattern(
   text: string,
   ignorePattern: ReadonlyArray<string> | string
 ): boolean {

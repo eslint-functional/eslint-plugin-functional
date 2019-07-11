@@ -27,7 +27,7 @@ export const name = "readonly-array" as const;
 // The options this rule can take.
 type Options = readonly [
   ignore.IgnoreLocalOption &
-    ignore.IgnorePatternOptions &
+    ignore.IgnorePatternOption &
     ignore.IgnoreReturnTypeOption
 ];
 
@@ -35,7 +35,7 @@ type Options = readonly [
 const schema: JSONSchema4 = [
   deepMerge([
     ignore.ignoreLocalOptionSchema,
-    ignore.ignorePatternOptionsSchema,
+    ignore.ignorePatternOptionSchema,
     ignore.ignoreReturnTypeOptionSchema
   ])
 ];
