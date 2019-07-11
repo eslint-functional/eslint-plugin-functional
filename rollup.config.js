@@ -30,16 +30,12 @@ export default {
   ],
 
   external: id => {
-    // Config File?
-    if (id.includes("./configs/") && id.endsWith(".json")) {
-      return true;
-    }
-    // Local File?
-    if (id.startsWith(".") || id.startsWith("/")) {
-      return false;
-    }
-
-    return true;
+    return (
+      // Config File?
+      (id.includes("./configs/") && id.endsWith(".json")) ||
+      // Not a Local File?
+      !(id.startsWith(".") || id.startsWith("/"))
+    );
   },
 
   plugins: [
