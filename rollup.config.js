@@ -54,12 +54,10 @@ export default {
   ],
 
   treeshake: {
-    pureExternalModules: id => {
-      // List of non-pure externals.
-      return ![
-        "array.prototype.flatmap/auto.js"
-      ].includes(id);
-    },
+    annotations: true,
+    moduleSideEffects: [
+      "array.prototype.flatmap/auto.js"
+    ],
     propertyReadSideEffects: false
   }
 };
