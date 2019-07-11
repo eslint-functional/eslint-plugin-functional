@@ -162,7 +162,7 @@ yarn version --major
 
 ## Prior work
 
-This work was originally inspired by [eslint-plugin-immutable](https://github.com/jhusain/eslint-plugin-immutable).
+This project started off as a port of [tslint-immutable](https://github.com/jonaskello/tslint-immutable) which was originally inspired by [eslint-plugin-immutable](https://github.com/jhusain/eslint-plugin-immutable).
 
 [version-image]: https://img.shields.io/npm/v/eslint-plugin-ts-immutable.svg?style=flat
 [version-url]: https://www.npmjs.com/packageeslint-plugin-ts-immutable
