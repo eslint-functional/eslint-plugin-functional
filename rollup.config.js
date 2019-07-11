@@ -8,25 +8,8 @@ import rollupPluginNodeResolve from "rollup-plugin-node-resolve";
 import rollupPluginTypescript from "rollup-plugin-typescript2";
 import rollupPluginJSON from "rollup-plugin-json";
 
-export default {
+const common = {
   input: "src/index.ts",
-
-  output: [
-    {
-      dir: "./lib",
-      entryFileNames: "[name].js",
-      chunkFileNames: "common/[hash].js",
-      format: "cjs",
-      sourcemap: false
-    },
-    {
-      dir: "./lib",
-      entryFileNames: "[name].mjs",
-      chunkFileNames: "common/[hash].mjs",
-      format: "esm",
-      sourcemap: false
-    }
-  ],
 
   external: id => {
     return (
@@ -35,17 +18,6 @@ export default {
     );
   },
 
-  plugins: [
-    rollupPluginNodeResolve(),
-    rollupPluginCommonjs(),
-    rollupPluginTypescript({
-      objectHashIgnoreUnknownHack: true
-    }),
-    rollupPluginJSON({
-      preferConst: true
-    })
-  ],
-
   treeshake: {
     annotations: true,
     moduleSideEffects: [
@@ -53,4 +25,52 @@ export default {
     ],
     propertyReadSideEffects: false
   }
-};
+}
+
+const cjs = {
+    ...common,
+
+    output: {
+      dir: "./lib",
+      entryFileNames: "[name].js",
+      chunkFileNames: "common/[hash].js",
+      format: "cjs",
+      sourcemap: false
+    },
+
+    plugins: [
+      rollupPluginNodeResolve(),
+      rollupPluginCommonjs(),
+      rollupPluginTypescript({
+        tsconfigOverride: { compilerOptions: { target: "es5" } }
+      }),
+      rollupPluginJSON({
+        preferConst: true
+      })
+  ],
+  };
+
+const esm ={
+    ...common,
+
+    output: {
+      dir: "./lib",
+      entryFileNames: "[name].mjs",
+      chunkFileNames: "common/[hash].mjs",
+      format: "esm",
+      sourcemap: false
+    },
+
+    plugins: [
+      rollupPluginNodeResolve(),
+      rollupPluginCommonjs(),
+      rollupPluginTypescript({
+        tsconfigOverride: { compilerOptions: { target: "es2017" } }
+      }),
+      rollupPluginJSON({
+        preferConst: true
+      })
+    ],
+  };
+
+export default [cjs, esm];
