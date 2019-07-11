@@ -40,11 +40,11 @@
     "ts-immutable/no-method-signature": "error",
     "ts-immutable/no-this": "error",
     "ts-immutable/no-class": "error",
-    "ts-immutable/no-loop-statement": "warn",
-    "ts-immutable/no-throw": "warn",
+    "ts-immutable/no-loop-statement": "error",
+    "ts-immutable/no-throw": "error",
     "ts-immutable/no-mixed-interface": "error",
     "ts-immutable/no-expression-statement": "warn",
-    "ts-immutable/no-if-statement": "warn",
+    "ts-immutable/no-if-statement": "error",
     "ts-immutable/no-try": "warn",
 
     // Typescript eslint.
