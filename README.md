@@ -60,8 +60,6 @@ You can enable one of these rulesets like so:
 }
 ```
 
-**Note: Make sure to use `eslint --ext .js,.ts` since by [default](https://eslint.org/docs/user-guide/command-line-interface#--ext) `eslint` will only search for .js files.**
-
 ### With TypeScript
 
 `@typescript-eslint/parser` is needed to parse TypeScript code; add `@typescript-eslint/parser` to the "parser" filed in your `.eslintrc` configuration file.
@@ -92,6 +90,8 @@ For this plugin to use type information, you will need to specify a path to your
 ```
 
 See [@typescript-eslint/parser's README.md](https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/parser#readme) for more information on the available "parserOptions".
+
+**Note: Make sure to use `eslint --ext .js,.ts` since by [default](https://eslint.org/docs/user-guide/command-line-interface#--ext) `eslint` will only search for .js files.**
 
 ## Supported Rules
 
