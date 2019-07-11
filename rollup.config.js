@@ -14,14 +14,14 @@ export default {
 
   output: [
     {
-      dir: "./dist",
+      dir: "./lib",
       entryFileNames: "[name].js",
       chunkFileNames: "common/[hash].js",
       format: "cjs",
       sourcemap: false
     },
     {
-      dir: "./dist",
+      dir: "./lib",
       entryFileNames: "[name].mjs",
       chunkFileNames: "common/[hash].mjs",
       format: "esm",
@@ -48,7 +48,7 @@ export default {
       preferConst: true
     }),
     rollupPluginCopy({
-      targets: [{ src: "src/configs/**/*.json", dest: "dist/configs" }],
+      targets: [{ src: "src/configs/**/*.json", dest: "lib/configs" }],
       hook: "writeBundle"
     })
   ],

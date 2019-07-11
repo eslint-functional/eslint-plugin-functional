@@ -4,6 +4,6 @@ thumbs.db
 .rpt2_cache/
 node_modules/
 /build/
-/dist/
+/lib/
 /coverage/
 js_out/
