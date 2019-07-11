@@ -1,8 +1,0 @@
-{
-  "extends": "./configs/functional-lite.json",
-  "rules": {
-    "ts-immutable/no-expression-statement": "error",
-    "ts-immutable/no-if-statement": "error",
-    "ts-immutable/no-try": "error"
-  }
-}

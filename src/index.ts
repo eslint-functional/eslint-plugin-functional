@@ -1,20 +1,16 @@
-import all from "./configs/all.json";
-import base from "./configs/base.json";
-import eslintRecommended from "./configs/eslint-recommended.json";
-import functionalLite from "./configs/functional-lite.json";
-import functional from "./configs/functional.json";
-import recommended from "./configs/recommended.json";
+import all from "./configs/all";
+import functionalLite from "./configs/functional-lite";
+import functional from "./configs/functional";
+import immutable from "./configs/immutable";
 import { rules } from "./rules";
 
 const config = {
   rules,
   configs: {
     all,
-    base,
-    recommended,
+    recommended: immutable,
     functional,
-    "functional-lite": functionalLite,
-    "eslint-recommended": eslintRecommended
+    "functional-lite": functionalLite
   }
 };
 
