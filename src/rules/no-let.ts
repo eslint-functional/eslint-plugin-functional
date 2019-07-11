@@ -16,13 +16,11 @@ import { isForXInitialiser } from "../util/typeguard";
 export const name = "no-let" as const;
 
 // The options this rule can take.
-type Options = readonly [
-  ignore.IgnoreLocalOption & ignore.IgnorePatternOptions
-];
+type Options = readonly [ignore.IgnoreLocalOption & ignore.IgnorePatternOption];
 
 // The schema for the rule options.
 const schema: JSONSchema4 = [
-  deepMerge([ignore.ignoreLocalOptionSchema, ignore.ignorePatternOptionsSchema])
+  deepMerge([ignore.ignoreLocalOptionSchema, ignore.ignorePatternOptionSchema])
 ];
 
 // The default options for the rule.

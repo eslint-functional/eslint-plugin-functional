@@ -27,13 +27,16 @@ export const name = "no-array-mutation" as const;
 
 // The options this rule can take.
 type Options = readonly [
-  ignore.IgnorePatternOptions & ignore.IgnoreNewArrayOption
+  ignore.IgnorePatternOption &
+    ignore.IgnoreAccessorPatternOption &
+    ignore.IgnoreNewArrayOption
 ];
 
 // The schema for the rule options.
 const schema: JSONSchema4 = [
   deepMerge([
-    ignore.ignorePatternOptionsSchema,
+    ignore.ignorePatternOptionSchema,
+    ignore.ignoreAccessorPatternOptionSchema,
     ignore.ignoreNewArrayOptionSchema
   ])
 ];

@@ -139,7 +139,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
           mutableD: { readonly [key: string]: string },
         }
       };`,
-    optionsSet: [[{ ignorePattern: "mutable*" }], [{ ignorePrefix: "mutable" }]]
+    optionsSet: [[{ ignorePattern: "^mutable" }]]
   },
   // Ignore Suffix.
   {
@@ -156,7 +156,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
           dMutable: { readonly [key: string]: string },
         }
       };`,
-    optionsSet: [[{ ignorePattern: "*Mutable" }], [{ ignoreSuffix: "Mutable" }]]
+    optionsSet: [[{ ignorePattern: "Mutable$" }]]
   }
 ];
 
