@@ -1,6 +1,5 @@
-{
-  "extends": "./configs/base.json",
-  "rules": {
+const config = {
+  rules: {
     "ts-immutable/no-array-mutation": "error",
     "ts-immutable/no-class": "error",
     "ts-immutable/no-delete": "error",
@@ -14,10 +13,10 @@
     "ts-immutable/no-throw": "error",
     "ts-immutable/no-try": "error"
   },
-  "overrides": [
+  overrides: [
     {
-      "files": ["*.ts", "*.tsx"],
-      "rules": {
+      files: ["*.ts", "*.tsx"],
+      rules: {
         "ts-immutable/no-method-signature": "error",
         "ts-immutable/no-mixed-interface": "error",
         "ts-immutable/readonly-array": "error",
@@ -25,4 +24,6 @@
       }
     }
   ]
-}
+};
+
+export default config;

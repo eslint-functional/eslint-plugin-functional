@@ -7,7 +7,6 @@ import rollupPluginCommonjs from "rollup-plugin-commonjs";
 import rollupPluginNodeResolve from "rollup-plugin-node-resolve";
 import rollupPluginTypescript from "rollup-plugin-typescript2";
 import rollupPluginJSON from "rollup-plugin-json";
-import rollupPluginCopy from "rollup-plugin-copy";
 
 export default {
   input: "src/index.ts",
@@ -31,8 +30,6 @@ export default {
 
   external: id => {
     return (
-      // Config File?
-      (id.includes("./configs/") && id.endsWith(".json")) ||
       // Not a Local File?
       !(id.startsWith(".") || id.startsWith("/"))
     );
@@ -46,10 +43,6 @@ export default {
     }),
     rollupPluginJSON({
       preferConst: true
-    }),
-    rollupPluginCopy({
-      targets: [{ src: "src/configs/**/*.json", dest: "lib/configs" }],
-      hook: "writeBundle"
     })
   ],
 

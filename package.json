@@ -63,7 +63,6 @@
     "rimraf": "^2.6.3",
     "rollup": "^1.16.2",
     "rollup-plugin-commonjs": "^10.0.1",
-    "rollup-plugin-copy": "^3.0.0",
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-resolve": "^5.1.0",
     "rollup-plugin-typescript2": "^0.21.2",
