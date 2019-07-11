@@ -65,7 +65,7 @@ If you want to use rules which require type information, you will need to specif
 }
 ```
 
-See [@typescript-eslint/parser's README.md](../parser/README.md) for more information on the available "parserOptions".
+See [@typescript-eslint/parser's README.md](https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/parser#readme) for more information on the available "parserOptions".
 
 **Note: Make sure to use `eslint --ext .js,.ts` since by [default](https://eslint.org/docs/user-guide/command-line-interface#--ext) `eslint` will only search for .js files.**
 
