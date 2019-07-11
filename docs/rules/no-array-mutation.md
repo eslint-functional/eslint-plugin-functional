@@ -20,12 +20,11 @@ The rule accepts an options object with the following properties:
 type Options = {
   readonly ignoreNewArray?: boolean;
   readonly ignorePattern?: string | Array<string>;
-  readonly ignorePrefix?: string | Array<string>;
-  readonly ignoreSuffix?: string | Array<string>;
+  readonly ignoreAccessorPattern?: string | Array<string>;
 };
 
 const defaults = {
-  ignoreNewArray: false
+  ignoreNewArray: true
 };
 ```
 
@@ -43,3 +42,7 @@ const sorted = original.slice().sort((a, b) => a.localeCompare(b)); // This is O
 ### `ignorePattern`
 
 See the [ignorePattern](./options-ignore-pattern.md) docs.
+
+### `ignoreAccessorPattern`
+
+See the [ignoreAccessorPattern](./options-ignore-accessor-pattern.md) docs.

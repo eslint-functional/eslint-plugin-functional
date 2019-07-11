@@ -22,8 +22,7 @@ The rule accepts an options object with the following properties:
 ```typescript
 type Options = {
   readonly ignorePattern?: string | Array<string>;
-  readonly ignorePrefix?: string | Array<string>;
-  readonly ignoreSuffix?: string | Array<string>;
+  readonly ignoreAccessorPattern?: string | Array<string>;
 };
 
 const defaults = {};
@@ -32,3 +31,7 @@ const defaults = {};
 ### `ignorePattern`
 
 See the [ignorePattern](./options-ignore-pattern.md) docs.
+
+### `ignoreAccessorPattern`
+
+See the [ignoreAccessorPattern](./options-ignore-accessor-pattern.md) docs.
