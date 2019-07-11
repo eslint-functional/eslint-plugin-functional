@@ -2,8 +2,8 @@
   "name": "eslint-plugin-ts-immutable",
   "version": "0.1.0",
   "description": "ESLint rules to disable mutation in TypeScript.",
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
+  "main": "lib/index.js",
+  "module": "lib/index.mjs",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jonaskello/eslint-plugin-ts-immutable"
@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/jonaskello/eslint-plugin-ts-immutable#readme",
   "files": [
-    "/dist",
+    "/lib",
     "package.json",
     "CHANGELOG.md",
     "LICENSE",
@@ -78,7 +78,7 @@
     "compile": "rollup -c",
     "compile-tests": "tsc -p tsconfig.tests.json",
     "build-tests": "rimraf build && yarn compile-tests",
-    "build": "rimraf dist && yarn compile",
+    "build": "rimraf lib && yarn compile",
     "prelint": "yarn build && yarn link && yarn link 'eslint-plugin-ts-immutable'",
     "lint": "eslint './{src,tests}/**/*.ts' --ext .ts",
     "test": "jest --testPathIgnorePatterns _work.test",
