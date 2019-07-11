@@ -12,7 +12,7 @@ type OptionsSet = {
    * The set of options this test case should pass for.
    */
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-  optionsSet: ReadonlyArray<any>;
+  readonly optionsSet: ReadonlyArray<any>;
 };
 
 export type ValidTestCase = Omit<ESLintRuleTester.ValidTestCase, "options"> &
@@ -42,27 +42,27 @@ export function processValidTestCase(
 export function processInvalidTestCase(
   testCases: ReadonlyArray<InvalidTestCase>
 ): Array<ESLintRuleTester.InvalidTestCase> {
-  return testCases.reduce<Array<ESLintRuleTester.InvalidTestCase>>(
+  return testCases.reduce<ReadonlyArray<ESLintRuleTester.InvalidTestCase>>(
     (testCasesCarry, testCase) => {
       return [
         ...testCasesCarry,
-        ...testCase.optionsSet.reduce<Array<ESLintRuleTester.InvalidTestCase>>(
-          (optionsSetCarry, options) => {
-            const { optionsSet, ...eslintTestCase } = testCase;
-            return [
-              ...optionsSetCarry,
-              {
-                ...eslintTestCase,
-                options
-              }
-            ];
-          },
-          []
-        )
+        ...testCase.optionsSet.reduce<
+          ReadonlyArray<ESLintRuleTester.InvalidTestCase>
+        >((optionsSetCarry, options) => {
+          const { optionsSet, ...eslintTestCase } = testCase;
+          return [
+            ...optionsSetCarry,
+            {
+              ...eslintTestCase,
+              options
+            }
+          ];
+        }, [])
       ];
     },
     []
-  );
+    /* eslint-disable ts-immutable/readonly-array */
+  ) as Array<ESLintRuleTester.InvalidTestCase>;
 }
 
 export function createDummyRule(

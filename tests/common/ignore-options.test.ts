@@ -1,13 +1,20 @@
+import { ValidTestCase } from "@typescript-eslint/experimental-utils/dist/ts-eslint";
 import dedent from "dedent";
 import { Rule, RuleTester } from "eslint";
 
-import { shouldIgnore } from "../../src/common/ignore-options";
-import { createDummyRule } from "../util";
+import {
+  IgnoreAccessorPatternOption,
+  IgnorePatternOption,
+  shouldIgnore
+} from "../../src/common/ignore-options";
 import { typescript } from "../configs";
+import { createDummyRule } from "../util";
 
 describe("option: ignore", () => {
   describe("ignoreAccessorPattern", () => {
-    const assignmentExpressionTests = [
+    const tests: ReadonlyArray<
+      ValidTestCase<readonly [boolean, IgnoreAccessorPatternOption]>
+    > = [
       // Exact match.
       {
         code: dedent`
@@ -73,7 +80,7 @@ describe("option: ignore", () => {
           xxx_mutable_xxx.foo[0] = 0;`,
         options: [false, { ignoreAccessorPattern: "*_mutable_*" }]
       },
-      // Nested-property match.
+      // Mutable self.
       {
         code: dedent`
           mutable_xxx.foo.bar = 0;
@@ -87,7 +94,20 @@ describe("option: ignore", () => {
           mutable_xxx[0] = 0;`,
         options: [false, { ignoreAccessorPattern: "mutable_*.*" }]
       },
-      // Deep property match.
+      // Mutable deep properties.
+      {
+        code: dedent`
+          mutable_xxx.foo.bar.baz[0] = 0;
+          mutable_xxx.foo.bar.baz = [0, 1, 2];
+          mutable_xxx.foo.bar = 0;`,
+        options: [true, { ignoreAccessorPattern: "mutable_*.**.*" }]
+      },
+      {
+        code: dedent`
+          mutable_xxx.foo = 0;`,
+        options: [false, { ignoreAccessorPattern: "mutable_*.**.*" }]
+      },
+      // Mutable deep properties and mutable self.
       {
         code: dedent`
           mutable_xxx.foo.bar.baz[0] = 0;
@@ -109,14 +129,16 @@ describe("option: ignore", () => {
         };
       }) as Rule.RuleModule,
       {
-        valid: assignmentExpressionTests,
+        valid: [...tests],
         invalid: []
       }
     );
   });
 
   describe("ignorePattern", () => {
-    const assignmentExpressionTests = [
+    const assignmentExpressionTests: ReadonlyArray<
+      ValidTestCase<readonly [boolean, IgnorePatternOption]>
+    > = [
       // Prefix match.
       {
         code: dedent`
@@ -162,12 +184,14 @@ describe("option: ignore", () => {
         };
       }) as Rule.RuleModule,
       {
-        valid: assignmentExpressionTests,
+        valid: [...assignmentExpressionTests],
         invalid: []
       }
     );
 
-    const expressionStatementTests = [
+    const expressionStatementTests: ReadonlyArray<
+      ValidTestCase<readonly [boolean, IgnorePatternOption]>
+    > = [
       {
         code: dedent`
           const x = 0;`,
@@ -196,7 +220,7 @@ describe("option: ignore", () => {
         };
       }) as Rule.RuleModule,
       {
-        valid: expressionStatementTests,
+        valid: [...expressionStatementTests],
         invalid: []
       }
     );

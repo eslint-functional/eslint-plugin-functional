@@ -1,18 +1,25 @@
 import { TSESTree } from "@typescript-eslint/typescript-estree";
 import { all as deepMerge } from "deepmerge";
+import { JSONSchema4 } from "json-schema";
 
 import * as ignore from "../common/ignore-options";
-import { checkNode, createRule, RuleContext, RuleMetaData } from "../util/rule";
+import {
+  checkNode,
+  createRule,
+  RuleContext,
+  RuleMetaData,
+  RuleResult
+} from "../util/rule";
 import { isForXInitialiser } from "../util/typeguard";
 
 // The name of this rule.
 export const name = "no-let" as const;
 
 // The options this rule can take.
-type Options = [ignore.IgnoreLocalOption & ignore.IgnorePatternOption];
+type Options = readonly [ignore.IgnoreLocalOption & ignore.IgnorePatternOption];
 
 // The schema for the rule options.
-const schema = [
+const schema: JSONSchema4 = [
   deepMerge([ignore.ignoreLocalOptionSchema, ignore.ignorePatternOptionSchema])
 ];
 
@@ -47,25 +54,40 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
 function checkVariableDeclaration(
   node: TSESTree.VariableDeclaration,
   context: RuleContext<keyof typeof errorMessages, Options>
-): void {
-  if (node.kind === "let") {
-    // Report the error.
-    context.report({
-      node,
-      messageId: "generic",
-      fix:
-        // Can only fix if all declarations have an initial value (with the
-        // exception of ForOf and ForIn Statement initialisers).
-        node.declarations.every(declaration => declaration.init !== null) ||
-        isForXInitialiser(node)
-          ? fixer =>
-              fixer.replaceTextRange(
-                [node.range[0], node.range[0] + node.kind.length],
-                "const"
-              )
-          : undefined
-    });
-  }
+): RuleResult<keyof typeof errorMessages, Options> {
+  return {
+    context,
+    descriptors:
+      node.kind === "let"
+        ? [
+            {
+              node,
+              messageId: "generic",
+              fix:
+                /*
+                 * TODO: Remove this fix?
+                 * This fix doesn't actually fix the problem; it just turns the
+                 * let into a const and makes "cannot reassign to const" issues.
+                 *
+                 * Note: The rule "prefer-const"'s fix will fix lets only when
+                 * they aren't reassigned to.
+                 */
+
+                // Can only fix if all declarations have an initial value (with the
+                // exception of ForOf and ForIn Statement initialisers).
+                node.declarations.every(
+                  declaration => declaration.init !== null
+                ) || isForXInitialiser(node)
+                  ? fixer =>
+                      fixer.replaceTextRange(
+                        [node.range[0], node.range[0] + node.kind.length],
+                        "const"
+                      )
+                  : undefined
+            }
+          ]
+        : []
+  };
 }
 
 // Create the rule.

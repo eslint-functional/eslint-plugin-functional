@@ -1,3 +1,6 @@
+// Polyfill.
+import "array.prototype.flatmap/auto.js";
+
 import { TSESTree } from "@typescript-eslint/typescript-estree";
 import { all as deepMerge } from "deepmerge";
 import { JSONSchema4 } from "json-schema";
@@ -6,10 +9,12 @@ import * as ignore from "../common/ignore-options";
 import {
   checkNode,
   createRule,
-  getParserServices,
+  getTypeOfNode,
   RuleContext,
-  RuleMetaData
+  RuleMetaData,
+  RuleResult
 } from "../util/rule";
+import { isInReturnType } from "../util/tree";
 import {
   isArrayType,
   isAssignmentPattern,
@@ -23,7 +28,7 @@ import {
 export const name = "readonly-array" as const;
 
 // The options this rule can take.
-type Options = [
+type Options = readonly [
   ignore.IgnoreLocalOption &
     ignore.IgnorePatternOption &
     ignore.IgnoreReturnTypeOption
@@ -72,28 +77,29 @@ function checkArrayOrTupleType(
   node: TSESTree.TSArrayType | TSESTree.TSTupleType,
   context: RuleContext<keyof typeof errorMessages, Options>,
   [options]: Options
-): void {
-  if (
-    !node.parent ||
-    !isTSTypeOperator(node.parent) ||
-    node.parent.operator !== "readonly"
-  ) {
-    if (options.ignoreReturnType && isInReturnType(node)) {
-      return;
-    }
-
-    context.report({
-      node,
-      messageId: "generic",
-      fix: fixer =>
-        node.parent && isTSArrayType(node.parent)
-          ? [
-              fixer.insertTextBefore(node, "(readonly "),
-              fixer.insertTextAfter(node, ")")
-            ]
-          : fixer.insertTextBefore(node, "readonly ")
-    });
-  }
+): RuleResult<keyof typeof errorMessages, Options> {
+  return {
+    context,
+    descriptors:
+      (!node.parent ||
+        !isTSTypeOperator(node.parent) ||
+        node.parent.operator !== "readonly") &&
+      (!options.ignoreReturnType || !isInReturnType(node))
+        ? [
+            {
+              node,
+              messageId: "generic",
+              fix:
+                node.parent && isTSArrayType(node.parent)
+                  ? fixer => [
+                      fixer.insertTextBefore(node, "(readonly "),
+                      fixer.insertTextAfter(node, ")")
+                    ]
+                  : fixer => fixer.insertTextBefore(node, "readonly ")
+            }
+          ]
+        : []
+  };
 }
 
 /**
@@ -103,18 +109,22 @@ function checkTypeReference(
   node: TSESTree.TSTypeReference,
   context: RuleContext<keyof typeof errorMessages, Options>,
   [options]: Options
-): void {
-  if (isIdentifier(node.typeName) && node.typeName.name === "Array") {
-    if (options.ignoreReturnType && isInReturnType(node)) {
-      return;
-    }
-
-    context.report({
-      node,
-      messageId: "generic",
-      fix: fixer => fixer.insertTextBefore(node, "Readonly")
-    });
-  }
+): RuleResult<keyof typeof errorMessages, Options> {
+  return {
+    context,
+    descriptors:
+      isIdentifier(node.typeName) &&
+      node.typeName.name === "Array" &&
+      (!options.ignoreReturnType || !isInReturnType(node))
+        ? [
+            {
+              node,
+              messageId: "generic",
+              fix: fixer => fixer.insertTextBefore(node, "Readonly")
+            }
+          ]
+        : []
+  };
 }
 
 /**
@@ -127,67 +137,50 @@ function checkImplicitType(
     | TSESTree.FunctionExpression
     | TSESTree.ArrowFunctionExpression,
   context: RuleContext<keyof typeof errorMessages, Options>
-): void {
+): RuleResult<keyof typeof errorMessages, Options> {
   type Declarator = {
-    id: TSESTree.Node;
-    init: TSESTree.Node | null;
-    node: TSESTree.Node;
+    readonly id: TSESTree.Node;
+    readonly init: TSESTree.Node | null;
+    readonly node: TSESTree.Node;
   };
 
   const declarators: ReadonlyArray<Declarator> = isFunctionLike(node)
-    ? (node.params
+    ? node.params
         .map(param =>
           isAssignmentPattern(param)
-            ? { id: param.left, init: param.right, node: param }
+            ? /* eslint-disable-next-line @typescript-eslint/no-object-literal-type-assertion */
+              ({ id: param.left, init: param.right, node: param } as Declarator)
             : undefined
         )
-        .filter(param => param !== undefined) as ReadonlyArray<Declarator>)
-    : node.declarations.map(declaration => ({
-        id: declaration.id,
-        init: declaration.init,
-        node: declaration
-      }));
+        .filter((param): param is Declarator => param !== undefined)
+    : node.declarations.map(
+        declaration =>
+          /* eslint-disable-next-line @typescript-eslint/no-object-literal-type-assertion */
+          ({
+            id: declaration.id,
+            init: declaration.init,
+            node: declaration
+          } as Declarator)
+      );
 
-  declarators.forEach(declarator => {
-    if (
-      isIdentifier(declarator.id) &&
-      declarator.id.typeAnnotation === undefined &&
-      declarator.init !== null
-    ) {
-      const parserServices = getParserServices(context);
-      const type = parserServices.program
-        .getTypeChecker()
-        .getTypeAtLocation(
-          parserServices.esTreeNodeToTSNodeMap.get(declarator.init)
-        );
-
-      if (isArrayType(type)) {
-        context.report({
-          node: declarator.node,
-          messageId: "implicit",
-          fix: fixer =>
-            fixer.insertTextAfter(declarator.id, ": readonly unknown[]")
-        });
-      }
-    }
-  });
-}
-
-/**
- * Is the given node in the return type.
- */
-function isInReturnType(node: TSESTree.Node): boolean {
-  let n: TSESTree.Node | undefined = node;
-  while (n && n.parent) {
-    if (isFunctionLike(n.parent)) {
-      if (n.parent.returnType === n) {
-        return true;
-      }
-      return false;
-    }
-    n = n.parent;
-  }
-  return false;
+  return {
+    context,
+    descriptors: declarators.flatMap(declarator => {
+      return isIdentifier(declarator.id) &&
+        declarator.id.typeAnnotation === undefined &&
+        declarator.init !== null &&
+        isArrayType(getTypeOfNode(declarator.init, context))
+        ? [
+            {
+              node: declarator.node,
+              messageId: "implicit",
+              fix: fixer =>
+                fixer.insertTextAfter(declarator.id, ": readonly unknown[]")
+            }
+          ]
+        : [];
+    })
+  };
 }
 
 // Create the rule.
@@ -195,24 +188,24 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
   name,
   meta,
   defaultOptions,
-  create(context, options) {
+  create(context, [ignoreOptions, ...otherOptions]) {
     const _checkArrayOrTupleType = checkNode(
       checkArrayOrTupleType,
       context,
-      undefined,
-      options
+      ignoreOptions,
+      otherOptions
     );
     const _checkTypeReference = checkNode(
       checkTypeReference,
       context,
-      undefined,
-      options
+      ignoreOptions,
+      otherOptions
     );
     const _checkImplicitType = checkNode(
       checkImplicitType,
       context,
-      undefined,
-      options
+      ignoreOptions,
+      otherOptions
     );
 
     return {

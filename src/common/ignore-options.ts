@@ -40,7 +40,7 @@ export const ignoreLocalOptionSchema: JSONSchema4 = {
 };
 
 export interface IgnorePatternOption {
-  readonly ignorePattern?: string | Array<string>;
+  readonly ignorePattern?: string | ReadonlyArray<string>;
 }
 
 export const ignorePatternOptionSchema: JSONSchema4 = {
@@ -57,7 +57,7 @@ export const ignorePatternOptionSchema: JSONSchema4 = {
 };
 
 export interface IgnoreAccessorPatternOption {
-  readonly ignoreAccessorPattern?: string | Array<string>;
+  readonly ignoreAccessorPattern?: string | ReadonlyArray<string>;
 }
 
 export const ignoreAccessorPatternOptionSchema: JSONSchema4 = {
@@ -133,44 +133,30 @@ export function shouldIgnore(
   context: RuleContext<string, BaseOptions>,
   ignoreOptions: AllIgnoreOptions
 ): boolean {
-  // Ignore if in a function and ignoreLocal is set.
-  if (ignoreOptions.ignoreLocal && inFunction(node)) {
-    return true;
-  }
-
-  // Ignore if in a class and ignoreClass is set.
-  if (ignoreOptions.ignoreClass && inClass(node)) {
-    return true;
-  }
-
-  // Ignore if in an interface and ignoreInterface is set.
-  if (ignoreOptions.ignoreInterface && inInterface(node)) {
-    return true;
-  }
-
-  const texts: ReadonlyArray<string> = getNodeTexts(node, context);
-
-  if (texts.length > 0) {
-    // Ignore if a pattern matches and ignorePattern is set.
-    if (
-      ignoreOptions.ignorePattern &&
-      texts.every(text => isIgnoredPattern(text, ignoreOptions.ignorePattern!))
-    ) {
-      return true;
-    }
-
-    // Ignore if a pattern matches and ignoreAccessorPattern is set.
-    if (
-      ignoreOptions.ignoreAccessorPattern &&
-      texts.every(text =>
-        isIgnoredAccessorPattern(text, ignoreOptions.ignoreAccessorPattern!)
-      )
-    ) {
-      return true;
-    }
-  }
-
-  return false;
+  return (
+    // Ignore if in a function and ignoreLocal is set.
+    (Boolean(ignoreOptions.ignoreLocal) && inFunction(node)) ||
+    // Ignore if in a class and ignoreClass is set.
+    (Boolean(ignoreOptions.ignoreClass) && inClass(node)) ||
+    // Ignore if in an interface and ignoreInterface is set.
+    (Boolean(ignoreOptions.ignoreInterface) && inInterface(node)) ||
+    ((texts: ReadonlyArray<string>): boolean =>
+      texts.length > 0
+        ? // Ignore if ignorePattern is set and a pattern matches.
+          (ignoreOptions.ignorePattern !== undefined &&
+            texts.every(text =>
+              isIgnoredPattern(text, ignoreOptions.ignorePattern!)
+            )) ||
+          // Ignore if ignoreAccessorPattern is set and an accessor pattern matches.
+          (ignoreOptions.ignoreAccessorPattern !== undefined &&
+            texts.every(text =>
+              isIgnoredAccessorPattern(
+                text,
+                ignoreOptions.ignoreAccessorPattern!
+              )
+            ))
+        : false)(getNodeTexts(node, context))
+  );
 }
 
 function getNodeTexts(
@@ -216,9 +202,9 @@ function _getNodeText(
 
 function isIgnoredPattern(
   text: string,
-  ignorePattern: Array<string> | string
+  ignorePattern: ReadonlyArray<string> | string
 ): boolean {
-  const patterns = Array.isArray(ignorePattern)
+  const patterns: ReadonlyArray<string> = Array.isArray(ignorePattern)
     ? ignorePattern
     : [ignorePattern];
 
@@ -228,9 +214,9 @@ function isIgnoredPattern(
 
 function isIgnoredAccessorPattern(
   text: string,
-  ignorePattern: Array<string> | string
+  ignorePattern: ReadonlyArray<string> | string
 ): boolean {
-  const patterns = Array.isArray(ignorePattern)
+  const patterns: ReadonlyArray<string> = Array.isArray(ignorePattern)
     ? ignorePattern
     : [ignorePattern];
 
@@ -241,63 +227,27 @@ function isIgnoredAccessorPattern(
 }
 
 function findMatch(
-  patternParts: ReadonlyArray<string>,
-  textParts: ReadonlyArray<string>
+  [pattern, ...remainingPatternParts]: ReadonlyArray<string>,
+  textParts: ReadonlyArray<string>,
+  allowExtra: boolean = false
 ): boolean {
-  const maxlength =
-    patternParts.length > textParts.length
-      ? patternParts.length
-      : textParts.length;
-
-  for (let index = 0; index < maxlength; index++) {
-    // Out of text or pattern?
-    if (
-      index >= patternParts.length ||
-      (patternParts[index] !== "**" && index >= textParts.length)
-    ) {
-      return false;
-    }
-
-    switch (patternParts[index]) {
-      // Match any depth (including 0)?
-      case "**": {
-        const subpattern = patternParts.slice(index + 1);
-        if (subpattern.length === 0) {
-          return true;
-        }
-        for (let offset = 0; offset < textParts.length - index; offset++) {
-          const submatch = findMatch(
-            subpattern,
-            textParts.slice(index + offset)
-          );
-          if (submatch) {
-            return submatch;
-          }
-        }
-        return false;
-      }
-
-      // Match anything?
-      case "*":
-        continue;
-
-      default:
-        break;
-    }
-
-    // textParts[i] matches patternParts[i]?
-    if (
-      new RegExp(
-        "^" + escapeRegExp(patternParts[index]).replace(/\\\*/g, ".*") + "$"
-      ).test(textParts[index])
-    ) {
-      continue;
-    }
-
-    // No Match.
-    return false;
-  }
-
-  // Match.
-  return true;
+  return pattern === undefined
+    ? allowExtra || textParts.length === 0
+    : // Match any depth (including 0)?
+    pattern === "**"
+    ? textParts.length === 0
+      ? findMatch(remainingPatternParts, [], allowExtra)
+      : Array.from({ length: textParts.length })
+          .map((_element, index) => index)
+          .some(offset =>
+            findMatch(remainingPatternParts, textParts.slice(offset), true)
+          )
+    : // Match anything?
+    pattern === "*"
+    ? textParts.length > 0 &&
+      findMatch(remainingPatternParts, textParts.slice(1), allowExtra)
+    : // Text matches pattern?
+      new RegExp("^" + escapeRegExp(pattern).replace(/\\\*/g, ".*") + "$").test(
+        textParts[0]
+      ) && findMatch(remainingPatternParts, textParts.slice(1), allowExtra);
 }
