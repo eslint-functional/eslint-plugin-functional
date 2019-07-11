@@ -70,22 +70,20 @@ function check(
     | TSESTree.ClassProperty,
   context: RuleContext<keyof typeof errorMessages, Options>
 ): RuleResult<keyof typeof errorMessages, Options> {
-  if (!node.readonly) {
-    const fix = "readonly ";
-    return {
-      context,
-      descriptors: [
-        {
-          node,
-          messageId: "generic",
-          fix: isTSIndexSignature(node)
-            ? fixer => fixer.insertTextBefore(node, fix)
-            : fixer => fixer.insertTextBefore(node.key, fix)
-        }
-      ]
-    };
-  }
-  return { context, descriptors: [] };
+  return {
+    context,
+    descriptors: node.readonly
+      ? []
+      : [
+          {
+            node,
+            messageId: "generic",
+            fix: isTSIndexSignature(node)
+              ? fixer => fixer.insertTextBefore(node, "readonly ")
+              : fixer => fixer.insertTextBefore(node.key, "readonly ")
+          }
+        ]
+  };
 }
 
 // Create the rule.

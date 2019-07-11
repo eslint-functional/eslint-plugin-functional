@@ -11,6 +11,7 @@ import {
   RuleModule,
   ReportDescriptor
 } from "@typescript-eslint/experimental-utils/dist/ts-eslint";
+import { Type } from "typescript";
 
 import { version } from "../../package.json";
 import { AllIgnoreOptions, shouldIgnore } from "../common/ignore-options";
@@ -88,6 +89,9 @@ export function checkNode<
   otherOptions: BaseOptions = []
 ): (node: Node) => void {
   return (node: Node) => {
+    // This function can't be functional as it needs to interact with 3rd-party
+    // libraries that aren't functional.
+    /* eslint-disable ts-immutable/no-if-statement, ts-immutable/no-expression-statement */
     if (!ignoreOptions || !shouldIgnore(node, context, ignoreOptions)) {
       const result = check(
         node,
@@ -99,7 +103,22 @@ export function checkNode<
         result.context.report(descriptor)
       );
     }
+    /* eslint-enable ts-immutable/no-if-statement, ts-immutable/no-expression-statement */
   };
+}
+
+/**
+ * Get the type of the the given node.
+ */
+export function getTypeOfNode<Context extends RuleContext<string, BaseOptions>>(
+  node: TSESTree.Node,
+  context: Context
+): Type {
+  const parserServices = getParserServices(context);
+
+  return parserServices.program
+    .getTypeChecker()
+    .getTypeAtLocation(parserServices.esTreeNodeToTSNodeMap.get(node));
 }
 
 /**
@@ -121,6 +140,7 @@ export function parserServicesAvaliable<
 export function getParserServices<
   Context extends RuleContext<string, BaseOptions>
 >(context: Context): ParserServices {
+  /* eslint-disable-next-line ts-immutable/no-if-statement */
   if (parserServicesAvaliable(context)) {
     return context.parserServices as ParserServices;
   }
@@ -129,6 +149,7 @@ export function getParserServices<
    * The user needs to have configured "project" in their parserOptions
    * for @typescript-eslint/parser
    */
+  /* eslint-disable-next-line ts-immutable/no-throw */
   throw new Error(
     'You have used a rule which is only avaliable for TypeScript files and requires parserServices to be generated. You must therefore provide a value for the "parserOptions.project" property for @typescript-eslint/parser.'
   );

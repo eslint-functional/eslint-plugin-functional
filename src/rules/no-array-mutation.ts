@@ -6,8 +6,7 @@ import * as ignore from "../common/ignore-options";
 import {
   checkNode,
   createRule,
-  getParserServices,
-  ParserServices,
+  getTypeOfNode,
   RuleContext,
   RuleMetaData,
   RuleResult
@@ -111,23 +110,14 @@ function checkAssignmentExpression(
   node: TSESTree.AssignmentExpression,
   context: RuleContext<keyof typeof errorMessages, Options>
 ): RuleResult<keyof typeof errorMessages, Options> {
-  if (isMemberExpression(node.left)) {
-    const parserServices = getParserServices(context);
-
-    if (
-      isArrayType(
-        parserServices.program
-          .getTypeChecker()
-          .getTypeAtLocation(
-            parserServices.esTreeNodeToTSNodeMap.get(node.left.object)
-          )
-      )
-    ) {
-      return { context, descriptors: [{ node, messageId: "generic" }] };
-    }
-  }
-
-  return { context, descriptors: [] };
+  return {
+    context,
+    descriptors:
+      isMemberExpression(node.left) &&
+      isArrayType(getTypeOfNode(node.left.object, context))
+        ? [{ node, messageId: "generic" }]
+        : []
+  };
 }
 
 /**
@@ -137,20 +127,15 @@ function checkUnaryExpression(
   node: TSESTree.UnaryExpression,
   context: RuleContext<keyof typeof errorMessages, Options>
 ): RuleResult<keyof typeof errorMessages, Options> {
-  if (node.operator === "delete" && isMemberExpression(node.argument)) {
-    const parserServices = getParserServices(context);
-    const type = parserServices.program
-      .getTypeChecker()
-      .getTypeAtLocation(
-        parserServices.esTreeNodeToTSNodeMap.get(node.argument.object)
-      );
-
-    if (isArrayType(type)) {
-      return { context, descriptors: [{ node, messageId: "generic" }] };
-    }
-  }
-
-  return { context, descriptors: [] };
+  return {
+    context,
+    descriptors:
+      node.operator === "delete" &&
+      isMemberExpression(node.argument) &&
+      isArrayType(getTypeOfNode(node.argument.object, context))
+        ? [{ node, messageId: "generic" }]
+        : []
+  };
 }
 
 /**
@@ -160,26 +145,14 @@ function checkUpdateExpression(
   node: TSESTree.UpdateExpression,
   context: RuleContext<keyof typeof errorMessages, Options>
 ): RuleResult<keyof typeof errorMessages, Options> {
-  if (
-    (node.operator === "++" || node.operator === "--") &&
-    isMemberExpression(node.argument)
-  ) {
-    const parserServices = getParserServices(context);
-
-    if (
-      isArrayType(
-        parserServices.program
-          .getTypeChecker()
-          .getTypeAtLocation(
-            parserServices.esTreeNodeToTSNodeMap.get(node.argument.object)
-          )
-      )
-    ) {
-      return { context, descriptors: [{ node, messageId: "generic" }] };
-    }
-  }
-
-  return { context, descriptors: [] };
+  return {
+    context,
+    descriptors:
+      isMemberExpression(node.argument) &&
+      isArrayType(getTypeOfNode(node.argument.object, context))
+        ? [{ node, messageId: "generic" }]
+        : []
+  };
 }
 
 /**
@@ -190,34 +163,23 @@ function checkCallExpression(
   context: RuleContext<keyof typeof errorMessages, Options>,
   [options]: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
-  if (
-    isMemberExpression(node.callee) &&
-    isIdentifier(node.callee.property) &&
-    mutatorMethods.some(
-      m =>
-        m ===
-        ((node.callee as TSESTree.MemberExpression)
-          .property as TSESTree.Identifier).name
-    )
-  ) {
-    const parserServices = getParserServices(context);
-
-    if (
+  return {
+    context,
+    descriptors:
+      isMemberExpression(node.callee) &&
+      isIdentifier(node.callee.property) &&
+      mutatorMethods.some(
+        m =>
+          m ===
+          ((node.callee as TSESTree.MemberExpression)
+            .property as TSESTree.Identifier).name
+      ) &&
       (!options.ignoreNewArray ||
-        !isInChainCallAndFollowsNew(node.callee, parserServices)) &&
-      isArrayType(
-        parserServices.program
-          .getTypeChecker()
-          .getTypeAtLocation(
-            parserServices.esTreeNodeToTSNodeMap.get(node.callee.object)
-          )
-      )
-    ) {
-      return { context, descriptors: [{ node, messageId: "generic" }] };
-    }
-  }
-
-  return { context, descriptors: [] };
+        !isInChainCallAndFollowsNew(node.callee, context)) &&
+      isArrayType(getTypeOfNode(node.callee.object, context))
+        ? [{ node, messageId: "generic" }]
+        : []
+  };
 }
 
 /**
@@ -236,20 +198,14 @@ function isExpected<T>(expected: T): (actual: T) => boolean {
  */
 function isInChainCallAndFollowsNew(
   node: TSESTree.MemberExpression,
-  parserServices: ParserServices
+  context: RuleContext<keyof typeof errorMessages, Options>
 ): boolean {
   return (
     // Check for: [0, 1, 2]
     isArrayExpression(node.object) ||
     // Check for: new Array()
     ((isNewExpression(node.object) &&
-      isArrayConstructorType(
-        parserServices.program
-          .getTypeChecker()
-          .getTypeAtLocation(
-            parserServices.esTreeNodeToTSNodeMap.get(node.object.callee)
-          )
-      )) ||
+      isArrayConstructorType(getTypeOfNode(node.object.callee, context))) ||
       (isCallExpression(node.object) &&
         isMemberExpression(node.object.callee) &&
         isIdentifier(node.object.callee.property) &&
@@ -258,13 +214,7 @@ function isInChainCallAndFollowsNew(
           isExpected(node.object.callee.property.name)
         ) &&
           isArrayConstructorType(
-            parserServices.program
-              .getTypeChecker()
-              .getTypeAtLocation(
-                parserServices.esTreeNodeToTSNodeMap.get(
-                  node.object.callee.object
-                )
-              )
+            getTypeOfNode(node.object.callee.object, context)
           )) ||
           // Check for: array.slice(0)
           newArrayReturningMethods.some(

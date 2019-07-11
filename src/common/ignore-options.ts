@@ -133,44 +133,30 @@ export function shouldIgnore(
   context: RuleContext<string, BaseOptions>,
   ignoreOptions: AllIgnoreOptions
 ): boolean {
-  // Ignore if in a function and ignoreLocal is set.
-  if (ignoreOptions.ignoreLocal && inFunction(node)) {
-    return true;
-  }
-
-  // Ignore if in a class and ignoreClass is set.
-  if (ignoreOptions.ignoreClass && inClass(node)) {
-    return true;
-  }
-
-  // Ignore if in an interface and ignoreInterface is set.
-  if (ignoreOptions.ignoreInterface && inInterface(node)) {
-    return true;
-  }
-
-  const texts: ReadonlyArray<string> = getNodeTexts(node, context);
-
-  if (texts.length > 0) {
-    // Ignore if a pattern matches and ignorePattern is set.
-    if (
-      ignoreOptions.ignorePattern &&
-      texts.every(text => isIgnoredPattern(text, ignoreOptions.ignorePattern!))
-    ) {
-      return true;
-    }
-
-    // Ignore if a pattern matches and ignoreAccessorPattern is set.
-    if (
-      ignoreOptions.ignoreAccessorPattern &&
-      texts.every(text =>
-        isIgnoredAccessorPattern(text, ignoreOptions.ignoreAccessorPattern!)
-      )
-    ) {
-      return true;
-    }
-  }
-
-  return false;
+  return (
+    // Ignore if in a function and ignoreLocal is set.
+    (Boolean(ignoreOptions.ignoreLocal) && inFunction(node)) ||
+    // Ignore if in a class and ignoreClass is set.
+    (Boolean(ignoreOptions.ignoreClass) && inClass(node)) ||
+    // Ignore if in an interface and ignoreInterface is set.
+    (Boolean(ignoreOptions.ignoreInterface) && inInterface(node)) ||
+    ((texts: ReadonlyArray<string>): boolean =>
+      texts.length > 0
+        ? // Ignore if ignorePattern is set and a pattern matches.
+          (ignoreOptions.ignorePattern !== undefined &&
+            texts.every(text =>
+              isIgnoredPattern(text, ignoreOptions.ignorePattern!)
+            )) ||
+          // Ignore if ignoreAccessorPattern is set and an accessor pattern matches.
+          (ignoreOptions.ignoreAccessorPattern !== undefined &&
+            texts.every(text =>
+              isIgnoredAccessorPattern(
+                text,
+                ignoreOptions.ignoreAccessorPattern!
+              )
+            ))
+        : false)(getNodeTexts(node, context))
+  );
 }
 
 function getNodeTexts(
