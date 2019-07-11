@@ -61,22 +61,36 @@ describe("option: ignore", () => {
       // Property match.
       {
         code: dedent`
-          mutable_xxx.foo = 1;`,
+          mutable_xxx.foo = 0;`,
         options: [true, { ignorePattern: "mutable_*.*" }]
       },
       {
         code: dedent`
-          mutable_xxx.foo.bar.baz = 1;
-          mutable_xxx.foo.bar = 1;`,
+          mutable_xxx.foo.bar.baz = 0;
+          mutable_xxx.foo.bar = 0;`,
         options: [false, { ignorePattern: "mutable_*.*" }]
       },
       // Deep property match.
       {
         code: dedent`
+          mutable_xxx.foo.bar.baz = 0;
+          mutable_xxx.foo.bar = 0;
+          mutable_xxx.foo = 0;`,
+        options: [true, { ignorePattern: "mutable_*.**.*" }]
+      },
+      {
+        code: dedent`
+          mutable_xxx = 0;`,
+        options: [false, { ignorePattern: "mutable_*.**.*" }]
+      },
+      // Deep property match and self.
+      {
+        code: dedent`
           mutable_xxx.foo.bar.baz = 1;
           mutable_xxx.foo.bar = 1;
-          mutable_xxx.foo = 1;`,
-        options: [true, { ignorePattern: "mutable_*.**.*" }]
+          mutable_xxx.foo = 1;
+          mutable_xxx = 1;`,
+        options: [true, { ignorePattern: "mutable_*.**" }]
       }
     ];
 
