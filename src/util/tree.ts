@@ -51,17 +51,30 @@ export function getForXStatement(node: TSESTree.Node): ForXStatement | null {
 }
 
 /**
+ * Is the given node in the return type.
+ */
+export function isInReturnType(node: TSESTree.Node): boolean {
+  return (
+    getParentOfType((n): n is TSESTree.Node => {
+      return (
+        n.parent != undefined &&
+        isFunctionLike(n.parent) &&
+        n.parent.returnType === n
+      );
+    }, node) !== null
+  );
+}
+
+/**
  * Return the parent that meets the given check criteria.
  */
 function getParentOfType<T extends TSESTree.Node>(
   checker: (node: TSESTree.Node) => node is T,
   node: TSESTree.Node
 ): T | null {
-  let n: TSESTree.Node | undefined = node;
-  while ((n = n.parent)) {
-    if (checker(n)) {
-      return n;
-    }
-  }
-  return null;
+  return checker(node)
+    ? node
+    : node.parent == undefined
+    ? null
+    : getParentOfType(checker, node.parent);
 }

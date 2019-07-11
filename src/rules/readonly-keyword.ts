@@ -1,15 +1,22 @@
 import { TSESTree } from "@typescript-eslint/typescript-estree";
 import { all as deepMerge } from "deepmerge";
+import { JSONSchema4 } from "json-schema";
 
 import * as ignore from "../common/ignore-options";
-import { checkNode, createRule, RuleContext, RuleMetaData } from "../util/rule";
+import {
+  checkNode,
+  createRule,
+  RuleContext,
+  RuleMetaData,
+  RuleResult
+} from "../util/rule";
 import { isTSIndexSignature } from "../util/typeguard";
 
 // The name of this rule.
 export const name = "readonly-keyword" as const;
 
 // The options this rule can take.
-type Options = [
+type Options = readonly [
   ignore.IgnoreLocalOption &
     ignore.IgnorePatternOption &
     ignore.IgnoreClassOption &
@@ -17,7 +24,7 @@ type Options = [
 ];
 
 // The schema for the rule options.
-const schema = [
+const schema: JSONSchema4 = [
   deepMerge([
     ignore.ignoreLocalOptionSchema,
     ignore.ignorePatternOptionSchema,
@@ -62,17 +69,21 @@ function check(
     | TSESTree.TSIndexSignature
     | TSESTree.ClassProperty,
   context: RuleContext<keyof typeof errorMessages, Options>
-): void {
-  if (!node.readonly) {
-    const fix = "readonly ";
-    context.report({
-      node,
-      messageId: "generic",
-      fix: isTSIndexSignature(node)
-        ? fixer => fixer.insertTextBefore(node, fix)
-        : fixer => fixer.insertTextBefore(node.key, fix)
-    });
-  }
+): RuleResult<keyof typeof errorMessages, Options> {
+  return {
+    context,
+    descriptors: node.readonly
+      ? []
+      : [
+          {
+            node,
+            messageId: "generic",
+            fix: isTSIndexSignature(node)
+              ? fixer => fixer.insertTextBefore(node, "readonly ")
+              : fixer => fixer.insertTextBefore(node.key, "readonly ")
+          }
+        ]
+  };
 }
 
 // Create the rule.

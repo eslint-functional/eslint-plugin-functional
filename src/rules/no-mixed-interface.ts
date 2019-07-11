@@ -1,14 +1,21 @@
+import { ReportDescriptor } from "@typescript-eslint/experimental-utils/dist/ts-eslint";
 import { TSESTree } from "@typescript-eslint/typescript-estree";
 import { AST_NODE_TYPES } from "@typescript-eslint/typescript-estree/dist/ts-estree/ast-node-types";
 
-import { checkNode, createRule, RuleContext, RuleMetaData } from "../util/rule";
+import {
+  checkNode,
+  createRule,
+  RuleContext,
+  RuleMetaData,
+  RuleResult
+} from "../util/rule";
 import { isTSPropertySignature } from "../util/typeguard";
 
 // The name of this rule.
 export const name = "no-mixed-interface" as const;
 
 // The options this rule can take.
-type Options = [];
+type Options = readonly [];
 
 // The default options for the rule.
 const defaultOptions: Options = [];
@@ -37,34 +44,50 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
 function checkTSInterfaceDeclaration(
   node: TSESTree.TSInterfaceDeclaration,
   context: RuleContext<keyof typeof errorMessages, Options>
-): void {
-  let prevMemberType: AST_NODE_TYPES | undefined = undefined;
-  let prevMemberTypeAnnotation: AST_NODE_TYPES | undefined = undefined;
+): RuleResult<keyof typeof errorMessages, Options> {
+  type CarryType = {
+    readonly prevMemberType: AST_NODE_TYPES | undefined;
+    readonly prevMemberTypeAnnotation: AST_NODE_TYPES | undefined;
+    readonly violations: ReadonlyArray<
+      ReportDescriptor<keyof typeof errorMessages>
+    >;
+  };
 
-  for (const member of node.body.body) {
-    const memberType = member.type;
-    const memberTypeAnnotation =
-      isTSPropertySignature(member) && member.typeAnnotation !== undefined
-        ? member.typeAnnotation.typeAnnotation.type
-        : undefined;
+  return {
+    context,
+    descriptors: node.body.body.reduce<CarryType>(
+      (carry, member) => {
+        const memberType = member.type;
+        const memberTypeAnnotation =
+          isTSPropertySignature(member) && member.typeAnnotation !== undefined
+            ? member.typeAnnotation.typeAnnotation.type
+            : undefined;
 
-    if (
-      // Not the first property in the interface.
-      prevMemberType !== undefined &&
-      // And different property type to previous property.
-      (prevMemberType !== memberType ||
-        // Or annotationed with a different type annotation.
-        (prevMemberTypeAnnotation !== memberTypeAnnotation &&
-          // Where one of the properties is a annotationed as a function.
-          (prevMemberTypeAnnotation === AST_NODE_TYPES.TSFunctionType ||
-            memberTypeAnnotation === AST_NODE_TYPES.TSFunctionType)))
-    ) {
-      context.report({ node: member, messageId: "generic" });
-    }
-
-    prevMemberType = memberType;
-    prevMemberTypeAnnotation = memberTypeAnnotation;
-  }
+        return {
+          prevMemberType: memberType,
+          prevMemberTypeAnnotation: memberTypeAnnotation,
+          violations:
+            // Not the first property in the interface.
+            carry.prevMemberType !== undefined &&
+            // And different property type to previous property.
+            (carry.prevMemberType !== memberType ||
+              // Or annotationed with a different type annotation.
+              (carry.prevMemberTypeAnnotation !== memberTypeAnnotation &&
+                // Where one of the properties is a annotationed as a function.
+                (carry.prevMemberTypeAnnotation ===
+                  AST_NODE_TYPES.TSFunctionType ||
+                  memberTypeAnnotation === AST_NODE_TYPES.TSFunctionType)))
+              ? [...carry.violations, { node: member, messageId: "generic" }]
+              : carry.violations
+        };
+      },
+      {
+        prevMemberType: undefined,
+        prevMemberTypeAnnotation: undefined,
+        violations: []
+      }
+    ).violations
+  };
 }
 
 // Create the rule.
@@ -72,12 +95,10 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
   name,
   meta,
   defaultOptions,
-  create(context, options) {
+  create(context) {
     const _checkTSInterfaceDeclaration = checkNode(
       checkTSInterfaceDeclaration,
-      context,
-      undefined,
-      options
+      context
     );
 
     return {

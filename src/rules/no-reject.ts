@@ -1,13 +1,19 @@
 import { TSESTree } from "@typescript-eslint/typescript-estree";
 
-import { checkNode, createRule, RuleContext, RuleMetaData } from "../util/rule";
+import {
+  checkNode,
+  createRule,
+  RuleContext,
+  RuleMetaData,
+  RuleResult
+} from "../util/rule";
 import { isIdentifier, isMemberExpression } from "../util/typeguard";
 
 // The name of this rule.
 export const name = "no-reject" as const;
 
 // The options this rule can take.
-type Options = [];
+type Options = readonly [];
 
 // The default options for the rule.
 const defaultOptions: Options = [];
@@ -35,16 +41,18 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
 function checkCallExpression(
   node: TSESTree.CallExpression,
   context: RuleContext<keyof typeof errorMessages, Options>
-): void {
-  if (
-    isMemberExpression(node.callee) &&
-    isIdentifier(node.callee.object) &&
-    isIdentifier(node.callee.property) &&
-    node.callee.object.name === "Promise" &&
-    node.callee.property.name === "reject"
-  ) {
-    context.report({ node, messageId: "generic" });
-  }
+): RuleResult<keyof typeof errorMessages, Options> {
+  return {
+    context,
+    descriptors:
+      isMemberExpression(node.callee) &&
+      isIdentifier(node.callee.object) &&
+      isIdentifier(node.callee.property) &&
+      node.callee.object.name === "Promise" &&
+      node.callee.property.name === "reject"
+        ? [{ node, messageId: "generic" }]
+        : []
+  };
 }
 
 // Create the rule.
@@ -52,13 +60,8 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
   name,
   meta,
   defaultOptions,
-  create(context, options) {
-    const _checkCallExpression = checkNode(
-      checkCallExpression,
-      context,
-      undefined,
-      options
-    );
+  create(context) {
+    const _checkCallExpression = checkNode(checkCallExpression, context);
 
     return {
       CallExpression: _checkCallExpression

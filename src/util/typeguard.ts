@@ -13,20 +13,20 @@ import { ForXStatement } from "./types";
  */
 
 export type ArrayType = ts.Type & {
-  symbol: {
-    name: "Array";
+  readonly symbol: {
+    readonly name: "Array";
   };
 };
 
 export type ArrayConstructorType = ts.Type & {
-  symbol: {
-    name: "ArrayConstructor";
+  readonly symbol: {
+    readonly name: "ArrayConstructor";
   };
 };
 
 export type ObjectConstructorType = ts.Type & {
-  symbol: {
-    name: "ObjectConstructor";
+  readonly symbol: {
+    readonly name: "ObjectConstructor";
   };
 };
 
@@ -167,35 +167,26 @@ export function isUnionType(type: ts.Type): type is ts.UnionType {
 }
 
 export function isArrayType(type: ts.Type): type is ArrayType {
-  if (type.symbol && type.symbol.name === "Array") {
-    return true;
-  }
-  if (isUnionType(type)) {
-    return type.types.some(isArrayType);
-  }
-  return false;
+  return (
+    (type.symbol && type.symbol.name === "Array") ||
+    (isUnionType(type) && type.types.some(isArrayType))
+  );
 }
 
 export function isArrayConstructorType(
   type: ts.Type
 ): type is ArrayConstructorType {
-  if (type.symbol && type.symbol.name === "ArrayConstructor") {
-    return true;
-  }
-  if (isUnionType(type)) {
-    return type.types.some(isArrayConstructorType);
-  }
-  return false;
+  return (
+    (type.symbol && type.symbol.name === "ArrayConstructor") ||
+    (isUnionType(type) && type.types.some(isArrayConstructorType))
+  );
 }
 
 export function isObjectConstructorType(
   type: ts.Type
 ): type is ObjectConstructorType {
-  if (type.symbol && type.symbol.name === "ObjectConstructor") {
-    return true;
-  }
-  if (isUnionType(type)) {
-    return type.types.some(isObjectConstructorType);
-  }
-  return false;
+  return (
+    (type.symbol && type.symbol.name === "ObjectConstructor") ||
+    (isUnionType(type) && type.types.some(isObjectConstructorType))
+  );
 }

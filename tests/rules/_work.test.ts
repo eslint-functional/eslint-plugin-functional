@@ -17,7 +17,7 @@ import { typescript } from "../configs";
  * Step 2a.
  * Provide a valid test case.
  */
-const valid: Array<string | RuleTester.ValidTestCase> = [
+const valid: ReadonlyArray<string | RuleTester.ValidTestCase> = [
   // {
   //   code: dedent`
   //     // Code
@@ -30,7 +30,7 @@ const valid: Array<string | RuleTester.ValidTestCase> = [
  * Step 2b.
  * Or provide an invalid test case.
  */
-const invalid: Array<RuleTester.InvalidTestCase> = [
+const invalid: ReadonlyArray<RuleTester.InvalidTestCase> = [
   // {
   //   code: dedent`
   //     // Code
@@ -58,9 +58,9 @@ const ruleTester = new RuleTester(typescript);
 ruleTester.run(
   dedent`
     Work`,
-  rule as Rule.RuleModule,
+  (rule as unknown) as Rule.RuleModule,
   {
-    valid,
-    invalid
+    valid: [...valid],
+    invalid: [...invalid]
   }
 );
