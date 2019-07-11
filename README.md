@@ -75,14 +75,14 @@ In addition to immutable rules this project also contains a few rules for enforc
 
 **Key**:
 
-| Symbol            | Meaning                                                                                                                                |
-| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| :see_no_evil:     | Ruleset: Recommended                                                                                                                   |
-| :hear_no_evil:    | Ruleset: Functional Lite                                                                                                               |
-| :speak_no_evil:   | Ruleset: Functional                                                                                                                    |
-| :wrench:          | Fixable                                                                                                                                |
+|      Symbol       | Meaning                                                                                                                                |
+| :---------------: | -------------------------------------------------------------------------------------------------------------------------------------- |
+|   :see_no_evil:   | Ruleset: Recommended<br><sub><sup>This ruleset is designed to enforce immutability in the code.</sup></sub>                            |
+|  :hear_no_evil:   | Ruleset: Functional Lite<br><sub><sup>This ruleset is designed to enforce a somewhat functional programming code style.</sup></sub>    |
+|  :speak_no_evil:  | Ruleset: Functional<br><sub><sup>This ruleset is designed to enforce a functional programming code style.</sup></sub>                  |
+|     :wrench:      | Fixable<br><sub><sup>Problems found by this rule are potentially fixable with the `--fix` option.</sup></sub>                          |
 | :thought_balloon: | Only Avaliable for TypeScript<br><sub><sup>The rule either requires Type Information or only works with TypeScript syntax.</sup></sub> |
-| :blue_heart:      | Works better with TypeScript<br><sub><sup>Type Information will be used if available making the rule work in more case.</sup></sub>    |
+|   :blue_heart:    | Works better with TypeScript<br><sub><sup>Type Information will be used if available making the rule work in more case.</sup></sub>    |
 
 ### Immutability rules
 
