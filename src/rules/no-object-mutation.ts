@@ -6,7 +6,7 @@ import * as ignore from "../common/ignore-options";
 import {
   checkNode,
   createRule,
-  getParserServices,
+  getTypeOfNode,
   parserServicesAvaliable,
   RuleContext,
   RuleMetaData,
@@ -62,15 +62,15 @@ function checkAssignmentExpression(
   node: TSESTree.AssignmentExpression,
   context: RuleContext<keyof typeof errorMessages, Options>
 ): RuleResult<keyof typeof errorMessages, Options> {
-  // No assignment with object.property on the left.
-  if (
-    isMemberExpression(node.left) &&
-    // Ignore if in a constructor - allow for field initialization.
-    !inConstructor(node)
-  ) {
-    return { context, descriptors: [{ node, messageId: "generic" }] };
-  }
-  return { context, descriptors: [] };
+  return {
+    context,
+    descriptors:
+      isMemberExpression(node.left) &&
+      // Ignore if in a constructor - allow for field initialization.
+      !inConstructor(node)
+        ? [{ node, messageId: "generic" }]
+        : []
+  };
 }
 
 /**
@@ -80,11 +80,13 @@ function checkUnaryExpression(
   node: TSESTree.UnaryExpression,
   context: RuleContext<keyof typeof errorMessages, Options>
 ): RuleResult<keyof typeof errorMessages, Options> {
-  // No deleting object properties.
-  if (node.operator === "delete" && isMemberExpression(node.argument)) {
-    return { context, descriptors: [{ node, messageId: "generic" }] };
-  }
-  return { context, descriptors: [] };
+  return {
+    context,
+    descriptors:
+      node.operator === "delete" && isMemberExpression(node.argument)
+        ? [{ node, messageId: "generic" }]
+        : []
+  };
 }
 
 /**
@@ -94,13 +96,12 @@ function checkUpdateExpression(
   node: TSESTree.UpdateExpression,
   context: RuleContext<keyof typeof errorMessages, Options>
 ): RuleResult<keyof typeof errorMessages, Options> {
-  if (
-    (node.operator === "++" || node.operator === "--") &&
-    isMemberExpression(node.argument)
-  ) {
-    return { context, descriptors: [{ node, messageId: "generic" }] };
-  }
-  return { context, descriptors: [] };
+  return {
+    context,
+    descriptors: isMemberExpression(node.argument)
+      ? [{ node, messageId: "generic" }]
+      : []
+  };
 }
 
 /**
@@ -111,40 +112,24 @@ function checkCallExpression(
   context: RuleContext<keyof typeof errorMessages, Options>
 ): RuleResult<keyof typeof errorMessages, Options> {
   // No Object.assign on identifiers.
-  if (
-    isMemberExpression(node.callee) &&
-    isIdentifier(node.callee.property) &&
-    node.callee.property.name === "assign" &&
-    node.arguments.length >= 2 &&
-    (isIdentifier(node.arguments[0]) || isMemberExpression(node.arguments[0]))
-  ) {
-    // Do type checking if avaliable.
-    if (parserServicesAvaliable(context)) {
-      const parserServices = getParserServices(context);
-      if (
-        isObjectConstructorType(
-          parserServices.program
-            .getTypeChecker()
-            .getTypeAtLocation(
-              parserServices.esTreeNodeToTSNodeMap.get(node.callee.object)
-            )
-        )
-      ) {
-        return { context, descriptors: [{ node, messageId: "generic" }] };
-      }
-    }
-    // No type checking avaliable? Just assume "Object" is an ObjectConstructor
-    // (and the only ObjectConstructor).
-    else {
-      if (
-        isIdentifier(node.callee.object) &&
-        node.callee.object.name === "Object"
-      ) {
-        return { context, descriptors: [{ node, messageId: "generic" }] };
-      }
-    }
-  }
-  return { context, descriptors: [] };
+  return {
+    context,
+    descriptors:
+      isMemberExpression(node.callee) &&
+      isIdentifier(node.callee.property) &&
+      node.callee.property.name === "assign" &&
+      node.arguments.length >= 2 &&
+      (isIdentifier(node.arguments[0]) ||
+        isMemberExpression(node.arguments[0])) &&
+      // Type checking if avaliable?
+      ((parserServicesAvaliable(context) &&
+        isObjectConstructorType(getTypeOfNode(node.callee.object, context))) ||
+        // Type checking not avaliable?
+        (isIdentifier(node.callee.object) &&
+          node.callee.object.name === "Object"))
+        ? [{ node, messageId: "generic" }]
+        : []
+  };
 }
 
 // Create the rule.

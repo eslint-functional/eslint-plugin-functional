@@ -42,17 +42,17 @@ function checkCallExpression(
   node: TSESTree.CallExpression,
   context: RuleContext<keyof typeof errorMessages, Options>
 ): RuleResult<keyof typeof errorMessages, Options> {
-  if (
-    isMemberExpression(node.callee) &&
-    isIdentifier(node.callee.object) &&
-    isIdentifier(node.callee.property) &&
-    node.callee.object.name === "Promise" &&
-    node.callee.property.name === "reject"
-  ) {
-    return { context, descriptors: [{ node, messageId: "generic" }] };
-  }
-
-  return { context, descriptors: [] };
+  return {
+    context,
+    descriptors:
+      isMemberExpression(node.callee) &&
+      isIdentifier(node.callee.object) &&
+      isIdentifier(node.callee.property) &&
+      node.callee.object.name === "Promise" &&
+      node.callee.property.name === "reject"
+        ? [{ node, messageId: "generic" }]
+        : []
+  };
 }
 
 // Create the rule.

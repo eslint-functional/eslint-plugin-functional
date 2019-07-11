@@ -6,7 +6,7 @@ import * as ignore from "../common/ignore-options";
 import {
   checkNode,
   createRule,
-  getParserServices,
+  getTypeOfNode,
   RuleContext,
   RuleMetaData,
   RuleResult
@@ -75,33 +75,28 @@ function checkArrayOrTupleType(
   context: RuleContext<keyof typeof errorMessages, Options>,
   [options]: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
-  if (
-    !node.parent ||
-    !isTSTypeOperator(node.parent) ||
-    node.parent.operator !== "readonly"
-  ) {
-    if (options.ignoreReturnType && isInReturnType(node)) {
-      return { context, descriptors: [] };
-    }
-
-    return {
-      context,
-      descriptors: [
-        {
-          node,
-          messageId: "generic",
-          fix: fixer =>
-            node.parent && isTSArrayType(node.parent)
-              ? [
-                  fixer.insertTextBefore(node, "(readonly "),
-                  fixer.insertTextAfter(node, ")")
-                ]
-              : fixer.insertTextBefore(node, "readonly ")
-        }
-      ]
-    };
-  }
-  return { context, descriptors: [] };
+  return {
+    context,
+    descriptors:
+      (!node.parent ||
+        !isTSTypeOperator(node.parent) ||
+        node.parent.operator !== "readonly") &&
+      (!options.ignoreReturnType || !isInReturnType(node))
+        ? [
+            {
+              node,
+              messageId: "generic",
+              fix:
+                node.parent && isTSArrayType(node.parent)
+                  ? fixer => [
+                      fixer.insertTextBefore(node, "(readonly "),
+                      fixer.insertTextAfter(node, ")")
+                    ]
+                  : fixer => fixer.insertTextBefore(node, "readonly ")
+            }
+          ]
+        : []
+  };
 }
 
 /**
@@ -112,21 +107,21 @@ function checkTypeReference(
   context: RuleContext<keyof typeof errorMessages, Options>,
   [options]: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
-  if (isIdentifier(node.typeName) && node.typeName.name === "Array") {
-    if (!options.ignoreReturnType || !isInReturnType(node)) {
-      return {
-        context,
-        descriptors: [
-          {
-            node,
-            messageId: "generic",
-            fix: fixer => fixer.insertTextBefore(node, "Readonly")
-          }
-        ]
-      };
-    }
-  }
-  return { context, descriptors: [] };
+  return {
+    context,
+    descriptors:
+      isIdentifier(node.typeName) &&
+      node.typeName.name === "Array" &&
+      (!options.ignoreReturnType || !isInReturnType(node))
+        ? [
+            {
+              node,
+              messageId: "generic",
+              fix: fixer => fixer.insertTextBefore(node, "Readonly")
+            }
+          ]
+        : []
+  };
 }
 
 /**
@@ -168,30 +163,19 @@ function checkImplicitType(
   return {
     context,
     descriptors: declarators.flatMap(declarator => {
-      if (
-        isIdentifier(declarator.id) &&
+      return isIdentifier(declarator.id) &&
         declarator.id.typeAnnotation === undefined &&
-        declarator.init !== null
-      ) {
-        const parserServices = getParserServices(context);
-        const type = parserServices.program
-          .getTypeChecker()
-          .getTypeAtLocation(
-            parserServices.esTreeNodeToTSNodeMap.get(declarator.init)
-          );
-
-        if (isArrayType(type)) {
-          return [
+        declarator.init !== null &&
+        isArrayType(getTypeOfNode(declarator.init, context))
+        ? [
             {
               node: declarator.node,
               messageId: "implicit",
               fix: fixer =>
                 fixer.insertTextAfter(declarator.id, ": readonly unknown[]")
             }
-          ];
-        }
-      }
-      return [];
+          ]
+        : [];
     })
   };
 }

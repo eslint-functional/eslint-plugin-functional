@@ -41,10 +41,11 @@ function checkUnaryExpression(
   node: TSESTree.UnaryExpression,
   context: RuleContext<keyof typeof errorMessages, Options>
 ): RuleResult<keyof typeof errorMessages, Options> {
-  if (node.operator === "delete") {
-    return { context, descriptors: [{ node, messageId: "generic" }] };
-  }
-  return { context, descriptors: [] };
+  return {
+    context,
+    descriptors:
+      node.operator === "delete" ? [{ node, messageId: "generic" }] : []
+  };
 }
 
 // Create the rule.

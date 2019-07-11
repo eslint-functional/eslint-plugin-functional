@@ -55,30 +55,39 @@ function checkVariableDeclaration(
   node: TSESTree.VariableDeclaration,
   context: RuleContext<keyof typeof errorMessages, Options>
 ): RuleResult<keyof typeof errorMessages, Options> {
-  if (node.kind === "let") {
-    // Report the error.
-    return {
-      context,
-      descriptors: [
-        {
-          node,
-          messageId: "generic",
-          fix:
-            // Can only fix if all declarations have an initial value (with the
-            // exception of ForOf and ForIn Statement initialisers).
-            node.declarations.every(declaration => declaration.init !== null) ||
-            isForXInitialiser(node)
-              ? fixer =>
-                  fixer.replaceTextRange(
-                    [node.range[0], node.range[0] + node.kind.length],
-                    "const"
-                  )
-              : undefined
-        }
-      ]
-    };
-  }
-  return { context, descriptors: [] };
+  return {
+    context,
+    descriptors:
+      node.kind === "let"
+        ? [
+            {
+              node,
+              messageId: "generic",
+              fix:
+                /*
+                 * TODO: Remove this fix?
+                 * This fix doesn't actually fix the problem; it just turns the
+                 * let into a const and makes "cannot reassign to const" issues.
+                 *
+                 * Note: The rule "prefer-const"'s fix will fix lets only when
+                 * they aren't reassigned to.
+                 */
+
+                // Can only fix if all declarations have an initial value (with the
+                // exception of ForOf and ForIn Statement initialisers).
+                node.declarations.every(
+                  declaration => declaration.init !== null
+                ) || isForXInitialiser(node)
+                  ? fixer =>
+                      fixer.replaceTextRange(
+                        [node.range[0], node.range[0] + node.kind.length],
+                        "const"
+                      )
+                  : undefined
+            }
+          ]
+        : []
+  };
 }
 
 // Create the rule.
