@@ -11,6 +11,7 @@ import {
   RuleMetaData,
   RuleResult
 } from "../util/rule";
+import { isInReturnType } from "../util/tree";
 import {
   isArrayType,
   isAssignmentPattern,
@@ -193,23 +194,6 @@ function checkImplicitType(
       return [];
     })
   };
-}
-
-/**
- * Is the given node in the return type.
- */
-function isInReturnType(node: TSESTree.Node): boolean {
-  let n: TSESTree.Node | undefined = node;
-  while (n && n.parent) {
-    if (isFunctionLike(n.parent)) {
-      if (n.parent.returnType === n) {
-        return true;
-      }
-      return false;
-    }
-    n = n.parent;
-  }
-  return false;
 }
 
 // Create the rule.

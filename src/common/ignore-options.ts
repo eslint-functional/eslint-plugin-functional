@@ -281,57 +281,27 @@ function isIgnoredPattern(
 }
 
 function findMatch(
-  patternParts: ReadonlyArray<string>,
-  textParts: ReadonlyArray<string>
+  [pattern, ...remainingPatternParts]: ReadonlyArray<string>,
+  textParts: ReadonlyArray<string>,
+  allowExtra: boolean = false
 ): boolean {
-  const [maxlength, minlength] =
-    patternParts.length > textParts.length
-      ? [patternParts.length, textParts.length]
-      : [textParts.length, patternParts.length];
-
-  for (let index = 0; index < maxlength; index++) {
-    // Out of text or pattern?
-    if (index >= minlength) {
-      return false;
-    }
-
-    switch (patternParts[index]) {
-      // Match any depth (including 0)?
-      case "**": {
-        const subpattern: ReadonlyArray<string> = patternParts.slice(index + 1);
-        for (let offset = 0; offset < textParts.length - index; offset++) {
-          const submatch = findMatch(
-            subpattern,
-            textParts.slice(index + offset)
-          );
-          if (submatch) {
-            return submatch;
-          }
-        }
-        return false;
-      }
-
-      // Match anything?
-      case "*":
-        continue;
-
-      default:
-        break;
-    }
-
-    // textParts[i] matches patternParts[i]?
-    if (
-      new RegExp(
-        "^" + escapeRegExp(patternParts[index]).replace(/\\\*/g, ".*") + "$"
-      ).test(textParts[index])
-    ) {
-      continue;
-    }
-
-    // No Match.
-    return false;
-  }
-
-  // Match.
-  return true;
+  return pattern === undefined
+    ? allowExtra || textParts.length === 0
+    : // Match any depth (including 0)?
+    pattern === "**"
+    ? textParts.length === 0
+      ? findMatch(remainingPatternParts, [], allowExtra)
+      : Array.from({ length: textParts.length })
+          .map((_element, index) => index)
+          .some(offset =>
+            findMatch(remainingPatternParts, textParts.slice(offset), true)
+          )
+    : // Match anything?
+    pattern === "*"
+    ? textParts.length > 0 &&
+      findMatch(remainingPatternParts, textParts.slice(1), allowExtra)
+    : // Text matches pattern?
+      new RegExp("^" + escapeRegExp(pattern).replace(/\\\*/g, ".*") + "$").test(
+        textParts[0]
+      ) && findMatch(remainingPatternParts, textParts.slice(1), allowExtra);
 }
