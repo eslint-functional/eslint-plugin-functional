@@ -3,6 +3,7 @@
  */
 
 import { TSESTree } from "@typescript-eslint/typescript-estree";
+// TODO: import ts only if it is avaliable.
 import ts from "typescript";
 
 import { getForXStatement } from "./tree";
