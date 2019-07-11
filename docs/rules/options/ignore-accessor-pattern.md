@@ -1,4 +1,4 @@
-### Using the `ignoreAccessorPattern` option
+# Using the `ignoreAccessorPattern` option
 
 This option takes a match string or an array of match strings (not a RegExp pattern).
 
@@ -20,7 +20,7 @@ For example:
 }
 ```
 
-#### Wildcards
+## Wildcards
 
 The following wildcards can be used when specifing a pattern:
 

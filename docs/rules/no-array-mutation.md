@@ -41,8 +41,8 @@ const sorted = original.slice().sort((a, b) => a.localeCompare(b)); // This is O
 
 ### `ignorePattern`
 
-See the [ignorePattern](./options-ignore-pattern.md) docs.
+See the [ignorePattern](./options/ignore-pattern.md) docs.
 
 ### `ignoreAccessorPattern`
 
-See the [ignoreAccessorPattern](./options-ignore-accessor-pattern.md) docs.
+See the [ignoreAccessorPattern](./options/ignore-accessor-pattern.md) docs.

@@ -30,8 +30,8 @@ const defaults = {};
 
 ### `ignorePattern`
 
-See the [ignorePattern](./options-ignore-pattern.md) docs.
+See the [ignorePattern](./options/ignore-pattern.md) docs.
 
 ### `ignoreAccessorPattern`
 
-See the [ignoreAccessorPattern](./options-ignore-accessor-pattern.md) docs.
+See the [ignoreAccessorPattern](./options/ignore-accessor-pattern.md) docs.
