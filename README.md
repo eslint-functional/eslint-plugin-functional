@@ -114,6 +114,8 @@ In addition to immutable rules this project also contains a few rules for enforc
 
 In addition to the immutability rules above, there are a few standard rules that needs to be enabled to achieve immutability.
 
+Each of these rules are enabled by default in the rulesets this plugin provides.
+
 ### [no-var](https://eslint.org/docs/rules/no-var)
 
 Without this rule, it is still possible to create `var` variables that are mutable.
@@ -121,6 +123,10 @@ Without this rule, it is still possible to create `var` variables that are mutab
 ### [no-param-reassign](https://eslint.org/docs/rules/no-param-reassign)
 
 Without this rule, function parameters are mutable.
+
+### [prefer-const](https://eslint.org/docs/rules/no-param-reassign)
+
+This rule is helpful when converting from an imperative code style to a functional one.
 
 ### [@typescript-eslint/explicit-function-return-type](https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/explicit-function-return-type.md)
 
