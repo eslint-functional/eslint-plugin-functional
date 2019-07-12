@@ -2,13 +2,11 @@ import { TSESTree } from "@typescript-eslint/typescript-estree";
 
 import {
   isClassLike,
-  isForXStatement,
   isFunctionLike,
   isIdentifier,
   isMethodDefinition,
   isTSInterfaceBody
 } from "./typeguard";
-import { ForXStatement } from "./types";
 
 /**
  * Test if the given node is in a function.

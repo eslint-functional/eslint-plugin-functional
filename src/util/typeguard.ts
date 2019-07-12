@@ -6,8 +6,6 @@ import { TSESTree } from "@typescript-eslint/typescript-estree";
 // TODO: import ts only if it is avaliable.
 import ts from "typescript";
 
-import { ForXStatement } from "./types";
-
 /*
  * TS Types.
  */
@@ -62,10 +60,6 @@ export function isClassLike(
   node: TSESTree.Node
 ): node is TSESTree.ClassDeclaration | TSESTree.ClassExpression {
   return node.type === "ClassDeclaration" || node.type === "ClassExpression";
-}
-
-export function isForXStatement(node: TSESTree.Node): node is ForXStatement {
-  return node.type === "ForInStatement" || node.type === "ForOfStatement";
 }
 
 export function isFunctionLike(
