@@ -44,13 +44,6 @@ export function inConstructor(node: TSESTree.Node): boolean {
 }
 
 /**
- * Test if the given node is in a ForX Statememt.
- */
-export function getForXStatement(node: TSESTree.Node): ForXStatement | null {
-  return getParentOfType<ForXStatement>(isForXStatement, node);
-}
-
-/**
  * Is the given node in the return type.
  */
 export function isInReturnType(node: TSESTree.Node): boolean {
