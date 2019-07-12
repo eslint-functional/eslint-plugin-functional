@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [v0.2.1] - 2019-07-12
+
+Remove fixer for `no-let`.
+TypeScript is no longer imported unless it is available.
+
 ## [v0.2.0] - 2019-07-12
 
 This is the first release where things should work. All the rules have been ported over from "ts-immutable" and tests are in place.
