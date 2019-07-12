@@ -3,7 +3,6 @@
  */
 
 import { TSESTree } from "@typescript-eslint/typescript-estree";
-// TODO: import ts only if it is avaliable.
 import ts from "typescript";
 
 /*
@@ -150,7 +149,15 @@ export function isVariableDeclarator(
  */
 
 export function isUnionType(type: ts.Type): type is ts.UnionType {
-  return type.flags === ts.TypeFlags.Union;
+  // TODO: Find a nicer why to conditionally require typescript.
+  /* eslint-disable-next-line ts-immutable/no-try */
+  try {
+    // Cannot use top-level typescript import - that is for types only, not values.
+    /* eslint-disable-next-line @typescript-eslint/no-require-imports */
+    return type.flags === require("typescript").TypeFlags.Union;
+  } catch (error) {
+    return false;
+  }
 }
 
 export function isArrayType(type: ts.Type): type is ArrayType {
