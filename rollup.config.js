@@ -20,57 +20,55 @@ const common = {
 
   treeshake: {
     annotations: true,
-    moduleSideEffects: [
-      "array.prototype.flatmap/auto.js"
-    ],
+    moduleSideEffects: ["array.prototype.flatmap/auto.js"],
     propertyReadSideEffects: false
   }
-}
+};
 
 const cjs = {
-    ...common,
+  ...common,
 
-    output: {
-      dir: "./lib",
-      entryFileNames: "[name].js",
-      chunkFileNames: "common/[hash].js",
-      format: "cjs",
-      sourcemap: false
-    },
+  output: {
+    dir: "./lib",
+    entryFileNames: "[name].js",
+    chunkFileNames: "common/[hash].js",
+    format: "cjs",
+    sourcemap: false
+  },
 
-    plugins: [
-      rollupPluginNodeResolve(),
-      rollupPluginCommonjs(),
-      rollupPluginTypescript({
-        tsconfigOverride: { compilerOptions: { target: "es5" } }
-      }),
-      rollupPluginJSON({
-        preferConst: true
-      })
-  ],
-  };
+  plugins: [
+    rollupPluginNodeResolve(),
+    rollupPluginCommonjs(),
+    rollupPluginTypescript({
+      tsconfigOverride: { compilerOptions: { target: "es5" } }
+    }),
+    rollupPluginJSON({
+      preferConst: true
+    })
+  ]
+};
 
-const esm ={
-    ...common,
+const esm = {
+  ...common,
 
-    output: {
-      dir: "./lib",
-      entryFileNames: "[name].mjs",
-      chunkFileNames: "common/[hash].mjs",
-      format: "esm",
-      sourcemap: false
-    },
+  output: {
+    dir: "./lib",
+    entryFileNames: "[name].mjs",
+    chunkFileNames: "common/[hash].mjs",
+    format: "esm",
+    sourcemap: false
+  },
 
-    plugins: [
-      rollupPluginNodeResolve(),
-      rollupPluginCommonjs(),
-      rollupPluginTypescript({
-        tsconfigOverride: { compilerOptions: { target: "es2017" } }
-      }),
-      rollupPluginJSON({
-        preferConst: true
-      })
-    ],
-  };
+  plugins: [
+    rollupPluginNodeResolve(),
+    rollupPluginCommonjs(),
+    rollupPluginTypescript({
+      tsconfigOverride: { compilerOptions: { target: "es2017" } }
+    }),
+    rollupPluginJSON({
+      preferConst: true
+    })
+  ]
+};
 
 export default [cjs, esm];
