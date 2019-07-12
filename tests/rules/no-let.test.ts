@@ -162,7 +162,6 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
   {
     code: `let x = 0;`,
     optionsSet: [[], [{ ignoreLocal: true }], [{ ignorePattern: "^mutable" }]],
-    output: `const x = 0;`,
     errors: [
       {
         messageId: "generic",
@@ -175,7 +174,6 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
   {
     code: `for (let x = 0; x < 1; x++);`,
     optionsSet: [[], [{ ignoreLocal: true }], [{ ignorePattern: "^mutable" }]],
-    output: `for (const x = 0; x < 1; x++);`,
     errors: [
       {
         messageId: "generic",
@@ -188,7 +186,6 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
   {
     code: `for (let x = 0, y = 0; x < 1; x++);`,
     optionsSet: [[], [{ ignoreLocal: true }], [{ ignorePattern: "^mutable" }]],
-    output: `for (const x = 0, y = 0; x < 1; x++);`,
     errors: [
       {
         messageId: "generic",
@@ -201,7 +198,6 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
   {
     code: `for (let x in {});`,
     optionsSet: [[], [{ ignoreLocal: true }], [{ ignorePattern: "^mutable" }]],
-    output: `for (const x in {});`,
     errors: [
       {
         messageId: "generic",
@@ -214,7 +210,6 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
   {
     code: `for (let x of []);`,
     optionsSet: [[], [{ ignoreLocal: true }], [{ ignorePattern: "^mutable" }]],
-    output: `for (const x of []);`,
     errors: [
       {
         messageId: "generic",
@@ -231,11 +226,6 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         let y = 0;
       }`,
     optionsSet: [[], [{ ignorePattern: "^mutable" }]],
-    output: dedent`
-      function foo() {
-        let x;
-        const y = 0;
-      }`,
     errors: [
       {
         messageId: "generic",
@@ -258,11 +248,6 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         let y = 0;
       }`,
     optionsSet: [[], [{ ignorePattern: "^mutable" }]],
-    output: dedent`
-      const foo = () => {
-        let x;
-        const y = 0;
-      }`,
     errors: [
       {
         messageId: "generic",
@@ -287,13 +272,6 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         }
       }`,
     optionsSet: [[], [{ ignorePattern: "^mutable" }]],
-    output: dedent`
-      class Foo {
-        foo() {
-          let x;
-          const y = 0;
-        }
-      }`,
     errors: [
       {
         messageId: "generic",

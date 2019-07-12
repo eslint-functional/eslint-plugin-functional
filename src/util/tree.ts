@@ -2,13 +2,11 @@ import { TSESTree } from "@typescript-eslint/typescript-estree";
 
 import {
   isClassLike,
-  isForXStatement,
   isFunctionLike,
   isIdentifier,
   isMethodDefinition,
   isTSInterfaceBody
 } from "./typeguard";
-import { ForXStatement } from "./types";
 
 /**
  * Test if the given node is in a function.
@@ -41,13 +39,6 @@ export function inConstructor(node: TSESTree.Node): boolean {
     isIdentifier(methodDefinition.key) &&
     methodDefinition.key.name === "constructor"
   );
-}
-
-/**
- * Test if the given node is in a ForX Statememt.
- */
-export function getForXStatement(node: TSESTree.Node): ForXStatement | null {
-  return getParentOfType<ForXStatement>(isForXStatement, node);
 }
 
 /**

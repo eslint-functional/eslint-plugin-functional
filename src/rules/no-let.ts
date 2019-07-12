@@ -10,7 +10,6 @@ import {
   RuleMetaData,
   RuleResult
 } from "../util/rule";
-import { isForXInitialiser } from "../util/typeguard";
 
 // The name of this rule.
 export const name = "no-let" as const;
@@ -57,36 +56,7 @@ function checkVariableDeclaration(
 ): RuleResult<keyof typeof errorMessages, Options> {
   return {
     context,
-    descriptors:
-      node.kind === "let"
-        ? [
-            {
-              node,
-              messageId: "generic",
-              fix:
-                /*
-                 * TODO: Remove this fix?
-                 * This fix doesn't actually fix the problem; it just turns the
-                 * let into a const and makes "cannot reassign to const" issues.
-                 *
-                 * Note: The rule "prefer-const"'s fix will fix lets only when
-                 * they aren't reassigned to.
-                 */
-
-                // Can only fix if all declarations have an initial value (with the
-                // exception of ForOf and ForIn Statement initialisers).
-                node.declarations.every(
-                  declaration => declaration.init !== null
-                ) || isForXInitialiser(node)
-                  ? fixer =>
-                      fixer.replaceTextRange(
-                        [node.range[0], node.range[0] + node.kind.length],
-                        "const"
-                      )
-                  : undefined
-            }
-          ]
-        : []
+    descriptors: node.kind === "let" ? [{ node, messageId: "generic" }] : []
   };
 }
 

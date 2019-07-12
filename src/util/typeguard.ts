@@ -6,9 +6,6 @@ import { TSESTree } from "@typescript-eslint/typescript-estree";
 // TODO: import ts only if it is avaliable.
 import ts from "typescript";
 
-import { getForXStatement } from "./tree";
-import { ForXStatement } from "./types";
-
 /*
  * TS Types.
  */
@@ -63,17 +60,6 @@ export function isClassLike(
   node: TSESTree.Node
 ): node is TSESTree.ClassDeclaration | TSESTree.ClassExpression {
   return node.type === "ClassDeclaration" || node.type === "ClassExpression";
-}
-
-export function isForXInitialiser(
-  node: TSESTree.Node
-): node is TSESTree.ForInitialiser {
-  const forX = getForXStatement(node);
-  return forX !== null && forX.left === node;
-}
-
-export function isForXStatement(node: TSESTree.Node): node is ForXStatement {
-  return node.type === "ForInStatement" || node.type === "ForOfStatement";
 }
 
 export function isFunctionLike(
