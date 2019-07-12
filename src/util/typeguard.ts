@@ -3,25 +3,28 @@
  */
 
 import { TSESTree } from "@typescript-eslint/typescript-estree";
-import ts from "typescript";
+// TS import - only use this for types, will be stripped out by rollup.
+import { Type, UnionType } from "typescript";
+// TS import - conditionally imported only when typescript is avaliable.
+import ts from "../util/conditional-imports/typescript";
 
 /*
  * TS Types.
  */
 
-export type ArrayType = ts.Type & {
+export type ArrayType = Type & {
   readonly symbol: {
     readonly name: "Array";
   };
 };
 
-export type ArrayConstructorType = ts.Type & {
+export type ArrayConstructorType = Type & {
   readonly symbol: {
     readonly name: "ArrayConstructor";
   };
 };
 
-export type ObjectConstructorType = ts.Type & {
+export type ObjectConstructorType = Type & {
   readonly symbol: {
     readonly name: "ObjectConstructor";
   };
@@ -148,19 +151,11 @@ export function isVariableDeclarator(
  * TS types type guards.
  */
 
-export function isUnionType(type: ts.Type): type is ts.UnionType {
-  // TODO: Find a nicer why to conditionally require typescript.
-  /* eslint-disable-next-line ts-immutable/no-try */
-  try {
-    // Cannot use top-level typescript import - that is for types only, not values.
-    /* eslint-disable-next-line @typescript-eslint/no-require-imports */
-    return type.flags === require("typescript").TypeFlags.Union;
-  } catch (error) {
-    return false;
-  }
+export function isUnionType(type: Type): type is UnionType {
+  return ts !== undefined && type.flags === ts.TypeFlags.Union;
 }
 
-export function isArrayType(type: ts.Type): type is ArrayType {
+export function isArrayType(type: Type): type is ArrayType {
   return (
     (type.symbol && type.symbol.name === "Array") ||
     (isUnionType(type) && type.types.some(isArrayType))
@@ -168,7 +163,7 @@ export function isArrayType(type: ts.Type): type is ArrayType {
 }
 
 export function isArrayConstructorType(
-  type: ts.Type
+  type: Type
 ): type is ArrayConstructorType {
   return (
     (type.symbol && type.symbol.name === "ArrayConstructor") ||
@@ -177,7 +172,7 @@ export function isArrayConstructorType(
 }
 
 export function isObjectConstructorType(
-  type: ts.Type
+  type: Type
 ): type is ObjectConstructorType {
   return (
     (type.symbol && type.symbol.name === "ObjectConstructor") ||
