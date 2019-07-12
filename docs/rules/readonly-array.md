@@ -48,12 +48,6 @@ const defaults = {
 };
 ```
 
-### `ignore-rest-parameters`
-
-TODO: This option does not seem to exist in the code?
-
-Doesn't check for `ReadonlyArray` for function rest parameters.
-
 ### `ignoreReturnType`
 
 Doesn't check the return type of functions.
