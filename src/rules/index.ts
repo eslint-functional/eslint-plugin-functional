@@ -3,7 +3,6 @@ import {
   rule as noArrayMutationRule
 } from "./no-array-mutation";
 import { name as noClassRuleName, rule as noClassRule } from "./no-class";
-import { name as noDeleteRuleName, rule as noDeleteRule } from "./no-delete";
 import {
   name as noExpressionStatementRuleName,
   rule as noExpressionStatementRule
@@ -48,7 +47,6 @@ import {
 export const rules = {
   [noArrayMutationRuleName]: noArrayMutationRule,
   [noClassRuleName]: noClassRule,
-  [noDeleteRuleName]: noDeleteRule,
   [noExpressionStatementRuleName]: noExpressionStatementRule,
   [noIfStatementRuleName]: noIfStatementRule,
   [noLetRuleName]: noLetRule,
