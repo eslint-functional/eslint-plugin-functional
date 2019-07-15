@@ -16,7 +16,32 @@ import {
 } from "../util";
 
 // Valid test cases.
-const valid: ReadonlyArray<ValidTestCase> = [];
+const valid: ReadonlyArray<ValidTestCase> = [
+  {
+    code: dedent`
+      function foo(i) {
+        if (i === 1) {
+          return 1;
+        }
+        return 0;
+      }`,
+    optionsSet: [[{ allowReturningStatements: true }]]
+  },
+  {
+    code: dedent`
+      function foo(i) {
+        switch(i) {
+          case "a":
+            return 1;
+          case "b":
+            return 2;
+          default:
+            return 3;
+        }
+      }`,
+    optionsSet: [[{ allowReturningStatements: true }]]
+  }
+];
 
 // Invalid test cases.
 const invalid: ReadonlyArray<InvalidTestCase> = [
@@ -28,7 +53,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
     optionsSet: [[]],
     errors: [
       {
-        messageId: "if",
+        messageId: "unexpectedIf",
         type: "IfStatement",
         line: 1,
         column: 1
@@ -53,10 +78,119 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
     optionsSet: [[]],
     errors: [
       {
-        messageId: "switch",
+        messageId: "unexpectedSwitch",
         type: "SwitchStatement",
         line: 3,
         column: 1
+      }
+    ]
+  },
+  {
+    code: dedent`
+      function foo(i) {
+        if (i === 1) {
+          return 1;
+        }
+        return 0;
+      }`,
+    optionsSet: [[]],
+    errors: [
+      {
+        messageId: "unexpectedIf",
+        type: "IfStatement",
+        line: 2,
+        column: 3
+      }
+    ]
+  },
+  {
+    code: dedent`
+      function foo(i) {
+        switch(i) {
+          case "a":
+            return 1;
+          case "b":
+            return 2;
+          default:
+            return 3;
+        }
+      }`,
+    optionsSet: [[]],
+    errors: [
+      {
+        messageId: "unexpectedSwitch",
+        type: "SwitchStatement",
+        line: 2,
+        column: 3
+      }
+    ]
+  },
+  {
+    code: dedent`
+      function foo(i) {
+        if (i === 1) {
+          console.log("bar");
+        }
+        if (i === 2) console.log("baz");
+        else return 3;
+        return 0;
+      }`,
+    optionsSet: [[{ allowReturningStatements: true }]],
+    errors: [
+      {
+        messageId: "incompleteIf",
+        type: "IfStatement",
+        line: 2,
+        column: 3
+      },
+      {
+        messageId: "incompleteIf",
+        type: "IfStatement",
+        line: 5,
+        column: 3
+      }
+    ]
+  },
+  {
+    code: dedent`
+      function foo(i) {
+        switch(i) {
+          case "a":
+            return 1;
+          case "b":
+            return 2;
+          default:
+            break;
+        }
+      }`,
+    optionsSet: [[{ allowReturningStatements: true }]],
+    errors: [
+      {
+        messageId: "incompleteSwitch",
+        type: "SwitchStatement",
+        line: 2,
+        column: 3
+      }
+    ]
+  },
+  {
+    code: dedent`
+      function foo(x, y) {
+        if (x > 0) {
+          if (y < 100) {
+            return 1;
+          } else {
+            console.log("bar");
+          }
+        }
+      }`,
+    optionsSet: [[{ allowReturningStatements: true }]],
+    errors: [
+      {
+        messageId: "incompleteIf",
+        type: "IfStatement",
+        line: 3,
+        column: 5
       }
     ]
   }

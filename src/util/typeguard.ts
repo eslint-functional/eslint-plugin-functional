@@ -52,6 +52,12 @@ export function isArrayExpression(
   return node.type === "ArrayExpression";
 }
 
+export function isBlockStatement(
+  node: TSESTree.Node
+): node is TSESTree.BlockStatement {
+  return node.type === "BlockStatement";
+}
+
 export function isCallExpression(
   node: TSESTree.Node
 ): node is TSESTree.CallExpression {
@@ -81,6 +87,12 @@ export function isIdentifier(node: TSESTree.Node): node is TSESTree.Identifier {
   return node.type === "Identifier";
 }
 
+export function isIfStatement(
+  node: TSESTree.Node
+): node is TSESTree.IfStatement {
+  return node.type === "IfStatement";
+}
+
 export function isMemberExpression(
   node: TSESTree.Node
 ): node is TSESTree.MemberExpression {
@@ -97,6 +109,12 @@ export function isNewExpression(
   node: TSESTree.Node
 ): node is TSESTree.NewExpression {
   return node.type === "NewExpression";
+}
+
+export function isReturnStatement(
+  node: TSESTree.Node
+): node is TSESTree.ReturnStatement {
+  return node.type === "ReturnStatement";
 }
 
 export function isTSIndexSignature(
