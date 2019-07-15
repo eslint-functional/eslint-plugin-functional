@@ -42,7 +42,7 @@
     "ts-immutable/no-throw": "error",
     "ts-immutable/no-mixed-interface": "error",
     "ts-immutable/no-expression-statement": "warn",
-    "ts-immutable/no-if-statement": "error",
+    "ts-immutable/no-conditional-statement": "error",
     "ts-immutable/no-try": "warn",
 
     // Typescript eslint.
