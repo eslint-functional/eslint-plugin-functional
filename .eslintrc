@@ -31,9 +31,8 @@
     "no-var": "error",
 
     // Our rules.
+    "ts-immutable/immutable-data": "error",
     "ts-immutable/no-let": "error",
-    "ts-immutable/no-array-mutation": "error",
-    "ts-immutable/no-object-mutation": "error",
     "ts-immutable/no-delete": "error",
     "ts-immutable/readonly-array": ["error", { "ignoreReturnType": true }],
     "ts-immutable/readonly-keyword": "error",

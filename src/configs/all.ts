@@ -1,13 +1,12 @@
 const config = {
   rules: {
-    "ts-immutable/no-array-mutation": "error",
+    "ts-immutable/immutable-data": "error",
     "ts-immutable/no-class": "error",
     "ts-immutable/no-delete": "error",
     "ts-immutable/no-expression-statement": "error",
     "ts-immutable/no-if-statement": "error",
     "ts-immutable/no-let": "error",
     "ts-immutable/no-loop-statement": "error",
-    "ts-immutable/no-object-mutation": "error",
     "ts-immutable/no-reject": "error",
     "ts-immutable/no-this": "error",
     "ts-immutable/no-throw": "error",
