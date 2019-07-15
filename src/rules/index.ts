@@ -1,7 +1,7 @@
 import {
-  name as noArrayMutationRuleName,
-  rule as noArrayMutationRule
-} from "./no-array-mutation";
+  name as immutableDataRuleName,
+  rule as immutableDataRule
+} from "./immutable-data";
 import { name as noClassRuleName, rule as noClassRule } from "./no-class";
 import {
   name as noExpressionStatementRuleName,
@@ -17,14 +17,6 @@ import {
   rule as noLoopRule
 } from "./no-loop-statement";
 import {
-  name as noObjectMutationRuleName,
-  rule as noObjectMutationRule
-} from "./no-object-mutation";
-import { name as noRejectRuleName, rule as noRejectRule } from "./no-reject";
-import { name as noThisRuleName, rule as noThisRule } from "./no-this";
-import { name as noThrowRuleName, rule as noThrowRule } from "./no-throw";
-import { name as noTryRuleName, rule as noTryRule } from "./no-try";
-import {
   name as noMethodSignatureRuleName,
   rule as noMethodSignatureRule
 } from "./no-method-signature";
@@ -32,6 +24,10 @@ import {
   name as noMixedInterfaceRuleName,
   rule as noMixedInterfaceRule
 } from "./no-mixed-interface";
+import { name as noRejectRuleName, rule as noRejectRule } from "./no-reject";
+import { name as noThisRuleName, rule as noThisRule } from "./no-this";
+import { name as noThrowRuleName, rule as noThrowRule } from "./no-throw";
+import { name as noTryRuleName, rule as noTryRule } from "./no-try";
 import {
   name as readonlyArrayRuleName,
   rule as readonlyArrayRule
@@ -45,7 +41,7 @@ import {
  * All of the custom rules.
  */
 export const rules = {
-  [noArrayMutationRuleName]: noArrayMutationRule,
+  [immutableDataRuleName]: immutableDataRule,
   [noClassRuleName]: noClassRule,
   [noExpressionStatementRuleName]: noExpressionStatementRule,
   [noIfStatementRuleName]: noIfStatementRule,
@@ -53,7 +49,6 @@ export const rules = {
   [noLoopRuleName]: noLoopRule,
   [noMethodSignatureRuleName]: noMethodSignatureRule,
   [noMixedInterfaceRuleName]: noMixedInterfaceRule,
-  [noObjectMutationRuleName]: noObjectMutationRule,
   [noRejectRuleName]: noRejectRule,
   [noThisRuleName]: noThisRule,
   [noThrowRuleName]: noThrowRule,

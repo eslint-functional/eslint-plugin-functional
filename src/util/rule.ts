@@ -113,44 +113,14 @@ export function checkNode<
 export function getTypeOfNode<Context extends RuleContext<string, BaseOptions>>(
   node: TSESTree.Node,
   context: Context
-): Type {
-  const parserServices = getParserServices(context);
+): Type | null {
+  const parserServices = context.parserServices;
 
-  return parserServices.program
-    .getTypeChecker()
-    .getTypeAtLocation(parserServices.esTreeNodeToTSNodeMap.get(node));
-}
-
-/**
- * Ensure the type info is avaliable.
- */
-export function parserServicesAvaliable<
-  Context extends RuleContext<string, BaseOptions>
->(context: Context): boolean {
-  return (
-    context.parserServices !== undefined &&
-    context.parserServices.program !== undefined &&
-    context.parserServices.esTreeNodeToTSNodeMap !== undefined
-  );
-}
-
-/**
- * Ensure the type info is avaliable.
- */
-export function getParserServices<
-  Context extends RuleContext<string, BaseOptions>
->(context: Context): ParserServices {
-  /* eslint-disable-next-line ts-immutable/no-if-statement */
-  if (parserServicesAvaliable(context)) {
-    return context.parserServices as ParserServices;
-  }
-
-  /**
-   * The user needs to have configured "project" in their parserOptions
-   * for @typescript-eslint/parser
-   */
-  /* eslint-disable-next-line ts-immutable/no-throw */
-  throw new Error(
-    'You have used a rule which is only avaliable for TypeScript files and requires parserServices to be generated. You must therefore provide a value for the "parserOptions.project" property for @typescript-eslint/parser.'
-  );
+  return parserServices === undefined ||
+    parserServices.program === undefined ||
+    parserServices.esTreeNodeToTSNodeMap === undefined
+    ? null
+    : parserServices.program
+        .getTypeChecker()
+        .getTypeAtLocation(parserServices.esTreeNodeToTSNodeMap.get(node));
 }
