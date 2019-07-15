@@ -13,11 +13,9 @@ env:
   - TSVERSION=next
   - TSVERSION=latest
   - TSVERSION=3.4.1 # Our minimum supported version
-  - TSVERSION=3.2.1 # @typescript-eslint minimum supported version
 matrix:
   allow_failures:
     - env: TSVERSION=next
-    - env: TSVERSION=3.2.1
 before_script:
   # Test with the compiled tests?
   # Note: tests must be compiled in order to use them to test different typescript versions.
