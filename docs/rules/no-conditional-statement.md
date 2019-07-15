@@ -1,10 +1,10 @@
-# Disallow if statements (no-if-statement)
+# Disallow conditional statements (no-conditional-statement)
 
-This rule disallows if statements.
+This rule disallows conditional statements such as if and switch.
 
 ## Rule Details
 
-If statements is not a good fit for functional style programming as they are not expresssions and do not return a value.
+Conditional statements are not a good fit for functional style programming as they are not expressions and do not return a value.
 
 ```typescript
 let x;
