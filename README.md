@@ -118,7 +118,6 @@ In addition to immutable rules this project also contains a few rules for enforc
 | [`ts-immutable/no-array-mutation`](./docs/rules/no-array-mutation.md)     | Disallow mutating arrays                                                   |               :heavy_check_mark:               |                 :heavy_check_mark:                  |               :heavy_check_mark:                |          | :thought_balloon: |
 | [`ts-immutable/no-object-mutation`](./docs/rules/no-object-mutation.md)   | Disallow mutating objects                                                  |               :heavy_check_mark:               |                 :heavy_check_mark:                  |               :heavy_check_mark:                |          |   :blue_heart:    |
 | [`ts-immutable/no-method-signature`](./docs/rules/no-method-signature.md) | Enforce property signatures with readonly modifiers over method signatures |               :heavy_check_mark:               |                 :heavy_check_mark:                  |               :heavy_check_mark:                |          | :thought_balloon: |
-| [`ts-immutable/no-delete`](./docs/rules/no-delete.md)                     | Disallow delete expressions                                                |               :heavy_check_mark:               |                 :heavy_check_mark:                  |               :heavy_check_mark:                |          |                   |
 
 ### Functional style rules
 
