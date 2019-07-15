@@ -1,4 +1,5 @@
 import { TSESTree } from "@typescript-eslint/typescript-estree";
+import { JSONSchema4 } from "json-schema";
 
 import {
   checkNode,
@@ -7,20 +8,42 @@ import {
   RuleMetaData,
   RuleResult
 } from "../util/rule";
+import {
+  isBlockStatement,
+  isIfStatement,
+  isReturnStatement
+} from "../util/typeguard";
 
 // The name of this rule.
 export const name = "no-conditional-statement" as const;
 
 // The options this rule can take.
-type Options = readonly [];
+type Options = readonly [{ readonly allowReturningStatements: boolean }];
+
+// The schema for the rule options.
+const schema: JSONSchema4 = [
+  {
+    type: "object",
+    properties: {
+      allowReturningStatements: {
+        type: "boolean"
+      }
+    },
+    additionalProperties: false
+  }
+];
 
 // The default options for the rule.
-const defaultOptions: Options = [];
+const defaultOptions: Options = [{ allowReturningStatements: false }];
 
 // The possible error messages.
 const errorMessages = {
-  if: "Unexpected if, use a conditional expression (ternary operator) instead.",
-  switch:
+  incompleteIf: "Incomplete if, every branch must contain a return statement.",
+  incompleteSwitch:
+    "Incomplete switch, every case must contain a return statement.",
+  unexpectedIf:
+    "Unexpected if, use a conditional expression (ternary operator) instead.",
+  unexpectedSwitch:
     "Unexpected switch, use a conditional expression (ternary operator) instead."
 } as const;
 
@@ -33,18 +56,45 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
     recommended: false
   },
   messages: errorMessages,
-  schema: []
+  schema
 };
+
+function isIfReturningStatement(node: TSESTree.IfStatement): boolean {
+  return [node.consequent, node.alternate].every(
+    branch =>
+      branch === null ||
+      isReturnStatement(branch) ||
+      (isBlockStatement(branch) &&
+        branch.body.some(
+          statement =>
+            isReturnStatement(statement) ||
+            // Another instance of this rule will check nested if statements.
+            isIfStatement(statement)
+        )) ||
+      isIfStatement(branch)
+  );
+}
+
+function isSwitchReturningStatement(node: TSESTree.SwitchStatement): boolean {
+  return node.cases.every(c => c.consequent.some(isReturnStatement));
+}
 
 /**
  * Check if the given IfStatement violates this rule.
  */
 function checkIfStatement(
   node: TSESTree.IfStatement,
-  context: RuleContext<keyof typeof errorMessages, Options>
+  context: RuleContext<keyof typeof errorMessages, Options>,
+  [options]: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
-  // All if statements violate this rule.
-  return { context, descriptors: [{ node, messageId: "if" }] };
+  return {
+    context,
+    descriptors: options.allowReturningStatements
+      ? isIfReturningStatement(node)
+        ? []
+        : [{ node, messageId: "incompleteIf" }]
+      : [{ node, messageId: "unexpectedIf" }]
+  };
 }
 
 /**
@@ -52,10 +102,17 @@ function checkIfStatement(
  */
 function checkSwitchStatement(
   node: TSESTree.SwitchStatement,
-  context: RuleContext<keyof typeof errorMessages, Options>
+  context: RuleContext<keyof typeof errorMessages, Options>,
+  [options]: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
-  // All if statements violate this rule.
-  return { context, descriptors: [{ node, messageId: "switch" }] };
+  return {
+    context,
+    descriptors: options.allowReturningStatements
+      ? isSwitchReturningStatement(node)
+        ? []
+        : [{ node, messageId: "incompleteSwitch" }]
+      : [{ node, messageId: "unexpectedSwitch" }]
+  };
 }
 
 // Create the rule.
@@ -63,9 +120,19 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
   name,
   meta,
   defaultOptions,
-  create(context) {
-    const _checkIfStatement = checkNode(checkIfStatement, context);
-    const _checkSwitchStatement = checkNode(checkSwitchStatement, context);
+  create(context, options) {
+    const _checkIfStatement = checkNode(
+      checkIfStatement,
+      context,
+      undefined,
+      options
+    );
+    const _checkSwitchStatement = checkNode(
+      checkSwitchStatement,
+      context,
+      undefined,
+      options
+    );
 
     return {
       IfStatement: _checkIfStatement,
