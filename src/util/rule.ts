@@ -1,15 +1,11 @@
+import { ESLintUtils, TSESTree } from "@typescript-eslint/experimental-utils";
 import {
-  ESLintUtils,
-  ParserServices as UtilParserServices,
-  TSESTree
-} from "@typescript-eslint/experimental-utils";
-import {
+  ReportDescriptor,
   RuleContext as UtilRuleContext,
   RuleListener,
   RuleMetaData as UtilRuleMetaData,
   RuleMetaDataDocs as UtilRuleMetaDataDocs,
-  RuleModule,
-  ReportDescriptor
+  RuleModule
 } from "@typescript-eslint/experimental-utils/dist/ts-eslint";
 import { Type } from "typescript";
 
