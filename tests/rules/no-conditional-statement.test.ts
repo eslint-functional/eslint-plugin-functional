@@ -1,10 +1,11 @@
 /**
- * @fileoverview Tests for no-if-statement
+ * @fileoverview Tests for no-conditional-statement
  */
 
+import dedent from "dedent";
 import { Rule, RuleTester } from "eslint";
 
-import { name, rule } from "../../src/rules/no-if-statement";
+import { name, rule } from "../../src/rules/no-conditional-statement";
 
 import { es3, typescript } from "../configs";
 import {
@@ -20,13 +21,41 @@ const valid: ReadonlyArray<ValidTestCase> = [];
 // Invalid test cases.
 const invalid: ReadonlyArray<InvalidTestCase> = [
   {
-    code: "if (i === 1) { x = 2; }",
+    code: dedent`
+      if (i === 1) {
+        x = 2;
+      }`,
     optionsSet: [[]],
     errors: [
       {
-        messageId: "generic",
+        messageId: "if",
         type: "IfStatement",
         line: 1,
+        column: 1
+      }
+    ]
+  },
+  {
+    code: dedent`
+      var x = "c";
+      var y = "";
+      switch(x) {
+        case "a":
+          y = 1;
+          break;
+        case "b":
+          y = 2;
+          break;
+        default:
+          y = 3;
+          break;
+      }`,
+    optionsSet: [[]],
+    errors: [
+      {
+        messageId: "switch",
+        type: "SwitchStatement",
+        line: 3,
         column: 1
       }
     ]

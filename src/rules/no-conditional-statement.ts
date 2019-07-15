@@ -9,7 +9,7 @@ import {
 } from "../util/rule";
 
 // The name of this rule.
-export const name = "no-if-statement" as const;
+export const name = "no-conditional-statement" as const;
 
 // The options this rule can take.
 type Options = readonly [];
@@ -19,8 +19,9 @@ const defaultOptions: Options = [];
 
 // The possible error messages.
 const errorMessages = {
-  generic:
-    "Unexpected if, use a conditional expression (ternary operator) instead."
+  if: "Unexpected if, use a conditional expression (ternary operator) instead.",
+  switch:
+    "Unexpected switch, use a conditional expression (ternary operator) instead."
 } as const;
 
 // The meta data for this rule.
@@ -43,7 +44,18 @@ function checkIfStatement(
   context: RuleContext<keyof typeof errorMessages, Options>
 ): RuleResult<keyof typeof errorMessages, Options> {
   // All if statements violate this rule.
-  return { context, descriptors: [{ node, messageId: "generic" }] };
+  return { context, descriptors: [{ node, messageId: "if" }] };
+}
+
+/**
+ * Check if the given SwitchStatement violates this rule.
+ */
+function checkSwitchStatement(
+  node: TSESTree.SwitchStatement,
+  context: RuleContext<keyof typeof errorMessages, Options>
+): RuleResult<keyof typeof errorMessages, Options> {
+  // All if statements violate this rule.
+  return { context, descriptors: [{ node, messageId: "switch" }] };
 }
 
 // Create the rule.
@@ -53,9 +65,11 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
   defaultOptions,
   create(context) {
     const _checkIfStatement = checkNode(checkIfStatement, context);
+    const _checkSwitchStatement = checkNode(checkSwitchStatement, context);
 
     return {
-      IfStatement: _checkIfStatement
+      IfStatement: _checkIfStatement,
+      SwitchStatement: _checkSwitchStatement
     };
   }
 });
