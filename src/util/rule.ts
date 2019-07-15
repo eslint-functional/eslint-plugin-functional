@@ -40,10 +40,6 @@ export type RuleResult<
   readonly descriptors: ReadonlyArray<ReportDescriptor<MessageIds>>;
 };
 
-export type ParserServices = {
-  [k in keyof UtilParserServices]: Exclude<UtilParserServices[k], undefined>;
-};
-
 type Mutable<T> = {
   -readonly [P in keyof T]: T[P];
 };
