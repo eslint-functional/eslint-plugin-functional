@@ -25,7 +25,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
         }
         return 0;
       }`,
-    optionsSet: [[{ allowReturningStatements: true }]]
+    optionsSet: [[{ allowReturningBranches: true }]]
   },
   {
     code: dedent`
@@ -39,7 +39,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
             return 3;
         }
       }`,
-    optionsSet: [[{ allowReturningStatements: true }]]
+    optionsSet: [[{ allowReturningBranches: true }]]
   }
 ];
 
@@ -135,7 +135,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         else return 3;
         return 0;
       }`,
-    optionsSet: [[{ allowReturningStatements: true }]],
+    optionsSet: [[{ allowReturningBranches: true }]],
     errors: [
       {
         messageId: "incompleteIf",
@@ -163,7 +163,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
             break;
         }
       }`,
-    optionsSet: [[{ allowReturningStatements: true }]],
+    optionsSet: [[{ allowReturningBranches: true }]],
     errors: [
       {
         messageId: "incompleteSwitch",
@@ -184,7 +184,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
           }
         }
       }`,
-    optionsSet: [[{ allowReturningStatements: true }]],
+    optionsSet: [[{ allowReturningBranches: true }]],
     errors: [
       {
         messageId: "incompleteIf",
