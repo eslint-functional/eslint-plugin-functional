@@ -2,7 +2,6 @@ const config = {
   rules: {
     "ts-immutable/immutable-data": "error",
     "ts-immutable/no-class": "error",
-    "ts-immutable/no-delete": "error",
     "ts-immutable/no-expression-statement": "error",
     "ts-immutable/no-if-statement": "error",
     "ts-immutable/no-let": "error",
