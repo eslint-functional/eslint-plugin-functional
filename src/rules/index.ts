@@ -3,7 +3,6 @@ import {
   rule as immutableDataRule
 } from "./immutable-data";
 import { name as noClassRuleName, rule as noClassRule } from "./no-class";
-import { name as noDeleteRuleName, rule as noDeleteRule } from "./no-delete";
 import {
   name as noExpressionStatementRuleName,
   rule as noExpressionStatementRule
@@ -44,7 +43,6 @@ import {
 export const rules = {
   [immutableDataRuleName]: immutableDataRule,
   [noClassRuleName]: noClassRule,
-  [noDeleteRuleName]: noDeleteRule,
   [noExpressionStatementRuleName]: noExpressionStatementRule,
   [noIfStatementRuleName]: noIfStatementRule,
   [noLetRuleName]: noLetRule,

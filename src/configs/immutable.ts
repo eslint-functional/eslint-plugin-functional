@@ -7,8 +7,7 @@ const config = deepMerge([
   {
     rules: {
       "ts-immutable/no-let": "error",
-      "ts-immutable/immutable-data": "error",
-      "ts-immutable/no-delete": "error"
+      "ts-immutable/immutable-data": "error"
     },
     overrides: [
       {

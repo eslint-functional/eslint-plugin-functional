@@ -117,7 +117,6 @@ In addition to immutable rules this project also contains a few rules for enforc
 | [`ts-immutable/no-let`](./docs/rules/no-let.md)                           | Disallow mutable variables                                                 |               :heavy_check_mark:               |                 :heavy_check_mark:                  |               :heavy_check_mark:                | :wrench: |                   |
 | [`ts-immutable/immutable-data`](./docs/rules/immutable-data.md)           | Disallow mutating objects and arrays                                       |               :heavy_check_mark:               |                 :heavy_check_mark:                  |               :heavy_check_mark:                |          |   :blue_heart:    |
 | [`ts-immutable/no-method-signature`](./docs/rules/no-method-signature.md) | Enforce property signatures with readonly modifiers over method signatures |               :heavy_check_mark:               |                 :heavy_check_mark:                  |               :heavy_check_mark:                |          | :thought_balloon: |
-| [`ts-immutable/no-delete`](./docs/rules/no-delete.md)                     | Disallow delete expressions                                                |               :heavy_check_mark:               |                 :heavy_check_mark:                  |               :heavy_check_mark:                |          |                   |
 
 ### Functional style rules
 
