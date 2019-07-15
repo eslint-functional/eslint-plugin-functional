@@ -18,14 +18,14 @@ import {
 export const name = "no-conditional-statement" as const;
 
 // The options this rule can take.
-type Options = readonly [{ readonly allowReturningStatements: boolean }];
+type Options = readonly [{ readonly allowReturningBranches: boolean }];
 
 // The schema for the rule options.
 const schema: JSONSchema4 = [
   {
     type: "object",
     properties: {
-      allowReturningStatements: {
+      allowReturningBranches: {
         type: "boolean"
       }
     },
@@ -34,7 +34,7 @@ const schema: JSONSchema4 = [
 ];
 
 // The default options for the rule.
-const defaultOptions: Options = [{ allowReturningStatements: false }];
+const defaultOptions: Options = [{ allowReturningBranches: false }];
 
 // The possible error messages.
 const errorMessages = {
@@ -89,7 +89,7 @@ function checkIfStatement(
 ): RuleResult<keyof typeof errorMessages, Options> {
   return {
     context,
-    descriptors: options.allowReturningStatements
+    descriptors: options.allowReturningBranches
       ? isIfReturningStatement(node)
         ? []
         : [{ node, messageId: "incompleteIf" }]
@@ -107,7 +107,7 @@ function checkSwitchStatement(
 ): RuleResult<keyof typeof errorMessages, Options> {
   return {
     context,
-    descriptors: options.allowReturningStatements
+    descriptors: options.allowReturningBranches
       ? isSwitchReturningStatement(node)
         ? []
         : [{ node, messageId: "incompleteSwitch" }]
