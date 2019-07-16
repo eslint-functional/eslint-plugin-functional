@@ -74,6 +74,11 @@
     "eslint": ">=6.0.0",
     "typescript": ">=3.4.1"
   },
+  "peerDependenciesMeta": {
+    "typescript": {
+      "optional": true
+    }
+  },
   "scripts": {
     "compile": "rollup -c",
     "compile-tests": "tsc -p tsconfig.tests.json",
