@@ -176,7 +176,7 @@ yarn version --major
 This project started off as a port of [tslint-immutable](https://github.com/jonaskello/tslint-immutable) which was originally inspired by [eslint-plugin-immutable](https://github.com/jhusain/eslint-plugin-immutable).
 
 [version-image]: https://img.shields.io/npm/v/eslint-plugin-ts-immutable.svg?style=flat
-[version-url]: https://www.npmjs.com/packageeslint-plugin-ts-immutable
+[version-url]: https://www.npmjs.com/package/eslint-plugin-ts-immutable
 [travis-image]: https://travis-ci.com/jonaskello/eslint-plugin-ts-immutable.svg?branch=master&style=flat
 [travis-url]: https://travis-ci.com/jonaskello/eslint-plugin-ts-immutable
 [codecov-image]: https://codecov.io/gh/jonaskello/eslint-plugin-ts-immutable/branch/master/graph/badge.svg
