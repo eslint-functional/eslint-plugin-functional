@@ -10,7 +10,12 @@
   },
   "keywords": [
     "eslint",
-    "immutability"
+    "eslint plugin",
+    "immutable",
+    "immutability",
+    "functional",
+    "functional programming",
+    "fp"
   ],
   "author": "Jonas Kello",
   "contributors": [
