@@ -104,7 +104,6 @@ function getSwitchCaseViolations(
 ): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
   const nodes = node.cases.reduce<ReadonlyArray<TSESTree.Node>>(
     (carry, branch) =>
-      branch === null ||
       branch.consequent.length === 0 ||
       branch.consequent.some(isReturnStatement) ||
       (branch.consequent.every(isBlockStatement) &&
