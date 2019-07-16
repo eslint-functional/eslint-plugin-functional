@@ -18,7 +18,11 @@ import {
 export const name = "no-conditional-statement" as const;
 
 // The options this rule can take.
-type Options = readonly [{ readonly allowReturningBranches: boolean }];
+type Options = readonly [
+  {
+    readonly allowReturningBranches: boolean | "onlyIfExhaustive";
+  }
+];
 
 // The schema for the rule options.
 const schema: JSONSchema4 = [
@@ -26,7 +30,15 @@ const schema: JSONSchema4 = [
     type: "object",
     properties: {
       allowReturningBranches: {
-        type: "boolean"
+        oneOf: [
+          {
+            type: "boolean"
+          },
+          {
+            type: "string",
+            enum: ["onlyIfExhaustive"]
+          }
+        ]
       }
     },
     additionalProperties: false
@@ -38,9 +50,12 @@ const defaultOptions: Options = [{ allowReturningBranches: false }];
 
 // The possible error messages.
 const errorMessages = {
-  incompleteIf: "Incomplete if, every branch must contain a return statement.",
+  incompleteBranch:
+    "Incomplete branch, every branch in a conditional statement must contain a return statement.",
+  incompleteIf:
+    "Incomplete if, it must have an else statement and every branch must contain a return statement.",
   incompleteSwitch:
-    "Incomplete switch, every case must contain a return statement.",
+    "Incomplete switch, it must have an default case and every case must contain a return statement.",
   unexpectedIf:
     "Unexpected if, use a conditional expression (ternary operator) instead.",
   unexpectedSwitch:
@@ -59,9 +74,13 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
   schema
 };
 
-function isIfReturningStatement(node: TSESTree.IfStatement): boolean {
-  return [node.consequent, node.alternate].every(
-    branch =>
+function getIfBranchViolations(
+  node: TSESTree.IfStatement
+): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
+  const nodes = [node.consequent, node.alternate].reduce<
+    ReadonlyArray<TSESTree.Node>
+  >(
+    (carry, branch) =>
       branch === null ||
       isReturnStatement(branch) ||
       (isBlockStatement(branch) &&
@@ -72,11 +91,45 @@ function isIfReturningStatement(node: TSESTree.IfStatement): boolean {
             isIfStatement(statement)
         )) ||
       isIfStatement(branch)
+        ? carry
+        : [...carry, branch],
+    []
   );
+
+  return nodes.flatMap(node => [{ node, messageId: "incompleteBranch" }]);
 }
 
-function isSwitchReturningStatement(node: TSESTree.SwitchStatement): boolean {
-  return node.cases.every(c => c.consequent.some(isReturnStatement));
+function getSwitchCaseViolations(
+  node: TSESTree.SwitchStatement
+): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
+  const nodes = node.cases.reduce<ReadonlyArray<TSESTree.Node>>(
+    (carry, branch) =>
+      branch === null ||
+      branch.consequent.length === 0 ||
+      branch.consequent.some(isReturnStatement) ||
+      (branch.consequent.every(isBlockStatement) &&
+        (branch.consequent[
+          branch.consequent.length - 1
+        ] as TSESTree.BlockStatement).body.some(isReturnStatement))
+        ? carry
+        : [...carry, branch],
+    []
+  );
+
+  return nodes.flatMap(node => [{ node, messageId: "incompleteBranch" }]);
+}
+
+function isExhaustiveIfViolation(node: TSESTree.IfStatement): boolean {
+  return node.alternate === null;
+}
+
+function isExhaustiveSwitchViolation(node: TSESTree.SwitchStatement): boolean {
+  return (
+    // No cases defined.
+    node.cases.length === 0 ||
+    // No default case defined.
+    node.cases.every(c => c.test !== null)
+  );
 }
 
 /**
@@ -90,9 +143,11 @@ function checkIfStatement(
   return {
     context,
     descriptors: options.allowReturningBranches
-      ? isIfReturningStatement(node)
-        ? []
-        : [{ node, messageId: "incompleteIf" }]
+      ? options.allowReturningBranches === "onlyIfExhaustive"
+        ? isExhaustiveIfViolation(node)
+          ? [{ node, messageId: "incompleteIf" }]
+          : getIfBranchViolations(node)
+        : getIfBranchViolations(node)
       : [{ node, messageId: "unexpectedIf" }]
   };
 }
@@ -108,9 +163,11 @@ function checkSwitchStatement(
   return {
     context,
     descriptors: options.allowReturningBranches
-      ? isSwitchReturningStatement(node)
-        ? []
-        : [{ node, messageId: "incompleteSwitch" }]
+      ? options.allowReturningBranches === "onlyIfExhaustive"
+        ? isExhaustiveSwitchViolation(node)
+          ? [{ node, messageId: "incompleteSwitch" }]
+          : getSwitchCaseViolations(node)
+        : getSwitchCaseViolations(node)
       : [{ node, messageId: "unexpectedSwitch" }]
   };
 }

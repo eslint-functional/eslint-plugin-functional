@@ -23,7 +23,32 @@ const valid: ReadonlyArray<ValidTestCase> = [
         if (i === 1) {
           return 1;
         }
-        return 0;
+      }`,
+    optionsSet: [[{ allowReturningBranches: true }]]
+  },
+  {
+    code: dedent`
+      function foo(i) {
+        if (i === 1) {
+          return 1;
+        } else {
+          return 0;
+        }
+      }`,
+    optionsSet: [
+      [{ allowReturningBranches: true }],
+      [{ allowReturningBranches: "onlyIfExhaustive" }]
+    ]
+  },
+  {
+    code: dedent`
+      function foo(i) {
+        switch(i) {
+          case "a":
+            return 1;
+          case "b":
+            return 2;
+        }
       }`,
     optionsSet: [[{ allowReturningBranches: true }]]
   },
@@ -39,7 +64,10 @@ const valid: ReadonlyArray<ValidTestCase> = [
             return 3;
         }
       }`,
-    optionsSet: [[{ allowReturningBranches: true }]]
+    optionsSet: [
+      [{ allowReturningBranches: true }],
+      [{ allowReturningBranches: "onlyIfExhaustive" }]
+    ]
   }
 ];
 
@@ -138,16 +166,16 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
     optionsSet: [[{ allowReturningBranches: true }]],
     errors: [
       {
-        messageId: "incompleteIf",
-        type: "IfStatement",
+        messageId: "incompleteBranch",
+        type: "BlockStatement",
         line: 2,
-        column: 3
+        column: 16
       },
       {
-        messageId: "incompleteIf",
-        type: "IfStatement",
+        messageId: "incompleteBranch",
+        type: "ExpressionStatement",
         line: 5,
-        column: 3
+        column: 16
       }
     ]
   },
@@ -166,10 +194,10 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
     optionsSet: [[{ allowReturningBranches: true }]],
     errors: [
       {
-        messageId: "incompleteSwitch",
-        type: "SwitchStatement",
-        line: 2,
-        column: 3
+        messageId: "incompleteBranch",
+        type: "SwitchCase",
+        line: 7,
+        column: 5
       }
     ]
   },
@@ -187,14 +215,107 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
     optionsSet: [[{ allowReturningBranches: true }]],
     errors: [
       {
+        messageId: "incompleteBranch",
+        type: "BlockStatement",
+        line: 5,
+        column: 12
+      }
+    ]
+  },
+  {
+    code: dedent`
+      function foo(i) {
+        if (i === 1) {
+          return 1;
+        }
+      }`,
+    optionsSet: [[{ allowReturningBranches: "onlyIfExhaustive" }]],
+    errors: [
+      {
         messageId: "incompleteIf",
         type: "IfStatement",
-        line: 3,
+        line: 2,
+        column: 3
+      }
+    ]
+  },
+  {
+    code: dedent`
+      function foo(i) {
+        if (i === 1) {
+          return 1;
+        } else {
+          console.log(1);
+        }
+      }`,
+    optionsSet: [[{ allowReturningBranches: "onlyIfExhaustive" }]],
+    errors: [
+      {
+        messageId: "incompleteBranch",
+        type: "BlockStatement",
+        line: 4,
+        column: 10
+      }
+    ]
+  },
+  {
+    code: dedent`
+      function foo(i) {
+        switch(i) {
+          case "a":
+            return 1;
+          case "b":
+            return 2;
+        }
+      }`,
+    optionsSet: [[{ allowReturningBranches: "onlyIfExhaustive" }]],
+    errors: [
+      {
+        messageId: "incompleteSwitch",
+        type: "SwitchStatement",
+        line: 2,
+        column: 3
+      }
+    ]
+  },
+  {
+    code: dedent`
+      function foo(i) {
+        switch(i) {
+          case "a":
+            return 1;
+          case "b":
+            return 2;
+          default:
+            break;
+        }
+      }`,
+    optionsSet: [[{ allowReturningBranches: "onlyIfExhaustive" }]],
+    errors: [
+      {
+        messageId: "incompleteBranch",
+        type: "SwitchCase",
+        line: 7,
         column: 5
       }
     ]
   }
 ];
+
+// Exhaustive type test. - Not currently supported.
+// {
+//   code: dedent`
+//     type T = "a" | "b";
+//     function foo(i: T) {
+//       switch(i) {
+//         case "a":
+//           return 1;
+//         case "b":
+//           return 2;
+//       }
+//     }`,
+//   optionsSet: [[{ allowReturningBranches: "onlyIfExhaustive" }]]
+// }
 
 describe("TypeScript", () => {
   const ruleTester = new RuleTester(typescript);
