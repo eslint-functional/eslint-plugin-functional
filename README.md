@@ -63,18 +63,7 @@ You can enable one of these rulesets like so:
 ### With TypeScript
 
 `@typescript-eslint/parser` is needed to parse TypeScript code; add `@typescript-eslint/parser` to the "parser" filed in your `.eslintrc` configuration file.
-
-```json
-{
-  "parser": "@typescript-eslint/parser",
-  "plugins": ["ts-immutable"],
-  "rules": {
-    "ts-immutable/rule-name": "error"
-  }
-}
-```
-
-For this plugin to use type information, you will need to specify a path to your tsconfig.json file in the "project" property of "parserOptions".
+Additionally, for this plugin to use type information, you will need to specify a path to your tsconfig.json file in the "project" property of "parserOptions".
 
 ```json
 {
