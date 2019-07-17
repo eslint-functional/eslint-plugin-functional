@@ -4,13 +4,13 @@ import {
 } from "./immutable-data";
 import { name as noClassRuleName, rule as noClassRule } from "./no-class";
 import {
+  name as noConditionalStatementRuleName,
+  rule as noConditionalStatementRule
+} from "./no-conditional-statement";
+import {
   name as noExpressionStatementRuleName,
   rule as noExpressionStatementRule
 } from "./no-expression-statement";
-import {
-  name as noIfStatementRuleName,
-  rule as noIfStatementRule
-} from "./no-if-statement";
 import { name as noLetRuleName, rule as noLetRule } from "./no-let";
 import {
   name as noLoopRuleName,
@@ -43,8 +43,8 @@ import {
 export const rules = {
   [immutableDataRuleName]: immutableDataRule,
   [noClassRuleName]: noClassRule,
+  [noConditionalStatementRuleName]: noConditionalStatementRule,
   [noExpressionStatementRuleName]: noExpressionStatementRule,
-  [noIfStatementRuleName]: noIfStatementRule,
   [noLetRuleName]: noLetRule,
   [noLoopRuleName]: noLoopRule,
   [noMethodSignatureRuleName]: noMethodSignatureRule,
