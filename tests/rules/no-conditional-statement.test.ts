@@ -37,7 +37,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
       }`,
     optionsSet: [
       [{ allowReturningBranches: true }],
-      [{ allowReturningBranches: "onlyIfExhaustive" }]
+      [{ allowReturningBranches: "ifExhaustive" }]
     ]
   },
   {
@@ -66,7 +66,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
       }`,
     optionsSet: [
       [{ allowReturningBranches: true }],
-      [{ allowReturningBranches: "onlyIfExhaustive" }]
+      [{ allowReturningBranches: "ifExhaustive" }]
     ]
   }
 ];
@@ -229,7 +229,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
           return 1;
         }
       }`,
-    optionsSet: [[{ allowReturningBranches: "onlyIfExhaustive" }]],
+    optionsSet: [[{ allowReturningBranches: "ifExhaustive" }]],
     errors: [
       {
         messageId: "incompleteIf",
@@ -248,7 +248,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
           console.log(1);
         }
       }`,
-    optionsSet: [[{ allowReturningBranches: "onlyIfExhaustive" }]],
+    optionsSet: [[{ allowReturningBranches: "ifExhaustive" }]],
     errors: [
       {
         messageId: "incompleteBranch",
@@ -268,7 +268,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
             return 2;
         }
       }`,
-    optionsSet: [[{ allowReturningBranches: "onlyIfExhaustive" }]],
+    optionsSet: [[{ allowReturningBranches: "ifExhaustive" }]],
     errors: [
       {
         messageId: "incompleteSwitch",
@@ -290,7 +290,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
             break;
         }
       }`,
-    optionsSet: [[{ allowReturningBranches: "onlyIfExhaustive" }]],
+    optionsSet: [[{ allowReturningBranches: "ifExhaustive" }]],
     errors: [
       {
         messageId: "incompleteBranch",
@@ -314,7 +314,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
 //           return 2;
 //       }
 //     }`,
-//   optionsSet: [[{ allowReturningBranches: "onlyIfExhaustive" }]]
+//   optionsSet: [[{ allowReturningBranches: "ifExhaustive" }]]
 // }
 
 describe("TypeScript", () => {

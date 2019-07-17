@@ -29,7 +29,7 @@ The rule accepts an options object with the following properties:
 
 ```typescript
 type Options = {
-  readonly allowReturningBranches: boolean | "onlyIfExhaustive";
+  readonly allowReturningBranches: boolean | "ifExhaustive";
 };
 
 const defaults = {
@@ -54,7 +54,7 @@ function foo(error, data) {
 }
 ```
 
-#### `"onlyIfExhaustive"`
+#### `"ifExhaustive"`
 
 This will only allow conditional statements to exists if every case is taken it to account and each has a return statement.
 In other works, every if must have an else and every switch must have a default case.

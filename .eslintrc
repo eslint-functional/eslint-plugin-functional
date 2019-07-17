@@ -44,7 +44,7 @@
     "ts-immutable/no-expression-statement": "warn",
     "ts-immutable/no-conditional-statement": [
       "error",
-      { "allowReturningBranches": "onlyIfExhaustive" }
+      { "allowReturningBranches": "ifExhaustive" }
     ],
     "ts-immutable/no-try": "warn",
 
