@@ -20,7 +20,7 @@ export const name = "no-conditional-statement" as const;
 // The options this rule can take.
 type Options = readonly [
   {
-    readonly allowReturningBranches: boolean | "onlyIfExhaustive";
+    readonly allowReturningBranches: boolean | "ifExhaustive";
   }
 ];
 
@@ -36,7 +36,7 @@ const schema: JSONSchema4 = [
           },
           {
             type: "string",
-            enum: ["onlyIfExhaustive"]
+            enum: ["ifExhaustive"]
           }
         ]
       }
@@ -142,7 +142,7 @@ function checkIfStatement(
   return {
     context,
     descriptors: options.allowReturningBranches
-      ? options.allowReturningBranches === "onlyIfExhaustive"
+      ? options.allowReturningBranches === "ifExhaustive"
         ? isExhaustiveIfViolation(node)
           ? [{ node, messageId: "incompleteIf" }]
           : getIfBranchViolations(node)
@@ -162,7 +162,7 @@ function checkSwitchStatement(
   return {
     context,
     descriptors: options.allowReturningBranches
-      ? options.allowReturningBranches === "onlyIfExhaustive"
+      ? options.allowReturningBranches === "ifExhaustive"
         ? isExhaustiveSwitchViolation(node)
           ? [{ node, messageId: "incompleteSwitch" }]
           : getSwitchCaseViolations(node)
