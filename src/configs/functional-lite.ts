@@ -9,6 +9,10 @@ const config = deepMerge([
       "ts-immutable/no-this": "error",
       "ts-immutable/no-class": "error",
       "ts-immutable/no-loop-statement": "error",
+      "ts-immutable/no-conditional-statement": [
+        "error",
+        { allowReturningBranches: true }
+      ],
       "ts-immutable/no-throw": "error"
     },
     overrides: [
