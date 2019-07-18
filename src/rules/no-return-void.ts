@@ -73,7 +73,8 @@ function checkFunction(
   node:
     | TSESTree.FunctionDeclaration
     | TSESTree.FunctionExpression
-    | TSESTree.ArrowFunctionExpression,
+    | TSESTree.ArrowFunctionExpression
+    | TSESTree.TSFunctionType,
   context: RuleContext<keyof typeof errorMessages, Options>,
   [options]: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
@@ -107,7 +108,8 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
     return {
       FunctionDeclaration: _checkFunction,
       FunctionExpression: _checkFunction,
-      ArrowFunctionExpression: _checkFunction
+      ArrowFunctionExpression: _checkFunction,
+      TSFunctionType: _checkFunction
     };
   }
 });

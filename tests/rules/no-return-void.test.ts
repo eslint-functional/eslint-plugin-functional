@@ -108,6 +108,22 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         column: 26
       }
     ]
+  },
+  // Disallow higher-order function void.
+  {
+    code: dedent`
+      function foo(bar: number): (baz: number) => void {
+        return baz => { console.log(bar, baz); }
+      }`,
+    optionsSet: [[]],
+    errors: [
+      {
+        messageId: "generic",
+        type: "TSTypeAnnotation",
+        line: 1,
+        column: 42
+      }
+    ]
   }
 ];
 
