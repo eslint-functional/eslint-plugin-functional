@@ -41,6 +41,7 @@
     "ts-immutable/no-loop-statement": "error",
     "ts-immutable/no-throw": "error",
     "ts-immutable/no-mixed-interface": "error",
+    "ts-immutable/no-return-void": "error",
     "ts-immutable/no-expression-statement": "warn",
     "ts-immutable/no-conditional-statement": [
       "error",
