@@ -114,6 +114,16 @@ export function isNewExpression(
   return node.type === AST_NODE_TYPES.NewExpression;
 }
 
+export function isProperty(node: TSESTree.Node): node is TSESTree.Property {
+  return node.type === AST_NODE_TYPES.Property;
+}
+
+export function isRestElement(
+  node: TSESTree.Node
+): node is TSESTree.RestElement {
+  return node.type === AST_NODE_TYPES.RestElement;
+}
+
 export function isReturnStatement(
   node: TSESTree.Node
 ): node is TSESTree.ReturnStatement {
