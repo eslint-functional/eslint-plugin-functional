@@ -144,11 +144,18 @@ const valid: ReadonlyArray<ValidTestCase> = [
       function foo<T>(x: T): T extends Array<number> ? string : number[] {}`,
     optionsSet: [[{ ignoreReturnType: true }]]
   },
-  // Should no fail on implicit ReadonlyArray type in variable declaration.
+  // Should not fail on implicit ReadonlyArray type in variable declaration.
   {
     code: dedent`
       const foo = [1, 2, 3] as const`,
     optionsSet: [[]]
+  },
+  // Should not fail on implicit Array if allowed.
+  {
+    code: dedent`
+      const foo = [1, 2, 3]
+      function bar(param = [1, 2, 3]) {}`,
+    optionsSet: [[{ allowImplicit: true }]]
   }
 ];
 

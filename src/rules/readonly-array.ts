@@ -31,7 +31,9 @@ export const name = "readonly-array" as const;
 type Options = readonly [
   ignore.IgnoreLocalOption &
     ignore.IgnorePatternOption &
-    ignore.IgnoreReturnTypeOption
+    ignore.IgnoreReturnTypeOption & {
+      readonly allowImplicit: boolean;
+    }
 ];
 
 // The schema for the rule options.
@@ -39,7 +41,16 @@ const schema: JSONSchema4 = [
   deepMerge([
     ignore.ignoreLocalOptionSchema,
     ignore.ignorePatternOptionSchema,
-    ignore.ignoreReturnTypeOptionSchema
+    ignore.ignoreReturnTypeOptionSchema,
+    {
+      type: "object",
+      properties: {
+        allowImplicit: {
+          type: "boolean"
+        }
+      },
+      additionalProperties: false
+    }
   ])
 ];
 
@@ -47,7 +58,8 @@ const schema: JSONSchema4 = [
 const defaultOptions: Options = [
   {
     ignoreLocal: false,
-    ignoreReturnType: false
+    ignoreReturnType: false,
+    allowImplicit: false
   }
 ];
 
@@ -212,10 +224,14 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
       TSArrayType: _checkArrayOrTupleType,
       TSTupleType: _checkArrayOrTupleType,
       TSTypeReference: _checkTypeReference,
-      VariableDeclaration: _checkImplicitType,
-      FunctionDeclaration: _checkImplicitType,
-      FunctionExpression: _checkImplicitType,
-      ArrowFunctionExpression: _checkImplicitType
+      ...(ignoreOptions.allowImplicit
+        ? {}
+        : {
+            VariableDeclaration: _checkImplicitType,
+            FunctionDeclaration: _checkImplicitType,
+            FunctionExpression: _checkImplicitType,
+            ArrowFunctionExpression: _checkImplicitType
+          })
     };
   }
 });
