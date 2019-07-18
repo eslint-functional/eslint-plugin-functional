@@ -1,4 +1,5 @@
 import { TSESTree } from "@typescript-eslint/typescript-estree";
+import { JSONSchema4 } from "json-schema";
 
 import {
   checkNode,
@@ -14,6 +15,9 @@ export const name = "no-reject" as const;
 
 // The options this rule can take.
 type Options = readonly [];
+
+// The schema for the rule options.
+const schema: JSONSchema4 = [];
 
 // The default options for the rule.
 const defaultOptions: Options = [];
@@ -32,7 +36,7 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
     recommended: false
   },
   messages: errorMessages,
-  schema: []
+  schema
 };
 
 /**

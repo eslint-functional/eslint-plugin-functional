@@ -1,4 +1,8 @@
 import {
+  name as functionalParametersName,
+  rule as functionalParameters
+} from "./functional-parameters";
+import {
   name as immutableDataRuleName,
   rule as immutableDataRule
 } from "./immutable-data";
@@ -45,6 +49,7 @@ import {
  * All of the custom rules.
  */
 export const rules = {
+  [functionalParametersName]: functionalParameters,
   [immutableDataRuleName]: immutableDataRule,
   [noClassRuleName]: noClassRule,
   [noConditionalStatementRuleName]: noConditionalStatementRule,

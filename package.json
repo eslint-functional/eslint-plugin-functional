@@ -63,6 +63,7 @@
     "glob": "^7.1.4",
     "husky": "^2.4.1",
     "jest": "^24.8.0",
+    "json-schema": "^0.2.3",
     "lint-staged": "^8.2.1",
     "prettier": "^1.18.2",
     "rimraf": "^2.6.3",
