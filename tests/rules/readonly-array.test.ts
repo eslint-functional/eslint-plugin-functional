@@ -148,14 +148,14 @@ const valid: ReadonlyArray<ValidTestCase> = [
   {
     code: dedent`
       const foo = [1, 2, 3] as const`,
-    optionsSet: [[]]
+    optionsSet: [[{ checkImplicit: true }]]
   },
-  // Should not fail on implicit Array if allowed.
+  // Should not fail on implicit Array.
   {
     code: dedent`
       const foo = [1, 2, 3]
       function bar(param = [1, 2, 3]) {}`,
-    optionsSet: [[{ allowImplicit: true }]]
+    optionsSet: [[]]
   }
 ];
 
@@ -629,7 +629,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
     code: dedent`
       const foo = [1, 2, 3]
       function bar(param = [1, 2, 3]) {}`,
-    optionsSet: [[]],
+    optionsSet: [[{ checkImplicit: true }]],
     output: dedent`
       const foo: readonly unknown[] = [1, 2, 3]
       function bar(param: readonly unknown[] = [1, 2, 3]) {}`,
