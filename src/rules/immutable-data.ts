@@ -113,6 +113,18 @@ const arrayNewObjectReturningMethods = [
 const arrayConstructorFunctions = ["from", "of"] as const;
 
 /**
+ * Object constructor functions that mutate an object.
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object#Methods_of_the_Object_constructor
+ */
+const objectConstructorMutatorFunctions = [
+  "assign",
+  "defineProperties",
+  "defineProperty",
+  "setPrototypeOf"
+] as const;
+
+/**
  * Check if the given assignment expression violates this rule.
  */
 function checkAssignmentExpression(
@@ -199,8 +211,13 @@ function checkCallExpression(
             node.callee.object
           )
           ? [{ node, messageId: "array" }]
-          : // Potential non-array object mutation (Object.assign on identifier)?
-          node.callee.property.name === "assign" &&
+          : // Potential non-array object mutation (ex. Object.assign on identifier)?
+          objectConstructorMutatorFunctions.some(
+              m =>
+                m ===
+                ((node.callee as TSESTree.MemberExpression)
+                  .property as TSESTree.Identifier).name
+            ) &&
             node.arguments.length >= 2 &&
             (isIdentifier(node.arguments[0]) ||
               isMemberExpression(node.arguments[0])) &&
@@ -240,7 +257,7 @@ function isInChainCallAndFollowsNew(
       (isCallExpression(node.object) &&
         isMemberExpression(node.object.callee) &&
         isIdentifier(node.object.callee.property) &&
-        // Check for: Object.from(iterable)
+        // Check for: Array.from(iterable)
         ((arrayConstructorFunctions.some(
           isExpected(node.object.callee.property.name)
         ) &&
