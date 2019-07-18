@@ -65,6 +65,9 @@ export function createRule<
  * Create a function that processes common options and then runs the given
  * check.
  */
+// This function can't be functional as it needs to interact with 3rd-party
+// libraries that aren't functional.
+/* eslint-disable ts-immutable/no-return-void, ts-immutable/no-conditional-statement, ts-immutable/no-expression-statement */
 export function checkNode<
   MessageIds extends string,
   Context extends RuleContext<MessageIds, BaseOptions>,
@@ -81,9 +84,6 @@ export function checkNode<
   otherOptions: BaseOptions = []
 ): (node: Node) => void {
   return (node: Node) => {
-    // This function can't be functional as it needs to interact with 3rd-party
-    // libraries that aren't functional.
-    /* eslint-disable ts-immutable/no-conditional-statement, ts-immutable/no-expression-statement */
     if (!ignoreOptions || !shouldIgnore(node, context, ignoreOptions)) {
       const result = check(
         node,
@@ -95,9 +95,9 @@ export function checkNode<
         result.context.report(descriptor)
       );
     }
-    /* eslint-enable ts-immutable/no-conditional-statement, ts-immutable/no-expression-statement */
   };
 }
+/* eslint-enable ts-immutable/no-return-void, ts-immutable/no-conditional-statement, ts-immutable/no-expression-statement */
 
 /**
  * Get the type of the the given node.
