@@ -40,13 +40,19 @@ type Options = {
   readonly ignoreReturnType?: boolean;
   readonly ignoreLocal?: boolean;
   readonly ignorePattern?: string | Array<string>;
+  readonly allowImplicit: boolean
 };
 
 const defaults = {
   ignoreReturnType: false,
-  ignoreLocal: false
+  ignoreLocal: false,
+  allowImplicit: false
 };
 ```
+
+### `allowImplicit`
+
+Don't mark mutable arrays as an issue when they type is implicit. Only mark explicit types as issues.
 
 ### `ignoreReturnType`
 
