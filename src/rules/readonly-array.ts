@@ -31,7 +31,7 @@ export const name = "readonly-array" as const;
 type Options = ignore.IgnoreLocalOption &
   ignore.IgnorePatternOption &
   ignore.IgnoreReturnTypeOption & {
-    readonly allowImplicit: boolean;
+    readonly checkImplicit: boolean;
   };
 
 // The schema for the rule options.
@@ -43,7 +43,7 @@ const schema: JSONSchema4 = [
     {
       type: "object",
       properties: {
-        allowImplicit: {
+        checkImplicit: {
           type: "boolean"
         }
       },
@@ -56,7 +56,7 @@ const schema: JSONSchema4 = [
 const defaultOptions: Options = {
   ignoreLocal: false,
   ignoreReturnType: false,
-  allowImplicit: false
+  checkImplicit: false
 };
 
 // The possible error messages.
@@ -209,14 +209,14 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
       TSArrayType: _checkArrayOrTupleType,
       TSTupleType: _checkArrayOrTupleType,
       TSTypeReference: _checkTypeReference,
-      ...(options.allowImplicit
-        ? {}
-        : {
+      ...(options.checkImplicit
+        ? {
             VariableDeclaration: _checkImplicitType,
             FunctionDeclaration: _checkImplicitType,
             FunctionExpression: _checkImplicitType,
             ArrowFunctionExpression: _checkImplicitType
-          })
+          }
+        : {})
     };
   }
 );

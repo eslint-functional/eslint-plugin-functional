@@ -40,19 +40,21 @@ type Options = {
   readonly ignoreReturnType?: boolean;
   readonly ignoreLocal?: boolean;
   readonly ignorePattern?: string | Array<string>;
-  readonly allowImplicit: boolean
+  readonly checkImplicit: boolean
 };
 
 const defaults = {
   ignoreReturnType: false,
   ignoreLocal: false,
-  allowImplicit: false
+  checkImplicit: false
 };
 ```
 
-### `allowImplicit`
+### `checkImplicit`
 
-Don't mark mutable arrays as an issue when they type is implicit. Only mark explicit types as issues.
+By default, this function only checks explicit types. Enabling this option will make the rule also check implicit types.
+
+Note: Checking implicit types is more expensive (slow).
 
 ### `ignoreReturnType`
 
