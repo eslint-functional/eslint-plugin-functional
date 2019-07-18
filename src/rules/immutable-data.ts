@@ -257,7 +257,7 @@ function isInChainCallAndFollowsNew(
       (isCallExpression(node.object) &&
         isMemberExpression(node.object.callee) &&
         isIdentifier(node.object.callee.property) &&
-        // Check for: Object.from(iterable)
+        // Check for: Array.from(iterable)
         ((arrayConstructorFunctions.some(
           isExpected(node.object.callee.property.name)
         ) &&
