@@ -13,13 +13,13 @@ import {
 export const name = "no-class" as const;
 
 // The options this rule can take.
-type Options = readonly [];
+type Options = {};
 
 // The schema for the rule options.
 const schema: JSONSchema4 = [];
 
 // The default options for the rule.
-const defaultOptions: Options = [];
+const defaultOptions: Options = {};
 
 // The possible error messages.
 const errorMessages = {
@@ -50,16 +50,16 @@ function checkClass(
 }
 
 // Create the rule.
-export const rule = createRule<keyof typeof errorMessages, Options>({
+export const rule = createRule<keyof typeof errorMessages, Options>(
   name,
   meta,
   defaultOptions,
-  create(context) {
-    const _checkClass = checkNode(checkClass, context);
+  (context, options) => {
+    const _checkClass = checkNode(checkClass, context, options);
 
     return {
       ClassDeclaration: _checkClass,
       ClassExpression: _checkClass
     };
   }
-});
+);

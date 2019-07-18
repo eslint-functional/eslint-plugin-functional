@@ -13,13 +13,13 @@ import {
 export const name = "no-try" as const;
 
 // The options this rule can take.
-type Options = readonly [];
+type Options = {};
 
 // The schema for the rule options.
 const schema: JSONSchema4 = [];
 
 // The default options for the rule.
-const defaultOptions: Options = [];
+const defaultOptions: Options = {};
 
 // The possible error messages.
 const errorMessages = {
@@ -51,15 +51,15 @@ function checkTryStatement(
 }
 
 // Create the rule.
-export const rule = createRule<keyof typeof errorMessages, Options>({
+export const rule = createRule<keyof typeof errorMessages, Options>(
   name,
   meta,
   defaultOptions,
-  create(context) {
-    const _checkTryStatement = checkNode(checkTryStatement, context);
+  (context, options) => {
+    const _checkTryStatement = checkNode(checkTryStatement, context, options);
 
     return {
       TryStatement: _checkTryStatement
     };
   }
-});
+);

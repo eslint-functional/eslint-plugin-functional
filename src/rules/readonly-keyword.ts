@@ -16,12 +16,10 @@ import { isTSIndexSignature, isTSParameterProperty } from "../util/typeguard";
 export const name = "readonly-keyword" as const;
 
 // The options this rule can take.
-type Options = readonly [
-  ignore.IgnoreLocalOption &
-    ignore.IgnorePatternOption &
-    ignore.IgnoreClassOption &
-    ignore.IgnoreInterfaceOption
-];
+type Options = ignore.IgnoreLocalOption &
+  ignore.IgnorePatternOption &
+  ignore.IgnoreClassOption &
+  ignore.IgnoreInterfaceOption;
 
 // The schema for the rule options.
 const schema: JSONSchema4 = [
@@ -34,13 +32,11 @@ const schema: JSONSchema4 = [
 ];
 
 // The default options for the rule.
-const defaultOptions: Options = [
-  {
-    ignoreClass: false,
-    ignoreInterface: false,
-    ignoreLocal: false
-  }
-];
+const defaultOptions: Options = {
+  ignoreClass: false,
+  ignoreInterface: false,
+  ignoreLocal: false
+};
 
 // The possible error messages.
 const errorMessages = {
@@ -90,12 +86,12 @@ function check(
 }
 
 // Create the rule.
-export const rule = createRule<keyof typeof errorMessages, Options>({
+export const rule = createRule<keyof typeof errorMessages, Options>(
   name,
   meta,
   defaultOptions,
-  create(context, [ignoreOptions, ...otherOptions]) {
-    const _checkNode = checkNode(check, context, ignoreOptions, otherOptions);
+  (context, options) => {
+    const _checkNode = checkNode(check, context, options);
 
     return {
       ClassProperty: _checkNode,
@@ -104,4 +100,4 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
       TSParameterProperty: _checkNode
     };
   }
-});
+);

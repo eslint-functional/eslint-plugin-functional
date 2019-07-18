@@ -15,7 +15,7 @@ import {
 export const name = "no-let" as const;
 
 // The options this rule can take.
-type Options = readonly [ignore.IgnoreLocalOption & ignore.IgnorePatternOption];
+type Options = ignore.IgnoreLocalOption & ignore.IgnorePatternOption;
 
 // The schema for the rule options.
 const schema: JSONSchema4 = [
@@ -23,11 +23,9 @@ const schema: JSONSchema4 = [
 ];
 
 // The default options for the rule.
-const defaultOptions: Options = [
-  {
-    ignoreLocal: false
-  }
-];
+const defaultOptions: Options = {
+  ignoreLocal: false
+};
 
 // The possible error messages.
 const errorMessages = {
@@ -61,20 +59,19 @@ function checkVariableDeclaration(
 }
 
 // Create the rule.
-export const rule = createRule<keyof typeof errorMessages, Options>({
+export const rule = createRule<keyof typeof errorMessages, Options>(
   name,
   meta,
   defaultOptions,
-  create(context, [ignoreOptions, ...otherOptions]) {
+  (context, options) => {
     const _checkVariableDeclaration = checkNode(
       checkVariableDeclaration,
       context,
-      ignoreOptions,
-      otherOptions
+      options
     );
 
     return {
       VariableDeclaration: _checkVariableDeclaration
     };
   }
-});
+);

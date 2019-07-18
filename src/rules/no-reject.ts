@@ -14,13 +14,13 @@ import { isIdentifier, isMemberExpression } from "../util/typeguard";
 export const name = "no-reject" as const;
 
 // The options this rule can take.
-type Options = readonly [];
+type Options = {};
 
 // The schema for the rule options.
 const schema: JSONSchema4 = [];
 
 // The default options for the rule.
-const defaultOptions: Options = [];
+const defaultOptions: Options = {};
 
 // The possible error messages.
 const errorMessages = {
@@ -60,15 +60,19 @@ function checkCallExpression(
 }
 
 // Create the rule.
-export const rule = createRule<keyof typeof errorMessages, Options>({
+export const rule = createRule<keyof typeof errorMessages, Options>(
   name,
   meta,
   defaultOptions,
-  create(context) {
-    const _checkCallExpression = checkNode(checkCallExpression, context);
+  (context, options) => {
+    const _checkCallExpression = checkNode(
+      checkCallExpression,
+      context,
+      options
+    );
 
     return {
       CallExpression: _checkCallExpression
     };
   }
-});
+);

@@ -1,10 +1,10 @@
-import { RuleTester as ESLintRuleTester } from "eslint";
 import {
-  RuleMetaData,
   RuleContext,
   RuleListener,
-  RuleModule
+  RuleMetaData
 } from "@typescript-eslint/experimental-utils/dist/ts-eslint";
+import { Rule, RuleTester as ESLintRuleTester } from "eslint";
+
 import { createRule } from "../src/util/rule";
 
 type OptionsSet = {
@@ -68,11 +68,11 @@ export function processInvalidTestCase(
 export function createDummyRule(
   create: (
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    context: RuleContext<"generic", Array<any>>,
+    context: RuleContext<"generic", any>,
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    optionsWithDefault: Array<any>
+    optionsWithDefault: any
   ) => RuleListener
-): RuleModule<"generic", [], RuleListener> {
+): Rule.RuleModule {
   const meta: RuleMetaData<"generic"> = {
     type: "suggestion",
     docs: {
@@ -89,10 +89,5 @@ export function createDummyRule(
   };
 
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-  return createRule<"generic", Array<any>>({
-    name: "dummy",
-    meta,
-    defaultOptions: [],
-    create
-  });
+  return createRule<"generic", Array<any>>("dummy", meta, [], create);
 }

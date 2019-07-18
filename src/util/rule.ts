@@ -4,16 +4,15 @@ import {
   RuleContext as UtilRuleContext,
   RuleListener,
   RuleMetaData as UtilRuleMetaData,
-  RuleMetaDataDocs as UtilRuleMetaDataDocs,
-  RuleModule
+  RuleMetaDataDocs as UtilRuleMetaDataDocs
 } from "@typescript-eslint/experimental-utils/dist/ts-eslint";
+import { Rule } from "eslint";
 import { Type } from "typescript";
 
 import { version } from "../../package.json";
-import { AllIgnoreOptions, shouldIgnore } from "../common/ignore-options";
+import { shouldIgnore } from "../common/ignore-options";
 
-/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-export type BaseOptions = ReadonlyArray<any>;
+export type BaseOptions = object;
 
 // "url" will be set automatically.
 export type RuleMetaDataDocs = Omit<UtilRuleMetaDataDocs, "url">;
@@ -26,7 +25,7 @@ export type RuleMetaData<MessageIds extends string> = {
 export type RuleContext<
   MessageIds extends string,
   Options extends BaseOptions
-> = UtilRuleContext<MessageIds, Options>;
+> = UtilRuleContext<MessageIds, readonly [Options]>;
 
 export type RuleResult<
   MessageIds extends string,
@@ -36,29 +35,34 @@ export type RuleResult<
   readonly descriptors: ReadonlyArray<ReportDescriptor<MessageIds>>;
 };
 
-type Mutable<T> = {
-  -readonly [P in keyof T]: T[P];
-};
-
 /**
  * Create a rule.
  */
 export function createRule<
   MessageIds extends string,
   Options extends BaseOptions
->(data: {
-  readonly name: string;
-  readonly meta: RuleMetaData<MessageIds>;
-  readonly defaultOptions: Options;
-  readonly create: (
-    context: RuleContext<MessageIds, Mutable<Options>>,
-    optionsWithDefault: Mutable<Options>
-  ) => RuleListener;
-}): RuleModule<MessageIds, Options, RuleListener> {
+>(
+  name: string,
+  meta: RuleMetaData<MessageIds>,
+  defaultOptions: Options,
+  create: (
+    context: UtilRuleContext<MessageIds, readonly [Options]>,
+    optionsWithDefault: Options
+  ) => RuleListener
+): Rule.RuleModule {
   return ESLintUtils.RuleCreator(
     name =>
       `https://github.com/jonaskello/eslint-plugin-ts-immutable/blob/v${version}/docs/rules/${name}.md`
-  )(data);
+  )({
+    name,
+    meta,
+    defaultOptions: [defaultOptions],
+    create: (
+      c: UtilRuleContext<MessageIds, readonly [Options]>,
+      [o]: readonly [Options]
+    ) => create(c, o)
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+  } as any) as any;
 }
 
 /**
@@ -71,25 +75,20 @@ export function createRule<
 export function checkNode<
   MessageIds extends string,
   Context extends RuleContext<MessageIds, BaseOptions>,
-  IgnoreOptions extends AllIgnoreOptions,
-  Node extends TSESTree.Node
+  Node extends TSESTree.Node,
+  Options extends BaseOptions
 >(
   check: (
     node: Node,
     context: Context,
-    options: BaseOptions
-  ) => RuleResult<MessageIds, BaseOptions>,
+    options: Options
+  ) => RuleResult<MessageIds, Options>,
   context: Context,
-  ignoreOptions?: IgnoreOptions,
-  otherOptions: BaseOptions = []
+  options: Options
 ): (node: Node) => void {
   return (node: Node) => {
-    if (!ignoreOptions || !shouldIgnore(node, context, ignoreOptions)) {
-      const result = check(
-        node,
-        context,
-        [ignoreOptions, ...otherOptions].filter(option => option !== undefined)
-      );
+    if (!options || !shouldIgnore(node, context, options)) {
+      const result = check(node, context, options);
 
       result.descriptors.forEach(descriptor =>
         result.context.report(descriptor)

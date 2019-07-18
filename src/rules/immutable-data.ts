@@ -28,17 +28,15 @@ import {
 export const name = "immutable-data" as const;
 
 // The options this rule can take.
-type Options = readonly [
-  ignore.IgnorePatternOption &
-    ignore.IgnoreAccessorPatternOption & {
-      readonly assumeTypes:
-        | boolean
-        | {
-            readonly forArrays?: boolean;
-            readonly forObjects?: boolean;
-          };
-    }
-];
+type Options = ignore.IgnorePatternOption &
+  ignore.IgnoreAccessorPatternOption & {
+    readonly assumeTypes:
+      | boolean
+      | {
+          readonly forArrays?: boolean;
+          readonly forObjects?: boolean;
+        };
+  };
 
 // The schema for the rule options.
 const schema: JSONSchema4 = [
@@ -74,11 +72,9 @@ const schema: JSONSchema4 = [
 ];
 
 // The default options for the rule.
-const defaultOptions: Options = [
-  {
-    assumeTypes: true
-  }
-];
+const defaultOptions: Options = {
+  assumeTypes: true
+};
 
 // The possible error messages.
 const errorMessages = {
@@ -205,7 +201,7 @@ function checkUpdateExpression(
 function checkCallExpression(
   node: TSESTree.CallExpression,
   context: RuleContext<keyof typeof errorMessages, Options>,
-  [options]: Options
+  options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const assumeTypesForArrays =
     options.assumeTypes === true ||
@@ -300,36 +296,32 @@ function isInChainCallAndFollowsNew(
 }
 
 // Create the rule.
-export const rule = createRule<keyof typeof errorMessages, Options>({
+export const rule = createRule<keyof typeof errorMessages, Options>(
   name,
   meta,
   defaultOptions,
-  create(context, [ignoreOptions, ...otherOptions]) {
+  (context, options) => {
     const _checkAssignmentExpression = checkNode(
       checkAssignmentExpression,
       context,
-      ignoreOptions,
-      otherOptions
+      options
     );
     const _checkUnaryExpression = checkNode(
       checkUnaryExpression,
       context,
-      ignoreOptions,
-      otherOptions
+      options
     );
     const _checkUpdateExpression = checkNode(
       checkUpdateExpression,
       context,
-      ignoreOptions,
-      otherOptions
+      options
     );
     // This functionality is only avaliable if the parser services are
     // avaliable.
     const _checkCallExpression = checkNode(
       checkCallExpression,
       context,
-      ignoreOptions,
-      otherOptions
+      options
     );
 
     return {
@@ -339,4 +331,4 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
       CallExpression: _checkCallExpression
     };
   }
-});
+);

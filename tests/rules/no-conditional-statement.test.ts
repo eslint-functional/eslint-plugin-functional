@@ -3,7 +3,7 @@
  */
 
 import dedent from "dedent";
-import { Rule, RuleTester } from "eslint";
+import { RuleTester } from "eslint";
 
 import { name, rule } from "../../src/rules/no-conditional-statement";
 
@@ -319,7 +319,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
 
 describe("TypeScript", () => {
   const ruleTester = new RuleTester(typescript);
-  ruleTester.run(name, (rule as unknown) as Rule.RuleModule, {
+  ruleTester.run(name, rule, {
     valid: processValidTestCase(valid),
     invalid: processInvalidTestCase(invalid)
   });
@@ -327,7 +327,7 @@ describe("TypeScript", () => {
 
 describe("JavaScript (es3)", () => {
   const ruleTester = new RuleTester(es3);
-  ruleTester.run(name, (rule as unknown) as Rule.RuleModule, {
+  ruleTester.run(name, rule, {
     valid: processValidTestCase(valid),
     invalid: processInvalidTestCase(invalid)
   });

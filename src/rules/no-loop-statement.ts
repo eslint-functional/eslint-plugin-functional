@@ -13,13 +13,13 @@ import {
 export const name = "no-loop-statement" as const;
 
 // The options this rule can take.
-type Options = readonly [];
+type Options = {};
 
 // The schema for the rule options.
 const schema: JSONSchema4 = [];
 
 // The default options for the rule.
-const defaultOptions: Options = [];
+const defaultOptions: Options = {};
 
 // The possible error messages.
 const errorMessages = {
@@ -55,12 +55,12 @@ function checkLoop(
 }
 
 // Create the rule.
-export const rule = createRule<keyof typeof errorMessages, Options>({
+export const rule = createRule<keyof typeof errorMessages, Options>(
   name,
   meta,
   defaultOptions,
-  create(context) {
-    const _checkLoop = checkNode(checkLoop, context);
+  (context, options) => {
+    const _checkLoop = checkNode(checkLoop, context, options);
 
     return {
       ForStatement: _checkLoop,
@@ -70,4 +70,4 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
       DoWhileStatement: _checkLoop
     };
   }
-});
+);
