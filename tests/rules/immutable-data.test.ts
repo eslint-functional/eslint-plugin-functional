@@ -219,6 +219,35 @@ const objectES3Invalid: ReadonlyArray<InvalidTestCase> = [
         column: 9
       }
     ]
+  },
+  // Disallow other object mutation methods.
+  {
+    code: dedent`
+      var foo = { a: 1 };
+      Object.defineProperties(foo, { b: { value: 2, writable: false }});
+      Object.defineProperty(foo, "c", { value: 3, writable: false });
+      Object.setPrototypeOf(foo, null);`,
+    optionsSet: [[{ assumeTypes: true }]],
+    errors: [
+      {
+        messageId: "object",
+        type: "CallExpression",
+        line: 2,
+        column: 1
+      },
+      {
+        messageId: "object",
+        type: "CallExpression",
+        line: 3,
+        column: 1
+      },
+      {
+        messageId: "object",
+        type: "CallExpression",
+        line: 4,
+        column: 1
+      }
+    ]
   }
 ];
 
