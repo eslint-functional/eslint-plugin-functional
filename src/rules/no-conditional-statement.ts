@@ -66,7 +66,7 @@ const errorMessages = {
 const meta: RuleMetaData<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
-    description: "Disallow if statements.",
+    description: "Disallow conditional statements.",
     category: "Best Practices",
     recommended: false
   },
