@@ -21,15 +21,19 @@ import {
   isFunctionLike,
   isIdentifier,
   isTSArrayType,
+  isTSIndexSignature,
+  isTSParameterProperty,
   isTSTypeOperator
 } from "../util/typeguard";
 
 // The name of this rule.
-export const name = "readonly-array" as const;
+export const name = "prefer-readonly-types" as const;
 
 // The options this rule can take.
 type Options = ignore.IgnoreLocalOption &
   ignore.IgnorePatternOption &
+  ignore.IgnoreClassOption &
+  ignore.IgnoreInterfaceOption &
   ignore.IgnoreReturnTypeOption & {
     readonly checkImplicit: boolean;
   };
@@ -39,6 +43,8 @@ const schema: JSONSchema4 = [
   deepMerge([
     ignore.ignoreLocalOptionSchema,
     ignore.ignorePatternOptionSchema,
+    ignore.ignoreClassOptionSchema,
+    ignore.ignoreInterfaceOptionSchema,
     ignore.ignoreReturnTypeOptionSchema,
     {
       type: "object",
@@ -54,15 +60,18 @@ const schema: JSONSchema4 = [
 
 // The default options for the rule.
 const defaultOptions: Options = {
+  checkImplicit: false,
+  ignoreClass: false,
+  ignoreInterface: false,
   ignoreLocal: false,
-  ignoreReturnType: false,
-  checkImplicit: false
+  ignoreReturnType: false
 };
 
 // The possible error messages.
 const errorMessages = {
-  generic: "Only readonly arrays allowed.",
-  implicit: "Implicitly a mutable array. Only readonly arrays allowed."
+  array: "Only readonly arrays allowed.",
+  implicit: "Implicitly a mutable array. Only readonly arrays allowed.",
+  property: "A readonly modifier is required."
 } as const;
 
 // The meta data for this rule.
@@ -96,7 +105,7 @@ function checkArrayOrTupleType(
         ? [
             {
               node,
-              messageId: "generic",
+              messageId: "array",
               fix:
                 node.parent && isTSArrayType(node.parent)
                   ? fixer => [
@@ -127,11 +136,40 @@ function checkTypeReference(
         ? [
             {
               node,
-              messageId: "generic",
+              messageId: "array",
               fix: fixer => fixer.insertTextBefore(node, "Readonly")
             }
           ]
         : []
+  };
+}
+
+/**
+ * Check if the given property/signature node violates this rule.
+ */
+function checkProperty(
+  node:
+    | TSESTree.ClassProperty
+    | TSESTree.TSIndexSignature
+    | TSESTree.TSParameterProperty
+    | TSESTree.TSPropertySignature,
+  context: RuleContext<keyof typeof errorMessages, Options>
+): RuleResult<keyof typeof errorMessages, Options> {
+  return {
+    context,
+    descriptors: node.readonly
+      ? []
+      : [
+          {
+            node,
+            messageId: "property",
+            fix: isTSIndexSignature(node)
+              ? fixer => fixer.insertTextBefore(node, "readonly ")
+              : isTSParameterProperty(node)
+              ? fixer => fixer.insertTextBefore(node.parameter, "readonly ")
+              : fixer => fixer.insertTextBefore(node.key, "readonly ")
+          }
+        ]
   };
 }
 
@@ -203,12 +241,17 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
       options
     );
     const _checkTypeReference = checkNode(checkTypeReference, context, options);
+    const _checkProperty = checkNode(checkProperty, context, options);
     const _checkImplicitType = checkNode(checkImplicitType, context, options);
 
     return {
       TSArrayType: _checkArrayOrTupleType,
       TSTupleType: _checkArrayOrTupleType,
       TSTypeReference: _checkTypeReference,
+      ClassProperty: _checkProperty,
+      TSIndexSignature: _checkProperty,
+      TSParameterProperty: _checkProperty,
+      TSPropertySignature: _checkProperty,
       ...(options.checkImplicit
         ? {
             VariableDeclaration: _checkImplicitType,
