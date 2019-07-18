@@ -23,6 +23,7 @@ import {
   isTSArrayType,
   isTSIndexSignature,
   isTSParameterProperty,
+  isTSTupleType,
   isTSTypeOperator
 } from "../util/typeguard";
 
@@ -70,6 +71,7 @@ const defaultOptions: Options = {
 // The possible error messages.
 const errorMessages = {
   array: "Only readonly arrays allowed.",
+  tuple: "Only readonly tuples allowed.",
   implicit: "Implicitly a mutable array. Only readonly arrays allowed.",
   property: "A readonly modifier is required."
 } as const;
@@ -105,7 +107,7 @@ function checkArrayOrTupleType(
         ? [
             {
               node,
-              messageId: "array",
+              messageId: isTSTupleType(node) ? "tuple" : "array",
               fix:
                 node.parent && isTSArrayType(node.parent)
                   ? fixer => [
