@@ -94,7 +94,7 @@
     "test": "jest --testPathIgnorePatterns _work.test",
     "test-work": "jest tests/rules/_work.test.ts",
     "test-compiled": "USE_COMPLIED=1 yarn test",
-    "verify": "yarn build && yarn lint && yarn build-tests && yarn test-compiled",
+    "verify": "yarn build && yarn lint && yarn build-tests && yarn test-compiled && rimraf build",
     "report-coverage": "codecov -f coverage/lcov.info",
     "preversion": "yarn verify",
     "postversion": "git push --tags && yarn publish --new-version $npm_package_version && git push && echo \"Successfully released version $npm_package_version!\""
