@@ -49,6 +49,20 @@ const valid: ReadonlyArray<ValidTestCase> = [
       }`,
     optionsSet: [[]]
   },
+  // Class with parameter properties.
+  {
+    code: dedent`
+      class Klass {
+        constructor (
+          nonParameterProp: string,
+          readonly readonlyProp: string,
+          public readonly publicReadonlyProp: string,
+          protected readonly protectedReadonlyProp: string,
+          private readonly privateReadonlyProp: string,
+      ) { }
+    }`,
+    optionsSet: [[]]
+  },
   // CallSignature and MethodSignature cannot have readonly modifiers and should
   // not produce failures.
   {
@@ -203,6 +217,46 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         type: "ClassProperty",
         line: 5,
         column: 3
+      }
+    ]
+  },
+  // Class Parameter Properties.
+  {
+    code: dedent`
+      class Klass {
+        constructor (
+          public publicProp: string,
+          protected protectedProp: string,
+          private privateProp: string,
+      ) { }
+      }`,
+    optionsSet: [[]],
+    output: dedent`
+      class Klass {
+        constructor (
+          public readonly publicProp: string,
+          protected readonly protectedProp: string,
+          private readonly privateProp: string,
+      ) { }
+      }`,
+    errors: [
+      {
+        messageId: "generic",
+        type: "TSParameterProperty",
+        line: 3,
+        column: 5
+      },
+      {
+        messageId: "generic",
+        type: "TSParameterProperty",
+        line: 4,
+        column: 5
+      },
+      {
+        messageId: "generic",
+        type: "TSParameterProperty",
+        line: 5,
+        column: 5
       }
     ]
   },

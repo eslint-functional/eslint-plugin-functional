@@ -10,7 +10,7 @@ import {
   RuleMetaData,
   RuleResult
 } from "../util/rule";
-import { isTSIndexSignature } from "../util/typeguard";
+import { isTSIndexSignature, isTSParameterProperty } from "../util/typeguard";
 
 // The name of this rule.
 export const name = "readonly-keyword" as const;
@@ -67,7 +67,8 @@ function check(
   node:
     | TSESTree.TSPropertySignature
     | TSESTree.TSIndexSignature
-    | TSESTree.ClassProperty,
+    | TSESTree.ClassProperty
+    | TSESTree.TSParameterProperty,
   context: RuleContext<keyof typeof errorMessages, Options>
 ): RuleResult<keyof typeof errorMessages, Options> {
   return {
@@ -80,6 +81,8 @@ function check(
             messageId: "generic",
             fix: isTSIndexSignature(node)
               ? fixer => fixer.insertTextBefore(node, "readonly ")
+              : isTSParameterProperty(node)
+              ? fixer => fixer.insertTextBefore(node.parameter, "readonly ")
               : fixer => fixer.insertTextBefore(node.key, "readonly ")
           }
         ]
@@ -97,7 +100,8 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
     return {
       ClassProperty: _checkNode,
       TSIndexSignature: _checkNode,
-      TSPropertySignature: _checkNode
+      TSPropertySignature: _checkNode,
+      TSParameterProperty: _checkNode
     };
   }
 });
