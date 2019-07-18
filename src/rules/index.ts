@@ -8,6 +8,10 @@ import {
 } from "./immutable-data";
 import { name as noClassRuleName, rule as noClassRule } from "./no-class";
 import {
+  name as noReturnVoidName,
+  rule as noReturnVoid
+} from "./no-return-void";
+import {
   name as noConditionalStatementRuleName,
   rule as noConditionalStatementRule
 } from "./no-conditional-statement";
@@ -55,6 +59,7 @@ export const rules = {
   [noMethodSignatureRuleName]: noMethodSignatureRule,
   [noMixedInterfaceRuleName]: noMixedInterfaceRule,
   [noRejectRuleName]: noRejectRule,
+  [noReturnVoidName]: noReturnVoid,
   [noThisRuleName]: noThisRule,
   [noThrowRuleName]: noThrowRule,
   [noTryRuleName]: noTryRule,

@@ -148,6 +148,12 @@ export function isTSInterfaceBody(
   return node.type === AST_NODE_TYPES.TSInterfaceBody;
 }
 
+export function isTSNullKeyword(
+  node: TSESTree.Node
+): node is TSESTree.TSNullKeyword {
+  return node.type === AST_NODE_TYPES.TSNullKeyword;
+}
+
 export function isTSParameterProperty(
   node: TSESTree.Node
 ): node is TSESTree.TSParameterProperty {
@@ -170,6 +176,18 @@ export function isTSTypeOperator(
   node: TSESTree.Node
 ): node is TSESTree.TSTypeOperator {
   return node.type === AST_NODE_TYPES.TSTypeOperator;
+}
+
+export function isTSUndefinedKeyword(
+  node: TSESTree.Node
+): node is TSESTree.TSUndefinedKeyword {
+  return node.type === AST_NODE_TYPES.TSUndefinedKeyword;
+}
+
+export function isTSVoidKeyword(
+  node: TSESTree.Node
+): node is TSESTree.TSVoidKeyword {
+  return node.type === AST_NODE_TYPES.TSVoidKeyword;
 }
 
 export function isVariableDeclaration(
