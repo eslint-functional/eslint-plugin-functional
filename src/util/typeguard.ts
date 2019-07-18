@@ -2,7 +2,7 @@
  * This file has functions that typeguard the given node/type.
  */
 
-import { TSESTree } from "@typescript-eslint/typescript-estree";
+import { TSESTree, AST_NODE_TYPES } from "@typescript-eslint/typescript-estree";
 // TS import - only use this for types, will be stripped out by rollup.
 import { Type, UnionType } from "typescript";
 // TS import - conditionally imported only when typescript is avaliable.
@@ -121,6 +121,12 @@ export function isTSIndexSignature(
   node: TSESTree.Node
 ): node is TSESTree.TSIndexSignature {
   return node.type === "TSIndexSignature";
+}
+
+export function isTSParameterProperty(
+  node: TSESTree.Node
+): node is TSESTree.TSParameterProperty {
+  return node.type === AST_NODE_TYPES.TSParameterProperty;
 }
 
 export function isTSInterfaceBody(
