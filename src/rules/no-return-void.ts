@@ -51,7 +51,7 @@ const defaultOptions: Options = [
 
 // The possible error messages.
 const errorMessages = {
-  generic: "Functions must return a value."
+  generic: "Function must return a value."
 } as const;
 
 // The meta data for this rule.
