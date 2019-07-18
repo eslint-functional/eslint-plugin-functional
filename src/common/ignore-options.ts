@@ -13,7 +13,7 @@ import {
   isIdentifier,
   isMemberExpression,
   isTSPropertySignature,
-  isTypeAliasDeclaration,
+  isTSTypeAliasDeclaration,
   isVariableDeclaration,
   isVariableDeclarator
 } from "../util/typeguard";
@@ -179,7 +179,7 @@ function getNodeText(
     ? getNodeText(node.callee, context)
     : isMemberExpression(node)
     ? _getNodeText(node.object, context)
-    : isVariableDeclarator(node) || isTypeAliasDeclaration(node)
+    : isVariableDeclarator(node) || isTSTypeAliasDeclaration(node)
     ? _getNodeText(node.id, context)
     : isTSPropertySignature(node)
     ? _getNodeText(node.key, context)
