@@ -17,13 +17,11 @@ import { isRestElement } from "../util/typeguard";
 export const name = "functional-parameters" as const;
 
 // The options this rule can take.
-type Options = readonly [
-  ignore.IgnorePatternOption & {
-    readonly allowRestParameter: boolean;
-    readonly allowArgumentsKeyword: boolean;
-    readonly enforceParameterCount: false | "atLeastOne" | "exactlyOne";
-  }
-];
+type Options = ignore.IgnorePatternOption & {
+  readonly allowRestParameter: boolean;
+  readonly allowArgumentsKeyword: boolean;
+  readonly enforceParameterCount: false | "atLeastOne" | "exactlyOne";
+};
 
 // The schema for the rule options.
 const schema: JSONSchema4 = [
@@ -57,13 +55,11 @@ const schema: JSONSchema4 = [
 ];
 
 // The default options for the rule.
-const defaultOptions: Options = [
-  {
-    allowRestParameter: false,
-    allowArgumentsKeyword: false,
-    enforceParameterCount: "atLeastOne"
-  }
-];
+const defaultOptions: Options = {
+  allowRestParameter: false,
+  allowArgumentsKeyword: false,
+  enforceParameterCount: "atLeastOne"
+};
 
 // The possible error messages.
 const errorMessages = {
@@ -96,7 +92,7 @@ function checkFunction(
     | TSESTree.FunctionExpression
     | TSESTree.ArrowFunctionExpression,
   context: RuleContext<keyof typeof errorMessages, Options>,
-  [options]: Options
+  options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   return {
     context,
@@ -127,7 +123,7 @@ function getRestParamViolations(
 }
 
 function getParamCountViolations(
-  enforceParameterCount: Options[0]["enforceParameterCount"],
+  enforceParameterCount: Options["enforceParameterCount"],
   node:
     | TSESTree.FunctionDeclaration
     | TSESTree.FunctionExpression
@@ -156,7 +152,7 @@ function getParamCountViolations(
 function checkIdentifier(
   node: TSESTree.Identifier,
   context: RuleContext<keyof typeof errorMessages, Options>,
-  [options]: Options
+  options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   return {
     context,
@@ -176,23 +172,13 @@ function checkIdentifier(
 }
 
 // Create the rule.
-export const rule = createRule<keyof typeof errorMessages, Options>({
+export const rule = createRule<keyof typeof errorMessages, Options>(
   name,
   meta,
   defaultOptions,
-  create(context, [ignoreOptions, ...otherOptions]) {
-    const _checkFunction = checkNode(
-      checkFunction,
-      context,
-      ignoreOptions,
-      otherOptions
-    );
-    const _checkIdentifier = checkNode(
-      checkIdentifier,
-      context,
-      ignoreOptions,
-      otherOptions
-    );
+  (context, options) => {
+    const _checkFunction = checkNode(checkFunction, context, options);
+    const _checkIdentifier = checkNode(checkIdentifier, context, options);
 
     return {
       FunctionDeclaration: _checkFunction,
@@ -201,4 +187,4 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
       Identifier: _checkIdentifier
     };
   }
-});
+);

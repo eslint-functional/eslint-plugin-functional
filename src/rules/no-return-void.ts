@@ -18,12 +18,10 @@ import {
 export const name = "no-return-void" as const;
 
 // The options this rule can take.
-type Options = readonly [
-  {
-    readonly allowNull: boolean;
-    readonly allowUndefined: boolean;
-  }
-];
+type Options = {
+  readonly allowNull: boolean;
+  readonly allowUndefined: boolean;
+};
 
 // The schema for the rule options.
 const schema: JSONSchema4 = [
@@ -42,12 +40,10 @@ const schema: JSONSchema4 = [
 ];
 
 // The default options for the rule.
-const defaultOptions: Options = [
-  {
-    allowNull: true,
-    allowUndefined: true
-  }
-];
+const defaultOptions: Options = {
+  allowNull: true,
+  allowUndefined: true
+};
 
 // The possible error messages.
 const errorMessages = {
@@ -76,7 +72,7 @@ function checkFunction(
     | TSESTree.ArrowFunctionExpression
     | TSESTree.TSFunctionType,
   context: RuleContext<keyof typeof errorMessages, Options>,
-  [options]: Options
+  options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   return {
     context,
@@ -93,17 +89,12 @@ function checkFunction(
 }
 
 // Create the rule.
-export const rule = createRule<keyof typeof errorMessages, Options>({
+export const rule = createRule<keyof typeof errorMessages, Options>(
   name,
   meta,
   defaultOptions,
-  create(context, options) {
-    const _checkFunction = checkNode(
-      checkFunction,
-      context,
-      undefined,
-      options
-    );
+  (context, options) => {
+    const _checkFunction = checkNode(checkFunction, context, options);
 
     return {
       FunctionDeclaration: _checkFunction,
@@ -112,4 +103,4 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
       TSFunctionType: _checkFunction
     };
   }
-});
+);

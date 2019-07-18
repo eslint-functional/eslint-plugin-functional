@@ -18,11 +18,9 @@ import {
 export const name = "no-conditional-statement" as const;
 
 // The options this rule can take.
-type Options = readonly [
-  {
-    readonly allowReturningBranches: boolean | "ifExhaustive";
-  }
-];
+type Options = {
+  readonly allowReturningBranches: boolean | "ifExhaustive";
+};
 
 // The schema for the rule options.
 const schema: JSONSchema4 = [
@@ -46,7 +44,7 @@ const schema: JSONSchema4 = [
 ];
 
 // The default options for the rule.
-const defaultOptions: Options = [{ allowReturningBranches: false }];
+const defaultOptions: Options = { allowReturningBranches: false };
 
 // The possible error messages.
 const errorMessages = {
@@ -137,7 +135,7 @@ function isExhaustiveSwitchViolation(node: TSESTree.SwitchStatement): boolean {
 function checkIfStatement(
   node: TSESTree.IfStatement,
   context: RuleContext<keyof typeof errorMessages, Options>,
-  [options]: Options
+  options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   return {
     context,
@@ -157,7 +155,7 @@ function checkIfStatement(
 function checkSwitchStatement(
   node: TSESTree.SwitchStatement,
   context: RuleContext<keyof typeof errorMessages, Options>,
-  [options]: Options
+  options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   return {
     context,
@@ -172,21 +170,15 @@ function checkSwitchStatement(
 }
 
 // Create the rule.
-export const rule = createRule<keyof typeof errorMessages, Options>({
+export const rule = createRule<keyof typeof errorMessages, Options>(
   name,
   meta,
   defaultOptions,
-  create(context, options) {
-    const _checkIfStatement = checkNode(
-      checkIfStatement,
-      context,
-      undefined,
-      options
-    );
+  (context, options) => {
+    const _checkIfStatement = checkNode(checkIfStatement, context, options);
     const _checkSwitchStatement = checkNode(
       checkSwitchStatement,
       context,
-      undefined,
       options
     );
 
@@ -195,4 +187,4 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
       SwitchStatement: _checkSwitchStatement
     };
   }
-});
+);

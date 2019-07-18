@@ -13,13 +13,13 @@ import {
 export const name = "no-method-signature" as const;
 
 // The options this rule can take.
-type Options = readonly [];
+type Options = {};
 
 // The schema for the rule options.
 const schema: JSONSchema4 = [];
 
 // The default options for the rule.
-const defaultOptions: Options = [];
+const defaultOptions: Options = {};
 
 // The possible error messages.
 const errorMessages = {
@@ -52,15 +52,19 @@ function checkTSMethodSignature(
 }
 
 // Create the rule.
-export const rule = createRule<keyof typeof errorMessages, Options>({
+export const rule = createRule<keyof typeof errorMessages, Options>(
   name,
   meta,
   defaultOptions,
-  create(context) {
-    const _checkTSMethodSignature = checkNode(checkTSMethodSignature, context);
+  (context, options) => {
+    const _checkTSMethodSignature = checkNode(
+      checkTSMethodSignature,
+      context,
+      options
+    );
 
     return {
       TSMethodSignature: _checkTSMethodSignature
     };
   }
-});
+);

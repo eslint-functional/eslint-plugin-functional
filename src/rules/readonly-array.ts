@@ -28,13 +28,11 @@ import {
 export const name = "readonly-array" as const;
 
 // The options this rule can take.
-type Options = readonly [
-  ignore.IgnoreLocalOption &
-    ignore.IgnorePatternOption &
-    ignore.IgnoreReturnTypeOption & {
-      readonly allowImplicit: boolean;
-    }
-];
+type Options = ignore.IgnoreLocalOption &
+  ignore.IgnorePatternOption &
+  ignore.IgnoreReturnTypeOption & {
+    readonly allowImplicit: boolean;
+  };
 
 // The schema for the rule options.
 const schema: JSONSchema4 = [
@@ -55,13 +53,11 @@ const schema: JSONSchema4 = [
 ];
 
 // The default options for the rule.
-const defaultOptions: Options = [
-  {
-    ignoreLocal: false,
-    ignoreReturnType: false,
-    allowImplicit: false
-  }
-];
+const defaultOptions: Options = {
+  ignoreLocal: false,
+  ignoreReturnType: false,
+  allowImplicit: false
+};
 
 // The possible error messages.
 const errorMessages = {
@@ -88,7 +84,7 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
 function checkArrayOrTupleType(
   node: TSESTree.TSArrayType | TSESTree.TSTupleType,
   context: RuleContext<keyof typeof errorMessages, Options>,
-  [options]: Options
+  options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   return {
     context,
@@ -120,7 +116,7 @@ function checkArrayOrTupleType(
 function checkTypeReference(
   node: TSESTree.TSTypeReference,
   context: RuleContext<keyof typeof errorMessages, Options>,
-  [options]: Options
+  options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   return {
     context,
@@ -196,35 +192,24 @@ function checkImplicitType(
 }
 
 // Create the rule.
-export const rule = createRule<keyof typeof errorMessages, Options>({
+export const rule = createRule<keyof typeof errorMessages, Options>(
   name,
   meta,
   defaultOptions,
-  create(context, [ignoreOptions, ...otherOptions]) {
+  (context, options) => {
     const _checkArrayOrTupleType = checkNode(
       checkArrayOrTupleType,
       context,
-      ignoreOptions,
-      otherOptions
+      options
     );
-    const _checkTypeReference = checkNode(
-      checkTypeReference,
-      context,
-      ignoreOptions,
-      otherOptions
-    );
-    const _checkImplicitType = checkNode(
-      checkImplicitType,
-      context,
-      ignoreOptions,
-      otherOptions
-    );
+    const _checkTypeReference = checkNode(checkTypeReference, context, options);
+    const _checkImplicitType = checkNode(checkImplicitType, context, options);
 
     return {
       TSArrayType: _checkArrayOrTupleType,
       TSTupleType: _checkArrayOrTupleType,
       TSTypeReference: _checkTypeReference,
-      ...(ignoreOptions.allowImplicit
+      ...(options.allowImplicit
         ? {}
         : {
             VariableDeclaration: _checkImplicitType,
@@ -234,4 +219,4 @@ export const rule = createRule<keyof typeof errorMessages, Options>({
           })
     };
   }
-});
+);

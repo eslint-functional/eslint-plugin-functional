@@ -3,7 +3,7 @@
  */
 
 import dedent from "dedent";
-import { Rule, RuleTester } from "eslint";
+import { RuleTester } from "eslint";
 
 /*
  * Step 1.
@@ -58,7 +58,7 @@ const ruleTester = new RuleTester(typescript);
 ruleTester.run(
   dedent`
     Work`,
-  (rule as unknown) as Rule.RuleModule,
+  rule,
   {
     valid: [...valid],
     invalid: [...invalid]

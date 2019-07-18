@@ -16,13 +16,13 @@ import { isTSPropertySignature } from "../util/typeguard";
 export const name = "no-mixed-interface" as const;
 
 // The options this rule can take.
-type Options = readonly [];
+type Options = {};
 
 // The schema for the rule options.
 const schema: JSONSchema4 = [];
 
 // The default options for the rule.
-const defaultOptions: Options = [];
+const defaultOptions: Options = {};
 
 // The possible error messages.
 const errorMessages = {
@@ -95,18 +95,19 @@ function checkTSInterfaceDeclaration(
 }
 
 // Create the rule.
-export const rule = createRule<keyof typeof errorMessages, Options>({
+export const rule = createRule<keyof typeof errorMessages, Options>(
   name,
   meta,
   defaultOptions,
-  create(context) {
+  (context, options) => {
     const _checkTSInterfaceDeclaration = checkNode(
       checkTSInterfaceDeclaration,
-      context
+      context,
+      options
     );
 
     return {
       TSInterfaceDeclaration: _checkTSInterfaceDeclaration
     };
   }
-});
+);

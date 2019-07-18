@@ -18,7 +18,7 @@ import {
   isVariableDeclarator
 } from "../util/typeguard";
 
-export type AllIgnoreOptions = IgnoreLocalOption &
+type IgnoreOptions = IgnoreLocalOption &
   IgnorePatternOption &
   IgnoreAccessorPatternOption &
   IgnoreClassOption &
@@ -131,29 +131,26 @@ export const ignoreNewArrayOptionSchema: JSONSchema4 = {
 export function shouldIgnore(
   node: TSESTree.Node,
   context: RuleContext<string, BaseOptions>,
-  ignoreOptions: AllIgnoreOptions
+  options: Partial<IgnoreOptions>
 ): boolean {
   return (
     // Ignore if in a function and ignoreLocal is set.
-    (Boolean(ignoreOptions.ignoreLocal) && inFunction(node)) ||
+    (Boolean(options.ignoreLocal) && inFunction(node)) ||
     // Ignore if in a class and ignoreClass is set.
-    (Boolean(ignoreOptions.ignoreClass) && inClass(node)) ||
+    (Boolean(options.ignoreClass) && inClass(node)) ||
     // Ignore if in an interface and ignoreInterface is set.
-    (Boolean(ignoreOptions.ignoreInterface) && inInterface(node)) ||
+    (Boolean(options.ignoreInterface) && inInterface(node)) ||
     ((texts: ReadonlyArray<string>): boolean =>
       texts.length > 0
         ? // Ignore if ignorePattern is set and a pattern matches.
-          (ignoreOptions.ignorePattern !== undefined &&
+          (options.ignorePattern !== undefined &&
             texts.every(text =>
-              isIgnoredPattern(text, ignoreOptions.ignorePattern!)
+              isIgnoredPattern(text, options.ignorePattern!)
             )) ||
           // Ignore if ignoreAccessorPattern is set and an accessor pattern matches.
-          (ignoreOptions.ignoreAccessorPattern !== undefined &&
+          (options.ignoreAccessorPattern !== undefined &&
             texts.every(text =>
-              isIgnoredAccessorPattern(
-                text,
-                ignoreOptions.ignoreAccessorPattern!
-              )
+              isIgnoredAccessorPattern(text, options.ignoreAccessorPattern!)
             ))
         : false)(getNodeTexts(node, context))
   );
