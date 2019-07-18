@@ -517,7 +517,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
       }`,
     errors: [
       {
-        messageId: "array",
+        messageId: "tuple",
         type: "TSTupleType",
         line: 1,
         column: 21
@@ -534,13 +534,13 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
       }`,
     errors: [
       {
-        messageId: "array",
+        messageId: "tuple",
         type: "TSTupleType",
         line: 1,
         column: 21
       },
       {
-        messageId: "array",
+        messageId: "tuple",
         type: "TSTupleType",
         line: 1,
         column: 38
@@ -557,7 +557,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
       }`,
     errors: [
       {
-        messageId: "array",
+        messageId: "tuple",
         type: "TSTupleType",
         line: 1,
         column: 47
@@ -574,7 +574,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
       }`,
     errors: [
       {
-        messageId: "array",
+        messageId: "tuple",
         type: "TSTupleType",
         line: 1,
         column: 21
