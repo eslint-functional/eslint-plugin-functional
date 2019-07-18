@@ -13,7 +13,8 @@ const config = deepMerge([
         "error",
         { allowReturningBranches: true }
       ],
-      "ts-immutable/no-throw": "error"
+      "ts-immutable/no-throw": "error",
+      "ts-immutable/functional-parameter": "error"
     },
     overrides: [
       {
