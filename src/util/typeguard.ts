@@ -36,20 +36,20 @@ export type ObjectConstructorType = Type & {
 
 export function isArrayExpression(
   node: TSESTree.Node
-): node is TSESTree.AssignmentExpression {
-  return node.type === AST_NODE_TYPES.AssignmentExpression;
+): node is TSESTree.ArrayExpression {
+  return node.type === AST_NODE_TYPES.ArrayExpression;
 }
 
 export function isAssignmentExpression(
   node: TSESTree.Node
-): node is TSESTree.AssignmentPattern {
-  return node.type === AST_NODE_TYPES.AssignmentPattern;
+): node is TSESTree.AssignmentExpression {
+  return node.type === AST_NODE_TYPES.AssignmentExpression;
 }
 
 export function isAssignmentPattern(
   node: TSESTree.Node
-): node is TSESTree.ArrayExpression {
-  return node.type === AST_NODE_TYPES.ArrayExpression;
+): node is TSESTree.AssignmentPattern {
+  return node.type === AST_NODE_TYPES.AssignmentPattern;
 }
 
 export function isBlockStatement(
@@ -122,14 +122,14 @@ export function isReturnStatement(
 
 export function isTSArrayType(
   node: TSESTree.Node
-): node is TSESTree.TSIndexSignature {
-  return node.type === AST_NODE_TYPES.TSIndexSignature;
+): node is TSESTree.TSArrayType {
+  return node.type === AST_NODE_TYPES.TSArrayType;
 }
 
 export function isTSIndexSignature(
   node: TSESTree.Node
-): node is TSESTree.TSParameterProperty {
-  return node.type === AST_NODE_TYPES.TSParameterProperty;
+): node is TSESTree.TSIndexSignature {
+  return node.type === AST_NODE_TYPES.TSIndexSignature;
 }
 
 export function isTSInterfaceBody(
@@ -140,8 +140,8 @@ export function isTSInterfaceBody(
 
 export function isTSParameterProperty(
   node: TSESTree.Node
-): node is TSESTree.TSArrayType {
-  return node.type === AST_NODE_TYPES.TSArrayType;
+): node is TSESTree.TSParameterProperty {
+  return node.type === AST_NODE_TYPES.TSParameterProperty;
 }
 
 export function isTSPropertySignature(
@@ -150,16 +150,16 @@ export function isTSPropertySignature(
   return node.type === AST_NODE_TYPES.TSPropertySignature;
 }
 
+export function isTSTypeAliasDeclaration(
+  node: TSESTree.Node
+): node is TSESTree.TSTypeAliasDeclaration {
+  return node.type === AST_NODE_TYPES.TSTypeAliasDeclaration;
+}
+
 export function isTSTypeOperator(
   node: TSESTree.Node
 ): node is TSESTree.TSTypeOperator {
   return node.type === AST_NODE_TYPES.TSTypeOperator;
-}
-
-export function isTypeAliasDeclaration(
-  node: TSESTree.Node
-): node is TSESTree.TSTypeAliasDeclaration {
-  return node.type === AST_NODE_TYPES.TSTypeAliasDeclaration;
 }
 
 export function isVariableDeclaration(
