@@ -4,7 +4,9 @@ import {
   isClassLike,
   isFunctionLike,
   isIdentifier,
+  isMemberExpression,
   isMethodDefinition,
+  isProperty,
   isTSInterfaceBody
 } from "./typeguard";
 
@@ -53,6 +55,22 @@ export function isInReturnType(node: TSESTree.Node): boolean {
         n.parent.returnType === n
       );
     }, node) !== null
+  );
+}
+
+export function isPropertyAccess(node: TSESTree.Identifier): boolean {
+  return (
+    node.parent !== undefined &&
+    isMemberExpression(node.parent) &&
+    node.parent.property === node
+  );
+}
+
+export function isPropertyName(node: TSESTree.Identifier): boolean {
+  return (
+    node.parent !== undefined &&
+    isProperty(node.parent) &&
+    node.parent.key === node
   );
 }
 
