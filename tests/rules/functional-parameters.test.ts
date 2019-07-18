@@ -1,11 +1,11 @@
 /**
- * @fileoverview Tests for functional-parameter
+ * @fileoverview Tests for functional-parameters
  */
 
 import dedent from "dedent";
 import { Rule, RuleTester } from "eslint";
 
-import { name, rule } from "../../src/rules/functional-parameter";
+import { name, rule } from "../../src/rules/functional-parameters";
 
 import { es3, es6, typescript } from "../configs";
 import {

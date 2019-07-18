@@ -14,7 +14,7 @@ import { isPropertyAccess, isPropertyName } from "../util/tree";
 import { isRestElement } from "../util/typeguard";
 
 // The name of this rule.
-export const name = "functional-parameter" as const;
+export const name = "functional-parameters" as const;
 
 // The options this rule can take.
 type Options = readonly [
