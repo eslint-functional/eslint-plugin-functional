@@ -1,4 +1,4 @@
-# Enforce Functional Parameter (functional-parameters)
+# Enforce Functional Parameters (functional-parameters)
 
 Disallow use of rest parameters, the `arguments` keyword and enforces that functions take a least 1 parameter.
 
@@ -30,10 +30,6 @@ const defaults = {
   enforceParameterCount: "atLeastOne"
 };
 ```
-
-### `ignorePattern`
-
-See the [ignorePattern](./options/ignore-pattern.md) docs.
 
 ### `allowRestParameter`
 
@@ -78,3 +74,7 @@ function add(x) {
 ```
 
 See [Currying](https://en.wikipedia.org/wiki/Currying) and [Higher-order function](https://en.wikipedia.org/wiki/Higher-order_function) on Wikipedia for more infomation.
+
+### `ignorePattern`
+
+See the [ignorePattern](./options/ignore-pattern.md) docs.
