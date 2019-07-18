@@ -147,6 +147,24 @@ export function isTSTypeOperator(
   return node.type === "TSTypeOperator";
 }
 
+export function isTSNullKeyword(
+  node: TSESTree.Node
+): node is TSESTree.TSNullKeyword {
+  return node.type === "TSNullKeyword";
+}
+
+export function isTSUndefinedKeyword(
+  node: TSESTree.Node
+): node is TSESTree.TSUndefinedKeyword {
+  return node.type === "TSUndefinedKeyword";
+}
+
+export function isTSVoidKeyword(
+  node: TSESTree.Node
+): node is TSESTree.TSVoidKeyword {
+  return node.type === "TSVoidKeyword";
+}
+
 export function isTypeAliasDeclaration(
   node: TSESTree.Node
 ): node is TSESTree.TSTypeAliasDeclaration {
