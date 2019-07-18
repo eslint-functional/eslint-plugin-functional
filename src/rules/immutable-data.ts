@@ -3,10 +3,6 @@ import { all as deepMerge } from "deepmerge";
 import { JSONSchema4 } from "json-schema";
 
 import * as ignore from "../common/ignore-options";
-import {
-  AssumeTypesOption,
-  assumeTypesOptionSchema
-} from "../common/types-options";
 import { isExpected } from "../util/misc";
 import {
   checkNode,
@@ -34,8 +30,14 @@ export const name = "immutable-data" as const;
 // The options this rule can take.
 type Options = readonly [
   ignore.IgnorePatternOption &
-    ignore.IgnoreAccessorPatternOption &
-    AssumeTypesOption
+    ignore.IgnoreAccessorPatternOption & {
+      readonly assumeTypes:
+        | boolean
+        | {
+            readonly forArrays?: boolean;
+            readonly forObjects?: boolean;
+          };
+    }
 ];
 
 // The schema for the rule options.
@@ -43,7 +45,31 @@ const schema: JSONSchema4 = [
   deepMerge([
     ignore.ignorePatternOptionSchema,
     ignore.ignoreAccessorPatternOptionSchema,
-    assumeTypesOptionSchema
+    {
+      type: "object",
+      properties: {
+        assumeTypes: {
+          oneOf: [
+            {
+              type: "boolean"
+            },
+            {
+              type: "object",
+              properties: {
+                forArrays: {
+                  type: "boolean"
+                },
+                forObjects: {
+                  type: "boolean"
+                }
+              },
+              additionalProperties: false
+            }
+          ]
+        }
+      },
+      additionalProperties: false
+    }
   ])
 ];
 
