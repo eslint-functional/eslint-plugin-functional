@@ -111,6 +111,16 @@ export function isNewExpression(
   return node.type === "NewExpression";
 }
 
+export function isProperty(node: TSESTree.Node): node is TSESTree.Property {
+  return node.type === "Property";
+}
+
+export function isRestElement(
+  node: TSESTree.Node
+): node is TSESTree.RestElement {
+  return node.type === "RestElement";
+}
+
 export function isReturnStatement(
   node: TSESTree.Node
 ): node is TSESTree.ReturnStatement {
