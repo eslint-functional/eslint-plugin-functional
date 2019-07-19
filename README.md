@@ -114,8 +114,6 @@ See [@typescript-eslint/parser's README.md](https://github.com/typescript-eslint
 
 ## Supported Rules
 
-In addition to immutable rules this project also contains a few rules for enforcing a functional style of programming. The following rules are available:
-
 **Key**:
 
 |      Symbol       | Meaning                                                                                                                                |
@@ -127,7 +125,7 @@ In addition to immutable rules this project also contains a few rules for enforc
 | :thought_balloon: | Only Avaliable for TypeScript<br><sub><sup>The rule either requires Type Information or only works with TypeScript syntax.</sup></sub> |
 |   :blue_heart:    | Works better with TypeScript<br><sub><sup>Type Information will be used if available making the rule work in more case.</sup></sub>    |
 
-### Immutability rules
+### No mutability
 
 | Name                                                             | Description                                                                | <span title="Recommended">:see_no_evil:</span> | <span title="Functional Lite">:hear_no_evil:</span> | <span title="Functional">:speak_no_evil:</span> | :wrench: |   :blue_heart:    |
 | ---------------------------------------------------------------- | -------------------------------------------------------------------------- | :--------------------------------------------: | :-------------------------------------------------: | :---------------------------------------------: | :------: | :---------------: |
@@ -136,21 +134,36 @@ In addition to immutable rules this project also contains a few rules for enforc
 | [`immutable-data`](./docs/rules/immutable-data.md)               | Disallow mutating objects and arrays                                       |               :heavy_check_mark:               |                 :heavy_check_mark:                  |               :heavy_check_mark:                |          |   :blue_heart:    |
 | [`no-method-signature`](./docs/rules/no-method-signature.md)     | Enforce property signatures with readonly modifiers over method signatures |               :heavy_check_mark:               |                 :heavy_check_mark:                  |               :heavy_check_mark:                |          | :thought_balloon: |
 
-### Functional style rules
+### No object-orientation
 
-| Name                                                                   | Description                                                                   | <span title="Recommended">:see_no_evil:</span> | <span title="Functional Lite">:hear_no_evil:</span> | <span title="Functional">:speak_no_evil:</span> | :wrench: |   :blue_heart:    |
-| ---------------------------------------------------------------------- | ----------------------------------------------------------------------------- | :--------------------------------------------: | :-------------------------------------------------: | :---------------------------------------------: | :------: | :---------------: |
-| [`no-this`](./docs/rules/no-this.md)                                   | Disallow this access                                                          |                                                |                 :heavy_check_mark:                  |               :heavy_check_mark:                |          |                   |
-| [`no-class`](./docs/rules/no-class.md)                                 | Disallow classes                                                              |                                                |                 :heavy_check_mark:                  |               :heavy_check_mark:                |          |                   |
-| [`no-mixed-interface`](./docs/rules/no-mixed-interface.md)             | Restrict interfaces so that only members of the same kind are allowed in them |                                                |                 :heavy_check_mark:                  |               :heavy_check_mark:                |          | :thought_balloon: |
-| [`no-expression-statement`](./docs/rules/no-expression-statement.md)   | Disallow expressions to cause side-effects                                    |                                                |                                                     |               :heavy_check_mark:                |          |                   |
-| [`no-conditional-statement`](./docs/rules/no-conditional-statement.md) | Disallow conditional statements (if and switch statements)                    |                                                |                                                     |               :heavy_check_mark:                |          |                   |
-| [`no-loop-statement`](./docs/rules/no-loop-statement.md)               | Disallow imperative loops                                                     |                                                |                 :heavy_check_mark:                  |               :heavy_check_mark:                |          |                   |
-| [`no-return-void`](./docs/rules/no-return-void.md)                     | Disallow function that return nothing                                         |                                                |                 :heavy_check_mark:                  |               :heavy_check_mark:                |          | :thought_balloon: |
-| [`functional-parameters`](./docs/rules/functional-parameters.md)       | Functions must have functional parameter                                      |                                                |                 :heavy_check_mark:                  |               :heavy_check_mark:                |          |                   |
-| [`no-throw`](./docs/rules/no-throw.md)                                 | Disallow throwing exceptions                                                  |                                                |                 :heavy_check_mark:                  |               :heavy_check_mark:                |          |                   |
-| [`no-try`](./docs/rules/no-try.md)                                     | Disallow try-catch[-finally] and try-finally patterns                         |                                                |                                                     |               :heavy_check_mark:                |          |                   |
-| [`no-reject`](./docs/rules/no-reject.md)                               | Disallow rejecting Promises                                                   |                                                |                                                     |                                                 |          |                   |
+| Name                                                       | Description                                                                   | <span title="Recommended">:see_no_evil:</span> | <span title="Functional Lite">:hear_no_evil:</span> | <span title="Functional">:speak_no_evil:</span> | :wrench: |   :blue_heart:    |
+| ---------------------------------------------------------- | ----------------------------------------------------------------------------- | :--------------------------------------------: | :-------------------------------------------------: | :---------------------------------------------: | :------: | :---------------: |
+| [`no-this`](./docs/rules/no-this.md)                       | Disallow this access                                                          |                                                |                 :heavy_check_mark:                  |               :heavy_check_mark:                |          |                   |
+| [`no-class`](./docs/rules/no-class.md)                     | Disallow classes                                                              |                                                |                 :heavy_check_mark:                  |               :heavy_check_mark:                |          |                   |
+| [`no-mixed-interface`](./docs/rules/no-mixed-interface.md) | Restrict interfaces so that only members of the same kind are allowed in them |                                                |                 :heavy_check_mark:                  |               :heavy_check_mark:                |          | :thought_balloon: |
+
+### No statements
+
+| Name                                                                   | Description                                                | <span title="Recommended">:see_no_evil:</span> | <span title="Functional Lite">:hear_no_evil:</span> | <span title="Functional">:speak_no_evil:</span> | :wrench: |   :blue_heart:    |
+| ---------------------------------------------------------------------- | ---------------------------------------------------------- | :--------------------------------------------: | :-------------------------------------------------: | :---------------------------------------------: | :------: | :---------------: |
+| [`no-expression-statement`](./docs/rules/no-expression-statement.md)   | Disallow expressions to cause side-effects                 |                                                |                                                     |               :heavy_check_mark:                |          |                   |
+| [`no-conditional-statement`](./docs/rules/no-conditional-statement.md) | Disallow conditional statements (if and switch statements) |                                                |                                                     |               :heavy_check_mark:                |          |                   |
+| [`no-loop-statement`](./docs/rules/no-loop-statement.md)               | Disallow imperative loops                                  |                                                |                 :heavy_check_mark:                  |               :heavy_check_mark:                |          |                   |
+| [`no-return-void`](./docs/rules/no-return-void.md)                     | Disallow function that return nothing                      |                                                |                 :heavy_check_mark:                  |               :heavy_check_mark:                |          | :thought_balloon: |
+
+### No exceptions
+
+| Name                                     | Description                                           | <span title="Recommended">:see_no_evil:</span> | <span title="Functional Lite">:hear_no_evil:</span> | <span title="Functional">:speak_no_evil:</span> | :wrench: | :blue_heart: |
+| ---------------------------------------- | ----------------------------------------------------- | :--------------------------------------------: | :-------------------------------------------------: | :---------------------------------------------: | :------: | :----------: |
+| [`no-throw`](./docs/rules/no-throw.md)   | Disallow throwing exceptions                          |                                                |                 :heavy_check_mark:                  |               :heavy_check_mark:                |          |              |
+| [`no-try`](./docs/rules/no-try.md)       | Disallow try-catch[-finally] and try-finally patterns |                                                |                                                     |               :heavy_check_mark:                |          |              |
+| [`no-reject`](./docs/rules/no-reject.md) | Disallow rejecting Promises                           |                                                |                                                     |                                                 |          |              |
+
+### Currying
+
+| Name                                                             | Description                              | <span title="Recommended">:see_no_evil:</span> | <span title="Functional Lite">:hear_no_evil:</span> | <span title="Functional">:speak_no_evil:</span> | :wrench: | :blue_heart: |
+| ---------------------------------------------------------------- | ---------------------------------------- | :--------------------------------------------: | :-------------------------------------------------: | :---------------------------------------------: | :------: | :----------: |
+| [`functional-parameters`](./docs/rules/functional-parameters.md) | Functions must have functional parameter |                                                |                 :heavy_check_mark:                  |               :heavy_check_mark:                |          |              |
 
 ## Recommended standard rules
 
