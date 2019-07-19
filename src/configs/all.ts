@@ -17,8 +17,7 @@ const config = {
       rules: {
         "ts-immutable/no-method-signature": "error",
         "ts-immutable/no-mixed-interface": "error",
-        "ts-immutable/readonly-array": "error",
-        "ts-immutable/readonly-keyword": "error"
+        "ts-immutable/prefer-readonly-types": "error"
       }
     }
   ]
