@@ -343,10 +343,44 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
       }`,
     errors: [
       {
-        messageId: "array",
+        messageId: "type",
         type: "TSTypeReference",
         line: 1,
         column: 26
+      }
+    ]
+  },
+  {
+    code: dedent`
+      function foo(numbers: Set<number>) {
+      }`,
+    optionsSet: [[]],
+    output: dedent`
+      function foo(numbers: ReadonlySet<number>) {
+      }`,
+    errors: [
+      {
+        messageId: "type",
+        type: "TSTypeReference",
+        line: 1,
+        column: 23
+      }
+    ]
+  },
+  {
+    code: dedent`
+      function foo(numbers: Map<number, string>) {
+      }`,
+    optionsSet: [[]],
+    output: dedent`
+      function foo(numbers: ReadonlyMap<number, string>) {
+      }`,
+    errors: [
+      {
+        messageId: "type",
+        type: "TSTypeReference",
+        line: 1,
+        column: 23
       }
     ]
   },
@@ -363,7 +397,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
       }`,
     errors: [
       {
-        messageId: "array",
+        messageId: "type",
         type: "TSTypeReference",
         line: 2,
         column: 17
@@ -387,7 +421,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
       }`,
     errors: [
       {
-        messageId: "array",
+        messageId: "type",
         type: "TSTypeReference",
         line: 3,
         column: 22
@@ -411,13 +445,13 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
       }`,
     errors: [
       {
-        messageId: "array",
+        messageId: "type",
         type: "TSTypeReference",
         line: 1,
         column: 17
       },
       {
-        messageId: "array",
+        messageId: "type",
         type: "TSTypeReference",
         line: 3,
         column: 19
@@ -441,13 +475,13 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
       }`,
     errors: [
       {
-        messageId: "array",
+        messageId: "type",
         type: "TSTypeReference",
         line: 1,
         column: 17
       },
       {
-        messageId: "array",
+        messageId: "type",
         type: "TSTypeReference",
         line: 3,
         column: 19
@@ -499,7 +533,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
       };`,
     errors: [
       {
-        messageId: "array",
+        messageId: "type",
         type: "TSTypeReference",
         line: 2,
         column: 12
@@ -624,19 +658,19 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
       }`,
     errors: [
       {
-        messageId: "array",
+        messageId: "type",
         type: "TSTypeReference",
         line: 3,
         column: 19
       },
       {
-        messageId: "array",
+        messageId: "type",
         type: "TSTypeReference",
         line: 7,
         column: 17
       },
       {
-        messageId: "array",
+        messageId: "type",
         type: "TSTypeReference",
         line: 11,
         column: 19
@@ -650,7 +684,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
     output: `type Foo = ReadonlyArray<string>;`,
     errors: [
       {
-        messageId: "array",
+        messageId: "type",
         type: "TSTypeReference",
         line: 1,
         column: 12
@@ -674,7 +708,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
       }`,
     errors: [
       {
-        messageId: "array",
+        messageId: "type",
         type: "TSTypeReference",
         line: 3,
         column: 19
@@ -694,7 +728,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
       }`,
     errors: [
       {
-        messageId: "array",
+        messageId: "type",
         type: "TSTypeReference",
         line: 2,
         column: 14
@@ -718,7 +752,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
       }`,
     errors: [
       {
-        messageId: "array",
+        messageId: "type",
         type: "TSTypeReference",
         line: 3,
         column: 19
@@ -732,7 +766,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
     output: `const foo: ReadonlyArray<string> = [];`,
     errors: [
       {
-        messageId: "array",
+        messageId: "type",
         type: "TSTypeReference",
         line: 1,
         column: 12
@@ -760,7 +794,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
     output: `let x: Foo<ReadonlyArray<string>>;`,
     errors: [
       {
-        messageId: "array",
+        messageId: "type",
         type: "TSTypeReference",
         line: 1,
         column: 12
