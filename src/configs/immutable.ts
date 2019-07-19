@@ -14,8 +14,7 @@ const config = deepMerge([
         files: ["*.ts", "*.tsx"],
         rules: {
           "ts-immutable/no-method-signature": "warn",
-          "ts-immutable/readonly-array": "error",
-          "ts-immutable/readonly-keyword": "error"
+          "ts-immutable/prefer-readonly-types": "error"
         }
       }
     ]

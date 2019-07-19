@@ -37,13 +37,9 @@ import { name as noThisRuleName, rule as noThisRule } from "./no-this";
 import { name as noThrowRuleName, rule as noThrowRule } from "./no-throw";
 import { name as noTryRuleName, rule as noTryRule } from "./no-try";
 import {
-  name as readonlyArrayRuleName,
-  rule as readonlyArrayRule
-} from "./readonly-array";
-import {
-  name as readonlyKeywordRuleName,
-  rule as readonlyKeywordRule
-} from "./readonly-keyword";
+  name as preferReadonlyTypesRuleName,
+  rule as preferReadonlyTypesRule
+} from "./prefer-readonly-types";
 
 /**
  * All of the custom rules.
@@ -63,6 +59,5 @@ export const rules = {
   [noThisRuleName]: noThisRule,
   [noThrowRuleName]: noThrowRule,
   [noTryRuleName]: noTryRule,
-  [readonlyArrayRuleName]: readonlyArrayRule,
-  [readonlyKeywordRuleName]: readonlyKeywordRule
+  [preferReadonlyTypesRuleName]: preferReadonlyTypesRule
 };

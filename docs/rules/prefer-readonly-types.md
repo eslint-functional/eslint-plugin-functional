@@ -1,10 +1,14 @@
-# Enforce readonly modifiers are used where possible (readonly-keyword)
+# Prefer readonly types over mutable types (prefer-readonly-types)
 
-This rule enforces use of the `readonly` modifier. The `readonly` modifier can appear on property signatures in interfaces, property declarations in classes, and index signatures.
+This rule enforces use of the readonly modifier and readonly types.
 
 ## Rule Details
 
-Below is some information about the `readonly` modifier and the benefits of using it:
+This rule enforces use of `readonly T[]` (`ReadonlyArray<T>`) over `T[]` (`Array<T>`).
+
+The readonly modifier must appear on property signatures in interfaces, property declarations in classes, and index signatures.
+
+### Benefits of using the `readonly` modifier
 
 You might think that using `const` would eliminate mutation from your TypeScript code. **Wrong.** Turns out that there's a pretty big loophole in `const`.
 
@@ -52,24 +56,65 @@ const foo: { readonly [key: string]: number } = { a: 1, b: 2 };
 foo["a"] = 3; // Error: Index signature only permits reading
 ```
 
+### Benefits of using `readonly T[]`
+
+Even if an array is declared with `const` it is still possible to mutate the contents of the array.
+
+```typescript
+interface Point {
+  readonly x: number;
+  readonly y: number;
+}
+const points: Array<Point> = [{ x: 23, y: 44 }];
+points.push({ x: 1, y: 2 }); // This is legal
+```
+
+Using the `ReadonlyArray<T>` type or `readonly T[]` will stop this mutation:
+
+```typescript
+interface Point {
+  readonly x: number;
+  readonly y: number;
+}
+
+const points: ReadonlyArray<Point> = [{ x: 23, y: 44 }];
+// const points: readonly Point[] = [{ x: 23, y: 44 }]; // This is the alternative syntax for the line above
+
+points.push({ x: 1, y: 2 }); // Unresolved method push()
+```
+
 ## Options
 
 The rule accepts an options object with the following properties:
 
 ```typescript
 type Options = {
+  readonly checkImplicit: boolean
   readonly ignoreClass?: boolean;
   readonly ignoreInterface?: boolean;
   readonly ignoreLocal?: boolean;
   readonly ignorePattern?: string | Array<string>;
+  readonly ignoreReturnType?: boolean;
 };
 
 const defaults = {
+  checkImplicit: false,
   ignoreClass: false,
   ignoreInterface: false,
-  ignoreLocal: false
+  ignoreLocal: false,
+  ignoreReturnType: false
 };
 ```
+
+### `checkImplicit`
+
+By default, this function only checks explicit types. Enabling this option will make the rule also check implicit types.
+
+Note: Checking implicit types is more expensive (slow).
+
+### `ignoreReturnType`
+
+Doesn't check the return type of functions.
 
 ### `ignoreClass`
 
