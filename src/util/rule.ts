@@ -67,7 +67,7 @@ export function createRule<
 
 // This function can't be functional as it needs to interact with 3rd-party
 // libraries that aren't functional.
-/* eslint-disable ts-immutable/no-return-void, ts-immutable/no-conditional-statement, ts-immutable/no-expression-statement */
+/* eslint-disable functional/no-return-void, functional/no-conditional-statement, functional/no-expression-statement */
 /**
  * Create a function that processes common options and then runs the given
  * check.
@@ -96,7 +96,7 @@ export function checkNode<
     }
   };
 }
-/* eslint-enable ts-immutable/no-return-void, ts-immutable/no-conditional-statement, ts-immutable/no-expression-statement */
+/* eslint-enable functional/no-return-void, functional/no-conditional-statement, functional/no-expression-statement */
 
 /**
  * Get the type of the the given node.

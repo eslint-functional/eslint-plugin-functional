@@ -6,9 +6,9 @@ const config = deepMerge([
   functionalLite,
   {
     rules: {
-      "ts-immutable/no-conditional-statement": "error",
-      "ts-immutable/no-expression-statement": "error",
-      "ts-immutable/no-try": "error"
+      "functional/no-conditional-statement": "error",
+      "functional/no-expression-statement": "error",
+      "functional/no-try": "error"
     }
   }
 ]);

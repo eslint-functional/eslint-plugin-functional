@@ -1,6 +1,6 @@
 {
   "rules": {
     "@typescript-eslint/no-require-imports": "off",
-    "ts-immutable/no-try": "off"
+    "functional/no-try": "off"
   }
 }
