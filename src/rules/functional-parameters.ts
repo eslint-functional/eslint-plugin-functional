@@ -83,8 +83,11 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
   schema
 };
 
+/**
+ * Get the rest parameter violations.
+ */
 function getRestParamViolations(
-  allowRestParameter: boolean,
+  allowRestParameter: Options["allowRestParameter"],
   node:
     | TSESTree.FunctionDeclaration
     | TSESTree.FunctionExpression
@@ -102,6 +105,9 @@ function getRestParamViolations(
     : [];
 }
 
+/**
+ * Get the parameter count violations.
+ */
 function getParamCountViolations(
   enforceParameterCount: Options["enforceParameterCount"],
   node:

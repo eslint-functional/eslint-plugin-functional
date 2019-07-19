@@ -65,6 +65,9 @@ export function processValidTestCase(
   return processInvalidTestCase(testCases as any);
 }
 
+/**
+ * Create a dummy rule for testing.
+ */
 export function createDummyRule(
   create: (
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */

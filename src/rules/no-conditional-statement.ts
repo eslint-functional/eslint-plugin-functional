@@ -72,6 +72,10 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
   schema
 };
 
+/**
+ * Get all of the violations in the given if statement assuming if statements
+ * are allowed.
+ */
 function getIfBranchViolations(
   node: TSESTree.IfStatement
 ): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
@@ -97,7 +101,11 @@ function getIfBranchViolations(
   return nodes.flatMap(node => [{ node, messageId: "incompleteBranch" }]);
 }
 
-function getSwitchCaseViolations(
+/**
+ * Get all of the violations in the given switch statement assuming switch
+ * statements are allowed.
+ */
+function getSwitchViolations(
   node: TSESTree.SwitchStatement
 ): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
   const nodes = node.cases.reduce<ReadonlyArray<TSESTree.Node>>(
@@ -116,10 +124,16 @@ function getSwitchCaseViolations(
   return nodes.flatMap(node => [{ node, messageId: "incompleteBranch" }]);
 }
 
+/**
+ * Does the given if statement violate this rule if it must be exhaustive.
+ */
 function isExhaustiveIfViolation(node: TSESTree.IfStatement): boolean {
   return node.alternate === null;
 }
 
+/**
+ * Does the given switch statement violate this rule if it must be exhaustive.
+ */
 function isExhaustiveSwitchViolation(node: TSESTree.SwitchStatement): boolean {
   return (
     // No cases defined.
@@ -163,8 +177,8 @@ function checkSwitchStatement(
       ? options.allowReturningBranches === "ifExhaustive"
         ? isExhaustiveSwitchViolation(node)
           ? [{ node, messageId: "incompleteSwitch" }]
-          : getSwitchCaseViolations(node)
-        : getSwitchCaseViolations(node)
+          : getSwitchViolations(node)
+        : getSwitchViolations(node)
       : [{ node, messageId: "unexpectedSwitch" }]
   };
 }
