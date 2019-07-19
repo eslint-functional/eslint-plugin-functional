@@ -125,6 +125,99 @@ export const ignoreNewArrayOptionSchema: JSONSchema4 = {
   additionalProperties: false
 };
 
+function _getNodeText(
+  node: TSESTree.Node,
+  context: RuleContext<string, BaseOptions>
+): string {
+  return isIdentifier(node)
+    ? node.name
+    : isMemberExpression(node)
+    ? `${_getNodeText(node.object, context)}.${_getNodeText(
+        node.property,
+        context
+      )}`
+    : context.getSourceCode().getText(node);
+}
+
+function getNodeText(
+  node: TSESTree.Node,
+  context: RuleContext<string, BaseOptions>
+): string | undefined {
+  return isAssignmentExpression(node)
+    ? getNodeText(node.left, context)
+    : isCallExpression(node)
+    ? getNodeText(node.callee, context)
+    : isMemberExpression(node)
+    ? _getNodeText(node.object, context)
+    : isVariableDeclarator(node) || isTSTypeAliasDeclaration(node)
+    ? _getNodeText(node.id, context)
+    : isTSPropertySignature(node)
+    ? _getNodeText(node.key, context)
+    : _getNodeText(node, context);
+}
+
+function getNodeTexts(
+  node: TSESTree.Node,
+  context: RuleContext<string, BaseOptions>
+): ReadonlyArray<string> {
+  return (isVariableDeclaration(node)
+    ? node.declarations.flatMap(declarator => getNodeText(declarator, context))
+    : [getNodeText(node, context)]
+  ).filter(name => name !== undefined) as ReadonlyArray<string>;
+}
+
+function isIgnoredPattern(
+  text: string,
+  ignorePattern: ReadonlyArray<string> | string
+): boolean {
+  const patterns: ReadonlyArray<string> = Array.isArray(ignorePattern)
+    ? ignorePattern
+    : [ignorePattern];
+
+  // One or more patterns match?
+  return patterns.some(pattern => new RegExp(pattern).test(text));
+}
+
+function findMatch(
+  [pattern, ...remainingPatternParts]: ReadonlyArray<string>,
+  textParts: ReadonlyArray<string>,
+  allowExtra: boolean = false
+): boolean {
+  return pattern === undefined
+    ? allowExtra || textParts.length === 0
+    : // Match any depth (including 0)?
+    pattern === "**"
+    ? textParts.length === 0
+      ? findMatch(remainingPatternParts, [], allowExtra)
+      : Array.from({ length: textParts.length })
+          .map((_element, index) => index)
+          .some(offset =>
+            findMatch(remainingPatternParts, textParts.slice(offset), true)
+          )
+    : // Match anything?
+    pattern === "*"
+    ? textParts.length > 0 &&
+      findMatch(remainingPatternParts, textParts.slice(1), allowExtra)
+    : // Text matches pattern?
+      new RegExp("^" + escapeRegExp(pattern).replace(/\\\*/g, ".*") + "$").test(
+        textParts[0]
+      ) && findMatch(remainingPatternParts, textParts.slice(1), allowExtra);
+}
+
+function isIgnoredAccessorPattern(
+  text: string,
+  ignorePattern: ReadonlyArray<string> | string
+): boolean {
+  const patterns: ReadonlyArray<string> = Array.isArray(ignorePattern)
+    ? ignorePattern
+    : [ignorePattern];
+
+  // One or more patterns match?
+  return patterns.some(pattern =>
+    findMatch(pattern.split("."), text.split("."))
+  );
+}
+
 /**
  * Should the given node be ignored?
  */
@@ -154,97 +247,4 @@ export function shouldIgnore(
             ))
         : false)(getNodeTexts(node, context))
   );
-}
-
-function getNodeTexts(
-  node: TSESTree.Node,
-  context: RuleContext<string, BaseOptions>
-): ReadonlyArray<string> {
-  return (isVariableDeclaration(node)
-    ? node.declarations.flatMap(declarator => getNodeText(declarator, context))
-    : [getNodeText(node, context)]
-  ).filter(name => name !== undefined) as ReadonlyArray<string>;
-}
-
-function getNodeText(
-  node: TSESTree.Node,
-  context: RuleContext<string, BaseOptions>
-): string | undefined {
-  return isAssignmentExpression(node)
-    ? getNodeText(node.left, context)
-    : isCallExpression(node)
-    ? getNodeText(node.callee, context)
-    : isMemberExpression(node)
-    ? _getNodeText(node.object, context)
-    : isVariableDeclarator(node) || isTSTypeAliasDeclaration(node)
-    ? _getNodeText(node.id, context)
-    : isTSPropertySignature(node)
-    ? _getNodeText(node.key, context)
-    : _getNodeText(node, context);
-}
-
-function _getNodeText(
-  node: TSESTree.Node,
-  context: RuleContext<string, BaseOptions>
-): string {
-  return isIdentifier(node)
-    ? node.name
-    : isMemberExpression(node)
-    ? `${_getNodeText(node.object, context)}.${_getNodeText(
-        node.property,
-        context
-      )}`
-    : context.getSourceCode().getText(node);
-}
-
-function isIgnoredPattern(
-  text: string,
-  ignorePattern: ReadonlyArray<string> | string
-): boolean {
-  const patterns: ReadonlyArray<string> = Array.isArray(ignorePattern)
-    ? ignorePattern
-    : [ignorePattern];
-
-  // One or more patterns match?
-  return patterns.some(pattern => new RegExp(pattern).test(text));
-}
-
-function isIgnoredAccessorPattern(
-  text: string,
-  ignorePattern: ReadonlyArray<string> | string
-): boolean {
-  const patterns: ReadonlyArray<string> = Array.isArray(ignorePattern)
-    ? ignorePattern
-    : [ignorePattern];
-
-  // One or more patterns match?
-  return patterns.some(pattern =>
-    findMatch(pattern.split("."), text.split("."))
-  );
-}
-
-function findMatch(
-  [pattern, ...remainingPatternParts]: ReadonlyArray<string>,
-  textParts: ReadonlyArray<string>,
-  allowExtra: boolean = false
-): boolean {
-  return pattern === undefined
-    ? allowExtra || textParts.length === 0
-    : // Match any depth (including 0)?
-    pattern === "**"
-    ? textParts.length === 0
-      ? findMatch(remainingPatternParts, [], allowExtra)
-      : Array.from({ length: textParts.length })
-          .map((_element, index) => index)
-          .some(offset =>
-            findMatch(remainingPatternParts, textParts.slice(offset), true)
-          )
-    : // Match anything?
-    pattern === "*"
-    ? textParts.length > 0 &&
-      findMatch(remainingPatternParts, textParts.slice(1), allowExtra)
-    : // Text matches pattern?
-      new RegExp("^" + escapeRegExp(pattern).replace(/\\\*/g, ".*") + "$").test(
-        textParts[0]
-      ) && findMatch(remainingPatternParts, textParts.slice(1), allowExtra);
 }

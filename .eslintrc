@@ -76,10 +76,10 @@
     "@typescript-eslint/no-use-before-define": [
       "error",
       {
-        "functions": false,
-        "classes": false,
+        "functions": true,
+        "classes": true,
         "variables": true,
-        "typedefs": false
+        "typedefs": true
       }
     ],
 

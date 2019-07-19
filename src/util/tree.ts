@@ -11,6 +11,20 @@ import {
 } from "./typeguard";
 
 /**
+ * Return the parent that meets the given check criteria.
+ */
+function getParentOfType<T extends TSESTree.Node>(
+  checker: (node: TSESTree.Node) => node is T,
+  node: TSESTree.Node
+): T | null {
+  return checker(node)
+    ? node
+    : node.parent == undefined
+    ? null
+    : getParentOfType(checker, node.parent);
+}
+
+/**
  * Test if the given node is in a function.
  */
 export function inFunction(node: TSESTree.Node): boolean {
@@ -72,18 +86,4 @@ export function isPropertyName(node: TSESTree.Identifier): boolean {
     isProperty(node.parent) &&
     node.parent.key === node
   );
-}
-
-/**
- * Return the parent that meets the given check criteria.
- */
-function getParentOfType<T extends TSESTree.Node>(
-  checker: (node: TSESTree.Node) => node is T,
-  node: TSESTree.Node
-): T | null {
-  return checker(node)
-    ? node
-    : node.parent == undefined
-    ? null
-    : getParentOfType(checker, node.parent);
 }
