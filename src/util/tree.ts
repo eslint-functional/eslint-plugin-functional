@@ -72,6 +72,9 @@ export function isInReturnType(node: TSESTree.Node): boolean {
   );
 }
 
+/**
+ * Is the given identifier a property of an object?
+ */
 export function isPropertyAccess(node: TSESTree.Identifier): boolean {
   return (
     node.parent !== undefined &&
@@ -80,6 +83,9 @@ export function isPropertyAccess(node: TSESTree.Identifier): boolean {
   );
 }
 
+/**
+ * Is the given identifier a property name?
+ */
 export function isPropertyName(node: TSESTree.Identifier): boolean {
   return (
     node.parent !== undefined &&

@@ -125,6 +125,11 @@ export const ignoreNewArrayOptionSchema: JSONSchema4 = {
   additionalProperties: false
 };
 
+/**
+ * Recursive callback of `getNodeText`.
+ *
+ * This function not be called from anywhere else.
+ */
 function _getNodeText(
   node: TSESTree.Node,
   context: RuleContext<string, BaseOptions>
@@ -139,6 +144,9 @@ function _getNodeText(
     : context.getSourceCode().getText(node);
 }
 
+/**
+ * Get the text of the given node.
+ */
 function getNodeText(
   node: TSESTree.Node,
   context: RuleContext<string, BaseOptions>
@@ -156,6 +164,9 @@ function getNodeText(
     : _getNodeText(node, context);
 }
 
+/**
+ * Get all the important bits of texts from the given node.
+ */
 function getNodeTexts(
   node: TSESTree.Node,
   context: RuleContext<string, BaseOptions>
@@ -166,7 +177,12 @@ function getNodeTexts(
   ).filter(name => name !== undefined) as ReadonlyArray<string>;
 }
 
-function isIgnoredPattern(
+/**
+ * Should the given text be ignore?
+ *
+ * Test using the given pattern(s).
+ */
+function shouldIgnoreViaPattern(
   text: string,
   ignorePattern: ReadonlyArray<string> | string
 ): boolean {
@@ -178,7 +194,14 @@ function isIgnoredPattern(
   return patterns.some(pattern => new RegExp(pattern).test(text));
 }
 
-function findMatch(
+/**
+ * Recursive callback of `shouldIgnoreViaAccessorPattern`.
+ *
+ * This function not be called from anywhere else.
+ *
+ * Does the given text match the given pattern.
+ */
+function accessorPatternMatch(
   [pattern, ...remainingPatternParts]: ReadonlyArray<string>,
   textParts: ReadonlyArray<string>,
   allowExtra: boolean = false
@@ -188,23 +211,41 @@ function findMatch(
     : // Match any depth (including 0)?
     pattern === "**"
     ? textParts.length === 0
-      ? findMatch(remainingPatternParts, [], allowExtra)
+      ? accessorPatternMatch(remainingPatternParts, [], allowExtra)
       : Array.from({ length: textParts.length })
           .map((_element, index) => index)
           .some(offset =>
-            findMatch(remainingPatternParts, textParts.slice(offset), true)
+            accessorPatternMatch(
+              remainingPatternParts,
+              textParts.slice(offset),
+              true
+            )
           )
     : // Match anything?
     pattern === "*"
     ? textParts.length > 0 &&
-      findMatch(remainingPatternParts, textParts.slice(1), allowExtra)
+      accessorPatternMatch(
+        remainingPatternParts,
+        textParts.slice(1),
+        allowExtra
+      )
     : // Text matches pattern?
       new RegExp("^" + escapeRegExp(pattern).replace(/\\\*/g, ".*") + "$").test(
         textParts[0]
-      ) && findMatch(remainingPatternParts, textParts.slice(1), allowExtra);
+      ) &&
+      accessorPatternMatch(
+        remainingPatternParts,
+        textParts.slice(1),
+        allowExtra
+      );
 }
 
-function isIgnoredAccessorPattern(
+/**
+ * Should the given text be ignore?
+ *
+ * Test using the given accessor pattern(s).
+ */
+function shouldIgnoreViaAccessorPattern(
   text: string,
   ignorePattern: ReadonlyArray<string> | string
 ): boolean {
@@ -214,7 +255,7 @@ function isIgnoredAccessorPattern(
 
   // One or more patterns match?
   return patterns.some(pattern =>
-    findMatch(pattern.split("."), text.split("."))
+    accessorPatternMatch(pattern.split("."), text.split("."))
   );
 }
 
@@ -238,12 +279,15 @@ export function shouldIgnore(
         ? // Ignore if ignorePattern is set and a pattern matches.
           (options.ignorePattern !== undefined &&
             texts.every(text =>
-              isIgnoredPattern(text, options.ignorePattern!)
+              shouldIgnoreViaPattern(text, options.ignorePattern!)
             )) ||
           // Ignore if ignoreAccessorPattern is set and an accessor pattern matches.
           (options.ignoreAccessorPattern !== undefined &&
             texts.every(text =>
-              isIgnoredAccessorPattern(text, options.ignoreAccessorPattern!)
+              shouldIgnoreViaAccessorPattern(
+                text,
+                options.ignoreAccessorPattern!
+              )
             ))
         : false)(getNodeTexts(node, context))
   );

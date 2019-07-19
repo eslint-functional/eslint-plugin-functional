@@ -1,5 +1,5 @@
 /**
- * This file has functions that typeguard the given node/type.
+ * @file Functions that typeguard the given node/type.
  */
 
 import { AST_NODE_TYPES, TSESTree } from "@typescript-eslint/typescript-estree";
@@ -7,6 +7,9 @@ import { AST_NODE_TYPES, TSESTree } from "@typescript-eslint/typescript-estree";
 import { Type, UnionType } from "typescript";
 // TS import - conditionally imported only when typescript is avaliable.
 import ts from "../util/conditional-imports/typescript";
+
+// Any JSDoc for these functions would be tedious.
+/* eslint-disable jsdoc/require-jsdoc */
 
 /*
  * TS Types.
@@ -64,6 +67,11 @@ export function isCallExpression(
   return node.type === AST_NODE_TYPES.CallExpression;
 }
 
+/**
+ * Is the given node a class node?
+ *
+ * It doesn't matter what type of class.
+ */
 export function isClassLike(
   node: TSESTree.Node
 ): node is TSESTree.ClassDeclaration | TSESTree.ClassExpression {
@@ -73,6 +81,11 @@ export function isClassLike(
   );
 }
 
+/**
+ * Is the given node a function node?
+ *
+ * It doesn't matter what type of function.
+ */
 export function isFunctionLike(
   node: TSESTree.Node
 ): node is
