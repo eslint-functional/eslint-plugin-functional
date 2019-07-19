@@ -27,18 +27,6 @@ export type InvalidTestCase = Omit<
 /**
  * Convert our test cases into ones eslint test runner is expecting.
  */
-export function processValidTestCase(
-  testCases: ReadonlyArray<ValidTestCase>
-): Array<ESLintRuleTester.ValidTestCase> {
-  // Ideally these two functions should be merged into 1 but I haven't been able
-  // to get the typing information right - so for now they are two functions.
-  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-  return processInvalidTestCase(testCases as any);
-}
-
-/**
- * Convert our test cases into ones eslint test runner is expecting.
- */
 export function processInvalidTestCase(
   testCases: ReadonlyArray<InvalidTestCase>
 ): Array<ESLintRuleTester.InvalidTestCase> {
@@ -65,6 +53,21 @@ export function processInvalidTestCase(
   ) as Array<ESLintRuleTester.InvalidTestCase>;
 }
 
+/**
+ * Convert our test cases into ones eslint test runner is expecting.
+ */
+export function processValidTestCase(
+  testCases: ReadonlyArray<ValidTestCase>
+): Array<ESLintRuleTester.ValidTestCase> {
+  // Ideally these two functions should be merged into 1 but I haven't been able
+  // to get the typing information right - so for now they are two functions.
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+  return processInvalidTestCase(testCases as any);
+}
+
+/**
+ * Create a dummy rule for testing.
+ */
 export function createDummyRule(
   create: (
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
