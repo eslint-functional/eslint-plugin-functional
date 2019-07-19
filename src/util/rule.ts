@@ -52,7 +52,7 @@ export function createRule<
 ): Rule.RuleModule {
   return ESLintUtils.RuleCreator(
     name =>
-      `https://github.com/jonaskello/eslint-plugin-ts-immutable/blob/v${version}/docs/rules/${name}.md`
+      `https://github.com/jonaskello/eslint-plugin-functional/blob/v${version}/docs/rules/${name}.md`
   )({
     name,
     meta,

@@ -1,12 +1,12 @@
 {
-  "name": "eslint-plugin-ts-immutable",
+  "name": "eslint-plugin-functional",
   "version": "0.3.0",
-  "description": "ESLint rules to disable mutation in TypeScript.",
+  "description": "ESLint rules to disable mutation and promote fp in TypeScript.",
   "main": "lib/index.js",
   "module": "lib/index.mjs",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jonaskello/eslint-plugin-ts-immutable"
+    "url": "git+https://github.com/jonaskello/eslint-plugin-functional"
   },
   "keywords": [
     "eslint",
@@ -26,9 +26,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jonaskello/eslint-plugin-ts-immutable/issues"
+    "url": "https://github.com/jonaskello/eslint-plugin-functional/issues"
   },
-  "homepage": "https://github.com/jonaskello/eslint-plugin-ts-immutable#readme",
+  "homepage": "https://github.com/jonaskello/eslint-plugin-functional#readme",
   "files": [
     "/lib",
     "package.json",
@@ -91,7 +91,7 @@
     "compile-tests": "tsc -p tsconfig.tests.json",
     "build-tests": "rimraf build && yarn compile-tests",
     "build": "rimraf lib && yarn compile",
-    "prelint": "yarn build && yarn link && yarn link 'eslint-plugin-ts-immutable'",
+    "prelint": "yarn build && yarn link && yarn link 'eslint-plugin-functional'",
     "lint": "eslint './{src,tests}/**/*.ts' --ext .ts",
     "test": "jest --testPathIgnorePatterns _work.test",
     "test-work": "jest tests/rules/_work.test.ts",
