@@ -11,6 +11,20 @@ import {
 } from "./typeguard";
 
 /**
+ * Return the parent that meets the given check criteria.
+ */
+function getParentOfType<T extends TSESTree.Node>(
+  checker: (node: TSESTree.Node) => node is T,
+  node: TSESTree.Node
+): T | null {
+  return checker(node)
+    ? node
+    : node.parent == undefined
+    ? null
+    : getParentOfType(checker, node.parent);
+}
+
+/**
  * Test if the given node is in a function.
  */
 export function inFunction(node: TSESTree.Node): boolean {
@@ -58,6 +72,9 @@ export function isInReturnType(node: TSESTree.Node): boolean {
   );
 }
 
+/**
+ * Is the given identifier a property of an object?
+ */
 export function isPropertyAccess(node: TSESTree.Identifier): boolean {
   return (
     node.parent !== undefined &&
@@ -66,24 +83,13 @@ export function isPropertyAccess(node: TSESTree.Identifier): boolean {
   );
 }
 
+/**
+ * Is the given identifier a property name?
+ */
 export function isPropertyName(node: TSESTree.Identifier): boolean {
   return (
     node.parent !== undefined &&
     isProperty(node.parent) &&
     node.parent.key === node
   );
-}
-
-/**
- * Return the parent that meets the given check criteria.
- */
-function getParentOfType<T extends TSESTree.Node>(
-  checker: (node: TSESTree.Node) => node is T,
-  node: TSESTree.Node
-): T | null {
-  return checker(node)
-    ? node
-    : node.parent == undefined
-    ? null
-    : getParentOfType(checker, node.parent);
 }

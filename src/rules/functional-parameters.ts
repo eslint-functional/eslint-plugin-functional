@@ -84,27 +84,10 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
 };
 
 /**
- * Check if the given function node has a reset parameter this rule.
+ * Get the rest parameter violations.
  */
-function checkFunction(
-  node:
-    | TSESTree.FunctionDeclaration
-    | TSESTree.FunctionExpression
-    | TSESTree.ArrowFunctionExpression,
-  context: RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
-): RuleResult<keyof typeof errorMessages, Options> {
-  return {
-    context,
-    descriptors: [
-      ...getRestParamViolations(options.allowRestParameter, node),
-      ...getParamCountViolations(options.enforceParameterCount, node)
-    ]
-  };
-}
-
 function getRestParamViolations(
-  allowRestParameter: boolean,
+  allowRestParameter: Options["allowRestParameter"],
   node:
     | TSESTree.FunctionDeclaration
     | TSESTree.FunctionExpression
@@ -122,6 +105,9 @@ function getRestParamViolations(
     : [];
 }
 
+/**
+ * Get the parameter count violations.
+ */
 function getParamCountViolations(
   enforceParameterCount: Options["enforceParameterCount"],
   node:
@@ -144,6 +130,26 @@ function getParamCountViolations(
         }
       ]
     : [];
+}
+
+/**
+ * Check if the given function node has a reset parameter this rule.
+ */
+function checkFunction(
+  node:
+    | TSESTree.FunctionDeclaration
+    | TSESTree.FunctionExpression
+    | TSESTree.ArrowFunctionExpression,
+  context: RuleContext<keyof typeof errorMessages, Options>,
+  options: Options
+): RuleResult<keyof typeof errorMessages, Options> {
+  return {
+    context,
+    descriptors: [
+      ...getRestParamViolations(options.allowRestParameter, node),
+      ...getParamCountViolations(options.enforceParameterCount, node)
+    ]
+  };
 }
 
 /**

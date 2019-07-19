@@ -65,13 +65,13 @@ export function createRule<
   } as any) as any;
 }
 
+// This function can't be functional as it needs to interact with 3rd-party
+// libraries that aren't functional.
+/* eslint-disable ts-immutable/no-return-void, ts-immutable/no-conditional-statement, ts-immutable/no-expression-statement */
 /**
  * Create a function that processes common options and then runs the given
  * check.
  */
-// This function can't be functional as it needs to interact with 3rd-party
-// libraries that aren't functional.
-/* eslint-disable ts-immutable/no-return-void, ts-immutable/no-conditional-statement, ts-immutable/no-expression-statement */
 export function checkNode<
   MessageIds extends string,
   Context extends RuleContext<MessageIds, BaseOptions>,

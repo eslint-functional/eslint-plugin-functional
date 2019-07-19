@@ -1,5 +1,5 @@
 /**
- * @fileoverview Tests for no-try
+ * @file Tests for no-try.
  */
 
 import { RuleTester } from "eslint";
