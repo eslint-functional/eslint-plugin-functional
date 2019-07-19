@@ -71,9 +71,10 @@ const defaultOptions: Options = {
 // The possible error messages.
 const errorMessages = {
   array: "Only readonly arrays allowed.",
-  tuple: "Only readonly tuples allowed.",
   implicit: "Implicitly a mutable array. Only readonly arrays allowed.",
-  property: "A readonly modifier is required."
+  property: "A readonly modifier is required.",
+  tuple: "Only readonly tuples allowed.",
+  type: "Only readonly types allowed."
 } as const;
 
 // The meta data for this rule.
@@ -88,6 +89,11 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
   fixable: "code",
   schema
 };
+
+const mutableToImmutableTypes: ReadonlyMap<string, string> = new Map<
+  string,
+  string
+>([["Array", "ReadonlyArray"], ["Map", "ReadonlyMap"], ["Set", "ReadonlySet"]]);
 
 /**
  * Check if the given ArrayType or TupleType violates this rule.
@@ -129,21 +135,27 @@ function checkTypeReference(
   context: RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
-  return {
-    context,
-    descriptors:
-      isIdentifier(node.typeName) &&
-      node.typeName.name === "Array" &&
-      (!options.ignoreReturnType || !isInReturnType(node))
-        ? [
-            {
-              node,
-              messageId: "array",
-              fix: fixer => fixer.insertTextBefore(node, "Readonly")
-            }
-          ]
-        : []
-  };
+  if (isIdentifier(node.typeName)) {
+    const immutableType = mutableToImmutableTypes.get(node.typeName.name);
+    return {
+      context,
+      descriptors:
+        immutableType && (!options.ignoreReturnType || !isInReturnType(node))
+          ? [
+              {
+                node,
+                messageId: "type",
+                fix: fixer => fixer.replaceText(node.typeName, immutableType)
+              }
+            ]
+          : []
+    };
+  } else {
+    return {
+      context,
+      descriptors: []
+    };
+  }
 }
 
 /**
