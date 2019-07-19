@@ -1,5 +1,5 @@
 /**
- * @fileoverview Tests for no-conditional-statement
+ * @file Tests for no-conditional-statement
  */
 
 import dedent from "dedent";

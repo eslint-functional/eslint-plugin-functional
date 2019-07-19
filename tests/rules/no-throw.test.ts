@@ -1,5 +1,5 @@
 /**
- * @fileoverview Tests for no-throw
+ * @file Tests for no-throw
  */
 
 import dedent from "dedent";

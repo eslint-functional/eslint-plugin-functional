@@ -1,5 +1,5 @@
 /**
- * @fileoverview Tests for readonly-keyword
+ * @file Tests for readonly-keyword
  */
 
 import dedent from "dedent";
