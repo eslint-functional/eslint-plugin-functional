@@ -1,4 +1,4 @@
-# eslint-plugin-ts-immutable
+# eslint-plugin-functional
 
 [![npm version][version-image]][version-url]
 [![travis build][travis-image]][travis-url]
@@ -6,9 +6,23 @@
 [![code style: prettier][prettier-image]][prettier-url]
 [![MIT license][license-image]][license-url]
 
-[ESLint](https://eslint.org/) rules to disable mutation in JavaScript and TypeScript.
+[ESLint](https://eslint.org/) rules to disable mutation and promote fp in JavaScript and TypeScript.
 
-## Background
+## Introduction
+
+> :wave: If you previously used the rules in [tslint-immutable](https://www.npmjs.com/package/tslint-immutable), this package is the eslint version of those rules. Please see the [migration guide](docs/user-guide/migrating-from-tslint.md) for how to migrate.
+
+This package has a collection of eslint rules to promote functional programming style concepts. Note that you can use this package to enforce only some aspects of functional programming, for example only immutabiltiy. There are also options for the rules that allow you to gradually adopt a functional style. Most rules can be used both for JavaScript and TypeScript, however some rules, for example enforcing the `readonly` keyword, is of course only available for TypeScript.
+
+We've identified the following areas that needs to be linted in order to promote functional style in TypeScript/JavaScript:
+
+- [No mutability](#no-mutability)
+- [No object-orientation](#no-object-orientation)
+- [No statements](#no-statements)
+- [No exceptions](#no-exceptions)
+- [Currying](#currying)
+
+### No mutability
 
 In some applications it is important to not mutate any data, for example when using Redux to store state in a React application. Moreover immutable data structures has a lot of advantages in general so I want to use them everywhere in my applications.
 
@@ -16,20 +30,36 @@ I originally used [immutablejs](https://github.com/facebook/immutable-js/) for t
 
 Then TypeScript 2.0 came along and introduced [readonly](https://github.com/Microsoft/TypeScript/wiki/What's-new-in-TypeScript#read-only-properties-and-index-signatures) options for properties, indexers and arrays. TypeScript 3.0 has continued to add support immutability enforcing syntax. This enables us to use regular object and arrays and have the immutability enforced at compile time instead of run-time. Now the only drawback is that there is nothing enforcing the use of readonly in TypeScript.
 
-This can be solved by using linting rules. So the aim of this project is to leverage the type system in TypeScript to enforce immutability at compile-time while still using regular objects and arrays. Additionally, this project will also aim to support vanilla JavaScript where possible.
+This can be solved by using linting rules. So one aim of this project is to leverage the type system in TypeScript to enforce immutability at compile-time while still using regular objects and arrays. Additionally, this project will also aim to support disabling mutability for vanilla JavaScript where possible.
+
+### No object-orientation
+
+JavaScript is multi-paradigm, allowing both object-oriented and functional programming styles. In order to promote a functional style, the object oriented features of JavaScript needs to be disabled.
+
+### No statements
+
+In functional programming everything is an expression that produces a value. Javascript has a lot of syntax that is just statements that does not produce a value. That syntax has to be disabled to promote a functional style.
+
+### No exceptions
+
+Functional programming style does not use run-time exceptions. Instead expressions produces values to indicate errors.
+
+### Currying
+
+Javascript functions support syntax that is not compatible with curried functions. To enable currying this syntax has to be disabled.
 
 ## Installing
 
 ```sh
-npm install eslint eslint-plugin-ts-immutable --save-dev
+npm install eslint eslint-plugin-functional --save-dev
 ```
 
-**Note:** If you installed ESLint globally (using the `-g` flag) then you must also install `eslint-plugin-ts-immutable` globally.
+**Note:** If you installed ESLint globally (using the `-g` flag) then you must also install `eslint-plugin-functional` globally.
 
 To use this plugin with TypeScript, additionally install [@typescript-eslint/parser](https://www.npmjs.com/package/@typescript-eslint/parser).
 
 ```sh
-npm install eslint @typescript-eslint/parser eslint-plugin-ts-immutable --save-dev
+npm install eslint @typescript-eslint/parser eslint-plugin-functional --save-dev
 ```
 
 ## Usage
@@ -176,13 +206,13 @@ yarn version --major
 
 This project started off as a port of [tslint-immutable](https://github.com/jonaskello/tslint-immutable) which was originally inspired by [eslint-plugin-immutable](https://github.com/jhusain/eslint-plugin-immutable).
 
-[version-image]: https://img.shields.io/npm/v/eslint-plugin-ts-immutable.svg?style=flat
-[version-url]: https://www.npmjs.com/package/eslint-plugin-ts-immutable
-[travis-image]: https://travis-ci.com/jonaskello/eslint-plugin-ts-immutable.svg?branch=master&style=flat
-[travis-url]: https://travis-ci.com/jonaskello/eslint-plugin-ts-immutable
-[codecov-image]: https://codecov.io/gh/jonaskello/eslint-plugin-ts-immutable/branch/master/graph/badge.svg
-[codecov-url]: https://codecov.io/gh/jonaskello/eslint-plugin-ts-immutable
-[license-image]: https://img.shields.io/github/license/jonaskello/eslint-plugin-ts-immutable.svg?style=flat
+[version-image]: https://img.shields.io/npm/v/eslint-plugin-functional.svg?style=flat
+[version-url]: https://www.npmjs.com/package/eslint-plugin-functional
+[travis-image]: https://travis-ci.com/jonaskello/eslint-plugin-functional.svg?branch=master&style=flat
+[travis-url]: https://travis-ci.com/jonaskello/eslint-plugin-functional
+[codecov-image]: https://codecov.io/gh/jonaskello/eslint-plugin-functional/branch/master/graph/badge.svg
+[codecov-url]: https://codecov.io/gh/jonaskello/eslint-plugin-functional
+[license-image]: https://img.shields.io/github/license/jonaskello/eslint-plugin-functional.svg?style=flat
 [license-url]: https://opensource.org/licenses/MIT
 [prettier-image]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat
 [prettier-url]: https://github.com/prettier/prettier
