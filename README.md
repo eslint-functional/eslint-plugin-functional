@@ -64,13 +64,13 @@ npm install eslint @typescript-eslint/parser eslint-plugin-functional --save-dev
 
 ## Usage
 
-Add `ts-immutable` to the plugins section of your `.eslintrc` configuration file. Then configure the rules you want to use under the rules section.
+Add `functional` to the plugins section of your `.eslintrc` configuration file. Then configure the rules you want to use under the rules section.
 
 ```json
 {
-  "plugins": ["ts-immutable"],
+  "plugins": ["functional"],
   "rules": {
-    "ts-immutable/rule-name": "error"
+    "functional/rule-name": "error"
   }
 }
 ```
@@ -86,7 +86,7 @@ You can enable one of these rulesets like so:
 
 ```json
 {
-  "extends": ["plugin:ts-immutable/recommended"]
+  "extends": ["plugin:functional/recommended"]
 }
 ```
 
@@ -101,9 +101,9 @@ Additionally, for this plugin to use type information, you will need to specify 
   "parserOptions": {
     "project": "./tsconfig.json"
   },
-  "plugins": ["ts-immutable"],
+  "plugins": ["functional"],
   "rules": {
-    "ts-immutable/rule-name": "error"
+    "functional/rule-name": "error"
   }
 }
 ```

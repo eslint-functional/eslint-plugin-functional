@@ -89,7 +89,7 @@ The rule accepts an options object with the following properties:
 
 ```typescript
 type Options = {
-  readonly checkImplicit: boolean
+  readonly checkImplicit: boolean;
   readonly ignoreClass?: boolean;
   readonly ignoreInterface?: boolean;
   readonly ignoreLocal?: boolean;
@@ -123,7 +123,7 @@ A boolean to specify if checking for `readonly` should apply to classes. `false`
 Examples of **incorrect** code for the `{ "ignoreClass": false }` option:
 
 ```ts
-/*eslint ts-immutable/readonly: ["error", { "ignoreClass": false }]*/
+/*eslint functional/readonly: ["error", { "ignoreClass": false }]*/
 
 class {
   myprop: string;
@@ -133,7 +133,7 @@ class {
 Examples of **correct** code for the `{ "ignoreClass": true }` option:
 
 ```ts
-/*eslint ts-immutable/readonly: ["error", { "ignoreClass": true }]*/
+/*eslint functional/readonly: ["error", { "ignoreClass": true }]*/
 
 class {
   myprop: string;
@@ -147,7 +147,7 @@ A boolean to specify if checking for `readonly` should apply to interfaces. `fal
 Examples of **incorrect** code for the `{ "ignoreInterface": false }` option:
 
 ```ts
-/*eslint ts-immutable/readonly: ["error", { "ignoreInterface": false }]*/
+/*eslint functional/readonly: ["error", { "ignoreInterface": false }]*/
 
 interface {
   myprop: string;
@@ -157,7 +157,7 @@ interface {
 Examples of **correct** code for the `{ "ignoreInterface": true }` option:
 
 ```ts
-/*eslint ts-immutable/readonly: ["error", { "ignoreInterface": true }]*/
+/*eslint functional/readonly: ["error", { "ignoreInterface": true }]*/
 
 interface {
   myprop: string;

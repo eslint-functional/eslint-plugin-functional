@@ -7,7 +7,7 @@
     "jsdoc",
     "jest",
     "prettier",
-    "ts-immutable"
+    "functional"
   ],
   "env": {
     "es6": true,
@@ -32,25 +32,22 @@
     "no-var": "error",
 
     // Our rules.
-    "ts-immutable/immutable-data": "error",
-    "ts-immutable/no-let": "error",
-    "ts-immutable/prefer-readonly-types": [
-      "error",
-      { "ignoreReturnType": true }
-    ],
-    "ts-immutable/no-method-signature": "error",
-    "ts-immutable/no-this": "error",
-    "ts-immutable/no-class": "error",
-    "ts-immutable/no-loop-statement": "error",
-    "ts-immutable/no-throw": "error",
-    "ts-immutable/no-mixed-interface": "error",
-    "ts-immutable/no-return-void": "error",
-    "ts-immutable/no-expression-statement": "warn",
-    "ts-immutable/no-conditional-statement": [
+    "functional/immutable-data": "error",
+    "functional/no-let": "error",
+    "functional/prefer-readonly-types": ["error", { "ignoreReturnType": true }],
+    "functional/no-method-signature": "error",
+    "functional/no-this": "error",
+    "functional/no-class": "error",
+    "functional/no-loop-statement": "error",
+    "functional/no-throw": "error",
+    "functional/no-mixed-interface": "error",
+    "functional/no-return-void": "error",
+    "functional/no-expression-statement": "warn",
+    "functional/no-conditional-statement": [
       "error",
       { "allowReturningBranches": "ifExhaustive" }
     ],
-    "ts-immutable/no-try": "warn",
+    "functional/no-try": "warn",
 
     // Typescript eslint.
     "@typescript-eslint/array-type": ["error", "generic"],
@@ -123,7 +120,7 @@
         "jest/prefer-spy-on": "error",
         "jest/valid-expect": "error",
 
-        "ts-immutable/no-expression-statement": "off"
+        "functional/no-expression-statement": "off"
       }
     }
   ]

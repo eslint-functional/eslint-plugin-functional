@@ -49,7 +49,7 @@ export function processInvalidTestCase(
       ];
     },
     []
-    /* eslint-disable-next-line ts-immutable/prefer-readonly-types */
+    /* eslint-disable-next-line functional/prefer-readonly-types */
   ) as Array<ESLintRuleTester.InvalidTestCase>;
 }
 

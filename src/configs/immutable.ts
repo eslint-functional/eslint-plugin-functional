@@ -6,15 +6,15 @@ const config = deepMerge([
   recommended,
   {
     rules: {
-      "ts-immutable/no-let": "error",
-      "ts-immutable/immutable-data": "error"
+      "functional/no-let": "error",
+      "functional/immutable-data": "error"
     },
     overrides: [
       {
         files: ["*.ts", "*.tsx"],
         rules: {
-          "ts-immutable/no-method-signature": "warn",
-          "ts-immutable/prefer-readonly-types": "error"
+          "functional/no-method-signature": "warn",
+          "functional/prefer-readonly-types": "error"
         }
       }
     ]

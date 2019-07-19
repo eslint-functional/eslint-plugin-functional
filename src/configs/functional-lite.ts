@@ -6,22 +6,22 @@ const config = deepMerge([
   immutable,
   {
     rules: {
-      "ts-immutable/no-this": "error",
-      "ts-immutable/no-class": "error",
-      "ts-immutable/no-loop-statement": "error",
-      "ts-immutable/no-conditional-statement": [
+      "functional/no-this": "error",
+      "functional/no-class": "error",
+      "functional/no-loop-statement": "error",
+      "functional/no-conditional-statement": [
         "error",
         { allowReturningBranches: true }
       ],
-      "ts-immutable/no-throw": "error",
-      "ts-immutable/no-return-void": "error",
-      "ts-immutable/functional-parameters": "error"
+      "functional/no-throw": "error",
+      "functional/no-return-void": "error",
+      "functional/functional-parameters": "error"
     },
     overrides: [
       {
         files: ["*.ts", "*.tsx"],
         rules: {
-          "ts-immutable/no-mixed-interface": "error"
+          "functional/no-mixed-interface": "error"
         }
       }
     ]
