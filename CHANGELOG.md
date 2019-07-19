@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/jonaskello/eslint-plugin-functional/compare/v0.3.0...HEAD)
 
+## [v0.4.0](https://github.com/jonaskello/eslint-plugin-functional/compare/v0.2.1...v0.3.0)
+
+### Changed
+
+- Renamed to pacakge from `eslint-plugin-ts-immutable` to `eslint-plugin-functional`.
+
 ## [v0.3.0](https://github.com/jonaskello/eslint-plugin-functional/compare/v0.2.1...v0.3.0)
 
 ### Merged
