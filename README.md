@@ -133,8 +133,6 @@ See [@typescript-eslint/parser's README.md](https://github.com/typescript-eslint
 | [`no-let`](./docs/rules/no-let.md)                               | Disallow mutable variables                                                 |               :heavy_check_mark:               |                 :heavy_check_mark:                  |               :heavy_check_mark:                |          |                   |
 | [`immutable-data`](./docs/rules/immutable-data.md)               | Disallow mutating objects and arrays                                       |               :heavy_check_mark:               |                 :heavy_check_mark:                  |               :heavy_check_mark:                |          |   :blue_heart:    |
 | [`no-method-signature`](./docs/rules/no-method-signature.md)     | Enforce property signatures with readonly modifiers over method signatures |               :heavy_check_mark:               |                 :heavy_check_mark:                  |               :heavy_check_mark:                |          | :thought_balloon: |
-| <td colspan=2> No object-orientation                             |
-| [`no-method-signature`](./docs/rules/no-method-signature.md)     | Enforce property signatures with readonly modifiers over method signatures |               :heavy_check_mark:               |                 :heavy_check_mark:                  |               :heavy_check_mark:                |          | :thought_balloon: |
 
 ### No object-orientation
 
