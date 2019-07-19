@@ -1,5 +1,5 @@
 /**
- * @file Tests for functional-parameters
+ * @file Tests for functional-parameters.
  */
 
 import dedent from "dedent";

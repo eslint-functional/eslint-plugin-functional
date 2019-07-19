@@ -1,5 +1,5 @@
 /**
- * @file Tests for immutable-data
+ * @file Tests for immutable-data.
  */
 
 import dedent from "dedent";

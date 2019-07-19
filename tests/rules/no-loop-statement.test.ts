@@ -1,5 +1,5 @@
 /**
- * @file Tests for no-loop
+ * @file Tests for no-loop.
  */
 
 import { RuleTester } from "eslint";

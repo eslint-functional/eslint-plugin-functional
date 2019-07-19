@@ -1,5 +1,5 @@
 /**
- * @file Tests for no-method-signature
+ * @file Tests for no-method-signature.
  */
 
 import dedent from "dedent";
