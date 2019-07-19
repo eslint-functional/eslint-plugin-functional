@@ -33,8 +33,10 @@
     // Our rules.
     "ts-immutable/immutable-data": "error",
     "ts-immutable/no-let": "error",
-    "ts-immutable/readonly-array": ["error", { "ignoreReturnType": true }],
-    "ts-immutable/readonly-keyword": "error",
+    "ts-immutable/prefer-readonly-types": [
+      "error",
+      { "ignoreReturnType": true }
+    ],
     "ts-immutable/no-method-signature": "error",
     "ts-immutable/no-this": "error",
     "ts-immutable/no-class": "error",

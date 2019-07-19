@@ -61,7 +61,7 @@ export function processInvalidTestCase(
       ];
     },
     []
-    /* eslint-disable ts-immutable/readonly-array */
+    /* eslint-disable-next-line ts-immutable/prefer-readonly-types */
   ) as Array<ESLintRuleTester.InvalidTestCase>;
 }
 
@@ -89,5 +89,5 @@ export function createDummyRule(
   };
 
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-  return createRule<"generic", Array<any>>("dummy", meta, [], create);
+  return createRule<"generic", ReadonlyArray<any>>("dummy", meta, [], create);
 }
