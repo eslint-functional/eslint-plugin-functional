@@ -1,1 +1,1 @@
-Placeholder for the migration guide, to be fille din before 1.0.0.
+Placeholder for the migration guide, to be filled in before 1.0.0.
