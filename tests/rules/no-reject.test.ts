@@ -1,5 +1,5 @@
 /**
- * @file Tests for no-reject
+ * @file Tests for no-reject.
  */
 
 import dedent from "dedent";
