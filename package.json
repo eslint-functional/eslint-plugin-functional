@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-ts-immutable",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "ESLint rules to disable mutation in TypeScript.",
   "main": "lib/index.js",
   "module": "lib/index.mjs",
