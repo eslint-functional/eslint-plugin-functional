@@ -1,5 +1,5 @@
 /**
- * @fileoverview Tests for no-this
+ * @file Tests for no-this.
  */
 
 import { RuleTester } from "eslint";
