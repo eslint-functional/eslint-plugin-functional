@@ -1,5 +1,5 @@
 /**
- * @fileoverview Tests for no-return-void
+ * @file Tests for no-return-void.
  */
 
 import dedent from "dedent";

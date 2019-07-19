@@ -1,5 +1,5 @@
 /**
- * @fileoverview Provided to help with local test debugging.
+ * @file Provided to help with local test debugging.
  */
 
 import dedent from "dedent";

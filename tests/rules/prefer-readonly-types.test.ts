@@ -1,5 +1,5 @@
 /**
- * @fileoverview Tests for prefer-readonly-types
+ * @file Tests for prefer-readonly-types.
  */
 
 import dedent from "dedent";
