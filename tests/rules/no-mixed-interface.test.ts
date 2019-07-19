@@ -1,5 +1,5 @@
 /**
- * @fileoverview Tests for no-mixed-interface
+ * @file Tests for no-mixed-interface
  */
 
 import dedent from "dedent";

@@ -1,5 +1,5 @@
 /**
- * @fileoverview Tests for readonly-array
+ * @file Tests for readonly-array
  */
 
 import dedent from "dedent";

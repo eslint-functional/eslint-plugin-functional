@@ -1,5 +1,5 @@
 /**
- * @fileoverview Tests for no-expression-statement
+ * @file Tests for no-expression-statement
  */
 
 import dedent from "dedent";
