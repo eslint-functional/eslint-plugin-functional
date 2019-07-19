@@ -179,6 +179,12 @@ export function isTSPropertySignature(
   return node.type === AST_NODE_TYPES.TSPropertySignature;
 }
 
+export function isTSTupleType(
+  node: TSESTree.Node
+): node is TSESTree.TSTupleType {
+  return node.type === AST_NODE_TYPES.TSTupleType;
+}
+
 export function isTSTypeAliasDeclaration(
   node: TSESTree.Node
 ): node is TSESTree.TSTypeAliasDeclaration {
