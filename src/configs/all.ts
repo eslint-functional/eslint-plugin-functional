@@ -17,7 +17,8 @@ const config = {
       rules: {
         "functional/no-method-signature": "error",
         "functional/no-mixed-interface": "error",
-        "functional/prefer-readonly-types": "error"
+        "functional/prefer-readonly-types": "error",
+        "functional/prefer-type": "error"
       }
     }
   ]

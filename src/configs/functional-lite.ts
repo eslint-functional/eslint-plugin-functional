@@ -21,7 +21,8 @@ const config = deepMerge([
       {
         files: ["*.ts", "*.tsx"],
         rules: {
-          "functional/no-mixed-interface": "error"
+          "functional/no-mixed-interface": "error",
+          "functional/prefer-type": "error"
         }
       }
     ]
