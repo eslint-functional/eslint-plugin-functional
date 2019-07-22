@@ -4,15 +4,15 @@ import recommended from "./external-recommended";
 
 const config = deepMerge(recommended, {
   rules: {
-    "functional/no-let": "error",
-    "functional/immutable-data": "error"
+    "functional/no-expression-statement": "error",
+    "functional/no-conditional-statement": "error",
+    "functional/no-loop-statement": "error"
   },
   overrides: [
     {
       files: ["*.ts", "*.tsx"],
       rules: {
-        "functional/no-method-signature": "warn",
-        "functional/prefer-readonly-types": "error"
+        "functional/no-return-void": "error"
       }
     }
   ]
