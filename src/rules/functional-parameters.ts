@@ -10,17 +10,25 @@ import {
   RuleMetaData,
   RuleResult
 } from "../util/rule";
-import { isPropertyAccess, isPropertyName } from "../util/tree";
+import { isIIFE, isPropertyAccess, isPropertyName } from "../util/tree";
 import { isRestElement } from "../util/typeguard";
 
 // The name of this rule.
 export const name = "functional-parameters" as const;
 
+type ParameterCountOptions = "atLeastOne" | "exactlyOne";
+
 // The options this rule can take.
 type Options = ignore.IgnorePatternOption & {
   readonly allowRestParameter: boolean;
   readonly allowArgumentsKeyword: boolean;
-  readonly enforceParameterCount: false | "atLeastOne" | "exactlyOne";
+  readonly enforceParameterCount:
+    | false
+    | ParameterCountOptions
+    | {
+        readonly count: ParameterCountOptions;
+        readonly allowIIFE: boolean;
+      };
 };
 
 // The schema for the rule options.
@@ -45,6 +53,19 @@ const schema: JSONSchema4 = [
             {
               type: "string",
               enum: ["atLeastOne", "exactlyOne"]
+            },
+            {
+              type: "object",
+              properties: {
+                count: {
+                  type: "string",
+                  enum: ["atLeastOne", "exactlyOne"]
+                },
+                allowIIFE: {
+                  type: "boolean"
+                }
+              },
+              additionalProperties: false
             }
           ]
         }
@@ -58,7 +79,10 @@ const schema: JSONSchema4 = [
 const defaultOptions: Options = {
   allowRestParameter: false,
   allowArgumentsKeyword: false,
-  enforceParameterCount: "atLeastOne"
+  enforceParameterCount: {
+    count: "atLeastOne",
+    allowIIFE: false
+  }
 };
 
 // The possible error messages.
@@ -115,21 +139,41 @@ function getParamCountViolations(
     | TSESTree.FunctionExpression
     | TSESTree.ArrowFunctionExpression
 ): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
-  return enforceParameterCount === "atLeastOne" && node.params.length < 1
-    ? [
-        {
-          node: node,
-          messageId: "paramCountAtLeastOne"
-        }
-      ]
-    : enforceParameterCount === "exactlyOne" && node.params.length !== 1
-    ? [
-        {
-          node: node,
-          messageId: "paramCountExactlyOne"
-        }
-      ]
-    : [];
+  if (
+    enforceParameterCount === false ||
+    (node.params.length === 0 &&
+      typeof enforceParameterCount === "object" &&
+      enforceParameterCount.allowIIFE &&
+      isIIFE(node))
+  ) {
+    return [];
+  } else if (
+    node.params.length === 0 &&
+    (enforceParameterCount === "atLeastOne" ||
+      (typeof enforceParameterCount === "object" &&
+        enforceParameterCount.count === "atLeastOne"))
+  ) {
+    return [
+      {
+        node,
+        messageId: "paramCountAtLeastOne"
+      }
+    ];
+  } else if (
+    node.params.length !== 1 &&
+    (enforceParameterCount === "exactlyOne" ||
+      (typeof enforceParameterCount === "object" &&
+        enforceParameterCount.count === "exactlyOne"))
+  ) {
+    return [
+      {
+        node,
+        messageId: "paramCountExactlyOne"
+      }
+    ];
+  } else {
+    return [];
+  }
 }
 
 /**

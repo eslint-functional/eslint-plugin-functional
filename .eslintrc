@@ -19,7 +19,8 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:eslint-plugin/recommended",
     "plugin:prettier/recommended",
-    "prettier/@typescript-eslint"
+    "prettier/@typescript-eslint",
+    "plugin:functional/functional"
   ],
   "parserOptions": {
     "ecmaVersion": 10,
@@ -32,22 +33,11 @@
     "no-var": "error",
 
     // Our rules.
-    "functional/immutable-data": "error",
-    "functional/no-let": "error",
     "functional/prefer-readonly-types": ["error", { "ignoreReturnType": true }],
-    "functional/no-method-signature": "error",
-    "functional/no-this": "error",
-    "functional/no-class": "error",
-    "functional/no-loop-statement": "error",
-    "functional/no-throw": "error",
-    "functional/no-mixed-interface": "error",
-    "functional/no-return-void": "error",
-    "functional/no-expression-statement": "warn",
     "functional/no-conditional-statement": [
       "error",
       { "allowReturningBranches": "ifExhaustive" }
     ],
-    "functional/no-try": "warn",
 
     // Typescript eslint.
     "@typescript-eslint/array-type": ["error", "generic"],
@@ -120,6 +110,7 @@
         "jest/prefer-spy-on": "error",
         "jest/valid-expect": "error",
 
+        "functional/functional-parameters": "off",
         "functional/no-expression-statement": "off"
       }
     }

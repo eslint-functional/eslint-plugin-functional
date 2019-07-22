@@ -1,7 +1,9 @@
 import { TSESTree } from "@typescript-eslint/typescript-estree";
 
 import {
+  isCallExpression,
   isClassLike,
+  isFunctionExpressionLike,
   isFunctionLike,
   isIdentifier,
   isMemberExpression,
@@ -91,5 +93,17 @@ export function isPropertyName(node: TSESTree.Identifier): boolean {
     node.parent !== undefined &&
     isProperty(node.parent) &&
     node.parent.key === node
+  );
+}
+
+/**
+ * Is the given function an IIFE?
+ */
+export function isIIFE(node: TSESTree.Node): boolean {
+  return (
+    isFunctionExpressionLike(node) &&
+    node.parent !== undefined &&
+    isCallExpression(node.parent) &&
+    node.parent.callee === node
   );
 }

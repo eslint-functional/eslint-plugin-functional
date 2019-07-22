@@ -39,10 +39,9 @@ export const ignoreLocalOptionSchema: JSONSchema4 = {
   additionalProperties: false
 };
 
-export interface IgnorePatternOption {
+export type IgnorePatternOption = {
   readonly ignorePattern?: string | ReadonlyArray<string>;
-}
-
+};
 export const ignorePatternOptionSchema: JSONSchema4 = {
   type: "object",
   properties: {
@@ -56,10 +55,9 @@ export const ignorePatternOptionSchema: JSONSchema4 = {
   additionalProperties: false
 };
 
-export interface IgnoreAccessorPatternOption {
+export type IgnoreAccessorPatternOption = {
   readonly ignoreAccessorPattern?: string | ReadonlyArray<string>;
-}
-
+};
 export const ignoreAccessorPatternOptionSchema: JSONSchema4 = {
   type: "object",
   properties: {
@@ -73,9 +71,9 @@ export const ignoreAccessorPatternOptionSchema: JSONSchema4 = {
   additionalProperties: false
 };
 
-export interface IgnoreReturnTypeOption {
+export type IgnoreReturnTypeOption = {
   readonly ignoreReturnType?: boolean;
-}
+};
 export const ignoreReturnTypeOptionSchema: JSONSchema4 = {
   type: "object",
   properties: {
@@ -86,9 +84,9 @@ export const ignoreReturnTypeOptionSchema: JSONSchema4 = {
   additionalProperties: false
 };
 
-export interface IgnoreClassOption {
+export type IgnoreClassOption = {
   readonly ignoreClass?: boolean;
-}
+};
 export const ignoreClassOptionSchema: JSONSchema4 = {
   type: "object",
   properties: {
@@ -99,9 +97,9 @@ export const ignoreClassOptionSchema: JSONSchema4 = {
   additionalProperties: false
 };
 
-export interface IgnoreInterfaceOption {
+export type IgnoreInterfaceOption = {
   readonly ignoreInterface?: boolean;
-}
+};
 export const ignoreInterfaceOptionSchema: JSONSchema4 = {
   type: "object",
   properties: {
@@ -112,9 +110,9 @@ export const ignoreInterfaceOptionSchema: JSONSchema4 = {
   additionalProperties: false
 };
 
-export interface IgnoreNewArrayOption {
+export type IgnoreNewArrayOption = {
   readonly ignoreNewArray?: boolean;
-}
+};
 export const ignoreNewArrayOptionSchema: JSONSchema4 = {
   type: "object",
   properties: {

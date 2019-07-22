@@ -8,10 +8,6 @@ import {
 } from "./immutable-data";
 import { name as noClassRuleName, rule as noClassRule } from "./no-class";
 import {
-  name as noReturnVoidName,
-  rule as noReturnVoid
-} from "./no-return-void";
-import {
   name as noConditionalStatementRuleName,
   rule as noConditionalStatementRule
 } from "./no-conditional-statement";
@@ -33,6 +29,10 @@ import {
   rule as noMixedInterfaceRule
 } from "./no-mixed-interface";
 import { name as noRejectRuleName, rule as noRejectRule } from "./no-reject";
+import {
+  name as noReturnVoidName,
+  rule as noReturnVoid
+} from "./no-return-void";
 import { name as noThisRuleName, rule as noThisRule } from "./no-this";
 import { name as noThrowRuleName, rule as noThrowRule } from "./no-throw";
 import { name as noTryRuleName, rule as noTryRule } from "./no-try";
@@ -40,6 +40,10 @@ import {
   name as preferReadonlyTypesRuleName,
   rule as preferReadonlyTypesRule
 } from "./prefer-readonly-types";
+import {
+  name as preferTypeRuleName,
+  rule as preferTypeRule
+} from "./prefer-type";
 
 /**
  * All of the custom rules.
@@ -59,5 +63,6 @@ export const rules = {
   [noThisRuleName]: noThisRule,
   [noThrowRuleName]: noThrowRule,
   [noTryRuleName]: noTryRule,
-  [preferReadonlyTypesRuleName]: preferReadonlyTypesRule
+  [preferReadonlyTypesRuleName]: preferReadonlyTypesRule,
+  [preferTypeRuleName]: preferTypeRule
 };
