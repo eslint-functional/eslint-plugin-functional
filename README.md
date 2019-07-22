@@ -141,6 +141,7 @@ See [@typescript-eslint/parser's README.md](https://github.com/typescript-eslint
 | [`no-this`](./docs/rules/no-this.md)                       | Disallow this access                                                          |                                                |                 :heavy_check_mark:                  |               :heavy_check_mark:                |          |                   |
 | [`no-class`](./docs/rules/no-class.md)                     | Disallow classes                                                              |                                                |                 :heavy_check_mark:                  |               :heavy_check_mark:                |          |                   |
 | [`no-mixed-interface`](./docs/rules/no-mixed-interface.md) | Restrict interfaces so that only members of the same kind are allowed in them |                                                |                 :heavy_check_mark:                  |               :heavy_check_mark:                |          | :thought_balloon: |
+| [`prefer-type`](./docs/rules/prefer-type.md)               | Prefer type literals over interfaces                                          |                                                |                 :heavy_check_mark:                  |               :heavy_check_mark:                |          | :thought_balloon: |
 
 ### No statements
 
