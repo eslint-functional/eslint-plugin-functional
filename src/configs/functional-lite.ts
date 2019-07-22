@@ -1,32 +1,13 @@
-import { all as deepMerge } from "deepmerge";
+import deepMerge from "deepmerge";
 
-import immutable from "./immutable";
+import functional from "./functional";
 
-const config = deepMerge([
-  immutable,
-  {
-    rules: {
-      "functional/no-this": "error",
-      "functional/no-class": "error",
-      "functional/no-loop-statement": "error",
-      "functional/no-conditional-statement": [
-        "error",
-        { allowReturningBranches: true }
-      ],
-      "functional/no-throw": "error",
-      "functional/no-return-void": "error",
-      "functional/functional-parameters": "error"
-    },
-    overrides: [
-      {
-        files: ["*.ts", "*.tsx"],
-        rules: {
-          "functional/no-mixed-interface": "error",
-          "functional/prefer-type": "error"
-        }
-      }
-    ]
+const config = deepMerge(functional, {
+  rules: {
+    "functional/no-conditional-statement": "off",
+    "functional/no-expression-statement": "off",
+    "functional/no-try": "off"
   }
-]);
+});
 
 export default config;

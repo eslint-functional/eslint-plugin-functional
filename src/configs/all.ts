@@ -1,5 +1,6 @@
 const config = {
   rules: {
+    "functional/functional-parameters": "error",
     "functional/immutable-data": "error",
     "functional/no-class": "error",
     "functional/no-conditional-statement": "error",
@@ -18,7 +19,8 @@ const config = {
         "functional/no-method-signature": "error",
         "functional/no-mixed-interface": "error",
         "functional/prefer-readonly-types": "error",
-        "functional/prefer-type": "error"
+        "functional/prefer-type": "error",
+        "functional/no-return-void": "error"
       }
     }
   ]
