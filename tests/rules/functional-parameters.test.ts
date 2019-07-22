@@ -24,11 +24,48 @@ const es3Valid: ReadonlyArray<ValidTestCase> = [
       };
       foo.arguments = 3`,
     optionsSet: [[]]
+  },
+  {
+    code: dedent`
+      (function() {
+        console.log("hello world");
+      })();`,
+    optionsSet: [[{ enforceParameterCount: { allowIIFE: true } }]]
   }
 ];
 
 // Invalid test cases.
 const es3Invalid: ReadonlyArray<InvalidTestCase> = [
+  {
+    code: dedent`
+      function foo() {
+        console.log("hello world");
+      }`,
+    optionsSet: [[]],
+    errors: [
+      {
+        messageId: "paramCountAtLeastOne",
+        type: "FunctionDeclaration",
+        line: 1,
+        column: 1
+      }
+    ]
+  },
+  {
+    code: dedent`
+      (function() {
+        console.log("hello world");
+      })();`,
+    optionsSet: [[]],
+    errors: [
+      {
+        messageId: "paramCountAtLeastOne",
+        type: "FunctionExpression",
+        line: 1,
+        column: 2
+      }
+    ]
+  },
   {
     code: dedent`
       function foo(bar) {
@@ -49,6 +86,13 @@ const es3Invalid: ReadonlyArray<InvalidTestCase> = [
 // Valid test cases.
 const es6Valid: ReadonlyArray<ValidTestCase> = [
   ...es3Valid,
+  {
+    code: dedent`
+      (() => {
+        console.log("hello world");
+      })();`,
+    optionsSet: [[{ enforceParameterCount: { allowIIFE: true } }]]
+  },
   {
     code: dedent`
       function foo([bar, ...baz]) {
@@ -88,6 +132,21 @@ const es6Valid: ReadonlyArray<ValidTestCase> = [
 // Invalid test cases.
 const es6Invalid: ReadonlyArray<InvalidTestCase> = [
   ...es3Invalid,
+  {
+    code: dedent`
+      (() => {
+        console.log("hello world");
+      })();`,
+    optionsSet: [[]],
+    errors: [
+      {
+        messageId: "paramCountAtLeastOne",
+        type: "ArrowFunctionExpression",
+        line: 1,
+        column: 2
+      }
+    ]
+  },
   {
     code: dedent`
       function foo(...bar) {
