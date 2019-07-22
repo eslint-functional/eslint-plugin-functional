@@ -81,6 +81,26 @@ export function isClassLike(
   );
 }
 
+export function isFunctionDeclaration(
+  node: TSESTree.Node
+): node is TSESTree.FunctionDeclaration {
+  return node.type === AST_NODE_TYPES.FunctionDeclaration;
+}
+
+/**
+ * Is the given node a function expression node?
+ *
+ * It doesn't matter what type of function expression.
+ */
+export function isFunctionExpressionLike(
+  node: TSESTree.Node
+): node is TSESTree.FunctionExpression | TSESTree.ArrowFunctionExpression {
+  return (
+    node.type === AST_NODE_TYPES.FunctionExpression ||
+    node.type === AST_NODE_TYPES.ArrowFunctionExpression
+  );
+}
+
 /**
  * Is the given node a function node?
  *
@@ -92,11 +112,7 @@ export function isFunctionLike(
   | TSESTree.FunctionDeclaration
   | TSESTree.FunctionExpression
   | TSESTree.ArrowFunctionExpression {
-  return (
-    node.type === AST_NODE_TYPES.FunctionDeclaration ||
-    node.type === AST_NODE_TYPES.FunctionExpression ||
-    node.type === AST_NODE_TYPES.ArrowFunctionExpression
-  );
+  return isFunctionDeclaration(node) || isFunctionExpressionLike(node);
 }
 
 export function isIdentifier(node: TSESTree.Node): node is TSESTree.Identifier {

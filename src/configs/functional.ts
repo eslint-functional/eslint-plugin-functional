@@ -1,13 +1,17 @@
-import deepMerge from "deepmerge";
+import { all as deepMerge } from "deepmerge";
 
-import functionalLite from "./functional-lite";
+import currying from "./currying";
+import immutable from "./immutable";
+import noExceptions from "./no-exceptions";
+import noObjectOrientation from "./no-object-orientation";
+import noStatements from "./no-statements";
 
-const config = deepMerge(functionalLite, {
-  rules: {
-    "functional/no-conditional-statement": "error",
-    "functional/no-expression-statement": "error",
-    "functional/no-try": "error"
-  }
-});
+const config = deepMerge([
+  currying,
+  immutable,
+  noExceptions,
+  noObjectOrientation,
+  noStatements
+]);
 
 export default config;

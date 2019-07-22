@@ -21,13 +21,19 @@ type Options = {
   readonly ignorePattern?: string | Array<string>;
   readonly allowRestParameter: boolean;
   readonly allowArgumentsKeyword: boolean;
-  readonly enforceParameterCount: false | "atLeastOne" | "exactlyOne";
+  readonly enforceParameterCount: false | "atLeastOne" | "exactlyOne" | {
+    readonly count: "atLeastOne" | "exactlyOne";
+    readonly allowIIFE: boolean;
+  };
 };
 
 const defaults = {
   allowRestParameter: false,
   allowArgumentsKeyword: false,
-  enforceParameterCount: "atLeastOne"
+  enforceParameterCount: {
+    count: "atLeastOne",
+    allowIIFE: false
+  }
 };
 ```
 
@@ -74,6 +80,14 @@ function add(x) {
 ```
 
 See [Currying](https://en.wikipedia.org/wiki/Currying) and [Higher-order function](https://en.wikipedia.org/wiki/Higher-order_function) on Wikipedia for more infomation.
+
+#### `enforceParameterCount.count`
+
+See [enforceParameterCount](#enforceparametercount).
+
+#### `enforceParameterCount.allowIIFE`
+
+If true, this option allows for the use of [IIFEs](https://developer.mozilla.org/en-US/docs/Glossary/IIFE) that do not have any parameters.
 
 ### `ignorePattern`
 
