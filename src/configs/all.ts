@@ -17,7 +17,7 @@ const config = {
       files: ["*.ts", "*.tsx"],
       rules: {
         "functional/no-method-signature": "error",
-        "functional/no-mixed-interface": "error",
+        "functional/no-mixed-type": "error",
         "functional/prefer-readonly-types": "error",
         "functional/prefer-type": "error",
         "functional/no-return-void": "error"

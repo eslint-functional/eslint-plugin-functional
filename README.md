@@ -135,11 +135,11 @@ See [@typescript-eslint/parser's README.md](https://github.com/typescript-eslint
 
 :see_no_evil: = `no-object-orientation` Ruleset.
 
-| Name                                                       | Description                                                             | <span title="No Object-Orientation">:see_no_evil:</span> | <span title="Lite">:hear_no_evil:</span> | <span title="Recommended">:speak_no_evil:</span> | :wrench: |   :blue_heart:    |
-| ---------------------------------------------------------- | ----------------------------------------------------------------------- | :------------------------------------------------------: | :--------------------------------------: | :----------------------------------------------: | :------: | :---------------: |
-| [`no-this`](./docs/rules/no-this.md)                       | Disallow `this` access                                                  |                    :heavy_check_mark:                    |            :heavy_check_mark:            |                :heavy_check_mark:                |          |                   |
-| [`no-class`](./docs/rules/no-class.md)                     | Disallow classes                                                        |                    :heavy_check_mark:                    |            :heavy_check_mark:            |                :heavy_check_mark:                |          |                   |
-| [`no-mixed-interface`](./docs/rules/no-mixed-interface.md) | Restrict interfaces so that they cannot contain both data and functions |                    :heavy_check_mark:                    |            :heavy_check_mark:            |                :heavy_check_mark:                |          | :thought_balloon: |
+| Name                                             | Description                                                              | <span title="No Object-Orientation">:see_no_evil:</span> | <span title="Lite">:hear_no_evil:</span> | <span title="Recommended">:speak_no_evil:</span> | :wrench: |   :blue_heart:    |
+| ------------------------------------------------ | ------------------------------------------------------------------------ | :------------------------------------------------------: | :--------------------------------------: | :----------------------------------------------: | :------: | :---------------: |
+| [`no-this`](./docs/rules/no-this.md)             | Disallow `this` access                                                   |                    :heavy_check_mark:                    |            :heavy_check_mark:            |                :heavy_check_mark:                |          |                   |
+| [`no-class`](./docs/rules/no-class.md)           | Disallow classes                                                         |                    :heavy_check_mark:                    |            :heavy_check_mark:            |                :heavy_check_mark:                |          |                   |
+| [`no-mixed-type`](./docs/rules/no-mixed-type.md) | Restrict types so that only members of the same kind are allowed in them |                    :heavy_check_mark:                    |            :heavy_check_mark:            |                :heavy_check_mark:                |          | :thought_balloon: |
 
 ### No Statements Rules
 
