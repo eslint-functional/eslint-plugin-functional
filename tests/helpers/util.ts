@@ -3,9 +3,10 @@ import {
   RuleListener,
   RuleMetaData
 } from "@typescript-eslint/experimental-utils/dist/ts-eslint";
-import { Rule, RuleTester as ESLintRuleTester } from "eslint";
+import deepMerge, { Options as deepMergeOptions } from "deepmerge";
+import { Linter, Rule, RuleTester as ESLintRuleTester } from "eslint";
 
-import { createRule } from "../src/util/rule";
+import { createRule } from "../../src/util/rule";
 
 type OptionsSet = {
   /**
@@ -93,4 +94,53 @@ export function createDummyRule(
 
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   return createRule<"generic", ReadonlyArray<any>>("dummy", meta, [], create);
+}
+
+export type Config = Linter.Config & {
+  readonly overrides?: ReadonlyArray<{
+    readonly files: ReadonlyArray<string>;
+    readonly rules: Linter.Config["rules"];
+  }>;
+};
+
+/**
+ * Create an empty target for the given value.
+ */
+function emptyTarget(value: unknown): {} {
+  return Array.isArray(value) ? [] : {};
+}
+
+/**
+ * Create a clone of the given value.
+ */
+function clone<T>(value: T, options: deepMergeOptions): T {
+  return deepMerge<T>(emptyTarget(value), value, options);
+}
+
+/**
+ * Combine merge 2 arrays.
+ */
+export function combineMerge<T extends object>(
+  target: ReadonlyArray<T>,
+  source: ReadonlyArray<T>,
+  options: deepMergeOptions
+): Array<T> {
+  // TODO: make this function functional.
+  /* eslint-disable */
+  const destination = target.slice();
+
+  source.forEach((item, index) => {
+    if (typeof destination[index] === "undefined") {
+      const cloneRequested = options.clone !== false;
+      const shouldClone = cloneRequested && options.isMergeableObject(item);
+      destination[index] = shouldClone ? clone(item, options) : item;
+    } else if (options.isMergeableObject(item)) {
+      destination[index] = deepMerge(target[index], item, options);
+    } else if (target.indexOf(item) === -1) {
+      destination.push(item);
+    }
+  });
+
+  return destination;
+  /* eslint-enable */
 }

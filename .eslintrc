@@ -111,6 +111,7 @@
         "jest/valid-expect": "error",
 
         "functional/functional-parameters": "off",
+        "functional/no-conditional-statement": "off",
         "functional/no-expression-statement": "off"
       }
     }
