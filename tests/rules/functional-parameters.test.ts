@@ -7,13 +7,13 @@ import { RuleTester } from "eslint";
 
 import { name, rule } from "../../src/rules/functional-parameters";
 
-import { es3, es6, typescript } from "../configs";
+import { es3, es6, typescript } from "../helpers/configs";
 import {
   InvalidTestCase,
   processInvalidTestCase,
   processValidTestCase,
   ValidTestCase
-} from "../util";
+} from "../helpers/util";
 
 // Valid test cases.
 const es3Valid: ReadonlyArray<ValidTestCase> = [

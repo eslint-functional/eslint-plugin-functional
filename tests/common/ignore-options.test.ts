@@ -7,8 +7,8 @@ import {
   IgnorePatternOption,
   shouldIgnore
 } from "../../src/common/ignore-options";
-import { typescript } from "../configs";
-import { createDummyRule } from "../util";
+import { typescript } from "../helpers/configs";
+import { createDummyRule } from "../helpers/util";
 
 describe("option: ignore", () => {
   describe("ignoreAccessorPattern", () => {
