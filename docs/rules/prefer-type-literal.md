@@ -1,4 +1,4 @@
-# Prefer type over interface (prefer-type)
+# Prefer type over interface (prefer-type-literal)
 
 This rule enforces use of the type literals over interfaces.
 

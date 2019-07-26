@@ -19,7 +19,7 @@ const config = {
         "functional/no-method-signature": "error",
         "functional/no-mixed-interface": "error",
         "functional/prefer-readonly-type": "error",
-        "functional/prefer-type": "error",
+        "functional/prefer-type-literal": "error",
         "functional/no-return-void": "error"
       }
     }
