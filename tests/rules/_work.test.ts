@@ -11,7 +11,7 @@ import { RuleTester } from "eslint";
  */
 import { rule } from "../../src/rules/prefer-readonly-type";
 
-import { typescript } from "../configs";
+import { typescript } from "../helpers/configs";
 
 /*
  * Step 2a.
