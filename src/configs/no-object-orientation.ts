@@ -11,7 +11,8 @@ const config = deepMerge(recommended, {
     {
       files: ["*.ts", "*.tsx"],
       rules: {
-        "functional/no-mixed-type": "error"
+        "functional/no-mixed-type": "error",
+        "functional/prefer-type-literal": "error"
       }
     }
   ]
