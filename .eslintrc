@@ -20,7 +20,7 @@
     "plugin:eslint-plugin/recommended",
     "plugin:prettier/recommended",
     "prettier/@typescript-eslint",
-    "plugin:functional/functional"
+    "plugin:functional/recommended"
   ],
   "parserOptions": {
     "ecmaVersion": 10,
