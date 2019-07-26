@@ -207,6 +207,12 @@ export function isTSTypeAliasDeclaration(
   return node.type === AST_NODE_TYPES.TSTypeAliasDeclaration;
 }
 
+export function isTSTypeLiteral(
+  node: TSESTree.Node
+): node is TSESTree.TSTypeLiteral {
+  return node.type === AST_NODE_TYPES.TSTypeLiteral;
+}
+
 export function isTSTypeOperator(
   node: TSESTree.Node
 ): node is TSESTree.TSTypeOperator {
