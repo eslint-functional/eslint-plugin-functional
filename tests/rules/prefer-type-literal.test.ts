@@ -1,11 +1,11 @@
 /**
- * @file Tests for prefer-type.
+ * @file Tests for prefer-type-literal.
  */
 
 import dedent from "dedent";
 import { RuleTester } from "eslint";
 
-import { name, rule } from "../../src/rules/prefer-type";
+import { name, rule } from "../../src/rules/prefer-type-literal";
 
 import { typescript } from "../configs";
 import {

@@ -13,7 +13,7 @@ import {
 import { isIdentifier } from "../util/typeguard";
 
 // The name of this rule.
-export const name = "prefer-type" as const;
+export const name = "prefer-type-literal" as const;
 
 // The options this rule can take.
 type Options = ignore.IgnoreLocalOption & ignore.IgnorePatternOption;

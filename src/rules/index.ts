@@ -43,7 +43,7 @@ import {
 import {
   name as preferTypeRuleName,
   rule as preferTypeRule
-} from "./prefer-type";
+} from "./prefer-type-literal";
 
 /**
  * All of the custom rules.
