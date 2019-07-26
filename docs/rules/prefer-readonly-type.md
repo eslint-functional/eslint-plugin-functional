@@ -1,4 +1,4 @@
-# Prefer readonly types over mutable types (prefer-readonly-types)
+# Prefer readonly types over mutable types (prefer-readonly-type)
 
 This rule enforces use of the readonly modifier and readonly types.
 

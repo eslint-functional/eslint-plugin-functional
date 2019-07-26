@@ -39,7 +39,7 @@ import { name as noTryRuleName, rule as noTryRule } from "./no-try";
 import {
   name as preferReadonlyTypesRuleName,
   rule as preferReadonlyTypesRule
-} from "./prefer-readonly-types";
+} from "./prefer-readonly-type";
 import {
   name as preferTypeRuleName,
   rule as preferTypeRule

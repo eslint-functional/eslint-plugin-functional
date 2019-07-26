@@ -12,7 +12,7 @@ const config = deepMerge(recommended, {
       files: ["*.ts", "*.tsx"],
       rules: {
         "functional/no-method-signature": "warn",
-        "functional/prefer-readonly-types": "error"
+        "functional/prefer-readonly-type": "error"
       }
     }
   ]

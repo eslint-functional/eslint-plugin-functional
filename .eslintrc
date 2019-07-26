@@ -33,7 +33,7 @@
     "no-var": "error",
 
     // Our rules.
-    "functional/prefer-readonly-types": ["error", { "ignoreReturnType": true }],
+    "functional/prefer-readonly-type": ["error", { "ignoreReturnType": true }],
     "functional/no-conditional-statement": [
       "error",
       { "allowReturningBranches": "ifExhaustive" }

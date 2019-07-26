@@ -1,11 +1,11 @@
 /**
- * @file Tests for prefer-readonly-types.
+ * @file Tests for prefer-readonly-type.
  */
 
 import dedent from "dedent";
 import { RuleTester } from "eslint";
 
-import { name, rule } from "../../src/rules/prefer-readonly-types";
+import { name, rule } from "../../src/rules/prefer-readonly-type";
 
 import { typescript } from "../configs";
 import {
