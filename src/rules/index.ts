@@ -27,7 +27,7 @@ import {
 import {
   name as noMixedInterfaceRuleName,
   rule as noMixedInterfaceRule
-} from "./no-mixed-interface";
+} from "./no-mixed-type";
 import { name as noRejectRuleName, rule as noRejectRule } from "./no-reject";
 import {
   name as noReturnVoidName,
