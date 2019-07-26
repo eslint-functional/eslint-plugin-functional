@@ -28,7 +28,7 @@ import {
 } from "../util/typeguard";
 
 // The name of this rule.
-export const name = "prefer-readonly-types" as const;
+export const name = "prefer-readonly-type" as const;
 
 // The options this rule can take.
 type Options = ignore.IgnoreLocalOption &
