@@ -124,42 +124,30 @@ export const ignoreNewArrayOptionSchema: JSONSchema4 = {
 };
 
 /**
- * Recursive callback of `getNodeText`.
- *
- * This function not be called from anywhere else.
- */
-function _getNodeText(
-  node: TSESTree.Node,
-  context: RuleContext<string, BaseOptions>
-): string {
-  return isIdentifier(node)
-    ? node.name
-    : isMemberExpression(node)
-    ? `${_getNodeText(node.object, context)}.${_getNodeText(
-        node.property,
-        context
-      )}`
-    : context.getSourceCode().getText(node);
-}
-
-/**
  * Get the text of the given node.
  */
 function getNodeText(
   node: TSESTree.Node,
   context: RuleContext<string, BaseOptions>
-): string | undefined {
-  return isAssignmentExpression(node)
+): string {
+  return isIdentifier(node)
+    ? node.name
+    : isAssignmentExpression(node)
     ? getNodeText(node.left, context)
     : isCallExpression(node)
     ? getNodeText(node.callee, context)
     : isMemberExpression(node)
-    ? _getNodeText(node.object, context)
-    : isVariableDeclarator(node) || isTSTypeAliasDeclaration(node)
-    ? _getNodeText(node.id, context)
+    ? `${getNodeText(node.object, context)}.${getNodeText(
+        node.property,
+        context
+      )}`
+    : isVariableDeclarator(node)
+    ? getNodeText(node.id, context)
+    : isTSTypeAliasDeclaration(node)
+    ? getNodeText(node.id, context)
     : isTSPropertySignature(node)
-    ? _getNodeText(node.key, context)
-    : _getNodeText(node, context);
+    ? getNodeText(node.key, context)
+    : context.getSourceCode().getText(node);
 }
 
 /**
@@ -169,10 +157,9 @@ function getNodeTexts(
   node: TSESTree.Node,
   context: RuleContext<string, BaseOptions>
 ): ReadonlyArray<string> {
-  return (isVariableDeclaration(node)
+  return isVariableDeclaration(node)
     ? node.declarations.flatMap(declarator => getNodeText(declarator, context))
-    : [getNodeText(node, context)]
-  ).filter(name => name !== undefined) as ReadonlyArray<string>;
+    : [getNodeText(node, context)];
 }
 
 /**

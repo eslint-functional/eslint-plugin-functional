@@ -37,6 +37,18 @@ const objectES3Valid: ReadonlyArray<ValidTestCase> = [
       var b = Object.assign(bar(1, 2, 3), { d: 4 });
       var c = Object.assign(x.func(), { d: 4 });`,
     optionsSet: [[]]
+  },
+  // IgnoreAccessorPattern - objects.
+  {
+    code: dedent`
+      var mutableVar = { a: 1 };
+      mutableVar.a = 0;`,
+    optionsSet: [
+      [{ ignoreAccessorPattern: ["**.mutable*.a"] }],
+      [{ ignoreAccessorPattern: ["**.mutable*.*"] }],
+      [{ ignoreAccessorPattern: ["**.mutable*.*.**"] }],
+      [{ ignoreAccessorPattern: ["**.mutable*.**"] }]
+    ]
   }
 ];
 
@@ -267,6 +279,20 @@ const objectES6Valid: ReadonlyArray<ValidTestCase> = [
         }
       }`,
     optionsSet: [[]]
+  },
+  // IgnoreAccessorPattern - classes.
+  {
+    code: dedent`
+      class Klass {
+        mutate() {
+          this.mutableField = 0;
+        }
+      }`,
+    optionsSet: [
+      [{ ignoreAccessorPattern: ["this.*.**"] }],
+      [{ ignoreAccessorPattern: ["**.mutable*"] }],
+      [{ ignoreAccessorPattern: ["**.mutable*.**"] }]
+    ]
   }
 ];
 
