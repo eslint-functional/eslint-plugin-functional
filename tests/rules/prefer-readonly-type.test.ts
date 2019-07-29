@@ -281,6 +281,11 @@ const valid: ReadonlyArray<ValidTestCase> = [
   // Ignore Prefix.
   {
     code: dedent`
+      let mutableFoo: string[] = [];`,
+    optionsSet: [[{ ignorePattern: "^mutable" }]]
+  },
+  {
+    code: dedent`
       let foo: {
         mutableA: number,
         mutableB: ReadonlyArray<string>,
@@ -295,7 +300,20 @@ const valid: ReadonlyArray<ValidTestCase> = [
       };`,
     optionsSet: [[{ ignorePattern: "^mutable" }]]
   },
+  {
+    code: dedent`
+      class Klass {
+        mutableA?: string;
+        private mutableB?: string;
+      }`,
+    optionsSet: [[{ ignorePattern: "^mutable" }]]
+  },
   // Ignore Suffix.
+  {
+    code: dedent`
+      let fooMutable: string[] = [];`,
+    optionsSet: [[{ ignorePattern: "Mutable$" }]]
+  },
   {
     code: dedent`
       let foo: {
@@ -310,6 +328,14 @@ const valid: ReadonlyArray<ValidTestCase> = [
           dMutable: { readonly [key: string]: string },
         }
       };`,
+    optionsSet: [[{ ignorePattern: "Mutable$" }]]
+  },
+  {
+    code: dedent`
+      class Klass {
+        AMutable?: string;
+        private BMutable?: string;
+      }`,
     optionsSet: [[{ ignorePattern: "Mutable$" }]]
   }
 ];
