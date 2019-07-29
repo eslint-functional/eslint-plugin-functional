@@ -7,7 +7,6 @@ import { JSONSchema4 } from "json-schema";
 
 import * as ignore from "../common/ignore-options";
 import {
-  checkNode,
   createRule,
   getTypeOfNode,
   RuleContext,
@@ -196,51 +195,63 @@ function checkImplicitType(
     | TSESTree.FunctionDeclaration
     | TSESTree.FunctionExpression
     | TSESTree.ArrowFunctionExpression,
-  context: RuleContext<keyof typeof errorMessages, Options>
+  context: RuleContext<keyof typeof errorMessages, Options>,
+  options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
-  type Declarator = {
-    readonly id: TSESTree.Node;
-    readonly init: TSESTree.Node | null;
-    readonly node: TSESTree.Node;
-  };
+  if (options.checkImplicit) {
+    type Declarator = {
+      readonly id: TSESTree.Node;
+      readonly init: TSESTree.Node | null;
+      readonly node: TSESTree.Node;
+    };
 
-  const declarators: ReadonlyArray<Declarator> = isFunctionLike(node)
-    ? node.params
-        .map(param =>
-          isAssignmentPattern(param)
-            ? /* eslint-disable-next-line @typescript-eslint/no-object-literal-type-assertion */
-              ({ id: param.left, init: param.right, node: param } as Declarator)
-            : undefined
-        )
-        .filter((param): param is Declarator => param !== undefined)
-    : node.declarations.map(
-        declaration =>
-          /* eslint-disable-next-line @typescript-eslint/no-object-literal-type-assertion */
-          ({
-            id: declaration.id,
-            init: declaration.init,
-            node: declaration
-          } as Declarator)
-      );
+    const declarators: ReadonlyArray<Declarator> = isFunctionLike(node)
+      ? node.params
+          .map(param =>
+            isAssignmentPattern(param)
+              ? /* eslint-disable-next-line @typescript-eslint/no-object-literal-type-assertion */
+                ({
+                  id: param.left,
+                  init: param.right,
+                  node: param
+                } as Declarator)
+              : undefined
+          )
+          .filter((param): param is Declarator => param !== undefined)
+      : node.declarations.map(
+          declaration =>
+            /* eslint-disable-next-line @typescript-eslint/no-object-literal-type-assertion */
+            ({
+              id: declaration.id,
+              init: declaration.init,
+              node: declaration
+            } as Declarator)
+        );
 
-  return {
-    context,
-    descriptors: declarators.flatMap(declarator => {
-      return isIdentifier(declarator.id) &&
-        declarator.id.typeAnnotation === undefined &&
-        declarator.init !== null &&
-        isArrayType(getTypeOfNode(declarator.init, context))
-        ? [
-            {
-              node: declarator.node,
-              messageId: "implicit",
-              fix: fixer =>
-                fixer.insertTextAfter(declarator.id, ": readonly unknown[]")
-            }
-          ]
-        : [];
-    })
-  };
+    return {
+      context,
+      descriptors: declarators.flatMap(declarator => {
+        return isIdentifier(declarator.id) &&
+          declarator.id.typeAnnotation === undefined &&
+          declarator.init !== null &&
+          isArrayType(getTypeOfNode(declarator.init, context))
+          ? [
+              {
+                node: declarator.node,
+                messageId: "implicit",
+                fix: fixer =>
+                  fixer.insertTextAfter(declarator.id, ": readonly unknown[]")
+              }
+            ]
+          : [];
+      })
+    };
+  } else {
+    return {
+      context,
+      descriptors: []
+    };
+  }
 }
 
 // Create the rule.
@@ -248,32 +259,17 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   name,
   meta,
   defaultOptions,
-  (context, options) => {
-    const _checkArrayOrTupleType = checkNode(
-      checkArrayOrTupleType,
-      context,
-      options
-    );
-    const _checkTypeReference = checkNode(checkTypeReference, context, options);
-    const _checkProperty = checkNode(checkProperty, context, options);
-    const _checkImplicitType = checkNode(checkImplicitType, context, options);
-
-    return {
-      TSArrayType: _checkArrayOrTupleType,
-      TSTupleType: _checkArrayOrTupleType,
-      TSTypeReference: _checkTypeReference,
-      ClassProperty: _checkProperty,
-      TSIndexSignature: _checkProperty,
-      TSParameterProperty: _checkProperty,
-      TSPropertySignature: _checkProperty,
-      ...(options.checkImplicit
-        ? {
-            VariableDeclaration: _checkImplicitType,
-            FunctionDeclaration: _checkImplicitType,
-            FunctionExpression: _checkImplicitType,
-            ArrowFunctionExpression: _checkImplicitType
-          }
-        : {})
-    };
+  {
+    TSArrayType: checkArrayOrTupleType,
+    TSTupleType: checkArrayOrTupleType,
+    TSTypeReference: checkTypeReference,
+    ClassProperty: checkProperty,
+    TSIndexSignature: checkProperty,
+    TSParameterProperty: checkProperty,
+    TSPropertySignature: checkProperty,
+    VariableDeclaration: checkImplicitType,
+    FunctionDeclaration: checkImplicitType,
+    FunctionExpression: checkImplicitType,
+    ArrowFunctionExpression: checkImplicitType
   }
 );

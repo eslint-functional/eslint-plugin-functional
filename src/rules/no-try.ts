@@ -2,7 +2,6 @@ import { TSESTree } from "@typescript-eslint/typescript-estree";
 import { JSONSchema4 } from "json-schema";
 
 import {
-  checkNode,
   createRule,
   RuleContext,
   RuleMetaData,
@@ -55,11 +54,7 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   name,
   meta,
   defaultOptions,
-  (context, options) => {
-    const _checkTryStatement = checkNode(checkTryStatement, context, options);
-
-    return {
-      TryStatement: _checkTryStatement
-    };
+  {
+    TryStatement: checkTryStatement
   }
 );
