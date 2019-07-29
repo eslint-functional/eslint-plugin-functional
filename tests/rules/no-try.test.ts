@@ -19,6 +19,14 @@ const valid: ReadonlyArray<ValidTestCase> = [
   {
     code: `var x = 0;`,
     optionsSet: [[]]
+  },
+  {
+    code: `try {} catch (e) {}`,
+    optionsSet: [[{ allowCatch: true }]]
+  },
+  {
+    code: `try {} finally {}`,
+    optionsSet: [[{ allowFinally: true }]]
   }
 ];
 
@@ -29,7 +37,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
     optionsSet: [[]],
     errors: [
       {
-        messageId: "generic",
+        messageId: "catch",
         type: "TryStatement",
         line: 1,
         column: 1
@@ -41,7 +49,31 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
     optionsSet: [[]],
     errors: [
       {
-        messageId: "generic",
+        messageId: "catch",
+        type: "TryStatement",
+        line: 1,
+        column: 1
+      }
+    ]
+  },
+  {
+    code: `try {} catch (e) {} finally {}`,
+    optionsSet: [[{ allowCatch: true }]],
+    errors: [
+      {
+        messageId: "finally",
+        type: "TryStatement",
+        line: 1,
+        column: 1
+      }
+    ]
+  },
+  {
+    code: `try {} catch (e) {} finally {}`,
+    optionsSet: [[{ allowFinally: true }]],
+    errors: [
+      {
+        messageId: "catch",
         type: "TryStatement",
         line: 1,
         column: 1
@@ -53,7 +85,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
     optionsSet: [[]],
     errors: [
       {
-        messageId: "generic",
+        messageId: "finally",
         type: "TryStatement",
         line: 1,
         column: 1
