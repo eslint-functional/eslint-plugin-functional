@@ -246,10 +246,10 @@ function checkCallExpression(
 ): RuleResult<keyof typeof errorMessages, Options> {
   const assumeTypesForArrays =
     options.assumeTypes === true ||
-    (options.assumeTypes !== false && Boolean(options.assumeTypes.forArrays));
+    (options.assumeTypes !== false && options.assumeTypes.forArrays === true);
   const assumeTypesForObjects =
     options.assumeTypes === true ||
-    (options.assumeTypes !== false && Boolean(options.assumeTypes.forObjects));
+    (options.assumeTypes !== false && options.assumeTypes.forObjects === true);
 
   return {
     context,
