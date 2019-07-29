@@ -254,11 +254,11 @@ export function shouldIgnore(
 ): boolean {
   return (
     // Ignore if in a function and ignoreLocal is set.
-    (Boolean(options.ignoreLocal) && inFunction(node)) ||
+    (options.ignoreLocal === true && inFunction(node)) ||
     // Ignore if in a class and ignoreClass is set.
-    (Boolean(options.ignoreClass) && inClass(node)) ||
+    (options.ignoreClass === true && inClass(node)) ||
     // Ignore if in an interface and ignoreInterface is set.
-    (Boolean(options.ignoreInterface) && inInterface(node)) ||
+    (options.ignoreInterface === true && inInterface(node)) ||
     ((texts: ReadonlyArray<string>): boolean =>
       texts.length > 0
         ? // Ignore if ignorePattern is set and a pattern matches.
