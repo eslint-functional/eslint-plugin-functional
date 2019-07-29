@@ -8,4 +8,24 @@ Try statements are not part of functional programming. See [no-throw](./no-throw
 
 ## Options
 
-The rule does not accept any options.
+The rule accepts an options object with the following properties:
+
+```typescript
+type Options = {
+  readonly allowCatch: boolean;
+  readonly allowFinally: boolean;
+};
+
+const defaults = {
+  allowCatch: false,
+  allowFinally: false
+};
+```
+
+### `allowCatch`
+
+If true, try-catch statements are allowed.
+
+### `allowFinally`
+
+If true, try-finally statements are allowed.
