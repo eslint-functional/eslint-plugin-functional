@@ -71,15 +71,30 @@ For example:
 
 ```js
 {
-  // Ignore all mutations directly on top-level objects that are prefixed with "mutable_".
-  "ignorePattern": "mutable_*"
+  // Ignore all reassigning to object properties that are prefixed with "mutable_".
+  "ignorePattern": "**.mutable_*"
 }
 ```
 
 ```js
 {
-  // Ignore all mutations directly on all objects, and any of their deeply nested properties, where that object is prefixed with "mutable_".
+  // Ignore all shallow mutations made to object properties that are prefixed with "mutable_".
+  "ignorePattern": "**.mutable_*.*"
+}
+```
+
+```js
+{
+  // Ignore all deep mutations made to object properties that are prefixed with "mutable_".
+  "ignorePattern": "**.mutable_*.*.**"
+}
+```
+
+```js
+{
+  // Ignore all deep mutations and reassigning to object properties that are prefixed with "mutable_".
   "ignorePattern": "**.mutable_*.**"
+  // This is the same as `"ignorePattern": ["**.mutable_*", "**.mutable_*.*.**"]`
 }
 ```
 
@@ -88,4 +103,4 @@ For example:
 The following wildcards can be used when specifing a pattern:
 
 `**` - Match any depth (including zero). Can only be used as a full accessor.
-`*` - When used as a full accessor, match the next accessor. When used as part of an accessor, match any characters.
+`*` - When used as a full accessor, match the next accessor (there must be one). When used as part of an accessor, match any characters.
