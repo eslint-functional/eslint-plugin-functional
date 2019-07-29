@@ -5,7 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/jonaskello/eslint-plugin-functional/compare/v0.4.0...HEAD)
+## [Unreleased](https://github.com/jonaskello/eslint-plugin-functional/compare/v0.5.0...HEAD)
+
+## [v0.5.0](https://github.com/jonaskello/eslint-plugin-functional/compare/v0.4.0...v0.5.0)
+
+### Merged
+
+- Refactor out the checkNode function for createRule. [`#48`](https://github.com/jonaskello/eslint-plugin-functional/pull/48)
+- Text matching of MemberExpression nodes now includes the property name [`#47`](https://github.com/jonaskello/eslint-plugin-functional/pull/47)
+- Test configs [`#43`](https://github.com/jonaskello/eslint-plugin-functional/pull/43)
+- feat(no-mixed-type): no-mixed-interface -> no-mixed-type [`#42`](https://github.com/jonaskello/eslint-plugin-functional/pull/42)
+- feat(configs): Create additional configs for each category of rules. [`#40`](https://github.com/jonaskello/eslint-plugin-functional/pull/40)
+- feat(functional-parameters): Add option to allow iifes [`#39`](https://github.com/jonaskello/eslint-plugin-functional/pull/39)
+- new rule: prefer-type [`#38`](https://github.com/jonaskello/eslint-plugin-functional/pull/38)
+
+### Fixed
+
+- feat(functional-parameters): Add option to allow iifes [`#37`](https://github.com/jonaskello/eslint-plugin-functional/issues/37)
 
 ## [v0.4.0](https://github.com/jonaskello/eslint-plugin-functional/compare/v0.3.0...v0.4.0)
 
