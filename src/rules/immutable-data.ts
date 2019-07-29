@@ -316,8 +316,6 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
       context,
       options
     );
-    // This functionality is only avaliable if the parser services are
-    // avaliable.
     const _checkCallExpression = checkNode(
       checkCallExpression,
       context,
