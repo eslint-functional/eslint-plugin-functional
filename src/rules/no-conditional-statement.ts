@@ -2,7 +2,6 @@ import { TSESTree } from "@typescript-eslint/typescript-estree";
 import { JSONSchema4 } from "json-schema";
 
 import {
-  checkNode,
   createRule,
   RuleContext,
   RuleMetaData,
@@ -188,17 +187,8 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   name,
   meta,
   defaultOptions,
-  (context, options) => {
-    const _checkIfStatement = checkNode(checkIfStatement, context, options);
-    const _checkSwitchStatement = checkNode(
-      checkSwitchStatement,
-      context,
-      options
-    );
-
-    return {
-      IfStatement: _checkIfStatement,
-      SwitchStatement: _checkSwitchStatement
-    };
+  {
+    IfStatement: checkIfStatement,
+    SwitchStatement: checkSwitchStatement
   }
 );

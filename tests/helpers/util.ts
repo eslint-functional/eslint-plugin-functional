@@ -6,8 +6,6 @@ import {
 import deepMerge, { Options as deepMergeOptions } from "deepmerge";
 import { Linter, Rule, RuleTester as ESLintRuleTester } from "eslint";
 
-import { createRule } from "../../src/util/rule";
-
 type OptionsSet = {
   /**
    * The set of options this test case should pass for.
@@ -72,9 +70,7 @@ export function processValidTestCase(
 export function createDummyRule(
   create: (
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    context: RuleContext<"generic", any>,
-    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    optionsWithDefault: any
+    context: RuleContext<"generic", any>
   ) => RuleListener
 ): Rule.RuleModule {
   const meta: RuleMetaData<"generic"> = {
@@ -92,8 +88,10 @@ export function createDummyRule(
     schema: {}
   };
 
-  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-  return createRule<"generic", ReadonlyArray<any>>("dummy", meta, [], create);
+  return {
+    meta,
+    create
+  } as Rule.RuleModule;
 }
 
 export type Config = Linter.Config & {

@@ -5,7 +5,6 @@ import { JSONSchema4 } from "json-schema";
 import * as ignore from "../common/ignore-options";
 import { isExpected } from "../util/misc";
 import {
-  checkNode,
   createRule,
   getTypeOfNode,
   RuleContext,
@@ -300,33 +299,10 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   name,
   meta,
   defaultOptions,
-  (context, options) => {
-    const _checkAssignmentExpression = checkNode(
-      checkAssignmentExpression,
-      context,
-      options
-    );
-    const _checkUnaryExpression = checkNode(
-      checkUnaryExpression,
-      context,
-      options
-    );
-    const _checkUpdateExpression = checkNode(
-      checkUpdateExpression,
-      context,
-      options
-    );
-    const _checkCallExpression = checkNode(
-      checkCallExpression,
-      context,
-      options
-    );
-
-    return {
-      AssignmentExpression: _checkAssignmentExpression,
-      UnaryExpression: _checkUnaryExpression,
-      UpdateExpression: _checkUpdateExpression,
-      CallExpression: _checkCallExpression
-    };
+  {
+    AssignmentExpression: checkAssignmentExpression,
+    UnaryExpression: checkUnaryExpression,
+    UpdateExpression: checkUpdateExpression,
+    CallExpression: checkCallExpression
   }
 );
