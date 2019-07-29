@@ -4,7 +4,6 @@ import { AST_NODE_TYPES } from "@typescript-eslint/typescript-estree/dist/ts-est
 import { JSONSchema4 } from "json-schema";
 
 import {
-  checkNode,
   createRule,
   RuleContext,
   RuleMetaData,
@@ -114,11 +113,14 @@ function getTypeElementViolations(
  */
 function checkTSInterfaceDeclaration(
   node: TSESTree.TSInterfaceDeclaration,
-  context: RuleContext<keyof typeof errorMessages, Options>
+  context: RuleContext<keyof typeof errorMessages, Options>,
+  options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   return {
     context,
-    descriptors: getTypeElementViolations(node.body.body)
+    descriptors: options.checkInterfaces
+      ? getTypeElementViolations(node.body.body)
+      : []
   };
 }
 
@@ -127,13 +129,15 @@ function checkTSInterfaceDeclaration(
  */
 function checkTSTypeAliasDeclaration(
   node: TSESTree.TSTypeAliasDeclaration,
-  context: RuleContext<keyof typeof errorMessages, Options>
+  context: RuleContext<keyof typeof errorMessages, Options>,
+  options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   return {
     context,
-    descriptors: isTSTypeLiteral(node.typeAnnotation)
-      ? getTypeElementViolations(node.typeAnnotation.members)
-      : []
+    descriptors:
+      options.checkTypeLiterals && isTSTypeLiteral(node.typeAnnotation)
+        ? getTypeElementViolations(node.typeAnnotation.members)
+        : []
   };
 }
 
@@ -142,26 +146,8 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   name,
   meta,
   defaultOptions,
-  (context, options) => {
-    return {
-      ...(options.checkInterfaces
-        ? {
-            TSInterfaceDeclaration: checkNode(
-              checkTSInterfaceDeclaration,
-              context,
-              options
-            )
-          }
-        : {}),
-      ...(options.checkTypeLiterals
-        ? {
-            TSTypeAliasDeclaration: checkNode(
-              checkTSTypeAliasDeclaration,
-              context,
-              options
-            )
-          }
-        : {})
-    };
+  {
+    TSInterfaceDeclaration: checkTSInterfaceDeclaration,
+    TSTypeAliasDeclaration: checkTSTypeAliasDeclaration
   }
 );

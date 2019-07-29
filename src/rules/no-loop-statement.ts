@@ -2,7 +2,6 @@ import { TSESTree } from "@typescript-eslint/typescript-estree";
 import { JSONSchema4 } from "json-schema";
 
 import {
-  checkNode,
   createRule,
   RuleContext,
   RuleMetaData,
@@ -59,15 +58,11 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   name,
   meta,
   defaultOptions,
-  (context, options) => {
-    const _checkLoop = checkNode(checkLoop, context, options);
-
-    return {
-      ForStatement: _checkLoop,
-      ForInStatement: _checkLoop,
-      ForOfStatement: _checkLoop,
-      WhileStatement: _checkLoop,
-      DoWhileStatement: _checkLoop
-    };
+  {
+    ForStatement: checkLoop,
+    ForInStatement: checkLoop,
+    ForOfStatement: checkLoop,
+    WhileStatement: checkLoop,
+    DoWhileStatement: checkLoop
   }
 );

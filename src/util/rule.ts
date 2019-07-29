@@ -35,35 +35,16 @@ export type RuleResult<
   readonly descriptors: ReadonlyArray<ReportDescriptor<MessageIds>>;
 };
 
-/**
- * Create a rule.
- */
-export function createRule<
+export type RuleFunctionsMap<
   MessageIds extends string,
   Options extends BaseOptions
->(
-  name: string,
-  meta: RuleMetaData<MessageIds>,
-  defaultOptions: Options,
-  create: (
-    context: UtilRuleContext<MessageIds, readonly [Options]>,
-    optionsWithDefault: Options
-  ) => RuleListener
-): Rule.RuleModule {
-  return ESLintUtils.RuleCreator(
-    name =>
-      `https://github.com/jonaskello/eslint-plugin-functional/blob/v${version}/docs/rules/${name}.md`
-  )({
-    name,
-    meta,
-    defaultOptions: [defaultOptions],
-    create: (
-      c: UtilRuleContext<MessageIds, readonly [Options]>,
-      [o]: readonly [Options]
-    ) => create(c, o)
-    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-  } as any) as any;
-}
+> = {
+  readonly [K in keyof RuleListener]: (
+    node: TSESTree.Node,
+    context: RuleContext<MessageIds, Options>,
+    options: Options
+  ) => RuleResult<MessageIds, Options>;
+};
 
 // This function can't be functional as it needs to interact with 3rd-party
 // libraries that aren't functional.
@@ -72,7 +53,7 @@ export function createRule<
  * Create a function that processes common options and then runs the given
  * check.
  */
-export function checkNode<
+function checkNode<
   MessageIds extends string,
   Context extends RuleContext<MessageIds, BaseOptions>,
   Node extends TSESTree.Node,
@@ -97,6 +78,38 @@ export function checkNode<
   };
 }
 /* eslint-enable functional/no-return-void, functional/no-conditional-statement, functional/no-expression-statement */
+
+/**
+ * Create a rule.
+ */
+export function createRule<
+  MessageIds extends string,
+  Options extends BaseOptions
+>(
+  name: string,
+  meta: RuleMetaData<MessageIds>,
+  defaultOptions: Options,
+  ruleFunctionsMap: RuleFunctionsMap<MessageIds, Options>
+): Rule.RuleModule {
+  return ESLintUtils.RuleCreator(
+    name =>
+      `https://github.com/jonaskello/eslint-plugin-functional/blob/v${version}/docs/rules/${name}.md`
+  )({
+    name,
+    meta,
+    defaultOptions: [defaultOptions],
+    create: (
+      context: UtilRuleContext<MessageIds, readonly [Options]>,
+      [options]: readonly [Options]
+    ) =>
+      Object.entries(ruleFunctionsMap)
+        .map(([nodeSelector, ruleFunction]) => ({
+          [nodeSelector]: checkNode(ruleFunction, context, options)
+        }))
+        .reduce((carry, object) => ({ ...carry, ...object }), {})
+    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+  } as any) as any;
+}
 
 /**
  * Get the type of the the given node.
