@@ -2,7 +2,6 @@ import { TSESTree } from "@typescript-eslint/typescript-estree";
 import { JSONSchema4 } from "json-schema";
 
 import {
-  checkNode,
   createRule,
   RuleContext,
   RuleMetaData,
@@ -56,15 +55,7 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   name,
   meta,
   defaultOptions,
-  (context, options) => {
-    const _checkTSMethodSignature = checkNode(
-      checkTSMethodSignature,
-      context,
-      options
-    );
-
-    return {
-      TSMethodSignature: _checkTSMethodSignature
-    };
+  {
+    TSMethodSignature: checkTSMethodSignature
   }
 );

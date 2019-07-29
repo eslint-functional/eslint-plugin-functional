@@ -4,7 +4,6 @@ import { JSONSchema4 } from "json-schema";
 
 import * as ignore from "../common/ignore-options";
 import {
-  checkNode,
   createRule,
   RuleContext,
   RuleMetaData,
@@ -63,15 +62,7 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   name,
   meta,
   defaultOptions,
-  (context, options) => {
-    const _checkVariableDeclaration = checkNode(
-      checkVariableDeclaration,
-      context,
-      options
-    );
-
-    return {
-      VariableDeclaration: _checkVariableDeclaration
-    };
+  {
+    VariableDeclaration: checkVariableDeclaration
   }
 );
