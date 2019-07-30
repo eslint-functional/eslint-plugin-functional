@@ -1,11 +1,11 @@
 /**
- * @file Tests for no-throw.
+ * @file Tests for no-throw-statement.
  */
 
 import dedent from "dedent";
 import { RuleTester } from "eslint";
 
-import { name, rule } from "../../src/rules/no-throw";
+import { name, rule } from "../../src/rules/no-throw-statement";
 
 import { es3, typescript } from "../helpers/configs";
 import {

@@ -157,11 +157,11 @@ See [@typescript-eslint/parser's README.md](https://github.com/typescript-eslint
 
 :see_no_evil: = `no-exceptions` Ruleset.
 
-| Name                                     | Description                                           | <span title="No Exceptions">:see_no_evil:</span> | <span title="Lite">:hear_no_evil:</span> | <span title="Recommended">:speak_no_evil:</span> | :wrench: | :blue_heart: |
-| ---------------------------------------- | ----------------------------------------------------- | :----------------------------------------------: | :--------------------------------------: | :----------------------------------------------: | :------: | :----------: |
-| [`no-throw`](./docs/rules/no-throw.md)   | Disallow throwing exceptions                          |                :heavy_check_mark:                |            :heavy_check_mark:            |                :heavy_check_mark:                |          |              |
-| [`no-try`](./docs/rules/no-try.md)       | Disallow try-catch[-finally] and try-finally patterns |                :heavy_check_mark:                |                                          |                :heavy_check_mark:                |          |              |
-| [`no-reject`](./docs/rules/no-reject.md) | Disallow rejecting Promises                           |                                                  |                                          |                                                  |          |              |
+| Name                                                       | Description                                           | <span title="No Exceptions">:see_no_evil:</span> | <span title="Lite">:hear_no_evil:</span> | <span title="Recommended">:speak_no_evil:</span> | :wrench: | :blue_heart: |
+| ---------------------------------------------------------- | ----------------------------------------------------- | :----------------------------------------------: | :--------------------------------------: | :----------------------------------------------: | :------: | :----------: |
+| [`no-throw-statement`](./docs/rules/no-throw-statement.md) | Disallow throwing exceptions                          |                :heavy_check_mark:                |            :heavy_check_mark:            |                :heavy_check_mark:                |          |              |
+| [`no-try`](./docs/rules/no-try.md)                         | Disallow try-catch[-finally] and try-finally patterns |                :heavy_check_mark:                |                                          |                :heavy_check_mark:                |          |              |
+| [`no-reject`](./docs/rules/no-reject.md)                   | Disallow rejecting Promises                           |                                                  |                                          |                                                  |          |              |
 
 ### Currying Rules
 
