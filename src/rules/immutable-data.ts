@@ -283,6 +283,8 @@ function checkCallExpression(
             node.arguments.length >= 2 &&
             (isIdentifier(node.arguments[0]) ||
               isMemberExpression(node.arguments[0])) &&
+            // Check if ignored here - this cannot be automatically checked beforehand.
+            !ignore.shouldIgnore(node.arguments[0], context, options) &&
             isObjectConstructorType(
               getTypeOfNode(node.callee.object, context),
               assumeTypesForObjects,

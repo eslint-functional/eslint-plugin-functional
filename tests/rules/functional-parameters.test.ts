@@ -117,7 +117,7 @@ const es6Valid: ReadonlyArray<ValidTestCase> = [
       }`,
     optionsSet: [
       [{ enforceParameterCount: "atLeastOne" }],
-      [{ ignorePattern: "^function foo", enforceParameterCount: "exactlyOne" }]
+      [{ ignorePattern: "^foo", enforceParameterCount: "exactlyOne" }]
     ]
   },
   {
@@ -125,7 +125,7 @@ const es6Valid: ReadonlyArray<ValidTestCase> = [
       function foo(...bar) {
         console.log(bar);
       }`,
-    optionsSet: [[{ ignorePattern: "^function foo" }]]
+    optionsSet: [[{ ignorePattern: "^foo" }]]
   }
 ];
 
