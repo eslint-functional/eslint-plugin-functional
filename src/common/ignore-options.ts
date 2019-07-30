@@ -11,7 +11,6 @@ import {
   hasID,
   hasKey,
   isAssignmentExpression,
-  isCallExpression,
   isExpressionStatement,
   isIdentifier,
   isMemberExpression,
@@ -21,6 +20,7 @@ import {
   isTSTupleType,
   isTSTypeAnnotation,
   isTSTypeReference,
+  isUnaryExpression,
   isVariableDeclaration
 } from "../util/typeguard";
 
@@ -146,8 +146,6 @@ function getNodeIdentifierText(
     ? getNodeIdentifierText(node.key, context)
     : isAssignmentExpression(node)
     ? getNodeIdentifierText(node.left, context)
-    : isCallExpression(node)
-    ? getNodeIdentifierText(node.callee, context)
     : isMemberExpression(node)
     ? `${getNodeIdentifierText(node.object, context)}.${getNodeIdentifierText(
         node.property,
@@ -155,6 +153,8 @@ function getNodeIdentifierText(
       )}`
     : isThisExpression(node)
     ? "this"
+    : isUnaryExpression(node)
+    ? getNodeIdentifierText(node.argument, context)
     : isExpressionStatement(node)
     ? context.getSourceCode().getText(node)
     : isTSArrayType(node) ||

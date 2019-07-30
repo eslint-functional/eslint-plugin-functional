@@ -256,6 +256,12 @@ export function isTSVoidKeyword(
   return node.type === AST_NODE_TYPES.TSVoidKeyword;
 }
 
+export function isUnaryExpression(
+  node: TSESTree.Node
+): node is TSESTree.UnaryExpression {
+  return node.type === AST_NODE_TYPES.UnaryExpression;
+}
+
 export function isVariableDeclaration(
   node: TSESTree.Node
 ): node is TSESTree.VariableDeclaration {
