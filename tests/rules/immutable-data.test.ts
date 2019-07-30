@@ -38,6 +38,19 @@ const objectES3Valid: ReadonlyArray<ValidTestCase> = [
       var c = Object.assign(x.func(), { d: 4 });`,
     optionsSet: [[]]
   },
+  // IgnorePattern - objects.
+  {
+    code: dedent`
+      var mutableVar = { a: 1 };
+      delete mutableVar.a;`,
+    optionsSet: [[{ ignorePattern: ["^mutable"] }]]
+  },
+  {
+    code: dedent`
+      var mutableVar = { a: 1 };
+      Object.assign(mutableVar, { b: 2 });`,
+    optionsSet: [[{ ignorePattern: ["^mutable"] }]]
+  },
   // IgnoreAccessorPattern - objects.
   {
     code: dedent`
