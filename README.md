@@ -6,7 +6,7 @@
 [![code style: prettier][prettier-image]][prettier-url]
 [![MIT license][license-image]][license-url]
 
-[ESLint](https://eslint.org/) rules to disable mutation and promote fp in JavaScript and TypeScript.
+[ESLint](https://eslint.org/) rules to disable mutation and promote functional programming in JavaScript and TypeScript.
 
 ## Introduction
 
