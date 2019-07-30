@@ -57,7 +57,7 @@ Below is a table mapping the `eslint-plugin-functional` rules to their `tslint-i
 | [`functional/no-let`](./docs/rules/no-let.md)                                     | `no-let`                                                |
 | [`functional/immutable-data`](./docs/rules/immutable-data.md)                     | `no-object-mutation`, `no-array-mutation` & `no-delete` |
 | [`functional/no-method-signature`](./docs/rules/no-method-signature.md)           | `no-method-signature`                                   |
-| [`functional/no-this`](./docs/rules/no-this.md)                                   | `no-this`                                               |
+| [`functional/no-this-expression`](./docs/rules/no-this-expression.md)             | `no-this`                                               |
 | [`functional/no-class`](./docs/rules/no-class.md)                                 | `no-class`                                              |
 | [`functional/no-mixed-type`](./docs/rules/no-mixed-type.md)                       | `no-mixed-interface`                                    |
 | [`functional/prefer-type-literal`](./docs/rules/prefer-type-literal.md)           | -                                                       |
@@ -65,7 +65,7 @@ Below is a table mapping the `eslint-plugin-functional` rules to their `tslint-i
 | [`functional/no-conditional-statement`](./docs/rules/no-conditional-statement.md) | `no-if-statement`                                       |
 | [`functional/no-loop-statement`](./docs/rules/no-loop-statement.md)               | `no-loop-statement`                                     |
 | [`functional/no-return-void`](./docs/rules/no-return-void.md)                     | -                                                       |
-| [`functional/no-throw`](./docs/rules/no-throw.md)                                 | `no-throw`                                              |
-| [`functional/no-try`](./docs/rules/no-try.md)                                     | `no-try`                                                |
-| [`functional/no-reject`](./docs/rules/no-reject.md)                               | `no-reject`                                             |
+| [`functional/no-throw-statement`](./docs/rules/no-throw-statement.md)             | `no-throw`                                              |
+| [`functional/no-try-statement`](./docs/rules/no-try-statement.md)                 | `no-try`                                                |
+| [`functional/no-promise-reject`](./docs/rules/no-promise-reject.md)               | `no-reject`                                             |
 | [`functional/functional-parameters`](./docs/rules/functional-parameters.md)       | -                                                       |

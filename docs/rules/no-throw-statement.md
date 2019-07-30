@@ -1,4 +1,4 @@
-# Disallow throwing exceptions (no-throw)
+# Disallow throwing exceptions (no-throw-statement)
 
 This rule disallows the `throw` keyword.
 
