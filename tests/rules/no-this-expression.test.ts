@@ -1,10 +1,10 @@
 /**
- * @file Tests for no-this.
+ * @file Tests for no-this-expression.
  */
 
 import { RuleTester } from "eslint";
 
-import { name, rule } from "../../src/rules/no-this";
+import { name, rule } from "../../src/rules/no-this-expression";
 
 import { es3, typescript } from "../helpers/configs";
 import {
