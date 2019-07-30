@@ -161,7 +161,7 @@ See [@typescript-eslint/parser's README.md](https://github.com/typescript-eslint
 | ---------------------------------------------------------- | ----------------------------------------------------- | :----------------------------------------------: | :--------------------------------------: | :----------------------------------------------: | :------: | :----------: |
 | [`no-throw-statement`](./docs/rules/no-throw-statement.md) | Disallow throwing exceptions                          |                :heavy_check_mark:                |            :heavy_check_mark:            |                :heavy_check_mark:                |          |              |
 | [`no-try-statement`](./docs/rules/no-try-statement.md)     | Disallow try-catch[-finally] and try-finally patterns |                :heavy_check_mark:                |                                          |                :heavy_check_mark:                |          |              |
-| [`no-reject`](./docs/rules/no-reject.md)                   | Disallow rejecting Promises                           |                                                  |                                          |                                                  |          |              |
+| [`no-promise-reject`](./docs/rules/no-promise-reject.md)   | Disallow rejecting Promises                           |                                                  |                                          |                                                  |          |              |
 
 ### Currying Rules
 
