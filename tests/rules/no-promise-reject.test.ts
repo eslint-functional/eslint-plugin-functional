@@ -1,11 +1,11 @@
 /**
- * @file Tests for no-reject.
+ * @file Tests for no-promise-reject.
  */
 
 import dedent from "dedent";
 import { RuleTester } from "eslint";
 
-import { name, rule } from "../../src/rules/no-reject";
+import { name, rule } from "../../src/rules/no-promise-reject";
 
 import { es6, typescript } from "../helpers/configs";
 import {

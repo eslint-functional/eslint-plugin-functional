@@ -28,7 +28,10 @@ import {
   name as noMixedInterfaceRuleName,
   rule as noMixedInterfaceRule
 } from "./no-mixed-type";
-import { name as noRejectRuleName, rule as noRejectRule } from "./no-reject";
+import {
+  name as noPromiseRejectRuleName,
+  rule as noPromiseRejectRule
+} from "./no-promise-reject";
 import {
   name as noReturnVoidName,
   rule as noReturnVoid
@@ -64,7 +67,7 @@ export const rules = {
   [noLoopRuleName]: noLoopRule,
   [noMethodSignatureRuleName]: noMethodSignatureRule,
   [noMixedInterfaceRuleName]: noMixedInterfaceRule,
-  [noRejectRuleName]: noRejectRule,
+  [noPromiseRejectRuleName]: noPromiseRejectRule,
   [noReturnVoidName]: noReturnVoid,
   [noThisRuleName]: noThisRule,
   [noThrowStatementRuleName]: noThrowStatementRule,
