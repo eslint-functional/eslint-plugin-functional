@@ -8,14 +8,20 @@ import { JSONSchema4 } from "json-schema";
 import { BaseOptions, RuleContext } from "../util/rule";
 import { inClass, inFunction, inInterface } from "../util/tree";
 import {
+  hasID,
+  hasKey,
   isAssignmentExpression,
   isCallExpression,
+  isExpressionStatement,
   isIdentifier,
   isMemberExpression,
-  isTSPropertySignature,
-  isTSTypeAliasDeclaration,
-  isVariableDeclaration,
-  isVariableDeclarator
+  isThisExpression,
+  isTSArrayType,
+  isTSIndexSignature,
+  isTSTupleType,
+  isTSTypeAnnotation,
+  isTSTypeReference,
+  isVariableDeclaration
 } from "../util/typeguard";
 
 type IgnoreOptions = IgnoreLocalOption &
@@ -124,42 +130,55 @@ export const ignoreNewArrayOptionSchema: JSONSchema4 = {
 };
 
 /**
- * Get the text of the given node.
+ * Get the identifier text of the given node.
  */
-function getNodeText(
-  node: TSESTree.Node,
+function getNodeIdentifierText(
+  node: TSESTree.Node | undefined | null,
   context: RuleContext<string, BaseOptions>
-): string {
-  return isIdentifier(node)
+): string | undefined {
+  return node === undefined || node === null
+    ? undefined
+    : isIdentifier(node)
     ? node.name
+    : hasID(node)
+    ? getNodeIdentifierText(node.id, context)
+    : hasKey(node)
+    ? getNodeIdentifierText(node.key, context)
     : isAssignmentExpression(node)
-    ? getNodeText(node.left, context)
+    ? getNodeIdentifierText(node.left, context)
     : isCallExpression(node)
-    ? getNodeText(node.callee, context)
+    ? getNodeIdentifierText(node.callee, context)
     : isMemberExpression(node)
-    ? `${getNodeText(node.object, context)}.${getNodeText(
+    ? `${getNodeIdentifierText(node.object, context)}.${getNodeIdentifierText(
         node.property,
         context
       )}`
-    : isVariableDeclarator(node)
-    ? getNodeText(node.id, context)
-    : isTSTypeAliasDeclaration(node)
-    ? getNodeText(node.id, context)
-    : isTSPropertySignature(node)
-    ? getNodeText(node.key, context)
-    : context.getSourceCode().getText(node);
+    : isThisExpression(node)
+    ? "this"
+    : isExpressionStatement(node)
+    ? context.getSourceCode().getText(node)
+    : isTSArrayType(node) ||
+      isTSIndexSignature(node) ||
+      isTSTupleType(node) ||
+      isTSTypeAnnotation(node) ||
+      isTSTypeReference(node)
+    ? getNodeIdentifierText(node.parent, context)
+    : undefined;
 }
 
 /**
- * Get all the important bits of texts from the given node.
+ * Get all the identifier texts of the given node.
  */
-function getNodeTexts(
+function getNodeIdentifierTexts(
   node: TSESTree.Node,
   context: RuleContext<string, BaseOptions>
 ): ReadonlyArray<string> {
-  return isVariableDeclaration(node)
-    ? node.declarations.flatMap(declarator => getNodeText(declarator, context))
-    : [getNodeText(node, context)];
+  return (isVariableDeclaration(node)
+    ? node.declarations.flatMap(declarator =>
+        getNodeIdentifierText(declarator, context)
+      )
+    : [getNodeIdentifierText(node, context)]
+  ).filter<string>((text): text is string => text !== undefined);
 }
 
 /**
@@ -274,6 +293,6 @@ export function shouldIgnore(
                 options.ignoreAccessorPattern!
               )
             ))
-        : false)(getNodeTexts(node, context))
+        : false)(getNodeIdentifierTexts(node, context))
   );
 }
