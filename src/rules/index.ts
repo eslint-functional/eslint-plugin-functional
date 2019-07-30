@@ -36,7 +36,10 @@ import {
   name as noReturnVoidName,
   rule as noReturnVoid
 } from "./no-return-void";
-import { name as noThisRuleName, rule as noThisRule } from "./no-this";
+import {
+  name as noThisExpressionRuleName,
+  rule as noThisExpressionRule
+} from "./no-this-expression";
 import {
   name as noThrowStatementRuleName,
   rule as noThrowStatementRule
@@ -69,7 +72,7 @@ export const rules = {
   [noMixedInterfaceRuleName]: noMixedInterfaceRule,
   [noPromiseRejectRuleName]: noPromiseRejectRule,
   [noReturnVoidName]: noReturnVoid,
-  [noThisRuleName]: noThisRule,
+  [noThisExpressionRuleName]: noThisExpressionRule,
   [noThrowStatementRuleName]: noThrowStatementRule,
   [noTryStatementRuleName]: noTryStatementRule,
   [preferReadonlyTypesRuleName]: preferReadonlyTypesRule,

@@ -8,7 +8,7 @@ const config = {
     "functional/no-let": "error",
     "functional/no-loop-statement": "error",
     "functional/no-promise-reject": "error",
-    "functional/no-this": "error",
+    "functional/no-this-expression": "error",
     "functional/no-throw-statement": "error",
     "functional/no-try-statement": "error"
   },
