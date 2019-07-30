@@ -51,7 +51,6 @@
     "@typescript-eslint/eslint-plugin": "^1.11.0",
     "@typescript-eslint/experimental-utils": "^1.11.0",
     "@typescript-eslint/parser": "^1.11.0",
-    "@typescript-eslint/typescript-estree": "^1.11.0",
     "babel-eslint": "^10.0.2",
     "codecov": "^3.5.0",
     "dedent": "^0.7.0",

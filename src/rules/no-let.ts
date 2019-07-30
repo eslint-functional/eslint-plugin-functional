@@ -1,4 +1,4 @@
-import { TSESTree } from "@typescript-eslint/typescript-estree";
+import { TSESTree } from "@typescript-eslint/experimental-utils";
 import { all as deepMerge } from "deepmerge";
 import { JSONSchema4 } from "json-schema";
 

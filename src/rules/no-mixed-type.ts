@@ -1,6 +1,8 @@
+import {
+  AST_NODE_TYPES,
+  TSESTree
+} from "@typescript-eslint/experimental-utils";
 import { ReportDescriptor } from "@typescript-eslint/experimental-utils/dist/ts-eslint";
-import { TSESTree } from "@typescript-eslint/typescript-estree";
-import { AST_NODE_TYPES } from "@typescript-eslint/typescript-estree/dist/ts-estree/ast-node-types";
 import { JSONSchema4 } from "json-schema";
 
 import {

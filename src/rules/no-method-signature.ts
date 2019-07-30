@@ -1,4 +1,4 @@
-import { TSESTree } from "@typescript-eslint/typescript-estree";
+import { TSESTree } from "@typescript-eslint/experimental-utils";
 import { JSONSchema4 } from "json-schema";
 
 import {
