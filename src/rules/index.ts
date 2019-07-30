@@ -38,7 +38,10 @@ import {
   name as noThrowStatementRuleName,
   rule as noThrowStatementRule
 } from "./no-throw-statement";
-import { name as noTryRuleName, rule as noTryRule } from "./no-try";
+import {
+  name as noTryStatementRuleName,
+  rule as noTryStatementRule
+} from "./no-try-statement";
 import {
   name as preferReadonlyTypesRuleName,
   rule as preferReadonlyTypesRule
@@ -65,7 +68,7 @@ export const rules = {
   [noReturnVoidName]: noReturnVoid,
   [noThisRuleName]: noThisRule,
   [noThrowStatementRuleName]: noThrowStatementRule,
-  [noTryRuleName]: noTryRule,
+  [noTryStatementRuleName]: noTryStatementRule,
   [preferReadonlyTypesRuleName]: preferReadonlyTypesRule,
   [preferTypeRuleName]: preferTypeRule
 };

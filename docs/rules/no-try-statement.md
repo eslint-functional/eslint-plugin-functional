@@ -1,4 +1,4 @@
-# Disallow try-catch[-finally] and try-finally patterns (no-try)
+# Disallow try-catch[-finally] and try-finally patterns (no-try-statement)
 
 This rule disallows the `try` keyword.
 

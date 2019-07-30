@@ -5,7 +5,7 @@ import recommended from "./external-recommended";
 const config = deepMerge(recommended, {
   rules: {
     "functional/no-throw-statement": "error",
-    "functional/no-try": "error"
+    "functional/no-try-statement": "error"
   }
 });
 
