@@ -2,7 +2,8 @@
  * @file Functions that typeguard the given node/type.
  */
 
-import { AST_NODE_TYPES, TSESTree } from "@typescript-eslint/typescript-estree";
+import { TSESTree } from "@typescript-eslint/typescript-estree";
+import { AST_NODE_TYPES } from "@typescript-eslint/typescript-estree/dist/ts-estree/ast-node-types";
 // TS import - only use this for types, will be stripped out by rollup.
 import { Type, UnionType } from "typescript";
 // TS import - conditionally imported only when typescript is avaliable.
