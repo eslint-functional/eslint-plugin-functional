@@ -84,6 +84,12 @@ export function isClassLike(
   );
 }
 
+export function isExpressionStatement(
+  node: TSESTree.Node
+): node is TSESTree.ExpressionStatement {
+  return node.type === AST_NODE_TYPES.ExpressionStatement;
+}
+
 export function isFunctionDeclaration(
   node: TSESTree.Node
 ): node is TSESTree.FunctionDeclaration {
@@ -162,6 +168,12 @@ export function isReturnStatement(
   return node.type === AST_NODE_TYPES.ReturnStatement;
 }
 
+export function isThisExpression(
+  node: TSESTree.Node
+): node is TSESTree.ThisExpression {
+  return node.type === AST_NODE_TYPES.ThisExpression;
+}
+
 export function isTSArrayType(
   node: TSESTree.Node
 ): node is TSESTree.TSArrayType {
@@ -210,6 +222,12 @@ export function isTSTypeAliasDeclaration(
   return node.type === AST_NODE_TYPES.TSTypeAliasDeclaration;
 }
 
+export function isTSTypeAnnotation(
+  node: TSESTree.Node
+): node is TSESTree.TSTypeAnnotation {
+  return node.type === AST_NODE_TYPES.TSTypeAnnotation;
+}
+
 export function isTSTypeLiteral(
   node: TSESTree.Node
 ): node is TSESTree.TSTypeLiteral {
@@ -220,6 +238,12 @@ export function isTSTypeOperator(
   node: TSESTree.Node
 ): node is TSESTree.TSTypeOperator {
   return node.type === AST_NODE_TYPES.TSTypeOperator;
+}
+
+export function isTSTypeReference(
+  node: TSESTree.Node
+): node is TSESTree.TSTypeReference {
+  return node.type === AST_NODE_TYPES.TSTypeReference;
 }
 
 export function isTSUndefinedKeyword(
@@ -234,6 +258,12 @@ export function isTSVoidKeyword(
   return node.type === AST_NODE_TYPES.TSVoidKeyword;
 }
 
+export function isUnaryExpression(
+  node: TSESTree.Node
+): node is TSESTree.UnaryExpression {
+  return node.type === AST_NODE_TYPES.UnaryExpression;
+}
+
 export function isVariableDeclaration(
   node: TSESTree.Node
 ): node is TSESTree.VariableDeclaration {
@@ -244,6 +274,18 @@ export function isVariableDeclarator(
   node: TSESTree.Node
 ): node is TSESTree.VariableDeclarator {
   return node.type === AST_NODE_TYPES.VariableDeclarator;
+}
+
+export function hasID(
+  node: TSESTree.Node
+): node is TSESTree.Node & { readonly id: unknown } {
+  return Object.prototype.hasOwnProperty.call(node, "id");
+}
+
+export function hasKey(
+  node: TSESTree.Node
+): node is TSESTree.Node & { readonly key: unknown } {
+  return Object.prototype.hasOwnProperty.call(node, "key");
 }
 
 /*
