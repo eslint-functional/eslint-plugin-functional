@@ -9,7 +9,7 @@ import {
 } from "../util/rule";
 
 // The name of this rule.
-export const name = "no-this" as const;
+export const name = "no-throw-statement" as const;
 
 // The options this rule can take.
 type Options = {};
@@ -22,14 +22,14 @@ const defaultOptions: Options = {};
 
 // The possible error messages.
 const errorMessages = {
-  generic: "Unexpected this, use functions not classes."
+  generic: "Unexpected throw, throwing exceptions is not functional."
 } as const;
 
 // The meta data for this rule.
 const meta: RuleMetaData<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
-    description: "Disallow this access.",
+    description: "Disallow throwing exceptions.",
     category: "Best Practices",
     recommended: false
   },
@@ -38,10 +38,10 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
 };
 
 /**
- * Check if the given ThisExpression violates this rule.
+ * Check if the given ThrowStatement violates this rule.
  */
-function checkThisExpression(
-  node: TSESTree.ThisExpression,
+function checkThrowStatement(
+  node: TSESTree.ThrowStatement,
   context: RuleContext<keyof typeof errorMessages, Options>
 ): RuleResult<keyof typeof errorMessages, Options> {
   // All throw statements violate this rule.
@@ -54,6 +54,6 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   meta,
   defaultOptions,
   {
-    ThisExpression: checkThisExpression
+    ThrowStatement: checkThrowStatement
   }
 );

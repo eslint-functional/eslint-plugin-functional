@@ -10,7 +10,7 @@ import {
 import { isIdentifier, isMemberExpression } from "../util/typeguard";
 
 // The name of this rule.
-export const name = "no-reject" as const;
+export const name = "no-promise-reject" as const;
 
 // The options this rule can take.
 type Options = {};
