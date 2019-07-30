@@ -1,8 +1,8 @@
 import {
   AST_NODE_TYPES,
+  TSESLint,
   TSESTree
 } from "@typescript-eslint/experimental-utils";
-import { ReportDescriptor } from "@typescript-eslint/experimental-utils/dist/ts-eslint";
 import { JSONSchema4 } from "json-schema";
 
 import {
@@ -72,7 +72,7 @@ function getTypeElementViolations(
     readonly prevMemberType: AST_NODE_TYPES | undefined;
     readonly prevMemberTypeAnnotation: AST_NODE_TYPES | undefined;
     readonly violations: ReadonlyArray<
-      ReportDescriptor<keyof typeof errorMessages>
+      TSESLint.ReportDescriptor<keyof typeof errorMessages>
     >;
   };
 

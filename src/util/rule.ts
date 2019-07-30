@@ -1,11 +1,8 @@
-import { ESLintUtils, TSESTree } from "@typescript-eslint/experimental-utils";
 import {
-  ReportDescriptor,
-  RuleContext as UtilRuleContext,
-  RuleListener,
-  RuleMetaData as UtilRuleMetaData,
-  RuleMetaDataDocs as UtilRuleMetaDataDocs
-} from "@typescript-eslint/experimental-utils/dist/ts-eslint";
+  ESLintUtils,
+  TSESLint,
+  TSESTree
+} from "@typescript-eslint/experimental-utils";
 import { Rule } from "eslint";
 import { Type } from "typescript";
 
@@ -15,31 +12,31 @@ import { shouldIgnore } from "../common/ignore-options";
 export type BaseOptions = object;
 
 // "url" will be set automatically.
-export type RuleMetaDataDocs = Omit<UtilRuleMetaDataDocs, "url">;
+export type RuleMetaDataDocs = Omit<TSESLint.RuleMetaDataDocs, "url">;
 
 // "docs.url" will be set automatically.
 export type RuleMetaData<MessageIds extends string> = {
   readonly docs: RuleMetaDataDocs;
-} & Omit<UtilRuleMetaData<MessageIds>, "docs">;
+} & Omit<TSESLint.RuleMetaData<MessageIds>, "docs">;
 
 export type RuleContext<
   MessageIds extends string,
   Options extends BaseOptions
-> = UtilRuleContext<MessageIds, readonly [Options]>;
+> = TSESLint.RuleContext<MessageIds, readonly [Options]>;
 
 export type RuleResult<
   MessageIds extends string,
   Options extends BaseOptions
 > = {
   readonly context: RuleContext<MessageIds, Options>;
-  readonly descriptors: ReadonlyArray<ReportDescriptor<MessageIds>>;
+  readonly descriptors: ReadonlyArray<TSESLint.ReportDescriptor<MessageIds>>;
 };
 
 export type RuleFunctionsMap<
   MessageIds extends string,
   Options extends BaseOptions
 > = {
-  readonly [K in keyof RuleListener]: (
+  readonly [K in keyof TSESLint.RuleListener]: (
     node: TSESTree.Node,
     context: RuleContext<MessageIds, Options>,
     options: Options
@@ -99,7 +96,7 @@ export function createRule<
     meta,
     defaultOptions: [defaultOptions],
     create: (
-      context: UtilRuleContext<MessageIds, readonly [Options]>,
+      context: TSESLint.RuleContext<MessageIds, readonly [Options]>,
       [options]: readonly [Options]
     ) =>
       Object.entries(ruleFunctionsMap)

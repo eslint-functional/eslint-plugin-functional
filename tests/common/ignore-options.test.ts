@@ -1,4 +1,4 @@
-import { ValidTestCase } from "@typescript-eslint/experimental-utils/dist/ts-eslint";
+import { TSESLint } from "@typescript-eslint/experimental-utils";
 import dedent from "dedent";
 import { Rule, RuleTester } from "eslint";
 
@@ -13,7 +13,7 @@ import { createDummyRule } from "../helpers/util";
 describe("option: ignore", () => {
   describe("ignoreAccessorPattern", () => {
     const tests: ReadonlyArray<
-      ValidTestCase<readonly [boolean, IgnoreAccessorPatternOption]>
+      TSESLint.ValidTestCase<readonly [boolean, IgnoreAccessorPatternOption]>
     > = [
       // Exact match.
       {
@@ -146,7 +146,7 @@ describe("option: ignore", () => {
 
   describe("ignorePattern", () => {
     const assignmentExpressionTests: ReadonlyArray<
-      ValidTestCase<readonly [boolean, IgnorePatternOption]>
+      TSESLint.ValidTestCase<readonly [boolean, IgnorePatternOption]>
     > = [
       // Prefix match.
       {
@@ -196,7 +196,7 @@ describe("option: ignore", () => {
     );
 
     const expressionStatementTests: ReadonlyArray<
-      ValidTestCase<readonly [boolean, IgnorePatternOption]>
+      TSESLint.ValidTestCase<readonly [boolean, IgnorePatternOption]>
     > = [
       {
         code: dedent`
