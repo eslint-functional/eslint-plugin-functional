@@ -7,13 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/jonaskello/eslint-plugin-functional/compare/v0.5.1...HEAD)
 
-## [v0.5.1](https://github.com/jonaskello/eslint-plugin-functional/compare/v0.5.0...v0.5.1)
+## [v0.5.1](https://github.com/jonaskello/eslint-plugin-functional/compare/v0.5.0...v0.5.1) - 2019-07-30
+
+### Merged
+
+- feat(no-try): Add options allowCatch and allowFinally. [`#50`](https://github.com/jonaskello/eslint-plugin-functional/pull/50)
 
 ### Fixed
 
-- Resolved issue with this plugin being unusable without TypeScript being installed as a peer dependency. [`#49`](https://github.com/jonaskello/eslint-plugin-functional/issues/49)
+- build: Remove @typescript-eslint as a dependency and thus remove typescript as a dependency. [`#49`](https://github.com/jonaskello/eslint-plugin-functional/issues/49)
 
-## [v0.5.0](https://github.com/jonaskello/eslint-plugin-functional/compare/v0.4.0...v0.5.0)
+## [v0.5.0](https://github.com/jonaskello/eslint-plugin-functional/compare/v0.4.0...v0.5.0) - 2019-07-29
 
 ### Merged
 
@@ -29,13 +33,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - feat(functional-parameters): Add option to allow iifes [`#37`](https://github.com/jonaskello/eslint-plugin-functional/issues/37)
 
-## [v0.4.0](https://github.com/jonaskello/eslint-plugin-functional/compare/v0.3.0...v0.4.0)
+## [v0.4.0](https://github.com/jonaskello/eslint-plugin-functional/compare/v0.3.0...v0.4.0) - 2019-07-19
 
-### Changed
+### Merged
 
-- Renamed to pacakge from `eslint-plugin-ts-immutable` to `eslint-plugin-functional`.
+- Rename the package [`#36`](https://github.com/jonaskello/eslint-plugin-functional/pull/36)
 
-## [v0.3.0](https://github.com/jonaskello/eslint-plugin-functional/compare/v0.2.1...v0.3.0)
+## [v0.3.0](https://github.com/jonaskello/eslint-plugin-functional/compare/v0.2.1...v0.3.0) - 2019-07-19
 
 ### Merged
 
