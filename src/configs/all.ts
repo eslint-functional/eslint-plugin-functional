@@ -10,7 +10,7 @@ const config = {
     "functional/no-reject": "error",
     "functional/no-this": "error",
     "functional/no-throw-statement": "error",
-    "functional/no-try": "error"
+    "functional/no-try-statement": "error"
   },
   overrides: [
     {
