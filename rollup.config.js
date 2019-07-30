@@ -14,7 +14,12 @@ const common = {
   external: id => {
     return (
       // Not a Local File?
-      !(id.startsWith(".") || id.startsWith("/"))
+      !(id.startsWith(".") || id.startsWith("/")) &&
+      // Not a explicitly marked as internal?
+      ![
+        "@typescript-eslint/experimental-utils",
+        "@typescript-eslint/typescript-estree"
+      ].some(internal => id.startsWith(internal))
     );
   },
 
