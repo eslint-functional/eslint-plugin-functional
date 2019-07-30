@@ -28,14 +28,26 @@ import {
   name as noMixedInterfaceRuleName,
   rule as noMixedInterfaceRule
 } from "./no-mixed-type";
-import { name as noRejectRuleName, rule as noRejectRule } from "./no-reject";
+import {
+  name as noPromiseRejectRuleName,
+  rule as noPromiseRejectRule
+} from "./no-promise-reject";
 import {
   name as noReturnVoidName,
   rule as noReturnVoid
 } from "./no-return-void";
-import { name as noThisRuleName, rule as noThisRule } from "./no-this";
-import { name as noThrowRuleName, rule as noThrowRule } from "./no-throw";
-import { name as noTryRuleName, rule as noTryRule } from "./no-try";
+import {
+  name as noThisExpressionRuleName,
+  rule as noThisExpressionRule
+} from "./no-this-expression";
+import {
+  name as noThrowStatementRuleName,
+  rule as noThrowStatementRule
+} from "./no-throw-statement";
+import {
+  name as noTryStatementRuleName,
+  rule as noTryStatementRule
+} from "./no-try-statement";
 import {
   name as preferReadonlyTypesRuleName,
   rule as preferReadonlyTypesRule
@@ -58,11 +70,11 @@ export const rules = {
   [noLoopRuleName]: noLoopRule,
   [noMethodSignatureRuleName]: noMethodSignatureRule,
   [noMixedInterfaceRuleName]: noMixedInterfaceRule,
-  [noRejectRuleName]: noRejectRule,
+  [noPromiseRejectRuleName]: noPromiseRejectRule,
   [noReturnVoidName]: noReturnVoid,
-  [noThisRuleName]: noThisRule,
-  [noThrowRuleName]: noThrowRule,
-  [noTryRuleName]: noTryRule,
+  [noThisExpressionRuleName]: noThisExpressionRule,
+  [noThrowStatementRuleName]: noThrowStatementRule,
+  [noTryStatementRuleName]: noTryStatementRule,
   [preferReadonlyTypesRuleName]: preferReadonlyTypesRule,
   [preferTypeRuleName]: preferTypeRule
 };

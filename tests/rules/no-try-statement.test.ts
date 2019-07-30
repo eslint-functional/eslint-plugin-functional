@@ -1,10 +1,10 @@
 /**
- * @file Tests for no-try.
+ * @file Tests for no-try-statement.
  */
 
 import { RuleTester } from "eslint";
 
-import { name, rule } from "../../src/rules/no-try";
+import { name, rule } from "../../src/rules/no-try-statement";
 
 import { es3, typescript } from "../helpers/configs";
 import {

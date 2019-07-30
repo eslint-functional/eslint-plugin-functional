@@ -4,7 +4,7 @@ import recommended from "./external-recommended";
 
 const config = deepMerge(recommended, {
   rules: {
-    "functional/no-this": "error",
+    "functional/no-this-expression": "error",
     "functional/no-class": "error"
   },
   overrides: [
