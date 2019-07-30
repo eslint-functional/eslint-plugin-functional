@@ -1,8 +1,4 @@
-import {
-  RuleContext,
-  RuleListener,
-  RuleMetaData
-} from "@typescript-eslint/experimental-utils/dist/ts-eslint";
+import { TSESLint } from "@typescript-eslint/experimental-utils";
 import deepMerge, { Options as deepMergeOptions } from "deepmerge";
 import { Linter, Rule, RuleTester as ESLintRuleTester } from "eslint";
 
@@ -70,10 +66,10 @@ export function processValidTestCase(
 export function createDummyRule(
   create: (
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    context: RuleContext<"generic", any>
-  ) => RuleListener
+    context: TSESLint.RuleContext<"generic", any>
+  ) => TSESLint.RuleListener
 ): Rule.RuleModule {
-  const meta: RuleMetaData<"generic"> = {
+  const meta: TSESLint.RuleMetaData<"generic"> = {
     type: "suggestion",
     docs: {
       description: "Disallow mutable variables.",
