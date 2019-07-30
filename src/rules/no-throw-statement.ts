@@ -9,7 +9,7 @@ import {
 } from "../util/rule";
 
 // The name of this rule.
-export const name = "no-throw" as const;
+export const name = "no-throw-statement" as const;
 
 // The options this rule can take.
 type Options = {};

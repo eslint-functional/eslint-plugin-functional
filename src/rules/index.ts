@@ -34,7 +34,10 @@ import {
   rule as noReturnVoid
 } from "./no-return-void";
 import { name as noThisRuleName, rule as noThisRule } from "./no-this";
-import { name as noThrowRuleName, rule as noThrowRule } from "./no-throw";
+import {
+  name as noThrowStatementRuleName,
+  rule as noThrowStatementRule
+} from "./no-throw-statement";
 import { name as noTryRuleName, rule as noTryRule } from "./no-try";
 import {
   name as preferReadonlyTypesRuleName,
@@ -61,7 +64,7 @@ export const rules = {
   [noRejectRuleName]: noRejectRule,
   [noReturnVoidName]: noReturnVoid,
   [noThisRuleName]: noThisRule,
-  [noThrowRuleName]: noThrowRule,
+  [noThrowStatementRuleName]: noThrowStatementRule,
   [noTryRuleName]: noTryRule,
   [preferReadonlyTypesRuleName]: preferReadonlyTypesRule,
   [preferTypeRuleName]: preferTypeRule

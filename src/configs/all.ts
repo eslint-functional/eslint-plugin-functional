@@ -9,7 +9,7 @@ const config = {
     "functional/no-loop-statement": "error",
     "functional/no-reject": "error",
     "functional/no-this": "error",
-    "functional/no-throw": "error",
+    "functional/no-throw-statement": "error",
     "functional/no-try": "error"
   },
   overrides: [
