@@ -12,18 +12,18 @@ The rule accepts an options object with the following properties:
 
 ```typescript
 type Options = {
-  readonly ignoreLocal?: boolean;
+  readonly allowLocalMutation?: boolean;
   readonly ignorePattern?: string | Array<string>;
 };
 
 const defaults = {
-  ignoreLocal: false,
+  allowLocalMutation: false,
 };
 ```
 
-### `ignoreLocal`
+### `allowLocalMutation`
 
-See the [ignoreLocal](./options/ignore-local.md) docs.
+See the [allowLocalMutation](./options/allow-local-mutation.md) docs.
 
 ### `ignorePattern`
 

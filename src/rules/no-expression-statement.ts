@@ -1,7 +1,10 @@
 import { TSESTree } from "@typescript-eslint/experimental-utils";
 import { JSONSchema4 } from "json-schema";
 
-import * as ignore from "../common/ignore-options";
+import {
+  IgnorePatternOption,
+  ignorePatternOptionSchema
+} from "../common/ignore-options";
 import {
   createRule,
   RuleContext,
@@ -13,10 +16,10 @@ import {
 export const name = "no-expression-statement" as const;
 
 // The options this rule can take.
-type Options = ignore.IgnorePatternOption;
+type Options = IgnorePatternOption;
 
 // The schema for the rule options.
-const schema: JSONSchema4 = [ignore.ignorePatternOptionSchema];
+const schema: JSONSchema4 = [ignorePatternOptionSchema];
 
 // The default options for the rule.
 const defaultOptions: Options = {};
