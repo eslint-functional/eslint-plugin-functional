@@ -5,7 +5,16 @@ import { TSESTree } from "@typescript-eslint/experimental-utils";
 import { all as deepMerge } from "deepmerge";
 import { JSONSchema4 } from "json-schema";
 
-import * as ignore from "../common/ignore-options";
+import {
+  AllowLocalMutationOption,
+  allowLocalMutationOptionSchema,
+  IgnoreClassOption,
+  ignoreClassOptionSchema,
+  IgnoreInterfaceOption,
+  ignoreInterfaceOptionSchema,
+  IgnorePatternOption,
+  ignorePatternOptionSchema
+} from "../common/ignore-options";
 import {
   createRule,
   getTypeOfNode,
@@ -30,25 +39,27 @@ import {
 export const name = "prefer-readonly-type" as const;
 
 // The options this rule can take.
-type Options = ignore.IgnoreLocalOption &
-  ignore.IgnorePatternOption &
-  ignore.IgnoreClassOption &
-  ignore.IgnoreInterfaceOption &
-  ignore.IgnoreReturnTypeOption & {
+type Options = AllowLocalMutationOption &
+  IgnorePatternOption &
+  IgnoreClassOption &
+  IgnoreInterfaceOption & {
+    readonly allowMutableReturnType: boolean;
     readonly checkImplicit: boolean;
   };
 
 // The schema for the rule options.
 const schema: JSONSchema4 = [
   deepMerge([
-    ignore.ignoreLocalOptionSchema,
-    ignore.ignorePatternOptionSchema,
-    ignore.ignoreClassOptionSchema,
-    ignore.ignoreInterfaceOptionSchema,
-    ignore.ignoreReturnTypeOptionSchema,
+    allowLocalMutationOptionSchema,
+    ignorePatternOptionSchema,
+    ignoreClassOptionSchema,
+    ignoreInterfaceOptionSchema,
     {
       type: "object",
       properties: {
+        allowMutableReturnType: {
+          type: "boolean"
+        },
         checkImplicit: {
           type: "boolean"
         }
@@ -63,8 +74,8 @@ const defaultOptions: Options = {
   checkImplicit: false,
   ignoreClass: false,
   ignoreInterface: false,
-  ignoreLocal: false,
-  ignoreReturnType: false
+  allowLocalMutation: false,
+  allowMutableReturnType: false
 };
 
 // The possible error messages.
@@ -108,7 +119,7 @@ function checkArrayOrTupleType(
       (!node.parent ||
         !isTSTypeOperator(node.parent) ||
         node.parent.operator !== "readonly") &&
-      (!options.ignoreReturnType || !isInReturnType(node))
+      (!options.allowMutableReturnType || !isInReturnType(node))
         ? [
             {
               node,
@@ -139,7 +150,8 @@ function checkTypeReference(
     return {
       context,
       descriptors:
-        immutableType && (!options.ignoreReturnType || !isInReturnType(node))
+        immutableType &&
+        (!options.allowMutableReturnType || !isInReturnType(node))
           ? [
               {
                 node,

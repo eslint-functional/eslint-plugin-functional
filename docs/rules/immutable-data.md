@@ -28,6 +28,7 @@ The rule accepts an options object with the following properties:
 type Options = {
   readonly ignorePattern?: string | Array<string>;
   readonly ignoreAccessorPattern?: string | Array<string>;
+  readonly ignoreImmediateMutation?: boolean;
   readonly assumeTypes:
     | boolean
     | {
@@ -37,9 +38,14 @@ type Options = {
 };
 
 const defaults = {
+  ignoreImmediateMutation: true,
   assumeTypes: true
 };
 ```
+
+### `ignoreImmediateMutation`
+
+TODO: ignoreImmediateMutation.
 
 ### `assumeTypes`
 

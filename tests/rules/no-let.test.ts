@@ -23,7 +23,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
         let x;
         let y = 0;
       }`,
-    optionsSet: [[{ ignoreLocal: true }]]
+    optionsSet: [[{ allowLocalMutation: true }]]
   },
   {
     code: dedent`
@@ -31,7 +31,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
         let x;
         let y = 0;
       }`,
-    optionsSet: [[{ ignoreLocal: true }]]
+    optionsSet: [[{ allowLocalMutation: true }]]
   },
   {
     code: dedent`
@@ -41,7 +41,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
           let y = 0;
         }
       }`,
-    optionsSet: [[{ ignoreLocal: true }]]
+    optionsSet: [[{ allowLocalMutation: true }]]
   },
   {
     code: dedent`
@@ -149,7 +149,11 @@ const valid: ReadonlyArray<ValidTestCase> = [
 const invalid: ReadonlyArray<InvalidTestCase> = [
   {
     code: `let x;`,
-    optionsSet: [[], [{ ignoreLocal: true }], [{ ignorePattern: "^mutable" }]],
+    optionsSet: [
+      [],
+      [{ allowLocalMutation: true }],
+      [{ ignorePattern: "^mutable" }]
+    ],
     errors: [
       {
         messageId: "generic",
@@ -161,7 +165,11 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
   },
   {
     code: `let x = 0;`,
-    optionsSet: [[], [{ ignoreLocal: true }], [{ ignorePattern: "^mutable" }]],
+    optionsSet: [
+      [],
+      [{ allowLocalMutation: true }],
+      [{ ignorePattern: "^mutable" }]
+    ],
     errors: [
       {
         messageId: "generic",
@@ -173,7 +181,11 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
   },
   {
     code: `for (let x = 0; x < 1; x++);`,
-    optionsSet: [[], [{ ignoreLocal: true }], [{ ignorePattern: "^mutable" }]],
+    optionsSet: [
+      [],
+      [{ allowLocalMutation: true }],
+      [{ ignorePattern: "^mutable" }]
+    ],
     errors: [
       {
         messageId: "generic",
@@ -185,7 +197,11 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
   },
   {
     code: `for (let x = 0, y = 0; x < 1; x++);`,
-    optionsSet: [[], [{ ignoreLocal: true }], [{ ignorePattern: "^mutable" }]],
+    optionsSet: [
+      [],
+      [{ allowLocalMutation: true }],
+      [{ ignorePattern: "^mutable" }]
+    ],
     errors: [
       {
         messageId: "generic",
@@ -197,7 +213,11 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
   },
   {
     code: `for (let x in {});`,
-    optionsSet: [[], [{ ignoreLocal: true }], [{ ignorePattern: "^mutable" }]],
+    optionsSet: [
+      [],
+      [{ allowLocalMutation: true }],
+      [{ ignorePattern: "^mutable" }]
+    ],
     errors: [
       {
         messageId: "generic",
@@ -209,7 +229,11 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
   },
   {
     code: `for (let x of []);`,
-    optionsSet: [[], [{ ignoreLocal: true }], [{ ignorePattern: "^mutable" }]],
+    optionsSet: [
+      [],
+      [{ allowLocalMutation: true }],
+      [{ ignorePattern: "^mutable" }]
+    ],
     errors: [
       {
         messageId: "generic",
