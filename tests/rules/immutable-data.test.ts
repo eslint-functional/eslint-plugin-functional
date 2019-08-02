@@ -545,6 +545,23 @@ const arrayES3Valid: ReadonlyArray<ValidTestCase> = [
       z.splice();
       z.unshift();`,
     optionsSet: [[{ assumeTypes: false }]]
+  },
+  {
+    code: dedent`
+      var mutableX = [0, 1];
+      mutableX.copyWithin(0, 1, 2);
+      mutableX.fill(3);
+      mutableX.pop();
+      mutableX.push(3);
+      mutableX.reverse();
+      mutableX.shift();
+      mutableX.sort();
+      mutableX.splice(0, 1, 9);
+      mutableX.unshift(6);`,
+    optionsSet: [
+      [{ ignorePattern: "^mutable" }],
+      [{ ignoreAccessorPattern: "mutable*" }]
+    ]
   }
 ];
 

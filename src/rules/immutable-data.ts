@@ -256,6 +256,8 @@ function checkCallExpression(
       // Potential object mutation?
       isMemberExpression(node.callee) && isIdentifier(node.callee.property)
         ? // Potential array mutation?
+          // Check if ignored here - this cannot be automatically checked beforehand.
+          !ignore.shouldIgnore(node.callee.object, context, options) &&
           arrayMutatorMethods.some(
             m =>
               m ===
