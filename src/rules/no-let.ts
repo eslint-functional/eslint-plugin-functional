@@ -2,7 +2,12 @@ import { TSESTree } from "@typescript-eslint/experimental-utils";
 import { all as deepMerge } from "deepmerge";
 import { JSONSchema4 } from "json-schema";
 
-import * as ignore from "../common/ignore-options";
+import {
+  AllowLocalMutationOption,
+  IgnorePatternOption,
+  allowLocalMutationOptionSchema,
+  ignorePatternOptionSchema
+} from "../common/ignore-options";
 import {
   createRule,
   RuleContext,
@@ -14,16 +19,16 @@ import {
 export const name = "no-let" as const;
 
 // The options this rule can take.
-type Options = ignore.IgnoreLocalOption & ignore.IgnorePatternOption;
+type Options = AllowLocalMutationOption & IgnorePatternOption;
 
 // The schema for the rule options.
 const schema: JSONSchema4 = [
-  deepMerge([ignore.ignoreLocalOptionSchema, ignore.ignorePatternOptionSchema])
+  deepMerge([allowLocalMutationOptionSchema, ignorePatternOptionSchema])
 ];
 
 // The default options for the rule.
 const defaultOptions: Options = {
-  ignoreLocal: false
+  allowLocalMutation: false
 };
 
 // The possible error messages.

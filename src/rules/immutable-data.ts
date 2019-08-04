@@ -2,7 +2,13 @@ import { TSESTree } from "@typescript-eslint/experimental-utils";
 import { all as deepMerge } from "deepmerge";
 import { JSONSchema4 } from "json-schema";
 
-import * as ignore from "../common/ignore-options";
+import {
+  IgnoreAccessorPatternOption,
+  IgnorePatternOption,
+  ignoreAccessorPatternOptionSchema,
+  ignorePatternOptionSchema,
+  shouldIgnore
+} from "../common/ignore-options";
 import { isExpected } from "../util/misc";
 import {
   createRule,
@@ -27,24 +33,28 @@ import {
 export const name = "immutable-data" as const;
 
 // The options this rule can take.
-type Options = ignore.IgnorePatternOption &
-  ignore.IgnoreAccessorPatternOption & {
+type Options = IgnorePatternOption &
+  IgnoreAccessorPatternOption & {
+    readonly ignoreImmediateMutation?: boolean;
     readonly assumeTypes:
       | boolean
       | {
-          readonly forArrays?: boolean;
-          readonly forObjects?: boolean;
+          readonly forArrays: boolean;
+          readonly forObjects: boolean;
         };
   };
 
 // The schema for the rule options.
 const schema: JSONSchema4 = [
   deepMerge([
-    ignore.ignorePatternOptionSchema,
-    ignore.ignoreAccessorPatternOptionSchema,
+    ignorePatternOptionSchema,
+    ignoreAccessorPatternOptionSchema,
     {
       type: "object",
       properties: {
+        ignoreImmediateMutation: {
+          type: "boolean"
+        },
         assumeTypes: {
           oneOf: [
             {
@@ -72,7 +82,10 @@ const schema: JSONSchema4 = [
 
 // The default options for the rule.
 const defaultOptions: Options = {
-  assumeTypes: true
+  assumeTypes: {
+    forArrays: true,
+    forObjects: true
+  }
 };
 
 // The possible error messages.
@@ -156,7 +169,7 @@ function checkAssignmentExpression(
     context,
     descriptors:
       isMemberExpression(node.left) &&
-      // Ignore if in a constructor - allow for field initialization.
+      // Allow if in a constructor - allow for field initialization.
       !inConstructor(node)
         ? [{ node, messageId: "generic" }]
         : []
@@ -256,8 +269,8 @@ function checkCallExpression(
       // Potential object mutation?
       isMemberExpression(node.callee) && isIdentifier(node.callee.property)
         ? // Potential array mutation?
-          // Check if ignored here - this cannot be automatically checked beforehand.
-          !ignore.shouldIgnore(node.callee.object, context, options) &&
+          // Check if allowed here - this cannot be automatically checked beforehand.
+          !shouldIgnore(node.callee.object, context, options) &&
           arrayMutatorMethods.some(
             m =>
               m ===
@@ -285,8 +298,8 @@ function checkCallExpression(
             node.arguments.length >= 2 &&
             (isIdentifier(node.arguments[0]) ||
               isMemberExpression(node.arguments[0])) &&
-            // Check if ignored here - this cannot be automatically checked beforehand.
-            !ignore.shouldIgnore(node.arguments[0], context, options) &&
+            // Check if allowed here - this cannot be automatically checked beforehand.
+            !shouldIgnore(node.arguments[0], context, options) &&
             isObjectConstructorType(
               getTypeOfNode(node.callee.object, context),
               assumeTypesForObjects,

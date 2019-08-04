@@ -22,7 +22,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
     code: `var x = [];`,
     optionsSet: [[]]
   },
-  // Ignored expressions should not cause failures.
+  // Allowed expressions should not cause failures.
   {
     code: dedent`
       console.log("yo");
@@ -47,7 +47,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
       }
     ]
   },
-  // Unignored expressions should cause failures.
+  // Non-allowed expressions should cause failures.
   {
     code: `console.trace();`,
     optionsSet: [[{ ignorePattern: "^console\\.log" }]],

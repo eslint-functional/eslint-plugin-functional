@@ -7,6 +7,7 @@ import { Rule } from "eslint";
 import { Type } from "typescript";
 
 import { version } from "../../package.json";
+
 import { shouldIgnore } from "../common/ignore-options";
 
 export type BaseOptions = object;

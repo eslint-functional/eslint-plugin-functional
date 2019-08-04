@@ -92,17 +92,17 @@ type Options = {
   readonly checkImplicit: boolean;
   readonly ignoreClass?: boolean;
   readonly ignoreInterface?: boolean;
-  readonly ignoreLocal?: boolean;
+  readonly allowLocalMutation?: boolean;
   readonly ignorePattern?: string | Array<string>;
-  readonly ignoreReturnType?: boolean;
+  readonly allowMutableReturnType?: boolean;
 };
 
 const defaults = {
   checkImplicit: false,
   ignoreClass: false,
   ignoreInterface: false,
-  ignoreLocal: false,
-  ignoreReturnType: false
+  allowLocalMutation: false,
+  allowMutableReturnType: false
 };
 ```
 
@@ -112,7 +112,7 @@ By default, this function only checks explicit types. Enabling this option will 
 
 Note: Checking implicit types is more expensive (slow).
 
-### `ignoreReturnType`
+### `allowMutableReturnType`
 
 Doesn't check the return type of functions.
 
@@ -164,9 +164,9 @@ interface {
 }
 ```
 
-### `ignoreLocal`
+### `allowLocalMutation`
 
-See the [ignoreLocal](./options/ignore-local.md) docs.
+See the [allowLocalMutation](./options/allow-local-mutation.md) docs.
 
 ### `ignorePattern`
 
