@@ -953,6 +953,77 @@ const arrayES3Invalid: ReadonlyArray<InvalidTestCase> = [
         column: 1
       }
     ]
+  },
+  // Disallowed array mutation methods to be chained to the creation of an array
+  // if `ignoreImmediateMutation` is false.
+  {
+    code: dedent`
+      [0, 1, 2].copyWithin(0, 1, 2);
+      [0, 1, 2].fill(3);
+      [0, 1, 2].pop();
+      [0, 1, 2].push(3);
+      [0, 1, 2].reverse();
+      [0, 1, 2].shift();
+      [0, 1, 2].sort();
+      [0, 1, 2].splice(0, 1, 9);
+      [0, 1, 2].unshift(6)`,
+    optionsSet: [[{ ignoreImmediateMutation: false }]],
+    errors: [
+      {
+        messageId: "array",
+        type: "CallExpression",
+        line: 1,
+        column: 1
+      },
+      {
+        messageId: "array",
+        type: "CallExpression",
+        line: 2,
+        column: 1
+      },
+      {
+        messageId: "array",
+        type: "CallExpression",
+        line: 3,
+        column: 1
+      },
+      {
+        messageId: "array",
+        type: "CallExpression",
+        line: 4,
+        column: 1
+      },
+      {
+        messageId: "array",
+        type: "CallExpression",
+        line: 5,
+        column: 1
+      },
+      {
+        messageId: "array",
+        type: "CallExpression",
+        line: 6,
+        column: 1
+      },
+      {
+        messageId: "array",
+        type: "CallExpression",
+        line: 7,
+        column: 1
+      },
+      {
+        messageId: "array",
+        type: "CallExpression",
+        line: 8,
+        column: 1
+      },
+      {
+        messageId: "array",
+        type: "CallExpression",
+        line: 9,
+        column: 1
+      }
+    ]
   }
 ];
 

@@ -45,7 +45,15 @@ const defaults = {
 
 ### `ignoreImmediateMutation`
 
-TODO: ignoreImmediateMutation.
+If true, immediate mutation of objects before they are assigned to a variable is allowed.
+This allows for the use of array mutator methods to be chained to newly created arrays.
+
+For example, an array can be immutably sorted like so:
+
+```javascript
+const original = ["foo", "bar", "baz"];
+const sorted = [...original].sort((a, b) => a.localeCompare(b)); // This is OK with ignoreImmediateMutation.
+```
 
 ### `assumeTypes`
 
