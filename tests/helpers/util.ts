@@ -98,17 +98,17 @@ export type Config = Linter.Config & {
 };
 
 /**
- * Create an empty target for the given value.
+ * Create a clone of the given object or array.
  */
-function emptyTarget(value: unknown): {} {
-  return Array.isArray(value) ? [] : {};
-}
-
-/**
- * Create a clone of the given value.
- */
-function clone<T>(value: T, options: deepMergeOptions): T {
-  return deepMerge<T>(emptyTarget(value), value, options);
+function clone<T extends ReadonlyArray<unknown> | {}>(
+  value: T,
+  options: deepMergeOptions
+): T {
+  return deepMerge<T>(
+    (Array.isArray(value) ? [] : {}) as Partial<T>,
+    value,
+    options
+  );
 }
 
 /**
