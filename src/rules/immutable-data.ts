@@ -35,7 +35,7 @@ export const name = "immutable-data" as const;
 // The options this rule can take.
 type Options = IgnorePatternOption &
   IgnoreAccessorPatternOption & {
-    readonly ignoreImmediateMutation?: boolean;
+    readonly ignoreImmediateMutation: boolean;
     readonly assumeTypes:
       | boolean
       | {
@@ -82,6 +82,7 @@ const schema: JSONSchema4 = [
 
 // The default options for the rule.
 const defaultOptions: Options = {
+  ignoreImmediateMutation: true,
   assumeTypes: {
     forArrays: true,
     forObjects: true
@@ -277,11 +278,12 @@ function checkCallExpression(
               ((node.callee as TSESTree.MemberExpression)
                 .property as TSESTree.Identifier).name
           ) &&
-          !isInChainCallAndFollowsNew(
-            node.callee,
-            context,
-            assumeTypesForArrays
-          ) &&
+          (!options.ignoreImmediateMutation ||
+            !isInChainCallAndFollowsNew(
+              node.callee,
+              context,
+              assumeTypesForArrays
+            )) &&
           isArrayType(
             getTypeOfNode(node.callee.object, context),
             assumeTypesForArrays,
