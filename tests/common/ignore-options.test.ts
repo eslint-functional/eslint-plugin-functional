@@ -130,10 +130,10 @@ describe("option: ignore", () => {
     new RuleTester(typescript).run(
       "AssignmentExpression",
       createDummyRule(context => {
-        const [ignored, options] = context.options;
+        const [allowed, options] = context.options;
         return {
           AssignmentExpression: node => {
-            expect(shouldIgnore(node, context, options)).toBe(ignored);
+            expect(shouldIgnore(node, context, options)).toBe(allowed);
           }
         };
       }) as Rule.RuleModule,
@@ -182,10 +182,10 @@ describe("option: ignore", () => {
     new RuleTester(typescript).run(
       "AssignmentExpression",
       createDummyRule(context => {
-        const [ignored, options] = context.options;
+        const [allowed, options] = context.options;
         return {
           AssignmentExpression: node => {
-            expect(shouldIgnore(node, context, options)).toBe(ignored);
+            expect(shouldIgnore(node, context, options)).toBe(allowed);
           }
         };
       }) as Rule.RuleModule,
@@ -218,10 +218,10 @@ describe("option: ignore", () => {
     new RuleTester(typescript).run(
       "ExpressionStatement",
       createDummyRule(context => {
-        const [ignored, options] = context.options;
+        const [allowed, options] = context.options;
         return {
           ExpressionStatement: node => {
-            expect(shouldIgnore(node, context, options)).toBe(ignored);
+            expect(shouldIgnore(node, context, options)).toBe(allowed);
           }
         };
       }) as Rule.RuleModule,

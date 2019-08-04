@@ -24,21 +24,14 @@ import {
   isVariableDeclaration
 } from "../util/typeguard";
 
-type IgnoreOptions = IgnoreLocalOption &
-  IgnorePatternOption &
-  IgnoreAccessorPatternOption &
-  IgnoreClassOption &
-  IgnoreInterfaceOption &
-  IgnoreNewArrayOption;
-
-export type IgnoreLocalOption = {
-  readonly ignoreLocal?: boolean;
+export type AllowLocalMutationOption = {
+  readonly allowLocalMutation: boolean;
 };
 
-export const ignoreLocalOptionSchema: JSONSchema4 = {
+export const allowLocalMutationOptionSchema: JSONSchema4 = {
   type: "object",
   properties: {
-    ignoreLocal: {
+    allowLocalMutation: {
       type: "boolean"
     }
   },
@@ -48,6 +41,7 @@ export const ignoreLocalOptionSchema: JSONSchema4 = {
 export type IgnorePatternOption = {
   readonly ignorePattern?: string | ReadonlyArray<string>;
 };
+
 export const ignorePatternOptionSchema: JSONSchema4 = {
   type: "object",
   properties: {
@@ -64,6 +58,7 @@ export const ignorePatternOptionSchema: JSONSchema4 = {
 export type IgnoreAccessorPatternOption = {
   readonly ignoreAccessorPattern?: string | ReadonlyArray<string>;
 };
+
 export const ignoreAccessorPatternOptionSchema: JSONSchema4 = {
   type: "object",
   properties: {
@@ -77,22 +72,10 @@ export const ignoreAccessorPatternOptionSchema: JSONSchema4 = {
   additionalProperties: false
 };
 
-export type IgnoreReturnTypeOption = {
-  readonly ignoreReturnType?: boolean;
-};
-export const ignoreReturnTypeOptionSchema: JSONSchema4 = {
-  type: "object",
-  properties: {
-    ignoreReturnType: {
-      type: "boolean"
-    }
-  },
-  additionalProperties: false
+export type IgnoreClassOption = {
+  readonly ignoreClass: boolean;
 };
 
-export type IgnoreClassOption = {
-  readonly ignoreClass?: boolean;
-};
 export const ignoreClassOptionSchema: JSONSchema4 = {
   type: "object",
   properties: {
@@ -104,25 +87,13 @@ export const ignoreClassOptionSchema: JSONSchema4 = {
 };
 
 export type IgnoreInterfaceOption = {
-  readonly ignoreInterface?: boolean;
+  readonly ignoreInterface: boolean;
 };
+
 export const ignoreInterfaceOptionSchema: JSONSchema4 = {
   type: "object",
   properties: {
     ignoreInterface: {
-      type: "boolean"
-    }
-  },
-  additionalProperties: false
-};
-
-export type IgnoreNewArrayOption = {
-  readonly ignoreNewArray?: boolean;
-};
-export const ignoreNewArrayOptionSchema: JSONSchema4 = {
-  type: "object",
-  properties: {
-    ignoreNewArray: {
       type: "boolean"
     }
   },
@@ -182,7 +153,7 @@ function getNodeIdentifierTexts(
 }
 
 /**
- * Should the given text be ignore?
+ * Should the given text be allowed?
  *
  * Test using the given pattern(s).
  */
@@ -245,7 +216,7 @@ function accessorPatternMatch(
 }
 
 /**
- * Should the given text be ignore?
+ * Should the given text be allowed?
  *
  * Test using the given accessor pattern(s).
  */
@@ -264,16 +235,28 @@ function shouldIgnoreViaAccessorPattern(
 }
 
 /**
- * Should the given node be ignored?
+ * Should the given node be allowed base off the following rule options?
+ *
+ * - IgnoreAccessorPatternOption
+ * - IgnoreClassOption
+ * - IgnoreInterfaceOption
+ * - IgnorePatternOption
+ * - AllowLocalMutationOption
  */
 export function shouldIgnore(
   node: TSESTree.Node,
   context: RuleContext<string, BaseOptions>,
-  options: Partial<IgnoreOptions>
+  options: Partial<
+    IgnoreAccessorPatternOption &
+      IgnoreClassOption &
+      IgnoreInterfaceOption &
+      IgnorePatternOption &
+      AllowLocalMutationOption
+  >
 ): boolean {
   return (
-    // Ignore if in a function and ignoreLocal is set.
-    (options.ignoreLocal === true && inFunction(node)) ||
+    // Allow if in a function and allowLocalMutation is set.
+    (options.allowLocalMutation === true && inFunction(node)) ||
     // Ignore if in a class and ignoreClass is set.
     (options.ignoreClass === true && inClass(node)) ||
     // Ignore if in an interface and ignoreInterface is set.

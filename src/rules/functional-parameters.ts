@@ -2,7 +2,10 @@ import { TSESTree } from "@typescript-eslint/experimental-utils";
 import { all as deepMerge } from "deepmerge";
 import { JSONSchema4 } from "json-schema";
 
-import * as ignore from "../common/ignore-options";
+import {
+  IgnorePatternOption,
+  ignorePatternOptionSchema
+} from "../common/ignore-options";
 import {
   createRule,
   RuleContext,
@@ -18,7 +21,7 @@ export const name = "functional-parameters" as const;
 type ParameterCountOptions = "atLeastOne" | "exactlyOne";
 
 // The options this rule can take.
-type Options = ignore.IgnorePatternOption & {
+type Options = IgnorePatternOption & {
   readonly allowRestParameter: boolean;
   readonly allowArgumentsKeyword: boolean;
   readonly enforceParameterCount:
@@ -33,7 +36,7 @@ type Options = ignore.IgnorePatternOption & {
 // The schema for the rule options.
 const schema: JSONSchema4 = [
   deepMerge([
-    ignore.ignorePatternOptionSchema,
+    ignorePatternOptionSchema,
     {
       type: "object",
       properties: {

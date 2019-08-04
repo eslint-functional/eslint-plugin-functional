@@ -11,7 +11,7 @@ type person = {
 };
 ```
 
-Typescript is not immutable by default but it can be if you use this package. So in order to create an escape hatch similar to how it is done in reason the `ignorePattern` option can be used. For example if you configure it to ignore variables with names that has the prefix "mutable" you can emulate the above example in typescript like this:
+Typescript is not immutable by default but it can be if you use this package. So in order to create an escape hatch similar to how it is done in reason the `ignorePattern` option can be used. For example if you configure it to allow variables with names that has the prefix "mutable" you can emulate the above example in typescript like this:
 
 ```typescript
 type person = {
