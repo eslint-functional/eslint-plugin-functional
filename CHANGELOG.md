@@ -5,9 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/jonaskello/eslint-plugin-functional/compare/v0.5.2...HEAD)
+## [Unreleased](https://github.com/jonaskello/eslint-plugin-functional/compare/v0.5.3...HEAD)
 
-## [v0.5.2](https://github.com/jonaskello/eslint-plugin-functional/compare/v0.5.1...v0.5.2) - 2019-07-31
+## [v0.5.3](https://github.com/jonaskello/eslint-plugin-functional/compare/v0.5.1...v0.5.3) - 2019-08-02
+
+### Fixed
+
+- fix(immutable-data): ignore call expressions on ignored arrays [`#56`](https://github.com/jonaskello/eslint-plugin-functional/issues/56)
+
+## [v0.5.2](https://github.com/jonaskello/eslint-plugin-functional/compare/v0.5.1...v0.5.2) - 2019-07-30
 
 ### Merged
 
