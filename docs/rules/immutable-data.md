@@ -6,7 +6,7 @@ This rule prohibits syntax that mutates existing objects and arrays via assignme
 
 While requiring the `readonly` modifier forces declared types to be immutable, it won't stop assignment into or modification of untyped objects or external types declared under different rules.
 
-```typescript
+```ts
 const x = { a: 1 };
 const y = [0, 1, 2];
 
@@ -24,7 +24,7 @@ y.push(3); // <- Modifying an array is not allowed.
 
 The rule accepts an options object with the following properties:
 
-```typescript
+```ts
 type Options = {
   readonly ignorePattern?: string | Array<string>;
   readonly ignoreAccessorPattern?: string | Array<string>;
@@ -50,7 +50,7 @@ This allows for the use of array mutator methods to be chained to newly created 
 
 For example, an array can be immutably sorted like so:
 
-```javascript
+```js
 const original = ["foo", "bar", "baz"];
 const sorted = [...original].sort((a, b) => a.localeCompare(b)); // This is OK with ignoreImmediateMutation.
 ```
@@ -63,7 +63,7 @@ If you are not using TypeScript, type checking cannot be performed; hence this o
 This option will make the rule assume the type of the nodes it is checking are of type Array/Object.  
 This may however result in some false positives being picked up.
 
-```typescript
+```ts
 const x = [0, 1, 2];
 x.push(3); // This will not be flagged as an issue if this option is disabled.
            // This is due to the fact that without a typing engine, we cannot tell that x is an array.

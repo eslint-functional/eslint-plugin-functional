@@ -10,7 +10,7 @@ Try statements are not part of functional programming. See [no-throw-statement](
 
 The rule accepts an options object with the following properties:
 
-```typescript
+```ts
 type Options = {
   readonly allowCatch: boolean;
   readonly allowFinally: boolean;

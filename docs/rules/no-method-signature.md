@@ -6,7 +6,7 @@ Prefer property signatures with readonly modifiers over method signatures.
 
 There are two ways function members can be declared in an interface or type alias:
 
-```typescript
+```ts
 interface Zoo {
   foo(): string; // MethodSignature, cannot have readonly modifier
   readonly bar: () => string; // PropertySignature

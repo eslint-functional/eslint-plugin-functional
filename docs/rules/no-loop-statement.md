@@ -6,7 +6,7 @@ This rule disallows for loop statements, including `for`, `for...of`, `for...in`
 
 In functional programming we want everthing to be an expression that returns a value. Loops in typescript are statements so they are not a good fit for a functional programming style.
 
-```typescript
+```ts
 const numbers = [1, 2, 3];
 const double = [];
 for (let i = 0; i < numbers.length; i++) {
@@ -16,7 +16,7 @@ for (let i = 0; i < numbers.length; i++) {
 
 Instead consider using `map` or `reduce`:
 
-```typescript
+```ts
 const numbers = [1, 2, 3];
 const double = numbers.map(n => n * 2);
 ```

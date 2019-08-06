@@ -10,7 +10,7 @@ Interfaces are part of Object Oriented Design. When it comes to functional desig
 
 The rule accepts an options object with the following properties:
 
-```typescript
+```ts
 type Options = {
   readonly allowLocalMutation?: boolean;
   readonly ignorePattern?: string | Array<string>;

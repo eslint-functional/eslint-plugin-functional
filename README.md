@@ -193,7 +193,7 @@ This rule is helpful when converting from an imperative code style to a function
 
 For performance reasons, tslint-immutable does not check implicit return types. So for example this function will return an mutable array but will not be detected:
 
-```javascript
+```js
 function foo() {
   return [1, 2, 3];
 }

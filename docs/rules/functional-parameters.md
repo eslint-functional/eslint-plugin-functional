@@ -16,7 +16,7 @@ Also of note: currying functions is a lot more difficult with an undefined numbe
 
 The rule accepts an options object with the following properties:
 
-```typescript
+```ts
 type Options = {
   readonly ignorePattern?: string | Array<string>;
   readonly allowRestParameter: boolean;
@@ -67,7 +67,7 @@ Any function that take takes multiple parameter can be rewritten as a higher-ord
 
 Example:
 
-```typescript
+```ts
 // This function
 function add(x, y) {
   return x + y;

@@ -14,7 +14,7 @@ Note: For performance reasons, this rule does not check implicit return types. W
 
 The rule accepts an options object with the following properties:
 
-```typescript
+```ts
 type Options = readonly [
   {
     readonly allowNull: boolean;

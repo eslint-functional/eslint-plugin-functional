@@ -6,13 +6,13 @@ This rule disallows the `throw` keyword.
 
 Exceptions are not part of functional programming.
 
-```typescript
+```ts
 throw new Error("Something went wrong."); // Unexpected throw, throwing exceptions is not functional.
 ```
 
 As an alternative a function should return an error:
 
-```typescript
+```ts
 function divide(x: number, y: number): number | Error {
   return y === 0 ? new Error("Cannot divide by zero.") : x / y;
 }
@@ -20,7 +20,7 @@ function divide(x: number, y: number): number | Error {
 
 Or in the case of an async function, a rejected promise should be returned.
 
-```typescript
+```ts
 async function divide(x: Promise<number>, y: Promise<number>): Promise<number> {
   const [xv, yv] = await Promise.all([x, y]);
 
