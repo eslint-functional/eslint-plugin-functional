@@ -6,7 +6,7 @@ This rule checks that the value of an expression is assigned to a variable and t
 
 When you call a function and don’t use it’s return value, chances are high that it is being called for its side effect. e.g.
 
-```typescript
+```ts
 array.push(1);
 alert("Hello world!");
 ```
@@ -15,7 +15,7 @@ alert("Hello world!");
 
 The rule accepts an options object with the following properties:
 
-```typescript
+```ts
 type Options = {
   readonly ignorePattern?: string | Array<string>;
 };

@@ -6,7 +6,7 @@ This rule disallows conditional statements such as if and switch.
 
 Conditional statements are not a good fit for functional style programming as they are not expressions and do not return a value.
 
-```typescript
+```ts
 let x;
 if (i === 1) {
   x = 2;
@@ -17,7 +17,7 @@ if (i === 1) {
 
 Instead consider using the [tenary operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator) which is an expression that returns a value:
 
-```typescript
+```ts
 const x = i === 1 ? 2 : 3;
 ```
 
@@ -27,7 +27,7 @@ For more background see this [blog post](https://hackernoon.com/rethinking-javas
 
 The rule accepts an options object with the following properties:
 
-```typescript
+```ts
 type Options = {
   readonly allowReturningBranches: boolean | "ifExhaustive";
 };
@@ -44,7 +44,7 @@ const defaults = {
 The optional allows conditional statements but only if all defined branches end with a return statement.
 This allows early escapes to be used.
 
-```typescript
+```ts
 function foo(error, data) {
   if (error) {
     return;
@@ -60,7 +60,7 @@ This will only allow conditional statements to exists if every case is taken it 
 In other works, every if must have an else and every switch must have a default case.
 This allows conditional statements to be used like [do expressions](https://github.com/tc39/proposal-do-expressions).
 
-```typescript
+```ts
 const x = (() => {
   switch(y) {
     case "a":
