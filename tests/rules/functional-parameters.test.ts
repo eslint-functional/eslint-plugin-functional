@@ -30,7 +30,7 @@ const es3Valid: ReadonlyArray<ValidTestCase> = [
       (function() {
         console.log("hello world");
       })();`,
-    optionsSet: [[{ enforceParameterCount: { allowIIFE: true } }]]
+    optionsSet: [[{ enforceParameterCount: { ignoreIIFE: true } }]]
   }
 ];
 
@@ -91,7 +91,7 @@ const es6Valid: ReadonlyArray<ValidTestCase> = [
       (() => {
         console.log("hello world");
       })();`,
-    optionsSet: [[{ enforceParameterCount: { allowIIFE: true } }]]
+    optionsSet: [[{ enforceParameterCount: { ignoreIIFE: true } }]]
   },
   {
     code: dedent`

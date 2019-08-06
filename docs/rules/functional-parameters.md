@@ -23,7 +23,7 @@ type Options = {
   readonly allowArgumentsKeyword: boolean;
   readonly enforceParameterCount: false | "atLeastOne" | "exactlyOne" | {
     readonly count: "atLeastOne" | "exactlyOne";
-    readonly allowIIFE: boolean;
+    readonly ignoreIIFE: boolean;
   };
 };
 
@@ -32,7 +32,7 @@ const defaults = {
   allowArgumentsKeyword: false,
   enforceParameterCount: {
     count: "atLeastOne",
-    allowIIFE: false
+    ignoreIIFE: false
   }
 };
 ```
@@ -85,7 +85,7 @@ See [Currying](https://en.wikipedia.org/wiki/Currying) and [Higher-order functio
 
 See [enforceParameterCount](#enforceparametercount).
 
-#### `enforceParameterCount.allowIIFE`
+#### `enforceParameterCount.ignoreIIFE`
 
 If true, this option allows for the use of [IIFEs](https://developer.mozilla.org/en-US/docs/Glossary/IIFE) that do not have any parameters.
 
