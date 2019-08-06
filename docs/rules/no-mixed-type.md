@@ -34,8 +34,8 @@ The rule accepts an options object with the following properties:
 
 ```ts
 type Options = {
-  readonly checkInterfaces: boolean;
-  readonly checkTypeLiterals: boolean;
+  checkInterfaces: boolean;
+  checkTypeLiterals: boolean;
 };
 
 const defaults = {

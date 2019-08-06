@@ -17,7 +17,7 @@ The rule accepts an options object with the following properties:
 
 ```ts
 type Options = {
-  readonly ignorePattern?: string | Array<string>;
+  ignorePattern?: string | Array<string>;
 };
 
 const defaults = {};

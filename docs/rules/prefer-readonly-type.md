@@ -89,20 +89,20 @@ The rule accepts an options object with the following properties:
 
 ```ts
 type Options = {
-  readonly checkImplicit: boolean;
-  readonly ignoreClass?: boolean;
-  readonly ignoreInterface?: boolean;
-  readonly allowLocalMutation?: boolean;
-  readonly ignorePattern?: string | Array<string>;
-  readonly allowMutableReturnType?: boolean;
+  allowLocalMutation: boolean;
+  allowMutableReturnType: boolean;
+  checkImplicit: boolean;
+  ignoreClass: boolean;
+  ignoreInterface: boolean;
+  ignorePattern?: string | Array<string>;
 };
 
 const defaults = {
+  allowLocalMutation: false,
+  allowMutableReturnType: false,
   checkImplicit: false,
   ignoreClass: false,
-  ignoreInterface: false,
-  allowLocalMutation: false,
-  allowMutableReturnType: false
+  ignoreInterface: false
 };
 ```
 

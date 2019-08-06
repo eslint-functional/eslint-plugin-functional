@@ -29,8 +29,8 @@ The rule accepts an options object with the following properties:
 
 ```ts
 type Options = {
-  readonly allowLocalMutation?: boolean;
-  readonly ignorePattern?: string | Array<string>;
+  allowLocalMutation: boolean;
+  ignorePattern?: string | Array<string>;
 };
 
 const defaults = {
