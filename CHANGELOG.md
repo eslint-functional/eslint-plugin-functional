@@ -5,9 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/jonaskello/eslint-plugin-functional/compare/v0.5.3...HEAD)
+## [Unreleased](https://github.com/jonaskello/eslint-plugin-functional/compare/v1.0.0-rc.1...HEAD)
 
-## [v0.5.3](https://github.com/jonaskello/eslint-plugin-functional/compare/v0.5.1...v0.5.3) - 2019-08-02
+## [v1.0.0-rc.1](https://github.com/jonaskello/eslint-plugin-functional/compare/v0.5.3...v1.0.0-rc.1) - 2019-08-06
+
+### Merged
+
+- fix(immutable-data): Implement option ignoreImmediateMutation [`#59`](https://github.com/jonaskello/eslint-plugin-functional/pull/59)
+- Rename Options [`#55`](https://github.com/jonaskello/eslint-plugin-functional/pull/55)
+- Fix #56 [`#57`](https://github.com/jonaskello/eslint-plugin-functional/pull/57)
+
+## [v0.5.3](https://github.com/jonaskello/eslint-plugin-functional/compare/v0.5.2...v0.5.3) - 2019-08-02
+
+### Merged
+
+- tslint migration guide [`#54`](https://github.com/jonaskello/eslint-plugin-functional/pull/54)
+- Rename Rules [`#53`](https://github.com/jonaskello/eslint-plugin-functional/pull/53)
 
 ### Fixed
 
