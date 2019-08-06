@@ -12,6 +12,34 @@ Rest parameters are another way any number of parameters can be passed to a func
 When it comes to functional programming, it is better have known and explicit parameters.
 Also of note: currying functions is a lot more difficult with an undefined number of parameters.
 
+Examples of **incorrect** code for this rule:
+
+```js
+/*eslint functional/functional-parameters: "error"*/
+
+function add() {
+  return arguments.reduce((sum, number) => sum + number, 0);
+}
+```
+
+```js
+/*eslint functional/functional-parameters: "error"*/
+
+function add(...numbers) {
+  return numbers.reduce((sum, number) => sum + number, 0);
+}
+```
+
+Examples of **correct** code for this rule:
+
+```js
+/*eslint functional/functional-parameters: "error"*/
+
+function add(numbers) {
+  return numbers.reduce((sum, number) => sum + number, 0);
+}
+```
+
 ## Options
 
 The rule accepts an options object with the following properties:

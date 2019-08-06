@@ -4,6 +4,47 @@ Disallow use of the `class` keyword.
 
 ## Rule Details
 
+Examples of **incorrect** code for this rule:
+
+```js
+/*eslint functional/no-class: "error"*/
+
+class Dog {
+  
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  get ageInDogYears() {
+    return 7 * this.age;
+  }
+}
+
+const dogA = new Dog("Jasper", 2);
+
+console.log(`${dogA.name} is ${dogA.ageInDogYears} in dog years.`);
+```
+
+Examples of **correct** code for this rule:
+
+```js
+/*eslint functional/no-class: "error"*/
+
+function getAgeInDogYears(age) {
+  return 7 * age;
+}
+
+const dogA = {
+  name: "Jasper",
+  age: 2
+};
+
+console.log(`${dogA.name} is ${getAgeInDogYears(dogA.age)} in dog years.`);
+```
+
+### React Examples
+
 Thanks to libraries like [recompose](https://github.com/acdlite/recompose) and Redux's [React Container components](http://redux.js.org/docs/basics/UsageWithReact.html), there's not much reason to build Components using `React.createClass` or ES6 classes anymore. The `no-this-expression` rule makes this explicit.
 
 ```ts
