@@ -30,7 +30,7 @@ const es3Valid: ReadonlyArray<ValidTestCase> = [
       (function() {
         console.log("hello world");
       })();`,
-    optionsSet: [[{ enforceParameterCount: { ignoreIIFE: true } }]]
+    optionsSet: [[]]
   }
 ];
 
@@ -56,7 +56,7 @@ const es3Invalid: ReadonlyArray<InvalidTestCase> = [
       (function() {
         console.log("hello world");
       })();`,
-    optionsSet: [[]],
+    optionsSet: [[{ enforceParameterCount: { ignoreIIFE: false } }]],
     errors: [
       {
         messageId: "paramCountAtLeastOne",
@@ -91,7 +91,7 @@ const es6Valid: ReadonlyArray<ValidTestCase> = [
       (() => {
         console.log("hello world");
       })();`,
-    optionsSet: [[{ enforceParameterCount: { ignoreIIFE: true } }]]
+    optionsSet: [[]]
   },
   {
     code: dedent`
@@ -137,7 +137,7 @@ const es6Invalid: ReadonlyArray<InvalidTestCase> = [
       (() => {
         console.log("hello world");
       })();`,
-    optionsSet: [[]],
+    optionsSet: [[{ enforceParameterCount: { ignoreIIFE: false } }]],
     errors: [
       {
         messageId: "paramCountAtLeastOne",
