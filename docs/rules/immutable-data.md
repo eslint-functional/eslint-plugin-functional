@@ -6,18 +6,45 @@ This rule prohibits syntax that mutates existing objects and arrays via assignme
 
 While requiring the `readonly` modifier forces declared types to be immutable, it won't stop assignment into or modification of untyped objects or external types declared under different rules.
 
-```ts
-const x = { a: 1 };
-const y = [0, 1, 2];
+Examples of **incorrect** code for this rule:
 
-x.foo = "bar"; // <- Modifying an existing object/array is not allowed.
-x.a += 1; // <- Modifying an existing object/array is not allowed.
-delete x.a; // <- Modifying an existing object/array is not allowed.
-Object.assign(x, { b: 2 }); // <- Modifying properties of existing object not allowed.
+```js
+/*eslint functional/immutable-data: "error"*/
 
-y[0] = 4; // <- Modifying an array is not allowed.
-y.length = 1; // <- Modifying an array is not allowed.
-y.push(3); // <- Modifying an array is not allowed.
+const obj = { foo: 1 };
+
+obj.foo += 2; // <- Modifying an existing object/array is not allowed.
+obj.bar = 1; // <- Modifying an existing object/array is not allowed.
+delete obj.foo; // <- Modifying an existing object/array is not allowed.
+Object.assign(obj, { bar: 2 }); // <- Modifying properties of existing object not allowed.
+```
+
+```js
+/*eslint functional/immutable-data: "error"*/
+
+const arr = [0, 1, 2];
+
+arr[0] = 4; // <- Modifying an array is not allowed.
+arr.length = 1; // <- Modifying an array is not allowed.
+arr.push(3); // <- Modifying an array is not allowed.
+```
+
+Examples of **correct** code for this rule:
+
+```js
+/*eslint functional/immutable-data: "error"*/
+
+const obj = { foo: 1 };
+const arr = [0, 1, 2];
+
+const x = {
+  ...obj
+  bar: [
+    ...arr,
+    3,
+    4
+  ]
+}
 ```
 
 ## Options
