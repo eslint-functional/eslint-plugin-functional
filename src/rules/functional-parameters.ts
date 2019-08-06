@@ -83,7 +83,7 @@ const defaultOptions: Options = {
   allowArgumentsKeyword: false,
   enforceParameterCount: {
     count: "atLeastOne",
-    ignoreIIFE: false
+    ignoreIIFE: true
   }
 };
 
