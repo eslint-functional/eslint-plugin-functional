@@ -29,7 +29,7 @@ type Options = IgnorePatternOption & {
     | ParameterCountOptions
     | {
         readonly count: ParameterCountOptions;
-        readonly allowIIFE: boolean;
+        readonly ignoreIIFE: boolean;
       };
 };
 
@@ -63,7 +63,7 @@ const schema: JSONSchema4 = [
                   type: "string",
                   enum: ["atLeastOne", "exactlyOne"]
                 },
-                allowIIFE: {
+                ignoreIIFE: {
                   type: "boolean"
                 }
               },
@@ -83,7 +83,7 @@ const defaultOptions: Options = {
   allowArgumentsKeyword: false,
   enforceParameterCount: {
     count: "atLeastOne",
-    allowIIFE: false
+    ignoreIIFE: false
   }
 };
 
@@ -145,7 +145,7 @@ function getParamCountViolations(
     enforceParameterCount === false ||
     (node.params.length === 0 &&
       typeof enforceParameterCount === "object" &&
-      enforceParameterCount.allowIIFE &&
+      enforceParameterCount.ignoreIIFE &&
       isIIFE(node))
   ) {
     return [];
