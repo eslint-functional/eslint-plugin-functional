@@ -29,7 +29,7 @@ The rule accepts an options object with the following properties:
 
 ```ts
 type Options = {
-  readonly allowReturningBranches: boolean | "ifExhaustive";
+  allowReturningBranches: boolean | "ifExhaustive";
 };
 
 const defaults = {

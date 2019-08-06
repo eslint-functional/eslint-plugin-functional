@@ -15,19 +15,15 @@ Note: For performance reasons, this rule does not check implicit return types. W
 The rule accepts an options object with the following properties:
 
 ```ts
-type Options = readonly [
-  {
-    readonly allowNull: boolean;
-    readonly allowUndefined: boolean;
-  }
-];
+type Options = {
+  allowNull: boolean;
+  allowUndefined: boolean;
+};
 
-const defaults: Options = [
-  {
-    allowNull: true,
-    allowUndefined: true
-  }
-];
+const defaults: Options = {
+  allowNull: true,
+  allowUndefined: true
+};
 ```
 
 ### allowNull

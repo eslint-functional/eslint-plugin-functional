@@ -12,8 +12,8 @@ The rule accepts an options object with the following properties:
 
 ```ts
 type Options = {
-  readonly allowCatch: boolean;
-  readonly allowFinally: boolean;
+  allowCatch: boolean;
+  allowFinally: boolean;
 };
 
 const defaults = {

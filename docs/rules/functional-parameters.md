@@ -18,12 +18,12 @@ The rule accepts an options object with the following properties:
 
 ```ts
 type Options = {
-  readonly ignorePattern?: string | Array<string>;
-  readonly allowRestParameter: boolean;
-  readonly allowArgumentsKeyword: boolean;
-  readonly enforceParameterCount: false | "atLeastOne" | "exactlyOne" | {
-    readonly count: "atLeastOne" | "exactlyOne";
-    readonly ignoreIIFE: boolean;
+  ignorePattern?: string | Array<string>;
+  allowRestParameter: boolean;
+  allowArgumentsKeyword: boolean;
+  enforceParameterCount: false | "atLeastOne" | "exactlyOne" | {
+    count: "atLeastOne" | "exactlyOne";
+    ignoreIIFE: boolean;
   };
 };
 
@@ -32,7 +32,7 @@ const defaults = {
   allowArgumentsKeyword: false,
   enforceParameterCount: {
     count: "atLeastOne",
-    ignoreIIFE: false
+    ignoreIIFE: true
   }
 };
 ```

@@ -26,14 +26,14 @@ The rule accepts an options object with the following properties:
 
 ```ts
 type Options = {
-  readonly ignorePattern?: string | Array<string>;
-  readonly ignoreAccessorPattern?: string | Array<string>;
-  readonly ignoreImmediateMutation?: boolean;
-  readonly assumeTypes:
+  ignorePattern?: string | Array<string>;
+  ignoreAccessorPattern?: string | Array<string>;
+  ignoreImmediateMutation: boolean;
+  assumeTypes:
     | boolean
     | {
-        readonly forArrays?: boolean;
-        readonly forObjects?: boolean;
+        forArrays: boolean;
+        forObjects: boolean;
       }
 };
 
