@@ -19,6 +19,7 @@ import {
   isTSIndexSignature,
   isTSTupleType,
   isTSTypeAnnotation,
+  isTSTypeLiteral,
   isTSTypeReference,
   isUnaryExpression,
   isVariableDeclaration
@@ -132,6 +133,7 @@ function getNodeIdentifierText(
       isTSIndexSignature(node) ||
       isTSTupleType(node) ||
       isTSTypeAnnotation(node) ||
+      isTSTypeLiteral(node) ||
       isTSTypeReference(node)
     ? getNodeIdentifierText(node.parent, context)
     : undefined;
