@@ -337,6 +337,14 @@ const valid: ReadonlyArray<ValidTestCase> = [
         private BMutable: string;
       }`,
     optionsSet: [[{ ignorePattern: "Mutable$" }]]
+  },
+  // Allow mutable TSIndexSignature.
+  {
+    code: dedent`
+      const mutableResult: {
+        [key: string]: string
+      } = {};`,
+    optionsSet: [[{ ignorePattern: "^mutable" }]]
   }
 ];
 
