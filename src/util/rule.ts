@@ -7,7 +7,6 @@ import { Rule } from "eslint";
 import { Type } from "typescript";
 
 import { version } from "../../package.json";
-
 import { shouldIgnore } from "../common/ignore-options";
 
 export type BaseOptions = object;
@@ -116,7 +115,7 @@ export function getTypeOfNode<Context extends RuleContext<string, BaseOptions>>(
   node: TSESTree.Node,
   context: Context
 ): Type | null {
-  const parserServices = context.parserServices;
+  const { parserServices } = context;
 
   return parserServices === undefined ||
     parserServices.program === undefined ||

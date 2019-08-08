@@ -207,7 +207,7 @@ function accessorPatternMatch(
         allowExtra
       )
     : // Text matches pattern?
-      new RegExp("^" + escapeRegExp(pattern).replace(/\\\*/g, ".*") + "$").test(
+      new RegExp(`^${escapeRegExp(pattern).replace(/\\\*/g, ".*")}$`).test(
         textParts[0]
       ) &&
       accessorPatternMatch(

@@ -242,11 +242,11 @@ function checkImplicitType(
 
     return {
       context,
-      descriptors: declarators.flatMap(declarator => {
-        return isIdentifier(declarator.id) &&
-          declarator.id.typeAnnotation === undefined &&
-          declarator.init !== null &&
-          isArrayType(getTypeOfNode(declarator.init, context))
+      descriptors: declarators.flatMap(declarator =>
+        isIdentifier(declarator.id) &&
+        declarator.id.typeAnnotation === undefined &&
+        declarator.init !== null &&
+        isArrayType(getTypeOfNode(declarator.init, context))
           ? [
               {
                 node: declarator.node,
@@ -255,8 +255,8 @@ function checkImplicitType(
                   fixer.insertTextAfter(declarator.id, ": readonly unknown[]")
               }
             ]
-          : [];
-      })
+          : []
+      )
     };
   } else {
     return {

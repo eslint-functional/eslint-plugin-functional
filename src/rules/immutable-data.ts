@@ -4,8 +4,8 @@ import { JSONSchema4 } from "json-schema";
 
 import {
   IgnoreAccessorPatternOption,
-  IgnorePatternOption,
   ignoreAccessorPatternOptionSchema,
+  IgnorePatternOption,
   ignorePatternOptionSchema,
   shouldIgnore
 } from "../common/ignore-options";

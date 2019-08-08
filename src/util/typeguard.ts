@@ -8,6 +8,7 @@ import {
 } from "@typescript-eslint/experimental-utils";
 // TS import - only use this for types, will be stripped out by rollup.
 import { Type, UnionType } from "typescript";
+
 // TS import - conditionally imported only when typescript is avaliable.
 import ts from "../util/conditional-imports/typescript";
 
