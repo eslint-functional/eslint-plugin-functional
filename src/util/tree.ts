@@ -64,13 +64,13 @@ export function inConstructor(node: TSESTree.Node): boolean {
  */
 export function isInReturnType(node: TSESTree.Node): boolean {
   return (
-    getParentOfType((n): n is TSESTree.Node => {
-      return (
+    getParentOfType(
+      (n): n is TSESTree.Node =>
         n.parent != undefined &&
         isFunctionLike(n.parent) &&
-        n.parent.returnType === n
-      );
-    }, node) !== null
+        n.parent.returnType === n,
+      node
+    ) !== null
   );
 }
 

@@ -4,8 +4,8 @@ import { JSONSchema4 } from "json-schema";
 
 import {
   AllowLocalMutationOption,
-  IgnorePatternOption,
   allowLocalMutationOptionSchema,
+  IgnorePatternOption,
   ignorePatternOptionSchema
 } from "../common/ignore-options";
 import {
