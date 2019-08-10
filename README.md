@@ -16,13 +16,13 @@ This package has a collection of eslint rules to promote functional programming 
 
 We've identified the following areas that needs to be linted in order to promote functional style in TypeScript/JavaScript:
 
-- [No mutability](#no-mutability)
+- [No mutations](#no-mutations)
 - [No object-orientation](#no-object-orientation)
 - [No statements](#no-statements)
 - [No exceptions](#no-exceptions)
 - [Currying](#currying)
 
-### No mutability
+### No mutations
 
 In some applications it is important to not mutate any data, for example when using Redux to store state in a React application. Moreover immutable data structures has a lot of advantages in general so I want to use them everywhere in my applications.
 
@@ -120,16 +120,16 @@ See [@typescript-eslint/parser's README.md](https://github.com/typescript-eslint
 | :thought_balloon: | Only Avaliable for TypeScript<br><sub><sup>The rule either requires Type Information or only works with TypeScript syntax.</sup></sub> |
 |   :blue_heart:    | Works better with TypeScript<br><sub><sup>Type Information will be used if available making the rule work in more case.</sup></sub>    |
 
-### Immutability Rules
+### No Mutations Rules
 
-:see_no_evil: = `immutable` Ruleset.
+:see_no_evil: = `no-mutations` Ruleset.
 
-| Name                                                           | Description                                                                | <span title="Immutable">:see_no_evil:</span> | <span title="Lite">:hear_no_evil:</span> | <span title="Recommended">:speak_no_evil:</span> | :wrench: |   :blue_heart:    |
-| -------------------------------------------------------------- | -------------------------------------------------------------------------- | :------------------------------------------: | :--------------------------------------: | :----------------------------------------------: | :------: | :---------------: |
-| [`prefer-readonly-type`](./docs/rules/prefer-readonly-type.md) | Use readonly types and readonly modifiers where possible                   |              :heavy_check_mark:              |            :heavy_check_mark:            |                :heavy_check_mark:                | :wrench: | :thought_balloon: |
-| [`no-let`](./docs/rules/no-let.md)                             | Disallow mutable variables                                                 |              :heavy_check_mark:              |            :heavy_check_mark:            |                :heavy_check_mark:                |          |                   |
-| [`immutable-data`](./docs/rules/immutable-data.md)             | Disallow mutating objects and arrays                                       |              :heavy_check_mark:              |            :heavy_check_mark:            |                :heavy_check_mark:                |          |   :blue_heart:    |
-| [`no-method-signature`](./docs/rules/no-method-signature.md)   | Enforce property signatures with readonly modifiers over method signatures |              :heavy_check_mark:              |            :heavy_check_mark:            |                :heavy_check_mark:                |          | :thought_balloon: |
+| Name                                                           | Description                                                                | <span title="No Mutations">:see_no_evil:</span> | <span title="Lite">:hear_no_evil:</span> | <span title="Recommended">:speak_no_evil:</span> | :wrench: |   :blue_heart:    |
+| -------------------------------------------------------------- | -------------------------------------------------------------------------- | :---------------------------------------------: | :--------------------------------------: | :----------------------------------------------: | :------: | :---------------: |
+| [`prefer-readonly-type`](./docs/rules/prefer-readonly-type.md) | Use readonly types and readonly modifiers where possible                   |               :heavy_check_mark:                |            :heavy_check_mark:            |                :heavy_check_mark:                | :wrench: | :thought_balloon: |
+| [`no-let`](./docs/rules/no-let.md)                             | Disallow mutable variables                                                 |               :heavy_check_mark:                |            :heavy_check_mark:            |                :heavy_check_mark:                |          |                   |
+| [`immutable-data`](./docs/rules/immutable-data.md)             | Disallow mutating objects and arrays                                       |               :heavy_check_mark:                |            :heavy_check_mark:            |                :heavy_check_mark:                |          |   :blue_heart:    |
+| [`no-method-signature`](./docs/rules/no-method-signature.md)   | Enforce property signatures with readonly modifiers over method signatures |               :heavy_check_mark:                |            :heavy_check_mark:            |                :heavy_check_mark:                |          | :thought_balloon: |
 
 ### No Object-Orientation Rules
 
