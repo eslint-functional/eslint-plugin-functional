@@ -9,7 +9,7 @@ import currying from "../src/configs/currying";
 import externalRecommended from "../src/configs/external-recommended";
 import functional from "../src/configs/functional";
 import functionalLite from "../src/configs/functional-lite";
-import immutable from "../src/configs/immutable";
+import noMutations from "../src/configs/no-mutations";
 import noExceptions from "../src/configs/no-exceptions";
 import noObjectOrientation from "../src/configs/no-object-orientation";
 import noStatements from "../src/configs/no-statements";
@@ -60,7 +60,7 @@ describe("configs", () => {
   describe("Currying", testConfig(currying as Config, master));
   describe("Functional", testConfig(functional as Config, master));
   describe("Functional Lite", testConfig(functionalLite as Config, master));
-  describe("Immutable", testConfig(immutable as Config, master));
+  describe("No Mutations", testConfig(noMutations as Config, master));
   describe("No Exceptions", testConfig(noExceptions as Config, master));
   describe(
     "No Object Orientation",
