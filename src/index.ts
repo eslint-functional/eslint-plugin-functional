@@ -2,7 +2,7 @@ import all from "./configs/all";
 import currying from "./configs/currying";
 import functional from "./configs/functional";
 import functionalLite from "./configs/functional-lite";
-import immutable from "./configs/immutable";
+import noMutations from "./configs/no-mutations";
 import noExceptions from "./configs/no-exceptions";
 import noObjectOrientation from "./configs/no-object-orientation";
 import noStatements from "./configs/no-statements";
@@ -12,13 +12,13 @@ const config = {
   rules,
   configs: {
     all,
-    currying,
-    immutable,
+    recommended: functional,
     lite: functionalLite,
+    "no-mutations": noMutations,
     "no-exceptions": noExceptions,
     "no-object-orientation": noObjectOrientation,
     "no-statements": noStatements,
-    recommended: functional
+    currying
   }
 };
 

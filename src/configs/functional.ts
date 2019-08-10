@@ -1,14 +1,14 @@
 import { all as deepMerge } from "deepmerge";
 
 import currying from "./currying";
-import immutable from "./immutable";
+import noMutations from "./no-mutations";
 import noExceptions from "./no-exceptions";
 import noObjectOrientation from "./no-object-orientation";
 import noStatements from "./no-statements";
 
 const config = deepMerge([
   currying,
-  immutable,
+  noMutations,
   noExceptions,
   noObjectOrientation,
   noStatements
