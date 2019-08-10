@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/jonaskello/eslint-plugin-functional/compare/v1.0.0-rc.2...HEAD)
 
-### Fixed
+### Changed
 
 - Rename the "No mutability" heading and "immutable" ruleset to "no-mutations". [`#62`](https://github.com/jonaskello/eslint-plugin-functional/pull/62)
 
