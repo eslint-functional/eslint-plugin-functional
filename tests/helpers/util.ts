@@ -1,6 +1,7 @@
 import { TSESLint } from "@typescript-eslint/experimental-utils";
 import deepMerge, { Options as deepMergeOptions } from "deepmerge";
 import { Linter, Rule, RuleTester as ESLintRuleTester } from "eslint";
+import { filename } from "./configs";
 
 type OptionsSet = {
   /**
@@ -36,6 +37,7 @@ export function processInvalidTestCase(
           return [
             ...optionsSetCarry,
             {
+              filename,
               ...eslintTestCase,
               options
             }
@@ -137,4 +139,24 @@ export function combineMerge<T extends object>(
 
   return destination;
   /* eslint-enable */
+}
+
+export type RuleTesterTests = {
+  valid?: Array<string | ESLintRuleTester.ValidTestCase>;
+  invalid?: ESLintRuleTester.InvalidTestCase[];
+};
+
+export function addFilename(
+  filename: string,
+  tests: RuleTesterTests
+): RuleTesterTests {
+  const { valid, invalid } = tests;
+  return {
+    invalid: invalid.map(test => ({ ...test, filename })),
+    valid: valid.map(test =>
+      typeof test === "string"
+        ? { code: test, filename }
+        : { ...test, filename }
+    )
+  };
 }

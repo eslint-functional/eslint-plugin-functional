@@ -7,8 +7,8 @@ import {
   IgnorePatternOption,
   shouldIgnore
 } from "../../src/common/ignore-options";
-import { typescript } from "../helpers/configs";
-import { createDummyRule } from "../helpers/util";
+import { typescript, filename } from "../helpers/configs";
+import { createDummyRule, addFilename } from "../helpers/util";
 
 describe("option: ignore", () => {
   describe("ignoreAccessorPattern", () => {
@@ -137,10 +137,10 @@ describe("option: ignore", () => {
           }
         };
       }) as Rule.RuleModule,
-      {
+      addFilename(filename, {
         valid: [...tests],
         invalid: []
-      }
+      })
     );
   });
 
@@ -189,10 +189,10 @@ describe("option: ignore", () => {
           }
         };
       }) as Rule.RuleModule,
-      {
+      addFilename(filename, {
         valid: [...assignmentExpressionTests],
         invalid: []
-      }
+      })
     );
 
     const expressionStatementTests: ReadonlyArray<
@@ -225,10 +225,10 @@ describe("option: ignore", () => {
           }
         };
       }) as Rule.RuleModule,
-      {
+      addFilename(filename, {
         valid: [...expressionStatementTests],
         invalid: []
-      }
+      })
     );
   });
 });

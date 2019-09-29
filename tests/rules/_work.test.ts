@@ -3,8 +3,15 @@
  */
 
 import dedent from "dedent";
+import {
+  ValidTestCase,
+  InvalidTestCase,
+  processValidTestCase,
+  processInvalidTestCase
+} from "../helpers/util";
+import { typescript } from "../helpers/configs";
+// import { RuleTester } from "../helpers/rule-tester";
 import { RuleTester } from "eslint";
-import { typescript, filename } from "../helpers/configs";
 
 /*
  * Step 1.
@@ -16,39 +23,52 @@ import { rule } from "../../src/rules/prefer-readonly-type";
  * Step 2a.
  * Provide a valid test case.
  */
-const valid: ReadonlyArray<string | RuleTester.ValidTestCase> = [
-  {
-    filename,
-    code: dedent`
-      // Code
-    `,
-    options: []
-  }
+const valid: ReadonlyArray<ValidTestCase> = [
+  // {
+  //   code: dedent`
+  //     // Code
+  //   `,
+  //   options: []
+  // }
 ];
 
 /*
  * Step 2b.
  * Or provide an invalid test case.
  */
-const invalid: ReadonlyArray<RuleTester.InvalidTestCase> = [
+const invalid: ReadonlyArray<InvalidTestCase> = [
   {
-    filename,
-    code: dedent`
-      // Code
-    `,
-    options: [],
-    output: dedent`
-      // Fixed Code - Remove member if rule doesn't have a fixer
-    `,
+    code: "class Foo {}",
+    optionsSet: [[]],
     errors: [
       {
         messageId: "generic",
-        line: 2,
-        column: 8
+        type: "ClassDeclaration",
+        line: 1,
+        column: 1
       }
     ]
   }
+  // {
+  //   code: dedent`
+  //     // Code
+  //   `,
+  //   options: [],
+  //   output: dedent`
+  //     // Fixed Code - Remove member if rule doesn't have a fixer
+  //   `,
+  //   errors: [
+  //     {
+  //       messageId: "generic",
+  //       line: 2,
+  //       column: 8
+  //     }
+  //   ]
+  // }
 ];
+
+const olle = processInvalidTestCase(invalid);
+console.log("olle", olle);
 
 /*
  * Step 3.
@@ -61,7 +81,7 @@ ruleTester.run(
     Work`,
   rule,
   {
-    valid: [...valid],
-    invalid: [...invalid]
+    valid: processValidTestCase(valid),
+    invalid: processInvalidTestCase(invalid)
   }
 );
