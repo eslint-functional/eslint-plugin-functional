@@ -28,7 +28,7 @@
   ],
   "parserOptions": {
     "ecmaVersion": 10,
-    "project": "./tsconfig.json",
+    "project": ["./tsconfig.json", "./tsconfig.tests.json"],
     "sourceType": "module"
   },
   "rules": {
