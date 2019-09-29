@@ -240,10 +240,10 @@ function shouldIgnoreViaAccessorPattern(
  * Should the given node be allowed base off the following rule options?
  *
  * - IgnoreAccessorPatternOption.
- * - IgnoreClassOption
- * - IgnoreInterfaceOption
- * - IgnorePatternOption
- * - AllowLocalMutationOption
+ * - IgnoreClassOption.
+ * - IgnoreInterfaceOption.
+ * - IgnorePatternOption.
+ * - AllowLocalMutationOption.
  */
 export function shouldIgnore(
   node: TSESTree.Node,

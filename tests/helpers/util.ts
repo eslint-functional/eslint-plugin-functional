@@ -142,10 +142,13 @@ export function combineMerge<T extends object>(
 }
 
 export type RuleTesterTests = {
-  valid?: Array<string | ESLintRuleTester.ValidTestCase>;
-  invalid?: ESLintRuleTester.InvalidTestCase[];
+  readonly valid?: ReadonlyArray<string | ESLintRuleTester.ValidTestCase>;
+  readonly invalid?: ReadonlyArray<ESLintRuleTester.InvalidTestCase>;
 };
 
+/**
+ * Adds filenames to the tests (needed for typescript to work when parserOptions.project has been set).
+ */
 export function addFilename(
   filename: string,
   tests: RuleTesterTests
