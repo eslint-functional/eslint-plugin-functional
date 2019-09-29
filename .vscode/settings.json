@@ -1,6 +1,11 @@
 {
   "editor.formatOnSave": true,
-  "eslint.validate": ["javascript", "typescript"],
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    { "language": "typescript", "autoFix": true },
+    { "language": "typescriptreact", "autoFix": true }
+  ],
   "files.exclude": {
     ".rpt2_cache": true,
     "coverage": true
