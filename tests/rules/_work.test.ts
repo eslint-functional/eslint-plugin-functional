@@ -4,6 +4,7 @@
 
 import dedent from "dedent";
 import { RuleTester } from "eslint";
+import { typescript, filename } from "../helpers/configs";
 
 /*
  * Step 1.
@@ -11,19 +12,18 @@ import { RuleTester } from "eslint";
  */
 import { rule } from "../../src/rules/prefer-readonly-type";
 
-import { typescript } from "../helpers/configs";
-
 /*
  * Step 2a.
  * Provide a valid test case.
  */
 const valid: ReadonlyArray<string | RuleTester.ValidTestCase> = [
-  // {
-  //   code: dedent`
-  //     // Code
-  //   `,
-  //   options: []
-  // }
+  {
+    filename,
+    code: dedent`
+      // Code
+    `,
+    options: []
+  }
 ];
 
 /*
@@ -31,22 +31,23 @@ const valid: ReadonlyArray<string | RuleTester.ValidTestCase> = [
  * Or provide an invalid test case.
  */
 const invalid: ReadonlyArray<RuleTester.InvalidTestCase> = [
-  // {
-  //   code: dedent`
-  //     // Code
-  //   `,
-  //   options: [],
-  //   output: dedent`
-  //     // Fixed Code - Remove member if rule doesn't have a fixer
-  //   `,
-  //   errors: [
-  //     {
-  //       messageId: "generic",
-  //       line: 2,
-  //       column: 8
-  //     }
-  //   ]
-  // }
+  {
+    filename,
+    code: dedent`
+      // Code
+    `,
+    options: [],
+    output: dedent`
+      // Fixed Code - Remove member if rule doesn't have a fixer
+    `,
+    errors: [
+      {
+        messageId: "generic",
+        line: 2,
+        column: 8
+      }
+    ]
+  }
 ];
 
 /*

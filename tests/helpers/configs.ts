@@ -1,10 +1,13 @@
 import { Linter } from "eslint";
+import { join } from "path";
+
+export const filename = join(__dirname, "file.ts");
 
 export const typescript: Linter.Config = {
   parser: require.resolve("@typescript-eslint/parser"),
   parserOptions: {
     sourceType: "module",
-    project: "./tsconfig.json"
+    project: join(__dirname, "./tsconfig.json")
   }
 };
 

@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "lib": ["es2017"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "target": "es2017"
+  },
+  "files": ["file.ts"]
+}
