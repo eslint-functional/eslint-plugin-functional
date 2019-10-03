@@ -142,8 +142,10 @@ export function combineMerge<T extends object>(
 }
 
 export type RuleTesterTests = {
-  readonly valid?: ReadonlyArray<string | ESLintRuleTester.ValidTestCase>;
-  readonly invalid?: ReadonlyArray<ESLintRuleTester.InvalidTestCase>;
+  // eslint-disable-next-line functional/prefer-readonly-type
+  valid?: Array<string | ESLintRuleTester.ValidTestCase>;
+  // eslint-disable-next-line functional/prefer-readonly-type
+  invalid?: Array<ESLintRuleTester.InvalidTestCase>;
 };
 
 /**
