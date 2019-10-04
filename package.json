@@ -88,7 +88,7 @@
   },
   "scripts": {
     "compile": "rollup -c",
-    "compile-tests": "tsc -p tsconfig.tests.json",
+    "compile-tests": "tsc -p tsconfig.tests.json && cp ./tests/helpers/tsconfig.json ./build/tests/helpers/",
     "build-tests": "rimraf build && yarn compile-tests",
     "build": "rimraf lib && yarn compile",
     "prelint": "yarn build && yarn link && yarn link 'eslint-plugin-functional'",
