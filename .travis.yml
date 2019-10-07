@@ -28,7 +28,7 @@ script:
   - yarn lint
   # If testing with compiled tests, compile them (with the version of typescript specified in yarn.lock).
   - if [ "$TEST_COMPILED" -eq 1 ]; then yarn compile-tests; fi
-  # Add the version of typescript to compile against.
+  # Add the version of typescript to test against.
   - yarn add -D typescript@"$TSVERSION"
   # Run the tests.
   - if [ "$TEST_COMPILED" -eq 1 ]; then yarn test-compiled --ci; else yarn test --ci; fi
