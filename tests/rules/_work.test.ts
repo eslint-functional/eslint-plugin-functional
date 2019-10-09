@@ -67,9 +67,6 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
   // }
 ];
 
-const olle = processInvalidTestCase(invalid);
-console.log("olle", olle);
-
 /*
  * Step 3.
  * Run test with `yarn test-work` or to debug in vscode, press F5 (with this
