@@ -10,7 +10,6 @@ import {
   processInvalidTestCase
 } from "../helpers/util";
 import { typescript } from "../helpers/configs";
-// import { RuleTester } from "../helpers/rule-tester";
 import { RuleTester } from "eslint";
 
 /*
