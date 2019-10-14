@@ -3,6 +3,13 @@
  */
 
 import dedent from "dedent";
+import {
+  ValidTestCase,
+  InvalidTestCase,
+  processValidTestCase,
+  processInvalidTestCase
+} from "../helpers/util";
+import { typescript } from "../helpers/configs";
 import { RuleTester } from "eslint";
 
 /*
@@ -11,13 +18,11 @@ import { RuleTester } from "eslint";
  */
 import { rule } from "../../src/rules/prefer-readonly-type";
 
-import { typescript } from "../helpers/configs";
-
 /*
  * Step 2a.
  * Provide a valid test case.
  */
-const valid: ReadonlyArray<string | RuleTester.ValidTestCase> = [
+const valid: ReadonlyArray<ValidTestCase> = [
   // {
   //   code: dedent`
   //     // Code
@@ -30,7 +35,19 @@ const valid: ReadonlyArray<string | RuleTester.ValidTestCase> = [
  * Step 2b.
  * Or provide an invalid test case.
  */
-const invalid: ReadonlyArray<RuleTester.InvalidTestCase> = [
+const invalid: ReadonlyArray<InvalidTestCase> = [
+  {
+    code: "class Foo {}",
+    optionsSet: [[]],
+    errors: [
+      {
+        messageId: "generic",
+        type: "ClassDeclaration",
+        line: 1,
+        column: 1
+      }
+    ]
+  }
   // {
   //   code: dedent`
   //     // Code
@@ -60,7 +77,7 @@ ruleTester.run(
     Work`,
   rule,
   {
-    valid: [...valid],
-    invalid: [...invalid]
+    valid: processValidTestCase(valid),
+    invalid: processInvalidTestCase(invalid)
   }
 );

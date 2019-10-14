@@ -181,7 +181,7 @@ function shouldIgnoreViaPattern(
 function accessorPatternMatch(
   [pattern, ...remainingPatternParts]: ReadonlyArray<string>,
   textParts: ReadonlyArray<string>,
-  allowExtra: boolean = false
+  allowExtra = false
 ): boolean {
   return pattern === undefined
     ? allowExtra || textParts.length === 0
@@ -239,11 +239,11 @@ function shouldIgnoreViaAccessorPattern(
 /**
  * Should the given node be allowed base off the following rule options?
  *
- * - IgnoreAccessorPatternOption
- * - IgnoreClassOption
- * - IgnoreInterfaceOption
- * - IgnorePatternOption
- * - AllowLocalMutationOption
+ * - IgnoreAccessorPatternOption.
+ * - IgnoreClassOption.
+ * - IgnoreInterfaceOption.
+ * - IgnorePatternOption.
+ * - AllowLocalMutationOption.
  */
 export function shouldIgnore(
   node: TSESTree.Node,

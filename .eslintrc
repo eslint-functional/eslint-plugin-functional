@@ -28,7 +28,7 @@
   ],
   "parserOptions": {
     "ecmaVersion": 10,
-    "project": "./tsconfig.json",
+    "project": ["./tsconfig.json", "./tsconfig.tests.json"],
     "sourceType": "module"
   },
   "rules": {
@@ -37,14 +37,17 @@
     "no-var": "error",
 
     // Our rules.
-    "functional/prefer-readonly-type": ["error", { "allowMutableReturnType": true }],
+    "functional/prefer-readonly-type": [
+      "error",
+      { "allowMutableReturnType": true }
+    ],
     "functional/no-conditional-statement": [
       "error",
       { "allowReturningBranches": "ifExhaustive" }
     ],
 
     // Typescript eslint.
-    "@typescript-eslint/array-type": ["error", "generic"],
+    "@typescript-eslint/array-type": ["error", { "default": "generic" }],
     "@typescript-eslint/explicit-function-return-type": [
       "error",
       {

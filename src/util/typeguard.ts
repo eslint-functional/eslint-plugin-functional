@@ -315,7 +315,7 @@ export function isArrayType(
 ): boolean;
 export function isArrayType(
   type: Type | null,
-  assumeType: boolean = false,
+  assumeType = false,
   node: TSESTree.Node | null = null
 ): boolean {
   return assumeType === true
@@ -346,7 +346,7 @@ export function isArrayConstructorType(
 ): boolean;
 export function isArrayConstructorType(
   type: Type | null,
-  assumeType: boolean = false,
+  assumeType = false,
   node: TSESTree.Node | null = null
 ): boolean {
   return assumeType === true
@@ -377,7 +377,7 @@ export function isObjectConstructorType(
 ): boolean;
 export function isObjectConstructorType(
   type: Type | null,
-  assumeType: boolean = false,
+  assumeType = false,
   node: TSESTree.Node | null = null
 ): boolean {
   return assumeType === true
