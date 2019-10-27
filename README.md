@@ -14,7 +14,7 @@
 
 This package has a collection of eslint rules to promote functional programming style concepts. Note that you can use this package to enforce only some aspects of functional programming, for example only immutability. There are also options for the rules that allow you to gradually adopt a functional style. Most rules can be used both for JavaScript and TypeScript, however some rules, for example enforcing the `readonly` keyword, is of course only available for TypeScript.
 
-We've identified the following areas that needs to be linted in order to promote functional style in TypeScript/JavaScript:
+We've identified the following areas that need to be linted in order to promote functional style in TypeScript/JavaScript:
 
 - [No mutations](#no-mutations)
 - [No object-orientation](#no-object-orientation)
@@ -24,17 +24,17 @@ We've identified the following areas that needs to be linted in order to promote
 
 ### No mutations
 
-In some applications it is important to not mutate any data, for example when using Redux to store state in a React application. Moreover immutable data structures has a lot of advantages in general so I want to use them everywhere in my applications.
+In some applications it is important to not mutate any data, for example when using Redux to store state in a React application. Moreover immutable data structures have a lot of advantages in general so I want to use them everywhere in my applications.
 
-I originally used [immutablejs](https://github.com/facebook/immutable-js/) for this purpose. It is a really nice library but I found it had some drawbacks. Specifically when debugging it was hard to see the structure, creating JSON was not straightforward, and passing parameters to other libraries required converting to regular mutable arrays and objects. The [seamless-immutable](https://github.com/rtfeldman/seamless-immutable) project seems to have the same conclusions and they use regular objects and arrays and check for immutability at run-time. This solves all the aformentioned drawbacks but introduces a new drawback of only being enforced at run-time. (Altough you lose the structural sharing feature of immutablejs with this solution so you would have to consider if that is something you need).
+I originally used [immutablejs](https://github.com/facebook/immutable-js/) for this purpose. It is a really nice library but I found it had some drawbacks. Specifically when debugging it was hard to see the structure, creating JSON was not straightforward, and passing parameters to other libraries required converting to regular mutable arrays and objects. The [seamless-immutable](https://github.com/rtfeldman/seamless-immutable) project seems to have the same conclusions and they use regular objects and arrays and check for immutability at run-time. This solves all the aformentioned drawbacks but introduces a new drawback of only being enforced at run-time. (Although you lose the structural sharing feature of immutablejs with this solution so you would have to consider if that is something you need).
 
-Then TypeScript 2.0 came along and introduced [readonly](https://github.com/Microsoft/TypeScript/wiki/What's-new-in-TypeScript#read-only-properties-and-index-signatures) options for properties, indexers and arrays. TypeScript 3.0 has continued to add support immutability enforcing syntax. This enables us to use regular object and arrays and have the immutability enforced at compile time instead of run-time. Now the only drawback is that there is nothing enforcing the use of readonly in TypeScript.
+Then TypeScript 2.0 came along and introduced [readonly](https://github.com/Microsoft/TypeScript/wiki/What's-new-in-TypeScript#read-only-properties-and-index-signatures) options for properties, indexers and arrays. TypeScript 3.0 has continued to add support immutability enforcing syntax. This enables us to use regular objects and arrays and have the immutability enforced at compile time instead of run-time. Now the only drawback is that there is nothing enforcing the use of readonly in TypeScript.
 
 This can be solved by using linting rules. So one aim of this project is to leverage the type system in TypeScript to enforce immutability at compile-time while still using regular objects and arrays. Additionally, this project will also aim to support disabling mutability for vanilla JavaScript where possible.
 
 ### No object-orientation
 
-JavaScript is multi-paradigm, allowing both object-oriented and functional programming styles. In order to promote a functional style, the object oriented features of JavaScript needs to be disabled.
+JavaScript is multi-paradigm, allowing both object-oriented and functional programming styles. In order to promote a functional style, the object oriented features of JavaScript need to be disabled.
 
 ### No statements
 
@@ -76,7 +76,7 @@ Add `functional` to the plugins section of your `.eslintrc` configuration file. 
 ```
 
 There are several rulesets provided by this plugin.
-[See bellow](#supported-rules) for what they are and what rules are including in each.
+[See below](#supported-rules) for what they are and what rules are including in each.
 
 You can enable one of these rulesets like so:
 
@@ -118,7 +118,7 @@ See [@typescript-eslint/parser's README.md](https://github.com/typescript-eslint
 |  :speak_no_evil:  | Ruleset: Recommended<br><sub><sup>This ruleset is designed to enforce a functional programming code style.</sup></sub>                 |
 |     :wrench:      | Fixable<br><sub><sup>Problems found by this rule are potentially fixable with the `--fix` option.</sup></sub>                          |
 | :thought_balloon: | Only Avaliable for TypeScript<br><sub><sup>The rule either requires Type Information or only works with TypeScript syntax.</sup></sub> |
-|   :blue_heart:    | Works better with TypeScript<br><sub><sup>Type Information will be used if available making the rule work in more case.</sup></sub>    |
+|   :blue_heart:    | Works better with TypeScript<br><sub><sup>Type Information will be used if available making the rule work in more cases.</sup></sub>   |
 
 ### No Mutations Rules
 
@@ -151,7 +151,7 @@ See [@typescript-eslint/parser's README.md](https://github.com/typescript-eslint
 | [`no-conditional-statement`](./docs/rules/no-conditional-statement.md) | Disallow conditional statements (if and switch statements) |                :heavy_check_mark:                |                                          |                :heavy_check_mark:                |          |                   |
 | [`no-expression-statement`](./docs/rules/no-expression-statement.md)   | Disallow expressions to cause side-effects                 |                :heavy_check_mark:                |                                          |                :heavy_check_mark:                |          |                   |
 | [`no-loop-statement`](./docs/rules/no-loop-statement.md)               | Disallow imperative loops                                  |                :heavy_check_mark:                |            :heavy_check_mark:            |                :heavy_check_mark:                |          |                   |
-| [`no-return-void`](./docs/rules/no-return-void.md)                     | Disallow function that return nothing                      |                :heavy_check_mark:                |            :heavy_check_mark:            |                :heavy_check_mark:                |          | :thought_balloon: |
+| [`no-return-void`](./docs/rules/no-return-void.md)                     | Disallow functions that return nothing                     |                :heavy_check_mark:                |            :heavy_check_mark:            |                :heavy_check_mark:                |          | :thought_balloon: |
 
 ### No Exceptions Rules
 
@@ -173,7 +173,7 @@ See [@typescript-eslint/parser's README.md](https://github.com/typescript-eslint
 
 ## Recommended standard rules
 
-In addition to the immutability rules above, there are a few standard rules that needs to be enabled to achieve immutability.
+In addition to the immutability rules above, there are a few standard rules that need to be enabled to achieve immutability.
 
 Each of these rules are enabled by default in the rulesets this plugin provides.
 
@@ -209,7 +209,7 @@ For new features file an issue. For bugs, file an issue and optionally file a PR
 
 To execute the tests run `yarn test`.
 
-To learn about eslint plugin development se the [relevant section](https://eslint.org/docs/developer-guide/working-with-plugins) of the eslit docs. You can also checkout the [typescript-eslint](https://github.com/typescript-eslint/typescript-eslint) repo which has some more information specific to typescript.
+To learn about eslint plugin development see the [relevant section](https://eslint.org/docs/developer-guide/working-with-plugins) of the eslint docs. You can also checkout the [typescript-eslint](https://github.com/typescript-eslint/typescript-eslint) repo which has some more information specific to typescript.
 
 In order to know which AST nodes are created for a snippet of TypeScript code you can use [ast explorer](https://astexplorer.net/) with options JavaScript and @typescript-eslint/parser.
 
