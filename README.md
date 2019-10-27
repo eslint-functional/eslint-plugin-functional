@@ -191,7 +191,7 @@ This rule is helpful when converting from an imperative code style to a function
 
 ### [@typescript-eslint/explicit-function-return-type](https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/explicit-function-return-type.md)
 
-For performance reasons, eslint-plugin-functional does not check implicit return types. So for example this function will return an mutable array but will not be detected:
+For performance reasons, eslint-plugin-functional does not check implicit return types. So for example this function will return a mutable array but will not be detected:
 
 ```js
 function foo() {
