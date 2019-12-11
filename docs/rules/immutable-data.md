@@ -61,11 +61,14 @@ The rule take advantage of TypeScript's typing engine to check if mutation is ta
 If you are not using TypeScript, type checking cannot be performed; hence this option exists.
 
 This option will make the rule assume the type of the nodes it is checking are of type Array/Object.  
-This may however result in some false positives being picked up.
+However this may result in some false positives being picked up.
+
+Disabling this option can result in false negatives, for example:
 
 ```ts
+// When this option is DISABLED (and type info is not available).
 const x = [0, 1, 2];
-x.push(3); // This will not be flagged as an issue if this option is disabled.
+x.push(3); // This will NOT be flagged.
            // This is due to the fact that without a typing engine, we cannot tell that x is an array.
 ```
 
