@@ -89,29 +89,29 @@ For example:
 ```js
 {
   // Ignore all reassigning to object properties that are prefixed with "mutable_".
-  "ignorePattern": "**.mutable_*"
+  "ignoreAccessorPattern": "**.mutable_*"
 }
 ```
 
 ```js
 {
   // Ignore all shallow mutations made to object properties that are prefixed with "mutable_".
-  "ignorePattern": "**.mutable_*.*"
+  "ignoreAccessorPattern": "**.mutable_*.*"
 }
 ```
 
 ```js
 {
   // Ignore all deep mutations made to object properties that are prefixed with "mutable_".
-  "ignorePattern": "**.mutable_*.*.**"
+  "ignoreAccessorPattern": "**.mutable_*.*.**"
 }
 ```
 
 ```js
 {
   // Ignore all deep mutations and reassigning to object properties that are prefixed with "mutable_".
-  "ignorePattern": "**.mutable_*.**"
-  // This is the same as `"ignorePattern": ["**.mutable_*", "**.mutable_*.*.**"]`
+  "ignoreAccessorPattern": "**.mutable_*.**"
+  // This is the same as `"ignoreAccessorPattern": ["**.mutable_*", "**.mutable_*.*.**"]`
 }
 ```
 
