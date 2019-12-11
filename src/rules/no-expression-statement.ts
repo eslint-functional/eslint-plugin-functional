@@ -5,6 +5,7 @@ import {
   IgnorePatternOption,
   ignorePatternOptionSchema
 } from "../common/ignore-options";
+import { isDirectivePrologue } from "../util/misc";
 import {
   createRule,
   RuleContext,
@@ -48,8 +49,12 @@ function checkExpressionStatement(
   node: TSESTree.ExpressionStatement,
   context: RuleContext<keyof typeof errorMessages, Options>
 ): RuleResult<keyof typeof errorMessages, Options> {
-  // All expression statements violate this rule.
-  return { context, descriptors: [{ node, messageId: "generic" }] };
+  return {
+    context,
+    descriptors:
+      // Allow specifying directive prologues.
+      isDirectivePrologue(node) ? [] : [{ node, messageId: "generic" }]
+  };
 }
 
 // Create the rule.
