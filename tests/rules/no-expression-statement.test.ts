@@ -28,6 +28,11 @@ const valid: ReadonlyArray<ValidTestCase> = [
       console.log("yo");
       console.error("yo");`,
     optionsSet: [[{ ignorePattern: "^console\\." }]]
+  },
+  // Allow specifying directive prologues.
+  {
+    code: `"use strict"`,
+    optionsSet: [[]]
   }
 ];
 
