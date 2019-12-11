@@ -318,7 +318,7 @@ export function isArrayType(
   assumeType = false,
   node: TSESTree.Node | null = null
 ): boolean {
-  return assumeType === true
+  return assumeType === true && type === null
     ? node !== null
     : type !== null &&
         ((type.symbol && type.symbol.name === "Array") ||
@@ -349,7 +349,7 @@ export function isArrayConstructorType(
   assumeType = false,
   node: TSESTree.Node | null = null
 ): boolean {
-  return assumeType === true
+  return assumeType === true && type === null
     ? node !== null && isIdentifier(node) && node.name === "Array"
     : type !== null &&
         ((type.symbol && type.symbol.name === "ArrayConstructor") ||
@@ -380,7 +380,7 @@ export function isObjectConstructorType(
   assumeType = false,
   node: TSESTree.Node | null = null
 ): boolean {
-  return assumeType === true
+  return assumeType === true && type === null
     ? node !== null && isIdentifier(node) && node.name === "Object"
     : type !== null &&
         ((type.symbol && type.symbol.name === "ObjectConstructor") ||
