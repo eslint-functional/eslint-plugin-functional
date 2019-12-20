@@ -76,7 +76,7 @@ Add `functional` to the plugins section of your `.eslintrc` configuration file. 
 ```
 
 There are several rulesets provided by this plugin.
-[See below](#supported-rules) for what they are and what rules are including in each.
+[See below](#rulesets) for what they are and what rules are including in each.
 
 You can enable one of these rulesets like so:
 
@@ -107,6 +107,30 @@ Additionally, for this plugin to use type information, you will need to specify 
 See [@typescript-eslint/parser's README.md](https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/parser#readme) for more information on the available "parserOptions".
 
 **Note: Make sure to use `eslint --ext .js,.ts` since by [default](https://eslint.org/docs/user-guide/command-line-interface#--ext) `eslint` will only search for .js files.**
+
+## Rulesets
+
+The following rulesets are made available by this plugin:
+
+Presets:
+
+- Recommended
+- Lite
+
+Categorized:
+
+- No Mutations
+- No Object Orientation
+- No Statements
+- No Exceptions
+- Currying
+
+Other:
+
+- All (Enables all rules defined in this plugin)
+- External Recommended (Configures recommended rules not defined by this plugin)
+
+The [below section](#supported-rules) gives details on which rules are enabled by each ruleset.
 
 ## Supported Rules
 
