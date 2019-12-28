@@ -225,6 +225,29 @@ function foo() {
 
 To avoid this situation you can enable `@typescript-eslint/explicit-function-return-type`. Now the above function is forced to declare the return type and the mutability will be detected.
 
+## Minimal Recommended Config
+
+```json
+{
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "functional"],
+  "env": {
+    "es6": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:functional/external-recommended",
+    "plugin:functional/recommended"
+  ],
+  "parserOptions": {
+    "project": "tsconfig.json",
+    "sourceType": "module"
+  }
+}
+```
+
 ## How to contribute
 
 For new features file an issue. For bugs, file an issue and optionally file a PR with a failing test.
