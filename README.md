@@ -114,21 +114,21 @@ The following rulesets are made available by this plugin:
 
 Presets:
 
-- Recommended
-- Lite
+- **Recommended** (plugin:functional/recommended)
+- **Lite** (plugin:functional/lite)
 
 Categorized:
 
-- No Mutations
-- No Object Orientation
-- No Statements
-- No Exceptions
-- Currying
+- **No Mutations** (plugin:functional/no-mutations)
+- **No Object Orientation** (plugin:functional/no-object-orientation)
+- **No Statements** (plugin:functional/no-statements)
+- **No Exceptions** (plugin:functional/no-exceptions)
+- **Currying** (plugin:functional/currying)
 
 Other:
 
-- All (Enables all rules defined in this plugin)
-- External Recommended (Configures recommended rules not defined by this plugin)
+- **All** (plugin:functional/all) - Enables all rules defined in this plugin.
+- **External Recommended** (plugin:functional/external-recommended) - Configures recommended rules not defined by this plugin.
 
 The [below section](#supported-rules) gives details on which rules are enabled by each ruleset.
 
