@@ -2,11 +2,8 @@
  * @file Tests for all configs except `all`.
  */
 
-import deepMerge from "deepmerge";
-
 import all from "../src/configs/all";
 import currying from "../src/configs/currying";
-import externalRecommended from "../src/configs/external-recommended";
 import functional from "../src/configs/functional";
 import functionalLite from "../src/configs/functional-lite";
 import noMutations from "../src/configs/no-mutations";
@@ -15,7 +12,7 @@ import noObjectOrientation from "../src/configs/no-object-orientation";
 import noStatements from "../src/configs/no-statements";
 import { rules } from "../src/rules";
 
-import { combineMerge, Config } from "./helpers/util";
+import { Config } from "./helpers/util";
 
 /**
  * Test the given config.
@@ -41,10 +38,6 @@ function testConfig(config: Config, master: Config) {
 }
 
 describe("configs", () => {
-  const master = deepMerge(all, externalRecommended, {
-    arrayMerge: combineMerge
-  }) as Config;
-
   describe("All", () => {
     const allRules = Object.keys(rules);
     const configJSRules = Object.keys(all.rules);
@@ -57,14 +50,17 @@ describe("configs", () => {
     });
   });
 
-  describe("Currying", testConfig(currying as Config, master));
-  describe("Functional", testConfig(functional as Config, master));
-  describe("Functional Lite", testConfig(functionalLite as Config, master));
-  describe("No Mutations", testConfig(noMutations as Config, master));
-  describe("No Exceptions", testConfig(noExceptions as Config, master));
+  describe("Currying", testConfig(currying as Config, all as Config));
+  describe("Functional", testConfig(functional as Config, all as Config));
+  describe(
+    "Functional Lite",
+    testConfig(functionalLite as Config, all as Config)
+  );
+  describe("No Mutations", testConfig(noMutations as Config, all as Config));
+  describe("No Exceptions", testConfig(noExceptions as Config, all as Config));
   describe(
     "No Object Orientation",
-    testConfig(noObjectOrientation as Config, master)
+    testConfig(noObjectOrientation as Config, all as Config)
   );
-  describe("No Statements", testConfig(noStatements as Config, master));
+  describe("No Statements", testConfig(noStatements as Config, all as Config));
 });
