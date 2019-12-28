@@ -5,6 +5,7 @@
 [![Coverage Status][codecov-image]][codecov-url]
 [![code style: prettier][prettier-image]][prettier-url]
 [![MIT license][license-image]][license-url]
+[![Join the community on Spectrum][spectrum-image]][spectrum-url]
 
 [ESLint](https://eslint.org/) rules to disable mutation and promote functional programming in JavaScript and TypeScript.
 
@@ -237,3 +238,5 @@ This project started off as a port of [tslint-immutable](https://github.com/jona
 [prettier-url]: https://github.com/prettier/prettier
 [type-info-badge]: https://img.shields.io/badge/type_info-required-d51313.svg?style=flat
 [type-info-url]: https://palantir.github.io/tslint/usage/type-checking
+[spectrum-image]: https://withspectrum.github.io/badge/badge.svg
+[spectrum-url]: https://spectrum.chat/eslint-functional
