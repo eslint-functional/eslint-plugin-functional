@@ -5,7 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/jonaskello/eslint-plugin-functional/compare/v1.0.2...HEAD)
+## [Unreleased](https://github.com/jonaskello/eslint-plugin-functional/compare/v1.0.3...HEAD)
+
+### Merged
+
+- Add a section to explicitly list all the rulesets [`#77`](https://github.com/jonaskello/eslint-plugin-functional/pull/77)
+- no longer include external recommended rules in the rulesets; put them in their own ruleset [`#80`](https://github.com/jonaskello/eslint-plugin-functional/pull/80)
+
+## [v1.0.3](https://github.com/jonaskello/eslint-plugin-functional/compare/v1.0.2...v1.0.3) - 2019-12-29
 
 ### Merged
 
