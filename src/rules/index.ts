@@ -25,8 +25,8 @@ import {
   rule as noMethodSignatureRule
 } from "./no-method-signature";
 import {
-  name as noMixedInterfaceRuleName,
-  rule as noMixedInterfaceRule
+  name as noMixedTypeRuleName,
+  rule as noMixedTypeRule
 } from "./no-mixed-type";
 import {
   name as noPromiseRejectRuleName,
@@ -69,7 +69,7 @@ export const rules = {
   [noLetRuleName]: noLetRule,
   [noLoopRuleName]: noLoopRule,
   [noMethodSignatureRuleName]: noMethodSignatureRule,
-  [noMixedInterfaceRuleName]: noMixedInterfaceRule,
+  [noMixedTypeRuleName]: noMixedTypeRule,
   [noPromiseRejectRuleName]: noPromiseRejectRule,
   [noReturnVoidName]: noReturnVoid,
   [noThisExpressionRuleName]: noThisExpressionRule,
