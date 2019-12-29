@@ -1,8 +1,4 @@
-import deepMerge from "deepmerge";
-
-import recommended from "./external-recommended";
-
-const config = deepMerge(recommended, {
+const config = {
   rules: {
     "functional/no-expression-statement": "error",
     "functional/no-conditional-statement": "error",
@@ -16,6 +12,6 @@ const config = deepMerge(recommended, {
       }
     }
   ]
-});
+};
 
 export default config;

@@ -1,5 +1,4 @@
 import { TSESLint } from "@typescript-eslint/experimental-utils";
-import deepMerge, { Options as deepMergeOptions } from "deepmerge";
 import { Linter, Rule, RuleTester as ESLintRuleTester } from "eslint";
 import { filename } from "./configs";
 
@@ -98,48 +97,6 @@ export type Config = Linter.Config & {
     readonly rules: Linter.Config["rules"];
   }>;
 };
-
-/**
- * Create a clone of the given object or array.
- */
-function clone<T extends ReadonlyArray<unknown> | {}>(
-  value: T,
-  options: deepMergeOptions
-): T {
-  return deepMerge<T>(
-    (Array.isArray(value) ? [] : {}) as Partial<T>,
-    value,
-    options
-  );
-}
-
-/**
- * Combine merge 2 arrays.
- */
-export function combineMerge<T extends object>(
-  target: ReadonlyArray<T>,
-  source: ReadonlyArray<T>,
-  options: deepMergeOptions
-): Array<T> {
-  // TODO: make this function functional.
-  /* eslint-disable */
-  const destination = target.slice();
-
-  source.forEach((item, index) => {
-    if (typeof destination[index] === "undefined") {
-      const cloneRequested = options.clone !== false;
-      const shouldClone = cloneRequested && options.isMergeableObject(item);
-      destination[index] = shouldClone ? clone(item, options) : item;
-    } else if (options.isMergeableObject(item)) {
-      destination[index] = deepMerge(target[index], item, options);
-    } else if (target.indexOf(item) === -1) {
-      destination.push(item);
-    }
-  });
-
-  return destination;
-  /* eslint-enable */
-}
 
 export type RuleTesterTests = {
   // eslint-disable-next-line functional/prefer-readonly-type
