@@ -5,7 +5,36 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/jonaskello/eslint-plugin-functional/compare/v1.0.0-rc.2...HEAD)
+## [Unreleased](https://github.com/jonaskello/eslint-plugin-functional/compare/v1.0.2...HEAD)
+
+## [v1.0.2](https://github.com/jonaskello/eslint-plugin-functional/compare/v1.0.1...v1.0.2) - 2019-12-11
+
+### Merged
+
+- feat(no-expression-statement): allow specifying directive prologues [`#74`](https://github.com/jonaskello/eslint-plugin-functional/pull/74)
+
+### Fixed
+
+- fix(no-expression-statement): allow specifying directive prologues [`#68`](https://github.com/jonaskello/eslint-plugin-functional/issues/68)
+
+## [v1.0.1](https://github.com/jonaskello/eslint-plugin-functional/compare/v1.0.0...v1.0.1) - 2019-12-11
+
+### Merged
+
+- fix(typeguards): only assume types if type information is not avaliable [`#73`](https://github.com/jonaskello/eslint-plugin-functional/pull/73)
+- docs(readme): change tslint-immutable to eslint-plugin-functional #66 [`#69`](https://github.com/jonaskello/eslint-plugin-functional/pull/69)
+- docs(readme): fix typos [`#70`](https://github.com/jonaskello/eslint-plugin-functional/pull/70)
+
+### Fixed
+
+- fix(typeguards): only assume types if type information is not avaliable [`#72`](https://github.com/jonaskello/eslint-plugin-functional/issues/72)
+
+## [v1.0.0](https://github.com/jonaskello/eslint-plugin-functional/compare/v1.0.0-rc.2...v1.0.0) - 2019-10-14
+
+### Merged
+
+- Upgrade typescript-eslint packages [`#65`](https://github.com/jonaskello/eslint-plugin-functional/pull/65)
+- Rename to no-mutations [`#62`](https://github.com/jonaskello/eslint-plugin-functional/pull/62)
 
 ### Changed
 
