@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/jonaskello/eslint-plugin-functional/compare/v1.0.2...HEAD)
 
+### Merged
+
+- Local mutation in a function now only refers to within the function's body [`#78`](https://github.com/jonaskello/eslint-plugin-functional/pull/78)
+- no-mixed-interface rule does not exist anymore [`#81`](https://github.com/jonaskello/eslint-plugin-functional/pull/81)
+
+### Fixed
+
+- fix(prefer-readonly-type): local mutation in a function only refers to within the function's body [`#75`](https://github.com/jonaskello/eslint-plugin-functional/issues/75)
+
 ## [v1.0.2](https://github.com/jonaskello/eslint-plugin-functional/compare/v1.0.1...v1.0.2) - 2019-12-11
 
 ### Merged
