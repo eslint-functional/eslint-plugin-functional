@@ -37,6 +37,16 @@ const defaults = {
 };
 ```
 
+Note: the `lite` ruleset overrides the default options for this rule to:
+
+```ts
+{
+  allowRestParameter: false,
+  allowArgumentsKeyword: false,
+  enforceParameterCount: false
+}
+```
+
 ### `allowRestParameter`
 
 If true, this option allows for the use of rest parameters.

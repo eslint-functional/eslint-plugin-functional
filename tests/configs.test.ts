@@ -11,8 +11,7 @@ import noExceptions from "../src/configs/no-exceptions";
 import noObjectOrientation from "../src/configs/no-object-orientation";
 import noStatements from "../src/configs/no-statements";
 import { rules } from "../src/rules";
-
-import { Config } from "./helpers/util";
+import { Config } from "../src/util/misc";
 
 /**
  * Test the given config.
@@ -50,17 +49,11 @@ describe("configs", () => {
     });
   });
 
-  describe("Currying", testConfig(currying as Config, all as Config));
-  describe("Functional", testConfig(functional as Config, all as Config));
-  describe(
-    "Functional Lite",
-    testConfig(functionalLite as Config, all as Config)
-  );
-  describe("No Mutations", testConfig(noMutations as Config, all as Config));
-  describe("No Exceptions", testConfig(noExceptions as Config, all as Config));
-  describe(
-    "No Object Orientation",
-    testConfig(noObjectOrientation as Config, all as Config)
-  );
-  describe("No Statements", testConfig(noStatements as Config, all as Config));
+  describe("Currying", testConfig(currying, all));
+  describe("Functional", testConfig(functional, all));
+  describe("Functional Lite", testConfig(functionalLite, all));
+  describe("No Mutations", testConfig(noMutations, all));
+  describe("No Exceptions", testConfig(noExceptions, all));
+  describe("No Object Orientation", testConfig(noObjectOrientation, all));
+  describe("No Statements", testConfig(noStatements, all));
 });

@@ -2,6 +2,7 @@ import {
   AST_NODE_TYPES,
   TSESTree
 } from "@typescript-eslint/experimental-utils";
+import { Linter } from "eslint";
 
 /**
  * Returns a function that checks if the given value is the same as the expected
@@ -23,3 +24,13 @@ export function isDirectivePrologue(
     node.expression.value.startsWith("use ")
   );
 }
+
+/**
+ * Eslint Config.
+ */
+export type Config = Linter.Config & {
+  readonly overrides?: ReadonlyArray<{
+    readonly files: ReadonlyArray<string>;
+    readonly rules: Linter.Config["rules"];
+  }>;
+};
