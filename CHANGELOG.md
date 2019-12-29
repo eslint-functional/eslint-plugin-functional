@@ -5,12 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased](https://github.com/jonaskello/eslint-plugin-functional/compare/v1.0.3...HEAD)
+## [Unreleased](https://github.com/jonaskello/eslint-plugin-functional/compare/v2.0.0...HEAD)
+
+## [v2.0.0](https://github.com/jonaskello/eslint-plugin-functional/compare/v1.0.3...v2.0.0) - 2019-12-29
 
 ### Merged
 
+- build(deps): bump handlebars from 4.1.2 to 4.5.3 [`#84`](https://github.com/jonaskello/eslint-plugin-functional/pull/84)
+- Do not enforce a parameter count by default in the lite ruleset [`#83`](https://github.com/jonaskello/eslint-plugin-functional/pull/83)
 - Add a section to explicitly list all the rulesets [`#77`](https://github.com/jonaskello/eslint-plugin-functional/pull/77)
 - no longer include external recommended rules in the rulesets; put them in their own ruleset [`#80`](https://github.com/jonaskello/eslint-plugin-functional/pull/80)
+
+### Fixed
+
+- feat(functional-parameters): do not enforce a parameter count by default in the lite ruleset [`#79`](https://github.com/jonaskello/eslint-plugin-functional/issues/79)
 
 ## [v1.0.3](https://github.com/jonaskello/eslint-plugin-functional/compare/v1.0.2...v1.0.3) - 2019-12-29
 
