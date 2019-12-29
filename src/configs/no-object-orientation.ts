@@ -1,4 +1,6 @@
-const config = {
+import { Config } from "../util/misc";
+
+const config: Config = {
   rules: {
     "functional/no-this-expression": "error",
     "functional/no-class": "error"
