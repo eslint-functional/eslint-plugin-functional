@@ -1165,6 +1165,23 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         column: 5
       }
     ]
+  },
+  {
+    code: dedent`
+      function foo(bar: { x: number }) {
+      };`,
+    optionsSet: [[{ allowLocalMutation: true }]],
+    output: dedent`
+      function foo(bar: { readonly x: number }) {
+      };`,
+    errors: [
+      {
+        messageId: "property",
+        type: "TSPropertySignature",
+        line: 1,
+        column: 21
+      }
+    ]
   }
 ];
 

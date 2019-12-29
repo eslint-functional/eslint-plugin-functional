@@ -6,7 +6,7 @@ import escapeRegExp from "escape-string-regexp";
 import { JSONSchema4 } from "json-schema";
 
 import { BaseOptions, RuleContext } from "../util/rule";
-import { inClass, inFunction, inInterface } from "../util/tree";
+import { inClass, inFunctionBody, inInterface } from "../util/tree";
 import {
   hasID,
   hasKey,
@@ -258,7 +258,7 @@ export function shouldIgnore(
 ): boolean {
   return (
     // Allow if in a function and allowLocalMutation is set.
-    (options.allowLocalMutation === true && inFunction(node)) ||
+    (options.allowLocalMutation === true && inFunctionBody(node)) ||
     // Ignore if in a class and ignoreClass is set.
     (options.ignoreClass === true && inClass(node)) ||
     // Ignore if in an interface and ignoreInterface is set.

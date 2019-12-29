@@ -16,21 +16,27 @@ import {
  * Return the parent that meets the given check criteria.
  */
 function getParentOfType<T extends TSESTree.Node>(
-  checker: (node: TSESTree.Node) => node is T,
-  node: TSESTree.Node
+  checker: (node: TSESTree.Node, child: TSESTree.Node | null) => node is T,
+  node: TSESTree.Node,
+  child: TSESTree.Node | null = null
 ): T | null {
-  return checker(node)
+  return checker(node, child)
     ? node
     : node.parent == undefined
     ? null
-    : getParentOfType(checker, node.parent);
+    : getParentOfType(checker, node.parent, node);
 }
 
 /**
- * Test if the given node is in a function.
+ * Test if the given node is in a function's body.
  */
-export function inFunction(node: TSESTree.Node): boolean {
-  return getParentOfType(isFunctionLike, node) !== null;
+export function inFunctionBody(node: TSESTree.Node): boolean {
+  return (
+    getParentOfType(
+      (n, c): n is TSESTree.Node => isFunctionLike(n) && n.body === c,
+      node
+    ) !== null
+  );
 }
 
 /**
