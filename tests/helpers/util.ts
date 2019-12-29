@@ -1,5 +1,5 @@
 import { TSESLint } from "@typescript-eslint/experimental-utils";
-import { Linter, Rule, RuleTester as ESLintRuleTester } from "eslint";
+import { Rule, RuleTester as ESLintRuleTester } from "eslint";
 import { filename } from "./configs";
 
 type OptionsSet = {
@@ -90,13 +90,6 @@ export function createDummyRule(
     create
   } as Rule.RuleModule;
 }
-
-export type Config = Linter.Config & {
-  readonly overrides?: ReadonlyArray<{
-    readonly files: ReadonlyArray<string>;
-    readonly rules: Linter.Config["rules"];
-  }>;
-};
 
 export type RuleTesterTests = {
   // eslint-disable-next-line functional/prefer-readonly-type

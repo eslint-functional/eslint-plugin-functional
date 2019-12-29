@@ -6,7 +6,9 @@ import noExceptions from "./no-exceptions";
 import noObjectOrientation from "./no-object-orientation";
 import noStatements from "./no-statements";
 
-const config = deepMerge([
+import { Config } from "../util/misc";
+
+const config: Config = deepMerge<Config>([
   currying,
   noMutations,
   noExceptions,
