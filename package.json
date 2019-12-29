@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-functional",
-  "version": "1.0.3",
+  "version": "2.0.0",
   "description": "ESLint rules to disable mutation and promote fp in TypeScript.",
   "main": "lib/index.js",
   "module": "lib/index.mjs",
