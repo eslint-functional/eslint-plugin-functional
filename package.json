@@ -92,7 +92,7 @@
     "build-tests": "rimraf build && yarn compile-tests",
     "build": "rimraf lib && yarn compile",
     "prelint": "yarn build && yarn link && yarn link 'eslint-plugin-functional'",
-    "lint": "eslint './{src,tests}/**/*.ts' --ext .ts -f visualstudio",
+    "lint": "yarn eslint './{src,tests}/**/*.ts' --ext .ts -f visualstudio",
     "test": "jest --testPathIgnorePatterns _work.test",
     "test-work": "jest tests/rules/_work.test.ts",
     "test-compiled": "USE_COMPLIED=1 yarn test",
