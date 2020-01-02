@@ -13,6 +13,7 @@ env:
   - TSVERSION=next
   - TSVERSION=latest
   - TSVERSION=3.4.1 # Our minimum supported version
+  - TSVERSION=none # JS only
 matrix:
   allow_failures:
     - env: TSVERSION=next
@@ -29,7 +30,7 @@ script:
   # If testing with compiled tests, compile them (with the version of typescript specified in yarn.lock).
   - if [ "$TEST_COMPILED" -eq 1 ]; then yarn compile-tests; fi
   # Add the version of typescript to test against.
-  - yarn add -D typescript@"$TSVERSION"
+  - if [ "$TSVERSION" = "none" ]; then yarn remove typescript; else yarn add -D typescript@"$TSVERSION"; fi
   # Run the tests.
   - if [ "$TEST_COMPILED" -eq 1 ]; then yarn test-compiled --ci; else yarn test --ci; fi
 after_success:
