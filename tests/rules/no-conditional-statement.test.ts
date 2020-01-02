@@ -47,6 +47,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
           case "a":
             return 1;
           case "b":
+          case "c":
             return 2;
         }
       }`,
