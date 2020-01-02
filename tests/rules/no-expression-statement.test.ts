@@ -68,15 +68,15 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
   }
 ];
 
-describe("TypeScript", () => {
-  if (tsInstalled()) {
+if (tsInstalled()) {
+  describe("TypeScript", () => {
     const ruleTester = new RuleTester(typescript);
     ruleTester.run(name, rule, {
       valid: processValidTestCase(valid),
       invalid: processInvalidTestCase(invalid)
     });
-  }
-});
+  });
+}
 
 describe("JavaScript (es3)", () => {
   const ruleTester = new RuleTester(es3);

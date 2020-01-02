@@ -1302,15 +1302,15 @@ const es6Invalid: ReadonlyArray<InvalidTestCase> = [
   ...arrayES6Invalid
 ];
 
-describe("TypeScript", () => {
-  if (tsInstalled()) {
+if (tsInstalled()) {
+  describe("TypeScript", () => {
     const ruleTester = new RuleTester(typescript);
     ruleTester.run(name, rule, {
       valid: processValidTestCase(es6Valid),
       invalid: processInvalidTestCase(es6Invalid)
     });
-  }
-});
+  });
+}
 
 describe("JavaScript (es6)", () => {
   const ruleTester = new RuleTester(es6);
