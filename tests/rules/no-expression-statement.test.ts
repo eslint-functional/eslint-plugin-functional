@@ -12,6 +12,7 @@ import {
   InvalidTestCase,
   processInvalidTestCase,
   processValidTestCase,
+  tsInstalled,
   ValidTestCase
 } from "../helpers/util";
 
@@ -68,11 +69,13 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
 ];
 
 describe("TypeScript", () => {
-  const ruleTester = new RuleTester(typescript);
-  ruleTester.run(name, rule, {
-    valid: processValidTestCase(valid),
-    invalid: processInvalidTestCase(invalid)
-  });
+  if (tsInstalled()) {
+    const ruleTester = new RuleTester(typescript);
+    ruleTester.run(name, rule, {
+      valid: processValidTestCase(valid),
+      invalid: processInvalidTestCase(invalid)
+    });
+  }
 });
 
 describe("JavaScript (es3)", () => {
