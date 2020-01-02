@@ -32,7 +32,7 @@ script:
   # Add the version of typescript to test against.
   - if [ "$TSVERSION" = "none" ]; then yarn remove typescript; else yarn add -D typescript@"$TSVERSION"; fi
   # Run the tests.
-  - if [ "$TEST_COMPILED" -eq 1 ]; then yarn test-compiled --ci; else yarn test --ci; fi
+  - if [ "$TEST_COMPILED" -eq 1 ]; then yarn test-compiled; else yarn test; fi
 after_success:
   # Report coverage but only for 1 of the vms - the one that runs the uncompiled tests.
   - if [ "$TEST_COMPILED" -eq 0 ]; then yarn report-coverage; fi
