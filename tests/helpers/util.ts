@@ -2,6 +2,8 @@ import { TSESLint } from "@typescript-eslint/experimental-utils";
 import { Rule, RuleTester as ESLintRuleTester } from "eslint";
 import { filename } from "./configs";
 
+import ts from "../../src/util/conditional-imports/typescript";
+
 type OptionsSet = {
   /**
    * The set of options this test case should pass for.
@@ -114,4 +116,11 @@ export function addFilename(
         : { ...test, filename }
     )
   };
+}
+
+/**
+ * Returns if TypeScript is installed locally or not.
+ */
+export function tsInstalled(): boolean {
+  return ts !== undefined;
 }
