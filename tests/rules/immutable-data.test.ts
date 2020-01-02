@@ -1302,15 +1302,18 @@ const es6Invalid: ReadonlyArray<InvalidTestCase> = [
   ...arrayES6Invalid
 ];
 
-if (tsInstalled()) {
-  describe("TypeScript", () => {
+describe("TypeScript", () => {
+  if (tsInstalled()) {
     const ruleTester = new RuleTester(typescript);
     ruleTester.run(name, rule, {
       valid: processValidTestCase(es6Valid),
       invalid: processInvalidTestCase(es6Invalid)
     });
-  });
-}
+  } else {
+    // eslint-disable-next-line jest/no-disabled-tests
+    test.skip("TypeScript is not installed.", () => {});
+  }
+});
 
 describe("JavaScript (es6)", () => {
   const ruleTester = new RuleTester(es6);
