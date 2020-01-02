@@ -31,6 +31,26 @@ const es3Valid: ReadonlyArray<ValidTestCase> = [
         console.log("hello world");
       })();`,
     optionsSet: [[]]
+  },
+  {
+    code: dedent`
+      function foo(bar) {
+        console.log(bar);
+      }`,
+    optionsSet: [
+      [{ enforceParameterCount: "atLeastOne" }],
+      [{ enforceParameterCount: "exactlyOne" }]
+    ]
+  },
+  {
+    code: dedent`
+      function foo(bar, baz) {
+        console.log(bar, baz);
+      }`,
+    optionsSet: [
+      [{ enforceParameterCount: "atLeastOne" }],
+      [{ ignorePattern: "^foo", enforceParameterCount: "exactlyOne" }]
+    ]
   }
 ];
 
@@ -80,87 +100,6 @@ const es3Invalid: ReadonlyArray<InvalidTestCase> = [
         column: 15
       }
     ]
-  }
-];
-
-// Valid test cases.
-const es6Valid: ReadonlyArray<ValidTestCase> = [
-  ...es3Valid,
-  {
-    code: dedent`
-      (() => {
-        console.log("hello world");
-      })();`,
-    optionsSet: [[]]
-  },
-  {
-    code: dedent`
-      function foo([bar, ...baz]) {
-        console.log(bar, baz);
-      }`,
-    optionsSet: [[]]
-  },
-  {
-    code: dedent`
-      function foo(bar) {
-        console.log(bar);
-      }`,
-    optionsSet: [
-      [{ enforceParameterCount: "atLeastOne" }],
-      [{ enforceParameterCount: "exactlyOne" }]
-    ]
-  },
-  {
-    code: dedent`
-      function foo(bar, baz) {
-        console.log(bar, baz);
-      }`,
-    optionsSet: [
-      [{ enforceParameterCount: "atLeastOne" }],
-      [{ ignorePattern: "^foo", enforceParameterCount: "exactlyOne" }]
-    ]
-  },
-  {
-    code: dedent`
-      function foo(...bar) {
-        console.log(bar);
-      }`,
-    optionsSet: [[{ ignorePattern: "^foo" }]]
-  }
-];
-
-// Invalid test cases.
-const es6Invalid: ReadonlyArray<InvalidTestCase> = [
-  ...es3Invalid,
-  {
-    code: dedent`
-      (() => {
-        console.log("hello world");
-      })();`,
-    optionsSet: [[{ enforceParameterCount: { ignoreIIFE: false } }]],
-    errors: [
-      {
-        messageId: "paramCountAtLeastOne",
-        type: "ArrowFunctionExpression",
-        line: 1,
-        column: 2
-      }
-    ]
-  },
-  {
-    code: dedent`
-      function foo(...bar) {
-        console.log(bar);
-      }`,
-    optionsSet: [[]],
-    errors: [
-      {
-        messageId: "restParam",
-        type: "RestElement",
-        line: 1,
-        column: 14
-      }
-    ]
   },
   {
     code: dedent`
@@ -204,6 +143,67 @@ const es6Invalid: ReadonlyArray<InvalidTestCase> = [
         type: "FunctionDeclaration",
         line: 1,
         column: 1
+      }
+    ]
+  }
+];
+
+// Valid test cases.
+const es6Valid: ReadonlyArray<ValidTestCase> = [
+  ...es3Valid,
+  {
+    code: dedent`
+      (() => {
+        console.log("hello world");
+      })();`,
+    optionsSet: [[]]
+  },
+  {
+    code: dedent`
+      function foo([bar, ...baz]) {
+        console.log(bar, baz);
+      }`,
+    optionsSet: [[]]
+  },
+  {
+    code: dedent`
+      function foo(...bar) {
+        console.log(bar);
+      }`,
+    optionsSet: [[{ ignorePattern: "^foo" }]]
+  }
+];
+
+// Invalid test cases.
+const es6Invalid: ReadonlyArray<InvalidTestCase> = [
+  ...es3Invalid,
+  {
+    code: dedent`
+      (() => {
+        console.log("hello world");
+      })();`,
+    optionsSet: [[{ enforceParameterCount: { ignoreIIFE: false } }]],
+    errors: [
+      {
+        messageId: "paramCountAtLeastOne",
+        type: "ArrowFunctionExpression",
+        line: 1,
+        column: 2
+      }
+    ]
+  },
+  {
+    code: dedent`
+      function foo(...bar) {
+        console.log(bar);
+      }`,
+    optionsSet: [[]],
+    errors: [
+      {
+        messageId: "restParam",
+        type: "RestElement",
+        line: 1,
+        column: 14
       }
     ]
   }
