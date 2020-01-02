@@ -45,6 +45,10 @@
       "error",
       { "allowReturningBranches": "ifExhaustive" }
     ],
+    "functional/functional-parameters": [
+      "error",
+      { "ignorePattern": ["^tsInstalled$"] }
+    ],
 
     // Typescript eslint.
     "@typescript-eslint/array-type": ["error", { "default": "generic" }],
