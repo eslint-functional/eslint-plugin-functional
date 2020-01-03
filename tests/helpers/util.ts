@@ -124,3 +124,8 @@ export function addFilename(
 export function tsInstalled(): boolean {
   return ts !== undefined;
 }
+
+/**
+ * Jest `describe` function that won't run if TypeScript isn't present.
+ */
+export const describeTsOnly = tsInstalled() ? describe : describe.skip;
