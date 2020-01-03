@@ -30,18 +30,22 @@ type Baz = Foo & {
 
 ## Options
 
-The rule accepts an options object with the following properties:
+This rule accepts an options object of the following type:
 
 ```ts
-type Options = {
+{
   checkInterfaces: boolean;
   checkTypeLiterals: boolean;
-};
+}
+```
 
-const defaults = {
+The default options:
+
+```ts
+{
   checkInterfaces: true,
   checkTypeLiterals: true
-};
+}
 ```
 
 ### checkInterfaces

@@ -6,23 +6,29 @@ This rule checks that the value of an expression is assigned to a variable and t
 
 When you call a function and don’t use it’s return value, chances are high that it is being called for its side effect. e.g.
 
-```ts
-array.push(1);
-alert("Hello world!");
+```js
+array.push(1);          // This statement performs a side-effect.
+alert("Hello world!");  // This statement performs a side-effect.
 ```
 
 ## Options
 
-The rule accepts an options object with the following properties:
+This rule accepts an options object of the following type:
 
 ```ts
-type Options = {
+{
   ignorePattern?: string | Array<string>;
-};
+}
+```
 
-const defaults = {};
+The default options:
+
+```ts
+{
+}
 ```
 
 ### `ignorePattern`
 
-See the [ignorePattern](./options/ignore-pattern.md) docs.
+Patterns will be matched against the line(s) of code.
+See the [ignorePattern](./options/ignore-pattern.md) docs for more infomation.

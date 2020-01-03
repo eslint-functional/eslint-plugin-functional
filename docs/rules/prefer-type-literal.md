@@ -4,21 +4,26 @@ This rule enforces use of the type literals over interfaces.
 
 ## Rule Details
 
-Interfaces are part of Object Oriented Design. When it comes to functional design, types should be used instead.
+Interfaces are part of Object Oriented Design.
+When it comes to functional design, types should be used instead.
 
 ## Options
 
-The rule accepts an options object with the following properties:
+This rule accepts an options object of the following type:
 
 ```ts
-type Options = {
+{
   allowLocalMutation?: boolean;
   ignorePattern?: string | Array<string>;
-};
+}
+```
 
-const defaults = {
+The default options:
+
+```ts
+{
   allowLocalMutation: false,
-};
+}
 ```
 
 ### `allowLocalMutation`
