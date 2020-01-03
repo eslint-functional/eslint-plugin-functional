@@ -13,6 +13,7 @@ env:
   - TSVERSION=next
   - TSVERSION=latest
   - TSVERSION=3.4.1 # Our minimum supported version
+  - TSVERSION=JS
 matrix:
   allow_failures:
     - env: TSVERSION=next
@@ -28,10 +29,12 @@ script:
   - yarn lint
   # If testing with compiled tests, compile them (with the version of typescript specified in yarn.lock).
   - if [ "$TEST_COMPILED" -eq 1 ]; then yarn compile-tests; fi
+  # Remove the current version of typescript.
+  - yarn remove typescript
   # Add the version of typescript to test against.
-  - yarn add -D typescript@"$TSVERSION"
+  - if [ "$TSVERSION" != "JS" ]; then yarn add -D typescript@"$TSVERSION"; fi
   # Run the tests.
-  - if [ "$TEST_COMPILED" -eq 1 ]; then yarn test-compiled --ci; else yarn test --ci; fi
+  - if [ "$TEST_COMPILED" -eq 1 ]; then yarn test-compiled; else yarn test; fi
 after_success:
   # Report coverage but only for 1 of the vms - the one that runs the uncompiled tests.
   - if [ "$TEST_COMPILED" -eq 0 ]; then yarn report-coverage; fi

@@ -9,6 +9,7 @@ import { name, rule } from "../../src/rules/no-conditional-statement";
 
 import { es3, typescript } from "../helpers/configs";
 import {
+  describeTsOnly,
   InvalidTestCase,
   processInvalidTestCase,
   processValidTestCase,
@@ -47,6 +48,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
           case "a":
             return 1;
           case "b":
+          case "c":
             return 2;
         }
       }`,
@@ -317,7 +319,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
 //   optionsSet: [[{ allowReturningBranches: "ifExhaustive" }]]
 // }
 
-describe("TypeScript", () => {
+describeTsOnly("TypeScript", () => {
   const ruleTester = new RuleTester(typescript);
   ruleTester.run(name, rule, {
     valid: processValidTestCase(valid),

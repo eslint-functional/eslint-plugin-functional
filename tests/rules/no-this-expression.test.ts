@@ -8,6 +8,7 @@ import { name, rule } from "../../src/rules/no-this-expression";
 
 import { es3, typescript } from "../helpers/configs";
 import {
+  describeTsOnly,
   InvalidTestCase,
   processInvalidTestCase,
   processValidTestCase,
@@ -38,7 +39,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
   }
 ];
 
-describe("TypeScript", () => {
+describeTsOnly("TypeScript", () => {
   const ruleTester = new RuleTester(typescript);
   ruleTester.run(name, rule, {
     valid: processValidTestCase(valid),
