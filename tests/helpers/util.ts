@@ -119,7 +119,7 @@ export function addFilename(
 }
 
 /**
- * Returns if TypeScript is installed locally or not.
+ * Returns whether or not TypeScript is installed locally.
  */
 export function tsInstalled(): boolean {
   return ts !== undefined;
