@@ -4,12 +4,13 @@ This rule prohibits syntax that mutates existing objects and arrays via assignme
 
 ## Rule Details
 
-While requiring the `readonly` modifier forces declared types to be immutable, it won't stop assignment into or modification of untyped objects or external types declared under different rules.
+While requiring the `readonly` modifier forces declared types to be immutable,
+it won't stop assignment into or modification of untyped objects or external types declared under different rules.
 
 Examples of **incorrect** code for this rule:
 
 ```js
-/*eslint functional/immutable-data: "error"*/
+/* eslint functional/immutable-data: "error" */
 
 const obj = { foo: 1 };
 
@@ -20,7 +21,7 @@ Object.assign(obj, { bar: 2 }); // <- Modifying properties of existing object no
 ```
 
 ```js
-/*eslint functional/immutable-data: "error"*/
+/* eslint functional/immutable-data: "error" */
 
 const arr = [0, 1, 2];
 
@@ -32,7 +33,7 @@ arr.push(3); // <- Modifying an array is not allowed.
 Examples of **correct** code for this rule:
 
 ```js
-/*eslint functional/immutable-data: "error"*/
+/* eslint functional/immutable-data: "error" */
 
 const obj = { foo: 1 };
 const arr = [0, 1, 2];
@@ -40,35 +41,56 @@ const arr = [0, 1, 2];
 const x = {
   ...obj
   bar: [
-    ...arr,
-    3,
-    4
+    ...arr, 3, 4
   ]
 }
 ```
 
 ## Options
 
-The rule accepts an options object with the following properties:
+This rule accepts an options object of the following type:
 
 ```ts
-type Options = {
-  ignorePattern?: string | Array<string>;
-  ignoreAccessorPattern?: string | Array<string>;
-  ignoreImmediateMutation: boolean;
+{
   assumeTypes:
     | boolean
     | {
         forArrays: boolean;
         forObjects: boolean;
       }
-};
+  ignoreImmediateMutation: boolean;
+  ignorePattern?: string | Array<string>;
+  ignoreAccessorPattern?: string | Array<string>;
+}
+```
 
-const defaults = {
-  ignoreImmediateMutation: true,
+The default options:
+
+```ts
+{
   assumeTypes: true
+  ignoreImmediateMutation: true,
 };
 ```
+
+### `assumeTypes`
+
+The rule take advantage of TypeScript's typing engine to check if mutation is taking place.
+If you are not using TypeScript, type checking cannot be performed; hence this option exists.
+
+This option will make the rule assume the type of the nodes it is checking are of type Array/Object.  
+However this may result in some false positives being picked up.
+
+Disabling this option can result in false negatives, for example:
+
+```js
+// When this option is DISABLED (and type info is not available).
+const x = [0, 1, 2];
+x.push(3); // This will NOT be flagged.
+           // This is due to the fact that without a typing engine, we cannot tell that x is an array.
+```
+
+Note: This option will have no effect if the TypeScript typing engine is avaliable (i.e. you are using TypeScript and have configured eslint correctly).
 
 ### `ignoreImmediateMutation`
 
@@ -82,28 +104,10 @@ const original = ["foo", "bar", "baz"];
 const sorted = [...original].sort((a, b) => a.localeCompare(b)); // This is OK with ignoreImmediateMutation.
 ```
 
-### `assumeTypes`
-
-The rule take advantage of TypeScript's typing engine to check if mutation is taking place.
-If you are not using TypeScript, type checking cannot be performed; hence this option exists.
-
-This option will make the rule assume the type of the nodes it is checking are of type Array/Object.  
-However this may result in some false positives being picked up.
-
-Disabling this option can result in false negatives, for example:
-
-```ts
-// When this option is DISABLED (and type info is not available).
-const x = [0, 1, 2];
-x.push(3); // This will NOT be flagged.
-           // This is due to the fact that without a typing engine, we cannot tell that x is an array.
-```
-
-Note: This option will have no effect if the TypeScript typing engine is avaliable (i.e. you are using TypeScript and have configured eslint correctly).
-
 ### `ignorePattern`
 
-See the [ignorePattern](./options/ignore-pattern.md) docs.
+Patterns will be matched against variable names.
+See the [ignorePattern](./options/ignore-pattern.md) docs for more infomation.
 
 ### `ignoreAccessorPattern`
 

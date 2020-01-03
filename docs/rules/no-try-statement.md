@@ -8,18 +8,22 @@ Try statements are not part of functional programming. See [no-throw-statement](
 
 ## Options
 
-The rule accepts an options object with the following properties:
+This rule accepts an options object of the following type:
 
 ```ts
-type Options = {
+{
   allowCatch: boolean;
   allowFinally: boolean;
 };
+```
 
-const defaults = {
+The default options:
+
+```ts
+{
   allowCatch: false,
   allowFinally: false
-};
+}
 ```
 
 ### `allowCatch`

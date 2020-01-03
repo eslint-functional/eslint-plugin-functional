@@ -4,18 +4,17 @@ Disallow use of rest parameters, the `arguments` keyword and enforces that funct
 
 ## Rule Details
 
-In function, `arguments` is a special variable that is implicitly available.
-This variable is an array containing the arguments passed to the function call and is often used to allow for any number of parameters to be passed to a function.
+In functions, `arguments` is a special variable that is implicitly available.
+This variable is an array containing the arguments passed to the function call and is often used to allow for any number of parameters to be passed to a function. Rest parameters are another way any number of parameters can be passed to a function.
 
-Rest parameters are another way any number of parameters can be passed to a function.
+When it comes to functional programming, known and explicit parameters must be used.
 
-When it comes to functional programming, it is better have known and explicit parameters.
-Also of note: currying functions is a lot more difficult with an undefined number of parameters.
+Note: With an unknown number of parameters, currying functions is a lot more difficult/impossible.
 
 Examples of **incorrect** code for this rule:
 
 ```js
-/*eslint functional/functional-parameters: "error"*/
+/* eslint functional/functional-parameters: "error" */
 
 function add() {
   return arguments.reduce((sum, number) => sum + number, 0);
@@ -23,7 +22,7 @@ function add() {
 ```
 
 ```js
-/*eslint functional/functional-parameters: "error"*/
+/* eslint functional/functional-parameters: "error" */
 
 function add(...numbers) {
   return numbers.reduce((sum, number) => sum + number, 0);
@@ -33,7 +32,7 @@ function add(...numbers) {
 Examples of **correct** code for this rule:
 
 ```js
-/*eslint functional/functional-parameters: "error"*/
+/* eslint functional/functional-parameters: "error" */
 
 function add(numbers) {
   return numbers.reduce((sum, number) => sum + number, 0);
@@ -42,30 +41,34 @@ function add(numbers) {
 
 ## Options
 
-The rule accepts an options object with the following properties:
+This rule accepts an options object of the following type:
 
 ```ts
-type Options = {
-  ignorePattern?: string | Array<string>;
+{
   allowRestParameter: boolean;
   allowArgumentsKeyword: boolean;
   enforceParameterCount: false | "atLeastOne" | "exactlyOne" | {
     count: "atLeastOne" | "exactlyOne";
     ignoreIIFE: boolean;
   };
-};
+  ignorePattern?: string | Array<string>;
+}
+```
 
-const defaults = {
+The default options:
+
+```ts
+{
   allowRestParameter: false,
   allowArgumentsKeyword: false,
   enforceParameterCount: {
     count: "atLeastOne",
     ignoreIIFE: true
   }
-};
+}
 ```
 
-Note: the `lite` ruleset overrides the default options for this rule to:
+Note: the `lite` ruleset overrides the default options to:
 
 ```ts
 {
@@ -105,7 +108,7 @@ Any function that take takes multiple parameter can be rewritten as a higher-ord
 
 Example:
 
-```ts
+```js
 // This function
 function add(x, y) {
   return x + y;
@@ -129,4 +132,5 @@ If true, this option allows for the use of [IIFEs](https://developer.mozilla.org
 
 ### `ignorePattern`
 
-See the [ignorePattern](./options/ignore-pattern.md) docs.
+Patterns will be matched against function names.
+See the [ignorePattern](./options/ignore-pattern.md) docs for more infomation.
