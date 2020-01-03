@@ -9,10 +9,10 @@ import { name, rule } from "../../src/rules/immutable-data";
 
 import { es3, es6, typescript } from "../helpers/configs";
 import {
+  describeTsOnly,
   InvalidTestCase,
   processInvalidTestCase,
   processValidTestCase,
-  tsInstalled,
   ValidTestCase
 } from "../helpers/util";
 
@@ -1302,17 +1302,12 @@ const es6Invalid: ReadonlyArray<InvalidTestCase> = [
   ...arrayES6Invalid
 ];
 
-describe("TypeScript", () => {
-  if (tsInstalled()) {
-    const ruleTester = new RuleTester(typescript);
-    ruleTester.run(name, rule, {
-      valid: processValidTestCase(es6Valid),
-      invalid: processInvalidTestCase(es6Invalid)
-    });
-  } else {
-    // eslint-disable-next-line jest/no-disabled-tests
-    test.skip("TypeScript is not installed.", () => {});
-  }
+describeTsOnly("TypeScript", () => {
+  const ruleTester = new RuleTester(typescript);
+  ruleTester.run(name, rule, {
+    valid: processValidTestCase(es6Valid),
+    invalid: processInvalidTestCase(es6Invalid)
+  });
 });
 
 describe("JavaScript (es6)", () => {

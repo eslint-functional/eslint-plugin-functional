@@ -9,10 +9,10 @@ import { name, rule } from "../../src/rules/no-promise-reject";
 
 import { es6, typescript } from "../helpers/configs";
 import {
+  describeTsOnly,
   InvalidTestCase,
   processInvalidTestCase,
   processValidTestCase,
-  tsInstalled,
   ValidTestCase
 } from "../helpers/util";
 
@@ -52,17 +52,12 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
   }
 ];
 
-describe("TypeScript", () => {
-  if (tsInstalled()) {
-    const ruleTester = new RuleTester(typescript);
-    ruleTester.run(name, rule, {
-      valid: processValidTestCase(valid),
-      invalid: processInvalidTestCase(invalid)
-    });
-  } else {
-    // eslint-disable-next-line jest/no-disabled-tests
-    test.skip("TypeScript is not installed.", () => {});
-  }
+describeTsOnly("TypeScript", () => {
+  const ruleTester = new RuleTester(typescript);
+  ruleTester.run(name, rule, {
+    valid: processValidTestCase(valid),
+    invalid: processInvalidTestCase(invalid)
+  });
 });
 
 describe("JavaScript (es6)", () => {
