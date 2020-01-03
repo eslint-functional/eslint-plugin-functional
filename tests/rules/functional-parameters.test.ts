@@ -9,6 +9,7 @@ import { name, rule } from "../../src/rules/functional-parameters";
 
 import { es3, es6, typescript } from "../helpers/configs";
 import {
+  describeTsOnly,
   InvalidTestCase,
   processInvalidTestCase,
   processValidTestCase,
@@ -31,6 +32,26 @@ const es3Valid: ReadonlyArray<ValidTestCase> = [
         console.log("hello world");
       })();`,
     optionsSet: [[]]
+  },
+  {
+    code: dedent`
+      function foo(bar) {
+        console.log(bar);
+      }`,
+    optionsSet: [
+      [{ enforceParameterCount: "atLeastOne" }],
+      [{ enforceParameterCount: "exactlyOne" }]
+    ]
+  },
+  {
+    code: dedent`
+      function foo(bar, baz) {
+        console.log(bar, baz);
+      }`,
+    optionsSet: [
+      [{ enforceParameterCount: "atLeastOne" }],
+      [{ ignorePattern: "^foo", enforceParameterCount: "exactlyOne" }]
+    ]
   }
 ];
 
@@ -78,87 +99,6 @@ const es3Invalid: ReadonlyArray<InvalidTestCase> = [
         type: "Identifier",
         line: 2,
         column: 15
-      }
-    ]
-  }
-];
-
-// Valid test cases.
-const es6Valid: ReadonlyArray<ValidTestCase> = [
-  ...es3Valid,
-  {
-    code: dedent`
-      (() => {
-        console.log("hello world");
-      })();`,
-    optionsSet: [[]]
-  },
-  {
-    code: dedent`
-      function foo([bar, ...baz]) {
-        console.log(bar, baz);
-      }`,
-    optionsSet: [[]]
-  },
-  {
-    code: dedent`
-      function foo(bar) {
-        console.log(bar);
-      }`,
-    optionsSet: [
-      [{ enforceParameterCount: "atLeastOne" }],
-      [{ enforceParameterCount: "exactlyOne" }]
-    ]
-  },
-  {
-    code: dedent`
-      function foo(bar, baz) {
-        console.log(bar, baz);
-      }`,
-    optionsSet: [
-      [{ enforceParameterCount: "atLeastOne" }],
-      [{ ignorePattern: "^foo", enforceParameterCount: "exactlyOne" }]
-    ]
-  },
-  {
-    code: dedent`
-      function foo(...bar) {
-        console.log(bar);
-      }`,
-    optionsSet: [[{ ignorePattern: "^foo" }]]
-  }
-];
-
-// Invalid test cases.
-const es6Invalid: ReadonlyArray<InvalidTestCase> = [
-  ...es3Invalid,
-  {
-    code: dedent`
-      (() => {
-        console.log("hello world");
-      })();`,
-    optionsSet: [[{ enforceParameterCount: { ignoreIIFE: false } }]],
-    errors: [
-      {
-        messageId: "paramCountAtLeastOne",
-        type: "ArrowFunctionExpression",
-        line: 1,
-        column: 2
-      }
-    ]
-  },
-  {
-    code: dedent`
-      function foo(...bar) {
-        console.log(bar);
-      }`,
-    optionsSet: [[]],
-    errors: [
-      {
-        messageId: "restParam",
-        type: "RestElement",
-        line: 1,
-        column: 14
       }
     ]
   },
@@ -209,7 +149,68 @@ const es6Invalid: ReadonlyArray<InvalidTestCase> = [
   }
 ];
 
-describe("TypeScript", () => {
+// Valid test cases.
+const es6Valid: ReadonlyArray<ValidTestCase> = [
+  ...es3Valid,
+  {
+    code: dedent`
+      (() => {
+        console.log("hello world");
+      })();`,
+    optionsSet: [[]]
+  },
+  {
+    code: dedent`
+      function foo([bar, ...baz]) {
+        console.log(bar, baz);
+      }`,
+    optionsSet: [[]]
+  },
+  {
+    code: dedent`
+      function foo(...bar) {
+        console.log(bar);
+      }`,
+    optionsSet: [[{ ignorePattern: "^foo" }]]
+  }
+];
+
+// Invalid test cases.
+const es6Invalid: ReadonlyArray<InvalidTestCase> = [
+  ...es3Invalid,
+  {
+    code: dedent`
+      (() => {
+        console.log("hello world");
+      })();`,
+    optionsSet: [[{ enforceParameterCount: { ignoreIIFE: false } }]],
+    errors: [
+      {
+        messageId: "paramCountAtLeastOne",
+        type: "ArrowFunctionExpression",
+        line: 1,
+        column: 2
+      }
+    ]
+  },
+  {
+    code: dedent`
+      function foo(...bar) {
+        console.log(bar);
+      }`,
+    optionsSet: [[]],
+    errors: [
+      {
+        messageId: "restParam",
+        type: "RestElement",
+        line: 1,
+        column: 14
+      }
+    ]
+  }
+];
+
+describeTsOnly("TypeScript", () => {
   const ruleTester = new RuleTester(typescript);
   ruleTester.run(name, rule, {
     valid: processValidTestCase(es6Valid),

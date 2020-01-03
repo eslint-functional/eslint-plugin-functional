@@ -7,7 +7,7 @@ import {
   IgnorePatternOption,
   shouldIgnore
 } from "../../src/common/ignore-options";
-import { filename, typescript } from "../helpers/configs";
+import { filename, es9 } from "../helpers/configs";
 import { addFilename, createDummyRule } from "../helpers/util";
 
 describe("option: ignore", () => {
@@ -127,7 +127,7 @@ describe("option: ignore", () => {
       }
     ];
 
-    new RuleTester(typescript).run(
+    new RuleTester(es9).run(
       "AssignmentExpression",
       createDummyRule(context => {
         const [allowed, options] = context.options;
@@ -179,7 +179,7 @@ describe("option: ignore", () => {
       }
     ];
 
-    new RuleTester(typescript).run(
+    new RuleTester(es9).run(
       "AssignmentExpression",
       createDummyRule(context => {
         const [allowed, options] = context.options;
@@ -215,7 +215,7 @@ describe("option: ignore", () => {
       }
     ];
 
-    new RuleTester(typescript).run(
+    new RuleTester(es9).run(
       "ExpressionStatement",
       createDummyRule(context => {
         const [allowed, options] = context.options;

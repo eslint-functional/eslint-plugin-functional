@@ -9,6 +9,7 @@ import { name, rule } from "../../src/rules/immutable-data";
 
 import { es3, es6, typescript } from "../helpers/configs";
 import {
+  describeTsOnly,
   InvalidTestCase,
   processInvalidTestCase,
   processValidTestCase,
@@ -1301,7 +1302,7 @@ const es6Invalid: ReadonlyArray<InvalidTestCase> = [
   ...arrayES6Invalid
 ];
 
-describe("TypeScript", () => {
+describeTsOnly("TypeScript", () => {
   const ruleTester = new RuleTester(typescript);
   ruleTester.run(name, rule, {
     valid: processValidTestCase(es6Valid),

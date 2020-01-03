@@ -217,12 +217,6 @@ export function isTSTupleType(
   return node.type === AST_NODE_TYPES.TSTupleType;
 }
 
-export function isTSTypeAliasDeclaration(
-  node: TSESTree.Node
-): node is TSESTree.TSTypeAliasDeclaration {
-  return node.type === AST_NODE_TYPES.TSTypeAliasDeclaration;
-}
-
 export function isTSTypeAnnotation(
   node: TSESTree.Node
 ): node is TSESTree.TSTypeAnnotation {
