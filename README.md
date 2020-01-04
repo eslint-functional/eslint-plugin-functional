@@ -200,7 +200,7 @@ The [below section](#supported-rules) gives details on which rules are enabled b
 
 In addition to the immutability rules above, there are a few standard rules that need to be enabled to achieve immutability.
 
-Each of these rules are enabled by default in the rulesets this plugin provides.
+These rules are all included in the *external-recommended* rulesets.
 
 ### [no-var](https://eslint.org/docs/rules/no-var)
 
