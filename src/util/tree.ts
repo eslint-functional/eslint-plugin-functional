@@ -13,9 +13,9 @@ import {
 } from "./typeguard";
 
 /**
- * Return the parent that meets the given check criteria.
+ * Return the first ancestor that meets the given check criteria.
  */
-function getParentOfType<T extends TSESTree.Node>(
+function getAncestorOfType<T extends TSESTree.Node>(
   checker: (node: TSESTree.Node, child: TSESTree.Node | null) => node is T,
   node: TSESTree.Node,
   child: TSESTree.Node | null = null
@@ -24,7 +24,7 @@ function getParentOfType<T extends TSESTree.Node>(
     ? node
     : node.parent == undefined
     ? null
-    : getParentOfType(checker, node.parent, node);
+    : getAncestorOfType(checker, node.parent, node);
 }
 
 /**
@@ -32,7 +32,7 @@ function getParentOfType<T extends TSESTree.Node>(
  */
 export function inFunctionBody(node: TSESTree.Node): boolean {
   return (
-    getParentOfType(
+    getAncestorOfType(
       (n, c): n is TSESTree.Node => isFunctionLike(n) && n.body === c,
       node
     ) !== null
@@ -43,21 +43,21 @@ export function inFunctionBody(node: TSESTree.Node): boolean {
  * Test if the given node is in a class.
  */
 export function inClass(node: TSESTree.Node): boolean {
-  return getParentOfType(isClassLike, node) !== null;
+  return getAncestorOfType(isClassLike, node) !== null;
 }
 
 /**
  * Test if the given node is in a TS Property Signature.
  */
 export function inInterface(node: TSESTree.Node): boolean {
-  return getParentOfType(isTSInterfaceBody, node) !== null;
+  return getAncestorOfType(isTSInterfaceBody, node) !== null;
 }
 
 /**
  * Test if the given node is in a Constructor.
  */
 export function inConstructor(node: TSESTree.Node): boolean {
-  const methodDefinition = getParentOfType(isMethodDefinition, node);
+  const methodDefinition = getAncestorOfType(isMethodDefinition, node);
   return (
     methodDefinition !== null &&
     isIdentifier(methodDefinition.key) &&
@@ -70,7 +70,7 @@ export function inConstructor(node: TSESTree.Node): boolean {
  */
 export function isInReturnType(node: TSESTree.Node): boolean {
   return (
-    getParentOfType(
+    getAncestorOfType(
       (n): n is TSESTree.Node =>
         n.parent != undefined &&
         isFunctionLike(n.parent) &&
