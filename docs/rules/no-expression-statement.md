@@ -6,9 +6,32 @@ This rule checks that the value of an expression is assigned to a variable and t
 
 When you call a function and don’t use it’s return value, chances are high that it is being called for its side effect. e.g.
 
+Examples of **incorrect** code for this rule:
+
 ```js
-array.push(1);          // This statement performs a side-effect.
-alert("Hello world!");  // This statement performs a side-effect.
+/* eslint functional/no-expression-statement: "error" */
+
+console.log("Hello world!");
+```
+
+```js
+/* eslint functional/no-expression-statement: "error" */
+
+array.push(3);
+```
+
+```js
+/* eslint functional/no-expression-statement: "error" */
+
+foo(bar);
+```
+
+Examples of **correct** code for this rule:
+
+```js
+/* eslint functional/no-expression-statement: "error" */
+
+const baz = foo(bar);
 ```
 
 ## Options
