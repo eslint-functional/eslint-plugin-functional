@@ -1,6 +1,8 @@
 # Disallow Rejecting Promises (no-promise-reject)
 
-This rule disallows `Promise.reject()`.
+This rule disallows use of `Promise.reject()`.
+
+We don't recommend this rule but it's there for those who want it.
 
 ## Rule Details
 
@@ -8,20 +10,33 @@ You can view a `Promise` as a result object with built-in error (something like 
 You can also view a rejected promise as something similar to an exception and as such something that does not fit with functional programming.
 If your view is the latter you can use the `no-promise-reject` rule to disallow rejected promises.
 
-```ts
-async function divide(
-  x: Promise<number>,
-  y: Promise<number>
-): Promise<number | Error> {
+Examples of **incorrect** code for this rule:
+
+```js
+/* eslint functional/no-promise-reject: "error" */
+
+async function divide(x, y) {
   const [xv, yv] = await Promise.all([x, y]);
 
-  // Rejecting the promise is not allowed so resolve to an Error instead
+  return (yv === 0
+    ? Promise.reject(new Error("Cannot divide by zero."))
+    : xv / yv
+  );
+}
+```
 
-  // return yv === 0
-  //   ? Promise.reject(new Error("Cannot divide by zero."))
-  //   : xv / yv;
+Examples of **correct** code for this rule:
 
-  return yv === 0 ? new Error("Cannot divide by zero.") : xv / yv;
+```js
+/* eslint functional/no-promise-reject: "error" */
+
+async function divide(x, y) {
+  const [xv, yv] = await Promise.all([x, y]);
+
+  return (yv === 0
+    ? new Error("Cannot divide by zero.")
+    : xv / yv
+  );
 }
 ```
 

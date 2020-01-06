@@ -8,22 +8,24 @@ This rule enforces use of `readonly T[]` (`ReadonlyArray<T>`) over `T[]` (`Array
 
 The readonly modifier must appear on property signatures in interfaces, property declarations in classes, and index signatures.
 
-### Benefits of using the `readonly` modifier
-
-You might think that using `const` would eliminate mutation from your TypeScript code. **Wrong.** Turns out that there's a pretty big loophole in `const`.
+Examples of **incorrect** code for this rule:
 
 ```ts
+/* eslint functional/prefer-readonly-type: "error" */
+
 interface Point {
   x: number;
   y: number;
 }
 const point: Point = { x: 23, y: 44 };
-point.x = 99; // This is legal
+point.x = 99; // This is perfectly valid.
 ```
 
-This is why the `readonly` modifier exists. It prevents you from assigning a value to the result of a member expression.
+Examples of **correct** code for this rule:
 
 ```ts
+/* eslint functional/prefer-readonly-type: "error" */
+
 interface Point {
   readonly x: number;
   readonly y: number;
@@ -32,9 +34,9 @@ const point: Point = { x: 23, y: 44 };
 point.x = 99; // <- No object mutation allowed.
 ```
 
-This is just as effective as using Object.freeze() to prevent mutations in your Redux reducers. However the `readonly` modifier has **no run-time cost**, and is enforced at **compile time**. A good alternative to object mutation is to use the ES2016 object spread [syntax](https://github.com/Microsoft/TypeScript/wiki/What's-new-in-TypeScript#object-spread-and-rest) that was added in typescript 2.1:
-
 ```ts
+/* eslint functional/prefer-readonly-type: "error" */
+
 interface Point {
   readonly x: number;
   readonly y: number;
@@ -43,11 +45,11 @@ const point: Point = { x: 23, y: 44 };
 const transformedPoint = { ...point, x: 99 };
 ```
 
-Note that you can also use object spread when destructuring to [delete keys](http://stackoverflow.com/questions/35342355/remove-data-from-nested-objects-without-mutating/35676025#35676025) in an object:
+### Benefits of using the `readonly` modifier
 
-```ts
-let { [action.id]: deletedItem, ...rest } = state;
-```
+A variable declared as `const` can not be reassigned, however what's in the variable can be mutated.
+This is why the `readonly` modifier exists. It prevents you from assigning a value to the result of a member expression.
+This is just as effective as using `Object.freeze()` to prevent mutations. However the `readonly` modifier has **no run-time cost**, and is enforced at **compile time**.
 
 The `readonly` modifier also works on indexers:
 
@@ -66,7 +68,7 @@ interface Point {
   readonly y: number;
 }
 const points: Array<Point> = [{ x: 23, y: 44 }];
-points.push({ x: 1, y: 2 }); // This is legal
+points.push({ x: 1, y: 2 }); // This is perfectly valid.
 ```
 
 Using the `ReadonlyArray<T>` type or `readonly T[]` will stop this mutation:
