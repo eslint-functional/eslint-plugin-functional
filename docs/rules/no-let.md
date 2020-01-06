@@ -4,38 +4,63 @@ This rule should be combined with tslint's built-in `no-var-keyword` rule to enf
 
 ## Rule Details
 
-There's no reason to use `let` in a Redux/React application, because all your state is managed by either Redux or React. Use `const` instead, and avoid state bugs altogether.
+In functional programming variables should not be mutable; use `const` instead.
 
-```ts
-let x = 5; // <- Unexpected let or var, use const.
+Examples of **incorrect** code for this rule:
+
+```js
+/* eslint functional/no-let: "error" */
+
+let x = 5;
 ```
 
-What about `for` loops? Loops can be replaced with the Array methods like `map`, `filter`, and so on. If you find the built-in JS Array methods lacking, use [ramda](http://ramdajs.com/), or [lodash-fp](https://github.com/lodash/lodash/wiki/FP-Guide).
+```js
+/* eslint functional/no-let: "error" */
 
-```ts
-const SearchResults = ({ results }) => (
-  <ul>
-    {results.map(result => (
-      <li>result</li>
-    )) // <- Who needs let?
-    }
-  </ul>
-);
+for (let i = 0; i < array.length; i++) {
+
+}
+```
+
+Examples of **correct** code for this rule:
+
+```js
+/* eslint functional/no-let: "error" */
+
+const x = 5;
+```
+
+```js
+/* eslint functional/no-let: "error" */
+
+for (const element of array) {
+}
+```
+
+```js
+/* eslint functional/no-let: "error" */
+
+for (const [index, element] of array.entries()) {
+}
 ```
 
 ## Options
 
-The rule accepts an options object with the following properties:
+This rule accepts an options object of the following type:
 
 ```ts
-type Options = {
+{
   allowLocalMutation: boolean;
   ignorePattern?: string | Array<string>;
-};
+}
+```
 
-const defaults = {
+The default options:
+
+```ts
+{
   allowLocalMutation: false
-};
+}
 ```
 
 ### `allowLocalMutation`
@@ -44,4 +69,5 @@ See the [allowLocalMutation](./options/allow-local-mutation.md) docs.
 
 ### `ignorePattern`
 
+Patterns will be matched against variable names.
 See the [ignorePattern](./options/ignore-pattern.md) docs.

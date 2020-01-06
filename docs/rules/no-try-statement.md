@@ -6,20 +6,48 @@ This rule disallows the `try` keyword.
 
 Try statements are not part of functional programming. See [no-throw-statement](./no-throw-statement.md) for more information.
 
+Examples of **incorrect** code for this rule:
+
+```js
+/* eslint functional/no-try-statement: "error" */
+
+try {
+  doSomethingThatMightGoWrong(); // <-- Might throw an exception.
+}
+catch (error) {
+  // Handle error.
+}
+```
+
+Examples of **correct** code for this rule:
+
+```js
+/* eslint functional/no-try-statement: "error" */
+
+doSomethingThatMightGoWrong() // <-- Returns a Promise.
+.catch(error => {
+  // Handle error.
+});
+```
+
 ## Options
 
-The rule accepts an options object with the following properties:
+This rule accepts an options object of the following type:
 
 ```ts
-type Options = {
+{
   allowCatch: boolean;
   allowFinally: boolean;
 };
+```
 
-const defaults = {
+The default options:
+
+```ts
+{
   allowCatch: false,
   allowFinally: false
-};
+}
 ```
 
 ### `allowCatch`

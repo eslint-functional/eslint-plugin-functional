@@ -5,8 +5,15 @@ This rule disallows conditional statements such as if and switch.
 ## Rule Details
 
 Conditional statements are not a good fit for functional style programming as they are not expressions and do not return a value.
+Instead consider using the [tenary operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator) which is an expression that returns a value:
 
-```ts
+For more background see this [blog post](https://hackernoon.com/rethinking-javascript-the-if-statement-b158a61cd6cb) and discussion in [tslint-immutable #54](https://github.com/jonaskello/tslint-immutable/issues/54).
+
+Examples of **incorrect** code for this rule:
+
+```js
+/* eslint functional/no-conditional-statement: "error" */
+
 let x;
 if (i === 1) {
   x = 2;
@@ -15,26 +22,44 @@ if (i === 1) {
 }
 ```
 
-Instead consider using the [tenary operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator) which is an expression that returns a value:
+Examples of **correct** code for this rule:
 
-```ts
+```js
+/* eslint functional/no-conditional-statement: "error" */
+
 const x = i === 1 ? 2 : 3;
 ```
 
-For more background see this [blog post](https://hackernoon.com/rethinking-javascript-the-if-statement-b158a61cd6cb) and discussion in [#54](https://github.com/jonaskello/tslint-immutable/issues/54).
+```js
+/* eslint functional/no-conditional-statement: "error" */
+
+function foo(x, y) {
+  return (
+    x === y   // if
+    ? 0
+    : x > y   // else if
+    ? 1
+    : -1      // else
+  );
+}
+```
 
 ## Options
 
-The rule accepts an options object with the following properties:
+This rule accepts an options object of the following type:
 
 ```ts
-type Options = {
+{
   allowReturningBranches: boolean | "ifExhaustive";
-};
+}
+```
 
-const defaults = {
+The default options:
+
+```ts
+{
   allowReturningBranches: false
-};
+}
 ```
 
 ### `allowReturningBranches`
@@ -44,7 +69,7 @@ const defaults = {
 The optional allows conditional statements but only if all defined branches end with a return statement.
 This allows early escapes to be used.
 
-```ts
+```js
 function foo(error, data) {
   if (error) {
     return;
@@ -60,7 +85,7 @@ This will only allow conditional statements to exists if every case is taken it 
 In other works, every if must have an else and every switch must have a default case.
 This allows conditional statements to be used like [do expressions](https://github.com/tc39/proposal-do-expressions).
 
-```ts
+```js
 const x = (() => {
   switch(y) {
     case "a":
@@ -72,4 +97,4 @@ const x = (() => {
 })();
 ```
 
-Note: Currently this option is not useable with the [no-else-return](https://eslint.org/docs/rules/no-else-return) rule; else statements must contain a return statement.
+Note: Currently this option is not useable with the [no-else-return](https://eslint.org/docs/rules/no-else-return) rule; `else` statements must contain a return statement.

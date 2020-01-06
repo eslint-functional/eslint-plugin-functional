@@ -5,28 +5,36 @@ This rule disallows the `throw` keyword.
 ## Rule Details
 
 Exceptions are not part of functional programming.
+As an alternative a function should return an error or in the case of an async function, a rejected promise.
 
-```ts
-throw new Error("Something went wrong."); // Unexpected throw, throwing exceptions is not functional.
+Examples of **incorrect** code for this rule:
+
+```js
+/* eslint functional/no-throw-statement: "error" */
+
+throw new Error("Something went wrong.");
 ```
 
-As an alternative a function should return an error:
+Examples of **correct** code for this rule:
 
-```ts
-function divide(x: number, y: number): number | Error {
+```js
+/* eslint functional/no-throw-statement: "error" */
+
+function divide(x, y) {
   return y === 0 ? new Error("Cannot divide by zero.") : x / y;
 }
 ```
 
-Or in the case of an async function, a rejected promise should be returned.
+```js
+/* eslint functional/no-throw-statement: "error" */
 
-```ts
-async function divide(x: Promise<number>, y: Promise<number>): Promise<number> {
+async function divide(x, y) {
   const [xv, yv] = await Promise.all([x, y]);
 
-  return yv === 0
+  return (yv === 0
     ? Promise.reject(new Error("Cannot divide by zero."))
-    : xv / yv;
+    : xv / yv
+  );
 }
 ```
 

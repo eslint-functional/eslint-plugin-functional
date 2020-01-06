@@ -6,42 +6,60 @@ This rule enforces that an aliased type literal or an interface only has one typ
 
 Mixing functions and data properties in the same type is a sign of object-orientation style.
 
-## Limitations
-
-This rule will only check alias type literal declarations and interface declarations. Advanced types will not be checked.
-For example intersection types will not be checked.
+Examples of **incorrect** code for this rule:
 
 ```ts
-// Interface declaration - Will be checked.
-interface IFoo {
-  prop1: string;
-}
+/* eslint functional/no-mixed-type: "error" */
 
-// Alias type literal declaration - Will be checked.
 type Foo = {
   prop1: string;
-};
-
-// Alias type intersection declaration (Advanced type) - Will NOT be checked.
-type Baz = Foo & {
   prop2: () => string;
 };
 ```
 
-## Options
-
-The rule accepts an options object with the following properties:
+Examples of **correct** code for this rule:
 
 ```ts
-type Options = {
+/* eslint functional/no-mixed-type: "error" */
+
+type Foo = {
+  prop1: string;
+  prop2: number;
+};
+```
+
+```ts
+/* eslint functional/no-mixed-type: "error" */
+
+type Foo = {
+  prop1: () => string;
+  prop2: () => () => number;
+};
+```
+
+## Limitations
+
+This rule will only check alias type literal declarations and interface declarations. Advanced types will not be checked.
+For example union and intersection types will not be checked.
+
+## Options
+
+This rule accepts an options object of the following type:
+
+```ts
+{
   checkInterfaces: boolean;
   checkTypeLiterals: boolean;
-};
+}
+```
 
-const defaults = {
+The default options:
+
+```ts
+{
   checkInterfaces: true,
   checkTypeLiterals: true
-};
+}
 ```
 
 ### checkInterfaces

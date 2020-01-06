@@ -4,9 +4,50 @@ Disallow use of the `class` keyword.
 
 ## Rule Details
 
+Examples of **incorrect** code for this rule:
+
+```js
+/* eslint functional/no-class: "error" */
+
+class Dog {
+  
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  get ageInDogYears() {
+    return 7 * this.age;
+  }
+}
+
+const dogA = new Dog("Jasper", 2);
+
+console.log(`${dogA.name} is ${dogA.ageInDogYears} in dog years.`);
+```
+
+Examples of **correct** code for this rule:
+
+```js
+/* eslint functional/no-class: "error" */
+
+function getAgeInDogYears(age) {
+  return 7 * age;
+}
+
+const dogA = {
+  name: "Jasper",
+  age: 2
+};
+
+console.log(`${dogA.name} is ${getAgeInDogYears(dogA.age)} in dog years.`);
+```
+
+### React Examples
+
 Thanks to libraries like [recompose](https://github.com/acdlite/recompose) and Redux's [React Container components](http://redux.js.org/docs/basics/UsageWithReact.html), there's not much reason to build Components using `React.createClass` or ES6 classes anymore. The `no-this-expression` rule makes this explicit.
 
-```ts
+```js
 const Message = React.createClass({
   render: function() {
     return <div>{this.props.message}</div>; // <- no this allowed
@@ -16,13 +57,13 @@ const Message = React.createClass({
 
 Instead of creating classes, you should use React 0.14's [Stateless Functional Components](https://medium.com/@joshblack/stateless-components-in-react-0-14-f9798f8b992d#.t5z2fdit6) and save yourself some keystrokes:
 
-```ts
+```js
 const Message = ({ message }) => <div>{message}</div>;
 ```
 
 What about lifecycle methods like `shouldComponentUpdate`? We can use the [recompose](https://github.com/acdlite/recompose) library to apply these optimizations to your Stateless Functional Components. The [recompose](https://github.com/acdlite/recompose) library relies on the fact that your Redux state is immutable to efficiently implement shouldComponentUpdate for you.
 
-```ts
+```js
 import { pure, onlyUpdateForKeys } from "recompose";
 
 const Message = ({ message }) => <div>{message}</div>;
