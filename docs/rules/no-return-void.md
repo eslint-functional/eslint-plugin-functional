@@ -8,22 +8,45 @@ In functional programming functions must return something, they cannot return no
 
 By default, this rule allows function to return `undefined` and `null`.
 
-Note: For performance reasons, this rule does not check implicit return types. We recommend using the rule [@typescript-eslint/explicit-function-return-type](https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/explicit-function-return-type.md) in conjunction with this rule.
+Note: For performance reasons, this rule does not check implicit return types.
+We recommend using the rule [@typescript-eslint/explicit-function-return-type](https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/explicit-function-return-type.md) in conjunction with this rule.
+
+Examples of **incorrect** code for this rule:
+
+```ts
+/* eslint functional/no-return-void: "error" */
+
+function updateText(): void {
+}
+```
+
+Examples of **correct** code for this rule:
+
+```ts
+/* eslint functional/no-return-void: "error" */
+
+function updateText(value: string): string {
+}
+```
 
 ## Options
 
-The rule accepts an options object with the following properties:
+This rule accepts an options object of the following type:
 
 ```ts
-type Options = {
+{
   allowNull: boolean;
   allowUndefined: boolean;
-};
+}
+```
 
-const defaults: Options = {
+The default options:
+
+```ts
+{
   allowNull: true,
   allowUndefined: true
-};
+}
 ```
 
 ### allowNull
