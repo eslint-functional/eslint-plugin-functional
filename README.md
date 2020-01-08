@@ -1,16 +1,18 @@
 <div align="center">
-  <img width="150" height="150" src="docs/assets/eslint-logo.svg">
 
-  <h1>eslint-plugin-functional</h1>
-  <p>
-    <a href="https://www.npmjs.com/package/eslint-plugin-functional"><img alt="npm version" src="https://img.shields.io/npm/v/eslint-plugin-functional.svg?style=flat"></a>
-    <a href="https://travis-ci.com/jonaskello/eslint-plugin-functional"><img alt="travis build" src="https://travis-ci.com/jonaskello/eslint-plugin-functional.svg?branch=master&amp;style=flat"></a>
-    <a href="https://codecov.io/gh/jonaskello/eslint-plugin-functional"><img alt="Coverage Status" src="https://codecov.io/gh/jonaskello/eslint-plugin-functional/branch/master/graph/badge.svg"></a>
-    <a href="https://github.com/prettier/prettier"><img alt="code style: prettier" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat"></a>
-    <a href="https://opensource.org/licenses/MIT"><img alt="MIT license" src="https://img.shields.io/github/license/jonaskello/eslint-plugin-functional.svg?style=flat"></a>
-    <a href="https://spectrum.chat/eslint-functional"><img alt="Join the community on Spectrum" src="https://withspectrum.github.io/badge/badge.svg"></a>
-  </p>
-  <p>An <a href="http://eslint.org">ESLint</a> plugin to disable mutation and promote functional programming in JavaScript and TypeScript.</p>
+![eslint-logo](docs/assets/eslint-logo.svg)
+
+# eslint-plugin-functional
+
+[![npm version](https://img.shields.io/npm/v/eslint-plugin-functional.svg?style=flat)](https://www.npmjs.com/package/eslint-plugin-functional)
+[![travis build](https://travis-ci.com/jonaskello/eslint-plugin-functional.svg?branch=master&amp;style=flat)](https://travis-ci.com/jonaskello/eslint-plugin-functional)
+[![Coverage Status](https://codecov.io/gh/jonaskello/eslint-plugin-functional/branch/master/graph/badge.svg)](https://codecov.io/gh/jonaskello/eslint-plugin-functional)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat)](https://github.com/prettier/prettier)
+[![MIT license](https://img.shields.io/github/license/jonaskello/eslint-plugin-functional.svg?style=flat)](https://opensource.org/licenses/MIT)
+[![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/eslint-functional)
+
+An [ESLint](http://eslint.org) plugin to disable mutation and promote functional programming in JavaScript and TypeScript.
+
 </div>
 
 > :wave: If you previously used the rules in [tslint-immutable](https://www.npmjs.com/package/tslint-immutable), this package is the eslint version of those rules. Please see the [migration guide](docs/user-guide/migrating-from-tslint.md) for how to migrate.
