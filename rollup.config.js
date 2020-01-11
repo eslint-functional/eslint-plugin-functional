@@ -54,9 +54,7 @@ const cjs = {
   plugins: [
     rollupPluginNodeResolve(),
     rollupPluginCommonjs(),
-    rollupPluginTypescript({
-      tsconfigOverride: { compilerOptions: { target: "es5" } }
-    }),
+    rollupPluginTypescript(),
     rollupPluginJSON({
       preferConst: true
     })
@@ -77,9 +75,7 @@ const esm = {
   plugins: [
     rollupPluginNodeResolve(),
     rollupPluginCommonjs(),
-    rollupPluginTypescript({
-      tsconfigOverride: { compilerOptions: { target: "es2017" } }
-    }),
+    rollupPluginTypescript(),
     rollupPluginJSON({
       preferConst: true
     })
