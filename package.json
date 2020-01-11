@@ -2,21 +2,24 @@
   "name": "eslint-plugin-functional",
   "version": "2.0.0",
   "description": "ESLint rules to disable mutation and promote fp in TypeScript.",
-  "main": "lib/index.js",
-  "module": "lib/index.mjs",
+  "keywords": [
+    "eslint",
+    "eslint plugin",
+    "fp",
+    "functional",
+    "functional programming",
+    "immutability",
+    "immutable"
+  ],
+  "homepage": "https://github.com/jonaskello/eslint-plugin-functional#readme",
+  "bugs": {
+    "url": "https://github.com/jonaskello/eslint-plugin-functional/issues"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jonaskello/eslint-plugin-functional"
   },
-  "keywords": [
-    "eslint",
-    "eslint plugin",
-    "immutable",
-    "immutability",
-    "functional",
-    "functional programming",
-    "fp"
-  ],
+  "license": "MIT",
   "author": "Jonas Kello",
   "contributors": [
     {
@@ -24,11 +27,6 @@
       "email": "rebecca.stevens@outlook.co.nz"
     }
   ],
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/jonaskello/eslint-plugin-functional/issues"
-  },
-  "homepage": "https://github.com/jonaskello/eslint-plugin-functional#readme",
   "files": [
     "/lib",
     "package.json",
@@ -36,6 +34,35 @@
     "LICENSE",
     "README.md"
   ],
+  "main": "lib/index.js",
+  "module": "lib/index.mjs",
+  "scripts": {
+    "build": "rimraf lib && yarn compile",
+    "build-tests": "rimraf build && yarn compile-tests",
+    "compile": "rollup -c",
+    "compile-tests": "tsc -p tsconfig.tests.json && cp ./tests/helpers/tsconfig.json ./build/tests/helpers/",
+    "prelint": "yarn build && yarn link && yarn link 'eslint-plugin-functional'",
+    "lint": "yarn eslint './{src,tests}/**/*.ts' --ext .ts -f visualstudio",
+    "report-coverage": "codecov -f coverage/lcov.info",
+    "test": "jest --testPathIgnorePatterns _work.test",
+    "test-compiled": "USE_COMPLIED=1 yarn test",
+    "test-work": "jest tests/rules/_work.test.ts",
+    "verify": "yarn build && yarn lint && yarn build-tests && yarn test-compiled && rimraf build",
+    "preversion": "yarn verify",
+    "postversion": "git push --tags && yarn publish --new-version $npm_package_version && git push && echo \"Successfully released version $npm_package_version!\""
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "./{src,tests}/**/*.{ts,json}": [
+      "prettier --write",
+      "git add"
+    ],
+    "./{src,tests}/**/*.{ts}": "eslint"
+  },
   "dependencies": {
     "@typescript-eslint/experimental-utils": "^1.11.0",
     "array.prototype.flatmap": "^1.2.1",
@@ -85,32 +112,5 @@
     "typescript": {
       "optional": true
     }
-  },
-  "scripts": {
-    "compile": "rollup -c",
-    "compile-tests": "tsc -p tsconfig.tests.json && cp ./tests/helpers/tsconfig.json ./build/tests/helpers/",
-    "build-tests": "rimraf build && yarn compile-tests",
-    "build": "rimraf lib && yarn compile",
-    "prelint": "yarn build && yarn link && yarn link 'eslint-plugin-functional'",
-    "lint": "yarn eslint './{src,tests}/**/*.ts' --ext .ts -f visualstudio",
-    "test": "jest --testPathIgnorePatterns _work.test",
-    "test-work": "jest tests/rules/_work.test.ts",
-    "test-compiled": "USE_COMPLIED=1 yarn test",
-    "verify": "yarn build && yarn lint && yarn build-tests && yarn test-compiled && rimraf build",
-    "report-coverage": "codecov -f coverage/lcov.info",
-    "preversion": "yarn verify",
-    "postversion": "git push --tags && yarn publish --new-version $npm_package_version && git push && echo \"Successfully released version $npm_package_version!\""
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "./{src,tests}/**/*.{ts}": "eslint",
-    "./{src,tests}/**/*.{ts,json}": [
-      "prettier --write",
-      "git add"
-    ]
   }
 }
