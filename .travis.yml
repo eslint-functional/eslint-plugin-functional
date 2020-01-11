@@ -6,9 +6,9 @@ cache:
 notifications:
   email: false
 node_js:
+  - "node"
   - "12"
   - "10"
-  - "8"
 env:
   - TSVERSION=next
   - TSVERSION=latest
