@@ -34,8 +34,12 @@
     "LICENSE",
     "README.md"
   ],
+  "exports": {
+    "import": "./lib/index.mjs",
+    "require": "./lib/index.js",
+    "default": "./lib/index.js"
+  },
   "main": "lib/index.js",
-  "module": "lib/index.mjs",
   "scripts": {
     "build": "yarn rimraf lib && yarn compile",
     "build-tests": "yarn rimraf build && yarn compile-tests",
