@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased](https://github.com/jonaskello/eslint-plugin-functional/compare/v2.0.0...HEAD)
 
+### Commits
+
+- **Breaking change:** build(dep): update all dependencies [`cae4c49`](https://github.com/jonaskello/eslint-plugin-functional/commit/cae4c49bdf3cd0845e399819046941fa4d2ee13f)
+
 ## [v2.0.0](https://github.com/jonaskello/eslint-plugin-functional/compare/v1.0.3...v2.0.0) - 2019-12-29
 
 ### Merged
