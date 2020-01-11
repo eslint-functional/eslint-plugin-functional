@@ -224,28 +224,28 @@ function isInChainCallAndFollowsNew(
     // Check for: [0, 1, 2]
     isArrayExpression(node.object) ||
     // Check for: new Array()
-    ((isNewExpression(node.object) &&
+    (isNewExpression(node.object) &&
       isArrayConstructorType(
         getTypeOfNode(node.object.callee, context),
         assumeArrayTypes,
         node.object.callee
       )) ||
-      (isCallExpression(node.object) &&
-        isMemberExpression(node.object.callee) &&
-        isIdentifier(node.object.callee.property) &&
-        // Check for: Array.from(iterable)
-        ((arrayConstructorFunctions.some(
+    (isCallExpression(node.object) &&
+      isMemberExpression(node.object.callee) &&
+      isIdentifier(node.object.callee.property) &&
+      // Check for: Array.from(iterable)
+      ((arrayConstructorFunctions.some(
+        isExpected(node.object.callee.property.name)
+      ) &&
+        isArrayConstructorType(
+          getTypeOfNode(node.object.callee.object, context),
+          assumeArrayTypes,
+          node.object.callee.object
+        )) ||
+        // Check for: array.slice(0)
+        arrayNewObjectReturningMethods.some(
           isExpected(node.object.callee.property.name)
-        ) &&
-          isArrayConstructorType(
-            getTypeOfNode(node.object.callee.object, context),
-            assumeArrayTypes,
-            node.object.callee.object
-          )) ||
-          // Check for: array.slice(0)
-          arrayNewObjectReturningMethods.some(
-            isExpected(node.object.callee.property.name)
-          ))))
+        )))
   );
 }
 
