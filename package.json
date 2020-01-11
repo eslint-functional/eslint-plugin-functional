@@ -34,8 +34,12 @@
     "LICENSE",
     "README.md"
   ],
+  "exports": {
+    "import": "./lib/index.mjs",
+    "require": "./lib/index.js",
+    "default": "./lib/index.js"
+  },
   "main": "lib/index.js",
-  "module": "lib/index.mjs",
   "scripts": {
     "build": "yarn rimraf lib && yarn compile",
     "build-tests": "yarn rimraf build && yarn compile-tests",
@@ -64,45 +68,45 @@
     "./{src,tests}/**/*.{ts}": "eslint"
   },
   "dependencies": {
-    "@typescript-eslint/experimental-utils": "^1.11.0",
-    "array.prototype.flatmap": "^1.2.1",
-    "deepmerge": "^3.3.0",
+    "@typescript-eslint/experimental-utils": "^2.15.0",
+    "array.prototype.flatmap": "^1.2.3",
+    "deepmerge": "^4.2.2",
     "escape-string-regexp": "^2.0.0"
   },
   "devDependencies": {
     "@types/dedent": "^0.7.0",
-    "@types/eslint": "^4.16.6",
-    "@types/estree": "^0.0.39",
+    "@types/eslint": "^6.1.3",
+    "@types/estree": "^0.0.42",
     "@types/glob": "^7.1.1",
-    "@types/jest": "^24.0.15",
-    "@types/node": "^8.10.49",
-    "@typescript-eslint/eslint-plugin": "^2.3.1",
-    "@typescript-eslint/parser": "^2.3.1",
-    "babel-eslint": "^10.0.2",
-    "codecov": "^3.5.0",
+    "@types/jest": "^24.0.25",
+    "@types/node": "^13.1.6",
+    "@typescript-eslint/eslint-plugin": "^2.15.0",
+    "@typescript-eslint/parser": "^2.15.0",
+    "babel-eslint": "^10.0.3",
+    "codecov": "^3.6.1",
     "dedent": "^0.7.0",
-    "eslint": "^6.5.0",
-    "eslint-config-prettier": "^6.0.0",
-    "eslint-plugin-eslint-plugin": "^2.1.0",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jest": "^22.7.1",
-    "eslint-plugin-jsdoc": "^15.5.3",
-    "eslint-plugin-prettier": "^3.1.0",
-    "glob": "^7.1.4",
-    "husky": "^2.4.1",
-    "jest": "^24.8.0",
-    "json-schema": "^0.2.3",
-    "lint-staged": "^8.2.1",
-    "prettier": "^1.18.2",
-    "rimraf": "^2.6.3",
-    "rollup": "^1.16.2",
-    "rollup-plugin-commonjs": "^10.0.1",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.9.0",
+    "eslint-plugin-eslint-plugin": "^2.2.0",
+    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-jest": "^23.4.0",
+    "eslint-plugin-jsdoc": "^20.0.5",
+    "eslint-plugin-prettier": "^3.1.2",
+    "glob": "^7.1.6",
+    "husky": "^4.0.6",
+    "jest": "^24.9.0",
+    "json-schema": "^0.2.5",
+    "lint-staged": "^9.5.0",
+    "prettier": "^1.19.1",
+    "rimraf": "^3.0.0",
+    "rollup": "^1.29.0",
+    "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-json": "^4.0.0",
-    "rollup-plugin-node-resolve": "^5.1.0",
-    "rollup-plugin-typescript2": "^0.21.2",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-typescript2": "^0.25.3",
     "shelljs": "^0.8.3",
-    "ts-jest": "^24.0.2",
-    "typescript": "^3.5.2"
+    "ts-jest": "^24.3.0",
+    "typescript": "^3.7.4"
   },
   "peerDependencies": {
     "eslint": "^5.0.0 || ^6.0.0",
@@ -112,5 +116,8 @@
     "typescript": {
       "optional": true
     }
+  },
+  "engines": {
+    "node": ">=10.18.0"
   }
 }

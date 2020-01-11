@@ -12,9 +12,9 @@ import { addFilename, createDummyRule } from "../helpers/util";
 
 describe("option: ignore", () => {
   describe("ignoreAccessorPattern", () => {
-    const tests: ReadonlyArray<
-      TSESLint.ValidTestCase<readonly [boolean, IgnoreAccessorPatternOption]>
-    > = [
+    const tests: ReadonlyArray<TSESLint.ValidTestCase<
+      readonly [boolean, IgnoreAccessorPatternOption]
+    >> = [
       // Exact match.
       {
         code: dedent`
@@ -145,9 +145,9 @@ describe("option: ignore", () => {
   });
 
   describe("ignorePattern", () => {
-    const assignmentExpressionTests: ReadonlyArray<
-      TSESLint.ValidTestCase<readonly [boolean, IgnorePatternOption]>
-    > = [
+    const assignmentExpressionTests: ReadonlyArray<TSESLint.ValidTestCase<
+      readonly [boolean, IgnorePatternOption]
+    >> = [
       // Prefix match.
       {
         code: dedent`
@@ -195,9 +195,9 @@ describe("option: ignore", () => {
       })
     );
 
-    const expressionStatementTests: ReadonlyArray<
-      TSESLint.ValidTestCase<readonly [boolean, IgnorePatternOption]>
-    > = [
+    const expressionStatementTests: ReadonlyArray<TSESLint.ValidTestCase<
+      readonly [boolean, IgnorePatternOption]
+    >> = [
       {
         code: dedent`
           const x = 0;`,

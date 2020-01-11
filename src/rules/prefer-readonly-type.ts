@@ -103,7 +103,11 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
 const mutableToImmutableTypes: ReadonlyMap<string, string> = new Map<
   string,
   string
->([["Array", "ReadonlyArray"], ["Map", "ReadonlyMap"], ["Set", "ReadonlySet"]]);
+>([
+  ["Array", "ReadonlyArray"],
+  ["Map", "ReadonlyMap"],
+  ["Set", "ReadonlySet"]
+]);
 
 /**
  * Check if the given ArrayType or TupleType violates this rule.
