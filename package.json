@@ -53,7 +53,8 @@
     "test-work": "yarn jest tests/rules/_work.test.ts",
     "verify": "yarn build && yarn lint && yarn build-tests && yarn test-compiled && rimraf build",
     "preversion": "yarn verify",
-    "postversion": "yarn auto-changelog -p && git add CHANGELOG.md && git commit -m \"docs(changelog): update changelog for v$npm_package_version\" && git push --tags && yarn publish --new-version $npm_package_version && git push && echo \"Successfully released version $npm_package_version!\""
+    "version": "yarn auto-changelog -p && git add CHANGELOG.md",
+    "postversion": "git push --tags && yarn publish --new-version $npm_package_version && git push && echo \"Successfully released version $npm_package_version!\""
   },
   "husky": {
     "hooks": {
