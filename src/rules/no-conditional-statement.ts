@@ -105,20 +105,19 @@ function getIfBranchViolations(
 function getSwitchViolations(
   node: TSESTree.SwitchStatement
 ): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
-  const nodes = node.cases.reduce<ReadonlyArray<TSESTree.Node>>(
-    (carry, branch) =>
-      branch.consequent.length === 0 ||
-      branch.consequent.some(isReturnStatement) ||
-      (branch.consequent.every(isBlockStatement) &&
+  const violations = node.cases.filter(
+    branch =>
+      branch.consequent.length !== 0 &&
+      !branch.consequent.some(isReturnStatement) &&
+      !(
+        branch.consequent.every(isBlockStatement) &&
         (branch.consequent[
           branch.consequent.length - 1
-        ] as TSESTree.BlockStatement).body.some(isReturnStatement))
-        ? carry
-        : [...carry, branch],
-    []
+        ] as TSESTree.BlockStatement).body.some(isReturnStatement)
+      )
   );
 
-  return nodes.flatMap(node => [{ node, messageId: "incompleteBranch" }]);
+  return violations.flatMap(node => [{ node, messageId: "incompleteBranch" }]);
 }
 
 /**
