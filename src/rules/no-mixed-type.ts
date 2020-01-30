@@ -63,49 +63,44 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
 };
 
 /**
- * Get the violations for the given type elements.
+ * Does the given type elements violate the rule.
  */
-function getTypeElementViolations(
+function hasTypeElementViolations(
   typeElements: ReadonlyArray<TSESTree.TypeElement>
-): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
+): boolean {
   type CarryType = {
     readonly prevMemberType: AST_NODE_TYPES | undefined;
     readonly prevMemberTypeAnnotation: AST_NODE_TYPES | undefined;
-    readonly violations: ReadonlyArray<
-      TSESLint.ReportDescriptor<keyof typeof errorMessages>
-    >;
+    readonly violations: boolean;
   };
 
-  return typeElements.reduce<CarryType>(
-    (carry, member) => {
-      const memberType = member.type;
-      const memberTypeAnnotation =
-        isTSPropertySignature(member) && member.typeAnnotation !== undefined
-          ? member.typeAnnotation.typeAnnotation.type
-          : undefined;
+  const typeElementsTypeInfo = typeElements.map(member => ({
+    type: member.type,
+    typeAnnotation:
+      isTSPropertySignature(member) && member.typeAnnotation !== undefined
+        ? member.typeAnnotation.typeAnnotation.type
+        : undefined
+  }));
 
-      return {
-        prevMemberType: memberType,
-        prevMemberTypeAnnotation: memberTypeAnnotation,
-        violations:
-          // Not the first property in the interface.
-          carry.prevMemberType !== undefined &&
-          // And different property type to previous property.
-          (carry.prevMemberType !== memberType ||
-            // Or annotationed with a different type annotation.
-            (carry.prevMemberTypeAnnotation !== memberTypeAnnotation &&
-              // Where one of the properties is a annotationed as a function.
-              (carry.prevMemberTypeAnnotation ===
-                AST_NODE_TYPES.TSFunctionType ||
-                memberTypeAnnotation === AST_NODE_TYPES.TSFunctionType)))
-            ? [...carry.violations, { node: member, messageId: "generic" }]
-            : carry.violations
-      };
-    },
+  return typeElementsTypeInfo.reduce<CarryType>(
+    (carry, member) => ({
+      prevMemberType: member.type,
+      prevMemberTypeAnnotation: member.typeAnnotation,
+      violations:
+        // Not the first property in the interface.
+        carry.prevMemberType !== undefined &&
+        // And different property type to previous property.
+        (carry.prevMemberType !== member.type ||
+          // Or annotationed with a different type annotation.
+          (carry.prevMemberTypeAnnotation !== member.typeAnnotation &&
+            // Where one of the properties is a annotationed as a function.
+            (carry.prevMemberTypeAnnotation === AST_NODE_TYPES.TSFunctionType ||
+              member.typeAnnotation === AST_NODE_TYPES.TSFunctionType)))
+    }),
     {
       prevMemberType: undefined,
       prevMemberTypeAnnotation: undefined,
-      violations: []
+      violations: false
     }
   ).violations;
 }
@@ -120,9 +115,10 @@ function checkTSInterfaceDeclaration(
 ): RuleResult<keyof typeof errorMessages, Options> {
   return {
     context,
-    descriptors: options.checkInterfaces
-      ? getTypeElementViolations(node.body.body)
-      : []
+    descriptors:
+      options.checkInterfaces && hasTypeElementViolations(node.body.body)
+        ? [{ node, messageId: "generic" }]
+        : []
   };
 }
 
@@ -137,8 +133,10 @@ function checkTSTypeAliasDeclaration(
   return {
     context,
     descriptors:
-      options.checkTypeLiterals && isTSTypeLiteral(node.typeAnnotation)
-        ? getTypeElementViolations(node.typeAnnotation.members)
+      options.checkTypeLiterals &&
+      isTSTypeLiteral(node.typeAnnotation) &&
+      hasTypeElementViolations(node.typeAnnotation.members)
+        ? [{ node, messageId: "generic" }]
         : []
   };
 }
