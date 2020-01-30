@@ -78,26 +78,24 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
 function getIfBranchViolations(
   node: TSESTree.IfStatement
 ): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
-  const nodes = [node.consequent, node.alternate].reduce<
-    ReadonlyArray<TSESTree.Node>
-  >(
-    (carry, branch) =>
-      branch === null ||
-      isReturnStatement(branch) ||
-      (isBlockStatement(branch) &&
+  const branches = [node.consequent, node.alternate];
+  const violations = branches.filter<NonNullable<typeof branches[0]>>(
+    (branch): branch is NonNullable<typeof branch> =>
+      branch !== null &&
+      !isReturnStatement(branch) &&
+      !(
+        isBlockStatement(branch) &&
         branch.body.some(
           statement =>
             isReturnStatement(statement) ||
             // Another instance of this rule will check nested if statements.
             isIfStatement(statement)
-        )) ||
-      isIfStatement(branch)
-        ? carry
-        : [...carry, branch],
-    []
+        )
+      ) &&
+      !isIfStatement(branch)
   );
 
-  return nodes.flatMap(node => [{ node, messageId: "incompleteBranch" }]);
+  return violations.flatMap(node => [{ node, messageId: "incompleteBranch" }]);
 }
 
 /**
