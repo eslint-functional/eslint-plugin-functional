@@ -27,28 +27,16 @@ export type InvalidTestCase = Omit<
 export function processInvalidTestCase(
   testCases: ReadonlyArray<InvalidTestCase>
 ): Array<ESLintRuleTester.InvalidTestCase> {
-  return testCases.reduce<ReadonlyArray<ESLintRuleTester.InvalidTestCase>>(
-    (testCasesCarry, testCase) => {
-      return [
-        ...testCasesCarry,
-        ...testCase.optionsSet.reduce<
-          ReadonlyArray<ESLintRuleTester.InvalidTestCase>
-        >((optionsSetCarry, options) => {
-          const { optionsSet, ...eslintTestCase } = testCase;
-          return [
-            ...optionsSetCarry,
-            {
-              filename,
-              ...eslintTestCase,
-              options
-            }
-          ];
-        }, [])
-      ];
-    },
-    []
-    /* eslint-disable-next-line functional/prefer-readonly-type */
-  ) as Array<ESLintRuleTester.InvalidTestCase>;
+  return testCases.flatMap(testCase =>
+    testCase.optionsSet.map(options => {
+      const { optionsSet, ...eslintTestCase } = testCase;
+      return {
+        filename,
+        ...eslintTestCase,
+        options
+      };
+    })
+  );
 }
 
 /**

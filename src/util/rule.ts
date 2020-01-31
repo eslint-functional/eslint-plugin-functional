@@ -1,3 +1,6 @@
+// Polyfill.
+import "object.fromentries/auto.js";
+
 import {
   ESLintUtils,
   TSESLint,
@@ -99,11 +102,12 @@ export function createRule<
       context: TSESLint.RuleContext<MessageIds, readonly [Options]>,
       [options]: readonly [Options]
     ) =>
-      Object.entries(ruleFunctionsMap)
-        .map(([nodeSelector, ruleFunction]) => ({
-          [nodeSelector]: checkNode(ruleFunction, context, options)
-        }))
-        .reduce((carry, object) => ({ ...carry, ...object }), {})
+      Object.fromEntries(
+        Object.entries(ruleFunctionsMap).map(([nodeSelector, ruleFunction]) => [
+          nodeSelector,
+          checkNode(ruleFunction, context, options)
+        ])
+      )
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   } as any) as any;
 }

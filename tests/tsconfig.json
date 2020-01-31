@@ -1,8 +1,8 @@
 {
-  "extends": "./tsconfig.json",
+  "extends": "../tsconfig.json",
   "compilerOptions": {
     "module": "commonjs",
-    "outDir": "build",
+    "outDir": "../build",
     // Turn off checks to make debugging nicer.
     "noFallthroughCasesInSwitch": false,
     "noImplicitAny": false,
@@ -12,5 +12,5 @@
     "noUnusedParameters": false,
     "strictNullChecks": false
   },
-  "include": ["tests/**/*.ts"]
+  "include": ["**/*.ts"]
 }

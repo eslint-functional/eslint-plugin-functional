@@ -44,7 +44,7 @@
     "build": "yarn rimraf lib && yarn compile",
     "build-tests": "yarn rimraf build && yarn compile-tests",
     "compile": "yarn rollup -c",
-    "compile-tests": "yarn tsc -p tsconfig.tests.json && cp ./tests/helpers/tsconfig.json ./build/tests/helpers/",
+    "compile-tests": "yarn tsc -p tests/tsconfig.json && cp ./tests/helpers/tsconfig.json ./build/tests/helpers/",
     "prelint": "yarn build && yarn link && yarn link 'eslint-plugin-functional'",
     "lint": "yarn eslint './{src,tests}/**/*.ts' --ext .ts -f visualstudio",
     "report-coverage": "yarn codecov -f coverage/lcov.info",
@@ -72,7 +72,8 @@
     "@typescript-eslint/experimental-utils": "^2.15.0",
     "array.prototype.flatmap": "^1.2.3",
     "deepmerge": "^4.2.2",
-    "escape-string-regexp": "^2.0.0"
+    "escape-string-regexp": "^2.0.0",
+    "object.fromentries": "^2.0.2"
   },
   "devDependencies": {
     "@types/dedent": "^0.7.0",

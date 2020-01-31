@@ -35,7 +35,10 @@ const common = {
 
   treeshake: {
     annotations: true,
-    moduleSideEffects: ["array.prototype.flatmap/auto.js"],
+    moduleSideEffects: [
+      "array.prototype.flatmap/auto.js",
+      "object.fromentries/auto.js"
+    ],
     propertyReadSideEffects: false
   }
 };

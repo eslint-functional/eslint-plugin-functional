@@ -78,26 +78,24 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
 function getIfBranchViolations(
   node: TSESTree.IfStatement
 ): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
-  const nodes = [node.consequent, node.alternate].reduce<
-    ReadonlyArray<TSESTree.Node>
-  >(
-    (carry, branch) =>
-      branch === null ||
-      isReturnStatement(branch) ||
-      (isBlockStatement(branch) &&
+  const branches = [node.consequent, node.alternate];
+  const violations = branches.filter<NonNullable<typeof branches[0]>>(
+    (branch): branch is NonNullable<typeof branch> =>
+      branch !== null &&
+      !isReturnStatement(branch) &&
+      !(
+        isBlockStatement(branch) &&
         branch.body.some(
           statement =>
             isReturnStatement(statement) ||
             // Another instance of this rule will check nested if statements.
             isIfStatement(statement)
-        )) ||
-      isIfStatement(branch)
-        ? carry
-        : [...carry, branch],
-    []
+        )
+      ) &&
+      !isIfStatement(branch)
   );
 
-  return nodes.flatMap(node => [{ node, messageId: "incompleteBranch" }]);
+  return violations.flatMap(node => [{ node, messageId: "incompleteBranch" }]);
 }
 
 /**
@@ -107,20 +105,19 @@ function getIfBranchViolations(
 function getSwitchViolations(
   node: TSESTree.SwitchStatement
 ): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
-  const nodes = node.cases.reduce<ReadonlyArray<TSESTree.Node>>(
-    (carry, branch) =>
-      branch.consequent.length === 0 ||
-      branch.consequent.some(isReturnStatement) ||
-      (branch.consequent.every(isBlockStatement) &&
+  const violations = node.cases.filter(
+    branch =>
+      branch.consequent.length !== 0 &&
+      !branch.consequent.some(isReturnStatement) &&
+      !(
+        branch.consequent.every(isBlockStatement) &&
         (branch.consequent[
           branch.consequent.length - 1
-        ] as TSESTree.BlockStatement).body.some(isReturnStatement))
-        ? carry
-        : [...carry, branch],
-    []
+        ] as TSESTree.BlockStatement).body.some(isReturnStatement)
+      )
   );
 
-  return nodes.flatMap(node => [{ node, messageId: "incompleteBranch" }]);
+  return violations.flatMap(node => [{ node, messageId: "incompleteBranch" }]);
 }
 
 /**
