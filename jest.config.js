@@ -19,7 +19,7 @@ module.exports = {
   coverageReporters: ["text-summary", "lcov"],
   globals: {
     "ts-jest": {
-      tsConfig: "tsconfig.tests.json"
+      tsConfig: "tests/tsconfig.json"
     }
   }
 };
