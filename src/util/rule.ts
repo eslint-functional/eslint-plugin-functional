@@ -1,3 +1,6 @@
+// Polyfill.
+import "object.fromentries/auto.js";
+
 import {
   ESLintUtils,
   TSESLint,
