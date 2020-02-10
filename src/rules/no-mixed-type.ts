@@ -1,6 +1,5 @@
 import {
   AST_NODE_TYPES,
-  TSESLint,
   TSESTree
 } from "@typescript-eslint/experimental-utils";
 import { JSONSchema4 } from "json-schema";
