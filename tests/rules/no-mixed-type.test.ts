@@ -116,9 +116,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
     errors: [
       {
         messageId: "generic",
-        type: "TSMethodSignature",
-        line: 3,
-        column: 3
+        type: "TSTypeAliasDeclaration",
+        line: 1,
+        column: 1
       }
     ]
   },
@@ -132,9 +132,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
     errors: [
       {
         messageId: "generic",
-        type: "TSMethodSignature",
-        line: 3,
-        column: 3
+        type: "TSInterfaceDeclaration",
+        line: 1,
+        column: 1
       }
     ]
   },
@@ -149,9 +149,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
     errors: [
       {
         messageId: "generic",
-        type: "TSPropertySignature",
-        line: 3,
-        column: 3
+        type: "TSTypeAliasDeclaration",
+        line: 1,
+        column: 1
       }
     ]
   },
@@ -165,9 +165,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
     errors: [
       {
         messageId: "generic",
-        type: "TSPropertySignature",
-        line: 3,
-        column: 3
+        type: "TSInterfaceDeclaration",
+        line: 1,
+        column: 1
       }
     ]
   }
