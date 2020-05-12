@@ -244,7 +244,7 @@ Without this rule, it is still possible to create `var` variables that are mutab
 
 Without this rule, function parameters are mutable.
 
-### [prefer-const](https://eslint.org/docs/rules/no-param-reassign)
+### [prefer-const](https://eslint.org/docs/rules/prefer-const)
 
 This rule is helpful when converting from an imperative code style to a functional one.
 
