@@ -236,6 +236,12 @@ const valid: ReadonlyArray<ValidTestCase> = [
       };`,
     optionsSet: [[]]
   },
+  // Mapped types with readonly on members should not produce failures.
+  {
+    code: dedent`
+      const func = (x: { readonly [key in string]: number }) => {}`,
+    optionsSet: [[]]
+  },
   // Ignore Classes.
   {
     code: dedent`
@@ -1181,6 +1187,22 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         type: "TSPropertySignature",
         line: 1,
         column: 21
+      }
+    ]
+  },
+  // Mapped type without readonly.
+  {
+    code: dedent`
+      const func = (x: { [key in string]: number }) => {}`,
+    optionsSet: [[]],
+    output: dedent`
+      const func = (x: { readonly [key in string]: number }) => {}`,
+    errors: [
+      {
+        messageId: "property",
+        type: "TSMappedType",
+        line: 1,
+        column: 18
       }
     ]
   }

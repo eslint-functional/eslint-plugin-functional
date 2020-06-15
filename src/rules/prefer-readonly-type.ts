@@ -142,6 +142,31 @@ function checkArrayOrTupleType(
 }
 
 /**
+ * Check if the given TSMappedType violates this rule.
+ */
+function checkMappedType(
+  node: TSESTree.TSMappedType,
+  context: RuleContext<keyof typeof errorMessages, Options>
+): RuleResult<keyof typeof errorMessages, Options> {
+  return {
+    context,
+    descriptors: node.readonly
+      ? []
+      : [
+          {
+            node,
+            messageId: "property",
+            fix: fixer =>
+              fixer.insertTextBeforeRange(
+                [node.range[0] + 1, node.range[1]],
+                " readonly"
+              )
+          }
+        ]
+  };
+}
+
+/**
  * Check if the given TypeReference violates this rule.
  */
 function checkTypeReference(
@@ -274,16 +299,17 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   meta,
   defaultOptions,
   {
-    TSArrayType: checkArrayOrTupleType,
-    TSTupleType: checkArrayOrTupleType,
-    TSTypeReference: checkTypeReference,
+    ArrowFunctionExpression: checkImplicitType,
     ClassProperty: checkProperty,
+    FunctionDeclaration: checkImplicitType,
+    FunctionExpression: checkImplicitType,
+    TSArrayType: checkArrayOrTupleType,
     TSIndexSignature: checkProperty,
     TSParameterProperty: checkProperty,
     TSPropertySignature: checkProperty,
-    VariableDeclaration: checkImplicitType,
-    FunctionDeclaration: checkImplicitType,
-    FunctionExpression: checkImplicitType,
-    ArrowFunctionExpression: checkImplicitType
+    TSTupleType: checkArrayOrTupleType,
+    TSMappedType: checkMappedType,
+    TSTypeReference: checkTypeReference,
+    VariableDeclaration: checkImplicitType
   }
 );
