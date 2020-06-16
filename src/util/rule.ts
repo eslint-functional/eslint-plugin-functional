@@ -128,13 +128,20 @@ export function getTypeOfNode<Context extends RuleContext<string, BaseOptions>>(
 ): Type | null {
   const { parserServices } = context;
 
-  return parserServices === undefined ||
+  if (
+    parserServices === undefined ||
     parserServices.program === undefined ||
     parserServices.esTreeNodeToTSNodeMap === undefined
-    ? null
-    : parserServices.program
-        .getTypeChecker()
-        .getTypeAtLocation(parserServices.esTreeNodeToTSNodeMap.get(node));
+  ) {
+    return null;
+  } else {
+    const checker = parserServices.program.getTypeChecker();
+    const nodeType = checker.getTypeAtLocation(
+      parserServices.esTreeNodeToTSNodeMap.get(node)
+    );
+    const constrained = checker.getBaseConstraintOfType(nodeType);
+    return constrained ?? nodeType;
+  }
 }
 
 /**
