@@ -226,9 +226,10 @@ function isInChainCallAndFollowsNew(
     // Check for: new Array()
     (isNewExpression(node.object) &&
       isArrayConstructorType(
-        getTypeOfNode(node.object.callee, context),
+        // `isNewExpression` type guard doesn't seem to be working? so use `as`.
+        getTypeOfNode((node.object as TSESTree.NewExpression).callee, context),
         assumeArrayTypes,
-        node.object.callee
+        (node.object as TSESTree.NewExpression).callee
       )) ||
     (isCallExpression(node.object) &&
       isMemberExpression(node.object.callee) &&
