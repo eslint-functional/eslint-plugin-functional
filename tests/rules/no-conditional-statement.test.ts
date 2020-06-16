@@ -418,24 +418,23 @@ const tsValid: ReadonlyArray<ValidTestCase> = [
       [{ allowReturningBranches: "ifExhaustive" }],
     ],
   },
+  // Exhaustive type test.
+  {
+    code: dedent`
+      type T = "a" | "b";
+      function foo(i: T) {
+        switch(i) {
+          case "a":
+            return 1;
+          case "b":
+            return 2;
+        }
+      }`,
+    optionsSet: [[{ allowReturningBranches: "ifExhaustive" }]],
+  },
 ];
 
 const tsInvalid: ReadonlyArray<InvalidTestCase> = [...es3Invalid];
-
-// Exhaustive type test. - Not currently supported.
-// {
-//   code: dedent`
-//     type T = "a" | "b";
-//     function foo(i: T) {
-//       switch(i) {
-//         case "a":
-//           return 1;
-//         case "b":
-//           return 2;
-//       }
-//     }`,
-//   optionsSet: [[{ allowReturningBranches: "ifExhaustive" }]]
-// }
 
 describeTsOnly("TypeScript", () => {
   const ruleTester = new RuleTester(typescript);
