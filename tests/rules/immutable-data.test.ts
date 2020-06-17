@@ -56,7 +56,8 @@ const objectES3Valid: ReadonlyArray<ValidTestCase> = [
   {
     code: dedent`
       var mutableVar = { a: 1 };
-      mutableVar.a = 0;`,
+      mutableVar.a = 0;
+      mutableVar.a++;`,
     optionsSet: [
       [{ ignoreAccessorPattern: ["**.mutable*.a"] }],
       [{ ignoreAccessorPattern: ["**.mutable*.*"] }],
