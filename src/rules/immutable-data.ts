@@ -198,13 +198,16 @@ function checkUnaryExpression(
  */
 function checkUpdateExpression(
   node: TSESTree.UpdateExpression,
-  context: RuleContext<keyof typeof errorMessages, Options>
+  context: RuleContext<keyof typeof errorMessages, Options>,
+  options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   return {
     context,
-    descriptors: isMemberExpression(node.argument)
-      ? [{ node, messageId: "generic" }]
-      : []
+    descriptors:
+      isMemberExpression(node.argument) &&
+      !shouldIgnore(node.argument, context, options)
+        ? [{ node, messageId: "generic" }]
+        : []
   };
 }
 
