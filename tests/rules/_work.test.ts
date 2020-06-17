@@ -1,3 +1,4 @@
+/* eslint-disable */
 /**
  * @file Provided to help with local test debugging.
  */
@@ -25,9 +26,9 @@ import { rule } from "../../src/rules/prefer-readonly-type";
 const valid: ReadonlyArray<ValidTestCase> = [
   // {
   //   code: dedent`
-  //     // Code
+  //     // Valid Code.
   //   `,
-  //   options: []
+  //   optionsSet: [[]],
   // }
 ];
 
@@ -36,29 +37,18 @@ const valid: ReadonlyArray<ValidTestCase> = [
  * Or provide an invalid test case.
  */
 const invalid: ReadonlyArray<InvalidTestCase> = [
-  {
-    code: "class Foo {}",
-    optionsSet: [[]],
-    errors: [
-      {
-        messageId: "generic",
-        type: "ClassDeclaration",
-        line: 1,
-        column: 1
-      }
-    ]
-  }
   // {
   //   code: dedent`
-  //     // Code
+  //     // Invalid Code.
   //   `,
-  //   options: [],
+  //   optionsSet: [[]],
   //   output: dedent`
-  //     // Fixed Code - Remove member if rule doesn't have a fixer
+  //     // Fixed Code - Remove if rule doesn't have a fixer.
   //   `,
   //   errors: [
   //     {
   //       messageId: "generic",
+  //       type: "ClassDeclaration",
   //       line: 2,
   //       column: 8
   //     }
@@ -72,12 +62,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
  * file open and focused).
  */
 const ruleTester = new RuleTester(typescript);
-ruleTester.run(
-  dedent`
-    Work`,
-  rule,
-  {
-    valid: processValidTestCase(valid),
-    invalid: processInvalidTestCase(invalid)
-  }
-);
+ruleTester.run("Work", rule, {
+  valid: processValidTestCase(valid),
+  invalid: processInvalidTestCase(invalid)
+});
