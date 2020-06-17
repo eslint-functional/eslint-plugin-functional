@@ -27,13 +27,13 @@ export type InvalidTestCase = Omit<
 export function processInvalidTestCase(
   testCases: ReadonlyArray<InvalidTestCase>
 ): Array<ESLintRuleTester.InvalidTestCase> {
-  return testCases.flatMap(testCase =>
-    testCase.optionsSet.map(options => {
+  return testCases.flatMap((testCase) =>
+    testCase.optionsSet.map((options) => {
       const { optionsSet, ...eslintTestCase } = testCase;
       return {
         filename,
         ...eslintTestCase,
-        options
+        options,
       };
     })
   );
@@ -66,26 +66,33 @@ export function createDummyRule(
       description: "Disallow mutable variables.",
       category: "Best Practices",
       recommended: "error",
-      url: ""
+      url: "",
     },
     messages: {
-      generic: "Error."
+      generic: "Error.",
     },
     fixable: "code",
-    schema: {}
+    schema: {},
   };
 
-  return {
+  return ({
     meta,
-    create
-  } as Rule.RuleModule;
+    create,
+  } as unknown) as Rule.RuleModule;
 }
 
 export type RuleTesterTests = {
   // eslint-disable-next-line functional/prefer-readonly-type
-  valid?: Array<string | ESLintRuleTester.ValidTestCase>;
+  valid?: Array<
+    | string
+    | ESLintRuleTester.ValidTestCase
+    | TSESLint.ValidTestCase<ReadonlyArray<unknown>>
+  >;
   // eslint-disable-next-line functional/prefer-readonly-type
-  invalid?: Array<ESLintRuleTester.InvalidTestCase>;
+  invalid?: Array<
+    | ESLintRuleTester.InvalidTestCase
+    | TSESLint.InvalidTestCase<string, ReadonlyArray<unknown>>
+  >;
 };
 
 /**
@@ -97,12 +104,12 @@ export function addFilename(
 ): RuleTesterTests {
   const { valid, invalid } = tests;
   return {
-    invalid: invalid.map(test => ({ ...test, filename })),
-    valid: valid.map(test =>
+    invalid: invalid.map((test) => ({ ...test, filename })),
+    valid: valid.map((test) =>
       typeof test === "string"
         ? { code: test, filename }
         : { ...test, filename }
-    )
+    ),
   };
 }
 
