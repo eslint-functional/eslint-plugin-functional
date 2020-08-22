@@ -100,7 +100,7 @@
     "jest": "^24.9.0",
     "json-schema": "^0.2.5",
     "lint-staged": "^10.2.11",
-    "prettier": "^1.19.1",
+    "prettier": "^2.0.5",
     "rimraf": "^3.0.0",
     "rollup": "^2.26.5",
     "rollup-plugin-commonjs": "^10.1.0",
