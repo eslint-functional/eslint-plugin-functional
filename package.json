@@ -72,7 +72,7 @@
     "@typescript-eslint/experimental-utils": "^2.15.0",
     "array.prototype.flatmap": "^1.2.3",
     "deepmerge": "^4.2.2",
-    "escape-string-regexp": "^2.0.0",
+    "escape-string-regexp": "^4.0.0",
     "object.fromentries": "^2.0.2"
   },
   "devDependencies": {
