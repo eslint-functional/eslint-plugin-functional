@@ -1,3 +1,6 @@
+branches:
+  only:
+    - master
 language: node_js
 cache:
   yarn: true
@@ -17,6 +20,8 @@ env:
 matrix:
   allow_failures:
     - env: TSVERSION=next
+  jobs:
+    fast_finish: true
 before_script:
   # Test with the compiled tests?
   # Note: tests must be compiled in order to use them to test different typescript versions.
