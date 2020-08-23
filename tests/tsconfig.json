@@ -10,7 +10,8 @@
     "noImplicitThis": false,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "strictNullChecks": false
+    "strictNullChecks": false,
+    "skipLibCheck": true
   },
   "include": ["**/*.ts"]
 }

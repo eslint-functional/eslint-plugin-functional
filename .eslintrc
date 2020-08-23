@@ -19,7 +19,6 @@
     "plugin:import/errors",
     "plugin:import/warnings",
     "plugin:import/typescript",
-    "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:eslint-plugin/recommended",
     "plugin:prettier/recommended",
@@ -55,6 +54,20 @@
 
     // Typescript eslint.
     "@typescript-eslint/array-type": ["error", { "default": "generic" }],
+    "@typescript-eslint/ban-types": [
+      "error",
+      {
+        "types": {
+          "Object": {
+            "message": "Use object instead",
+            "fixWith": "object"
+          },
+          "{}": false,
+          "object": false
+        },
+        "extendDefaults": true
+      }
+    ],
     "@typescript-eslint/explicit-function-return-type": [
       "error",
       {
@@ -66,6 +79,7 @@
     "@typescript-eslint/prefer-interface": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/no-require-imports": "error",
+    "@typescript-eslint/no-var-requires": "off",
     "@typescript-eslint/no-unused-vars": [
       "error",
       {
@@ -106,7 +120,7 @@
   "overrides": [
     // Testing Rules.
     {
-      "files": ["**/*.test.ts"],
+      "files": ["**/tests/**/*.ts"],
       "env": {
         "jest/globals": true
       },
