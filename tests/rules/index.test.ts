@@ -9,6 +9,7 @@ describe("./src/rules/index.ts", () => {
     .filter((file) => file !== "index.ts" && file.endsWith(".ts"));
 
   it("imports all available rule modules", () => {
+    expect.assertions(1);
     expect(rulesNames).toHaveLength(files.length);
   });
 });

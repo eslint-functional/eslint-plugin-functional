@@ -1,6 +1,6 @@
-import { Config } from "../util/misc";
+import { Linter } from "eslint";
 
-const config: Config = {
+const config: Linter.Config = {
   rules: {
     "functional/no-throw-statement": "error",
     "functional/no-try-statement": "error",

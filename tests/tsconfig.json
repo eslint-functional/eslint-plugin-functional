@@ -1,17 +1,11 @@
 {
-  "extends": "../tsconfig.json",
+  "extends": "../tsconfig.base.json",
   "compilerOptions": {
     "module": "commonjs",
     "outDir": "../build",
-    // Turn off checks to make debugging nicer.
-    "noFallthroughCasesInSwitch": false,
-    "noImplicitAny": false,
-    "noImplicitReturns": false,
-    "noImplicitThis": false,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "strictNullChecks": false,
-    "skipLibCheck": true
-  },
-  "include": ["**/*.ts"]
+    "skipLibCheck": true,
+    "declaration": false,
+    // Turn off strict checks to make debugging nicer.
+    "strict": false
+  }
 }
