@@ -17,7 +17,6 @@
     "sourceMap": false,
     "strictNullChecks": true,
     "target": "es2018",
-    "outDir": "js_out"
   },
   "include": ["src/**/*.ts"]
 }

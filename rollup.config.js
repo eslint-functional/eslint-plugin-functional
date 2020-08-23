@@ -5,7 +5,7 @@
 
 import rollupPluginCommonjs from "@rollup/plugin-commonjs";
 import rollupPluginNodeResolve from "@rollup/plugin-node-resolve";
-import rollupPluginTypescript from "rollup-plugin-typescript2";
+import rollupPluginTypescript from "@rollup/plugin-typescript";
 import rollupPluginJSON from "@rollup/plugin-json";
 
 import {
