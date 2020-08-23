@@ -113,7 +113,7 @@
   },
   "peerDependencies": {
     "eslint": "^5.0.0 || ^6.0.0 || ^7.0.0",
-    "typescript": ">=3.4.1"
+    "typescript": "^3.4.1 || ^4.0.0"
   },
   "peerDependenciesMeta": {
     "typescript": {
