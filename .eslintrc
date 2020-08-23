@@ -120,7 +120,7 @@
   "overrides": [
     // Testing Rules.
     {
-      "files": ["**/*.test.ts"],
+      "files": ["**/tests/**/*.ts"],
       "env": {
         "jest/globals": true
       },
