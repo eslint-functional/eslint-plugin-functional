@@ -138,7 +138,9 @@ describe("option: ignore", () => {
         };
       }) as Rule.RuleModule,
       addFilename(filename, {
-        valid: [...tests],
+        valid: [
+          ...((tests as unknown) as ReadonlyArray<RuleTester.ValidTestCase>),
+        ],
         invalid: [],
       })
     );
@@ -190,7 +192,11 @@ describe("option: ignore", () => {
         };
       }) as Rule.RuleModule,
       addFilename(filename, {
-        valid: [...assignmentExpressionTests],
+        valid: [
+          ...((assignmentExpressionTests as unknown) as ReadonlyArray<
+            RuleTester.ValidTestCase
+          >),
+        ],
         invalid: [],
       })
     );
@@ -226,7 +232,11 @@ describe("option: ignore", () => {
         };
       }) as Rule.RuleModule,
       addFilename(filename, {
-        valid: [...expressionStatementTests],
+        valid: [
+          ...((expressionStatementTests as unknown) as ReadonlyArray<
+            RuleTester.ValidTestCase
+          >),
+        ],
         invalid: [],
       })
     );
