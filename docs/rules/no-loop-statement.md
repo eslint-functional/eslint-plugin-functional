@@ -36,7 +36,7 @@ Examples of **correct** code for this rule:
 ```js
 /* eslint functional/no-loop-statement: "error" */
 const numbers = [1, 2, 3];
-const double = numbers.map(n => n * 2);
+const double = numbers.map((n) => n * 2);
 ```
 
 ```js

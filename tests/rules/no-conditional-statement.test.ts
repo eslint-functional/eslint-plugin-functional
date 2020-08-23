@@ -13,7 +13,7 @@ import {
   InvalidTestCase,
   processInvalidTestCase,
   processValidTestCase,
-  ValidTestCase
+  ValidTestCase,
 } from "../helpers/util";
 
 // Valid test cases.
@@ -25,7 +25,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
           return 1;
         }
       }`,
-    optionsSet: [[{ allowReturningBranches: true }]]
+    optionsSet: [[{ allowReturningBranches: true }]],
   },
   {
     code: dedent`
@@ -38,8 +38,8 @@ const valid: ReadonlyArray<ValidTestCase> = [
       }`,
     optionsSet: [
       [{ allowReturningBranches: true }],
-      [{ allowReturningBranches: "ifExhaustive" }]
-    ]
+      [{ allowReturningBranches: "ifExhaustive" }],
+    ],
   },
   {
     code: dedent`
@@ -52,7 +52,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
             return 2;
         }
       }`,
-    optionsSet: [[{ allowReturningBranches: true }]]
+    optionsSet: [[{ allowReturningBranches: true }]],
   },
   {
     code: dedent`
@@ -68,9 +68,9 @@ const valid: ReadonlyArray<ValidTestCase> = [
       }`,
     optionsSet: [
       [{ allowReturningBranches: true }],
-      [{ allowReturningBranches: "ifExhaustive" }]
-    ]
-  }
+      [{ allowReturningBranches: "ifExhaustive" }],
+    ],
+  },
 ];
 
 // Invalid test cases.
@@ -86,9 +86,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "unexpectedIf",
         type: "IfStatement",
         line: 1,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   {
     code: dedent`
@@ -111,9 +111,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "unexpectedSwitch",
         type: "SwitchStatement",
         line: 3,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   {
     code: dedent`
@@ -129,9 +129,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "unexpectedIf",
         type: "IfStatement",
         line: 2,
-        column: 3
-      }
-    ]
+        column: 3,
+      },
+    ],
   },
   {
     code: dedent`
@@ -151,9 +151,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "unexpectedSwitch",
         type: "SwitchStatement",
         line: 2,
-        column: 3
-      }
-    ]
+        column: 3,
+      },
+    ],
   },
   {
     code: dedent`
@@ -171,15 +171,15 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "incompleteBranch",
         type: "BlockStatement",
         line: 2,
-        column: 16
+        column: 16,
       },
       {
         messageId: "incompleteBranch",
         type: "ExpressionStatement",
         line: 5,
-        column: 16
-      }
-    ]
+        column: 16,
+      },
+    ],
   },
   {
     code: dedent`
@@ -199,9 +199,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "incompleteBranch",
         type: "SwitchCase",
         line: 7,
-        column: 5
-      }
-    ]
+        column: 5,
+      },
+    ],
   },
   {
     code: dedent`
@@ -220,9 +220,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "incompleteBranch",
         type: "BlockStatement",
         line: 5,
-        column: 12
-      }
-    ]
+        column: 12,
+      },
+    ],
   },
   {
     code: dedent`
@@ -237,9 +237,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "incompleteIf",
         type: "IfStatement",
         line: 2,
-        column: 3
-      }
-    ]
+        column: 3,
+      },
+    ],
   },
   {
     code: dedent`
@@ -256,9 +256,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "incompleteBranch",
         type: "BlockStatement",
         line: 4,
-        column: 10
-      }
-    ]
+        column: 10,
+      },
+    ],
   },
   {
     code: dedent`
@@ -276,9 +276,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "incompleteSwitch",
         type: "SwitchStatement",
         line: 2,
-        column: 3
-      }
-    ]
+        column: 3,
+      },
+    ],
   },
   {
     code: dedent`
@@ -298,10 +298,10 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "incompleteBranch",
         type: "SwitchCase",
         line: 7,
-        column: 5
-      }
-    ]
-  }
+        column: 5,
+      },
+    ],
+  },
 ];
 
 // Exhaustive type test. - Not currently supported.
@@ -323,7 +323,7 @@ describeTsOnly("TypeScript", () => {
   const ruleTester = new RuleTester(typescript);
   ruleTester.run(name, rule, {
     valid: processValidTestCase(valid),
-    invalid: processInvalidTestCase(invalid)
+    invalid: processInvalidTestCase(invalid),
   });
 });
 
@@ -331,6 +331,6 @@ describe("JavaScript (es3)", () => {
   const ruleTester = new RuleTester(es3);
   ruleTester.run(name, rule, {
     valid: processValidTestCase(valid),
-    invalid: processInvalidTestCase(invalid)
+    invalid: processInvalidTestCase(invalid),
   });
 });

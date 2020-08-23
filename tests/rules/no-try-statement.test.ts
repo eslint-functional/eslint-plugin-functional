@@ -12,23 +12,23 @@ import {
   InvalidTestCase,
   processInvalidTestCase,
   processValidTestCase,
-  ValidTestCase
+  ValidTestCase,
 } from "../helpers/util";
 
 // Valid test cases.
 const valid: ReadonlyArray<ValidTestCase> = [
   {
     code: `var x = 0;`,
-    optionsSet: [[]]
+    optionsSet: [[]],
   },
   {
     code: `try {} catch (e) {}`,
-    optionsSet: [[{ allowCatch: true }]]
+    optionsSet: [[{ allowCatch: true }]],
   },
   {
     code: `try {} finally {}`,
-    optionsSet: [[{ allowFinally: true }]]
-  }
+    optionsSet: [[{ allowFinally: true }]],
+  },
 ];
 
 // Invalid test cases.
@@ -41,9 +41,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "catch",
         type: "TryStatement",
         line: 1,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   {
     code: `try {} catch (e) {} finally {}`,
@@ -53,9 +53,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "catch",
         type: "TryStatement",
         line: 1,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   {
     code: `try {} catch (e) {} finally {}`,
@@ -65,9 +65,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "finally",
         type: "TryStatement",
         line: 1,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   {
     code: `try {} catch (e) {} finally {}`,
@@ -77,9 +77,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "catch",
         type: "TryStatement",
         line: 1,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   {
     code: `try {} finally {}`,
@@ -89,17 +89,17 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "finally",
         type: "TryStatement",
         line: 1,
-        column: 1
-      }
-    ]
-  }
+        column: 1,
+      },
+    ],
+  },
 ];
 
 describeTsOnly("TypeScript", () => {
   const ruleTester = new RuleTester(typescript);
   ruleTester.run(name, rule, {
     valid: processValidTestCase(valid),
-    invalid: processInvalidTestCase(invalid)
+    invalid: processInvalidTestCase(invalid),
   });
 });
 
@@ -107,6 +107,6 @@ describe("JavaScript (es3)", () => {
   const ruleTester = new RuleTester(es3);
   ruleTester.run(name, rule, {
     valid: processValidTestCase(valid),
-    invalid: processInvalidTestCase(invalid)
+    invalid: processInvalidTestCase(invalid),
   });
 });

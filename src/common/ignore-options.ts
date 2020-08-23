@@ -22,7 +22,7 @@ import {
   isTSTypeLiteral,
   isTSTypeReference,
   isUnaryExpression,
-  isVariableDeclaration
+  isVariableDeclaration,
 } from "../util/typeguard";
 
 export type AllowLocalMutationOption = {
@@ -33,10 +33,10 @@ export const allowLocalMutationOptionSchema: JSONSchema4 = {
   type: "object",
   properties: {
     allowLocalMutation: {
-      type: "boolean"
-    }
+      type: "boolean",
+    },
   },
-  additionalProperties: false
+  additionalProperties: false,
 };
 
 export type IgnorePatternOption = {
@@ -49,11 +49,11 @@ export const ignorePatternOptionSchema: JSONSchema4 = {
     ignorePattern: {
       type: ["string", "array"],
       items: {
-        type: "string"
-      }
-    }
+        type: "string",
+      },
+    },
   },
-  additionalProperties: false
+  additionalProperties: false,
 };
 
 export type IgnoreAccessorPatternOption = {
@@ -66,11 +66,11 @@ export const ignoreAccessorPatternOptionSchema: JSONSchema4 = {
     ignoreAccessorPattern: {
       type: ["string", "array"],
       items: {
-        type: "string"
-      }
-    }
+        type: "string",
+      },
+    },
   },
-  additionalProperties: false
+  additionalProperties: false,
 };
 
 export type IgnoreClassOption = {
@@ -81,10 +81,10 @@ export const ignoreClassOptionSchema: JSONSchema4 = {
   type: "object",
   properties: {
     ignoreClass: {
-      type: "boolean"
-    }
+      type: "boolean",
+    },
   },
-  additionalProperties: false
+  additionalProperties: false,
 };
 
 export type IgnoreInterfaceOption = {
@@ -95,10 +95,10 @@ export const ignoreInterfaceOptionSchema: JSONSchema4 = {
   type: "object",
   properties: {
     ignoreInterface: {
-      type: "boolean"
-    }
+      type: "boolean",
+    },
   },
-  additionalProperties: false
+  additionalProperties: false,
 };
 
 /**
@@ -147,7 +147,7 @@ function getNodeIdentifierTexts(
   context: RuleContext<string, BaseOptions>
 ): ReadonlyArray<string> {
   return (isVariableDeclaration(node)
-    ? node.declarations.flatMap(declarator =>
+    ? node.declarations.flatMap((declarator) =>
         getNodeIdentifierText(declarator, context)
       )
     : [getNodeIdentifierText(node, context)]
@@ -168,7 +168,7 @@ function shouldIgnoreViaPattern(
     : [ignorePattern];
 
   // One or more patterns match?
-  return patterns.some(pattern => new RegExp(pattern).test(text));
+  return patterns.some((pattern) => new RegExp(pattern).test(text));
 }
 
 /**
@@ -191,7 +191,7 @@ function accessorPatternMatch(
       ? accessorPatternMatch(remainingPatternParts, [], allowExtra)
       : Array.from({ length: textParts.length })
           .map((_element, index) => index)
-          .some(offset =>
+          .some((offset) =>
             accessorPatternMatch(
               remainingPatternParts,
               textParts.slice(offset),
@@ -231,7 +231,7 @@ function shouldIgnoreViaAccessorPattern(
     : [ignorePattern];
 
   // One or more patterns match?
-  return patterns.some(pattern =>
+  return patterns.some((pattern) =>
     accessorPatternMatch(pattern.split("."), text.split("."))
   );
 }
@@ -267,12 +267,12 @@ export function shouldIgnore(
       texts.length > 0
         ? // Ignore if ignorePattern is set and a pattern matches.
           (options.ignorePattern !== undefined &&
-            texts.every(text =>
+            texts.every((text) =>
               shouldIgnoreViaPattern(text, options.ignorePattern!)
             )) ||
           // Ignore if ignoreAccessorPattern is set and an accessor pattern matches.
           (options.ignoreAccessorPattern !== undefined &&
-            texts.every(text =>
+            texts.every((text) =>
               shouldIgnoreViaAccessorPattern(
                 text,
                 options.ignoreAccessorPattern!

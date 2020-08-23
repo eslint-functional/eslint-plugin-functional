@@ -11,23 +11,23 @@ import rollupPluginJSON from "rollup-plugin-json";
 import {
   isAbsolute as isAbsolutePath,
   join as joinPaths,
-  normalize as normalizePath
+  normalize as normalizePath,
 } from "path";
 
 const common = {
   input: "src/index.ts",
 
-  external: id => {
+  external: (id) => {
     const localPaths = [".", process.cwd()];
     const excludedPaths = ["node_modules"];
     const normalId = isAbsolutePath(id) ? normalizePath(id) : id;
 
     return !localPaths.some(
-      localPath =>
+      (localPath) =>
         // Local file?
         normalId.startsWith(localPath) &&
         // Not excluded?
-        !excludedPaths.some(excludePath =>
+        !excludedPaths.some((excludePath) =>
           normalId.startsWith(joinPaths(localPath, excludePath))
         )
     );
@@ -37,10 +37,10 @@ const common = {
     annotations: true,
     moduleSideEffects: [
       "array.prototype.flatmap/auto.js",
-      "object.fromentries/auto.js"
+      "object.fromentries/auto.js",
     ],
-    propertyReadSideEffects: false
-  }
+    propertyReadSideEffects: false,
+  },
 };
 
 const cjs = {
@@ -51,7 +51,7 @@ const cjs = {
     entryFileNames: "[name].js",
     chunkFileNames: "common/[hash].js",
     format: "cjs",
-    sourcemap: false
+    sourcemap: false,
   },
 
   plugins: [
@@ -59,9 +59,9 @@ const cjs = {
     rollupPluginCommonjs(),
     rollupPluginTypescript(),
     rollupPluginJSON({
-      preferConst: true
-    })
-  ]
+      preferConst: true,
+    }),
+  ],
 };
 
 const esm = {
@@ -72,7 +72,7 @@ const esm = {
     entryFileNames: "[name].mjs",
     chunkFileNames: "common/[hash].mjs",
     format: "esm",
-    sourcemap: false
+    sourcemap: false,
   },
 
   plugins: [
@@ -80,9 +80,9 @@ const esm = {
     rollupPluginCommonjs(),
     rollupPluginTypescript(),
     rollupPluginJSON({
-      preferConst: true
-    })
-  ]
+      preferConst: true,
+    }),
+  ],
 };
 
 export default [cjs, esm];

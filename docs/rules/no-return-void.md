@@ -17,6 +17,7 @@ Examples of **incorrect** code for this rule:
 /* eslint functional/no-return-void: "error" */
 
 function updateText(): void {
+
 }
 ```
 
@@ -26,6 +27,7 @@ Examples of **correct** code for this rule:
 /* eslint functional/no-return-void: "error" */
 
 function updateText(value: string): string {
+
 }
 ```
 

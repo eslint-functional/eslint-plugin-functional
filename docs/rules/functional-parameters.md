@@ -116,7 +116,7 @@ function add(x, y) {
 
 // can be rewritten like this.
 function add(x) {
-  return y => x + y;
+  return (y) => x + y;
 }
 ```
 

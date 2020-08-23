@@ -4,13 +4,13 @@ import { JSONSchema4 } from "json-schema";
 
 import {
   IgnorePatternOption,
-  ignorePatternOptionSchema
+  ignorePatternOptionSchema,
 } from "../common/ignore-options";
 import {
   createRule,
   RuleContext,
   RuleMetaData,
-  RuleResult
+  RuleResult,
 } from "../util/rule";
 import { isIIFE, isPropertyAccess, isPropertyName } from "../util/tree";
 import { isRestElement } from "../util/typeguard";
@@ -41,40 +41,40 @@ const schema: JSONSchema4 = [
       type: "object",
       properties: {
         allowRestParameter: {
-          type: "boolean"
+          type: "boolean",
         },
         allowArgumentsKeyword: {
-          type: "boolean"
+          type: "boolean",
         },
         enforceParameterCount: {
           oneOf: [
             {
               type: "boolean",
-              enum: [false]
+              enum: [false],
             },
             {
               type: "string",
-              enum: ["atLeastOne", "exactlyOne"]
+              enum: ["atLeastOne", "exactlyOne"],
             },
             {
               type: "object",
               properties: {
                 count: {
                   type: "string",
-                  enum: ["atLeastOne", "exactlyOne"]
+                  enum: ["atLeastOne", "exactlyOne"],
                 },
                 ignoreIIFE: {
-                  type: "boolean"
-                }
+                  type: "boolean",
+                },
               },
-              additionalProperties: false
-            }
-          ]
-        }
+              additionalProperties: false,
+            },
+          ],
+        },
       },
-      additionalProperties: false
-    }
-  ])
+      additionalProperties: false,
+    },
+  ]),
 ];
 
 // The default options for the rule.
@@ -83,8 +83,8 @@ const defaultOptions: Options = {
   allowArgumentsKeyword: false,
   enforceParameterCount: {
     count: "atLeastOne",
-    ignoreIIFE: true
-  }
+    ignoreIIFE: true,
+  },
 };
 
 // The possible error messages.
@@ -94,7 +94,7 @@ const errorMessages = {
   arguments:
     "Unexpected use of `arguments`. Use regular function arguments instead.",
   paramCountAtLeastOne: "Functions must have at least one parameter.",
-  paramCountExactlyOne: "Functions must have exactly one parameter."
+  paramCountExactlyOne: "Functions must have exactly one parameter.",
 } as const;
 
 // The meta data for this rule.
@@ -103,10 +103,10 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
   docs: {
     description: "Enforce functional parameters.",
     category: "Best Practices",
-    recommended: false
+    recommended: false,
   },
   messages: errorMessages,
-  schema
+  schema,
 };
 
 /**
@@ -125,8 +125,8 @@ function getRestParamViolations(
     ? [
         {
           node: node.params[node.params.length - 1],
-          messageId: "restParam"
-        }
+          messageId: "restParam",
+        },
       ]
     : [];
 }
@@ -158,8 +158,8 @@ function getParamCountViolations(
     return [
       {
         node,
-        messageId: "paramCountAtLeastOne"
-      }
+        messageId: "paramCountAtLeastOne",
+      },
     ];
   } else if (
     node.params.length !== 1 &&
@@ -170,8 +170,8 @@ function getParamCountViolations(
     return [
       {
         node,
-        messageId: "paramCountExactlyOne"
-      }
+        messageId: "paramCountExactlyOne",
+      },
     ];
   } else {
     return [];
@@ -193,8 +193,8 @@ function checkFunction(
     context,
     descriptors: [
       ...getRestParamViolations(options.allowRestParameter, node),
-      ...getParamCountViolations(options.enforceParameterCount, node)
-    ]
+      ...getParamCountViolations(options.enforceParameterCount, node),
+    ],
   };
 }
 
@@ -216,10 +216,10 @@ function checkIdentifier(
         ? [
             {
               node,
-              messageId: "arguments"
-            }
+              messageId: "arguments",
+            },
           ]
-        : []
+        : [],
   };
 }
 
@@ -232,6 +232,6 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
     FunctionDeclaration: checkFunction,
     FunctionExpression: checkFunction,
     ArrowFunctionExpression: checkFunction,
-    Identifier: checkIdentifier
+    Identifier: checkIdentifier,
   }
 );

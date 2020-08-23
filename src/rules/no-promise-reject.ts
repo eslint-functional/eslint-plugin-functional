@@ -5,7 +5,7 @@ import {
   createRule,
   RuleContext,
   RuleMetaData,
-  RuleResult
+  RuleResult,
 } from "../util/rule";
 import { isIdentifier, isMemberExpression } from "../util/typeguard";
 
@@ -23,7 +23,7 @@ const defaultOptions: Options = {};
 
 // The possible error messages.
 const errorMessages = {
-  generic: "Unexpected reject, return an error instead."
+  generic: "Unexpected reject, return an error instead.",
 } as const;
 
 // The meta data for this rule.
@@ -32,10 +32,10 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
   docs: {
     description: "Disallow try-catch[-finally] and try-finally patterns.",
     category: "Best Practices",
-    recommended: false
+    recommended: false,
   },
   messages: errorMessages,
-  schema
+  schema,
 };
 
 /**
@@ -54,7 +54,7 @@ function checkCallExpression(
       node.callee.object.name === "Promise" &&
       node.callee.property.name === "reject"
         ? [{ node, messageId: "generic" }]
-        : []
+        : [],
   };
 }
 
@@ -64,6 +64,6 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   meta,
   defaultOptions,
   {
-    CallExpression: checkCallExpression
+    CallExpression: checkCallExpression,
   }
 );

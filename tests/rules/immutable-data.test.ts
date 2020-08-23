@@ -13,7 +13,7 @@ import {
   InvalidTestCase,
   processInvalidTestCase,
   processValidTestCase,
-  ValidTestCase
+  ValidTestCase,
 } from "../helpers/util";
 
 // Valid test cases.
@@ -26,7 +26,7 @@ const objectES3Valid: ReadonlyArray<ValidTestCase> = [
       if (x.a && y.a) {}
       var w = ~x.a;
       if (!x.a) {}`,
-    optionsSet: [[]]
+    optionsSet: [[]],
   },
   // Allow Object.assign() on non identifiers.
   {
@@ -37,20 +37,20 @@ const objectES3Valid: ReadonlyArray<ValidTestCase> = [
       var a = Object.assign({}, { msg: "hello world" });
       var b = Object.assign(bar(1, 2, 3), { d: 4 });
       var c = Object.assign(x.func(), { d: 4 });`,
-    optionsSet: [[]]
+    optionsSet: [[]],
   },
   // IgnorePattern - objects.
   {
     code: dedent`
       var mutableVar = { a: 1 };
       delete mutableVar.a;`,
-    optionsSet: [[{ ignorePattern: ["^mutable"] }]]
+    optionsSet: [[{ ignorePattern: ["^mutable"] }]],
   },
   {
     code: dedent`
       var mutableVar = { a: 1 };
       Object.assign(mutableVar, { b: 2 });`,
-    optionsSet: [[{ ignorePattern: ["^mutable"] }]]
+    optionsSet: [[{ ignorePattern: ["^mutable"] }]],
   },
   // IgnoreAccessorPattern - objects.
   {
@@ -62,9 +62,9 @@ const objectES3Valid: ReadonlyArray<ValidTestCase> = [
       [{ ignoreAccessorPattern: ["**.mutable*.a"] }],
       [{ ignoreAccessorPattern: ["**.mutable*.*"] }],
       [{ ignoreAccessorPattern: ["**.mutable*.*.**"] }],
-      [{ ignoreAccessorPattern: ["**.mutable*.**"] }]
-    ]
-  }
+      [{ ignoreAccessorPattern: ["**.mutable*.**"] }],
+    ],
+  },
 ];
 
 // Invalid test cases.
@@ -100,129 +100,129 @@ const objectES3Invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "AssignmentExpression",
         line: 2,
-        column: 1
+        column: 1,
       },
       {
         messageId: "generic",
         type: "AssignmentExpression",
         line: 3,
-        column: 1
+        column: 1,
       },
       {
         messageId: "generic",
         type: "AssignmentExpression",
         line: 4,
-        column: 1
+        column: 1,
       },
       {
         messageId: "generic",
         type: "AssignmentExpression",
         line: 5,
-        column: 1
+        column: 1,
       },
       {
         messageId: "generic",
         type: "AssignmentExpression",
         line: 6,
-        column: 1
+        column: 1,
       },
       {
         messageId: "generic",
         type: "AssignmentExpression",
         line: 7,
-        column: 1
+        column: 1,
       },
       {
         messageId: "generic",
         type: "AssignmentExpression",
         line: 8,
-        column: 1
+        column: 1,
       },
       {
         messageId: "generic",
         type: "AssignmentExpression",
         line: 9,
-        column: 1
+        column: 1,
       },
       {
         messageId: "generic",
         type: "AssignmentExpression",
         line: 10,
-        column: 1
+        column: 1,
       },
       {
         messageId: "generic",
         type: "AssignmentExpression",
         line: 11,
-        column: 1
+        column: 1,
       },
       {
         messageId: "generic",
         type: "AssignmentExpression",
         line: 12,
-        column: 1
+        column: 1,
       },
       {
         messageId: "generic",
         type: "AssignmentExpression",
         line: 13,
-        column: 1
+        column: 1,
       },
       {
         messageId: "generic",
         type: "AssignmentExpression",
         line: 14,
-        column: 1
+        column: 1,
       },
       {
         messageId: "generic",
         type: "UnaryExpression",
         line: 15,
-        column: 1
+        column: 1,
       },
       {
         messageId: "generic",
         type: "UnaryExpression",
         line: 16,
-        column: 1
+        column: 1,
       },
       {
         messageId: "generic",
         type: "UpdateExpression",
         line: 17,
-        column: 1
+        column: 1,
       },
       {
         messageId: "generic",
         type: "UpdateExpression",
         line: 18,
-        column: 1
+        column: 1,
       },
       {
         messageId: "generic",
         type: "UpdateExpression",
         line: 19,
-        column: 1
+        column: 1,
       },
       {
         messageId: "generic",
         type: "UpdateExpression",
         line: 20,
-        column: 1
+        column: 1,
       },
       {
         messageId: "generic",
         type: "AssignmentExpression",
         line: 21,
-        column: 5
+        column: 5,
       },
       {
         messageId: "generic",
         type: "UpdateExpression",
         line: 22,
-        column: 5
-      }
-    ]
+        column: 5,
+      },
+    ],
   },
   // Disallow Object.assign on identifers.
   {
@@ -237,15 +237,15 @@ const objectES3Invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "object",
         type: "CallExpression",
         line: 3,
-        column: 9
+        column: 9,
       },
       {
         messageId: "object",
         type: "CallExpression",
         line: 4,
-        column: 9
-      }
-    ]
+        column: 9,
+      },
+    ],
   },
   // Disallow other object mutation methods.
   {
@@ -260,22 +260,22 @@ const objectES3Invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "object",
         type: "CallExpression",
         line: 2,
-        column: 1
+        column: 1,
       },
       {
         messageId: "object",
         type: "CallExpression",
         line: 3,
-        column: 1
+        column: 1,
       },
       {
         messageId: "object",
         type: "CallExpression",
         line: 4,
-        column: 1
-      }
-    ]
-  }
+        column: 1,
+      },
+    ],
+  },
 ];
 
 /**
@@ -293,7 +293,7 @@ const objectES6Valid: ReadonlyArray<ValidTestCase> = [
           this.baz = "hello";
         }
       }`,
-    optionsSet: [[]]
+    optionsSet: [[]],
   },
   // IgnoreAccessorPattern - classes.
   {
@@ -306,9 +306,9 @@ const objectES6Valid: ReadonlyArray<ValidTestCase> = [
     optionsSet: [
       [{ ignoreAccessorPattern: ["this.*.**"] }],
       [{ ignoreAccessorPattern: ["**.mutable*"] }],
-      [{ ignoreAccessorPattern: ["**.mutable*.**"] }]
-    ]
-  }
+      [{ ignoreAccessorPattern: ["**.mutable*.**"] }],
+    ],
+  },
 ];
 
 /**
@@ -326,9 +326,9 @@ const objectES6Invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "AssignmentExpression",
         line: 2,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   // No mutation in class methods.
   {
@@ -352,16 +352,16 @@ const objectES6Invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "AssignmentExpression",
         line: 10,
-        column: 5
+        column: 5,
       },
       {
         messageId: "generic",
         type: "AssignmentExpression",
         line: 11,
-        column: 5
-      }
-    ]
-  }
+        column: 5,
+      },
+    ],
+  },
 ];
 
 const arrayES3Valid: ReadonlyArray<ValidTestCase> = [
@@ -383,7 +383,7 @@ const arrayES3Valid: ReadonlyArray<ValidTestCase> = [
       --x;
       if (x = 2) {}
       if (x++) {}`,
-    optionsSet: [[]]
+    optionsSet: [[]],
   },
   // Allow array non-mutation methods
   {
@@ -408,7 +408,7 @@ const arrayES3Valid: ReadonlyArray<ValidTestCase> = [
       y[0].z.slice(1, 2);
       y[0].z.toString();
       y[0].z.toLocaleString("en", {timeZone: "UTC"});`,
-    optionsSet: [[]]
+    optionsSet: [[]],
   },
   // Allowed array mutation methods to be chained to the creation of an array.
   {
@@ -432,7 +432,7 @@ const arrayES3Valid: ReadonlyArray<ValidTestCase> = [
     new Array(5).sort();
     new Array(5).splice(0, 1, 9);
     new Array(5).unshift(6);`,
-    optionsSet: [[]]
+    optionsSet: [[]],
   },
   // Allowed array mutation methods to be chained to array constructor functions.
   {
@@ -456,7 +456,7 @@ const arrayES3Valid: ReadonlyArray<ValidTestCase> = [
     Array.from({ length: 10 }).sort();
     Array.from({ length: 10 }).splice(0, 1, 9);
     Array.from({ length: 10 }).unshift(6);`,
-    optionsSet: [[]]
+    optionsSet: [[]],
   },
   // Allowed array mutation methods to be chained to array accessor/iteration methods.
   {
@@ -520,7 +520,7 @@ const arrayES3Valid: ReadonlyArray<ValidTestCase> = [
     x.reduceRight(function (r, v) { return r.concat([v + 1]); }, []).sort();
     x.reduceRight(function (r, v) { return r.concat([v + 1]); }, []).splice(0, 1, 9);
     x.reduceRight(function (r, v) { return r.concat([v + 1]); }, []).unshift(6);`,
-    optionsSet: [[]]
+    optionsSet: [[]],
   },
   // Don't catch calls of array mutation methods on non-array objects.
   {
@@ -546,7 +546,7 @@ const arrayES3Valid: ReadonlyArray<ValidTestCase> = [
       z.sort();
       z.splice();
       z.unshift();`,
-    optionsSet: [[{ assumeTypes: false }]]
+    optionsSet: [[{ assumeTypes: false }]],
   },
   {
     code: dedent`
@@ -562,9 +562,9 @@ const arrayES3Valid: ReadonlyArray<ValidTestCase> = [
       mutableX.unshift(6);`,
     optionsSet: [
       [{ ignorePattern: "^mutable" }],
-      [{ ignoreAccessorPattern: "mutable*" }]
-    ]
-  }
+      [{ ignoreAccessorPattern: "mutable*" }],
+    ],
+  },
 ];
 
 const arrayES3Invalid: ReadonlyArray<InvalidTestCase> = [
@@ -581,15 +581,15 @@ const arrayES3Invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "AssignmentExpression",
         line: 3,
-        column: 1
+        column: 1,
       },
       {
         messageId: "generic",
         type: "AssignmentExpression",
         line: 4,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   {
     code: dedent`
@@ -604,15 +604,15 @@ const arrayES3Invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "AssignmentExpression",
         line: 3,
-        column: 1
+        column: 1,
       },
       {
         messageId: "generic",
         type: "AssignmentExpression",
         line: 4,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   {
     code: dedent`
@@ -627,15 +627,15 @@ const arrayES3Invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "AssignmentExpression",
         line: 3,
-        column: 1
+        column: 1,
       },
       {
         messageId: "generic",
         type: "AssignmentExpression",
         line: 4,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   {
     code: dedent`
@@ -650,15 +650,15 @@ const arrayES3Invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "UnaryExpression",
         line: 3,
-        column: 1
+        column: 1,
       },
       {
         messageId: "generic",
         type: "UnaryExpression",
         line: 4,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   {
     code: dedent`
@@ -673,15 +673,15 @@ const arrayES3Invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "UpdateExpression",
         line: 3,
-        column: 1
+        column: 1,
       },
       {
         messageId: "generic",
         type: "UpdateExpression",
         line: 4,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   {
     code: dedent`
@@ -696,15 +696,15 @@ const arrayES3Invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "UpdateExpression",
         line: 3,
-        column: 1
+        column: 1,
       },
       {
         messageId: "generic",
         type: "UpdateExpression",
         line: 4,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   {
     code: dedent`
@@ -719,15 +719,15 @@ const arrayES3Invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "UpdateExpression",
         line: 3,
-        column: 1
+        column: 1,
       },
       {
         messageId: "generic",
         type: "UpdateExpression",
         line: 4,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   {
     code: dedent`
@@ -742,15 +742,15 @@ const arrayES3Invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "UpdateExpression",
         line: 3,
-        column: 1
+        column: 1,
       },
       {
         messageId: "generic",
         type: "UpdateExpression",
         line: 4,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   {
     code: dedent`
@@ -765,15 +765,15 @@ const arrayES3Invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "AssignmentExpression",
         line: 3,
-        column: 5
+        column: 5,
       },
       {
         messageId: "generic",
         type: "AssignmentExpression",
         line: 4,
-        column: 5
-      }
-    ]
+        column: 5,
+      },
+    ],
   },
   {
     code: dedent`
@@ -788,15 +788,15 @@ const arrayES3Invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "UpdateExpression",
         line: 3,
-        column: 5
+        column: 5,
       },
       {
         messageId: "generic",
         type: "UpdateExpression",
         line: 4,
-        column: 5
-      }
-    ]
+        column: 5,
+      },
+    ],
   },
   {
     code: dedent`
@@ -811,15 +811,15 @@ const arrayES3Invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "AssignmentExpression",
         line: 3,
-        column: 1
+        column: 1,
       },
       {
         messageId: "generic",
         type: "AssignmentExpression",
         line: 4,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   // Disallowed array mutation methods.
   {
@@ -850,111 +850,111 @@ const arrayES3Invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "array",
         type: "CallExpression",
         line: 2,
-        column: 1
+        column: 1,
       },
       {
         messageId: "array",
         type: "CallExpression",
         line: 3,
-        column: 1
+        column: 1,
       },
       {
         messageId: "array",
         type: "CallExpression",
         line: 4,
-        column: 1
+        column: 1,
       },
       {
         messageId: "array",
         type: "CallExpression",
         line: 5,
-        column: 1
+        column: 1,
       },
       {
         messageId: "array",
         type: "CallExpression",
         line: 6,
-        column: 1
+        column: 1,
       },
       {
         messageId: "array",
         type: "CallExpression",
         line: 7,
-        column: 1
+        column: 1,
       },
       {
         messageId: "array",
         type: "CallExpression",
         line: 8,
-        column: 1
+        column: 1,
       },
       {
         messageId: "array",
         type: "CallExpression",
         line: 9,
-        column: 1
+        column: 1,
       },
       {
         messageId: "array",
         type: "CallExpression",
         line: 10,
-        column: 1
+        column: 1,
       },
       {
         messageId: "array",
         type: "CallExpression",
         line: 12,
-        column: 1
+        column: 1,
       },
       {
         messageId: "array",
         type: "CallExpression",
         line: 13,
-        column: 1
+        column: 1,
       },
       {
         messageId: "array",
         type: "CallExpression",
         line: 14,
-        column: 1
+        column: 1,
       },
       {
         messageId: "array",
         type: "CallExpression",
         line: 15,
-        column: 1
+        column: 1,
       },
       {
         messageId: "array",
         type: "CallExpression",
         line: 16,
-        column: 1
+        column: 1,
       },
       {
         messageId: "array",
         type: "CallExpression",
         line: 17,
-        column: 1
+        column: 1,
       },
       {
         messageId: "array",
         type: "CallExpression",
         line: 18,
-        column: 1
+        column: 1,
       },
       {
         messageId: "array",
         type: "CallExpression",
         line: 19,
-        column: 1
+        column: 1,
       },
       {
         messageId: "array",
         type: "CallExpression",
         line: 20,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   // Disallowed array mutation methods to be chained to the creation of an array
   // if `ignoreImmediateMutation` is false.
@@ -975,58 +975,58 @@ const arrayES3Invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "array",
         type: "CallExpression",
         line: 1,
-        column: 1
+        column: 1,
       },
       {
         messageId: "array",
         type: "CallExpression",
         line: 2,
-        column: 1
+        column: 1,
       },
       {
         messageId: "array",
         type: "CallExpression",
         line: 3,
-        column: 1
+        column: 1,
       },
       {
         messageId: "array",
         type: "CallExpression",
         line: 4,
-        column: 1
+        column: 1,
       },
       {
         messageId: "array",
         type: "CallExpression",
         line: 5,
-        column: 1
+        column: 1,
       },
       {
         messageId: "array",
         type: "CallExpression",
         line: 6,
-        column: 1
+        column: 1,
       },
       {
         messageId: "array",
         type: "CallExpression",
         line: 7,
-        column: 1
+        column: 1,
       },
       {
         messageId: "array",
         type: "CallExpression",
         line: 8,
-        column: 1
+        column: 1,
       },
       {
         messageId: "array",
         type: "CallExpression",
         line: 9,
-        column: 1
-      }
-    ]
-  }
+        column: 1,
+      },
+    ],
+  },
 ];
 
 // Valid test cases.
@@ -1045,8 +1045,8 @@ const arrayES6Valid: ReadonlyArray<ValidTestCase> = [
       x &= 1;
       x |= 1;
       x ^= 1;`,
-    optionsSet: [[]]
-  }
+    optionsSet: [[]],
+  },
 ];
 
 // Invalid test cases.
@@ -1066,15 +1066,15 @@ const arrayES6Invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "AssignmentExpression",
         line: 3,
-        column: 1
+        column: 1,
       },
       {
         messageId: "generic",
         type: "AssignmentExpression",
         line: 4,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   {
     code: dedent`
@@ -1089,15 +1089,15 @@ const arrayES6Invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "AssignmentExpression",
         line: 3,
-        column: 1
+        column: 1,
       },
       {
         messageId: "generic",
         type: "AssignmentExpression",
         line: 4,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   {
     code: dedent`
@@ -1112,15 +1112,15 @@ const arrayES6Invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "AssignmentExpression",
         line: 3,
-        column: 1
+        column: 1,
       },
       {
         messageId: "generic",
         type: "AssignmentExpression",
         line: 4,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   {
     code: dedent`
@@ -1135,15 +1135,15 @@ const arrayES6Invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "AssignmentExpression",
         line: 3,
-        column: 1
+        column: 1,
       },
       {
         messageId: "generic",
         type: "AssignmentExpression",
         line: 4,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   {
     code: dedent`
@@ -1158,15 +1158,15 @@ const arrayES6Invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "AssignmentExpression",
         line: 3,
-        column: 1
+        column: 1,
       },
       {
         messageId: "generic",
         type: "AssignmentExpression",
         line: 4,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   {
     code: dedent`
@@ -1181,15 +1181,15 @@ const arrayES6Invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "AssignmentExpression",
         line: 3,
-        column: 1
+        column: 1,
       },
       {
         messageId: "generic",
         type: "AssignmentExpression",
         line: 4,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   {
     code: dedent`
@@ -1204,15 +1204,15 @@ const arrayES6Invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "AssignmentExpression",
         line: 3,
-        column: 1
+        column: 1,
       },
       {
         messageId: "generic",
         type: "AssignmentExpression",
         line: 4,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   {
     code: dedent`
@@ -1227,15 +1227,15 @@ const arrayES6Invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "AssignmentExpression",
         line: 3,
-        column: 1
+        column: 1,
       },
       {
         messageId: "generic",
         type: "AssignmentExpression",
         line: 4,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   {
     code: dedent`
@@ -1250,15 +1250,15 @@ const arrayES6Invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "AssignmentExpression",
         line: 3,
-        column: 1
+        column: 1,
       },
       {
         messageId: "generic",
         type: "AssignmentExpression",
         line: 4,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   {
     code: dedent`
@@ -1273,41 +1273,41 @@ const arrayES6Invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "AssignmentExpression",
         line: 3,
-        column: 1
+        column: 1,
       },
       {
         messageId: "generic",
         type: "AssignmentExpression",
         line: 4,
-        column: 1
-      }
-    ]
-  }
+        column: 1,
+      },
+    ],
+  },
 ];
 
 const es3Valid: ReadonlyArray<ValidTestCase> = [
   ...objectES3Valid,
-  ...arrayES3Valid
+  ...arrayES3Valid,
 ];
 const es3Invalid: ReadonlyArray<InvalidTestCase> = [
   ...objectES3Invalid,
-  ...arrayES3Invalid
+  ...arrayES3Invalid,
 ];
 
 const es6Valid: ReadonlyArray<ValidTestCase> = [
   ...objectES6Valid,
-  ...arrayES6Valid
+  ...arrayES6Valid,
 ];
 const es6Invalid: ReadonlyArray<InvalidTestCase> = [
   ...objectES6Invalid,
-  ...arrayES6Invalid
+  ...arrayES6Invalid,
 ];
 
 describeTsOnly("TypeScript", () => {
   const ruleTester = new RuleTester(typescript);
   ruleTester.run(name, rule, {
     valid: processValidTestCase(es6Valid),
-    invalid: processInvalidTestCase(es6Invalid)
+    invalid: processInvalidTestCase(es6Invalid),
   });
 });
 
@@ -1315,7 +1315,7 @@ describe("JavaScript (es6)", () => {
   const ruleTester = new RuleTester(es6);
   ruleTester.run(name, rule, {
     valid: processValidTestCase(es6Valid),
-    invalid: processInvalidTestCase(es6Invalid)
+    invalid: processInvalidTestCase(es6Invalid),
   });
 });
 
@@ -1323,6 +1323,6 @@ describe("JavaScript (es3)", () => {
   const ruleTester = new RuleTester(es3);
   ruleTester.run(name, rule, {
     valid: processValidTestCase(es3Valid),
-    invalid: processInvalidTestCase(es3Invalid)
+    invalid: processInvalidTestCase(es3Invalid),
   });
 });

@@ -13,7 +13,7 @@ import {
   InvalidTestCase,
   processInvalidTestCase,
   processValidTestCase,
-  ValidTestCase
+  ValidTestCase,
 } from "../helpers/util";
 
 // Valid test cases.
@@ -32,9 +32,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "TSInterfaceDeclaration",
         line: 1,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   {
     code: dedent`
@@ -51,9 +51,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "TSInterfaceDeclaration",
         line: 1,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   {
     code: dedent`
@@ -70,9 +70,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "TSInterfaceDeclaration",
         line: 1,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   {
     code: dedent`
@@ -89,16 +89,16 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "TSInterfaceDeclaration",
         line: 1,
-        column: 1
-      }
-    ]
-  }
+        column: 1,
+      },
+    ],
+  },
 ];
 
 describeTsOnly("TypeScript", () => {
   const ruleTester = new RuleTester(typescript);
   ruleTester.run(name, rule, {
     valid: processValidTestCase(valid),
-    invalid: processInvalidTestCase(invalid)
+    invalid: processInvalidTestCase(invalid),
   });
 });

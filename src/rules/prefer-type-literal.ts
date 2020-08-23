@@ -6,13 +6,13 @@ import {
   AllowLocalMutationOption,
   allowLocalMutationOptionSchema,
   IgnorePatternOption,
-  ignorePatternOptionSchema
+  ignorePatternOptionSchema,
 } from "../common/ignore-options";
 import {
   createRule,
   RuleContext,
   RuleMetaData,
-  RuleResult
+  RuleResult,
 } from "../util/rule";
 import { isIdentifier } from "../util/typeguard";
 
@@ -24,17 +24,17 @@ type Options = AllowLocalMutationOption & IgnorePatternOption;
 
 // The schema for the rule options.
 const schema: JSONSchema4 = [
-  deepMerge([allowLocalMutationOptionSchema, ignorePatternOptionSchema])
+  deepMerge([allowLocalMutationOptionSchema, ignorePatternOptionSchema]),
 ];
 
 // The default options for the rule.
 const defaultOptions: Options = {
-  allowLocalMutation: false
+  allowLocalMutation: false,
 };
 
 // The possible error messages.
 const errorMessages = {
-  generic: "Unexpected interface, use a type literal instead."
+  generic: "Unexpected interface, use a type literal instead.",
 } as const;
 
 // The meta data for this rule.
@@ -43,11 +43,11 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
   docs: {
     description: "Prefer Type Literals over Interfaces.",
     category: "Best Practices",
-    recommended: false
+    recommended: false,
   },
   messages: errorMessages,
   fixable: "code",
-  schema
+  schema,
 };
 
 /**
@@ -65,8 +65,8 @@ function checkInterface(
         messageId: "generic",
         fix:
           node.extends === undefined ||
-          node.extends.every(type => isIdentifier(type.expression))
-            ? fixer => [
+          node.extends.every((type) => isIdentifier(type.expression))
+            ? (fixer) => [
                 fixer.replaceTextRange(
                   [node.range[0], node.range[0] + "interface".length],
                   "type"
@@ -79,18 +79,18 @@ function checkInterface(
                         [node.id.range[1], node.body.range[0]],
                         " "
                       ),
-                      ...node.extends.map(type =>
+                      ...node.extends.map((type) =>
                         fixer.insertTextBefore(
                           node.body,
                           `${(type.expression as TSESTree.Identifier).name} & `
                         )
-                      )
+                      ),
                     ]),
-                fixer.insertTextAfter(node, ";")
+                fixer.insertTextAfter(node, ";"),
               ]
-            : undefined
-      }
-    ]
+            : undefined,
+      },
+    ],
   };
 }
 
@@ -100,6 +100,6 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   meta,
   defaultOptions,
   {
-    TSInterfaceDeclaration: checkInterface
+    TSInterfaceDeclaration: checkInterface,
   }
 );

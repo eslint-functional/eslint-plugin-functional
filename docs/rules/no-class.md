@@ -10,7 +10,6 @@ Examples of **incorrect** code for this rule:
 /* eslint functional/no-class: "error" */
 
 class Dog {
-  
   constructor(name, age) {
     this.name = name;
     this.age = age;
@@ -37,7 +36,7 @@ function getAgeInDogYears(age) {
 
 const dogA = {
   name: "Jasper",
-  age: 2
+  age: 2,
 };
 
 console.log(`${dogA.name} is ${getAgeInDogYears(dogA.age)} in dog years.`);
@@ -49,9 +48,9 @@ Thanks to libraries like [recompose](https://github.com/acdlite/recompose) and R
 
 ```js
 const Message = React.createClass({
-  render: function() {
+  render: function () {
     return <div>{this.props.message}</div>; // <- no this allowed
-  }
+  },
 });
 ```
 

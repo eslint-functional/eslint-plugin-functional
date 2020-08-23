@@ -5,7 +5,7 @@ import {
   createRule,
   RuleContext,
   RuleMetaData,
-  RuleResult
+  RuleResult,
 } from "../util/rule";
 
 // The name of this rule.
@@ -23,7 +23,7 @@ const defaultOptions: Options = {};
 // The possible error messages.
 const errorMessages = {
   generic:
-    "Method signature is mutable, use property signature with readonly modifier instead."
+    "Method signature is mutable, use property signature with readonly modifier instead.",
 } as const;
 
 // The meta data for this rule.
@@ -33,10 +33,10 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
     description:
       "Prefer property signatures with readonly modifiers over method signatures.",
     category: "Best Practices",
-    recommended: "error"
+    recommended: "error",
   },
   messages: errorMessages,
-  schema
+  schema,
 };
 
 /**
@@ -56,6 +56,6 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   meta,
   defaultOptions,
   {
-    TSMethodSignature: checkTSMethodSignature
+    TSMethodSignature: checkTSMethodSignature,
   }
 );

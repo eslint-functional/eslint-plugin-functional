@@ -5,12 +5,12 @@ import {
   createRule,
   RuleContext,
   RuleMetaData,
-  RuleResult
+  RuleResult,
 } from "../util/rule";
 import {
   isTSNullKeyword,
   isTSUndefinedKeyword,
-  isTSVoidKeyword
+  isTSVoidKeyword,
 } from "../util/typeguard";
 
 // The name of this rule.
@@ -28,25 +28,25 @@ const schema: JSONSchema4 = [
     type: "object",
     properties: {
       allowNull: {
-        type: "boolean"
+        type: "boolean",
       },
       allowUndefined: {
-        type: "boolean"
-      }
+        type: "boolean",
+      },
     },
-    additionalProperties: false
-  }
+    additionalProperties: false,
+  },
 ];
 
 // The default options for the rule.
 const defaultOptions: Options = {
   allowNull: true,
-  allowUndefined: true
+  allowUndefined: true,
 };
 
 // The possible error messages.
 const errorMessages = {
-  generic: "Function must return a value."
+  generic: "Function must return a value.",
 } as const;
 
 // The meta data for this rule.
@@ -55,10 +55,10 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
   docs: {
     description: "Disallow functions that don't return anything.",
     category: "Best Practices",
-    recommended: false
+    recommended: false,
   },
   messages: errorMessages,
-  schema
+  schema,
 };
 
 /**
@@ -83,7 +83,7 @@ function checkFunction(
         (!options.allowUndefined &&
           isTSUndefinedKeyword(node.returnType.typeAnnotation)))
         ? [{ node: node.returnType, messageId: "generic" }]
-        : []
+        : [],
   };
 }
 
@@ -96,6 +96,6 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
     FunctionDeclaration: checkFunction,
     FunctionExpression: checkFunction,
     ArrowFunctionExpression: checkFunction,
-    TSFunctionType: checkFunction
+    TSFunctionType: checkFunction,
   }
 );
