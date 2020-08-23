@@ -13,7 +13,7 @@ import {
   InvalidTestCase,
   processInvalidTestCase,
   processValidTestCase,
-  ValidTestCase
+  ValidTestCase,
 } from "../helpers/util";
 
 // Valid test cases.
@@ -24,14 +24,14 @@ const es3Valid: ReadonlyArray<ValidTestCase> = [
         arguments: 2
       };
       foo.arguments = 3`,
-    optionsSet: [[]]
+    optionsSet: [[]],
   },
   {
     code: dedent`
       (function() {
         console.log("hello world");
       })();`,
-    optionsSet: [[]]
+    optionsSet: [[]],
   },
   {
     code: dedent`
@@ -40,8 +40,8 @@ const es3Valid: ReadonlyArray<ValidTestCase> = [
       }`,
     optionsSet: [
       [{ enforceParameterCount: "atLeastOne" }],
-      [{ enforceParameterCount: "exactlyOne" }]
-    ]
+      [{ enforceParameterCount: "exactlyOne" }],
+    ],
   },
   {
     code: dedent`
@@ -50,9 +50,9 @@ const es3Valid: ReadonlyArray<ValidTestCase> = [
       }`,
     optionsSet: [
       [{ enforceParameterCount: "atLeastOne" }],
-      [{ ignorePattern: "^foo", enforceParameterCount: "exactlyOne" }]
-    ]
-  }
+      [{ ignorePattern: "^foo", enforceParameterCount: "exactlyOne" }],
+    ],
+  },
 ];
 
 // Invalid test cases.
@@ -68,9 +68,9 @@ const es3Invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "paramCountAtLeastOne",
         type: "FunctionDeclaration",
         line: 1,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   {
     code: dedent`
@@ -83,9 +83,9 @@ const es3Invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "paramCountAtLeastOne",
         type: "FunctionExpression",
         line: 1,
-        column: 2
-      }
-    ]
+        column: 2,
+      },
+    ],
   },
   {
     code: dedent`
@@ -98,9 +98,9 @@ const es3Invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "arguments",
         type: "Identifier",
         line: 2,
-        column: 15
-      }
-    ]
+        column: 15,
+      },
+    ],
   },
   {
     code: dedent`
@@ -113,9 +113,9 @@ const es3Invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "paramCountAtLeastOne",
         type: "FunctionDeclaration",
         line: 1,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   {
     code: dedent`
@@ -128,9 +128,9 @@ const es3Invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "paramCountExactlyOne",
         type: "FunctionDeclaration",
         line: 1,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   {
     code: dedent`
@@ -143,10 +143,10 @@ const es3Invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "paramCountExactlyOne",
         type: "FunctionDeclaration",
         line: 1,
-        column: 1
-      }
-    ]
-  }
+        column: 1,
+      },
+    ],
+  },
 ];
 
 // Valid test cases.
@@ -157,22 +157,22 @@ const es6Valid: ReadonlyArray<ValidTestCase> = [
       (() => {
         console.log("hello world");
       })();`,
-    optionsSet: [[]]
+    optionsSet: [[]],
   },
   {
     code: dedent`
       function foo([bar, ...baz]) {
         console.log(bar, baz);
       }`,
-    optionsSet: [[]]
+    optionsSet: [[]],
   },
   {
     code: dedent`
       function foo(...bar) {
         console.log(bar);
       }`,
-    optionsSet: [[{ ignorePattern: "^foo" }]]
-  }
+    optionsSet: [[{ ignorePattern: "^foo" }]],
+  },
 ];
 
 // Invalid test cases.
@@ -189,9 +189,9 @@ const es6Invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "paramCountAtLeastOne",
         type: "ArrowFunctionExpression",
         line: 1,
-        column: 2
-      }
-    ]
+        column: 2,
+      },
+    ],
   },
   {
     code: dedent`
@@ -204,17 +204,17 @@ const es6Invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "restParam",
         type: "RestElement",
         line: 1,
-        column: 14
-      }
-    ]
-  }
+        column: 14,
+      },
+    ],
+  },
 ];
 
 describeTsOnly("TypeScript", () => {
   const ruleTester = new RuleTester(typescript);
   ruleTester.run(name, rule, {
     valid: processValidTestCase(es6Valid),
-    invalid: processInvalidTestCase(es6Invalid)
+    invalid: processInvalidTestCase(es6Invalid),
   });
 });
 
@@ -222,7 +222,7 @@ describe("JavaScript (es6)", () => {
   const ruleTester = new RuleTester(es6);
   ruleTester.run(name, rule, {
     valid: processValidTestCase(es6Valid),
-    invalid: processInvalidTestCase(es6Invalid)
+    invalid: processInvalidTestCase(es6Invalid),
   });
 });
 
@@ -230,6 +230,6 @@ describe("JavaScript (es3)", () => {
   const ruleTester = new RuleTester(es3);
   ruleTester.run(name, rule, {
     valid: processValidTestCase(es3Valid),
-    invalid: processInvalidTestCase(es3Invalid)
+    invalid: processInvalidTestCase(es3Invalid),
   });
 });

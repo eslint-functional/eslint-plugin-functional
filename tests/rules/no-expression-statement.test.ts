@@ -13,7 +13,7 @@ import {
   InvalidTestCase,
   processInvalidTestCase,
   processValidTestCase,
-  ValidTestCase
+  ValidTestCase,
 } from "../helpers/util";
 
 // Valid test cases.
@@ -21,20 +21,20 @@ const valid: ReadonlyArray<ValidTestCase> = [
   // Defining variable should still be allowed.
   {
     code: `var x = [];`,
-    optionsSet: [[]]
+    optionsSet: [[]],
   },
   // Allowed expressions should not cause failures.
   {
     code: dedent`
       console.log("yo");
       console.error("yo");`,
-    optionsSet: [[{ ignorePattern: "^console\\." }]]
+    optionsSet: [[{ ignorePattern: "^console\\." }]],
   },
   // Allow specifying directive prologues.
   {
     code: `"use strict"`,
-    optionsSet: [[]]
-  }
+    optionsSet: [[]],
+  },
 ];
 
 // Invalid test cases.
@@ -49,9 +49,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "ExpressionStatement",
         line: 2,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   // Non-allowed expressions should cause failures.
   {
@@ -62,17 +62,17 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "ExpressionStatement",
         line: 1,
-        column: 1
-      }
-    ]
-  }
+        column: 1,
+      },
+    ],
+  },
 ];
 
 describeTsOnly("TypeScript", () => {
   const ruleTester = new RuleTester(typescript);
   ruleTester.run(name, rule, {
     valid: processValidTestCase(valid),
-    invalid: processInvalidTestCase(invalid)
+    invalid: processInvalidTestCase(invalid),
   });
 });
 
@@ -80,6 +80,6 @@ describe("JavaScript (es3)", () => {
   const ruleTester = new RuleTester(es3);
   ruleTester.run(name, rule, {
     valid: processValidTestCase(valid),
-    invalid: processInvalidTestCase(invalid)
+    invalid: processInvalidTestCase(invalid),
   });
 });

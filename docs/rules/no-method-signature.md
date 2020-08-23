@@ -17,7 +17,7 @@ Examples of **incorrect** code for this rule:
 
 type Foo = {
   bar(): string;
-}
+};
 ```
 
 Examples of **correct** code for this rule:
@@ -27,7 +27,7 @@ Examples of **correct** code for this rule:
 
 type Foo = {
   readonly bar: () => string;
-}
+};
 ```
 
 ## Options

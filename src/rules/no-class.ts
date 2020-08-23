@@ -5,7 +5,7 @@ import {
   createRule,
   RuleContext,
   RuleMetaData,
-  RuleResult
+  RuleResult,
 } from "../util/rule";
 
 // The name of this rule.
@@ -22,7 +22,7 @@ const defaultOptions: Options = {};
 
 // The possible error messages.
 const errorMessages = {
-  generic: "Unexpected class, use functions not classes."
+  generic: "Unexpected class, use functions not classes.",
 } as const;
 
 // The meta data for this rule.
@@ -31,10 +31,10 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
   docs: {
     description: "Disallow classes.",
     category: "Best Practices",
-    recommended: false
+    recommended: false,
   },
   messages: errorMessages,
-  schema
+  schema,
 };
 
 /**

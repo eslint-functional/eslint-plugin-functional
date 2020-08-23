@@ -1,60 +1,60 @@
 import {
   name as functionalParametersName,
-  rule as functionalParameters
+  rule as functionalParameters,
 } from "./functional-parameters";
 import {
   name as immutableDataRuleName,
-  rule as immutableDataRule
+  rule as immutableDataRule,
 } from "./immutable-data";
 import { name as noClassRuleName, rule as noClassRule } from "./no-class";
 import {
   name as noConditionalStatementRuleName,
-  rule as noConditionalStatementRule
+  rule as noConditionalStatementRule,
 } from "./no-conditional-statement";
 import {
   name as noExpressionStatementRuleName,
-  rule as noExpressionStatementRule
+  rule as noExpressionStatementRule,
 } from "./no-expression-statement";
 import { name as noLetRuleName, rule as noLetRule } from "./no-let";
 import {
   name as noLoopRuleName,
-  rule as noLoopRule
+  rule as noLoopRule,
 } from "./no-loop-statement";
 import {
   name as noMethodSignatureRuleName,
-  rule as noMethodSignatureRule
+  rule as noMethodSignatureRule,
 } from "./no-method-signature";
 import {
   name as noMixedTypeRuleName,
-  rule as noMixedTypeRule
+  rule as noMixedTypeRule,
 } from "./no-mixed-type";
 import {
   name as noPromiseRejectRuleName,
-  rule as noPromiseRejectRule
+  rule as noPromiseRejectRule,
 } from "./no-promise-reject";
 import {
   name as noReturnVoidName,
-  rule as noReturnVoid
+  rule as noReturnVoid,
 } from "./no-return-void";
 import {
   name as noThisExpressionRuleName,
-  rule as noThisExpressionRule
+  rule as noThisExpressionRule,
 } from "./no-this-expression";
 import {
   name as noThrowStatementRuleName,
-  rule as noThrowStatementRule
+  rule as noThrowStatementRule,
 } from "./no-throw-statement";
 import {
   name as noTryStatementRuleName,
-  rule as noTryStatementRule
+  rule as noTryStatementRule,
 } from "./no-try-statement";
 import {
   name as preferReadonlyTypesRuleName,
-  rule as preferReadonlyTypesRule
+  rule as preferReadonlyTypesRule,
 } from "./prefer-readonly-type";
 import {
   name as preferTypeRuleName,
-  rule as preferTypeRule
+  rule as preferTypeRule,
 } from "./prefer-type-literal";
 
 /**
@@ -76,5 +76,5 @@ export const rules = {
   [noThrowStatementRuleName]: noThrowStatementRule,
   [noTryStatementRuleName]: noTryStatementRule,
   [preferReadonlyTypesRuleName]: preferReadonlyTypesRule,
-  [preferTypeRuleName]: preferTypeRule
+  [preferTypeRuleName]: preferTypeRule,
 };

@@ -87,7 +87,7 @@ Disabling this option can result in false negatives, for example:
 // When this option is DISABLED (and type info is not available).
 const x = [0, 1, 2];
 x.push(3); // This will NOT be flagged.
-           // This is due to the fact that without a typing engine, we cannot tell that x is an array.
+// This is due to the fact that without a typing engine, we cannot tell that x is an array.
 ```
 
 Note: This option will have no effect if the TypeScript typing engine is avaliable (i.e. you are using TypeScript and have configured eslint correctly).

@@ -13,7 +13,7 @@ import {
   InvalidTestCase,
   processInvalidTestCase,
   processValidTestCase,
-  ValidTestCase
+  ValidTestCase,
 } from "../helpers/util";
 
 // Valid test cases.
@@ -26,8 +26,8 @@ const valid: ReadonlyArray<ValidTestCase> = [
         }
         return Promise.resolve(10)
       }`,
-    optionsSet: [[]]
-  }
+    optionsSet: [[]],
+  },
 ];
 
 // Invalid test cases.
@@ -46,17 +46,17 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "CallExpression",
         line: 3,
-        column: 14
-      }
-    ]
-  }
+        column: 14,
+      },
+    ],
+  },
 ];
 
 describeTsOnly("TypeScript", () => {
   const ruleTester = new RuleTester(typescript);
   ruleTester.run(name, rule, {
     valid: processValidTestCase(valid),
-    invalid: processInvalidTestCase(invalid)
+    invalid: processInvalidTestCase(invalid),
   });
 });
 
@@ -64,6 +64,6 @@ describe("JavaScript (es6)", () => {
   const ruleTester = new RuleTester(es6);
   ruleTester.run(name, rule, {
     valid: processValidTestCase(valid),
-    invalid: processInvalidTestCase(invalid)
+    invalid: processInvalidTestCase(invalid),
   });
 });

@@ -13,7 +13,7 @@ const config: Config = deepMerge<Config>([
   noMutations,
   noExceptions,
   noObjectOrientation,
-  noStatements
+  noStatements,
 ]);
 
 export default config;

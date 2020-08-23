@@ -13,7 +13,7 @@ import {
   InvalidTestCase,
   processInvalidTestCase,
   processValidTestCase,
-  ValidTestCase
+  ValidTestCase,
 } from "../helpers/util";
 
 // Valid test cases.
@@ -23,14 +23,14 @@ const valid: ReadonlyArray<ValidTestCase> = [
       function foo(bar) {
         return bar + 1;
       }`,
-    optionsSet: [[], [{ allowNull: false }], [{ allowUndefined: false }]]
+    optionsSet: [[], [{ allowNull: false }], [{ allowUndefined: false }]],
   },
   {
     code: dedent`
       function foo(bar: number): number {
         return bar + 1;
       }`,
-    optionsSet: [[], [{ allowNull: false }], [{ allowUndefined: false }]]
+    optionsSet: [[], [{ allowNull: false }], [{ allowUndefined: false }]],
   },
   // Not testing implicit return types, therefore this is valid.
   {
@@ -38,7 +38,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
       function foo(bar) {
         console.log(bar);
       }`,
-    optionsSet: [[], [{ allowNull: false }], [{ allowUndefined: false }]]
+    optionsSet: [[], [{ allowNull: false }], [{ allowUndefined: false }]],
   },
   // Allow null.
   {
@@ -46,7 +46,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
       function foo(): null {
         return null;
       }`,
-    optionsSet: [[], [{ allowNull: true }], [{ allowUndefined: false }]]
+    optionsSet: [[], [{ allowNull: true }], [{ allowUndefined: false }]],
   },
   // Allow undefined.
   {
@@ -54,8 +54,8 @@ const valid: ReadonlyArray<ValidTestCase> = [
       function foo(): undefined {
         return undefined;
       }`,
-    optionsSet: [[], [{ allowNull: false }], [{ allowUndefined: true }]]
-  }
+    optionsSet: [[], [{ allowNull: false }], [{ allowUndefined: true }]],
+  },
 ];
 
 // Invalid test cases.
@@ -72,9 +72,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "TSTypeAnnotation",
         line: 1,
-        column: 26
-      }
-    ]
+        column: 26,
+      },
+    ],
   },
   // Disallow undefined.
   {
@@ -89,9 +89,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "TSTypeAnnotation",
         line: 1,
-        column: 26
-      }
-    ]
+        column: 26,
+      },
+    ],
   },
   // Disallow null.
   {
@@ -106,9 +106,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "TSTypeAnnotation",
         line: 1,
-        column: 26
-      }
-    ]
+        column: 26,
+      },
+    ],
   },
   // Disallow higher-order function void.
   {
@@ -122,16 +122,16 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "TSTypeAnnotation",
         line: 1,
-        column: 42
-      }
-    ]
-  }
+        column: 42,
+      },
+    ],
+  },
 ];
 
 describeTsOnly("TypeScript", () => {
   const ruleTester = new RuleTester(typescript);
   ruleTester.run(name, rule, {
     valid: processValidTestCase(valid),
-    invalid: processInvalidTestCase(invalid)
+    invalid: processInvalidTestCase(invalid),
   });
 });

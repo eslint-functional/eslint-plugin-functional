@@ -9,7 +9,7 @@ import {
   isMemberExpression,
   isMethodDefinition,
   isProperty,
-  isTSInterfaceBody
+  isTSInterfaceBody,
 } from "./typeguard";
 
 /**

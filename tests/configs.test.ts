@@ -20,7 +20,7 @@ function testConfig(config: Config, master: Config) {
   return () => {
     it("should not have any JS rules that the all config does not have", () => {
       if (config.rules) {
-        Object.keys(config.rules).every(rule => {
+        Object.keys(config.rules).every((rule) => {
           expect(master.rules[rule]).toBeDefined();
         });
       }
@@ -28,7 +28,7 @@ function testConfig(config: Config, master: Config) {
 
     it("should not have any TS rules that the all config does not have", () => {
       if (config.overrides) {
-        Object.keys(config.overrides[0].rules).every(rule => {
+        Object.keys(config.overrides[0].rules).every((rule) => {
           expect(master.overrides[0].rules[rule]).toBeDefined();
         });
       }

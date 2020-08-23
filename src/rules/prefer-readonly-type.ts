@@ -13,14 +13,14 @@ import {
   IgnoreInterfaceOption,
   ignoreInterfaceOptionSchema,
   IgnorePatternOption,
-  ignorePatternOptionSchema
+  ignorePatternOptionSchema,
 } from "../common/ignore-options";
 import {
   createRule,
   getTypeOfNode,
   RuleContext,
   RuleMetaData,
-  RuleResult
+  RuleResult,
 } from "../util/rule";
 import { isInReturnType } from "../util/tree";
 import {
@@ -32,7 +32,7 @@ import {
   isTSIndexSignature,
   isTSParameterProperty,
   isTSTupleType,
-  isTSTypeOperator
+  isTSTypeOperator,
 } from "../util/typeguard";
 
 // The name of this rule.
@@ -58,15 +58,15 @@ const schema: JSONSchema4 = [
       type: "object",
       properties: {
         allowMutableReturnType: {
-          type: "boolean"
+          type: "boolean",
         },
         checkImplicit: {
-          type: "boolean"
-        }
+          type: "boolean",
+        },
       },
-      additionalProperties: false
-    }
-  ])
+      additionalProperties: false,
+    },
+  ]),
 ];
 
 // The default options for the rule.
@@ -75,7 +75,7 @@ const defaultOptions: Options = {
   ignoreClass: false,
   ignoreInterface: false,
   allowLocalMutation: false,
-  allowMutableReturnType: false
+  allowMutableReturnType: false,
 };
 
 // The possible error messages.
@@ -84,7 +84,7 @@ const errorMessages = {
   implicit: "Implicitly a mutable array. Only readonly arrays allowed.",
   property: "A readonly modifier is required.",
   tuple: "Only readonly tuples allowed.",
-  type: "Only readonly types allowed."
+  type: "Only readonly types allowed.",
 } as const;
 
 // The meta data for this rule.
@@ -93,11 +93,11 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
   docs: {
     description: "Prefer readonly array over mutable arrays.",
     category: "Best Practices",
-    recommended: "error"
+    recommended: "error",
   },
   messages: errorMessages,
   fixable: "code",
-  schema
+  schema,
 };
 
 const mutableToImmutableTypes: ReadonlyMap<string, string> = new Map<
@@ -106,7 +106,7 @@ const mutableToImmutableTypes: ReadonlyMap<string, string> = new Map<
 >([
   ["Array", "ReadonlyArray"],
   ["Map", "ReadonlyMap"],
-  ["Set", "ReadonlySet"]
+  ["Set", "ReadonlySet"],
 ]);
 
 /**
@@ -130,14 +130,14 @@ function checkArrayOrTupleType(
               messageId: isTSTupleType(node) ? "tuple" : "array",
               fix:
                 node.parent && isTSArrayType(node.parent)
-                  ? fixer => [
+                  ? (fixer) => [
                       fixer.insertTextBefore(node, "(readonly "),
-                      fixer.insertTextAfter(node, ")")
+                      fixer.insertTextAfter(node, ")"),
                     ]
-                  : fixer => fixer.insertTextBefore(node, "readonly ")
-            }
+                  : (fixer) => fixer.insertTextBefore(node, "readonly "),
+            },
           ]
-        : []
+        : [],
   };
 }
 
@@ -156,13 +156,13 @@ function checkMappedType(
           {
             node,
             messageId: "property",
-            fix: fixer =>
+            fix: (fixer) =>
               fixer.insertTextBeforeRange(
                 [node.range[0] + 1, node.range[1]],
                 " readonly"
-              )
-          }
-        ]
+              ),
+          },
+        ],
   };
 }
 
@@ -185,15 +185,15 @@ function checkTypeReference(
               {
                 node,
                 messageId: "type",
-                fix: fixer => fixer.replaceText(node.typeName, immutableType)
-              }
+                fix: (fixer) => fixer.replaceText(node.typeName, immutableType),
+              },
             ]
-          : []
+          : [],
     };
   } else {
     return {
       context,
-      descriptors: []
+      descriptors: [],
     };
   }
 }
@@ -218,12 +218,12 @@ function checkProperty(
             node,
             messageId: "property",
             fix: isTSIndexSignature(node)
-              ? fixer => fixer.insertTextBefore(node, "readonly ")
+              ? (fixer) => fixer.insertTextBefore(node, "readonly ")
               : isTSParameterProperty(node)
-              ? fixer => fixer.insertTextBefore(node.parameter, "readonly ")
-              : fixer => fixer.insertTextBefore(node.key, "readonly ")
-          }
-        ]
+              ? (fixer) => fixer.insertTextBefore(node.parameter, "readonly ")
+              : (fixer) => fixer.insertTextBefore(node.key, "readonly "),
+          },
+        ],
   };
 }
 
@@ -248,28 +248,28 @@ function checkImplicitType(
 
     const declarators: ReadonlyArray<Declarator> = isFunctionLike(node)
       ? node.params
-          .map(param =>
+          .map((param) =>
             isAssignmentPattern(param)
               ? ({
                   id: param.left,
                   init: param.right,
-                  node: param
+                  node: param,
                 } as Declarator)
               : undefined
           )
           .filter((param): param is Declarator => param !== undefined)
       : node.declarations.map(
-          declaration =>
+          (declaration) =>
             ({
               id: declaration.id,
               init: declaration.init,
-              node: declaration
+              node: declaration,
             } as Declarator)
         );
 
     return {
       context,
-      descriptors: declarators.flatMap(declarator =>
+      descriptors: declarators.flatMap((declarator) =>
         isIdentifier(declarator.id) &&
         declarator.id.typeAnnotation === undefined &&
         declarator.init !== null &&
@@ -278,17 +278,17 @@ function checkImplicitType(
               {
                 node: declarator.node,
                 messageId: "implicit",
-                fix: fixer =>
-                  fixer.insertTextAfter(declarator.id, ": readonly unknown[]")
-              }
+                fix: (fixer) =>
+                  fixer.insertTextAfter(declarator.id, ": readonly unknown[]"),
+              },
             ]
           : []
-      )
+      ),
     };
   } else {
     return {
       context,
-      descriptors: []
+      descriptors: [],
     };
   }
 }
@@ -310,6 +310,6 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
     TSTupleType: checkArrayOrTupleType,
     TSMappedType: checkMappedType,
     TSTypeReference: checkTypeReference,
-    VariableDeclaration: checkImplicitType
+    VariableDeclaration: checkImplicitType,
   }
 );
