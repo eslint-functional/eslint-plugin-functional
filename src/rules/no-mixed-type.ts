@@ -1,6 +1,6 @@
 import {
   AST_NODE_TYPES,
-  TSESTree
+  TSESTree,
 } from "@typescript-eslint/experimental-utils";
 import { JSONSchema4 } from "json-schema";
 
@@ -8,7 +8,7 @@ import {
   createRule,
   RuleContext,
   RuleMetaData,
-  RuleResult
+  RuleResult,
 } from "../util/rule";
 import { isTSPropertySignature, isTSTypeLiteral } from "../util/typeguard";
 
@@ -27,25 +27,25 @@ const schema: JSONSchema4 = [
     type: "object",
     properties: {
       checkInterfaces: {
-        type: "boolean"
+        type: "boolean",
       },
       checkTypeLiterals: {
-        type: "boolean"
-      }
+        type: "boolean",
+      },
     },
-    additionalProperties: false
-  }
+    additionalProperties: false,
+  },
 ];
 
 // The default options for the rule.
 const defaultOptions: Options = {
   checkInterfaces: true,
-  checkTypeLiterals: true
+  checkTypeLiterals: true,
 };
 
 // The possible error messages.
 const errorMessages = {
-  generic: "Only the same kind of members allowed in types."
+  generic: "Only the same kind of members allowed in types.",
 } as const;
 
 // The meta data for this rule.
@@ -55,10 +55,10 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
     description:
       "Restrict types so that only members of the same kind of are allowed in them.",
     category: "Best Practices",
-    recommended: false
+    recommended: false,
   },
   messages: errorMessages,
-  schema
+  schema,
 };
 
 /**
@@ -73,12 +73,12 @@ function hasTypeElementViolations(
     readonly violations: boolean;
   };
 
-  const typeElementsTypeInfo = typeElements.map(member => ({
+  const typeElementsTypeInfo = typeElements.map((member) => ({
     type: member.type,
     typeAnnotation:
       isTSPropertySignature(member) && member.typeAnnotation !== undefined
         ? member.typeAnnotation.typeAnnotation.type
-        : undefined
+        : undefined,
   }));
 
   return typeElementsTypeInfo.reduce<CarryType>(
@@ -94,12 +94,12 @@ function hasTypeElementViolations(
           (carry.prevMemberTypeAnnotation !== member.typeAnnotation &&
             // Where one of the properties is a annotationed as a function.
             (carry.prevMemberTypeAnnotation === AST_NODE_TYPES.TSFunctionType ||
-              member.typeAnnotation === AST_NODE_TYPES.TSFunctionType)))
+              member.typeAnnotation === AST_NODE_TYPES.TSFunctionType))),
     }),
     {
       prevMemberType: undefined,
       prevMemberTypeAnnotation: undefined,
-      violations: false
+      violations: false,
     }
   ).violations;
 }
@@ -117,7 +117,7 @@ function checkTSInterfaceDeclaration(
     descriptors:
       options.checkInterfaces && hasTypeElementViolations(node.body.body)
         ? [{ node, messageId: "generic" }]
-        : []
+        : [],
   };
 }
 
@@ -136,7 +136,7 @@ function checkTSTypeAliasDeclaration(
       isTSTypeLiteral(node.typeAnnotation) &&
       hasTypeElementViolations(node.typeAnnotation.members)
         ? [{ node, messageId: "generic" }]
-        : []
+        : [],
   };
 }
 
@@ -147,6 +147,6 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   defaultOptions,
   {
     TSInterfaceDeclaration: checkTSInterfaceDeclaration,
-    TSTypeAliasDeclaration: checkTSTypeAliasDeclaration
+    TSTypeAliasDeclaration: checkTSTypeAliasDeclaration,
   }
 );

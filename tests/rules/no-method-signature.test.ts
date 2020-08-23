@@ -13,7 +13,7 @@ import {
   InvalidTestCase,
   processInvalidTestCase,
   processValidTestCase,
-  ValidTestCase
+  ValidTestCase,
 } from "../helpers/util";
 
 // Valid test cases.
@@ -23,15 +23,15 @@ const valid: ReadonlyArray<ValidTestCase> = [
       interface Foo {
         bar: (a: number, b: string) => number;
       }`,
-    optionsSet: [[]]
+    optionsSet: [[]],
   },
   {
     code: dedent`
       type Foo2 = {
         bar: (a: number, b: string) => number
       }`,
-    optionsSet: [[]]
-  }
+    optionsSet: [[]],
+  },
 ];
 
 // Invalid test cases.
@@ -47,9 +47,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "TSMethodSignature",
         line: 2,
-        column: 3
-      }
-    ]
+        column: 3,
+      },
+    ],
   },
   {
     code: dedent`
@@ -62,16 +62,16 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "TSMethodSignature",
         line: 2,
-        column: 3
-      }
-    ]
-  }
+        column: 3,
+      },
+    ],
+  },
 ];
 
 describeTsOnly("TypeScript", () => {
   const ruleTester = new RuleTester(typescript);
   ruleTester.run(name, rule, {
     valid: processValidTestCase(valid),
-    invalid: processInvalidTestCase(invalid)
+    invalid: processInvalidTestCase(invalid),
   });
 });

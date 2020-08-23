@@ -13,7 +13,7 @@ import {
   InvalidTestCase,
   processInvalidTestCase,
   processValidTestCase,
-  ValidTestCase
+  ValidTestCase,
 } from "../helpers/util";
 
 // Valid test cases.
@@ -25,7 +25,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
         bar: string;
         zoo: number;
       };`,
-    optionsSet: [[], [{ checkInterfaces: false }]]
+    optionsSet: [[], [{ checkInterfaces: false }]],
   },
   {
     code: dedent`
@@ -33,7 +33,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
         bar: string;
         zoo: number;
       }`,
-    optionsSet: [[], [{ checkTypeLiterals: false }]]
+    optionsSet: [[], [{ checkTypeLiterals: false }]],
   },
   // Only functions should not produce failures
   {
@@ -42,7 +42,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
         bar: string;
         zoo: number;
       };`,
-    optionsSet: [[], [{ checkInterfaces: false }]]
+    optionsSet: [[], [{ checkInterfaces: false }]],
   },
   {
     code: dedent`
@@ -50,7 +50,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
         bar: string;
         zoo: number;
       }`,
-    optionsSet: [[], [{ checkTypeLiterals: false }]]
+    optionsSet: [[], [{ checkTypeLiterals: false }]],
   },
   // Only indexer should not produce failures
   {
@@ -58,14 +58,14 @@ const valid: ReadonlyArray<ValidTestCase> = [
       type Foo = {
         [key: string]: string;
       };`,
-    optionsSet: [[], [{ checkInterfaces: false }]]
+    optionsSet: [[], [{ checkInterfaces: false }]],
   },
   {
     code: dedent`
       interface Foo {
         [key: string]: string;
       }`,
-    optionsSet: [[], [{ checkTypeLiterals: false }]]
+    optionsSet: [[], [{ checkTypeLiterals: false }]],
   },
   // Check Off.
   {
@@ -74,7 +74,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
         bar: string;
         zoo(): number;
       };`,
-    optionsSet: [[{ checkTypeLiterals: false }]]
+    optionsSet: [[{ checkTypeLiterals: false }]],
   },
   {
     code: dedent`
@@ -82,7 +82,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
         bar: string;
         zoo(): number;
       }`,
-    optionsSet: [[{ checkInterfaces: false }]]
+    optionsSet: [[{ checkInterfaces: false }]],
   },
   // Mixing properties and functions (PropertySignature) should produce failures.
   {
@@ -91,7 +91,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
         bar: string;
         zoo: () => number;
       };`,
-    optionsSet: [[{ checkTypeLiterals: false }]]
+    optionsSet: [[{ checkTypeLiterals: false }]],
   },
   {
     code: dedent`
@@ -99,8 +99,8 @@ const valid: ReadonlyArray<ValidTestCase> = [
         bar: string;
         zoo: () => number;
       }`,
-    optionsSet: [[{ checkInterfaces: false }]]
-  }
+    optionsSet: [[{ checkInterfaces: false }]],
+  },
 ];
 
 // Invalid test cases.
@@ -118,9 +118,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "TSTypeAliasDeclaration",
         line: 1,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   {
     code: dedent`
@@ -134,9 +134,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "TSInterfaceDeclaration",
         line: 1,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   // Mixing properties and functions (PropertySignature) should produce failures.
   {
@@ -151,9 +151,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "TSTypeAliasDeclaration",
         line: 1,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   {
     code: dedent`
@@ -167,16 +167,16 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "TSInterfaceDeclaration",
         line: 1,
-        column: 1
-      }
-    ]
-  }
+        column: 1,
+      },
+    ],
+  },
 ];
 
 describeTsOnly("TypeScript", () => {
   const ruleTester = new RuleTester(typescript);
   ruleTester.run(name, rule, {
     valid: processValidTestCase(valid),
-    invalid: processInvalidTestCase(invalid)
+    invalid: processInvalidTestCase(invalid),
   });
 });

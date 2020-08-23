@@ -4,7 +4,7 @@
 
 import {
   AST_NODE_TYPES,
-  TSESTree
+  TSESTree,
 } from "@typescript-eslint/experimental-utils";
 // TS import - only use this for types, will be stripped out by rollup.
 import { Type, UnionType } from "typescript";
@@ -317,7 +317,7 @@ export function isArrayType(
     : type !== null &&
         ((type.symbol && type.symbol.name === "Array") ||
           (isUnionType(type) &&
-            type.types.some(t => isArrayType(t, false, null))));
+            type.types.some((t) => isArrayType(t, false, null))));
 }
 
 export function isArrayConstructorType(
@@ -348,7 +348,7 @@ export function isArrayConstructorType(
     : type !== null &&
         ((type.symbol && type.symbol.name === "ArrayConstructor") ||
           (isUnionType(type) &&
-            type.types.some(t => isArrayConstructorType(t, false, null))));
+            type.types.some((t) => isArrayConstructorType(t, false, null))));
 }
 
 export function isObjectConstructorType(
@@ -379,5 +379,5 @@ export function isObjectConstructorType(
     : type !== null &&
         ((type.symbol && type.symbol.name === "ObjectConstructor") ||
           (isUnionType(type) &&
-            type.types.some(t => isObjectConstructorType(t, false, null))));
+            type.types.some((t) => isObjectConstructorType(t, false, null))));
 }

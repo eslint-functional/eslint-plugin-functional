@@ -5,7 +5,7 @@
 # eslint-plugin-functional
 
 [![npm version](https://img.shields.io/npm/v/eslint-plugin-functional.svg?style=flat)](https://www.npmjs.com/package/eslint-plugin-functional)
-[![travis build](https://travis-ci.com/jonaskello/eslint-plugin-functional.svg?branch=master&amp;style=flat)](https://travis-ci.com/jonaskello/eslint-plugin-functional)
+[![travis build](https://travis-ci.com/jonaskello/eslint-plugin-functional.svg?branch=master&style=flat)](https://travis-ci.com/jonaskello/eslint-plugin-functional)
 [![Coverage Status](https://codecov.io/gh/jonaskello/eslint-plugin-functional/branch/master/graph/badge.svg)](https://codecov.io/gh/jonaskello/eslint-plugin-functional)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat)](https://github.com/prettier/prettier)
 [![MIT license](https://img.shields.io/github/license/jonaskello/eslint-plugin-functional.svg?style=flat)](https://opensource.org/licenses/MIT)
@@ -234,7 +234,7 @@ The [below section](#supported-rules) gives details on which rules are enabled b
 
 In addition to the immutability rules above, there are a few standard rules that need to be enabled to achieve immutability.
 
-These rules are all included in the *external-recommended* rulesets.
+These rules are all included in the _external-recommended_ rulesets.
 
 ### [no-var](https://eslint.org/docs/rules/no-var)
 

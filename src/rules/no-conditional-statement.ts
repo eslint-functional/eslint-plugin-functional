@@ -5,12 +5,12 @@ import {
   createRule,
   RuleContext,
   RuleMetaData,
-  RuleResult
+  RuleResult,
 } from "../util/rule";
 import {
   isBlockStatement,
   isIfStatement,
-  isReturnStatement
+  isReturnStatement,
 } from "../util/typeguard";
 
 // The name of this rule.
@@ -29,17 +29,17 @@ const schema: JSONSchema4 = [
       allowReturningBranches: {
         oneOf: [
           {
-            type: "boolean"
+            type: "boolean",
           },
           {
             type: "string",
-            enum: ["ifExhaustive"]
-          }
-        ]
-      }
+            enum: ["ifExhaustive"],
+          },
+        ],
+      },
     },
-    additionalProperties: false
-  }
+    additionalProperties: false,
+  },
 ];
 
 // The default options for the rule.
@@ -56,7 +56,7 @@ const errorMessages = {
   unexpectedIf:
     "Unexpected if, use a conditional expression (ternary operator) instead.",
   unexpectedSwitch:
-    "Unexpected switch, use a conditional expression (ternary operator) instead."
+    "Unexpected switch, use a conditional expression (ternary operator) instead.",
 } as const;
 
 // The meta data for this rule.
@@ -65,10 +65,10 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
   docs: {
     description: "Disallow conditional statements.",
     category: "Best Practices",
-    recommended: false
+    recommended: false,
   },
   messages: errorMessages,
-  schema
+  schema,
 };
 
 /**
@@ -86,7 +86,7 @@ function getIfBranchViolations(
       !(
         isBlockStatement(branch) &&
         branch.body.some(
-          statement =>
+          (statement) =>
             isReturnStatement(statement) ||
             // Another instance of this rule will check nested if statements.
             isIfStatement(statement)
@@ -95,7 +95,9 @@ function getIfBranchViolations(
       !isIfStatement(branch)
   );
 
-  return violations.flatMap(node => [{ node, messageId: "incompleteBranch" }]);
+  return violations.flatMap((node) => [
+    { node, messageId: "incompleteBranch" },
+  ]);
 }
 
 /**
@@ -106,7 +108,7 @@ function getSwitchViolations(
   node: TSESTree.SwitchStatement
 ): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
   const violations = node.cases.filter(
-    branch =>
+    (branch) =>
       branch.consequent.length !== 0 &&
       !branch.consequent.some(isReturnStatement) &&
       !(
@@ -117,7 +119,9 @@ function getSwitchViolations(
       )
   );
 
-  return violations.flatMap(node => [{ node, messageId: "incompleteBranch" }]);
+  return violations.flatMap((node) => [
+    { node, messageId: "incompleteBranch" },
+  ]);
 }
 
 /**
@@ -135,7 +139,7 @@ function isExhaustiveSwitchViolation(node: TSESTree.SwitchStatement): boolean {
     // No cases defined.
     node.cases.length === 0 ||
     // No default case defined.
-    node.cases.every(c => c.test !== null)
+    node.cases.every((c) => c.test !== null)
   );
 }
 
@@ -155,7 +159,7 @@ function checkIfStatement(
           ? [{ node, messageId: "incompleteIf" }]
           : getIfBranchViolations(node)
         : getIfBranchViolations(node)
-      : [{ node, messageId: "unexpectedIf" }]
+      : [{ node, messageId: "unexpectedIf" }],
   };
 }
 
@@ -175,7 +179,7 @@ function checkSwitchStatement(
           ? [{ node, messageId: "incompleteSwitch" }]
           : getSwitchViolations(node)
         : getSwitchViolations(node)
-      : [{ node, messageId: "unexpectedSwitch" }]
+      : [{ node, messageId: "unexpectedSwitch" }],
   };
 }
 
@@ -186,6 +190,6 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   defaultOptions,
   {
     IfStatement: checkIfStatement,
-    SwitchStatement: checkSwitchStatement
+    SwitchStatement: checkSwitchStatement,
   }
 );

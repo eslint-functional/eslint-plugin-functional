@@ -13,7 +13,7 @@ import {
   InvalidTestCase,
   processInvalidTestCase,
   processValidTestCase,
-  ValidTestCase
+  ValidTestCase,
 } from "../helpers/util";
 
 // Valid test cases.
@@ -23,13 +23,13 @@ const valid: ReadonlyArray<ValidTestCase> = [
     code: dedent`
       function foo(...numbers: ReadonlyArray<number>) {
       }`,
-    optionsSet: [[]]
+    optionsSet: [[]],
   },
   {
     code: dedent`
       function foo(...numbers: readonly number[]) {
       }`,
-    optionsSet: [[]]
+    optionsSet: [[]],
   },
   // Should not fail on explicit ReadonlyArray return type.
   {
@@ -37,26 +37,26 @@ const valid: ReadonlyArray<ValidTestCase> = [
       function foo(): ReadonlyArray<number> {
         return [1, 2, 3];
       }`,
-    optionsSet: [[]]
+    optionsSet: [[]],
   },
   {
     code: dedent`
       const foo = (): ReadonlyArray<number> => {
         return [1, 2, 3];
       }`,
-    optionsSet: [[]]
+    optionsSet: [[]],
   },
   // ReadonlyArray Tuple.
   {
     code: dedent`
       function foo(tuple: readonly [number, string, readonly [number, string]]) {
       }`,
-    optionsSet: [[]]
+    optionsSet: [[]],
   },
   // Should not fail on ReadonlyArray type alias.
   {
     code: `type Foo = ReadonlyArray<string>;`,
-    optionsSet: [[]]
+    optionsSet: [[]],
   },
   // Should not fail on ReadonlyArray type alias in local type.
   {
@@ -64,33 +64,33 @@ const valid: ReadonlyArray<ValidTestCase> = [
       function foo() {
         type Foo = ReadonlyArray<string>;
       }`,
-    optionsSet: [[]]
+    optionsSet: [[]],
   },
   // Should not fail on ReadonlyArray in variable declaration.
   {
     code: `const foo: ReadonlyArray<string> = [];`,
-    optionsSet: [[]]
+    optionsSet: [[]],
   },
   // Allow return type.
   {
     code: dedent`
       function foo(...numbers: ReadonlyArray<number>): Array<number> {}
       function bar(...numbers: readonly number[]): number[] {}`,
-    optionsSet: [[{ allowMutableReturnType: true }]]
+    optionsSet: [[{ allowMutableReturnType: true }]],
   },
   // Allow return type.
   {
     code: dedent`
       const foo = function(...numbers: ReadonlyArray<number>): Array<number> {}
       const bar = function(...numbers: readonly number[]): number[] {}`,
-    optionsSet: [[{ allowMutableReturnType: true }]]
+    optionsSet: [[{ allowMutableReturnType: true }]],
   },
   // Allow return type.
   {
     code: dedent`
       const foo = (...numbers: ReadonlyArray<number>): Array<number> =>  {}
       const bar = (...numbers: readonly number[]): number[] =>  {}`,
-    optionsSet: [[{ allowMutableReturnType: true }]]
+    optionsSet: [[{ allowMutableReturnType: true }]],
   },
   // Allow return type.
   {
@@ -103,14 +103,14 @@ const valid: ReadonlyArray<ValidTestCase> = [
         foo(...numbers: readonly number[]): number[] {
         }
       }`,
-    optionsSet: [[{ allowMutableReturnType: true }]]
+    optionsSet: [[{ allowMutableReturnType: true }]],
   },
   // Allow return type with Type Arguments.
   {
     code: dedent`
       function foo(...numbers: ReadonlyArray<number>): Promise<Array<number>> {}
       function foo(...numbers: ReadonlyArray<number>): Promise<number[]> {}`,
-    optionsSet: [[{ allowMutableReturnType: true }]]
+    optionsSet: [[{ allowMutableReturnType: true }]],
   },
   // Allow return type with deep Type Arguments.
   {
@@ -118,45 +118,45 @@ const valid: ReadonlyArray<ValidTestCase> = [
       type Foo<T> = { readonly x: T; };
       function foo(...numbers: ReadonlyArray<number>): Promise<Foo<Array<number>>> {}
       function foo(...numbers: ReadonlyArray<number>): Promise<Foo<number[]>> {}`,
-    optionsSet: [[{ allowMutableReturnType: true }]]
+    optionsSet: [[{ allowMutableReturnType: true }]],
   },
   // Allow return type with Type Arguments in a tuple.
   {
     code: dedent`
       function foo(...numbers: ReadonlyArray<number>): readonly [number, Array<number>, number] {}
       function foo(...numbers: ReadonlyArray<number>): readonly [number, number[], number] {}`,
-    optionsSet: [[{ allowMutableReturnType: true }]]
+    optionsSet: [[{ allowMutableReturnType: true }]],
   },
   // Allow return type with Type Arguments Union.
   {
     code: dedent`
       function foo(...numbers: ReadonlyArray<number>): { readonly a: Array<number> } | { readonly b: string[] } {}`,
-    optionsSet: [[{ allowMutableReturnType: true }]]
+    optionsSet: [[{ allowMutableReturnType: true }]],
   },
   // Allow return type with Type Arguments Intersection.
   {
     code: dedent`
       function foo(...numbers: ReadonlyArray<number>): { readonly a: Array<number> } & { readonly b: string[] } {}`,
-    optionsSet: [[{ allowMutableReturnType: true }]]
+    optionsSet: [[{ allowMutableReturnType: true }]],
   },
   // Allow return type with Type Arguments Conditional.
   {
     code: dedent`
       function foo<T>(x: T): T extends Array<number> ? string : number[] {}`,
-    optionsSet: [[{ allowMutableReturnType: true }]]
+    optionsSet: [[{ allowMutableReturnType: true }]],
   },
   // Should not fail on implicit ReadonlyArray type in variable declaration.
   {
     code: dedent`
       const foo = [1, 2, 3] as const`,
-    optionsSet: [[{ checkImplicit: true }]]
+    optionsSet: [[{ checkImplicit: true }]],
   },
   // Should not fail on implicit Array.
   {
     code: dedent`
       const foo = [1, 2, 3]
       function bar(param = [1, 2, 3]) {}`,
-    optionsSet: [[]]
+    optionsSet: [[]],
   },
   // Interface with readonly modifiers should not produce failures.
   {
@@ -168,7 +168,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
         readonly d: { readonly [key: string]: string },
         readonly [key: string]: string,
       }`,
-    optionsSet: [[]]
+    optionsSet: [[]],
   },
   // PropertySignature and IndexSignature members without readonly modifier
   // should produce failures. Also verify that nested members are checked.
@@ -188,7 +188,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
           readonly [key: string]: string,
         }
       }`,
-    optionsSet: [[]]
+    optionsSet: [[]],
   },
   // Class with parameter properties.
   {
@@ -202,7 +202,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
           private readonly privateReadonlyProp: string,
       ) { }
     }`,
-    optionsSet: [[]]
+    optionsSet: [[]],
   },
   // CallSignature and MethodSignature cannot have readonly modifiers and should
   // not produce failures.
@@ -212,17 +212,17 @@ const valid: ReadonlyArray<ValidTestCase> = [
         (): void
         foo(): void
       }`,
-    optionsSet: [[]]
+    optionsSet: [[]],
   },
   // The literal with indexer with readonly modifier should not produce failures.
   {
     code: `let foo: { readonly [key: string]: number };`,
-    optionsSet: [[]]
+    optionsSet: [[]],
   },
   // Type literal in array template parameter with readonly should not produce failures.
   {
     code: `type foo = ReadonlyArray<{ readonly type: string, readonly code: string }>;`,
-    optionsSet: [[]]
+    optionsSet: [[]],
   },
   // Type literal with readonly on members should not produce failures.
   {
@@ -234,13 +234,13 @@ const valid: ReadonlyArray<ValidTestCase> = [
         readonly d: { readonly [key: string]: string }
         readonly [key: string]: string
       };`,
-    optionsSet: [[]]
+    optionsSet: [[]],
   },
   // Mapped types with readonly on members should not produce failures.
   {
     code: dedent`
       const func = (x: { readonly [key in string]: number }) => {}`,
-    optionsSet: [[]]
+    optionsSet: [[]],
   },
   // Ignore Classes.
   {
@@ -251,7 +251,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
         static baz: number;
         private static qux: number;
       }`,
-    optionsSet: [[{ ignoreClass: true }]]
+    optionsSet: [[{ ignoreClass: true }]],
   },
   // Ignore Interfaces.
   {
@@ -262,7 +262,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
         baz: () => string,
         qux: { [key: string]: string }
       }`,
-    optionsSet: [[{ ignoreInterface: true }]]
+    optionsSet: [[{ ignoreInterface: true }]],
   },
   // Allow Local.
   {
@@ -283,13 +283,13 @@ const valid: ReadonlyArray<ValidTestCase> = [
           }
         }
       };`,
-    optionsSet: [[{ allowLocalMutation: true }]]
+    optionsSet: [[{ allowLocalMutation: true }]],
   },
   // Ignore Prefix.
   {
     code: dedent`
       let mutableFoo: string[] = [];`,
-    optionsSet: [[{ ignorePattern: "^mutable" }]]
+    optionsSet: [[{ ignorePattern: "^mutable" }]],
   },
   {
     code: dedent`
@@ -305,7 +305,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
           mutableD: { readonly [key: string]: string },
         }
       };`,
-    optionsSet: [[{ ignorePattern: "^mutable" }]]
+    optionsSet: [[{ ignorePattern: "^mutable" }]],
   },
   {
     code: dedent`
@@ -313,13 +313,13 @@ const valid: ReadonlyArray<ValidTestCase> = [
         mutableA: string;
         private mutableB: string;
       }`,
-    optionsSet: [[{ ignorePattern: "^mutable" }]]
+    optionsSet: [[{ ignorePattern: "^mutable" }]],
   },
   // Ignore Suffix.
   {
     code: dedent`
       let fooMutable: string[] = [];`,
-    optionsSet: [[{ ignorePattern: "Mutable$" }]]
+    optionsSet: [[{ ignorePattern: "Mutable$" }]],
   },
   {
     code: dedent`
@@ -335,7 +335,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
           dMutable: { readonly [key: string]: string },
         }
       };`,
-    optionsSet: [[{ ignorePattern: "Mutable$" }]]
+    optionsSet: [[{ ignorePattern: "Mutable$" }]],
   },
   {
     code: dedent`
@@ -343,7 +343,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
         AMutable: string;
         private BMutable: string;
       }`,
-    optionsSet: [[{ ignorePattern: "Mutable$" }]]
+    optionsSet: [[{ ignorePattern: "Mutable$" }]],
   },
   // Allow mutable TSIndexSignature.
   {
@@ -351,8 +351,8 @@ const valid: ReadonlyArray<ValidTestCase> = [
       const mutableResult: {
         [key: string]: string
       } = {};`,
-    optionsSet: [[{ ignorePattern: "^mutable" }]]
-  }
+    optionsSet: [[{ ignorePattern: "^mutable" }]],
+  },
 ];
 
 // Invalid test cases.
@@ -370,9 +370,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "array",
         type: "TSArrayType",
         line: 1,
-        column: 26
-      }
-    ]
+        column: 26,
+      },
+    ],
   },
   {
     code: dedent`
@@ -387,9 +387,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "type",
         type: "TSTypeReference",
         line: 1,
-        column: 26
-      }
-    ]
+        column: 26,
+      },
+    ],
   },
   {
     code: dedent`
@@ -404,9 +404,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "type",
         type: "TSTypeReference",
         line: 1,
-        column: 23
-      }
-    ]
+        column: 23,
+      },
+    ],
   },
   {
     code: dedent`
@@ -421,9 +421,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "type",
         type: "TSTypeReference",
         line: 1,
-        column: 23
-      }
-    ]
+        column: 23,
+      },
+    ],
   },
   // Should fail on Array type in interface.
   {
@@ -441,9 +441,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "type",
         type: "TSTypeReference",
         line: 2,
-        column: 17
-      }
-    ]
+        column: 17,
+      },
+    ],
   },
   // Should fail on Array type in index interface.
   {
@@ -465,9 +465,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "type",
         type: "TSTypeReference",
         line: 3,
-        column: 22
-      }
-    ]
+        column: 22,
+      },
+    ],
   },
   // Should fail on Array type as function return type and in local interface.
   {
@@ -489,15 +489,15 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "type",
         type: "TSTypeReference",
         line: 1,
-        column: 17
+        column: 17,
       },
       {
         messageId: "type",
         type: "TSTypeReference",
         line: 3,
-        column: 19
-      }
-    ]
+        column: 19,
+      },
+    ],
   },
   // Should fail on Array type as function return type and in local interface.
   {
@@ -519,15 +519,15 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "type",
         type: "TSTypeReference",
         line: 1,
-        column: 17
+        column: 17,
       },
       {
         messageId: "type",
         type: "TSTypeReference",
         line: 3,
-        column: 19
-      }
-    ]
+        column: 19,
+      },
+    ],
   },
   // Should fail on shorthand syntax Array type as return type.
   {
@@ -543,9 +543,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "array",
         type: "TSArrayType",
         line: 1,
-        column: 17
-      }
-    ]
+        column: 17,
+      },
+    ],
   },
   // Should fail on shorthand syntax Array type as return type.
   {
@@ -557,9 +557,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "array",
         type: "TSArrayType",
         line: 1,
-        column: 17
-      }
-    ]
+        column: 17,
+      },
+    ],
   },
   // Should fail inside function.
   {
@@ -577,9 +577,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "type",
         type: "TSTypeReference",
         line: 2,
-        column: 12
-      }
-    ]
+        column: 12,
+      },
+    ],
   },
   // Tuples.
   {
@@ -595,9 +595,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "tuple",
         type: "TSTupleType",
         line: 1,
-        column: 21
-      }
-    ]
+        column: 21,
+      },
+    ],
   },
   {
     code: dedent`
@@ -612,15 +612,15 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "tuple",
         type: "TSTupleType",
         line: 1,
-        column: 21
+        column: 21,
       },
       {
         messageId: "tuple",
         type: "TSTupleType",
         line: 1,
-        column: 38
-      }
-    ]
+        column: 38,
+      },
+    ],
   },
   {
     code: dedent`
@@ -635,9 +635,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "tuple",
         type: "TSTupleType",
         line: 1,
-        column: 47
-      }
-    ]
+        column: 47,
+      },
+    ],
   },
   {
     code: dedent`
@@ -652,9 +652,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "tuple",
         type: "TSTupleType",
         line: 1,
-        column: 21
-      }
-    ]
+        column: 21,
+      },
+    ],
   },
   // Should fail on Array as type literal member as function parameter.
   {
@@ -702,21 +702,21 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "type",
         type: "TSTypeReference",
         line: 3,
-        column: 19
+        column: 19,
       },
       {
         messageId: "type",
         type: "TSTypeReference",
         line: 7,
-        column: 17
+        column: 17,
       },
       {
         messageId: "type",
         type: "TSTypeReference",
         line: 11,
-        column: 19
-      }
-    ]
+        column: 19,
+      },
+    ],
   },
   // Should fail on Array type alias.
   {
@@ -728,9 +728,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "type",
         type: "TSTypeReference",
         line: 1,
-        column: 12
-      }
-    ]
+        column: 12,
+      },
+    ],
   },
   // Should fail on Array as type member.
   {
@@ -752,9 +752,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "type",
         type: "TSTypeReference",
         line: 3,
-        column: 19
-      }
-    ]
+        column: 19,
+      },
+    ],
   },
   // Should fail on Array type alias in local type.
   {
@@ -772,9 +772,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "type",
         type: "TSTypeReference",
         line: 2,
-        column: 14
-      }
-    ]
+        column: 14,
+      },
+    ],
   },
   // Should fail on Array as type member in local type.
   {
@@ -796,9 +796,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "type",
         type: "TSTypeReference",
         line: 3,
-        column: 19
-      }
-    ]
+        column: 19,
+      },
+    ],
   },
   // Should fail on Array type in variable declaration.
   {
@@ -810,9 +810,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "type",
         type: "TSTypeReference",
         line: 1,
-        column: 12
-      }
-    ]
+        column: 12,
+      },
+    ],
   },
   // Should fail on shorthand Array syntax.
   {
@@ -824,9 +824,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "array",
         type: "TSArrayType",
         line: 1,
-        column: 12
-      }
-    ]
+        column: 12,
+      },
+    ],
   },
   // Should fail on Array type being used as template param.
   {
@@ -838,9 +838,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "type",
         type: "TSTypeReference",
         line: 1,
-        column: 12
-      }
-    ]
+        column: 12,
+      },
+    ],
   },
   // Should fail on nested shorthand arrays.
   {
@@ -852,9 +852,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "array",
         type: "TSArrayType",
         line: 1,
-        column: 17
-      }
-    ]
+        column: 17,
+      },
+    ],
   },
   // Should fail on implicit Array type in variable declaration.
   {
@@ -870,15 +870,15 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "implicit",
         type: "VariableDeclarator",
         line: 1,
-        column: 7
+        column: 7,
       },
       {
         messageId: "implicit",
         type: "AssignmentPattern",
         line: 2,
-        column: 14
-      }
-    ]
+        column: 14,
+      },
+    ],
   },
   // Class Property Signatures.
   {
@@ -902,27 +902,27 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "property",
         type: "ClassProperty",
         line: 2,
-        column: 3
+        column: 3,
       },
       {
         messageId: "property",
         type: "ClassProperty",
         line: 3,
-        column: 3
+        column: 3,
       },
       {
         messageId: "property",
         type: "ClassProperty",
         line: 4,
-        column: 3
+        column: 3,
       },
       {
         messageId: "property",
         type: "ClassProperty",
         line: 5,
-        column: 3
-      }
-    ]
+        column: 3,
+      },
+    ],
   },
   // Class Parameter Properties.
   {
@@ -948,21 +948,21 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "property",
         type: "TSParameterProperty",
         line: 3,
-        column: 5
+        column: 5,
       },
       {
         messageId: "property",
         type: "TSParameterProperty",
         line: 4,
-        column: 5
+        column: 5,
       },
       {
         messageId: "property",
         type: "TSParameterProperty",
         line: 5,
-        column: 5
-      }
-    ]
+        column: 5,
+      },
+    ],
   },
   // Interface Index Signatures.
   {
@@ -986,21 +986,21 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "property",
         type: "TSIndexSignature",
         line: 2,
-        column: 3
+        column: 3,
       },
       {
         messageId: "property",
         type: "TSIndexSignature",
         line: 5,
-        column: 3
+        column: 3,
       },
       {
         messageId: "property",
         type: "TSPropertySignature",
         line: 5,
-        column: 20
-      }
-    ]
+        column: 20,
+      },
+    ],
   },
   // Function Index Signatures.
   {
@@ -1024,15 +1024,15 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "property",
         type: "TSIndexSignature",
         line: 1,
-        column: 19
+        column: 19,
       },
       {
         messageId: "property",
         type: "TSIndexSignature",
         line: 4,
-        column: 23
-      }
-    ]
+        column: 23,
+      },
+    ],
   },
   // Type literal with indexer without readonly modifier should produce failures.
   {
@@ -1044,9 +1044,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "property",
         type: "TSIndexSignature",
         line: 1,
-        column: 12
-      }
-    ]
+        column: 12,
+      },
+    ],
   },
   // Type literal in property template parameter without readonly should produce failures.
   {
@@ -1066,15 +1066,15 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "property",
         type: "TSPropertySignature",
         line: 2,
-        column: 3
+        column: 3,
       },
       {
         messageId: "property",
         type: "TSPropertySignature",
         line: 3,
-        column: 3
-      }
-    ]
+        column: 3,
+      },
+    ],
   },
   // Type literal without readonly on members should produce failures.
   // Also verify that nested members are checked.
@@ -1115,63 +1115,63 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "property",
         type: "TSPropertySignature",
         line: 2,
-        column: 3
+        column: 3,
       },
       {
         messageId: "property",
         type: "TSPropertySignature",
         line: 3,
-        column: 3
+        column: 3,
       },
       {
         messageId: "property",
         type: "TSPropertySignature",
         line: 4,
-        column: 3
+        column: 3,
       },
       {
         messageId: "property",
         type: "TSPropertySignature",
         line: 5,
-        column: 3
+        column: 3,
       },
       {
         messageId: "property",
         type: "TSIndexSignature",
         line: 6,
-        column: 3
+        column: 3,
       },
       {
         messageId: "property",
         type: "TSPropertySignature",
         line: 8,
-        column: 5
+        column: 5,
       },
       {
         messageId: "property",
         type: "TSPropertySignature",
         line: 9,
-        column: 5
+        column: 5,
       },
       {
         messageId: "property",
         type: "TSPropertySignature",
         line: 10,
-        column: 5
+        column: 5,
       },
       {
         messageId: "property",
         type: "TSPropertySignature",
         line: 11,
-        column: 5
+        column: 5,
       },
       {
         messageId: "property",
         type: "TSIndexSignature",
         line: 12,
-        column: 5
-      }
-    ]
+        column: 5,
+      },
+    ],
   },
   {
     code: dedent`
@@ -1186,9 +1186,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "property",
         type: "TSPropertySignature",
         line: 1,
-        column: 21
-      }
-    ]
+        column: 21,
+      },
+    ],
   },
   // Mapped type without readonly.
   {
@@ -1202,16 +1202,16 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "property",
         type: "TSMappedType",
         line: 1,
-        column: 18
-      }
-    ]
-  }
+        column: 18,
+      },
+    ],
+  },
 ];
 
 describeTsOnly("TypeScript", () => {
   const ruleTester = new RuleTester(typescript);
   ruleTester.run(name, rule, {
     valid: processValidTestCase(valid),
-    invalid: processInvalidTestCase(invalid)
+    invalid: processInvalidTestCase(invalid),
   });
 });

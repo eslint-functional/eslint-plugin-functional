@@ -8,7 +8,7 @@ import {
   ValidTestCase,
   InvalidTestCase,
   processValidTestCase,
-  processInvalidTestCase
+  processInvalidTestCase,
 } from "../helpers/util";
 import { typescript } from "../helpers/configs";
 import { RuleTester } from "eslint";
@@ -64,5 +64,5 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
 const ruleTester = new RuleTester(typescript);
 ruleTester.run("Work", rule, {
   valid: processValidTestCase(valid),
-  invalid: processInvalidTestCase(invalid)
+  invalid: processInvalidTestCase(invalid),
 });

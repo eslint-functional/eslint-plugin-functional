@@ -4,7 +4,7 @@ const config: Config = {
   rules: {
     "prefer-const": "error",
     "no-param-reassign": "error",
-    "no-var": "error"
+    "no-var": "error",
   },
   overrides: [
     {
@@ -15,12 +15,12 @@ const config: Config = {
           {
             allowExpressions: true,
             allowTypedFunctionExpressions: true,
-            allowHigherOrderFunctions: true
-          }
-        ]
-      }
-    }
-  ]
+            allowHigherOrderFunctions: true,
+          },
+        ],
+      },
+    },
+  ],
 };
 
 export default config;

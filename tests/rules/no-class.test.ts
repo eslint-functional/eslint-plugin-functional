@@ -12,7 +12,7 @@ import {
   InvalidTestCase,
   processInvalidTestCase,
   processValidTestCase,
-  ValidTestCase
+  ValidTestCase,
 } from "../helpers/util";
 
 // Valid test cases.
@@ -28,9 +28,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "ClassDeclaration",
         line: 1,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   {
     code: "const klass = class {}",
@@ -40,17 +40,17 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "ClassExpression",
         line: 1,
-        column: 15
-      }
-    ]
-  }
+        column: 15,
+      },
+    ],
+  },
 ];
 
 describeTsOnly("TypeScript", () => {
   const ruleTester = new RuleTester(typescript);
   ruleTester.run(name, rule, {
     valid: processValidTestCase(valid),
-    invalid: processInvalidTestCase(invalid)
+    invalid: processInvalidTestCase(invalid),
   });
 });
 
@@ -58,6 +58,6 @@ describe("JavaScript (es6)", () => {
   const ruleTester = new RuleTester(es6);
   ruleTester.run(name, rule, {
     valid: processValidTestCase(valid),
-    invalid: processInvalidTestCase(invalid)
+    invalid: processInvalidTestCase(invalid),
   });
 });

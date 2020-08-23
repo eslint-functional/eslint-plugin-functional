@@ -12,7 +12,7 @@ const config: Config = {
     "functional/no-promise-reject": "error",
     "functional/no-this-expression": "error",
     "functional/no-throw-statement": "error",
-    "functional/no-try-statement": "error"
+    "functional/no-try-statement": "error",
   },
   overrides: [
     {
@@ -22,10 +22,10 @@ const config: Config = {
         "functional/no-mixed-type": "error",
         "functional/prefer-readonly-type": "error",
         "functional/prefer-type-literal": "error",
-        "functional/no-return-void": "error"
-      }
-    }
-  ]
+        "functional/no-return-void": "error",
+      },
+    },
+  ],
 };
 
 export default config;

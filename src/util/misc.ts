@@ -1,6 +1,6 @@
 import {
   AST_NODE_TYPES,
-  TSESTree
+  TSESTree,
 } from "@typescript-eslint/experimental-utils";
 import { Linter } from "eslint";
 
@@ -9,7 +9,7 @@ import { Linter } from "eslint";
  * value.
  */
 export function isExpected<T>(expected: T): (actual: T) => boolean {
-  return actual => actual === expected;
+  return (actual) => actual === expected;
 }
 
 /**
