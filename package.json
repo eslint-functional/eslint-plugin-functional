@@ -76,6 +76,9 @@
     "object.fromentries": "^2.0.2"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^15.0.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^9.0.0",
     "@types/dedent": "^0.7.0",
     "@types/eslint": "^7.2.1",
     "@types/estree": "^0.0.45",
@@ -103,9 +106,6 @@
     "prettier": "^2.0.5",
     "rimraf": "^3.0.0",
     "rollup": "^2.26.5",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-json": "^4.0.0",
-    "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-typescript2": "^0.27.2",
     "shelljs": "^0.8.3",
     "ts-jest": "^24.3.0",

@@ -3,10 +3,10 @@
  */
 // @ts-check
 
-import rollupPluginCommonjs from "rollup-plugin-commonjs";
-import rollupPluginNodeResolve from "rollup-plugin-node-resolve";
+import rollupPluginCommonjs from "@rollup/plugin-commonjs";
+import rollupPluginNodeResolve from "@rollup/plugin-node-resolve";
 import rollupPluginTypescript from "rollup-plugin-typescript2";
-import rollupPluginJSON from "rollup-plugin-json";
+import rollupPluginJSON from "@rollup/plugin-json";
 
 import {
   isAbsolute as isAbsolutePath,
