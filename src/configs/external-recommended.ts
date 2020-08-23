@@ -1,6 +1,6 @@
-import { Config } from "../util/misc";
+import { Linter } from "eslint";
 
-const config: Config = {
+const config: Linter.Config = {
   rules: {
     "prefer-const": "error",
     "no-param-reassign": "error",

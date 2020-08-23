@@ -3,7 +3,7 @@
 /**
  * Used compiled rules? i.e. test against JS files instead of TS files.
  */
-const useCompiled = process.env.USE_COMPLIED !== undefined;
+const useCompiled = Boolean(process.env.USE_COMPLIED);
 
 module.exports = {
   testEnvironment: "node",
@@ -19,7 +19,7 @@ module.exports = {
   coverageReporters: ["text-summary", "lcov"],
   globals: {
     "ts-jest": {
-      tsConfig: "tests/tsconfig.json",
+      tsconfig: "tests/tsconfig.json",
     },
   },
 };
