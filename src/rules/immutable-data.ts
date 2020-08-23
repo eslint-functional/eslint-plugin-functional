@@ -7,7 +7,7 @@ import {
   ignoreAccessorPatternOptionSchema,
   IgnorePatternOption,
   ignorePatternOptionSchema,
-  shouldIgnore
+  shouldIgnore,
 } from "../common/ignore-options";
 import { isExpected } from "../util/misc";
 import {
@@ -15,7 +15,7 @@ import {
   getTypeOfNode,
   RuleContext,
   RuleMetaData,
-  RuleResult
+  RuleResult,
 } from "../util/rule";
 import { inConstructor } from "../util/tree";
 import {
@@ -26,7 +26,7 @@ import {
   isIdentifier,
   isMemberExpression,
   isNewExpression,
-  isObjectConstructorType
+  isObjectConstructorType,
 } from "../util/typeguard";
 
 // The name of this rule.
@@ -53,31 +53,31 @@ const schema: JSONSchema4 = [
       type: "object",
       properties: {
         ignoreImmediateMutation: {
-          type: "boolean"
+          type: "boolean",
         },
         assumeTypes: {
           oneOf: [
             {
-              type: "boolean"
+              type: "boolean",
             },
             {
               type: "object",
               properties: {
                 forArrays: {
-                  type: "boolean"
+                  type: "boolean",
                 },
                 forObjects: {
-                  type: "boolean"
-                }
+                  type: "boolean",
+                },
               },
-              additionalProperties: false
-            }
-          ]
-        }
+              additionalProperties: false,
+            },
+          ],
+        },
       },
-      additionalProperties: false
-    }
-  ])
+      additionalProperties: false,
+    },
+  ]),
 ];
 
 // The default options for the rule.
@@ -85,15 +85,15 @@ const defaultOptions: Options = {
   ignoreImmediateMutation: true,
   assumeTypes: {
     forArrays: true,
-    forObjects: true
-  }
+    forObjects: true,
+  },
 };
 
 // The possible error messages.
 const errorMessages = {
   generic: "Modifying an existing object/array is not allowed.",
   object: "Modifying properties of existing object not allowed.",
-  array: "Modifying an array is not allowed."
+  array: "Modifying an array is not allowed.",
 } as const;
 
 // The meta data for this rule.
@@ -102,10 +102,10 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
   docs: {
     description: "Enforce treating data as immutable.",
     category: "Best Practices",
-    recommended: "error"
+    recommended: "error",
   },
   messages: errorMessages,
-  schema
+  schema,
 };
 
 /**
@@ -122,7 +122,7 @@ const arrayMutatorMethods = [
   "shift",
   "sort",
   "splice",
-  "unshift"
+  "unshift",
 ] as const;
 
 /**
@@ -137,7 +137,7 @@ const arrayNewObjectReturningMethods = [
   "filter",
   "map",
   "reduce",
-  "reduceRight"
+  "reduceRight",
 ] as const;
 
 /**
@@ -156,7 +156,7 @@ const objectConstructorMutatorFunctions = [
   "assign",
   "defineProperties",
   "defineProperty",
-  "setPrototypeOf"
+  "setPrototypeOf",
 ] as const;
 
 /**
@@ -173,7 +173,7 @@ function checkAssignmentExpression(
       // Allow if in a constructor - allow for field initialization.
       !inConstructor(node)
         ? [{ node, messageId: "generic" }]
-        : []
+        : [],
   };
 }
 
@@ -189,7 +189,7 @@ function checkUnaryExpression(
     descriptors:
       node.operator === "delete" && isMemberExpression(node.argument)
         ? [{ node, messageId: "generic" }]
-        : []
+        : [],
   };
 }
 
@@ -207,7 +207,7 @@ function checkUpdateExpression(
       isMemberExpression(node.argument) &&
       !shouldIgnore(node.argument, context, options)
         ? [{ node, messageId: "generic" }]
-        : []
+        : [],
   };
 }
 
@@ -277,7 +277,7 @@ function checkCallExpression(
           // Check if allowed here - this cannot be automatically checked beforehand.
           !shouldIgnore(node.callee.object, context, options) &&
           arrayMutatorMethods.some(
-            m =>
+            (m) =>
               m ===
               ((node.callee as TSESTree.MemberExpression)
                 .property as TSESTree.Identifier).name
@@ -296,7 +296,7 @@ function checkCallExpression(
           ? [{ node, messageId: "array" }]
           : // Potential non-array object mutation (ex. Object.assign on identifier)?
           objectConstructorMutatorFunctions.some(
-              m =>
+              (m) =>
                 m ===
                 ((node.callee as TSESTree.MemberExpression)
                   .property as TSESTree.Identifier).name
@@ -313,7 +313,7 @@ function checkCallExpression(
             )
           ? [{ node, messageId: "object" }]
           : []
-        : []
+        : [],
   };
 }
 
@@ -326,6 +326,6 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
     AssignmentExpression: checkAssignmentExpression,
     UnaryExpression: checkUnaryExpression,
     UpdateExpression: checkUpdateExpression,
-    CallExpression: checkCallExpression
+    CallExpression: checkCallExpression,
   }
 );

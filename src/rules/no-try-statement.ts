@@ -5,7 +5,7 @@ import {
   createRule,
   RuleContext,
   RuleMetaData,
-  RuleResult
+  RuleResult,
 } from "../util/rule";
 
 // The name of this rule.
@@ -23,26 +23,26 @@ const schema: JSONSchema4 = [
     type: "object",
     properties: {
       allowCatch: {
-        type: "boolean"
+        type: "boolean",
       },
       allowFinally: {
-        type: "boolean"
-      }
+        type: "boolean",
+      },
     },
-    additionalProperties: false
-  }
+    additionalProperties: false,
+  },
 ];
 
 // The default options for the rule.
 const defaultOptions: Options = {
   allowCatch: false,
-  allowFinally: false
+  allowFinally: false,
 };
 
 // The possible error messages.
 const errorMessages = {
   catch: "Unexpected try-catch, this pattern is not functional.",
-  finally: "Unexpected try-finally, this pattern is not functional."
+  finally: "Unexpected try-finally, this pattern is not functional.",
 } as const;
 
 // The meta data for this rule.
@@ -51,10 +51,10 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
   docs: {
     description: "Disallow try-catch[-finally] and try-finally patterns.",
     category: "Best Practices",
-    recommended: false
+    recommended: false,
   },
   messages: errorMessages,
-  schema
+  schema,
 };
 
 /**
@@ -72,7 +72,7 @@ function checkTryStatement(
         ? [{ node, messageId: "catch" }]
         : !options.allowFinally && node.finalizer !== null
         ? [{ node, messageId: "finally" }]
-        : []
+        : [],
   };
 }
 
@@ -82,6 +82,6 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   meta,
   defaultOptions,
   {
-    TryStatement: checkTryStatement
+    TryStatement: checkTryStatement,
   }
 );

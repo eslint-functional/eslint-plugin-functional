@@ -21,8 +21,8 @@ const config = {
     "no-exceptions": noExceptions,
     "no-object-orientation": noObjectOrientation,
     "no-statements": noStatements,
-    currying
-  }
+    currying,
+  },
 };
 
 export default config;

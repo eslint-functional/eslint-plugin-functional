@@ -3,14 +3,14 @@ import { JSONSchema4 } from "json-schema";
 
 import {
   IgnorePatternOption,
-  ignorePatternOptionSchema
+  ignorePatternOptionSchema,
 } from "../common/ignore-options";
 import { isDirectivePrologue } from "../util/misc";
 import {
   createRule,
   RuleContext,
   RuleMetaData,
-  RuleResult
+  RuleResult,
 } from "../util/rule";
 
 // The name of this rule.
@@ -27,7 +27,7 @@ const defaultOptions: Options = {};
 
 // The possible error messages.
 const errorMessages = {
-  generic: "Using expressions to cause side-effects not allowed."
+  generic: "Using expressions to cause side-effects not allowed.",
 } as const;
 
 // The meta data for this rule.
@@ -36,10 +36,10 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
   docs: {
     description: "Disallow expression statements.",
     category: "Best Practices",
-    recommended: false
+    recommended: false,
   },
   messages: errorMessages,
-  schema
+  schema,
 };
 
 /**
@@ -53,7 +53,7 @@ function checkExpressionStatement(
     context,
     descriptors:
       // Allow specifying directive prologues.
-      isDirectivePrologue(node) ? [] : [{ node, messageId: "generic" }]
+      isDirectivePrologue(node) ? [] : [{ node, messageId: "generic" }],
   };
 }
 
@@ -63,6 +63,6 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   meta,
   defaultOptions,
   {
-    ExpressionStatement: checkExpressionStatement
+    ExpressionStatement: checkExpressionStatement,
   }
 );

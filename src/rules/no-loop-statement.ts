@@ -5,7 +5,7 @@ import {
   createRule,
   RuleContext,
   RuleMetaData,
-  RuleResult
+  RuleResult,
 } from "../util/rule";
 
 // The name of this rule.
@@ -22,7 +22,7 @@ const defaultOptions: Options = {};
 
 // The possible error messages.
 const errorMessages = {
-  generic: "Unexpected loop, use map or reduce instead."
+  generic: "Unexpected loop, use map or reduce instead.",
 } as const;
 
 // The meta data for this rule.
@@ -31,10 +31,10 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
   docs: {
     description: "Disallow imperative loops.",
     category: "Best Practices",
-    recommended: false
+    recommended: false,
   },
   messages: errorMessages,
-  schema
+  schema,
 };
 
 /**
@@ -63,6 +63,6 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
     ForInStatement: checkLoop,
     ForOfStatement: checkLoop,
     WhileStatement: checkLoop,
-    DoWhileStatement: checkLoop
+    DoWhileStatement: checkLoop,
   }
 );

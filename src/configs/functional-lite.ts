@@ -12,10 +12,10 @@ const config: Config = deepMerge<Config>(functional, {
     "functional/functional-parameters": [
       "error",
       {
-        enforceParameterCount: false
-      }
-    ]
-  }
+        enforceParameterCount: false,
+      },
+    ],
+  },
 });
 
 export default config;

@@ -12,7 +12,7 @@ import {
   InvalidTestCase,
   processInvalidTestCase,
   processValidTestCase,
-  ValidTestCase
+  ValidTestCase,
 } from "../helpers/util";
 
 // Valid test cases.
@@ -28,9 +28,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "ForStatement",
         line: 1,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   {
     code: `for (const x in y) { console.log(x); }`,
@@ -40,9 +40,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "ForInStatement",
         line: 1,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   {
     code: `for (const x of y) { console.log(x); }`,
@@ -52,9 +52,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "ForOfStatement",
         line: 1,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   {
     code: `while (true) { console.log("a"); }`,
@@ -64,9 +64,9 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "WhileStatement",
         line: 1,
-        column: 1
-      }
-    ]
+        column: 1,
+      },
+    ],
   },
   {
     code: `do { console.log("a"); } while (true)`,
@@ -76,16 +76,16 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "DoWhileStatement",
         line: 1,
-        column: 1
-      }
-    ]
-  }
+        column: 1,
+      },
+    ],
+  },
 ];
 describeTsOnly("TypeScript", () => {
   const ruleTester = new RuleTester(typescript);
   ruleTester.run(name, rule, {
     valid: processValidTestCase(valid),
-    invalid: processInvalidTestCase(invalid)
+    invalid: processInvalidTestCase(invalid),
   });
 });
 
@@ -93,7 +93,7 @@ describe("JavaScript (es6)", () => {
   const ruleTester = new RuleTester(es6);
   ruleTester.run(name, rule, {
     valid: processValidTestCase(valid),
-    invalid: processInvalidTestCase(invalid)
+    invalid: processInvalidTestCase(invalid),
   });
 });
 
@@ -110,9 +110,9 @@ describe("JavaScript (es3)", () => {
             messageId: "generic",
             type: "ForStatement",
             line: 1,
-            column: 1
-          }
-        ]
+            column: 1,
+          },
+        ],
       },
       {
         code: `for (var x in y) { console.log(x); }`,
@@ -122,9 +122,9 @@ describe("JavaScript (es3)", () => {
             messageId: "generic",
             type: "ForInStatement",
             line: 1,
-            column: 1
-          }
-        ]
+            column: 1,
+          },
+        ],
       },
       {
         code: `while (true) { console.log("a"); }`,
@@ -134,9 +134,9 @@ describe("JavaScript (es3)", () => {
             messageId: "generic",
             type: "WhileStatement",
             line: 1,
-            column: 1
-          }
-        ]
+            column: 1,
+          },
+        ],
       },
       {
         code: `do { console.log("a"); } while (true)`,
@@ -146,10 +146,10 @@ describe("JavaScript (es3)", () => {
             messageId: "generic",
             type: "DoWhileStatement",
             line: 1,
-            column: 1
-          }
-        ]
-      }
-    ])
+            column: 1,
+          },
+        ],
+      },
+    ]),
   });
 });

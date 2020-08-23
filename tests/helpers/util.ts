@@ -27,13 +27,13 @@ export type InvalidTestCase = Omit<
 export function processInvalidTestCase(
   testCases: ReadonlyArray<InvalidTestCase>
 ): Array<ESLintRuleTester.InvalidTestCase> {
-  return testCases.flatMap(testCase =>
-    testCase.optionsSet.map(options => {
+  return testCases.flatMap((testCase) =>
+    testCase.optionsSet.map((options) => {
       const { optionsSet, ...eslintTestCase } = testCase;
       return {
         filename,
         ...eslintTestCase,
-        options
+        options,
       };
     })
   );
@@ -66,18 +66,18 @@ export function createDummyRule(
       description: "Disallow mutable variables.",
       category: "Best Practices",
       recommended: "error",
-      url: ""
+      url: "",
     },
     messages: {
-      generic: "Error."
+      generic: "Error.",
     },
     fixable: "code",
-    schema: {}
+    schema: {},
   };
 
   return {
     meta,
-    create
+    create,
   } as Rule.RuleModule;
 }
 
@@ -97,12 +97,12 @@ export function addFilename(
 ): RuleTesterTests {
   const { valid, invalid } = tests;
   return {
-    invalid: invalid.map(test => ({ ...test, filename })),
-    valid: valid.map(test =>
+    invalid: invalid.map((test) => ({ ...test, filename })),
+    valid: valid.map((test) =>
       typeof test === "string"
         ? { code: test, filename }
         : { ...test, filename }
-    )
+    ),
   };
 }
 

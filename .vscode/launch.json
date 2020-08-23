@@ -17,7 +17,7 @@
       "sourceMaps": true,
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
-      "disableOptimisticBPs": true,
+      "disableOptimisticBPs": true
     }
   ]
 }

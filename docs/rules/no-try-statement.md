@@ -13,8 +13,7 @@ Examples of **incorrect** code for this rule:
 
 try {
   doSomethingThatMightGoWrong(); // <-- Might throw an exception.
-}
-catch (error) {
+} catch (error) {
   // Handle error.
 }
 ```
@@ -25,9 +24,9 @@ Examples of **correct** code for this rule:
 /* eslint functional/no-try-statement: "error" */
 
 doSomethingThatMightGoWrong() // <-- Returns a Promise.
-.catch(error => {
-  // Handle error.
-});
+  .catch((error) => {
+    // Handle error.
+  });
 ```
 
 ## Options
@@ -38,7 +37,7 @@ This rule accepts an options object of the following type:
 {
   allowCatch: boolean;
   allowFinally: boolean;
-};
+}
 ```
 
 The default options:

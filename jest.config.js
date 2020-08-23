@@ -8,7 +8,7 @@ const useCompiled = process.env.USE_COMPLIED !== undefined;
 module.exports = {
   testEnvironment: "node",
   transform: {
-    "^.+\\.ts$": "ts-jest"
+    "^.+\\.ts$": "ts-jest",
   },
   testRegex: useCompiled
     ? "./build/tests/.+\\.test\\.js$"
@@ -19,7 +19,7 @@ module.exports = {
   coverageReporters: ["text-summary", "lcov"],
   globals: {
     "ts-jest": {
-      tsConfig: "tests/tsconfig.json"
-    }
-  }
+      tsConfig: "tests/tsconfig.json",
+    },
+  },
 };

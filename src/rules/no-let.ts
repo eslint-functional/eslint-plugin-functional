@@ -6,13 +6,13 @@ import {
   AllowLocalMutationOption,
   allowLocalMutationOptionSchema,
   IgnorePatternOption,
-  ignorePatternOptionSchema
+  ignorePatternOptionSchema,
 } from "../common/ignore-options";
 import {
   createRule,
   RuleContext,
   RuleMetaData,
-  RuleResult
+  RuleResult,
 } from "../util/rule";
 
 // The name of this rule.
@@ -23,17 +23,17 @@ type Options = AllowLocalMutationOption & IgnorePatternOption;
 
 // The schema for the rule options.
 const schema: JSONSchema4 = [
-  deepMerge([allowLocalMutationOptionSchema, ignorePatternOptionSchema])
+  deepMerge([allowLocalMutationOptionSchema, ignorePatternOptionSchema]),
 ];
 
 // The default options for the rule.
 const defaultOptions: Options = {
-  allowLocalMutation: false
+  allowLocalMutation: false,
 };
 
 // The possible error messages.
 const errorMessages = {
-  generic: "Unexpected let, use const instead."
+  generic: "Unexpected let, use const instead.",
 } as const;
 
 // The meta data for this rule.
@@ -42,11 +42,11 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
   docs: {
     description: "Disallow mutable variables.",
     category: "Best Practices",
-    recommended: "error"
+    recommended: "error",
   },
   messages: errorMessages,
   fixable: "code",
-  schema
+  schema,
 };
 
 /**
@@ -58,7 +58,7 @@ function checkVariableDeclaration(
 ): RuleResult<keyof typeof errorMessages, Options> {
   return {
     context,
-    descriptors: node.kind === "let" ? [{ node, messageId: "generic" }] : []
+    descriptors: node.kind === "let" ? [{ node, messageId: "generic" }] : [],
   };
 }
 
@@ -68,6 +68,6 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   meta,
   defaultOptions,
   {
-    VariableDeclaration: checkVariableDeclaration
+    VariableDeclaration: checkVariableDeclaration,
   }
 );

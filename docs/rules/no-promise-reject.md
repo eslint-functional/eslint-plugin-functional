@@ -18,10 +18,9 @@ Examples of **incorrect** code for this rule:
 async function divide(x, y) {
   const [xv, yv] = await Promise.all([x, y]);
 
-  return (yv === 0
+  return yv === 0
     ? Promise.reject(new Error("Cannot divide by zero."))
-    : xv / yv
-  );
+    : xv / yv;
 }
 ```
 
@@ -33,10 +32,9 @@ Examples of **correct** code for this rule:
 async function divide(x, y) {
   const [xv, yv] = await Promise.all([x, y]);
 
-  return (yv === 0
+  return yv === 0
     ? new Error("Cannot divide by zero.")
-    : xv / yv
-  );
+    : xv / yv;
 }
 ```
 

@@ -4,7 +4,7 @@ import "object.fromentries/auto.js";
 import {
   ESLintUtils,
   TSESLint,
-  TSESTree
+  TSESTree,
 } from "@typescript-eslint/experimental-utils";
 import { Rule } from "eslint";
 import { Type } from "typescript";
@@ -71,7 +71,7 @@ function checkNode<
     if (!options || !shouldIgnore(node, context, options)) {
       const result = check(node, context, options);
 
-      result.descriptors.forEach(descriptor =>
+      result.descriptors.forEach((descriptor) =>
         result.context.report(descriptor)
       );
     }
@@ -92,7 +92,7 @@ export function createRule<
   ruleFunctionsMap: RuleFunctionsMap<MessageIds, Options>
 ): Rule.RuleModule {
   return ESLintUtils.RuleCreator(
-    name =>
+    (name) =>
       `https://github.com/jonaskello/eslint-plugin-functional/blob/v${version}/docs/rules/${name}.md`
   )({
     name,
@@ -105,9 +105,9 @@ export function createRule<
       Object.fromEntries(
         Object.entries(ruleFunctionsMap).map(([nodeSelector, ruleFunction]) => [
           nodeSelector,
-          checkNode(ruleFunction, context, options)
+          checkNode(ruleFunction, context, options),
         ])
-      )
+      ),
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   } as any) as any;
 }
