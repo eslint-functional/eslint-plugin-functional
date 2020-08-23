@@ -20,7 +20,7 @@ export const name = "prefer-type-literal" as const;
 type Options = IgnorePatternOption;
 
 // The schema for the rule options.
-const schema: JSONSchema4 = [[ignorePatternOptionSchema]];
+const schema: JSONSchema4 = [ignorePatternOptionSchema];
 
 // The default options for the rule.
 const defaultOptions: Options = {};
