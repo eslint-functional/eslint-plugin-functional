@@ -37,23 +37,34 @@
     // Built in.
     "no-param-reassign": "error",
     "no-var": "error",
-
     // Our rules.
     "functional/prefer-readonly-type": [
       "error",
-      { "allowMutableReturnType": true }
+      {
+        "allowMutableReturnType": true
+      }
     ],
     "functional/no-conditional-statement": [
       "error",
-      { "allowReturningBranches": "ifExhaustive" }
+      {
+        "allowReturningBranches": "ifExhaustive"
+      }
     ],
     "functional/functional-parameters": [
       "error",
-      { "ignorePattern": ["^tsInstalled$"] }
+      {
+        "ignorePattern": [
+          "^tsInstalled$"
+        ]
+      }
     ],
-
     // Typescript eslint.
-    "@typescript-eslint/array-type": ["error", { "default": "generic" }],
+    "@typescript-eslint/array-type": [
+      "error",
+      {
+        "default": "generic"
+      }
+    ],
     "@typescript-eslint/ban-types": [
       "error",
       {
@@ -99,7 +110,6 @@
         "typedefs": true
       }
     ],
-
     // JSDoc.
     "jsdoc/check-alignment": 1,
     "jsdoc/check-indentation": 1,
@@ -120,7 +130,9 @@
   "overrides": [
     // Testing Rules.
     {
-      "files": ["**/tests/**/*.ts"],
+      "files": [
+        "**/tests/**/*.ts"
+      ],
       "env": {
         "jest/globals": true
       },
@@ -137,7 +149,6 @@
         "jest/prefer-to-have-length": "warn",
         "jest/prefer-spy-on": "error",
         "jest/valid-expect": "error",
-
         "functional/functional-parameters": "off",
         "functional/no-conditional-statement": "off",
         "functional/no-expression-statement": "off"
@@ -145,6 +156,8 @@
     }
   ],
   "settings": {
-    "import/ignore": ["escape-string-regexp"]
+    "import/ignore": [
+      "escape-string-regexp"
+    ]
   }
 }
