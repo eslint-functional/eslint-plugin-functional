@@ -141,8 +141,6 @@ See [@typescript-eslint/parser's README.md](https://github.com/typescript-eslint
 }
 ```
 
-**Note: Make sure to use `eslint --ext .js,.ts` since by [default](https://eslint.org/docs/user-guide/command-line-interface#--ext) `eslint` will only search for .js files.**
-
 ## Rulesets
 
 The following rulesets are made available by this plugin:
