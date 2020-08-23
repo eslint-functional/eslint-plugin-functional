@@ -1,10 +1,7 @@
 import { TSESTree } from "@typescript-eslint/experimental-utils";
-import { all as deepMerge } from "deepmerge";
 import { JSONSchema4 } from "json-schema";
 
 import {
-  AllowLocalMutationOption,
-  allowLocalMutationOptionSchema,
   IgnorePatternOption,
   ignorePatternOptionSchema,
 } from "../common/ignore-options";
@@ -20,17 +17,13 @@ import { isIdentifier } from "../util/typeguard";
 export const name = "prefer-type-literal" as const;
 
 // The options this rule can take.
-type Options = AllowLocalMutationOption & IgnorePatternOption;
+type Options = IgnorePatternOption;
 
 // The schema for the rule options.
-const schema: JSONSchema4 = [
-  deepMerge([allowLocalMutationOptionSchema, ignorePatternOptionSchema]),
-];
+const schema: JSONSchema4 = [[ignorePatternOptionSchema]];
 
 // The default options for the rule.
-const defaultOptions: Options = {
-  allowLocalMutation: false,
-};
+const defaultOptions: Options = {};
 
 // The possible error messages.
 const errorMessages = {
