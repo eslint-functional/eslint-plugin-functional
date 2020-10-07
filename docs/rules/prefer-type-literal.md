@@ -33,22 +33,9 @@ This rule accepts an options object of the following type:
 
 ```ts
 {
-  allowLocalMutation?: boolean;
   ignorePattern?: string | Array<string>;
 }
 ```
-
-The default options:
-
-```ts
-{
-  allowLocalMutation: false,
-}
-```
-
-### `allowLocalMutation`
-
-See the [allowLocalMutation](./options/allow-local-mutation.md) docs.
 
 ### `ignorePattern`
 
