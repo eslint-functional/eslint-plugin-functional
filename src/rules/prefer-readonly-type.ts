@@ -45,6 +45,7 @@ type Options = AllowLocalMutationOption &
   IgnoreInterfaceOption & {
     readonly allowMutableReturnType: boolean;
     readonly checkImplicit: boolean;
+    readonly ignoreMutableCollections: boolean;
   };
 
 // The schema for the rule options.
@@ -63,6 +64,9 @@ const schema: JSONSchema4 = [
         checkImplicit: {
           type: "boolean",
         },
+        ignoreMutableCollections: {
+          type: "boolean",
+        },
       },
       additionalProperties: false,
     },
@@ -74,6 +78,7 @@ const defaultOptions: Options = {
   checkImplicit: false,
   ignoreClass: false,
   ignoreInterface: false,
+  ignoreMutableCollections: false,
   allowLocalMutation: false,
   allowMutableReturnType: false,
 };
@@ -108,6 +113,9 @@ const mutableToImmutableTypes: ReadonlyMap<string, string> = new Map<
   ["Map", "ReadonlyMap"],
   ["Set", "ReadonlySet"],
 ]);
+const mutableTypeRegex = new RegExp(
+  Array.from(mutableToImmutableTypes.keys()).join("|")
+);
 
 /**
  * Check if the given ArrayType or TupleType violates this rule.
@@ -117,6 +125,13 @@ function checkArrayOrTupleType(
   context: RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
+  if (options.ignoreMutableCollections) {
+    return {
+      context,
+      descriptors: [],
+    };
+  }
+
   return {
     context,
     descriptors:
@@ -175,6 +190,16 @@ function checkTypeReference(
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   if (isIdentifier(node.typeName)) {
+    if (
+      options.ignoreMutableCollections &&
+      node.typeName.name.match(mutableTypeRegex)
+    ) {
+      return {
+        context,
+        descriptors: [],
+      };
+    }
+
     const immutableType = mutableToImmutableTypes.get(node.typeName.name);
     return {
       context,
@@ -273,7 +298,8 @@ function checkImplicitType(
         isIdentifier(declarator.id) &&
         declarator.id.typeAnnotation === undefined &&
         declarator.init !== null &&
-        isArrayType(getTypeOfNode(declarator.init, context))
+        isArrayType(getTypeOfNode(declarator.init, context)) &&
+        !options.ignoreMutableCollections
           ? [
               {
                 node: declarator.node,
