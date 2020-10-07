@@ -353,6 +353,47 @@ const valid: ReadonlyArray<ValidTestCase> = [
       } = {};`,
     optionsSet: [[{ ignorePattern: "^mutable" }]],
   },
+  // Ignore Mutable Collections (Array, Tuple, Set, Map)
+  {
+    code: dedent`type Foo = Array<string>;`,
+    optionsSet: [[{ ignoreCollections: true }]],
+  },
+  {
+    code: dedent`const Foo: number[] = [];`,
+    optionsSet: [[{ ignoreCollections: true }]],
+  },
+  {
+    code: dedent`const Foo = []`,
+    optionsSet: [[{ ignoreCollections: true, checkImplicit: true }]],
+  },
+  {
+    code: dedent`type Foo = [string, string];`,
+    optionsSet: [[{ ignoreCollections: true }]],
+  },
+  {
+    code: dedent`const Foo: [string, string] = ['foo', 'bar'];`,
+    optionsSet: [[{ ignoreCollections: true }]],
+  },
+  {
+    code: dedent`const Foo = ['foo', 'bar'];`,
+    optionsSet: [[{ ignoreCollections: true, checkImplicit: true }]],
+  },
+  {
+    code: dedent`type Foo = Set<string, string>;`,
+    optionsSet: [[{ ignoreCollections: true }]],
+  },
+  {
+    code: dedent`const Foo: Set<string, string> = new Set();`,
+    optionsSet: [[{ ignoreCollections: true }]],
+  },
+  {
+    code: dedent`type Foo = Map<string, string>;`,
+    optionsSet: [[{ ignoreCollections: true }]],
+  },
+  {
+    code: dedent`const Foo: Map<string, string> = new Map();`,
+    optionsSet: [[{ ignoreCollections: true }]],
+  },
 ];
 
 // Invalid test cases.

@@ -96,6 +96,7 @@ This rule accepts an options object of the following type:
   checkImplicit: boolean;
   ignoreClass: boolean;
   ignoreInterface: boolean;
+  ignoreCollections: boolean;
   ignorePattern?: string | Array<string>;
 }
 ```
@@ -108,7 +109,8 @@ The default options:
   allowMutableReturnType: false,
   checkImplicit: false,
   ignoreClass: false,
-  ignoreInterface: false
+  ignoreInterface: false,
+  ignoreCollections: false,
 }
 ```
 
@@ -168,6 +170,32 @@ Examples of **correct** code for the `{ "ignoreInterface": true }` option:
 interface {
   myprop: string;
 }
+```
+
+### `ignoreCollections`
+
+A boolean to specify if checking for `readonly` should apply to mutable collections (Array, Tuple, Set, and Map). Helpful for migrating from tslint-immutable to this plugin. `false` by default.
+
+Examples of **incorrect** code for the `{ "ignoreCollections": false }` option:
+
+```ts
+/* eslint functional/readonly: ["error", { "ignoreCollections": false }] */
+
+const foo: number[] = [];
+const bar: [string, string] = ["foo", "bar"];
+const baz: Set<string, string> = new Set();
+const qux: Map<string, string> = new Map();
+```
+
+Examples of **correct** code for the `{ "ignoreCollections": true }` option:
+
+```ts
+/* eslint functional/readonly: ["error", { "ignoreCollections": true }] */
+
+const foo: number[] = [];
+const bar: [string, string] = ["foo", "bar"];
+const baz: Set<string, string> = new Set();
+const qux: Map<string, string> = new Map();
 ```
 
 ### `allowLocalMutation`
