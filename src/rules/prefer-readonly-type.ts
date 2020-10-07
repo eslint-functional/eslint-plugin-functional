@@ -45,6 +45,7 @@ type Options = AllowLocalMutationOption &
   IgnoreInterfaceOption & {
     readonly allowMutableReturnType: boolean;
     readonly checkImplicit: boolean;
+    readonly ignoreCollections: boolean;
   };
 
 // The schema for the rule options.
@@ -63,6 +64,9 @@ const schema: JSONSchema4 = [
         checkImplicit: {
           type: "boolean",
         },
+        ignoreCollections: {
+          type: "boolean",
+        },
       },
       additionalProperties: false,
     },
@@ -74,6 +78,7 @@ const defaultOptions: Options = {
   checkImplicit: false,
   ignoreClass: false,
   ignoreInterface: false,
+  ignoreCollections: false,
   allowLocalMutation: false,
   allowMutableReturnType: false,
 };
@@ -108,6 +113,9 @@ const mutableToImmutableTypes: ReadonlyMap<string, string> = new Map<
   ["Map", "ReadonlyMap"],
   ["Set", "ReadonlySet"],
 ]);
+const mutableTypeRegex = new RegExp(
+  `^${Array.from(mutableToImmutableTypes.keys()).join("|")}$`
+);
 
 /**
  * Check if the given ArrayType or TupleType violates this rule.
@@ -117,28 +125,35 @@ function checkArrayOrTupleType(
   context: RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
-  return {
-    context,
-    descriptors:
-      (!node.parent ||
-        !isTSTypeOperator(node.parent) ||
-        node.parent.operator !== "readonly") &&
-      (!options.allowMutableReturnType || !isInReturnType(node))
-        ? [
-            {
-              node,
-              messageId: isTSTupleType(node) ? "tuple" : "array",
-              fix:
-                node.parent && isTSArrayType(node.parent)
-                  ? (fixer) => [
-                      fixer.insertTextBefore(node, "(readonly "),
-                      fixer.insertTextAfter(node, ")"),
-                    ]
-                  : (fixer) => fixer.insertTextBefore(node, "readonly "),
-            },
-          ]
-        : [],
-  };
+  if (options.ignoreCollections) {
+    return {
+      context,
+      descriptors: [],
+    };
+  } else {
+    return {
+      context,
+      descriptors:
+        (!node.parent ||
+          !isTSTypeOperator(node.parent) ||
+          node.parent.operator !== "readonly") &&
+        (!options.allowMutableReturnType || !isInReturnType(node))
+          ? [
+              {
+                node,
+                messageId: isTSTupleType(node) ? "tuple" : "array",
+                fix:
+                  node.parent && isTSArrayType(node.parent)
+                    ? (fixer) => [
+                        fixer.insertTextBefore(node, "(readonly "),
+                        fixer.insertTextAfter(node, ")"),
+                      ]
+                    : (fixer) => fixer.insertTextBefore(node, "readonly "),
+              },
+            ]
+          : [],
+    };
+  }
 }
 
 /**
@@ -175,21 +190,32 @@ function checkTypeReference(
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   if (isIdentifier(node.typeName)) {
-    const immutableType = mutableToImmutableTypes.get(node.typeName.name);
-    return {
-      context,
-      descriptors:
-        immutableType &&
-        (!options.allowMutableReturnType || !isInReturnType(node))
-          ? [
-              {
-                node,
-                messageId: "type",
-                fix: (fixer) => fixer.replaceText(node.typeName, immutableType),
-              },
-            ]
-          : [],
-    };
+    if (
+      options.ignoreCollections &&
+      node.typeName.name.match(mutableTypeRegex)
+    ) {
+      return {
+        context,
+        descriptors: [],
+      };
+    } else {
+      const immutableType = mutableToImmutableTypes.get(node.typeName.name);
+      return {
+        context,
+        descriptors:
+          immutableType &&
+          (!options.allowMutableReturnType || !isInReturnType(node))
+            ? [
+                {
+                  node,
+                  messageId: "type",
+                  fix: (fixer) =>
+                    fixer.replaceText(node.typeName, immutableType),
+                },
+              ]
+            : [],
+      };
+    }
   } else {
     return {
       context,
@@ -273,7 +299,8 @@ function checkImplicitType(
         isIdentifier(declarator.id) &&
         declarator.id.typeAnnotation === undefined &&
         declarator.init !== null &&
-        isArrayType(getTypeOfNode(declarator.init, context))
+        isArrayType(getTypeOfNode(declarator.init, context)) &&
+        !options.ignoreCollections
           ? [
               {
                 node: declarator.node,
