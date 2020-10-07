@@ -356,43 +356,43 @@ const valid: ReadonlyArray<ValidTestCase> = [
   // Ignore Mutable Collections (Array, Tuple, Set, Map)
   {
     code: dedent`type Foo = Array<string>;`,
-    optionsSet: [[{ ignoreMutableCollections: true }]],
+    optionsSet: [[{ ignoreCollections: true }]],
   },
   {
     code: dedent`const Foo: number[] = [];`,
-    optionsSet: [[{ ignoreMutableCollections: true }]],
+    optionsSet: [[{ ignoreCollections: true }]],
   },
   {
     code: dedent`const Foo = []`,
-    optionsSet: [[{ ignoreMutableCollections: true, checkImplicit: true }]],
+    optionsSet: [[{ ignoreCollections: true, checkImplicit: true }]],
   },
   {
     code: dedent`type Foo = [string, string];`,
-    optionsSet: [[{ ignoreMutableCollections: true }]],
+    optionsSet: [[{ ignoreCollections: true }]],
   },
   {
     code: dedent`const Foo: [string, string] = ['foo', 'bar'];`,
-    optionsSet: [[{ ignoreMutableCollections: true }]],
+    optionsSet: [[{ ignoreCollections: true }]],
   },
   {
     code: dedent`const Foo = ['foo', 'bar'];`,
-    optionsSet: [[{ ignoreMutableCollections: true, checkImplicit: true }]],
+    optionsSet: [[{ ignoreCollections: true, checkImplicit: true }]],
   },
   {
     code: dedent`type Foo = Set<string, string>;`,
-    optionsSet: [[{ ignoreMutableCollections: true }]],
+    optionsSet: [[{ ignoreCollections: true }]],
   },
   {
     code: dedent`const Foo: Set<string, string> = new Set();`,
-    optionsSet: [[{ ignoreMutableCollections: true }]],
+    optionsSet: [[{ ignoreCollections: true }]],
   },
   {
     code: dedent`type Foo = Map<string, string>;`,
-    optionsSet: [[{ ignoreMutableCollections: true }]],
+    optionsSet: [[{ ignoreCollections: true }]],
   },
   {
     code: dedent`const Foo: Map<string, string> = new Map();`,
-    optionsSet: [[{ ignoreMutableCollections: true }]],
+    optionsSet: [[{ ignoreCollections: true }]],
   },
 ];
 

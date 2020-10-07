@@ -96,7 +96,7 @@ This rule accepts an options object of the following type:
   checkImplicit: boolean;
   ignoreClass: boolean;
   ignoreInterface: boolean;
-  ignoreMutableCollections: boolean;
+  ignoreCollections: boolean;
   ignorePattern?: string | Array<string>;
 }
 ```
@@ -110,7 +110,7 @@ The default options:
   checkImplicit: false,
   ignoreClass: false,
   ignoreInterface: false,
-  ignoreMutableCollections: false,
+  ignoreCollections: false,
 }
 ```
 
@@ -172,14 +172,14 @@ interface {
 }
 ```
 
-### `ignoreMutableCollections`
+### `ignoreCollections`
 
 A boolean to specify if checking for `readonly` should apply to mutable collections (Array, Tuple, Set, and Map). Helpful for migrating from tslint-immutable to this plugin. `false` by default.
 
-Examples of **incorrect** code for the `{ "ignoreMutableCollections": false }` option:
+Examples of **incorrect** code for the `{ "ignoreCollections": false }` option:
 
 ```ts
-/* eslint functional/readonly: ["error", { "ignoreMutableCollections": false }] */
+/* eslint functional/readonly: ["error", { "ignoreCollections": false }] */
 
 const foo: number[] = [];
 const bar: [string, string] = ["foo", "bar"];
@@ -187,10 +187,10 @@ const baz: Set<string, string> = new Set();
 const qux: Map<string, string> = new Map();
 ```
 
-Examples of **correct** code for the `{ "ignoreMutableCollections": true }` option:
+Examples of **correct** code for the `{ "ignoreCollections": true }` option:
 
 ```ts
-/* eslint functional/readonly: ["error", { "ignoreMutableCollections": true }] */
+/* eslint functional/readonly: ["error", { "ignoreCollections": true }] */
 
 const foo: number[] = [];
 const bar: [string, string] = ["foo", "bar"];

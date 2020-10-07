@@ -45,7 +45,7 @@ type Options = AllowLocalMutationOption &
   IgnoreInterfaceOption & {
     readonly allowMutableReturnType: boolean;
     readonly checkImplicit: boolean;
-    readonly ignoreMutableCollections: boolean;
+    readonly ignoreCollections: boolean;
   };
 
 // The schema for the rule options.
@@ -64,7 +64,7 @@ const schema: JSONSchema4 = [
         checkImplicit: {
           type: "boolean",
         },
-        ignoreMutableCollections: {
+        ignoreCollections: {
           type: "boolean",
         },
       },
@@ -78,7 +78,7 @@ const defaultOptions: Options = {
   checkImplicit: false,
   ignoreClass: false,
   ignoreInterface: false,
-  ignoreMutableCollections: false,
+  ignoreCollections: false,
   allowLocalMutation: false,
   allowMutableReturnType: false,
 };
@@ -125,7 +125,7 @@ function checkArrayOrTupleType(
   context: RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
-  if (options.ignoreMutableCollections) {
+  if (options.ignoreCollections) {
     return {
       context,
       descriptors: [],
@@ -191,7 +191,7 @@ function checkTypeReference(
 ): RuleResult<keyof typeof errorMessages, Options> {
   if (isIdentifier(node.typeName)) {
     if (
-      options.ignoreMutableCollections &&
+      options.ignoreCollections &&
       node.typeName.name.match(mutableTypeRegex)
     ) {
       return {
@@ -300,7 +300,7 @@ function checkImplicitType(
         declarator.id.typeAnnotation === undefined &&
         declarator.init !== null &&
         isArrayType(getTypeOfNode(declarator.init, context)) &&
-        !options.ignoreMutableCollections
+        !options.ignoreCollections
           ? [
               {
                 node: declarator.node,
