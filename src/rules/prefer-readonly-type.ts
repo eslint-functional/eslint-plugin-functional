@@ -114,7 +114,7 @@ const mutableToImmutableTypes: ReadonlyMap<string, string> = new Map<
   ["Set", "ReadonlySet"],
 ]);
 const mutableTypeRegex = new RegExp(
-  Array.from(mutableToImmutableTypes.keys()).join("|")
+  `^${Array.from(mutableToImmutableTypes.keys()).join("|")}$`
 );
 
 /**
