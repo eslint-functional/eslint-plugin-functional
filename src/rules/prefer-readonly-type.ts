@@ -130,30 +130,30 @@ function checkArrayOrTupleType(
       context,
       descriptors: [],
     };
+  } else {
+    return {
+      context,
+      descriptors:
+        (!node.parent ||
+          !isTSTypeOperator(node.parent) ||
+          node.parent.operator !== "readonly") &&
+        (!options.allowMutableReturnType || !isInReturnType(node))
+          ? [
+              {
+                node,
+                messageId: isTSTupleType(node) ? "tuple" : "array",
+                fix:
+                  node.parent && isTSArrayType(node.parent)
+                    ? (fixer) => [
+                        fixer.insertTextBefore(node, "(readonly "),
+                        fixer.insertTextAfter(node, ")"),
+                      ]
+                    : (fixer) => fixer.insertTextBefore(node, "readonly "),
+              },
+            ]
+          : [],
+    };
   }
-
-  return {
-    context,
-    descriptors:
-      (!node.parent ||
-        !isTSTypeOperator(node.parent) ||
-        node.parent.operator !== "readonly") &&
-      (!options.allowMutableReturnType || !isInReturnType(node))
-        ? [
-            {
-              node,
-              messageId: isTSTupleType(node) ? "tuple" : "array",
-              fix:
-                node.parent && isTSArrayType(node.parent)
-                  ? (fixer) => [
-                      fixer.insertTextBefore(node, "(readonly "),
-                      fixer.insertTextAfter(node, ")"),
-                    ]
-                  : (fixer) => fixer.insertTextBefore(node, "readonly "),
-            },
-          ]
-        : [],
-  };
 }
 
 /**
@@ -198,23 +198,24 @@ function checkTypeReference(
         context,
         descriptors: [],
       };
+    } else {
+      const immutableType = mutableToImmutableTypes.get(node.typeName.name);
+      return {
+        context,
+        descriptors:
+          immutableType &&
+          (!options.allowMutableReturnType || !isInReturnType(node))
+            ? [
+                {
+                  node,
+                  messageId: "type",
+                  fix: (fixer) =>
+                    fixer.replaceText(node.typeName, immutableType),
+                },
+              ]
+            : [],
+      };
     }
-
-    const immutableType = mutableToImmutableTypes.get(node.typeName.name);
-    return {
-      context,
-      descriptors:
-        immutableType &&
-        (!options.allowMutableReturnType || !isInReturnType(node))
-          ? [
-              {
-                node,
-                messageId: "type",
-                fix: (fixer) => fixer.replaceText(node.typeName, immutableType),
-              },
-            ]
-          : [],
-    };
   } else {
     return {
       context,
