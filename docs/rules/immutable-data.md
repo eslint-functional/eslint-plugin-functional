@@ -68,7 +68,7 @@ The default options:
 
 ```ts
 {
-  assumeTypes: true
+  assumeTypes: true,
   ignoreImmediateMutation: true,
 };
 ```
