@@ -13,6 +13,7 @@ const config: Linter.Config = {
     "functional/no-this-expression": "error",
     "functional/no-throw-statement": "error",
     "functional/no-try-statement": "error",
+    "functional/prefer-tacit": ["warn", { assumeTypes: { allowFixer: false } }],
   },
   overrides: [
     {
@@ -21,6 +22,7 @@ const config: Linter.Config = {
         "functional/no-method-signature": "error",
         "functional/no-mixed-type": "error",
         "functional/prefer-readonly-type": "error",
+        "functional/prefer-tacit": ["error", { assumeTypes: false }],
         "functional/prefer-type-literal": "error",
         "functional/no-return-void": "error",
       },

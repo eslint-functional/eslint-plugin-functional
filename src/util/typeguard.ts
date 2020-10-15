@@ -181,6 +181,12 @@ export function isTSArrayType(
   return node.type === AST_NODE_TYPES.TSArrayType;
 }
 
+export function isTSFunctionType(
+  node: TSESTree.Node
+): node is TSESTree.TSFunctionType {
+  return node.type === AST_NODE_TYPES.TSFunctionType;
+}
+
 export function isTSIndexSignature(
   node: TSESTree.Node
 ): node is TSESTree.TSIndexSignature {
