@@ -1,80 +1,38 @@
-import {
-  name as functionalParametersName,
-  rule as functionalParameters,
-} from "./functional-parameters";
-import {
-  name as immutableDataRuleName,
-  rule as immutableDataRule,
-} from "./immutable-data";
-import { name as noClassRuleName, rule as noClassRule } from "./no-class";
-import {
-  name as noConditionalStatementRuleName,
-  rule as noConditionalStatementRule,
-} from "./no-conditional-statement";
-import {
-  name as noExpressionStatementRuleName,
-  rule as noExpressionStatementRule,
-} from "./no-expression-statement";
-import { name as noLetRuleName, rule as noLetRule } from "./no-let";
-import {
-  name as noLoopRuleName,
-  rule as noLoopRule,
-} from "./no-loop-statement";
-import {
-  name as noMethodSignatureRuleName,
-  rule as noMethodSignatureRule,
-} from "./no-method-signature";
-import {
-  name as noMixedTypeRuleName,
-  rule as noMixedTypeRule,
-} from "./no-mixed-type";
-import {
-  name as noPromiseRejectRuleName,
-  rule as noPromiseRejectRule,
-} from "./no-promise-reject";
-import {
-  name as noReturnVoidName,
-  rule as noReturnVoid,
-} from "./no-return-void";
-import {
-  name as noThisExpressionRuleName,
-  rule as noThisExpressionRule,
-} from "./no-this-expression";
-import {
-  name as noThrowStatementRuleName,
-  rule as noThrowStatementRule,
-} from "./no-throw-statement";
-import {
-  name as noTryStatementRuleName,
-  rule as noTryStatementRule,
-} from "./no-try-statement";
-import {
-  name as preferReadonlyTypesRuleName,
-  rule as preferReadonlyTypesRule,
-} from "./prefer-readonly-type";
-import {
-  name as preferTypeRuleName,
-  rule as preferTypeRule,
-} from "./prefer-type-literal";
+import * as functionalParameters from "./functional-parameters";
+import * as immutableData from "./immutable-data";
+import * as noClass from "./no-class";
+import * as noConditionalStatement from "./no-conditional-statement";
+import * as noExpressionStatement from "./no-expression-statement";
+import * as noLet from "./no-let";
+import * as noLoop from "./no-loop-statement";
+import * as noMethodSignature from "./no-method-signature";
+import * as noMixedType from "./no-mixed-type";
+import * as noPromiseReject from "./no-promise-reject";
+import * as noReturnVoid from "./no-return-void";
+import * as noThisExpression from "./no-this-expression";
+import * as noThrowStatement from "./no-throw-statement";
+import * as noTryStatement from "./no-try-statement";
+import * as preferReadonlyTypes from "./prefer-readonly-type";
+import * as preferType from "./prefer-type-literal";
 
 /**
  * All of the custom rules.
  */
 export const rules = {
-  [functionalParametersName]: functionalParameters,
-  [immutableDataRuleName]: immutableDataRule,
-  [noClassRuleName]: noClassRule,
-  [noConditionalStatementRuleName]: noConditionalStatementRule,
-  [noExpressionStatementRuleName]: noExpressionStatementRule,
-  [noLetRuleName]: noLetRule,
-  [noLoopRuleName]: noLoopRule,
-  [noMethodSignatureRuleName]: noMethodSignatureRule,
-  [noMixedTypeRuleName]: noMixedTypeRule,
-  [noPromiseRejectRuleName]: noPromiseRejectRule,
-  [noReturnVoidName]: noReturnVoid,
-  [noThisExpressionRuleName]: noThisExpressionRule,
-  [noThrowStatementRuleName]: noThrowStatementRule,
-  [noTryStatementRuleName]: noTryStatementRule,
-  [preferReadonlyTypesRuleName]: preferReadonlyTypesRule,
-  [preferTypeRuleName]: preferTypeRule,
+  [functionalParameters.name]: functionalParameters.rule,
+  [immutableData.name]: immutableData.rule,
+  [noClass.name]: noClass.rule,
+  [noConditionalStatement.name]: noConditionalStatement.rule,
+  [noExpressionStatement.name]: noExpressionStatement.rule,
+  [noLet.name]: noLet.rule,
+  [noLoop.name]: noLoop.rule,
+  [noMethodSignature.name]: noMethodSignature.rule,
+  [noMixedType.name]: noMixedType.rule,
+  [noPromiseReject.name]: noPromiseReject.rule,
+  [noReturnVoid.name]: noReturnVoid.rule,
+  [noThisExpression.name]: noThisExpression.rule,
+  [noThrowStatement.name]: noThrowStatement.rule,
+  [noTryStatement.name]: noTryStatement.rule,
+  [preferReadonlyTypes.name]: preferReadonlyTypes.rule,
+  [preferType.name]: preferType.rule,
 };

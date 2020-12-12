@@ -12,9 +12,9 @@ import { addFilename, createDummyRule } from "../helpers/util";
 
 describe("option: ignore", () => {
   describe("ignoreAccessorPattern", () => {
-    const tests: ReadonlyArray<TSESLint.ValidTestCase<
-      readonly [boolean, IgnoreAccessorPatternOption]
-    >> = [
+    const tests: ReadonlyArray<
+      TSESLint.ValidTestCase<readonly [boolean, IgnoreAccessorPatternOption]>
+    > = [
       // Exact match.
       {
         code: dedent`
@@ -147,9 +147,9 @@ describe("option: ignore", () => {
   });
 
   describe("ignorePattern", () => {
-    const assignmentExpressionTests: ReadonlyArray<TSESLint.ValidTestCase<
-      readonly [boolean, IgnorePatternOption]
-    >> = [
+    const assignmentExpressionTests: ReadonlyArray<
+      TSESLint.ValidTestCase<readonly [boolean, IgnorePatternOption]>
+    > = [
       // Prefix match.
       {
         code: dedent`
@@ -193,17 +193,15 @@ describe("option: ignore", () => {
       }) as Rule.RuleModule,
       addFilename(filename, {
         valid: [
-          ...((assignmentExpressionTests as unknown) as ReadonlyArray<
-            RuleTester.ValidTestCase
-          >),
+          ...((assignmentExpressionTests as unknown) as ReadonlyArray<RuleTester.ValidTestCase>),
         ],
         invalid: [],
       })
     );
 
-    const expressionStatementTests: ReadonlyArray<TSESLint.ValidTestCase<
-      readonly [boolean, IgnorePatternOption]
-    >> = [
+    const expressionStatementTests: ReadonlyArray<
+      TSESLint.ValidTestCase<readonly [boolean, IgnorePatternOption]>
+    > = [
       {
         code: dedent`
           const x = 0;`,
@@ -233,9 +231,7 @@ describe("option: ignore", () => {
       }) as Rule.RuleModule,
       addFilename(filename, {
         valid: [
-          ...((expressionStatementTests as unknown) as ReadonlyArray<
-            RuleTester.ValidTestCase
-          >),
+          ...((expressionStatementTests as unknown) as ReadonlyArray<RuleTester.ValidTestCase>),
         ],
         invalid: [],
       })
