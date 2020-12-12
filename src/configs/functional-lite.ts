@@ -1,10 +1,9 @@
 import deepMerge from "deepmerge";
+import { Linter } from "eslint";
 
 import functional from "./functional";
 
-import { Config } from "../util/misc";
-
-const config: Config = deepMerge<Config>(functional, {
+const config: Linter.Config = deepMerge(functional, {
   rules: {
     "functional/no-conditional-statement": "off",
     "functional/no-expression-statement": "off",

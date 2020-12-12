@@ -9,8 +9,11 @@ import {
 import { Rule } from "eslint";
 import { Type } from "typescript";
 
-import { version } from "../../package.json";
 import { shouldIgnore } from "../common/ignore-options";
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore -- This file is outside of the root dir (i.e. src/).
+import { version } from "../../package.json";
 
 export type BaseOptions = object;
 
@@ -40,7 +43,11 @@ export type RuleFunctionsMap<
   Options extends BaseOptions
 > = {
   readonly [K in keyof TSESLint.RuleListener]: (
-    node: TSESTree.Node,
+    node: NonNullable<TSESLint.RuleListener[K]> extends TSESLint.RuleFunction<
+      infer U
+    >
+      ? U
+      : never,
     context: RuleContext<MessageIds, Options>,
     options: Options
   ) => RuleResult<MessageIds, Options>;

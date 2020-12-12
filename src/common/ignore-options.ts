@@ -165,7 +165,7 @@ function shouldIgnoreViaPattern(
 ): boolean {
   const patterns: ReadonlyArray<string> = Array.isArray(ignorePattern)
     ? ignorePattern
-    : [ignorePattern];
+    : [ignorePattern as string];
 
   // One or more patterns match?
   return patterns.some((pattern) => new RegExp(pattern).test(text));
@@ -228,7 +228,7 @@ function shouldIgnoreViaAccessorPattern(
 ): boolean {
   const patterns: ReadonlyArray<string> = Array.isArray(ignorePattern)
     ? ignorePattern
-    : [ignorePattern];
+    : [ignorePattern as string];
 
   // One or more patterns match?
   return patterns.some((pattern) =>

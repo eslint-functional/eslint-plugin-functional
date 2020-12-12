@@ -1,3 +1,5 @@
+import { Linter, Rule } from "eslint";
+
 import all from "./configs/all";
 import currying from "./configs/currying";
 import externalRecommended from "./configs/external-recommended";
@@ -10,7 +12,12 @@ import noStatements from "./configs/no-statements";
 
 import { rules } from "./rules";
 
-const config = {
+type EslintPluginConfig = {
+  readonly rules: Record<string, Rule.RuleModule>;
+  readonly configs: Record<string, Linter.Config>;
+};
+
+const config: EslintPluginConfig = {
   rules,
   configs: {
     all,

@@ -16,11 +16,13 @@ describe("plugin", () => {
   ).filter((file) => file !== "index.ts" && file.endsWith(".ts"));
 
   it("should have all the rules", () => {
+    expect.assertions(2);
     expect(plugin).toHaveProperty("rules");
     expect(Object.keys(plugin.rules)).toHaveLength(ruleFiles.length);
   });
 
   it("should have all the configs", () => {
+    expect.assertions(2);
     expect(plugin).toHaveProperty("configs");
     expect(Object.keys(plugin.configs)).toHaveLength(configFiles.length);
   });

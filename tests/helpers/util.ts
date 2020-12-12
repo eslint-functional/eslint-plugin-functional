@@ -97,8 +97,8 @@ export function addFilename(
 ): RuleTesterTests {
   const { valid, invalid } = tests;
   return {
-    invalid: invalid.map((test) => ({ ...test, filename })),
-    valid: valid.map((test) =>
+    invalid: invalid?.map((test) => ({ ...test, filename })),
+    valid: valid?.map((test) =>
       typeof test === "string"
         ? { code: test, filename }
         : { ...test, filename }
