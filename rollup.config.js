@@ -7,30 +7,15 @@ import rollupPluginCommonjs from "@rollup/plugin-commonjs";
 import rollupPluginNodeResolve from "@rollup/plugin-node-resolve";
 import rollupPluginTypescript from "@rollup/plugin-typescript";
 import rollupPluginJSON from "@rollup/plugin-json";
-
-import {
-  isAbsolute as isAbsolutePath,
-  join as joinPaths,
-  normalize as normalizePath,
-} from "path";
+import rollupPluginAutoExternal from "rollup-plugin-auto-external";
 
 const common = {
   input: "src/index.ts",
 
-  external: (id) => {
-    const localPaths = [".", process.cwd()];
-    const excludedPaths = ["node_modules"];
-    const normalId = isAbsolutePath(id) ? normalizePath(id) : id;
-
-    return !localPaths.some(
-      (localPath) =>
-        // Local file?
-        normalId.startsWith(localPath) &&
-        // Not excluded?
-        !excludedPaths.some((excludePath) =>
-          normalId.startsWith(joinPaths(localPath, excludePath))
-        )
-    );
+  output: {
+    dir: "./lib",
+    exports: "default",
+    sourcemap: false,
   },
 
   treeshake: {
@@ -43,46 +28,43 @@ const common = {
   },
 };
 
-const cjs = {
-  ...common,
-
-  output: {
-    dir: "./lib",
-    entryFileNames: "[name].js",
-    chunkFileNames: "common/[hash].js",
-    format: "cjs",
-    sourcemap: false,
-  },
-
-  plugins: [
+/**
+ * Get new instances of all the common plugins.
+ */
+function getPlugins() {
+  return [
+    rollupPluginAutoExternal(),
     rollupPluginNodeResolve(),
     rollupPluginCommonjs(),
     rollupPluginTypescript(),
     rollupPluginJSON({
       preferConst: true,
     }),
-  ],
+  ];
+}
+
+const cjs = {
+  ...common,
+
+  output: {
+    ...common.output,
+    entryFileNames: "[name].js",
+    format: "cjs",
+  },
+
+  plugins: getPlugins(),
 };
 
 const esm = {
   ...common,
 
   output: {
-    dir: "./lib",
+    ...common.output,
     entryFileNames: "[name].mjs",
-    chunkFileNames: "common/[hash].mjs",
     format: "esm",
-    sourcemap: false,
   },
 
-  plugins: [
-    rollupPluginNodeResolve(),
-    rollupPluginCommonjs(),
-    rollupPluginTypescript(),
-    rollupPluginJSON({
-      preferConst: true,
-    }),
-  ],
+  plugins: getPlugins(),
 };
 
 export default [cjs, esm];
