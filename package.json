@@ -50,7 +50,6 @@
     "prelint": "yarn build && yarn link && yarn link 'eslint-plugin-functional'",
     "lint": "yarn eslint './{src,tests}/**/*.ts' -f visualstudio",
     "lint-fix": "yarn lint --fix",
-    "report-coverage": "yarn codecov -f coverage/lcov.info",
     "test": "yarn jest --testPathIgnorePatterns _work.test",
     "test-compiled": "yarn cross-env USE_COMPLIED=1 yarn test",
     "test-work": "yarn jest tests/rules/_work.test.ts --no-coverage",
