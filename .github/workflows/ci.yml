@@ -1,0 +1,88 @@
+name: CI
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  lint:
+    name: Linting Checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup NodeJs
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14"
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Run Linting Checks
+        run: yarn lint
+  test:
+    strategy:
+      fail-fast: true
+      matrix:
+        os:
+          - "ubuntu-latest"
+        node_version:
+          - "10"
+          - "12"
+          - "14"
+          - "15"
+        ts_version:
+          - "next"
+          - "latest"
+          - "3.4.1"
+          - "JS"
+    name: "Test - Node: ${{ matrix.node_version }} - TS: ${{ matrix.ts_version }} - OS: ${{ matrix.os }}"
+    runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.ts_version == 'next' }}
+    env:
+      # Use compiled tests on everything instances except this one.
+      USE_COMPILED_TEST: ${{ fromJSON('["false", "true"]')[matrix.ts_version != 'latest' || matrix.node_version != '14' || matrix.os != 'ubuntu-latest'] }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          # Fetch all commits for codecov.
+          fetch-depth: ${{ fromJSON('[0, 1]')[ env.USE_COMPILED_TEST == 'true'] }}
+
+      - name: Setup NodeJs
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node_version }}
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build
+        run: yarn build
+
+      - name: Compile Tests
+        if: env.USE_COMPILED_TEST == 'true'
+        run: yarn compile-tests
+
+      - name: Remove Dev TypeScript
+        run: yarn remove typescript
+
+      - name: Add TypeScript "${{ matrix.ts_version }}"
+        if: matrix.ts_version != 'JS'
+        run: yarn add -D typescript@"${{ matrix.ts_version }}"
+
+      - name: Run Tests (Uncompiled)
+        if: env.USE_COMPILED_TEST != 'true'
+        run: yarn test
+
+      - name: Run Tests (Compiled)
+        if: env.USE_COMPILED_TEST == 'true'
+        run: yarn test-compiled
+
+      - name: Report coverage
+        uses: codecov/codecov-action@v1
+        if: env.USE_COMPILED_TEST != 'true'
+        with:
+          file: coverage/lcov.info
