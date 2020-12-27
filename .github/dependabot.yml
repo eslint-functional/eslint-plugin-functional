@@ -3,7 +3,7 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "live"
+      interval: "monthly"
     labels:
       - "Type: Maintenance"
       - ":blue_heart:"
