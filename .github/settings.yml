@@ -75,6 +75,9 @@ labels:
   - name: "Status: Triage"
     color: fbca04
     description: "This issue needs to be triaged."
+  - name: "Status: Investigation Pending"
+    color: cccccc
+    description: "Issue need to be investigated further."
   - name: "Status: On Hold"
     color: cccccc
     description: "Issue or PR that has been placed on hold for now."
