@@ -1,27 +1,28 @@
 {
   "files.exclude": {
     ".rpt2_cache": true,
-    "coverage": true
+    "coverage": true,
   },
   "files.trimTrailingWhitespace": true,
   "search.exclude": {
-    "**/.git": true,
-    "**/.rpt2_cache": true,
-    "**/build": true,
-    "**/lib": true,
-    ".vscode/**": true
+    "**/.git/": true,
+    "**/.rpt2_cache/": true,
+    "**/yarn.lock": true,
+    ".vscode/": true,
+    "build/": true,
+    "lib/": true,
   },
   "typescript.tsdk": "./node_modules/typescript/lib",
   "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": false
+    "editor.defaultFormatter": "vscode.json-language-features",
+    "editor.formatOnSave": false,
   },
   "[jsonc]": {
     "editor.defaultFormatter": "vscode.json-language-features",
-    "editor.formatOnSave": false
+    "editor.formatOnSave": false,
   },
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
-  }
+  },
 }
