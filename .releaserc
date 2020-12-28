@@ -1,0 +1,14 @@
+plugins:
+  - - "@semantic-release/commit-analyzer"
+    - preset: "eslint",
+  - - "@semantic-release/release-notes-generator"
+    - preset: "eslint",
+  - - "@semantic-release/changelog"
+    - changelogTitle: "# Changelog
+
+        All notable changes to this project will be documented in this file."
+  - "@semantic-release/git"
+  - "@semantic-release/npm"
+  - - "@semantic-release/github"
+    - releasedLabels:
+        - "Status: Released"
