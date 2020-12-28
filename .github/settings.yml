@@ -4,10 +4,12 @@ repository:
   description: ESLint rules to disable mutation and promote fp in JavaScript and TypeScript.
   private: false
   has_issues: true
+  has_projects: true
   has_wiki: false
   has_downloads: true
   default_branch: master
-  allow_squash_merge: false
+  allow_auto_merge: true
+  allow_squash_merge: true
   allow_merge_commit: true
   allow_rebase_merge: true
 
@@ -48,6 +50,9 @@ labels:
   - name: "Type: Maintenance"
     color: 2af79e
     description: "Generic maintenance tasks, e.g., package updates."
+  - name: "Type: Question"
+    color: cc317c
+    description: "A general question or how to do something. Not a question about adding/removing/changing features."
 
   # Additional markers
   - name: "Security"
@@ -59,6 +64,12 @@ labels:
   - name: "Declined"
     color: f9d0c4
     description: "This issue or PR has been declined."
+  - name: "Breaking Change"
+    color: a80016
+    description: "This change will require a new major release."
+  - name: "Feature Removal"
+    color: a80016
+    description: "A feature is no longer wanted/needed (remove/deprecate it)"
 
   # Ongoing Status labels
   - name: "Status: Triage"
