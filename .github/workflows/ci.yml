@@ -5,8 +5,23 @@ on:
   - pull_request
 
 jobs:
+  pre_job:
+    runs-on: ubuntu-latest
+    outputs:
+      should_skip: ${{ steps.skip_check.outputs.should_skip }}
+    steps:
+      - name: Skip Duplicate Actions
+        id: skip_check
+        uses: fkirc/skip-duplicate-actions@v3.3.0
+        with:
+          concurrent_skipping: 'same_content'
+          paths_ignore: '[".vscode/", "**/docs/**", "**/*.md"]'
+          do_not_skip: '["pull_request"]'
+
   lint:
     name: Linting Checks
+    needs: pre_job
+    if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -22,7 +37,11 @@ jobs:
 
       - name: Run Linting Checks
         run: yarn lint
+
   test:
+    name: "Test - Node: ${{ matrix.node_version }} - TS: ${{ matrix.ts_version }} - OS: ${{ matrix.os }}"
+    needs: pre_job
+    if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
     strategy:
       fail-fast: true
       matrix:
@@ -38,7 +57,6 @@ jobs:
           - "latest"
           - "3.4.1"
           - "JS"
-    name: "Test - Node: ${{ matrix.node_version }} - TS: ${{ matrix.ts_version }} - OS: ${{ matrix.os }}"
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.ts_version == 'next' }}
     env:
