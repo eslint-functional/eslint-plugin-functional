@@ -2,6 +2,7 @@
 repository:
   name: eslint-plugin-functional
   description: ESLint rules to disable mutation and promote fp in JavaScript and TypeScript.
+  topics: eslint, eslint-plugin, eslint-rules, javascript, typescript, immutability, fp, functional, functional-programming
   private: false
   has_issues: true
   has_projects: true
