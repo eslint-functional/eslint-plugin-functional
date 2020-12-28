@@ -4,23 +4,22 @@ on:
   pull_request:
 
 jobs:
-  worker:
-    runs-on: ubuntu-latest
-
+  automerge:
     if: github.actor == 'dependabot[bot]'
+    runs-on: ubuntu-latest
     steps:
-      - name: "Wait for status checks"
+      - name: Wait for status checks
         id: waitforstatuschecks
         uses: WyriHaximus/github-action-wait-for-status@v1.2.0
         with:
-          ignoreActions: dependabot-automerge,release
-          checkInterval: 300
+          ignoreActions: automerge
+          checkInterval: 60
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
-      - name: "Automerge"
-        uses: pascalgn/automerge-action@v0.12.0
+      - name: "Merge"
         if: steps.waitforstatuschecks.outputs.status == 'success'
+        uses: pascalgn/automerge-action@v0.12.0
         env:
           MERGE_LABELS: ":blue_heart:,!Status: On Hold"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
