@@ -19,11 +19,10 @@
     "plugin:import/errors",
     "plugin:import/warnings",
     "plugin:import/typescript",
-    "plugin:@typescript-eslint/recommended",
     "plugin:eslint-plugin/recommended",
+    "plugin:functional/recommended",
     "plugin:prettier/recommended",
-    "prettier/@typescript-eslint",
-    "plugin:functional/recommended"
+    "prettier/@typescript-eslint"
   ],
   "parserOptions": {
     "ecmaVersion": 10,
@@ -33,6 +32,10 @@
     ],
     "sourceType": "module"
   },
+  "ignorePatterns": [
+    "build/",
+    "lib/"
+  ],
   "rules": {
     // Built in.
     "no-param-reassign": "error",
@@ -57,81 +60,100 @@
           "^tsInstalled$"
         ]
       }
-    ],
-    // Typescript eslint.
-    "@typescript-eslint/array-type": [
-      "error",
-      {
-        "default": "generic"
-      }
-    ],
-    "@typescript-eslint/ban-types": [
-      "error",
-      {
-        "types": {
-          "Object": {
-            "message": "Use object instead",
-            "fixWith": "object"
-          },
-          "{}": false,
-          "object": false
-        },
-        "extendDefaults": true
-      }
-    ],
-    "@typescript-eslint/explicit-function-return-type": [
-      "error",
-      {
-        "allowExpressions": true,
-        "allowTypedFunctionExpressions": true,
-        "allowHigherOrderFunctions": true
-      }
-    ],
-    "@typescript-eslint/prefer-interface": "off",
-    "@typescript-eslint/no-non-null-assertion": "off",
-    "@typescript-eslint/no-require-imports": "error",
-    "@typescript-eslint/no-var-requires": "off",
-    "@typescript-eslint/no-unused-vars": [
-      "error",
-      {
-        "args": "after-used",
-        "argsIgnorePattern": "^_",
-        "caughtErrors": "none",
-        "ignoreRestSiblings": true,
-        "vars": "all"
-      }
-    ],
-    "@typescript-eslint/no-use-before-define": [
-      "error",
-      {
-        "functions": true,
-        "classes": true,
-        "variables": true,
-        "typedefs": true
-      }
-    ],
-    // JSDoc.
-    "jsdoc/check-alignment": 1,
-    "jsdoc/check-indentation": 1,
-    "jsdoc/check-param-names": 1,
-    "jsdoc/check-tag-names": 1,
-    "jsdoc/implements-on-classes": 1,
-    "jsdoc/newline-after-description": 1,
-    "jsdoc/no-types": 1,
-    "jsdoc/require-description": 1,
-    "jsdoc/require-description-complete-sentence": 1,
-    "jsdoc/require-hyphen-before-param-description": 1,
-    "jsdoc/require-jsdoc": 1,
-    "jsdoc/require-param-description": 1,
-    "jsdoc/require-param-name": 1,
-    "jsdoc/require-returns-check": 1,
-    "jsdoc/require-returns-description": 1
+    ]
   },
   "overrides": [
-    // Testing Rules.
+    // Top level files.
     {
       "files": [
-        "**/tests/**/*.ts"
+        "*"
+      ],
+      "rules": {
+        "functional/immutable-data": "off",
+        "functional/functional-parameters": "off",
+        "functional/no-expression-statement": "off"
+      }
+    },
+    // TypeScript files.
+    {
+      "files": [
+        "**/*.ts"
+      ],
+      "extends": [
+        "plugin:@typescript-eslint/recommended"
+      ],
+      "rules": {
+        "@typescript-eslint/array-type": [
+          "error",
+          {
+            "default": "generic"
+          }
+        ],
+        "@typescript-eslint/ban-types": [
+          "error",
+          {
+            "types": {
+              "Object": {
+                "message": "Use object instead",
+                "fixWith": "object"
+              },
+              "{}": false,
+              "object": false
+            },
+            "extendDefaults": true
+          }
+        ],
+        "@typescript-eslint/prefer-interface": "off",
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "@typescript-eslint/no-require-imports": "error",
+        "@typescript-eslint/no-var-requires": "off",
+        "@typescript-eslint/no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars-experimental": [
+          "warn",
+          {
+            "ignoredNamesRegex": "^_",
+            "ignoreArgsIfArgsAfterAreUsed": true
+          }
+        ],
+        "@typescript-eslint/no-use-before-define": [
+          "error",
+          {
+            "functions": false,
+            "classes": true,
+            "variables": true,
+            "typedefs": true
+          }
+        ]
+      }
+    },
+    // Source files.
+    {
+      "files": [
+        "src/**/*"
+      ],
+      "rules": {
+        // JSDoc.
+        "jsdoc/check-alignment": "warn",
+        "jsdoc/check-indentation": "warn",
+        "jsdoc/check-param-names": "warn",
+        "jsdoc/check-tag-names": "warn",
+        "jsdoc/implements-on-classes": "warn",
+        "jsdoc/newline-after-description": "warn",
+        "jsdoc/no-types": "warn",
+        "jsdoc/require-description": "warn",
+        "jsdoc/require-description-complete-sentence": "warn",
+        "jsdoc/require-hyphen-before-param-description": "warn",
+        "jsdoc/require-jsdoc": "warn",
+        "jsdoc/require-param-description": "warn",
+        "jsdoc/require-param-name": "warn",
+        "jsdoc/require-returns-check": "warn",
+        "jsdoc/require-returns-description": "warn"
+      }
+    },
+    // Testing Files.
+    {
+      "files": [
+        "tests/**/*"
       ],
       "env": {
         "jest/globals": true
