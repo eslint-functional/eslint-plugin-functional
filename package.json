@@ -52,10 +52,7 @@
     "lint-fix": "yarn lint --fix",
     "test": "nyc ava",
     "test-work": "ava 'tests/rules/_work.test.ts'",
-    "verify": "yarn build && yarn lint && yarn build-tests && yarn test-compiled && rimraf build",
-    "preversion": "yarn verify",
-    "version": "auto-changelog -p && git add CHANGELOG.md",
-    "postversion": "git push --tags && yarn publish --new-version $npm_package_version && git push && echo \"Successfully released version $npm_package_version!\""
+    "verify": "yarn build && yarn lint && yarn build-tests && yarn test-compiled && rimraf build"
   },
   "dependencies": {
     "@typescript-eslint/experimental-utils": "^4.9.1",
@@ -84,7 +81,6 @@
     "@types/node": "14.14.12",
     "@typescript-eslint/eslint-plugin": "^4.11.1",
     "@typescript-eslint/parser": "^4.11.1",
-    "auto-changelog": "^2.2.1",
     "ava": "^3.15.0",
     "babel-eslint": "^10.0.2",
     "codecov": "^3.8.1",
