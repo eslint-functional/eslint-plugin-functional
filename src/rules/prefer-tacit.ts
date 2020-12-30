@@ -1,4 +1,4 @@
-import { Type } from "typescript";
+import { FunctionLikeDeclaration, Type } from "typescript";
 import { all as deepMerge } from "deepmerge";
 import { TSESTree } from "@typescript-eslint/experimental-utils";
 import { JSONSchema4 } from "json-schema";
@@ -113,9 +113,17 @@ function isCallerViolation(
       const declaration = getESTreeNode(tsDeclaration, context);
 
       return (
-        declaration !== null &&
-        (isFunctionLike(declaration) || isTSFunctionType(declaration)) &&
-        declaration.params.length === caller.arguments.length
+        (declaration !== null &&
+          (isFunctionLike(declaration) || isTSFunctionType(declaration)) &&
+          declaration.params.length === caller.arguments.length) ||
+        // Check for optional params.
+        (tsDeclaration as FunctionLikeDeclaration).parameters
+          .slice(caller.arguments.length)
+          .every(
+            (param) =>
+              param.initializer !== undefined ||
+              param.questionToken !== undefined
+          )
       );
     }
   }
