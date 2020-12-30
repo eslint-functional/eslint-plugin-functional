@@ -75,8 +75,8 @@ labels:
   - name: "Status: Triage"
     color: fbca04
     description: "This issue needs to be triaged."
-  - name: "Status: Investigation Pending"
-    color: cccccc
+  - name: "Status: Investigation Needed"
+    color: fef2c0
     description: "Issue need to be investigated further."
   - name: "Status: On Hold"
     color: cccccc
