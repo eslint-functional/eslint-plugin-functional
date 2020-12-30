@@ -7,7 +7,7 @@ import {
   TSESTree,
 } from "@typescript-eslint/experimental-utils";
 import { Rule } from "eslint";
-import { Type } from "typescript";
+import { Node, Type } from "typescript";
 
 import { shouldIgnore } from "../common/ignore-options";
 
@@ -135,4 +135,20 @@ export function getTypeOfNode<Context extends RuleContext<string, BaseOptions>>(
     : parserServices.program
         .getTypeChecker()
         .getTypeAtLocation(parserServices.esTreeNodeToTSNodeMap.get(node));
+}
+
+/**
+ * Get the es tree node from the given ts node.
+ */
+export function getESTreeNode<Context extends RuleContext<string, BaseOptions>>(
+  node: Node,
+  context: Context
+): TSESTree.Node | null {
+  const { parserServices } = context;
+
+  return parserServices === undefined ||
+    parserServices.program === undefined ||
+    parserServices.tsNodeToESTreeNodeMap === undefined
+    ? null
+    : parserServices.tsNodeToESTreeNodeMap.get(node);
 }
