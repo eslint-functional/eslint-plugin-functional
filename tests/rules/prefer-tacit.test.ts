@@ -91,6 +91,24 @@ const es6Invalid: ReadonlyArray<InvalidTestCase> = [
       },
     ],
   },
+  // Default parameters.
+  {
+    code: dedent`
+      function f(x, y = 10) {}
+      const foo = x => f(x);`,
+    optionsSet: [[{ assumeTypes: { allowFixer: true } }]],
+    output: dedent`
+      function f(x, y = 10) {}
+      const foo = f;`,
+    errors: [
+      {
+        messageId: "generic",
+        type: "ArrowFunctionExpression",
+        line: 2,
+        column: 13,
+      },
+    ],
+  },
 ];
 
 // Invalid test cases.
@@ -166,6 +184,24 @@ const tsInvalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "ArrowFunctionExpression",
         line: 3,
+        column: 13,
+      },
+    ],
+  },
+  // Optional parameters.
+  {
+    code: dedent`
+      function f(x: number, y?: number) {}
+      const foo = x => f(x);`,
+    optionsSet: [[]],
+    output: dedent`
+      function f(x: number, y?: number) {}
+      const foo = f;`,
+    errors: [
+      {
+        messageId: "generic",
+        type: "ArrowFunctionExpression",
+        line: 2,
         column: 13,
       },
     ],
