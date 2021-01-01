@@ -25,6 +25,7 @@ const common = {
       "object.fromentries/auto.js",
     ],
     propertyReadSideEffects: false,
+    unknownGlobalSideEffects: false,
   },
 };
 
