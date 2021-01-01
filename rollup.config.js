@@ -9,6 +9,11 @@ import rollupPluginTypescript from "@rollup/plugin-typescript";
 import rollupPluginJSON from "@rollup/plugin-json";
 import rollupPluginAutoExternal from "rollup-plugin-auto-external";
 
+const polyfills = [
+  "array.prototype.flatmap/auto.js",
+  "object.fromentries/auto.js",
+];
+
 const common = {
   input: "src/index.ts",
 
@@ -18,12 +23,11 @@ const common = {
     sourcemap: false,
   },
 
+  external: polyfills,
+
   treeshake: {
     annotations: true,
-    moduleSideEffects: [
-      "array.prototype.flatmap/auto.js",
-      "object.fromentries/auto.js",
-    ],
+    moduleSideEffects: polyfills,
     propertyReadSideEffects: false,
     unknownGlobalSideEffects: false,
   },
