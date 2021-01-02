@@ -1,18 +1,18 @@
 /**
  * @file Tests for all configs except `all`.
  */
-import { Linter } from "eslint";
+import type { Linter } from "eslint";
 
-import all from "../src/configs/all";
-import currying from "../src/configs/currying";
-import functional from "../src/configs/functional";
-import functionalLite from "../src/configs/functional-lite";
-import noMutations from "../src/configs/no-mutations";
-import noExceptions from "../src/configs/no-exceptions";
-import noObjectOrientation from "../src/configs/no-object-orientation";
-import noStatements from "../src/configs/no-statements";
-import stylitic from "../src/configs/stylitic";
-import { rules } from "../src/rules";
+import all from "~/configs/all";
+import currying from "~/configs/currying";
+import functional from "~/configs/functional";
+import functionalLite from "~/configs/functional-lite";
+import noExceptions from "~/configs/no-exceptions";
+import noMutations from "~/configs/no-mutations";
+import noObjectOrientation from "~/configs/no-object-orientation";
+import noStatements from "~/configs/no-statements";
+import stylitic from "~/configs/stylitic";
+import { rules } from "~/rules";
 
 /**
  * Test the given config.
@@ -22,7 +22,7 @@ function testConfig(config: Linter.Config, master: Linter.Config) {
     it("should not have any JS rules that the all config does not have", () => {
       expect.hasAssertions();
       expect(config).not.toStrictEqual(master);
-      Object.keys(config.rules ?? {}).every((rule) => {
+      Object.keys(config.rules ?? {}).forEach((rule) => {
         expect(master.rules?.[rule]).toBeDefined();
       });
     });
@@ -30,7 +30,7 @@ function testConfig(config: Linter.Config, master: Linter.Config) {
     it("should not have any TS rules that the all config does not have", () => {
       expect.hasAssertions();
       expect(config).not.toStrictEqual(master);
-      Object.keys(config.overrides?.[0].rules ?? {}).every((rule) => {
+      Object.keys(config.overrides?.[0].rules ?? {}).forEach((rule) => {
         expect(master.overrides?.[0].rules?.[rule]).toBeDefined();
       });
     });

@@ -1,23 +1,20 @@
-import { TSESTree } from "@typescript-eslint/experimental-utils";
+import type { TSESTree } from "@typescript-eslint/experimental-utils";
 import { all as deepMerge } from "deepmerge";
-import { JSONSchema4 } from "json-schema";
+import type { JSONSchema4 } from "json-schema";
 
-import {
+import type {
   IgnoreAccessorPatternOption,
-  ignoreAccessorPatternOptionSchema,
   IgnorePatternOption,
+} from "~/common/ignore-options";
+import {
+  ignoreAccessorPatternOptionSchema,
   ignorePatternOptionSchema,
   shouldIgnore,
-} from "../common/ignore-options";
-import { isExpected } from "../util/misc";
-import {
-  createRule,
-  getTypeOfNode,
-  RuleContext,
-  RuleMetaData,
-  RuleResult,
-} from "../util/rule";
-import { inConstructor } from "../util/tree";
+} from "~/common/ignore-options";
+import { isExpected } from "~/utils/misc";
+import type { RuleContext, RuleMetaData, RuleResult } from "~/utils/rule";
+import { createRule, getTypeOfNode } from "~/utils/rule";
+import { inConstructor } from "~/utils/tree";
 import {
   isArrayConstructorType,
   isArrayExpression,
@@ -27,7 +24,7 @@ import {
   isMemberExpression,
   isNewExpression,
   isObjectConstructorType,
-} from "../util/typeguard";
+} from "~/utils/typeguard";
 
 // The name of this rule.
 export const name = "immutable-data" as const;
@@ -268,6 +265,14 @@ function checkCallExpression(
     options.assumeTypes === true ||
     (options.assumeTypes !== false && options.assumeTypes.forObjects === true);
 
+  const isMethodName = (methodName) => {
+    return (
+      methodName ===
+      ((node.callee as TSESTree.MemberExpression)
+        .property as TSESTree.Identifier).name
+    );
+  };
+
   return {
     context,
     descriptors:
@@ -276,12 +281,7 @@ function checkCallExpression(
         ? // Potential array mutation?
           // Check if allowed here - this cannot be automatically checked beforehand.
           !shouldIgnore(node.callee.object, context, options) &&
-          arrayMutatorMethods.some(
-            (m) =>
-              m ===
-              ((node.callee as TSESTree.MemberExpression)
-                .property as TSESTree.Identifier).name
-          ) &&
+          arrayMutatorMethods.some(isMethodName) &&
           (!options.ignoreImmediateMutation ||
             !isInChainCallAndFollowsNew(
               node.callee,
@@ -295,12 +295,7 @@ function checkCallExpression(
           )
           ? [{ node, messageId: "array" }]
           : // Potential non-array object mutation (ex. Object.assign on identifier)?
-          objectConstructorMutatorFunctions.some(
-              (m) =>
-                m ===
-                ((node.callee as TSESTree.MemberExpression)
-                  .property as TSESTree.Identifier).name
-            ) &&
+          objectConstructorMutatorFunctions.some(isMethodName) &&
             node.arguments.length >= 2 &&
             (isIdentifier(node.arguments[0]) ||
               isMemberExpression(node.arguments[0])) &&

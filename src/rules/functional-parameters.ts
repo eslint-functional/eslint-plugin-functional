@@ -1,19 +1,13 @@
-import { TSESTree } from "@typescript-eslint/experimental-utils";
+import type { TSESTree } from "@typescript-eslint/experimental-utils";
 import { all as deepMerge } from "deepmerge";
-import { JSONSchema4 } from "json-schema";
+import type { JSONSchema4 } from "json-schema";
 
-import {
-  IgnorePatternOption,
-  ignorePatternOptionSchema,
-} from "../common/ignore-options";
-import {
-  createRule,
-  RuleContext,
-  RuleMetaData,
-  RuleResult,
-} from "../util/rule";
-import { isIIFE, isPropertyAccess, isPropertyName } from "../util/tree";
-import { isRestElement } from "../util/typeguard";
+import type { IgnorePatternOption } from "~/common/ignore-options";
+import { ignorePatternOptionSchema } from "~/common/ignore-options";
+import type { RuleContext, RuleMetaData, RuleResult } from "~/utils/rule";
+import { createRule } from "~/utils/rule";
+import { isIIFE, isPropertyAccess, isPropertyName } from "~/utils/tree";
+import { isRestElement } from "~/utils/typeguard";
 
 // The name of this rule.
 export const name = "functional-parameters" as const;
@@ -149,7 +143,8 @@ function getParamCountViolations(
       isIIFE(node))
   ) {
     return [];
-  } else if (
+  }
+  if (
     node.params.length === 0 &&
     (enforceParameterCount === "atLeastOne" ||
       (typeof enforceParameterCount === "object" &&
@@ -161,7 +156,8 @@ function getParamCountViolations(
         messageId: "paramCountAtLeastOne",
       },
     ];
-  } else if (
+  }
+  if (
     node.params.length !== 1 &&
     (enforceParameterCount === "exactlyOne" ||
       (typeof enforceParameterCount === "object" &&
@@ -173,9 +169,8 @@ function getParamCountViolations(
         messageId: "paramCountExactlyOne",
       },
     ];
-  } else {
-    return [];
   }
+  return [];
 }
 
 /**

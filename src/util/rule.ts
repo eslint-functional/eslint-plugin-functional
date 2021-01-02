@@ -1,18 +1,16 @@
 // Polyfill.
 import "object.fromentries/auto.js";
 
-import {
-  ESLintUtils,
-  TSESLint,
-  TSESTree,
-} from "@typescript-eslint/experimental-utils";
-import { Rule } from "eslint";
-import { Node, Type } from "typescript";
+import type { TSESLint, TSESTree } from "@typescript-eslint/experimental-utils";
+import { ESLintUtils } from "@typescript-eslint/experimental-utils";
+import type { Rule } from "eslint";
+import type { Node, Type } from "typescript";
 
-import { shouldIgnore } from "../common/ignore-options";
+import { shouldIgnore } from "~/common/ignore-options";
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
 // @ts-ignore -- This file is outside of the root dir (i.e. src/).
+// eslint-disable-next-line import/no-relative-parent-imports
 import { version } from "../../package.json";
 
 export type BaseOptions = object;
@@ -63,18 +61,18 @@ export type RuleFunctionsMap<
 function checkNode<
   MessageIds extends string,
   Context extends RuleContext<MessageIds, BaseOptions>,
-  Node extends TSESTree.Node,
+  TSESTreeNode extends TSESTree.Node,
   Options extends BaseOptions
 >(
   check: (
-    node: Node,
+    node: TSESTreeNode,
     context: Context,
     options: Options
   ) => RuleResult<MessageIds, Options>,
   context: Context,
   options: Options
-): (node: Node) => void {
-  return (node: Node) => {
+): (node: TSESTreeNode) => void {
+  return (node: TSESTreeNode) => {
     if (!options || !shouldIgnore(node, context, options)) {
       const result = check(node, context, options);
 
