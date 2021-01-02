@@ -2,9 +2,7 @@
   "env": {
     "jest/globals": true
   },
-  "extends": [
-    "plugin:jest/recommended"
-  ],
+  "extends": ["plugin:jest/recommended"],
   "rules": {
     "eslint-comments/disable-enable-pair": "off",
     "eslint-comments/no-unlimited-disable": "off",

@@ -1,14 +1,28 @@
-import { TSESLint } from "@typescript-eslint/experimental-utils";
+import type { TSESLint } from "@typescript-eslint/experimental-utils";
 import dedent from "dedent";
-import { Rule, RuleTester } from "eslint";
+import { RuleTester } from "eslint";
 
-import {
+import type {
   IgnoreAccessorPatternOption,
   IgnorePatternOption,
-  shouldIgnore,
-} from "../../src/common/ignore-options";
-import { filename, es9 } from "../helpers/configs";
-import { addFilename, createDummyRule } from "../helpers/util";
+} from "~/common/ignore-options";
+import { shouldIgnore } from "~/common/ignore-options";
+import { filename, es9 } from "~/tests/helpers/configs";
+import { addFilename, createDummyRule } from "~/tests/helpers/util";
+
+/**
+ * Create a dummy rule that operates on AssignmentExpression nodes.
+ */
+function createDummyAssignmentExpressionRule() {
+  return createDummyRule((context) => {
+    const [allowed, options] = context.options;
+    return {
+      AssignmentExpression: (node) => {
+        expect(shouldIgnore(node, context, options)).toBe(allowed);
+      },
+    };
+  });
+}
 
 describe("option: ignore", () => {
   describe("ignoreAccessorPattern", () => {
@@ -129,14 +143,7 @@ describe("option: ignore", () => {
 
     new RuleTester(es9).run(
       "AssignmentExpression",
-      createDummyRule((context) => {
-        const [allowed, options] = context.options;
-        return {
-          AssignmentExpression: (node) => {
-            expect(shouldIgnore(node, context, options)).toBe(allowed);
-          },
-        };
-      }) as Rule.RuleModule,
+      createDummyAssignmentExpressionRule(),
       addFilename(filename, {
         valid: [
           ...((tests as unknown) as ReadonlyArray<RuleTester.ValidTestCase>),
@@ -183,14 +190,7 @@ describe("option: ignore", () => {
 
     new RuleTester(es9).run(
       "AssignmentExpression",
-      createDummyRule((context) => {
-        const [allowed, options] = context.options;
-        return {
-          AssignmentExpression: (node) => {
-            expect(shouldIgnore(node, context, options)).toBe(allowed);
-          },
-        };
-      }) as Rule.RuleModule,
+      createDummyAssignmentExpressionRule(),
       addFilename(filename, {
         valid: [
           ...((assignmentExpressionTests as unknown) as ReadonlyArray<RuleTester.ValidTestCase>),
@@ -228,7 +228,7 @@ describe("option: ignore", () => {
             expect(shouldIgnore(node, context, options)).toBe(allowed);
           },
         };
-      }) as Rule.RuleModule,
+      }),
       addFilename(filename, {
         valid: [
           ...((expressionStatementTests as unknown) as ReadonlyArray<RuleTester.ValidTestCase>),
