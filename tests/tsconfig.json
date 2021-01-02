@@ -1,11 +1,15 @@
 {
-  "extends": "../tsconfig.base.json",
+  "extends": "../tsconfig.json",
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "CommonJS",
+    "target": "ES2018",
     "outDir": "../build",
     "skipLibCheck": true,
     "declaration": false,
-    // Turn off strict checks to make debugging nicer.
+    // Turn off checks to make debugging nicer.
+    "noImplicitAny": false,
+    "noImplicitReturns": false,
+    "noImplicitThis": false,
     "strict": false
   }
 }

@@ -5,16 +5,14 @@
 import dedent from "dedent";
 import { RuleTester } from "eslint";
 
-import { name, rule } from "../../src/rules/functional-parameters";
-
-import { es3, es6, typescript } from "../helpers/configs";
+import { name, rule } from "~/rules/functional-parameters";
+import { es3, es6, typescript } from "~/tests/helpers/configs";
+import type { InvalidTestCase, ValidTestCase } from "~/tests/helpers/util";
 import {
   describeTsOnly,
-  InvalidTestCase,
   processInvalidTestCase,
   processValidTestCase,
-  ValidTestCase,
-} from "../helpers/util";
+} from "~/tests/helpers/util";
 
 // Valid test cases.
 const es3Valid: ReadonlyArray<ValidTestCase> = [

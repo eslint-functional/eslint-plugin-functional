@@ -1,4 +1,4 @@
-import { TSESTree } from "@typescript-eslint/experimental-utils";
+import type { TSESTree } from "@typescript-eslint/experimental-utils";
 
 import {
   isCallExpression,
@@ -22,7 +22,7 @@ function getAncestorOfType<T extends TSESTree.Node>(
 ): T | null {
   return checker(node, child)
     ? node
-    : node.parent == undefined
+    : node.parent === undefined || node.parent === null
     ? null
     : getAncestorOfType(checker, node.parent, node);
 }
@@ -72,7 +72,8 @@ export function isInReturnType(node: TSESTree.Node): boolean {
   return (
     getAncestorOfType(
       (n): n is TSESTree.Node =>
-        n.parent != undefined &&
+        n.parent !== undefined &&
+        n.parent !== null &&
         isFunctionLike(n.parent) &&
         n.parent.returnType === n,
       node

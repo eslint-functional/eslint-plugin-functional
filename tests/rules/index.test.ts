@@ -1,6 +1,6 @@
 import * as fs from "fs";
 
-import { rules } from "../../src/rules";
+import { rules } from "~/rules";
 
 describe("./src/rules/index.ts", () => {
   const rulesNames: ReadonlyArray<string> = Object.keys(rules);
