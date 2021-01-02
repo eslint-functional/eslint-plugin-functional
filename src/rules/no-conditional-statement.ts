@@ -1,17 +1,13 @@
-import { TSESTree } from "@typescript-eslint/experimental-utils";
-import { JSONSchema4 } from "json-schema";
+import type { TSESTree } from "@typescript-eslint/experimental-utils";
+import type { JSONSchema4 } from "json-schema";
 
-import {
-  createRule,
-  RuleContext,
-  RuleMetaData,
-  RuleResult,
-} from "../util/rule";
+import type { RuleContext, RuleMetaData, RuleResult } from "~/utils/rule";
+import { createRule } from "~/utils/rule";
 import {
   isBlockStatement,
   isIfStatement,
   isReturnStatement,
-} from "../util/typeguard";
+} from "~/utils/typeguard";
 
 // The name of this rule.
 export const name = "no-conditional-statement" as const;
@@ -72,6 +68,17 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
 };
 
 /**
+ * Get the Rule Results from the given violations.
+ */
+function getRuleResultsFromViolations(
+  violations: ReadonlyArray<TSESTree.Node>
+): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
+  return violations.flatMap((violatingNode) => [
+    { node: violatingNode, messageId: "incompleteBranch" },
+  ]);
+}
+
+/**
  * Get all of the violations in the given if statement assuming if statements
  * are allowed.
  */
@@ -95,9 +102,7 @@ function getIfBranchViolations(
       !isIfStatement(branch)
   );
 
-  return violations.flatMap((node) => [
-    { node, messageId: "incompleteBranch" },
-  ]);
+  return getRuleResultsFromViolations(violations);
 }
 
 /**
@@ -109,19 +114,17 @@ function getSwitchViolations(
 ): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
   const violations = node.cases.filter(
     (branch) =>
-      branch.consequent.length !== 0 &&
+      branch.consequent.length > 0 &&
       !branch.consequent.some(isReturnStatement) &&
       !(
         branch.consequent.every(isBlockStatement) &&
-        (branch.consequent[
-          branch.consequent.length - 1
-        ] as TSESTree.BlockStatement).body.some(isReturnStatement)
+        branch.consequent[branch.consequent.length - 1].body.some(
+          isReturnStatement
+        )
       )
   );
 
-  return violations.flatMap((node) => [
-    { node, messageId: "incompleteBranch" },
-  ]);
+  return getRuleResultsFromViolations(violations);
 }
 
 /**

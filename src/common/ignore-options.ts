@@ -1,12 +1,12 @@
 // Polyfill.
 import "array.prototype.flatmap/auto.js";
 
-import { TSESTree } from "@typescript-eslint/experimental-utils";
+import type { TSESTree } from "@typescript-eslint/experimental-utils";
 import escapeRegExp from "escape-string-regexp";
-import { JSONSchema4 } from "json-schema";
+import type { JSONSchema4 } from "json-schema";
 
-import { BaseOptions, RuleContext } from "../util/rule";
-import { inClass, inFunctionBody, inInterface } from "../util/tree";
+import type { BaseOptions, RuleContext } from "~/utils/rule";
+import { inClass, inFunctionBody, inInterface } from "~/utils/tree";
 import {
   hasID,
   hasKey,
@@ -23,7 +23,7 @@ import {
   isTSTypeReference,
   isUnaryExpression,
   isVariableDeclaration,
-} from "../util/typeguard";
+} from "~/utils/typeguard";
 
 export type AllowLocalMutationOption = {
   readonly allowLocalMutation: boolean;
@@ -119,10 +119,10 @@ function getNodeIdentifierText(
     : isAssignmentExpression(node)
     ? getNodeIdentifierText(node.left, context)
     : isMemberExpression(node)
-    ? `${getNodeIdentifierText(node.object, context)}.${getNodeIdentifierText(
+    ? `${getNodeIdentifierText(node.object, context)!}.${getNodeIdentifierText(
         node.property,
         context
-      )}`
+      )!}`
     : isThisExpression(node)
     ? "this"
     : isUnaryExpression(node)
@@ -168,7 +168,7 @@ function shouldIgnoreViaPattern(
     : [ignorePattern as string];
 
   // One or more patterns match?
-  return patterns.some((pattern) => new RegExp(pattern).test(text));
+  return patterns.some((pattern) => new RegExp(pattern, "u").test(text));
 }
 
 /**
@@ -179,7 +179,10 @@ function shouldIgnoreViaPattern(
  * Does the given text match the given pattern.
  */
 function accessorPatternMatch(
-  [pattern, ...remainingPatternParts]: ReadonlyArray<string>,
+  [pattern, ...remainingPatternParts]:
+    | readonly []
+    | readonly [string]
+    | ReadonlyArray<string>,
   textParts: ReadonlyArray<string>,
   allowExtra = false
 ): boolean {
@@ -207,9 +210,10 @@ function accessorPatternMatch(
         allowExtra
       )
     : // Text matches pattern?
-      new RegExp(`^${escapeRegExp(pattern).replace(/\\\*/g, ".*")}$`).test(
-        textParts[0]
-      ) &&
+      new RegExp(
+        `^${escapeRegExp(pattern).replace(/\\\*/gu, ".*")}$`,
+        "u"
+      ).test(textParts[0]) &&
       accessorPatternMatch(
         remainingPatternParts,
         textParts.slice(1),

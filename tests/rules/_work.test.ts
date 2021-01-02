@@ -9,15 +9,15 @@ import {
   InvalidTestCase,
   processValidTestCase,
   processInvalidTestCase,
-} from "../helpers/util";
-import { typescript } from "../helpers/configs";
+} from "~/tests/helpers/util";
+import { typescript } from "~/tests/helpers/configs";
 import { RuleTester } from "eslint";
 
 /*
  * Step 1.
  * Import the rule to test.
  */
-import { rule } from "../../src/rules/prefer-readonly-type";
+import { rule } from "~/rules/prefer-readonly-type";
 
 /*
  * Step 2a.

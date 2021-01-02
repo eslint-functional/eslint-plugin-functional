@@ -94,6 +94,8 @@ jobs:
       - name: Run Tests (Uncompiled)
         if: env.USE_COMPILED_TEST != 'true'
         run: yarn test
+        env:
+          USE_COMPILED_TEST: matrix.ts_version == 'JS'
 
       - name: Run Tests (Compiled)
         if: env.USE_COMPILED_TEST == 'true'
