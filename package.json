@@ -49,7 +49,7 @@
     "precompile-tests": "rimraf build",
     "compile-tests": "tsc -p tests/tsconfig.json && cpx ./tests/helpers/tsconfig.json ./build/tests/helpers/",
     "prelint": "yarn build && yarn link && yarn link 'eslint-plugin-functional'",
-    "lint": "eslint . -f visualstudio",
+    "lint": "eslint .",
     "lint-fix": "yarn lint --fix",
     "test": "jest --testPathIgnorePatterns _work.test",
     "test-compiled": "cross-env USE_COMPLIED=1 yarn test",
