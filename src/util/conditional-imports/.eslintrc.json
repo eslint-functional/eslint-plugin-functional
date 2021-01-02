@@ -1,6 +1,6 @@
 {
   "rules": {
-    "@typescript-eslint/no-require-imports": "off",
+    "@typescript-eslint/no-var-requires": "off",
     "functional/functional-parameters": "off",
     "functional/no-try-statement": "off"
   }
