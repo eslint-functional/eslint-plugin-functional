@@ -14,7 +14,7 @@ jobs:
         id: skip_check
         uses: fkirc/skip-duplicate-actions@v3.3.0
         with:
-          concurrent_skipping: 'same_content'
+          concurrent_skipping: "same_content"
           paths_ignore: '[".vscode/", "**/docs/**", "**/*.md"]'
           do_not_skip: '["pull_request"]'
 
@@ -55,24 +55,24 @@ jobs:
         ts_version:
           - "next"
           - "latest"
-          - "3.4.1"
+          # Can't test against this version as we are testing against own code base,
+          # and we use newer ts features.
+          # - "3.4.1"
           - "JS"
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.ts_version == 'next' }}
     env:
-      # Use compiled tests on everything instances except this one.
-      USE_COMPILED_TEST: ${{ fromJSON('["false", "true"]')[matrix.ts_version != 'latest' || matrix.node_version != '14' || matrix.os != 'ubuntu-latest'] }}
+      REPORT_COVERAGE: ${{ fromJSON('["false", "true"]')[matrix.ts_version == 'latest' && matrix.node_version == '14' && matrix.os == 'ubuntu-latest'] }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          # Fetch all commits for codecov.
-          fetch-depth: ${{ fromJSON('[0, 1]')[ env.USE_COMPILED_TEST == 'true'] }}
+          fetch-depth: 0
 
-      - name: Setup NodeJs
+      - name: Setup NodeJs for building
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node_version }}
+          node-version: "14"
 
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
@@ -81,26 +81,31 @@ jobs:
         run: yarn build
 
       - name: Compile Tests
-        if: env.USE_COMPILED_TEST == 'true'
+        if: matrix.ts_version == 'JS'
         run: yarn compile-tests
 
+      - name: Setup NodeJs ${{ matrix.node_version }} for testing
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node_version }}
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile --ignore-engines
+
       - name: Remove Dev TypeScript
-        run: yarn remove typescript
+        run: yarn remove typescript --ignore-engines
 
       - name: Add TypeScript "${{ matrix.ts_version }}"
         if: matrix.ts_version != 'JS'
-        run: yarn add -D typescript@"${{ matrix.ts_version }}"
+        run: yarn add -D typescript@"${{ matrix.ts_version }}" --ignore-engines
 
-      - name: Run Tests (Uncompiled)
-        if: env.USE_COMPILED_TEST != 'true'
+      - name: Run Tests
         run: yarn test
-
-      - name: Run Tests (Compiled)
-        if: env.USE_COMPILED_TEST == 'true'
-        run: yarn test-compiled
+        env:
+          USE_COMPILED_TEST: ${{ matrix.ts_version == 'JS' }}
 
       - name: Report coverage
         uses: codecov/codecov-action@v1
-        if: env.USE_COMPILED_TEST != 'true'
+        if: env.REPORT_COVERAGE == 'true'
         with:
           file: coverage/lcov.info

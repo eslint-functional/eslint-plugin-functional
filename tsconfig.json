@@ -1,10 +1,32 @@
 {
-  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "rootDir": "./src",
-    "removeComments": true
-  },
-  "exclude": [
-    "tests/**/*"
-  ]
+    "target": "ES2020",
+    "module": "esnext",
+    "lib": ["esnext"],
+    "alwaysStrict": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": false,
+    "newLine": "LF",
+    "noEmitOnError": true,
+    "removeComments": true,
+    "baseUrl": ".",
+    "paths": {
+      "~": ["src"],
+      "~/common/*": ["src/common/*"],
+      "~/conditional-imports/*": ["src/util/conditional-imports/*"],
+      "~/configs/*": ["src/configs/*"],
+      "~/rules": ["src/rules"],
+      "~/rules/*": ["src/rules/*"],
+      "~/utils/*": ["src/util/*"],
+      "~/tests/*": ["tests/*"]
+    }
+  }
 }

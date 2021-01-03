@@ -2,17 +2,16 @@
  * @file Functions that typeguard the given node/type.
  */
 
-import {
-  AST_NODE_TYPES,
-  TSESTree,
-} from "@typescript-eslint/experimental-utils";
+import type { TSESTree } from "@typescript-eslint/experimental-utils";
+import { AST_NODE_TYPES } from "@typescript-eslint/experimental-utils";
 // TS import - only use this for types, will be stripped out by rollup.
-import { Type, UnionType } from "typescript";
+import type { Type, UnionType } from "typescript";
 
 // TS import - conditionally imported only when typescript is avaliable.
-import ts from "../util/conditional-imports/typescript";
+import ts from "~/conditional-imports/typescript";
 
 // Any JSDoc for these functions would be tedious.
+// eslint-disable-next-line eslint-comments/disable-enable-pair
 /* eslint-disable jsdoc/require-jsdoc */
 
 /*
