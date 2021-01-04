@@ -1,9 +1,10 @@
 .DS_Store
 thumbs.db
 *.log
-.rpt2_cache/
-node_modules/
-/build/
-/lib/
-/coverage/
+
+.nyc_output/
+build/
+coverage/
 js_out/
+lib/
+node_modules/
