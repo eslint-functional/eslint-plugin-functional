@@ -110,11 +110,6 @@ export function addFilename(
 /**
  * Returns whether or not TypeScript is installed locally.
  */
-export function tsInstalled(): boolean {
+export function isTsInstalled(): boolean {
   return ts !== undefined;
 }
-
-/**
- * Jest `describe` function that won't run if TypeScript isn't present.
- */
-export const describeTsOnly = tsInstalled() ? describe : describe.skip;
