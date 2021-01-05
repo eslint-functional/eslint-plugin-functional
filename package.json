@@ -47,7 +47,7 @@
     "build-tests": "yarn compile-tests",
     "compile": "rollup -c",
     "compile-tests": "ts-node -P scripts/tsconfig.json scripts/compile-tests.ts",
-    "prelint": "yarn build && yarn link && yarn link 'eslint-plugin-functional'",
+    "prelint": "yarn build",
     "lint": "eslint .",
     "lint-fix": "yarn lint --fix",
     "test": "nyc ava",
