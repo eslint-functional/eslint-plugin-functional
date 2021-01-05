@@ -6,7 +6,6 @@
     "eslint-plugin",
     "functional",
     "import",
-    "jest",
     "jsdoc",
     "prettier"
   ],
