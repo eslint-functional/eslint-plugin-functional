@@ -1,7 +1,7 @@
 ---
 name: "\U0001F41B Bug Report"
 about: Report a bug to help us fix it
-title: ''
+title: '[rule-name] quick summary'
 labels: 'Type: Bug, Status: Triage'
 assignees: ''
 ---
