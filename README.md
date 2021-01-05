@@ -5,7 +5,7 @@
 # eslint-plugin-functional
 
 [![npm version](https://img.shields.io/npm/v/eslint-plugin-functional.svg?style=flat)](https://www.npmjs.com/package/eslint-plugin-functional)
-[![travis build](https://travis-ci.com/jonaskello/eslint-plugin-functional.svg?branch=master&style=flat)](https://travis-ci.com/jonaskello/eslint-plugin-functional)
+[![CI Status](https://img.shields.io/github/workflow/status/jonaskello/eslint-plugin-functional/CI)](https://github.com/jonaskello/eslint-plugin-functional/actions?query=workflow%3ACI+branch%3Amaster)
 [![Coverage Status](https://codecov.io/gh/jonaskello/eslint-plugin-functional/branch/master/graph/badge.svg)](https://codecov.io/gh/jonaskello/eslint-plugin-functional)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat)](https://github.com/prettier/prettier)
 [![MIT license](https://img.shields.io/github/license/jonaskello/eslint-plugin-functional.svg?style=flat)](https://opensource.org/licenses/MIT)
@@ -107,7 +107,7 @@ Enable rulesets via the "extends" property of your `.eslintrc` configuration fil
 
 ### With TypeScript
 
-Add `@typescript-eslint/parser` to the "parser" filed in your `.eslintrc` configuration file.  
+Add `@typescript-eslint/parser` to the "parser" filed in your `.eslintrc` configuration file.
 To use type information, you will need to specify a path to your `tsconfig.json` file in the "project" property of "parserOptions".
 
 ```jsonc
