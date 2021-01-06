@@ -32,6 +32,8 @@ const errorMessages = {
 
 // The meta data for this rule.
 const meta: RuleMetaData<keyof typeof errorMessages> = {
+  deprecated: true,
+  replacedBy: ["@typescript-eslint/consistent-type-definitions"],
   type: "suggestion",
   docs: {
     description: "Prefer Type Literals over Interfaces.",
