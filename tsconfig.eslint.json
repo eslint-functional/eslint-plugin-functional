@@ -1,4 +1,4 @@
 {
   // Explicitly add js files that eslint complains about.
-  "include": ["cz-adapter/index.js"]
+  "include": ["rollup.config.js", "cz-adapter/index.js"]
 }
