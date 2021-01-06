@@ -27,7 +27,7 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
   docs: {
     description: "Disallow throwing exceptions.",
     category: "Best Practices",
-    recommended: false,
+    recommended: "error",
   },
   messages: errorMessages,
   schema,

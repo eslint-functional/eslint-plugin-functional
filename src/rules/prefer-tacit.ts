@@ -78,7 +78,7 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
   docs: {
     description: "Replaces `x => f(x)` with just `f`.",
     category: "Best Practices",
-    recommended: "warn",
+    recommended: false,
   },
   messages: errorMessages,
   fixable: "code",

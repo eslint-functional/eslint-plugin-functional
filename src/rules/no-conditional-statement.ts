@@ -69,7 +69,7 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
   docs: {
     description: "Disallow conditional statements.",
     category: "Best Practices",
-    recommended: false,
+    recommended: "error",
   },
   messages: errorMessages,
   schema,
