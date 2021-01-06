@@ -23,7 +23,7 @@
   ],
   "parserOptions": {
     "ecmaVersion": 10,
-    "project": ["./tsconfig.json", "./tests/tsconfig.json"],
+    "project": ["./tsconfig.json", "./tsconfig.eslint.json"],
     "sourceType": "module"
   },
   "ignorePatterns": ["build/", "coverage/", "lib/"],

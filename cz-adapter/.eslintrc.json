@@ -1,0 +1,22 @@
+{
+  "rules": {
+    "functional/no-expression-statement": "off",
+    "functional/no-let": [
+      "error",
+      {
+        "ignorePattern": "^mutable"
+      }
+    ],
+    "functional/no-return-void": "off",
+    "functional/no-throw-statement": "off",
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": true,
+        "peerDependencies": true
+      }
+    ],
+    "node/no-sync": "off",
+    "node/no-unsupported-features/node-builtins": "off"
+  }
+}
