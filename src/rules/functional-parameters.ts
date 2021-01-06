@@ -97,7 +97,7 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
   docs: {
     description: "Enforce functional parameters.",
     category: "Best Practices",
-    recommended: false,
+    recommended: "error",
   },
   messages: errorMessages,
   schema,
