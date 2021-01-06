@@ -6,6 +6,7 @@ import noExceptions from "./no-exceptions";
 import noMutations from "./no-mutations";
 import noObjectOrientation from "./no-object-orientation";
 import noStatements from "./no-statements";
+import stylitic from "./stylitic";
 
 const config: Linter.Config = deepMerge([
   currying,
@@ -13,6 +14,7 @@ const config: Linter.Config = deepMerge([
   noExceptions,
   noObjectOrientation,
   noStatements,
+  stylitic,
 ]);
 
 export default config;
