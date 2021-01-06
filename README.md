@@ -243,7 +243,7 @@ The [below section](#supported-rules) gives details on which rules are enabled b
 
 | Name                                           | Description             | <span title="Stylitic">:see_no_evil:</span> | <span title="Lite">:hear_no_evil:</span> | <span title="Recommended">:speak_no_evil:</span> | :wrench: | :blue_heart: |
 | ---------------------------------------------- | ----------------------- | :-----------------------------------------: | :--------------------------------------: | :----------------------------------------------: | :------: | :----------: |
-| [`prefer-tacit`](./docs/rules/prefer-tacit.md) | Tacit/Point-Free style. |             :heavy_check_mark:              |                                          |                                                  | :wrench: | :blue_heart: |
+| [`prefer-tacit`](./docs/rules/prefer-tacit.md) | Tacit/Point-Free style. |             :heavy_check_mark:              |            :heavy_check_mark:            |                :heavy_check_mark:                | :wrench: | :blue_heart: |
 
 ## Recommended standard rules
 
