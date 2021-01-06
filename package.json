@@ -52,7 +52,7 @@
     "lint-fix": "yarn lint --fix",
     "test": "nyc ava",
     "test-work": "ava 'tests/rules/_work.test.ts'",
-    "verify": "yarn build && yarn lint && yarn build-tests && yarn test-compiled && rimraf build"
+    "verify": "yarn lint && yarn test"
   },
   "dependencies": {
     "@typescript-eslint/experimental-utils": "^4.9.1",

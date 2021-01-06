@@ -23,7 +23,7 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Build & Verify
+      - name: Verify
         run: yarn verify
 
       - name: Release
