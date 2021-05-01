@@ -85,7 +85,7 @@
     "cross-env": "^7.0.3",
     "dedent": "^0.7.0",
     "eslint": "^7.15.0",
-    "eslint-config-prettier": "^7.0.0",
+    "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-eslint-plugin": "^2.2.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jest": "^24.1.3",
