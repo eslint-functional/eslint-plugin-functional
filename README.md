@@ -15,7 +15,7 @@ An [ESLint](http://eslint.org) plugin to disable mutation and promote functional
 
 </div>
 
-> :wave: If you previously used the rules in [tslint-immutable](https://www.npmjs.com/package/tslint-immutable), this package is the eslint version of those rules. Please see the [migration guide](docs/user-guide/migrating-from-tslint.md) for how to migrate.
+> :wave: If you previously used the rules in [tslint-immutable](https://www.npmjs.com/package/tslint-immutable), this package is the ESLint version of those rules. Please see the [migration guide](docs/user-guide/migrating-from-tslint.md) for how to migrate.
 
 ## Features
 
@@ -36,7 +36,7 @@ JavaScript is multi-paradigm, allowing both object-oriented and functional progr
 
 ### No statements
 
-In functional programming everything is an expression that produces a value. Javascript has a lot of syntax that is just statements that does not produce a value. That syntax has to be disabled to promote a functional style.
+In functional programming everything is an expression that produces a value. JavaScript has a lot of syntax that is just statements that does not produce a value. That syntax has to be disabled to promote a functional style.
 
 ### No exceptions
 
@@ -44,7 +44,7 @@ Functional programming style does not use run-time exceptions. Instead expressio
 
 ### Currying
 
-Javascript functions support syntax that is not compatible with curried functions. To enable currying this syntax has to be disabled.
+JavaScript functions support syntax that is not compatible with curried functions. To enable currying this syntax has to be disabled.
 
 ### Stylitic
 
@@ -66,7 +66,7 @@ yarn add -D eslint eslint-plugin-functional
 
 ### TypeScript
 
-To use this plugin with TypeScript, a TypeScript parser for eslint is needed.
+To use this plugin with TypeScript, a TypeScript parser for ESLint is needed.
 We recommend [@typescript-eslint/parser](https://www.npmjs.com/package/@typescript-eslint/parser).
 
 ```sh
@@ -282,9 +282,9 @@ For new features file an issue. For bugs, file an issue and optionally file a PR
 
 To execute the tests run `yarn test`.
 
-To learn about eslint plugin development see the [relevant section](https://eslint.org/docs/developer-guide/working-with-plugins) of the eslint docs. You can also checkout the [typescript-eslint](https://github.com/typescript-eslint/typescript-eslint) repo which has some more information specific to typescript.
+To learn about ESLint plugin development see the [relevant section](https://eslint.org/docs/developer-guide/working-with-plugins) of the ESLint docs. You can also checkout the [typescript-eslint](https://github.com/typescript-eslint/typescript-eslint) repo which has some more information specific to TypeScript.
 
-In order to know which AST nodes are created for a snippet of TypeScript code you can use [ast explorer](https://astexplorer.net/) with options JavaScript and @typescript-eslint/parser.
+In order to know which AST nodes are created for a snippet of TypeScript code you can use [AST explorer](https://astexplorer.net/) with options JavaScript and @typescript-eslint/parser.
 
 ## How to publish
 

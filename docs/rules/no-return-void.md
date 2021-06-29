@@ -1,4 +1,4 @@
-# Disallow Returning Nothing (no-return-void)
+# Disallow returning nothing (no-return-void)
 
 Disallow functions that are declared as returning nothing.
 

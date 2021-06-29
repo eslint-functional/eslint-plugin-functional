@@ -1,4 +1,4 @@
-# Disallow Rejecting Promises (no-promise-reject)
+# Disallow rejecting Promises (no-promise-reject)
 
 This rule disallows use of `Promise.reject()`.
 

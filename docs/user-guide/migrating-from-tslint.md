@@ -1,14 +1,14 @@
 # Migrating from TSLint
 
-In 2019, [palantir plans to deprecate TSLint](https://github.com/palantir/tslint/issues/4534) and support the migration to ESLint.
+In 2019, [Palantir plans to deprecate TSLint](https://github.com/palantir/tslint/issues/4534) and support the migration to ESLint.
 This guide is intended to help those who are using tslint-immutable to migrate their settings and projects to use eslint-plugin-functional.
 
 ## Configuration File
 
-The eslint version of `tslint.json` (the configuration file) is `.eslintrc`.
-See [eslint's docs](https://eslint.org/docs/user-guide/configuring) for mor information on this file.
+The ESLint version of `tslint.json` (the configuration file) is `.eslintrc`.
+See [ESLint's docs](https://eslint.org/docs/user-guide/configuring) for mor information on this file.
 
-Out of the box, eslint does not understand TypeScript. To get eslint to understand it we need to change the default parser to one that understands it.
+Out of the box, ESLint does not understand TypeScript. To get ESLint to understand it we need to change the default parser to one that understands it.
 This is where [@typescript-eslint](https://github.com/typescript-eslint/typescript-eslint) comes in.
 In the config file, we can specify the parser to be used with the "parser" key. Any extra parser configuration can then be specified under the "parserOptions" key.
 In order for the parser to have access to type information, it needs access to your `tsconfig.json`; you'll need to specify this under "parserOptions" -> "project".
