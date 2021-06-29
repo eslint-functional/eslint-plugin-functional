@@ -107,7 +107,7 @@ Enable rulesets via the "extends" property of your `.eslintrc` configuration fil
 
 ### With TypeScript
 
-Add `@typescript-eslint/parser` to the "parser" filed in your `.eslintrc` configuration file.  
+Add `@typescript-eslint/parser` to the "parser" filed in your `.eslintrc` configuration file.
 To use type information, you will need to specify a path to your `tsconfig.json` file in the "project" property of "parserOptions".
 
 ```jsonc
@@ -182,7 +182,7 @@ The [below section](#supported-rules) gives details on which rules are enabled b
 |  :hear_no_evil:   | Ruleset: Lite<br><sub><sup>This ruleset is designed to enforce a somewhat functional programming code style.</sup></sub>               |
 |  :speak_no_evil:  | Ruleset: Recommended<br><sub><sup>This ruleset is designed to enforce a functional programming code style.</sup></sub>                 |
 |     :wrench:      | Fixable<br><sub><sup>Problems found by this rule are potentially fixable with the `--fix` option.</sup></sub>                          |
-| :thought_balloon: | Only Avaliable for TypeScript<br><sub><sup>The rule either requires Type Information or only works with TypeScript syntax.</sup></sub> |
+| :thought_balloon: | Only Available for TypeScript<br><sub><sup>The rule either requires Type Information or only works with TypeScript syntax.</sup></sub> |
 |   :blue_heart:    | Works better with TypeScript<br><sub><sup>Type Information will be used if available making the rule work in more cases.</sup></sub>   |
 
 ### No Mutations Rules

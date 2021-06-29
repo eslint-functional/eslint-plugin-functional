@@ -1,7 +1,7 @@
 // Note: This import will be stripped out by rollup.
 import ts from "typescript";
 
-// Conditionally loaded TypeScript but only if it is avaliable.
+// Conditionally loaded TypeScript but only if it is available.
 export default (() => {
   try {
     return require("typescript") as typeof ts;
