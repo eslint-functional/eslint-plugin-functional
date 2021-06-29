@@ -9,7 +9,7 @@ import {
 // TS import - only use this for types, will be stripped out by rollup.
 import { Type, UnionType } from "typescript";
 
-// TS import - conditionally imported only when typescript is avaliable.
+// TS import - conditionally imported only when typescript is available.
 import ts from "../util/conditional-imports/typescript";
 
 // Any JSDoc for these functions would be tedious.

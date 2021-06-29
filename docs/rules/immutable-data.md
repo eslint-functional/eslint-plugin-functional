@@ -78,7 +78,7 @@ The default options:
 The rule take advantage of TypeScript's typing engine to check if mutation is taking place.
 If you are not using TypeScript, type checking cannot be performed; hence this option exists.
 
-This option will make the rule assume the type of the nodes it is checking are of type Array/Object.  
+This option will make the rule assume the type of the nodes it is checking are of type Array/Object.
 However this may result in some false positives being picked up.
 
 Disabling this option can result in false negatives, for example:
@@ -90,7 +90,7 @@ x.push(3); // This will NOT be flagged.
 // This is due to the fact that without a typing engine, we cannot tell that x is an array.
 ```
 
-Note: This option will have no effect if the TypeScript typing engine is avaliable (i.e. you are using TypeScript and have configured eslint correctly).
+Note: This option will have no effect if the TypeScript typing engine is available (i.e. you are using TypeScript and have configured eslint correctly).
 
 ### `ignoreImmediateMutation`
 
