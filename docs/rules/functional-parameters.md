@@ -1,4 +1,4 @@
-# Enforce Functional Parameters (functional-parameters)
+# Enforce functional parameters (functional-parameters)
 
 Disallow use of rest parameters, the `arguments` keyword and enforces that functions take a least 1 parameter.
 

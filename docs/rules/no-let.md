@@ -1,6 +1,6 @@
 # Disallow mutable variables (no-let)
 
-This rule should be combined with tslint's built-in `no-var-keyword` rule to enforce that all variables are declared as `const`.
+This rule should be combined with TSLint's built-in `no-var-keyword` rule to enforce that all variables are declared as `const`.
 
 ## Rule Details
 
