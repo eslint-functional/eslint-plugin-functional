@@ -54,4 +54,4 @@ The default options:
 ### `ignorePattern`
 
 Patterns will be matched against the line(s) of code.
-See the [ignorePattern](./options/ignore-pattern.md) docs for more infomation.
+See the [ignorePattern](./options/ignore-pattern.md) docs for more information.

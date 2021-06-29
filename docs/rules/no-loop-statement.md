@@ -4,7 +4,7 @@ This rule disallows for loop statements, including `for`, `for...of`, `for...in`
 
 ## Rule Details
 
-In functional programming we want everthing to be an expression that returns a value.
+In functional programming we want everything to be an expression that returns a value.
 Loops in JavaScript are statements so they are not a good fit for a functional programming style.
 Instead consider using `map`, `reduce` or similar.
 For more background see this [blog post](https://hackernoon.com/rethinking-javascript-death-of-the-for-loop-c431564c84a8) and discussion in [tslint-immutable #54](https://github.com/jonaskello/tslint-immutable/issues/54).

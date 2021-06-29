@@ -120,7 +120,7 @@ function add(x) {
 }
 ```
 
-See [Currying](https://en.wikipedia.org/wiki/Currying) and [Higher-order function](https://en.wikipedia.org/wiki/Higher-order_function) on Wikipedia for more infomation.
+See [Currying](https://en.wikipedia.org/wiki/Currying) and [Higher-order function](https://en.wikipedia.org/wiki/Higher-order_function) on Wikipedia for more information.
 
 #### `enforceParameterCount.count`
 
@@ -133,4 +133,4 @@ If true, this option allows for the use of [IIFEs](https://developer.mozilla.org
 ### `ignorePattern`
 
 Patterns will be matched against function names.
-See the [ignorePattern](./options/ignore-pattern.md) docs for more infomation.
+See the [ignorePattern](./options/ignore-pattern.md) docs for more information.
