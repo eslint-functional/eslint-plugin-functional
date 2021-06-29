@@ -107,13 +107,13 @@ const sorted = [...original].sort((a, b) => a.localeCompare(b)); // This is OK w
 ### `ignorePattern`
 
 Patterns will be matched against variable names.
-See the [ignorePattern](./options/ignore-pattern.md) docs for more infomation.
+See the [ignorePattern](./options/ignore-pattern.md) docs for more information.
 
 ### `ignoreAccessorPattern`
 
 This option takes a match string or an array of match strings (not a RegExp pattern).
 
-The match string allows you to specify dot seperated `.` object paths and has support for "glob" `*` and "globstar" `**` matching.
+The match string allows you to specify dot separated `.` object paths and has support for "glob" `*` and "globstar" `**` matching.
 
 For example:
 
@@ -148,7 +148,7 @@ For example:
 
 #### Wildcards
 
-The following wildcards can be used when specifing a pattern:
+The following wildcards can be used when specifying a pattern:
 
 `**` - Match any depth (including zero). Can only be used as a full accessor.
 `*` - When used as a full accessor, match the next accessor (there must be one). When used as part of an accessor, match any characters.

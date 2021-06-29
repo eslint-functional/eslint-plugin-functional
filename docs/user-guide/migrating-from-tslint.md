@@ -6,7 +6,7 @@ This guide is intended to help those who are using tslint-immutable to migrate t
 ## Configuration File
 
 The ESLint version of `tslint.json` (the configuration file) is `.eslintrc`.
-See [ESLint's docs](https://eslint.org/docs/user-guide/configuring) for mor information on this file.
+See [ESLint's docs](https://eslint.org/docs/user-guide/configuring) for more information on this file.
 
 Out of the box, ESLint does not understand TypeScript. To get ESLint to understand it we need to change the default parser to one that understands it.
 This is where [@typescript-eslint](https://github.com/typescript-eslint/typescript-eslint) comes in.
