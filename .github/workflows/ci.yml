@@ -73,6 +73,10 @@ jobs:
         with:
           node-version: ${{ matrix.node_version }}
 
+      # Remove dev-dependencies that aren't needed for testing and aren't compatable with all node versions being tested against.
+      - name: Remove unneeded incompatible dev-dependencies
+        run: yarn remove @rebeccastevens/eslint-config
+
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
 
