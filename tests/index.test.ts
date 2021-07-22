@@ -24,6 +24,6 @@ describe("plugin", () => {
   it("should have all the configs", () => {
     expect.assertions(2);
     expect(plugin).toHaveProperty("configs");
-    expect(Object.keys(plugin.configs)).toHaveLength(configFiles.length + 1);
+    expect(Object.keys(plugin.configs)).toHaveLength(configFiles.length);
   });
 });
