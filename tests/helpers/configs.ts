@@ -1,5 +1,5 @@
-import { Linter } from "eslint";
-import * as path from "path";
+import type { Linter } from "eslint";
+import path from "path";
 
 export const filename = path.join(__dirname, "file.ts");
 

@@ -1,22 +1,19 @@
-import { TSESTree } from "@typescript-eslint/experimental-utils";
+import type { TSESTree } from "@typescript-eslint/experimental-utils";
 import { all as deepMerge } from "deepmerge";
-import { JSONSchema4 } from "json-schema";
+import type { JSONSchema4 } from "json-schema";
 
-import {
+import type {
   IgnoreAccessorPatternOption,
-  ignoreAccessorPatternOptionSchema,
   IgnorePatternOption,
+} from "../common/ignore-options";
+import {
+  ignoreAccessorPatternOptionSchema,
   ignorePatternOptionSchema,
   shouldIgnore,
 } from "../common/ignore-options";
 import { isExpected } from "../util/misc";
-import {
-  createRule,
-  getTypeOfNode,
-  RuleContext,
-  RuleMetaData,
-  RuleResult,
-} from "../util/rule";
+import type { RuleContext, RuleMetaData, RuleResult } from "../util/rule";
+import { createRule, getTypeOfNode } from "../util/rule";
 import { inConstructor } from "../util/tree";
 import {
   isArrayConstructorType,
@@ -33,8 +30,8 @@ import {
 export const name = "immutable-data" as const;
 
 // The options this rule can take.
-type Options = IgnorePatternOption &
-  IgnoreAccessorPatternOption & {
+type Options = IgnoreAccessorPatternOption &
+  IgnorePatternOption & {
     readonly ignoreImmediateMutation: boolean;
     readonly assumeTypes:
       | boolean
@@ -113,7 +110,7 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/prototype#Methods#Mutator_methods
  */
-const arrayMutatorMethods = [
+const arrayMutatorMethods = new Set([
   "copyWithin",
   "fill",
   "pop",
@@ -123,7 +120,7 @@ const arrayMutatorMethods = [
   "sort",
   "splice",
   "unshift",
-] as const;
+]);
 
 /**
  * Array methods that return a new object (or array) without mutating the original.
@@ -138,26 +135,26 @@ const arrayNewObjectReturningMethods = [
   "map",
   "reduce",
   "reduceRight",
-] as const;
+];
 
 /**
  * Array constructor functions that create a new array.
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array#Methods
  */
-const arrayConstructorFunctions = ["from", "of"] as const;
+const arrayConstructorFunctions = ["from", "of"];
 
 /**
  * Object constructor functions that mutate an object.
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object#Methods_of_the_Object_constructor
  */
-const objectConstructorMutatorFunctions = [
+const objectConstructorMutatorFunctions = new Set([
   "assign",
   "defineProperties",
   "defineProperty",
   "setPrototypeOf",
-] as const;
+]);
 
 /**
  * Check if the given assignment expression violates this rule.
@@ -276,14 +273,7 @@ function checkCallExpression(
         ? // Potential array mutation?
           // Check if allowed here - this cannot be automatically checked beforehand.
           !shouldIgnore(node.callee.object, context, options) &&
-          arrayMutatorMethods.some(
-            (m) =>
-              m ===
-              (
-                (node.callee as TSESTree.MemberExpression)
-                  .property as TSESTree.Identifier
-              ).name
-          ) &&
+          arrayMutatorMethods.has(node.callee.property.name) &&
           (!options.ignoreImmediateMutation ||
             !isInChainCallAndFollowsNew(
               node.callee,
@@ -297,14 +287,7 @@ function checkCallExpression(
           )
           ? [{ node, messageId: "array" }]
           : // Potential non-array object mutation (ex. Object.assign on identifier)?
-          objectConstructorMutatorFunctions.some(
-              (m) =>
-                m ===
-                (
-                  (node.callee as TSESTree.MemberExpression)
-                    .property as TSESTree.Identifier
-                ).name
-            ) &&
+          objectConstructorMutatorFunctions.has(node.callee.property.name) &&
             node.arguments.length >= 2 &&
             (isIdentifier(node.arguments[0]) ||
               isMemberExpression(node.arguments[0])) &&

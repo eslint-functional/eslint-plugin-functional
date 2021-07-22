@@ -1,20 +1,13 @@
-import { FunctionLikeDeclaration, Type } from "typescript";
+import type { TSESTree } from "@typescript-eslint/experimental-utils";
+import type { ReportDescriptor } from "@typescript-eslint/experimental-utils/dist/ts-eslint";
 import { all as deepMerge } from "deepmerge";
-import { TSESTree } from "@typescript-eslint/experimental-utils";
-import { JSONSchema4 } from "json-schema";
+import type { JSONSchema4 } from "json-schema";
+import type { FunctionLikeDeclaration, Type } from "typescript";
 
-import {
-  IgnorePatternOption,
-  ignorePatternOptionSchema,
-} from "../common/ignore-options";
-import {
-  createRule,
-  getESTreeNode,
-  getTypeOfNode,
-  RuleContext,
-  RuleMetaData,
-  RuleResult,
-} from "../util/rule";
+import type { IgnorePatternOption } from "../common/ignore-options";
+import { ignorePatternOptionSchema } from "../common/ignore-options";
+import type { RuleContext, RuleMetaData, RuleResult } from "../util/rule";
+import { createRule, getESTreeNode, getTypeOfNode } from "../util/rule";
 import {
   isBlockStatement,
   isCallExpression,
@@ -23,7 +16,6 @@ import {
   isReturnStatement,
   isTSFunctionType,
 } from "../util/typeguard";
-import { ReportDescriptor } from "@typescript-eslint/experimental-utils/dist/ts-eslint";
 
 // The name of this rule.
 export const name = "prefer-tacit" as const;
@@ -103,30 +95,27 @@ function isCallerViolation(
 ): boolean {
   if (calleeType.symbol === undefined) {
     return false;
-  } else {
-    const tsDeclaration =
-      calleeType.symbol.valueDeclaration ?? calleeType.symbol.declarations?.[0];
-
-    if (tsDeclaration === undefined) {
-      return false;
-    } else {
-      const declaration = getESTreeNode(tsDeclaration, context);
-
-      return (
-        (declaration !== null &&
-          (isFunctionLike(declaration) || isTSFunctionType(declaration)) &&
-          declaration.params.length === caller.arguments.length) ||
-        // Check for optional params.
-        (tsDeclaration as FunctionLikeDeclaration).parameters
-          .slice(caller.arguments.length)
-          .every(
-            (param) =>
-              param.initializer !== undefined ||
-              param.questionToken !== undefined
-          )
-      );
-    }
   }
+  const tsDeclaration =
+    calleeType.symbol.valueDeclaration ?? calleeType.symbol.declarations?.[0];
+
+  if (tsDeclaration === undefined) {
+    return false;
+  }
+  const declaration = getESTreeNode(tsDeclaration, context);
+
+  return (
+    (declaration !== null &&
+      (isFunctionLike(declaration) || isTSFunctionType(declaration)) &&
+      declaration.params.length === caller.arguments.length) ||
+    // Check for optional params.
+    (tsDeclaration as FunctionLikeDeclaration).parameters
+      .slice(caller.arguments.length)
+      .every(
+        (param) =>
+          param.initializer !== undefined || param.questionToken !== undefined
+      )
+  );
 }
 
 /**
@@ -134,9 +123,9 @@ function isCallerViolation(
  */
 function getCallDescriptors(
   node:
+    | TSESTree.ArrowFunctionExpression
     | TSESTree.FunctionDeclaration
-    | TSESTree.FunctionExpression
-    | TSESTree.ArrowFunctionExpression,
+    | TSESTree.FunctionExpression,
   context: RuleContext<keyof typeof errorMessages, Options>,
   options: Options,
   caller: TSESTree.CallExpression
@@ -165,7 +154,7 @@ function getCallDescriptors(
       const calleeName = caller.callee.name;
       return [
         {
-          node: node,
+          node,
           messageId: "generic",
           fix:
             // No fixer when assuming types as this is dangerous.
@@ -177,12 +166,10 @@ function getCallDescriptors(
               : (fixer) => fixer.replaceText(node, calleeName),
         },
       ];
-    } else {
-      return [];
     }
-  } else {
     return [];
   }
+  return [];
 }
 
 /**
@@ -190,17 +177,16 @@ function getCallDescriptors(
  */
 function getDirectCallDescriptors(
   node:
+    | TSESTree.ArrowFunctionExpression
     | TSESTree.FunctionDeclaration
-    | TSESTree.FunctionExpression
-    | TSESTree.ArrowFunctionExpression,
+    | TSESTree.FunctionExpression,
   context: RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): Array<ReportDescriptor<keyof typeof errorMessages>> {
   if (isCallExpression(node.body)) {
     return getCallDescriptors(node, context, options, node.body);
-  } else {
-    return [];
   }
+  return [];
 }
 
 /**
@@ -208,9 +194,9 @@ function getDirectCallDescriptors(
  */
 function getNestedCallDescriptors(
   node:
+    | TSESTree.ArrowFunctionExpression
     | TSESTree.FunctionDeclaration
-    | TSESTree.FunctionExpression
-    | TSESTree.ArrowFunctionExpression,
+    | TSESTree.FunctionExpression,
   context: RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): Array<ReportDescriptor<keyof typeof errorMessages>> {
@@ -227,9 +213,8 @@ function getNestedCallDescriptors(
       options,
       node.body.body[0].argument
     );
-  } else {
-    return [];
   }
+  return [];
 }
 
 /**
@@ -237,9 +222,9 @@ function getNestedCallDescriptors(
  */
 function checkFunction(
   node:
+    | TSESTree.ArrowFunctionExpression
     | TSESTree.FunctionDeclaration
-    | TSESTree.FunctionExpression
-    | TSESTree.ArrowFunctionExpression,
+    | TSESTree.FunctionExpression,
   context: RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
