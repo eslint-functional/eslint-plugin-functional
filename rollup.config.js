@@ -4,9 +4,9 @@
 // @ts-check
 
 import rollupPluginCommonjs from "@rollup/plugin-commonjs";
+import rollupPluginJSON from "@rollup/plugin-json";
 import rollupPluginNodeResolve from "@rollup/plugin-node-resolve";
 import rollupPluginTypescript from "@rollup/plugin-typescript";
-import rollupPluginJSON from "@rollup/plugin-json";
 import rollupPluginAutoExternal from "rollup-plugin-auto-external";
 
 const common = {

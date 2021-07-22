@@ -1,5 +1,5 @@
 import deepMerge from "deepmerge";
-import { Linter } from "eslint";
+import type { Linter } from "eslint";
 
 import functional from "./functional";
 

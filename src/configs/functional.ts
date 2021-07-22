@@ -1,9 +1,9 @@
 import { all as deepMerge } from "deepmerge";
-import { Linter } from "eslint";
+import type { Linter } from "eslint";
 
 import currying from "./currying";
-import noMutations from "./no-mutations";
 import noExceptions from "./no-exceptions";
+import noMutations from "./no-mutations";
 import noObjectOrientation from "./no-object-orientation";
 import noStatements from "./no-statements";
 

@@ -1,12 +1,8 @@
-import { TSESTree } from "@typescript-eslint/experimental-utils";
-import { JSONSchema4 } from "json-schema";
+import type { TSESTree } from "@typescript-eslint/experimental-utils";
+import type { JSONSchema4 } from "json-schema";
 
-import {
-  createRule,
-  RuleContext,
-  RuleMetaData,
-  RuleResult,
-} from "../util/rule";
+import type { RuleContext, RuleMetaData, RuleResult } from "../util/rule";
+import { createRule } from "../util/rule";
 import {
   isBlockStatement,
   isIfStatement,
@@ -72,6 +68,18 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
 };
 
 /**
+ * Report the given node as an incomplete branch violation.
+ *
+ * @param node - The node to report.
+ * @returns A violation rule result.
+ */
+function incompleteBranchViolation(
+  node: TSESTree.Node
+): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
+  return [{ node, messageId: "incompleteBranch" }];
+}
+
+/**
  * Get all of the violations in the given if statement assuming if statements
  * are allowed.
  */
@@ -95,9 +103,7 @@ function getIfBranchViolations(
       !isIfStatement(branch)
   );
 
-  return violations.flatMap((node) => [
-    { node, messageId: "incompleteBranch" },
-  ]);
+  return violations.flatMap(incompleteBranchViolation);
 }
 
 /**
@@ -109,21 +115,17 @@ function getSwitchViolations(
 ): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
   const violations = node.cases.filter(
     (branch) =>
-      branch.consequent.length !== 0 &&
+      branch.consequent.length > 0 &&
       !branch.consequent.some(isReturnStatement) &&
       !(
         branch.consequent.every(isBlockStatement) &&
-        (
-          branch.consequent[
-            branch.consequent.length - 1
-          ] as TSESTree.BlockStatement
-        ).body.some(isReturnStatement)
+        branch.consequent[branch.consequent.length - 1]!.body.some(
+          isReturnStatement
+        )
       )
   );
 
-  return violations.flatMap((node) => [
-    { node, messageId: "incompleteBranch" },
-  ]);
+  return violations.flatMap(incompleteBranchViolation);
 }
 
 /**
@@ -155,13 +157,14 @@ function checkIfStatement(
 ): RuleResult<keyof typeof errorMessages, Options> {
   return {
     context,
-    descriptors: options.allowReturningBranches
-      ? options.allowReturningBranches === "ifExhaustive"
+    descriptors:
+      options.allowReturningBranches === false
+        ? [{ node, messageId: "unexpectedIf" }]
+        : options.allowReturningBranches === "ifExhaustive"
         ? isExhaustiveIfViolation(node)
           ? [{ node, messageId: "incompleteIf" }]
           : getIfBranchViolations(node)
-        : getIfBranchViolations(node)
-      : [{ node, messageId: "unexpectedIf" }],
+        : getIfBranchViolations(node),
   };
 }
 
@@ -175,13 +178,14 @@ function checkSwitchStatement(
 ): RuleResult<keyof typeof errorMessages, Options> {
   return {
     context,
-    descriptors: options.allowReturningBranches
-      ? options.allowReturningBranches === "ifExhaustive"
+    descriptors:
+      options.allowReturningBranches === false
+        ? [{ node, messageId: "unexpectedSwitch" }]
+        : options.allowReturningBranches === "ifExhaustive"
         ? isExhaustiveSwitchViolation(node)
           ? [{ node, messageId: "incompleteSwitch" }]
           : getSwitchViolations(node)
-        : getSwitchViolations(node)
-      : [{ node, messageId: "unexpectedSwitch" }],
+        : getSwitchViolations(node),
   };
 }
 
