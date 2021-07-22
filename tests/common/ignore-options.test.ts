@@ -1,12 +1,12 @@
-import { TSESLint } from "@typescript-eslint/experimental-utils";
+import type { TSESLint } from "@typescript-eslint/experimental-utils";
 import dedent from "dedent";
-import { Rule, RuleTester } from "eslint";
+import { RuleTester } from "eslint";
 
-import {
+import type {
   IgnoreAccessorPatternOption,
   IgnorePatternOption,
-  shouldIgnore,
 } from "../../src/common/ignore-options";
+import { shouldIgnore } from "../../src/common/ignore-options";
 import { filename, es9 } from "../helpers/configs";
 import { addFilename, createDummyRule } from "../helpers/util";
 
@@ -136,7 +136,7 @@ describe("option: ignore", () => {
             expect(shouldIgnore(node, context, options)).toBe(allowed);
           },
         };
-      }) as Rule.RuleModule,
+      })!,
       addFilename(filename, {
         valid: [
           ...(tests as unknown as ReadonlyArray<RuleTester.ValidTestCase>),
@@ -190,7 +190,7 @@ describe("option: ignore", () => {
             expect(shouldIgnore(node, context, options)).toBe(allowed);
           },
         };
-      }) as Rule.RuleModule,
+      })!,
       addFilename(filename, {
         valid: [
           ...(assignmentExpressionTests as unknown as ReadonlyArray<RuleTester.ValidTestCase>),
@@ -228,7 +228,7 @@ describe("option: ignore", () => {
             expect(shouldIgnore(node, context, options)).toBe(allowed);
           },
         };
-      }) as Rule.RuleModule,
+      })!,
       addFilename(filename, {
         valid: [
           ...(expressionStatementTests as unknown as ReadonlyArray<RuleTester.ValidTestCase>),

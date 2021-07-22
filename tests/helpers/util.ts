@@ -1,8 +1,9 @@
-import { TSESLint } from "@typescript-eslint/experimental-utils";
-import { Rule, RuleTester as ESLintRuleTester } from "eslint";
-import { filename } from "./configs";
+import type { TSESLint } from "@typescript-eslint/experimental-utils";
+import type { Rule, RuleTester as ESLintRuleTester } from "eslint";
 
 import ts from "../../src/util/conditional-imports/typescript";
+
+import { filename } from "./configs";
 
 type OptionsSet = {
   /**
@@ -83,7 +84,7 @@ export function createDummyRule(
 
 export type RuleTesterTests = {
   // eslint-disable-next-line functional/prefer-readonly-type
-  valid?: Array<string | ESLintRuleTester.ValidTestCase>;
+  valid?: Array<ESLintRuleTester.ValidTestCase | string>;
   // eslint-disable-next-line functional/prefer-readonly-type
   invalid?: Array<ESLintRuleTester.InvalidTestCase>;
 };

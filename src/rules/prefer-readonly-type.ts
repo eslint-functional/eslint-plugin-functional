@@ -1,24 +1,21 @@
-import { TSESTree } from "@typescript-eslint/experimental-utils";
+import type { TSESTree } from "@typescript-eslint/experimental-utils";
 import { all as deepMerge } from "deepmerge";
-import { JSONSchema4 } from "json-schema";
+import type { JSONSchema4 } from "json-schema";
 
-import {
+import type {
   AllowLocalMutationOption,
-  allowLocalMutationOptionSchema,
   IgnoreClassOption,
-  ignoreClassOptionSchema,
   IgnoreInterfaceOption,
-  ignoreInterfaceOptionSchema,
   IgnorePatternOption,
-  ignorePatternOptionSchema,
 } from "../common/ignore-options";
 import {
-  createRule,
-  getTypeOfNode,
-  RuleContext,
-  RuleMetaData,
-  RuleResult,
-} from "../util/rule";
+  allowLocalMutationOptionSchema,
+  ignoreClassOptionSchema,
+  ignoreInterfaceOptionSchema,
+  ignorePatternOptionSchema,
+} from "../common/ignore-options";
+import type { RuleContext, RuleMetaData, RuleResult } from "../util/rule";
+import { createRule, getTypeOfNode } from "../util/rule";
 import { isInReturnType } from "../util/tree";
 import {
   isArrayType,
@@ -38,9 +35,9 @@ export const name = "prefer-readonly-type" as const;
 
 // The options this rule can take.
 type Options = AllowLocalMutationOption &
-  IgnorePatternOption &
   IgnoreClassOption &
-  IgnoreInterfaceOption & {
+  IgnoreInterfaceOption &
+  IgnorePatternOption & {
     readonly allowMutableReturnType: boolean;
     readonly checkImplicit: boolean;
     readonly ignoreCollections: boolean;
@@ -112,7 +109,8 @@ const mutableToImmutableTypes: ReadonlyMap<string, string> = new Map<
   ["Set", "ReadonlySet"],
 ]);
 const mutableTypeRegex = new RegExp(
-  `^${Array.from(mutableToImmutableTypes.keys()).join("|")}$`
+  `^${[...mutableToImmutableTypes.keys()].join("|")}$`,
+  "u"
 );
 
 /**
@@ -128,30 +126,29 @@ function checkArrayOrTupleType(
       context,
       descriptors: [],
     };
-  } else {
-    return {
-      context,
-      descriptors:
-        (!node.parent ||
-          !isTSTypeOperator(node.parent) ||
-          node.parent.operator !== "readonly") &&
-        (!options.allowMutableReturnType || !isInReturnType(node))
-          ? [
-              {
-                node,
-                messageId: isTSTupleType(node) ? "tuple" : "array",
-                fix:
-                  node.parent && isTSArrayType(node.parent)
-                    ? (fixer) => [
-                        fixer.insertTextBefore(node, "(readonly "),
-                        fixer.insertTextAfter(node, ")"),
-                      ]
-                    : (fixer) => fixer.insertTextBefore(node, "readonly "),
-              },
-            ]
-          : [],
-    };
   }
+  return {
+    context,
+    descriptors:
+      (node.parent === undefined ||
+        !isTSTypeOperator(node.parent) ||
+        node.parent.operator !== "readonly") &&
+      (!options.allowMutableReturnType || !isInReturnType(node))
+        ? [
+            {
+              node,
+              messageId: isTSTupleType(node) ? "tuple" : "array",
+              fix:
+                node.parent !== undefined && isTSArrayType(node.parent)
+                  ? (fixer) => [
+                      fixer.insertTextBefore(node, "(readonly "),
+                      fixer.insertTextAfter(node, ")"),
+                    ]
+                  : (fixer) => fixer.insertTextBefore(node, "readonly "),
+            },
+          ]
+        : [],
+  };
 }
 
 /**
@@ -163,19 +160,20 @@ function checkMappedType(
 ): RuleResult<keyof typeof errorMessages, Options> {
   return {
     context,
-    descriptors: node.readonly
-      ? []
-      : [
-          {
-            node,
-            messageId: "property",
-            fix: (fixer) =>
-              fixer.insertTextBeforeRange(
-                [node.range[0] + 1, node.range[1]],
-                " readonly"
-              ),
-          },
-        ],
+    descriptors:
+      node.readonly === true || node.readonly === "+"
+        ? []
+        : [
+            {
+              node,
+              messageId: "property",
+              fix: (fixer) =>
+                fixer.insertTextBeforeRange(
+                  [node.range[0] + 1, node.range[1]],
+                  " readonly"
+                ),
+            },
+          ],
   };
 }
 
@@ -190,36 +188,34 @@ function checkTypeReference(
   if (isIdentifier(node.typeName)) {
     if (
       options.ignoreCollections &&
-      node.typeName.name.match(mutableTypeRegex)
+      mutableTypeRegex.test(node.typeName.name)
     ) {
       return {
         context,
         descriptors: [],
       };
-    } else {
-      const immutableType = mutableToImmutableTypes.get(node.typeName.name);
-      return {
-        context,
-        descriptors:
-          immutableType &&
-          (!options.allowMutableReturnType || !isInReturnType(node))
-            ? [
-                {
-                  node,
-                  messageId: "type",
-                  fix: (fixer) =>
-                    fixer.replaceText(node.typeName, immutableType),
-                },
-              ]
-            : [],
-      };
     }
-  } else {
+    const immutableType = mutableToImmutableTypes.get(node.typeName.name);
     return {
       context,
-      descriptors: [],
+      descriptors:
+        immutableType !== undefined &&
+        immutableType.length > 0 &&
+        (!options.allowMutableReturnType || !isInReturnType(node))
+          ? [
+              {
+                node,
+                messageId: "type",
+                fix: (fixer) => fixer.replaceText(node.typeName, immutableType),
+              },
+            ]
+          : [],
     };
   }
+  return {
+    context,
+    descriptors: [],
+  };
 }
 
 /**
@@ -237,7 +233,7 @@ function checkProperty(
   return {
     context,
     descriptors:
-      !node.readonly &&
+      node.readonly !== true &&
       (!options.allowMutableReturnType || !isInReturnType(node))
         ? [
             {
@@ -261,10 +257,10 @@ function checkProperty(
  */
 function checkImplicitType(
   node:
-    | TSESTree.VariableDeclaration
+    | TSESTree.ArrowFunctionExpression
     | TSESTree.FunctionDeclaration
     | TSESTree.FunctionExpression
-    | TSESTree.ArrowFunctionExpression,
+    | TSESTree.VariableDeclaration,
   context: RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
@@ -315,12 +311,11 @@ function checkImplicitType(
           : []
       ),
     };
-  } else {
-    return {
-      context,
-      descriptors: [],
-    };
   }
+  return {
+    context,
+    descriptors: [],
+  };
 }
 
 // Create the rule.

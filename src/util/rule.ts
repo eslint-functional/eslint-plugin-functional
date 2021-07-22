@@ -1,16 +1,12 @@
-import {
-  ESLintUtils,
-  TSESLint,
-  TSESTree,
-} from "@typescript-eslint/experimental-utils";
-import { Rule } from "eslint";
-import { Node, Type } from "typescript";
+import type { TSESLint, TSESTree } from "@typescript-eslint/experimental-utils";
+import { ESLintUtils } from "@typescript-eslint/experimental-utils";
+import type { Rule } from "eslint";
+import type { Node, Type } from "typescript";
 
-import { shouldIgnore } from "../common/ignore-options";
-
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
 // @ts-ignore -- This file is outside of the root dir (i.e. src/).
 import { version } from "../../package.json";
+import { shouldIgnore } from "../common/ignore-options";
 
 export type BaseOptions = object;
 
@@ -18,9 +14,12 @@ export type BaseOptions = object;
 export type RuleMetaDataDocs = Omit<TSESLint.RuleMetaDataDocs, "url">;
 
 // "docs.url" will be set automatically.
-export type RuleMetaData<MessageIds extends string> = {
+export type RuleMetaData<MessageIds extends string> = Omit<
+  TSESLint.RuleMetaData<MessageIds>,
+  "docs"
+> & {
   readonly docs: RuleMetaDataDocs;
-} & Omit<TSESLint.RuleMetaData<MessageIds>, "docs">;
+};
 
 export type RuleContext<
   MessageIds extends string,
@@ -72,12 +71,13 @@ function checkNode<
   options: Options
 ): (node: Node) => void {
   return (node: Node) => {
-    if (!options || !shouldIgnore(node, context, options)) {
+    if (!shouldIgnore(node, context, options)) {
       const result = check(node, context, options);
 
-      result.descriptors.forEach((descriptor) =>
-        result.context.report(descriptor)
-      );
+      // eslint-disable-next-line functional/no-loop-statement -- can't really be avoided.
+      for (const descriptor of result.descriptors) {
+        result.context.report(descriptor);
+      }
     }
   };
 }
@@ -131,14 +131,13 @@ export function getTypeOfNode<Context extends RuleContext<string, BaseOptions>>(
     parserServices.esTreeNodeToTSNodeMap === undefined
   ) {
     return null;
-  } else {
-    const checker = parserServices.program.getTypeChecker();
-    const nodeType = checker.getTypeAtLocation(
-      parserServices.esTreeNodeToTSNodeMap.get(node)
-    );
-    const constrained = checker.getBaseConstraintOfType(nodeType);
-    return constrained ?? nodeType;
   }
+  const checker = parserServices.program.getTypeChecker();
+  const nodeType = checker.getTypeAtLocation(
+    parserServices.esTreeNodeToTSNodeMap.get(node)
+  );
+  const constrained = checker.getBaseConstraintOfType(nodeType);
+  return constrained ?? nodeType;
 }
 
 /**

@@ -2,9 +2,9 @@
  * @file Tests the index file.
  */
 
-import plugin from "../src/index";
-
 import { readdirSync } from "fs";
+
+import plugin from "../src";
 
 describe("plugin", () => {
   const ruleFiles: ReadonlyArray<string> = readdirSync("./src/rules").filter(
