@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-functional",
-  "version": "3.2.1",
+  "version": "3.2.2",
   "description": "ESLint rules to disable mutation and promote fp in TypeScript.",
   "keywords": [
     "eslint",
