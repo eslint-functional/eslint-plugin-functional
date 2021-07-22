@@ -30,8 +30,6 @@ const config: EslintPluginConfig = {
     "no-object-orientation": noObjectOrientation,
     "no-statements": noStatements,
     currying,
-    /** @deprecated Use `stylistic` instead. */
-    stylitic: stylistic,
     stylistic,
   },
 };
