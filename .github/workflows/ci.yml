@@ -48,7 +48,6 @@ jobs:
         os:
           - "ubuntu-latest"
         node_version:
-          - "10"
           - "12"
           - "14"
           - "16"
@@ -61,7 +60,7 @@ jobs:
     continue-on-error: ${{ matrix.ts_version == 'next' }}
     env:
       # Use compiled tests on everything instances except this one.
-      USE_COMPILED_TEST: ${{ fromJSON('["false", "true"]')[matrix.ts_version != 'latest' || matrix.node_version != '14' || matrix.os != 'ubuntu-latest'] }}
+      USE_COMPILED_TEST: ${{ fromJSON('["false", "true"]')[matrix.ts_version != 'latest' || matrix.node_version != '16' || matrix.os != 'ubuntu-latest'] }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
