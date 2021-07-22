@@ -1,16 +1,10 @@
-import { TSESTree } from "@typescript-eslint/experimental-utils";
-import { JSONSchema4 } from "json-schema";
+import type { TSESTree } from "@typescript-eslint/experimental-utils";
+import type { JSONSchema4 } from "json-schema";
 
-import {
-  IgnorePatternOption,
-  ignorePatternOptionSchema,
-} from "../common/ignore-options";
-import {
-  createRule,
-  RuleContext,
-  RuleMetaData,
-  RuleResult,
-} from "../util/rule";
+import type { IgnorePatternOption } from "../common/ignore-options";
+import { ignorePatternOptionSchema } from "../common/ignore-options";
+import type { RuleContext, RuleMetaData, RuleResult } from "../util/rule";
+import { createRule } from "../util/rule";
 import { isIdentifier } from "../util/typeguard";
 
 // The name of this rule.

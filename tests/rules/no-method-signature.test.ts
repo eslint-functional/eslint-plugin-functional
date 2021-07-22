@@ -6,14 +6,12 @@ import dedent from "dedent";
 import { RuleTester } from "eslint";
 
 import { name, rule } from "../../src/rules/no-method-signature";
-
 import { typescript } from "../helpers/configs";
+import type { InvalidTestCase, ValidTestCase } from "../helpers/util";
 import {
   describeTsOnly,
-  InvalidTestCase,
   processInvalidTestCase,
   processValidTestCase,
-  ValidTestCase,
 } from "../helpers/util";
 
 // Valid test cases.

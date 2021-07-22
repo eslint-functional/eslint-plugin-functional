@@ -1,14 +1,14 @@
 /**
  * @file Tests for all configs except `all`.
  */
-import { Linter } from "eslint";
+import type { Linter } from "eslint";
 
 import all from "../src/configs/all";
 import currying from "../src/configs/currying";
 import functional from "../src/configs/functional";
 import functionalLite from "../src/configs/functional-lite";
-import noMutations from "../src/configs/no-mutations";
 import noExceptions from "../src/configs/no-exceptions";
+import noMutations from "../src/configs/no-mutations";
 import noObjectOrientation from "../src/configs/no-object-orientation";
 import noStatements from "../src/configs/no-statements";
 import stylistic from "../src/configs/stylistic";
@@ -24,6 +24,7 @@ function testConfig(config: Linter.Config, master: Linter.Config) {
       expect(config).not.toStrictEqual(master);
       Object.keys(config.rules ?? {}).every((rule) => {
         expect(master.rules?.[rule]).toBeDefined();
+        return true;
       });
     });
 
@@ -32,6 +33,7 @@ function testConfig(config: Linter.Config, master: Linter.Config) {
       expect(config).not.toStrictEqual(master);
       Object.keys(config.overrides?.[0].rules ?? {}).every((rule) => {
         expect(master.overrides?.[0].rules?.[rule]).toBeDefined();
+        return true;
       });
     });
   };
