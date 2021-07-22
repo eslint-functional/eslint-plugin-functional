@@ -1,16 +1,10 @@
-import { TSESTree } from "@typescript-eslint/experimental-utils";
-import { JSONSchema4 } from "json-schema";
-import { Type } from "typescript";
+import type { TSESTree } from "@typescript-eslint/experimental-utils";
+import type { JSONSchema4 } from "json-schema";
+import type { Type } from "typescript";
 
 import tsutils from "../util/conditional-imports/tsutils";
-
-import {
-  createRule,
-  getTypeOfNode,
-  RuleContext,
-  RuleMetaData,
-  RuleResult,
-} from "../util/rule";
+import type { RuleContext, RuleMetaData, RuleResult } from "../util/rule";
+import { createRule, getTypeOfNode } from "../util/rule";
 import {
   isBlockStatement,
   isExpressionStatement,
@@ -79,6 +73,38 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
 };
 
 /**
+ * Report the given node as an incomplete branch violation.
+ *
+ * @param node - The node to report.
+ * @returns A violation rule result.
+ */
+function incompleteBranchViolation(
+  node: TSESTree.Node
+): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
+  return [{ node, messageId: "incompleteBranch" }];
+}
+
+/**
+ * Get a function that tests if the given statement is never returning.
+ */
+function getIsNeverExpressions(
+  context: RuleContext<keyof typeof errorMessages, Options>
+) {
+  return (statement: TSESTree.Statement) => {
+    if (isExpressionStatement(statement)) {
+      const expressionStatementType = getTypeOfNode(
+        statement.expression,
+        context
+      );
+      return (
+        expressionStatementType !== null && isNeverType(expressionStatementType)
+      );
+    }
+    return false;
+  };
+}
+
+/**
  * Get all of the violations in the given if statement assuming if statements
  * are allowed.
  */
@@ -132,21 +158,8 @@ function getIfBranchViolations(
           return false;
         }
 
-        if (
-          branch.body.some((statement) => {
-            if (isExpressionStatement(statement)) {
-              const expressionStatementType = getTypeOfNode(
-                statement.expression,
-                context
-              );
-              return (
-                expressionStatementType !== null &&
-                isNeverType(expressionStatementType)
-              );
-            }
-            return false;
-          })
-        ) {
+        const isNeverExpressions = getIsNeverExpressions(context);
+        if (branch.body.some(isNeverExpressions)) {
           return false;
         }
       }
@@ -155,9 +168,7 @@ function getIfBranchViolations(
     }
   );
 
-  return violations.flatMap((node) => [
-    { node, messageId: "incompleteBranch" },
-  ]);
+  return violations.flatMap(incompleteBranchViolation);
 }
 
 /**
@@ -168,6 +179,8 @@ function getSwitchViolations(
   node: TSESTree.SwitchStatement,
   context: RuleContext<keyof typeof errorMessages, Options>
 ): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
+  const isNeverExpressions = getIsNeverExpressions(context);
+
   const violations = node.cases.filter((branch) => {
     if (branch.consequent.length === 0) {
       return false;
@@ -193,49 +206,19 @@ function getSwitchViolations(
         return false;
       }
 
-      if (
-        lastBlock.body.some((statement) => {
-          if (isExpressionStatement(statement)) {
-            const expressionStatementType = getTypeOfNode(
-              statement.expression,
-              context
-            );
-            return (
-              expressionStatementType !== null &&
-              isNeverType(expressionStatementType)
-            );
-          }
-          return false;
-        })
-      ) {
+      if (lastBlock.body.some(isNeverExpressions)) {
         return false;
       }
     }
 
-    if (
-      branch.consequent.some((statement) => {
-        if (isExpressionStatement(statement)) {
-          const expressionStatementType = getTypeOfNode(
-            statement.expression,
-            context
-          );
-          return (
-            expressionStatementType !== null &&
-            isNeverType(expressionStatementType)
-          );
-        }
-        return false;
-      })
-    ) {
+    if (branch.consequent.some(isNeverExpressions)) {
       return false;
     }
 
     return true;
   });
 
-  return violations.flatMap((node) => [
-    { node, messageId: "incompleteBranch" },
-  ]);
+  return violations.flatMap(incompleteBranchViolation);
 }
 
 /**
@@ -254,22 +237,20 @@ function isExhaustiveTypeSwitchViolation(
 ): boolean {
   if (tsutils === undefined) {
     return true;
-  } else {
-    const discriminantType = getTypeOfNode(node.discriminant, context);
-
-    if (discriminantType === null || !discriminantType.isUnion()) {
-      return true;
-    } else {
-      const unionTypes = tsutils.unionTypeParts(discriminantType);
-      const caseTypes = node.cases.reduce<ReadonlySet<Type>>(
-        (types, c) => new Set([...types, getTypeOfNode(c.test!, context)!]),
-        new Set()
-      );
-      return (
-        unionTypes.filter((unionType) => !caseTypes.has(unionType)).length !== 0
-      );
-    }
   }
+
+  const discriminantType = getTypeOfNode(node.discriminant, context);
+  if (discriminantType === null || !discriminantType.isUnion()) {
+    return true;
+  }
+
+  const unionTypes = tsutils.unionTypeParts(discriminantType);
+  const caseTypes = node.cases.reduce<ReadonlySet<Type>>(
+    (types, c) => new Set([...types, getTypeOfNode(c.test!, context)!]),
+    new Set()
+  );
+
+  return unionTypes.some((unionType) => !caseTypes.has(unionType));
 }
 
 /**
@@ -299,13 +280,14 @@ function checkIfStatement(
 ): RuleResult<keyof typeof errorMessages, Options> {
   return {
     context,
-    descriptors: options.allowReturningBranches
-      ? options.allowReturningBranches === "ifExhaustive"
+    descriptors:
+      options.allowReturningBranches === false
+        ? [{ node, messageId: "unexpectedIf" }]
+        : options.allowReturningBranches === "ifExhaustive"
         ? isExhaustiveIfViolation(node)
           ? [{ node, messageId: "incompleteIf" }]
           : getIfBranchViolations(node, context)
-        : getIfBranchViolations(node, context)
-      : [{ node, messageId: "unexpectedIf" }],
+        : getIfBranchViolations(node, context),
   };
 }
 
@@ -319,13 +301,14 @@ function checkSwitchStatement(
 ): RuleResult<keyof typeof errorMessages, Options> {
   return {
     context,
-    descriptors: options.allowReturningBranches
-      ? options.allowReturningBranches === "ifExhaustive"
+    descriptors:
+      options.allowReturningBranches === false
+        ? [{ node, messageId: "unexpectedSwitch" }]
+        : options.allowReturningBranches === "ifExhaustive"
         ? isExhaustiveSwitchViolation(node, context)
           ? [{ node, messageId: "incompleteSwitch" }]
           : getSwitchViolations(node, context)
-        : getSwitchViolations(node, context)
-      : [{ node, messageId: "unexpectedSwitch" }],
+        : getSwitchViolations(node, context),
   };
 }
 
