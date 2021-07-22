@@ -1,7 +1,5 @@
-import {
-  AST_NODE_TYPES,
-  TSESTree,
-} from "@typescript-eslint/experimental-utils";
+import type { TSESTree } from "@typescript-eslint/experimental-utils";
+import { AST_NODE_TYPES } from "@typescript-eslint/experimental-utils";
 
 /**
  * Returns a function that checks if the given value is the same as the expected

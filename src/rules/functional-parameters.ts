@@ -1,17 +1,11 @@
-import { TSESTree } from "@typescript-eslint/experimental-utils";
+import type { TSESTree } from "@typescript-eslint/experimental-utils";
 import { all as deepMerge } from "deepmerge";
-import { JSONSchema4 } from "json-schema";
+import type { JSONSchema4 } from "json-schema";
 
-import {
-  IgnorePatternOption,
-  ignorePatternOptionSchema,
-} from "../common/ignore-options";
-import {
-  createRule,
-  RuleContext,
-  RuleMetaData,
-  RuleResult,
-} from "../util/rule";
+import type { IgnorePatternOption } from "../common/ignore-options";
+import { ignorePatternOptionSchema } from "../common/ignore-options";
+import type { RuleContext, RuleMetaData, RuleResult } from "../util/rule";
+import { createRule } from "../util/rule";
 import { isIIFE, isPropertyAccess, isPropertyName } from "../util/tree";
 import { isRestElement } from "../util/typeguard";
 
@@ -25,8 +19,8 @@ type Options = IgnorePatternOption & {
   readonly allowRestParameter: boolean;
   readonly allowArgumentsKeyword: boolean;
   readonly enforceParameterCount:
-    | false
     | ParameterCountOptions
+    | false
     | {
         readonly count: ParameterCountOptions;
         readonly ignoreIIFE: boolean;
@@ -115,9 +109,9 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
 function getRestParamViolations(
   allowRestParameter: Options["allowRestParameter"],
   node:
+    | TSESTree.ArrowFunctionExpression
     | TSESTree.FunctionDeclaration
     | TSESTree.FunctionExpression
-    | TSESTree.ArrowFunctionExpression
 ): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
   return !allowRestParameter &&
     node.params.length > 0 &&
@@ -137,9 +131,9 @@ function getRestParamViolations(
 function getParamCountViolations(
   enforceParameterCount: Options["enforceParameterCount"],
   node:
+    | TSESTree.ArrowFunctionExpression
     | TSESTree.FunctionDeclaration
     | TSESTree.FunctionExpression
-    | TSESTree.ArrowFunctionExpression
 ): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
   if (
     enforceParameterCount === false ||
@@ -149,7 +143,8 @@ function getParamCountViolations(
       isIIFE(node))
   ) {
     return [];
-  } else if (
+  }
+  if (
     node.params.length === 0 &&
     (enforceParameterCount === "atLeastOne" ||
       (typeof enforceParameterCount === "object" &&
@@ -161,7 +156,8 @@ function getParamCountViolations(
         messageId: "paramCountAtLeastOne",
       },
     ];
-  } else if (
+  }
+  if (
     node.params.length !== 1 &&
     (enforceParameterCount === "exactlyOne" ||
       (typeof enforceParameterCount === "object" &&
@@ -173,9 +169,8 @@ function getParamCountViolations(
         messageId: "paramCountExactlyOne",
       },
     ];
-  } else {
-    return [];
   }
+  return [];
 }
 
 /**
@@ -183,9 +178,9 @@ function getParamCountViolations(
  */
 function checkFunction(
   node:
+    | TSESTree.ArrowFunctionExpression
     | TSESTree.FunctionDeclaration
-    | TSESTree.FunctionExpression
-    | TSESTree.ArrowFunctionExpression,
+    | TSESTree.FunctionExpression,
   context: RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {

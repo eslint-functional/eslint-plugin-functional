@@ -2,17 +2,16 @@
  * @file Functions that typeguard the given node/type.
  */
 
-import {
-  AST_NODE_TYPES,
-  TSESTree,
-} from "@typescript-eslint/experimental-utils";
+import type { TSESTree } from "@typescript-eslint/experimental-utils";
+import { AST_NODE_TYPES } from "@typescript-eslint/experimental-utils";
 // TS import - only use this for types, will be stripped out by rollup.
-import { Type, UnionType } from "typescript";
+import type { Type, UnionType } from "typescript";
 
 // TS import - conditionally imported only when typescript is available.
-import ts from "../util/conditional-imports/typescript";
+import ts from "./conditional-imports/typescript";
 
 // Any JSDoc for these functions would be tedious.
+// eslint-disable-next-line eslint-comments/disable-enable-pair
 /* eslint-disable jsdoc/require-jsdoc */
 
 /*
@@ -122,7 +121,7 @@ export function isFunctionDeclaration(
  */
 export function isFunctionExpressionLike(
   node: TSESTree.Node
-): node is TSESTree.FunctionExpression | TSESTree.ArrowFunctionExpression {
+): node is TSESTree.ArrowFunctionExpression | TSESTree.FunctionExpression {
   return (
     node.type === AST_NODE_TYPES.FunctionExpression ||
     node.type === AST_NODE_TYPES.ArrowFunctionExpression
@@ -137,9 +136,9 @@ export function isFunctionExpressionLike(
 export function isFunctionLike(
   node: TSESTree.Node
 ): node is
+  | TSESTree.ArrowFunctionExpression
   | TSESTree.FunctionDeclaration
-  | TSESTree.FunctionExpression
-  | TSESTree.ArrowFunctionExpression {
+  | TSESTree.FunctionExpression {
   return isFunctionDeclaration(node) || isFunctionExpressionLike(node);
 }
 
@@ -357,7 +356,7 @@ export function isArrayType(
   return assumeType === true && type === null
     ? node !== null
     : type !== null &&
-        ((type.symbol && type.symbol.name === "Array") ||
+        ((type.symbol !== undefined && type.symbol.name === "Array") ||
           (isUnionType(type) &&
             type.types.some((t) => isArrayType(t, false, null))));
 }
@@ -388,7 +387,8 @@ export function isArrayConstructorType(
   return assumeType === true && type === null
     ? node !== null && isIdentifier(node) && node.name === "Array"
     : type !== null &&
-        ((type.symbol && type.symbol.name === "ArrayConstructor") ||
+        ((type.symbol !== undefined &&
+          type.symbol.name === "ArrayConstructor") ||
           (isUnionType(type) &&
             type.types.some((t) => isArrayConstructorType(t, false, null))));
 }
@@ -419,7 +419,8 @@ export function isObjectConstructorType(
   return assumeType === true && type === null
     ? node !== null && isIdentifier(node) && node.name === "Object"
     : type !== null &&
-        ((type.symbol && type.symbol.name === "ObjectConstructor") ||
+        ((type.symbol !== undefined &&
+          type.symbol.name === "ObjectConstructor") ||
           (isUnionType(type) &&
             type.types.some((t) => isObjectConstructorType(t, false, null))));
 }

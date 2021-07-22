@@ -1,8 +1,8 @@
-import { TSESTree } from "@typescript-eslint/experimental-utils";
+import type { TSESTree } from "@typescript-eslint/experimental-utils";
 import escapeRegExp from "escape-string-regexp";
-import { JSONSchema4 } from "json-schema";
+import type { JSONSchema4 } from "json-schema";
 
-import { BaseOptions, RuleContext } from "../util/rule";
+import type { BaseOptions, RuleContext } from "../util/rule";
 import { inClass, inFunctionBody, inInterface } from "../util/tree";
 import {
   hasID,
@@ -38,7 +38,7 @@ export const allowLocalMutationOptionSchema: JSONSchema4 = {
 };
 
 export type IgnorePatternOption = {
-  readonly ignorePattern?: string | ReadonlyArray<string>;
+  readonly ignorePattern?: ReadonlyArray<string> | string;
 };
 
 export const ignorePatternOptionSchema: JSONSchema4 = {
@@ -55,7 +55,7 @@ export const ignorePatternOptionSchema: JSONSchema4 = {
 };
 
 export type IgnoreAccessorPatternOption = {
-  readonly ignoreAccessorPattern?: string | ReadonlyArray<string>;
+  readonly ignoreAccessorPattern?: ReadonlyArray<string> | string;
 };
 
 export const ignoreAccessorPatternOptionSchema: JSONSchema4 = {
@@ -111,7 +111,7 @@ export const ignoreInterfaceOptionSchema: JSONSchema4 = {
  * Get the identifier text of the given node.
  */
 function getNodeIdentifierText(
-  node: TSESTree.Node | undefined | null,
+  node: TSESTree.Node | null | undefined,
   context: RuleContext<string, BaseOptions>
 ): string | undefined {
   return node === undefined || node === null
@@ -175,7 +175,7 @@ function shouldIgnoreViaPattern(
     : [ignorePattern as string];
 
   // One or more patterns match?
-  return patterns.some((pattern) => new RegExp(pattern).test(text));
+  return patterns.some((pattern) => new RegExp(pattern, "u").test(text));
 }
 
 /**
@@ -214,9 +214,10 @@ function accessorPatternMatch(
         allowExtra
       )
     : // Text matches pattern?
-      new RegExp(`^${escapeRegExp(pattern).replace(/\\\*/g, ".*")}$`).test(
-        textParts[0]
-      ) &&
+      new RegExp(
+        `^${escapeRegExp(pattern).replace(/\\\*/gu, ".*")}$`,
+        "u"
+      ).test(textParts[0]) &&
       accessorPatternMatch(
         remainingPatternParts,
         textParts.slice(1),
@@ -256,11 +257,11 @@ export function shouldIgnore(
   node: TSESTree.Node,
   context: RuleContext<string, BaseOptions>,
   options: Partial<
-    IgnoreAccessorPatternOption &
+    AllowLocalMutationOption &
+      IgnoreAccessorPatternOption &
       IgnoreClassOption &
       IgnoreInterfaceOption &
-      IgnorePatternOption &
-      AllowLocalMutationOption
+      IgnorePatternOption
   >
 ): boolean {
   return (

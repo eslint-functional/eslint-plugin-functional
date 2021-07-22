@@ -1,13 +1,8 @@
-import { TSESTree } from "@typescript-eslint/experimental-utils";
-import { JSONSchema4 } from "json-schema";
+import type { TSESTree } from "@typescript-eslint/experimental-utils";
+import type { JSONSchema4 } from "json-schema";
 
-import {
-  createRule,
-  getTypeOfNode,
-  RuleContext,
-  RuleMetaData,
-  RuleResult,
-} from "../util/rule";
+import type { RuleContext, RuleMetaData, RuleResult } from "../util/rule";
+import { createRule, getTypeOfNode } from "../util/rule";
 import {
   isFunctionLike,
   isNullType,
@@ -76,9 +71,9 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
  */
 function checkFunction(
   node:
+    | TSESTree.ArrowFunctionExpression
     | TSESTree.FunctionDeclaration
     | TSESTree.FunctionExpression
-    | TSESTree.ArrowFunctionExpression
     | TSESTree.TSFunctionType,
   context: RuleContext<keyof typeof errorMessages, Options>,
   options: Options

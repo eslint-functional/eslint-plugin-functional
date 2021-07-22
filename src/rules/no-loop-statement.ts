@@ -1,12 +1,8 @@
-import { TSESTree } from "@typescript-eslint/experimental-utils";
-import { JSONSchema4 } from "json-schema";
+import type { TSESTree } from "@typescript-eslint/experimental-utils";
+import type { JSONSchema4 } from "json-schema";
 
-import {
-  createRule,
-  RuleContext,
-  RuleMetaData,
-  RuleResult,
-} from "../util/rule";
+import type { RuleContext, RuleMetaData, RuleResult } from "../util/rule";
+import { createRule } from "../util/rule";
 
 // The name of this rule.
 export const name = "no-loop-statement" as const;
@@ -42,11 +38,11 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
  */
 function checkLoop(
   node:
-    | TSESTree.ForStatement
+    | TSESTree.DoWhileStatement
     | TSESTree.ForInStatement
     | TSESTree.ForOfStatement
-    | TSESTree.WhileStatement
-    | TSESTree.DoWhileStatement,
+    | TSESTree.ForStatement
+    | TSESTree.WhileStatement,
   context: RuleContext<keyof typeof errorMessages, Options>
 ): RuleResult<keyof typeof errorMessages, Options> {
   // All loops violate this rule.
