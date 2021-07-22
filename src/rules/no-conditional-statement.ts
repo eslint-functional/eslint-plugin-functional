@@ -113,9 +113,11 @@ function getSwitchViolations(
       !branch.consequent.some(isReturnStatement) &&
       !(
         branch.consequent.every(isBlockStatement) &&
-        (branch.consequent[
-          branch.consequent.length - 1
-        ] as TSESTree.BlockStatement).body.some(isReturnStatement)
+        (
+          branch.consequent[
+            branch.consequent.length - 1
+          ] as TSESTree.BlockStatement
+        ).body.some(isReturnStatement)
       )
   );
 

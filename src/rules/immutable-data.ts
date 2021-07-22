@@ -279,8 +279,10 @@ function checkCallExpression(
           arrayMutatorMethods.some(
             (m) =>
               m ===
-              ((node.callee as TSESTree.MemberExpression)
-                .property as TSESTree.Identifier).name
+              (
+                (node.callee as TSESTree.MemberExpression)
+                  .property as TSESTree.Identifier
+              ).name
           ) &&
           (!options.ignoreImmediateMutation ||
             !isInChainCallAndFollowsNew(
@@ -298,8 +300,10 @@ function checkCallExpression(
           objectConstructorMutatorFunctions.some(
               (m) =>
                 m ===
-                ((node.callee as TSESTree.MemberExpression)
-                  .property as TSESTree.Identifier).name
+                (
+                  (node.callee as TSESTree.MemberExpression)
+                    .property as TSESTree.Identifier
+                ).name
             ) &&
             node.arguments.length >= 2 &&
             (isIdentifier(node.arguments[0]) ||

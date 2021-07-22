@@ -146,11 +146,12 @@ function getNodeIdentifierTexts(
   node: TSESTree.Node,
   context: RuleContext<string, BaseOptions>
 ): ReadonlyArray<string> {
-  return (isVariableDeclaration(node)
-    ? node.declarations.flatMap((declarator) =>
-        getNodeIdentifierText(declarator, context)
-      )
-    : [getNodeIdentifierText(node, context)]
+  return (
+    isVariableDeclaration(node)
+      ? node.declarations.flatMap((declarator) =>
+          getNodeIdentifierText(declarator, context)
+        )
+      : [getNodeIdentifierText(node, context)]
   ).filter<string>((text): text is string => text !== undefined);
 }
 
