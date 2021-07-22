@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * Used compiled rules? i.e. test against JS files instead of TS files.
  */
