@@ -9,7 +9,7 @@ import noMutations from "./configs/no-mutations";
 import noExceptions from "./configs/no-exceptions";
 import noObjectOrientation from "./configs/no-object-orientation";
 import noStatements from "./configs/no-statements";
-import stylitic from "./configs/stylitic";
+import stylistic from "./configs/stylistic";
 
 import { rules } from "./rules";
 
@@ -30,7 +30,9 @@ const config: EslintPluginConfig = {
     "no-object-orientation": noObjectOrientation,
     "no-statements": noStatements,
     currying,
-    stylitic,
+    /** @deprecated Use `stylistic` instead. */
+    stylitic: stylistic,
+    stylistic,
   },
 };
 

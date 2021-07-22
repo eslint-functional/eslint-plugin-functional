@@ -11,7 +11,7 @@ import noMutations from "../src/configs/no-mutations";
 import noExceptions from "../src/configs/no-exceptions";
 import noObjectOrientation from "../src/configs/no-object-orientation";
 import noStatements from "../src/configs/no-statements";
-import stylitic from "../src/configs/stylitic";
+import stylistic from "../src/configs/stylistic";
 import { rules } from "../src/rules";
 
 /**
@@ -59,6 +59,6 @@ describe("configs", () => {
   describe("No Exceptions", testConfig(noExceptions, all));
   describe("No Object Orientation", testConfig(noObjectOrientation, all));
   describe("No Statements", testConfig(noStatements, all));
-  describe("Stylitic", testConfig(stylitic, all));
+  describe("Stylistic", testConfig(stylistic, all));
   /* eslint-enable jest/valid-describe */
 });
