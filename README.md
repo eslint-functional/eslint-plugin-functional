@@ -24,7 +24,7 @@ An [ESLint](http://eslint.org) plugin to disable mutation and promote functional
 - [No statements](#no-statements)
 - [No exceptions](#no-exceptions)
 - [Currying](#currying)
-- [Stylitic](#stylitic)
+- [Stylistic](#stylistic)
 
 ### No mutations
 
@@ -46,7 +46,7 @@ Functional programming style does not use run-time exceptions. Instead expressio
 
 JavaScript functions support syntax that is not compatible with curried functions. To enable currying this syntax has to be disabled.
 
-### Stylitic
+### Stylistic
 
 Make things look nicer (in our opinion).
 
@@ -100,7 +100,7 @@ Enable rulesets via the "extends" property of your `.eslintrc` configuration fil
   "extends": [
     "plugin:functional/external-recommended",
     "plugin:functional/recommended",
-    "plugin:functional/stylitic"
+    "plugin:functional/stylistic"
   ]
 }
 ```
@@ -143,7 +143,7 @@ See [@typescript-eslint/parser's README.md](https://github.com/typescript-eslint
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "plugin:functional/external-recommended",
     "plugin:functional/recommended",
-    "plugin:functional/stylitic"
+    "plugin:functional/stylistic"
   ]
 }
 ```
@@ -164,7 +164,7 @@ Categorized:
 - **No Statements** (plugin:functional/no-statements)
 - **No Exceptions** (plugin:functional/no-exceptions)
 - **Currying** (plugin:functional/currying)
-- **Stylitic** (plugin:functional/stylitic)
+- **Stylistic** (plugin:functional/stylistic)
 
 Other:
 
@@ -236,11 +236,11 @@ The [below section](#supported-rules) gives details on which rules are enabled b
 | ---------------------------------------------------------------- | ----------------------------------------- | :-----------------------------------------: | :--------------------------------------: | :----------------------------------------------: | :------: | :----------: |
 | [`functional-parameters`](./docs/rules/functional-parameters.md) | Functions must have functional parameters |             :heavy_check_mark:              |            :heavy_check_mark:            |                :heavy_check_mark:                |          |              |
 
-### Stylitic Rules
+### Stylistic Rules
 
-:see_no_evil: = `stylitic` Ruleset.
+:see_no_evil: = `stylistic` Ruleset.
 
-| Name                                           | Description             | <span title="Stylitic">:see_no_evil:</span> | <span title="Lite">:hear_no_evil:</span> | <span title="Recommended">:speak_no_evil:</span> | :wrench: | :blue_heart: |
+| Name                                           | Description             | <span title="Stylistic">:see_no_evil:</span> | <span title="Lite">:hear_no_evil:</span> | <span title="Recommended">:speak_no_evil:</span> | :wrench: | :blue_heart: |
 | ---------------------------------------------- | ----------------------- | :-----------------------------------------: | :--------------------------------------: | :----------------------------------------------: | :------: | :----------: |
 | [`prefer-tacit`](./docs/rules/prefer-tacit.md) | Tacit/Point-Free style. |             :heavy_check_mark:              |                                          |                                                  | :wrench: | :blue_heart: |
 
