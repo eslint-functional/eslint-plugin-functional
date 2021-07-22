@@ -75,10 +75,10 @@ export function createDummyRule(
     schema: {},
   };
 
-  return ({
+  return {
     meta,
     create,
-  } as unknown) as Rule.RuleModule;
+  } as unknown as Rule.RuleModule;
 }
 
 export type RuleTesterTests = {
