@@ -15,173 +15,38 @@
     "node": true
   },
   "extends": [
-    "eslint:recommended",
-    "plugin:import/errors",
-    "plugin:import/warnings",
-    "plugin:import/typescript",
+    "@rebeccastevens/eslint-config/modern",
+    "@rebeccastevens/eslint-config/typescript",
+    "@rebeccastevens/eslint-config/common-overrides",
     "plugin:eslint-plugin/recommended",
-    "plugin:functional/recommended",
     "plugin:prettier/recommended",
     "prettier"
   ],
   "parserOptions": {
     "ecmaVersion": 10,
-    "project": [
-      "./tsconfig.json",
-      "./tests/tsconfig.json"
-    ],
+    "project": ["./tsconfig.json", "./tests/tsconfig.json"],
     "sourceType": "module"
   },
-  "ignorePatterns": [
-    "build/",
-    "lib/"
-  ],
+  "ignorePatterns": ["build/", "coverage/", "lib/"],
   "rules": {
-    // Built in.
-    "no-param-reassign": "error",
-    "no-var": "error",
-    // Our rules.
-    "functional/prefer-readonly-type": [
-      "error",
-      {
-        "allowMutableReturnType": true
-      }
-    ],
-    "functional/no-conditional-statement": [
-      "error",
-      {
-        "allowReturningBranches": true
-      }
-    ],
-    "functional/functional-parameters": [
-      "error",
-      {
-        "ignorePattern": [
-          "^tsInstalled$"
-        ]
-      }
-    ]
+    "@typescript-eslint/no-unnecessary-condition": "off",
+    "import/no-unassigned-import": "off",
+    "node/no-unsupported-features/es-builtins": "off",
+    "node/no-unsupported-features/es-syntax": "off",
+    // enable once supported in all our supported node versions.
+    "unicorn/prefer-node-protocol": "off"
   },
   "overrides": [
     // Top level files.
     {
-      "files": [
-        "*"
-      ],
+      "files": ["*"],
       "rules": {
         "functional/immutable-data": "off",
         "functional/functional-parameters": "off",
-        "functional/no-expression-statement": "off"
-      }
-    },
-    // TypeScript files.
-    {
-      "files": [
-        "**/*.ts"
-      ],
-      "extends": [
-        "plugin:@typescript-eslint/recommended"
-      ],
-      "rules": {
-        "@typescript-eslint/array-type": [
-          "error",
-          {
-            "default": "generic"
-          }
-        ],
-        "@typescript-eslint/ban-types": [
-          "error",
-          {
-            "types": {
-              "Object": {
-                "message": "Use object instead",
-                "fixWith": "object"
-              },
-              "{}": false,
-              "object": false
-            },
-            "extendDefaults": true
-          }
-        ],
-        "@typescript-eslint/prefer-interface": "off",
-        "@typescript-eslint/no-non-null-assertion": "off",
-        "@typescript-eslint/no-require-imports": "error",
-        "@typescript-eslint/no-var-requires": "off",
-        "@typescript-eslint/no-unused-vars": "off",
-        "@typescript-eslint/no-unused-vars-experimental": [
-          "warn",
-          {
-            "ignoredNamesRegex": "^_",
-            "ignoreArgsIfArgsAfterAreUsed": true
-          }
-        ],
-        "@typescript-eslint/no-use-before-define": [
-          "error",
-          {
-            "functions": false,
-            "classes": true,
-            "variables": true,
-            "typedefs": true
-          }
-        ]
-      }
-    },
-    // Source files.
-    {
-      "files": [
-        "src/**/*"
-      ],
-      "rules": {
-        // JSDoc.
-        "jsdoc/check-alignment": "warn",
-        "jsdoc/check-indentation": "warn",
-        "jsdoc/check-param-names": "warn",
-        "jsdoc/check-tag-names": "warn",
-        "jsdoc/implements-on-classes": "warn",
-        "jsdoc/newline-after-description": "warn",
-        "jsdoc/no-types": "warn",
-        "jsdoc/require-description": "warn",
-        "jsdoc/require-description-complete-sentence": "warn",
-        "jsdoc/require-hyphen-before-param-description": "warn",
-        "jsdoc/require-jsdoc": "warn",
-        "jsdoc/require-param-description": "warn",
-        "jsdoc/require-param-name": "warn",
-        "jsdoc/require-returns-check": "warn",
-        "jsdoc/require-returns-description": "warn"
-      }
-    },
-    // Testing Files.
-    {
-      "files": [
-        "tests/**/*"
-      ],
-      "env": {
-        "jest/globals": true
-      },
-      "extends": [
-        "plugin:jest/recommended"
-      ],
-      "rules": {
-        "functional/functional-parameters": "off",
         "functional/no-conditional-statement": "off",
         "functional/no-expression-statement": "off",
-        "jest/no-alias-methods": "error",
-        "jest/no-test-return-statement": "error",
-        "jest/prefer-called-with": "warn",
-        "jest/prefer-expect-assertions": "error",
-        "jest/prefer-spy-on": "warn",
-        "jest/prefer-strict-equal": "warn",
-        "jest/prefer-to-be-null": "warn",
-        "jest/prefer-to-be-undefined": "warn",
-        "jest/prefer-to-contain": "warn",
-        "jest/prefer-to-have-length": "warn",
-        "jest/prefer-todo": "error"
+        "functional/no-throw-statement": "off"
       }
     }
-  ],
-  "settings": {
-    "import/ignore": [
-      "escape-string-regexp"
-    ]
-  }
+  ]
 }
