@@ -12,7 +12,7 @@ export const configs = {
     parser: require.resolve(typescriptParser),
     parserOptions: {
       sourceType: "module",
-      project: path.join(__dirname, "./tsconfig.json"),
+      project: path.join(__dirname, "./test-tsconfig.json"),
     },
   } as Linter.Config,
 
