@@ -75,6 +75,7 @@
     "@types/glob": "^7.1.1",
     "@types/jest": "^26.0.19",
     "@types/node": "15.0.1",
+    "@types/rollup-plugin-auto-external": "^2.0.2",
     "@typescript-eslint/eslint-plugin": "^4.28.4",
     "@typescript-eslint/parser": "^4.28.4",
     "auto-changelog": "^2.2.1",
@@ -110,6 +111,8 @@
     "rollup-plugin-auto-external": "^2.0.0",
     "shelljs": "^0.8.3",
     "ts-jest": "^26.4.4",
+    "ts-node": "^10.1.0",
+    "tsconfig-paths": "^3.10.1",
     "tslib": "^2.0.3",
     "typescript": "^4.1.3"
   },

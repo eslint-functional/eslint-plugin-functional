@@ -1,11 +1,11 @@
 import type { TSESTree } from "@typescript-eslint/experimental-utils";
 import type { JSONSchema4 } from "json-schema";
 
-import type { IgnorePatternOption } from "../common/ignore-options";
-import { ignorePatternOptionSchema } from "../common/ignore-options";
-import { isDirectivePrologue } from "../util/misc";
-import type { RuleContext, RuleMetaData, RuleResult } from "../util/rule";
-import { createRule } from "../util/rule";
+import type { IgnorePatternOption } from "~/common/ignore-options";
+import { ignorePatternOptionSchema } from "~/common/ignore-options";
+import { isDirectivePrologue } from "~/util/misc";
+import type { RuleContext, RuleMetaData, RuleResult } from "~/util/rule";
+import { createRule } from "~/util/rule";
 
 // The name of this rule.
 export const name = "no-expression-statement" as const;
