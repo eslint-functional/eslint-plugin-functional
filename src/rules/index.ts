@@ -14,7 +14,6 @@ import * as noThrowStatement from "./no-throw-statement";
 import * as noTryStatement from "./no-try-statement";
 import * as preferReadonlyTypes from "./prefer-readonly-type";
 import * as preferTacit from "./prefer-tacit";
-import * as preferType from "./prefer-type-literal";
 
 /**
  * All of the custom rules.
@@ -36,5 +35,4 @@ export const rules = {
   [noTryStatement.name]: noTryStatement.rule,
   [preferReadonlyTypes.name]: preferReadonlyTypes.rule,
   [preferTacit.name]: preferTacit.rule,
-  [preferType.name]: preferType.rule,
 };
