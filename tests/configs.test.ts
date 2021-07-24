@@ -3,16 +3,16 @@
  */
 import type { Linter } from "eslint";
 
-import all from "../src/configs/all";
-import currying from "../src/configs/currying";
-import functional from "../src/configs/functional";
-import functionalLite from "../src/configs/functional-lite";
-import noExceptions from "../src/configs/no-exceptions";
-import noMutations from "../src/configs/no-mutations";
-import noObjectOrientation from "../src/configs/no-object-orientation";
-import noStatements from "../src/configs/no-statements";
-import stylistic from "../src/configs/stylistic";
-import { rules } from "../src/rules";
+import all from "~/configs/all";
+import currying from "~/configs/currying";
+import functional from "~/configs/functional";
+import functionalLite from "~/configs/functional-lite";
+import noExceptions from "~/configs/no-exceptions";
+import noMutations from "~/configs/no-mutations";
+import noObjectOrientation from "~/configs/no-object-orientation";
+import noStatements from "~/configs/no-statements";
+import stylistic from "~/configs/stylistic";
+import { rules } from "~/rules";
 
 /**
  * Test the given config.

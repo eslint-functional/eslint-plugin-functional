@@ -2,9 +2,9 @@ import type { TSESTree } from "@typescript-eslint/experimental-utils";
 import { AST_NODE_TYPES } from "@typescript-eslint/experimental-utils";
 import type { JSONSchema4 } from "json-schema";
 
-import type { RuleContext, RuleMetaData, RuleResult } from "../util/rule";
-import { createRule } from "../util/rule";
-import { isTSPropertySignature, isTSTypeLiteral } from "../util/typeguard";
+import type { RuleContext, RuleMetaData, RuleResult } from "~/util/rule";
+import { createRule } from "~/util/rule";
+import { isTSPropertySignature, isTSTypeLiteral } from "~/util/typeguard";
 
 // The name of this rule.
 export const name = "no-mixed-type" as const;

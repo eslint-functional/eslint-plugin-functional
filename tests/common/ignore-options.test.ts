@@ -5,10 +5,10 @@ import { RuleTester } from "eslint";
 import type {
   IgnoreAccessorPatternOption,
   IgnorePatternOption,
-} from "../../src/common/ignore-options";
-import { shouldIgnore } from "../../src/common/ignore-options";
-import { filename, es9 } from "../helpers/configs";
-import { addFilename, createDummyRule } from "../helpers/util";
+} from "~/common/ignore-options";
+import { shouldIgnore } from "~/common/ignore-options";
+import { filename, es9 } from "~/tests/helpers/configs";
+import { addFilename, createDummyRule } from "~/tests/helpers/util";
 
 describe("option: ignore", () => {
   describe("ignoreAccessorPattern", () => {

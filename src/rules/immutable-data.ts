@@ -6,17 +6,17 @@ import type {
   IgnoreAccessorPatternOption,
   IgnorePatternOption,
   IgnoreClassOption,
-} from "../common/ignore-options";
+} from "~/common/ignore-options";
 import {
   ignoreAccessorPatternOptionSchema,
   ignoreClassOptionSchema,
   ignorePatternOptionSchema,
   shouldIgnore,
-} from "../common/ignore-options";
-import { isExpected } from "../util/misc";
-import type { RuleContext, RuleMetaData, RuleResult } from "../util/rule";
-import { createRule, getTypeOfNode } from "../util/rule";
-import { inConstructor } from "../util/tree";
+} from "~/common/ignore-options";
+import { isExpected } from "~/util/misc";
+import type { RuleContext, RuleMetaData, RuleResult } from "~/util/rule";
+import { createRule, getTypeOfNode } from "~/util/rule";
+import { inConstructor } from "~/util/tree";
 import {
   isArrayConstructorType,
   isArrayExpression,
@@ -26,7 +26,7 @@ import {
   isMemberExpression,
   isNewExpression,
   isObjectConstructorType,
-} from "../util/typeguard";
+} from "~/util/typeguard";
 
 // The name of this rule.
 export const name = "immutable-data" as const;
