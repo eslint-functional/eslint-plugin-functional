@@ -3,10 +3,8 @@ import { ESLintUtils } from "@typescript-eslint/experimental-utils";
 import type { Rule } from "eslint";
 import type { Node, Type } from "typescript";
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
-// @ts-ignore -- This file is outside of the root dir (i.e. src/).
-import { version } from "../../package.json";
-import { shouldIgnore } from "../common/ignore-options";
+import { shouldIgnore } from "~/common/ignore-options";
+import { version } from "~/package.json";
 
 export type BaseOptions = object;
 
