@@ -5,14 +5,14 @@
 import dedent from "dedent";
 import { RuleTester } from "eslint";
 
-import { name, rule } from "../../src/rules/no-return-void";
-import { typescript } from "../helpers/configs";
-import type { InvalidTestCase, ValidTestCase } from "../helpers/util";
+import { name, rule } from "~/rules/no-return-void";
+import { typescript } from "~/tests/helpers/configs";
+import type { InvalidTestCase, ValidTestCase } from "~/tests/helpers/util";
 import {
   describeTsOnly,
   processInvalidTestCase,
   processValidTestCase,
-} from "../helpers/util";
+} from "~/tests/helpers/util";
 
 // Valid test cases.
 const valid: ReadonlyArray<ValidTestCase> = [

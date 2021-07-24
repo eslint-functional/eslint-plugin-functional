@@ -2,12 +2,12 @@ import type { TSESTree } from "@typescript-eslint/experimental-utils";
 import { all as deepMerge } from "deepmerge";
 import type { JSONSchema4 } from "json-schema";
 
-import type { IgnorePatternOption } from "../common/ignore-options";
-import { ignorePatternOptionSchema } from "../common/ignore-options";
-import { isDirectivePrologue } from "../util/misc";
-import type { RuleContext, RuleMetaData, RuleResult } from "../util/rule";
-import { createRule, getTypeOfNode } from "../util/rule";
-import { isVoidType } from "../util/typeguard";
+import type { IgnorePatternOption } from "~/common/ignore-options";
+import { ignorePatternOptionSchema } from "~/common/ignore-options";
+import { isDirectivePrologue } from "~/util/misc";
+import type { RuleContext, RuleMetaData, RuleResult } from "~/util/rule";
+import { createRule, getTypeOfNode } from "~/util/rule";
+import { isVoidType } from "~/util/typeguard";
 
 // The name of this rule.
 export const name = "no-expression-statement" as const;

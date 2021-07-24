@@ -4,10 +4,10 @@ import { all as deepMerge } from "deepmerge";
 import type { JSONSchema4 } from "json-schema";
 import type { FunctionLikeDeclaration, Type } from "typescript";
 
-import type { IgnorePatternOption } from "../common/ignore-options";
-import { ignorePatternOptionSchema } from "../common/ignore-options";
-import type { RuleContext, RuleMetaData, RuleResult } from "../util/rule";
-import { createRule, getESTreeNode, getTypeOfNode } from "../util/rule";
+import type { IgnorePatternOption } from "~/common/ignore-options";
+import { ignorePatternOptionSchema } from "~/common/ignore-options";
+import type { RuleContext, RuleMetaData, RuleResult } from "~/util/rule";
+import { createRule, getESTreeNode, getTypeOfNode } from "~/util/rule";
 import {
   isBlockStatement,
   isCallExpression,
@@ -15,7 +15,7 @@ import {
   isIdentifier,
   isReturnStatement,
   isTSFunctionType,
-} from "../util/typeguard";
+} from "~/util/typeguard";
 
 // The name of this rule.
 export const name = "prefer-tacit" as const;
