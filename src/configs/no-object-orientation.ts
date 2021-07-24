@@ -10,7 +10,6 @@ const config: Linter.Config = {
       files: ["*.ts", "*.tsx"],
       rules: {
         "functional/no-mixed-type": "error",
-        "functional/prefer-type-literal": "error",
       },
     },
   ],
