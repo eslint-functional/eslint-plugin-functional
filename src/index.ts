@@ -1,16 +1,16 @@
 import type { Linter, Rule } from "eslint";
 
-import all from "./configs/all";
-import currying from "./configs/currying";
-import externalRecommended from "./configs/external-recommended";
-import functional from "./configs/functional";
-import functionalLite from "./configs/functional-lite";
-import noExceptions from "./configs/no-exceptions";
-import noMutations from "./configs/no-mutations";
-import noObjectOrientation from "./configs/no-object-orientation";
-import noStatements from "./configs/no-statements";
-import stylistic from "./configs/stylistic";
-import { rules } from "./rules";
+import all from "~/configs/all";
+import currying from "~/configs/currying";
+import externalRecommended from "~/configs/external-recommended";
+import functional from "~/configs/functional";
+import functionalLite from "~/configs/functional-lite";
+import noExceptions from "~/configs/no-exceptions";
+import noMutations from "~/configs/no-mutations";
+import noObjectOrientation from "~/configs/no-object-orientation";
+import noStatements from "~/configs/no-statements";
+import stylistic from "~/configs/stylistic";
+import { rules } from "~/rules";
 
 type EslintPluginConfig = {
   readonly rules: Record<string, Rule.RuleModule>;

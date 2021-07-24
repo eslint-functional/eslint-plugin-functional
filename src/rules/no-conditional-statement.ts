@@ -2,9 +2,9 @@ import type { TSESTree } from "@typescript-eslint/experimental-utils";
 import type { JSONSchema4 } from "json-schema";
 import type { Type } from "typescript";
 
-import tsutils from "../util/conditional-imports/tsutils";
-import type { RuleContext, RuleMetaData, RuleResult } from "../util/rule";
-import { createRule, getTypeOfNode } from "../util/rule";
+import tsutils from "~/conditional-imports/tsutils";
+import type { RuleContext, RuleMetaData, RuleResult } from "~/util/rule";
+import { createRule, getTypeOfNode } from "~/util/rule";
 import {
   isBlockStatement,
   isBreakStatement,
@@ -15,7 +15,7 @@ import {
   isReturnStatement,
   isSwitchStatement,
   isThrowStatement,
-} from "../util/typeguard";
+} from "~/util/typeguard";
 
 // The name of this rule.
 export const name = "no-conditional-statement" as const;

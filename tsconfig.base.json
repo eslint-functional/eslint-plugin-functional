@@ -7,12 +7,24 @@
     "lib": [
       "ESNext"
     ],
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./*"],
+      "~/index": ["./src"],
+      "~/common/*": ["src/common/*"],
+      "~/configs/*": ["src/configs/*"],
+      "~/rules": ["src/rules"],
+      "~/rules/*": ["src/rules/*"],
+      "~/util/*": ["src/util/*"],
+      "~/conditional-imports/*": ["src/util/conditional-imports/*"],
+      "~/tests/*": ["tests/*"]
+    },
     "module": "ESNext",
     "moduleResolution": "node",
     "newLine": "LF",
     "noEmitOnError": true,
     "resolveJsonModule": true,
     "strict": true,
-    "target": "ES2018",
+    "target": "ES2018"
   }
 }

@@ -1,7 +1,7 @@
 import type { TSESLint } from "@typescript-eslint/experimental-utils";
 import type { Rule, RuleTester as ESLintRuleTester } from "eslint";
 
-import ts from "../../src/util/conditional-imports/typescript";
+import ts from "~/conditional-imports/typescript";
 
 import { filename } from "./configs";
 
