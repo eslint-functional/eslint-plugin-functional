@@ -1,30 +1,20 @@
 {
-  "env": {
-    "jest/globals": true
-  },
-  "extends": [
-    "plugin:jest/recommended"
-  ],
+  "plugins": ["ava"],
+  "extends": ["plugin:ava/recommended"],
   "rules": {
+    "@typescript-eslint/no-unused-vars-experimental": "off",
     "@typescript-eslint/strict-boolean-expressions": "off",
+    "ava/no-import-test-files": ["error", { "files": ["tests/**/*.test.ts"] }],
     "eslint-comments/disable-enable-pair": "off",
     "eslint-comments/no-unlimited-disable": "off",
     "functional/functional-parameters": "off",
     "functional/no-conditional-statement": "off",
     "functional/no-expression-statement": "off",
-    "jest/no-alias-methods": "error",
-    "jest/no-test-return-statement": "error",
-    "jest/prefer-called-with": "warn",
-    "jest/prefer-expect-assertions": "error",
-    "jest/prefer-spy-on": "warn",
-    "jest/prefer-strict-equal": "warn",
-    "jest/prefer-to-be-null": "warn",
-    "jest/prefer-to-be-undefined": "warn",
-    "jest/prefer-to-contain": "warn",
-    "jest/prefer-to-have-length": "warn",
-    "jest/prefer-todo": "error",
-    "sonarjs/no-identical-functions": "off",
+    "functional/no-loop-statement": "off",
+    "functional/no-return-void": "off",
+    "import/no-named-as-default-member": "off",
     "sonarjs/no-duplicate-string": "off",
+    "sonarjs/no-identical-functions": "off",
     "unicorn/prefer-module": "off"
   }
 }
