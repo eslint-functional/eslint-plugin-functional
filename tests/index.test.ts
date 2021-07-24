@@ -2,28 +2,31 @@
  * @file Tests the index file.
  */
 
+import test from "ava";
 import { readdirSync } from "fs";
 
 import plugin from "~/index";
 
-describe("plugin", () => {
-  const ruleFiles: ReadonlyArray<string> = readdirSync("./src/rules").filter(
-    (file) => file !== "index.ts" && file.endsWith(".ts")
+const ruleFiles: ReadonlyArray<string> = readdirSync("./src/rules").filter(
+  (file) => file !== "index.ts" && file.endsWith(".ts")
+);
+
+const configFiles: ReadonlyArray<string> = readdirSync("./src/configs").filter(
+  (file) => file !== "index.ts" && file.endsWith(".ts")
+);
+
+test("should have all the rules", (t) => {
+  t.true(
+    Object.prototype.hasOwnProperty.call(plugin, "rules"),
+    'The plugin\'s config object should have a "rules" property.'
   );
+  t.assert(Object.keys(plugin.rules).length === ruleFiles.length);
+});
 
-  const configFiles: ReadonlyArray<string> = readdirSync(
-    "./src/configs"
-  ).filter((file) => file !== "index.ts" && file.endsWith(".ts"));
-
-  it("should have all the rules", () => {
-    expect.assertions(2);
-    expect(plugin).toHaveProperty("rules");
-    expect(Object.keys(plugin.rules)).toHaveLength(ruleFiles.length);
-  });
-
-  it("should have all the configs", () => {
-    expect.assertions(2);
-    expect(plugin).toHaveProperty("configs");
-    expect(Object.keys(plugin.configs)).toHaveLength(configFiles.length);
-  });
+test("should have all the configs", (t) => {
+  t.true(
+    Object.prototype.hasOwnProperty.call(plugin, "configs"),
+    'The plugin\'s config object should have a "configs" property.'
+  );
+  t.assert(Object.keys(plugin.configs).length === configFiles.length);
 });

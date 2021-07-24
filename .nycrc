@@ -1,0 +1,20 @@
+{
+  "extends": "@istanbuljs/nyc-config-typescript",
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "src/util/conditional-imports/**/*"
+  ],
+  "reporter": [
+    "lcov",
+    "text"
+  ],
+  "check-coverage": false,
+  "watermarks": {
+    "lines": [80, 95],
+    "functions": [80, 95],
+    "branches": [80, 95],
+    "statements": [80, 95]
+  }
+}

@@ -1,7 +1,7 @@
 .DS_Store
 thumbs.db
 *.log
-.rpt2_cache/
+.nyc_output/
 node_modules/
 /build/
 /lib/

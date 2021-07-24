@@ -1,12 +1,12 @@
 {
   "files.exclude": {
-    ".rpt2_cache": true,
+    ".nyc_output": true,
     "coverage": true,
   },
   "files.trimTrailingWhitespace": true,
   "search.exclude": {
     "**/.git/": true,
-    "**/.rpt2_cache/": true,
+    "**/.nyc_output/": true,
     "**/yarn.lock": true,
     ".vscode/": true,
     "build/": true,

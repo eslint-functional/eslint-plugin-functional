@@ -6,7 +6,6 @@
     "eslint-plugin",
     "functional",
     "import",
-    "jest",
     "jsdoc",
     "prettier"
   ],
@@ -30,7 +29,7 @@
   "ignorePatterns": ["build/", "coverage/", "lib/"],
   "rules": {
     "@typescript-eslint/no-unnecessary-condition": "off",
-    "import/no-unassigned-import": "off",
+    "import/no-relative-parent-imports": "error",
     "node/no-unsupported-features/es-builtins": "off",
     "node/no-unsupported-features/es-syntax": "off",
     // enable once supported in all our supported node versions.
