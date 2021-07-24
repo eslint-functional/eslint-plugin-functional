@@ -3,52 +3,72 @@ import path from "path";
 
 export const filename = path.join(__dirname, "file.ts");
 
-export const typescript: Linter.Config = {
-  parser: require.resolve("@typescript-eslint/parser"),
-  parserOptions: {
-    sourceType: "module",
-    project: path.join(__dirname, "./tsconfig.json"),
-  },
-};
+const typescriptParser = "@typescript-eslint/parser";
+const babelParser = "babel-eslint";
+const espreeParser = "espree";
 
-export const es9: Linter.Config = {
-  parser: require.resolve("babel-eslint"),
-  parserOptions: {
-    ecmaVersion: 9,
-  },
-};
+export const configs = {
+  typescript: {
+    parser: require.resolve(typescriptParser),
+    parserOptions: {
+      sourceType: "module",
+      project: path.join(__dirname, "./tsconfig.json"),
+    },
+  } as Linter.Config,
 
-export const es8: Linter.Config = {
-  parser: require.resolve("babel-eslint"),
-  parserOptions: {
-    ecmaVersion: 8,
-  },
-};
+  es11: {
+    parser: require.resolve(babelParser),
+    parserOptions: {
+      ecmaVersion: 9,
+    },
+  } as Linter.Config,
 
-export const es7: Linter.Config = {
-  parser: require.resolve("babel-eslint"),
-  parserOptions: {
-    ecmaVersion: 7,
-  },
-};
+  es10: {
+    parser: require.resolve(babelParser),
+    parserOptions: {
+      ecmaVersion: 9,
+    },
+  } as Linter.Config,
 
-export const es6: Linter.Config = {
-  parser: require.resolve("babel-eslint"),
-  parserOptions: {
-    ecmaVersion: 6,
-  },
-};
+  es9: {
+    parser: require.resolve(babelParser),
+    parserOptions: {
+      ecmaVersion: 9,
+    },
+  } as Linter.Config,
 
-export const es5: Linter.Config = {
-  parser: require.resolve("espree"),
-  parserOptions: {
-    ecmaVersion: 5,
-  },
-};
+  es8: {
+    parser: require.resolve(babelParser),
+    parserOptions: {
+      ecmaVersion: 8,
+    },
+  } as Linter.Config,
 
-export const es3: Linter.Config = {
-  parser: require.resolve("espree"),
-  parserOptions: {
-    ecmaVersion: 3,
-  },
+  es7: {
+    parser: require.resolve(babelParser),
+    parserOptions: {
+      ecmaVersion: 7,
+    },
+  } as Linter.Config,
+
+  es6: {
+    parser: require.resolve(babelParser),
+    parserOptions: {
+      ecmaVersion: 6,
+    },
+  } as Linter.Config,
+
+  es5: {
+    parser: require.resolve(espreeParser),
+    parserOptions: {
+      ecmaVersion: 5,
+    },
+  } as Linter.Config,
+
+  es3: {
+    parser: require.resolve(espreeParser),
+    parserOptions: {
+      ecmaVersion: 3,
+    },
+  } as Linter.Config,
 };
