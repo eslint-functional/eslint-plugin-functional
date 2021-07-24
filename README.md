@@ -208,7 +208,6 @@ The [below section](#supported-rules) gives details on which rules are enabled b
 | [`no-class`](./docs/rules/no-class.md)                       | Disallow classes                                                         |                    :heavy_check_mark:                    |            :heavy_check_mark:            |                :heavy_check_mark:                |          |                   |
 | [`no-mixed-type`](./docs/rules/no-mixed-type.md)             | Restrict types so that only members of the same kind are allowed in them |                    :heavy_check_mark:                    |            :heavy_check_mark:            |                :heavy_check_mark:                |          | :thought_balloon: |
 | [`no-this-expression`](./docs/rules/no-this-expression.md)   | Disallow `this` access                                                   |                    :heavy_check_mark:                    |            :heavy_check_mark:            |                :heavy_check_mark:                |          |                   |
-| [`prefer-type-literal`](./docs/rules/prefer-type-literal.md) | Use type literals over interfaces                                        |                    :heavy_check_mark:                    |            :heavy_check_mark:            |                :heavy_check_mark:                |          | :thought_balloon: |
 
 ### No Statements Rules
 
