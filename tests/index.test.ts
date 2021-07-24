@@ -4,7 +4,7 @@
 
 import { readdirSync } from "fs";
 
-import plugin from "../src";
+import plugin from "~/index";
 
 describe("plugin", () => {
   const ruleFiles: ReadonlyArray<string> = readdirSync("./src/rules").filter(

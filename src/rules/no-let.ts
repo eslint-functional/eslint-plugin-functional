@@ -5,13 +5,13 @@ import type { JSONSchema4 } from "json-schema";
 import type {
   AllowLocalMutationOption,
   IgnorePatternOption,
-} from "../common/ignore-options";
+} from "~/common/ignore-options";
 import {
   allowLocalMutationOptionSchema,
   ignorePatternOptionSchema,
-} from "../common/ignore-options";
-import type { RuleContext, RuleMetaData, RuleResult } from "../util/rule";
-import { createRule } from "../util/rule";
+} from "~/common/ignore-options";
+import type { RuleContext, RuleMetaData, RuleResult } from "~/util/rule";
+import { createRule } from "~/util/rule";
 
 // The name of this rule.
 export const name = "no-let" as const;

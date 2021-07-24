@@ -7,16 +7,16 @@ import type {
   IgnoreClassOption,
   IgnoreInterfaceOption,
   IgnorePatternOption,
-} from "../common/ignore-options";
+} from "~/common/ignore-options";
 import {
   allowLocalMutationOptionSchema,
   ignoreClassOptionSchema,
   ignoreInterfaceOptionSchema,
   ignorePatternOptionSchema,
-} from "../common/ignore-options";
-import type { RuleContext, RuleMetaData, RuleResult } from "../util/rule";
-import { createRule, getTypeOfNode } from "../util/rule";
-import { isInReturnType } from "../util/tree";
+} from "~/common/ignore-options";
+import type { RuleContext, RuleMetaData, RuleResult } from "~/util/rule";
+import { createRule, getTypeOfNode } from "~/util/rule";
+import { isInReturnType } from "~/util/tree";
 import {
   isArrayType,
   isAssignmentPattern,
@@ -28,7 +28,7 @@ import {
   isTSPropertySignature,
   isTSTupleType,
   isTSTypeOperator,
-} from "../util/typeguard";
+} from "~/util/typeguard";
 
 // The name of this rule.
 export const name = "prefer-readonly-type" as const;

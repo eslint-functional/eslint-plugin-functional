@@ -1,8 +1,8 @@
 import type { TSESTree } from "@typescript-eslint/experimental-utils";
 import type { JSONSchema4 } from "json-schema";
 
-import type { RuleContext, RuleMetaData, RuleResult } from "../util/rule";
-import { createRule, getTypeOfNode } from "../util/rule";
+import type { RuleContext, RuleMetaData, RuleResult } from "~/util/rule";
+import { createRule, getTypeOfNode } from "~/util/rule";
 import {
   isFunctionLike,
   isNullType,
@@ -11,7 +11,7 @@ import {
   isTSVoidKeyword,
   isUndefinedType,
   isVoidType,
-} from "../util/typeguard";
+} from "~/util/typeguard";
 
 // The name of this rule.
 export const name = "no-return-void" as const;

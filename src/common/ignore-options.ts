@@ -2,8 +2,8 @@ import type { TSESTree } from "@typescript-eslint/experimental-utils";
 import escapeRegExp from "escape-string-regexp";
 import type { JSONSchema4 } from "json-schema";
 
-import type { BaseOptions, RuleContext } from "../util/rule";
-import { inClass, inFunctionBody, inInterface } from "../util/tree";
+import type { BaseOptions, RuleContext } from "~/util/rule";
+import { inClass, inFunctionBody, inInterface } from "~/util/tree";
 import {
   hasID,
   hasKey,
@@ -21,7 +21,7 @@ import {
   isTSTypeReference,
   isUnaryExpression,
   isVariableDeclaration,
-} from "../util/typeguard";
+} from "~/util/typeguard";
 
 export type AllowLocalMutationOption = {
   readonly allowLocalMutation: boolean;

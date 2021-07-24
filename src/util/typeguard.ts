@@ -8,7 +8,7 @@ import { AST_NODE_TYPES } from "@typescript-eslint/experimental-utils";
 import type { Type, UnionType } from "typescript";
 
 // TS import - conditionally imported only when typescript is available.
-import ts from "./conditional-imports/typescript";
+import ts from "~/conditional-imports/typescript";
 
 // Any JSDoc for these functions would be tedious.
 // eslint-disable-next-line eslint-comments/disable-enable-pair
