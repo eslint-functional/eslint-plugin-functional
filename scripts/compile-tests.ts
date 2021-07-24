@@ -53,8 +53,8 @@ async function createTestsTsConfig() {
  */
 async function createTestsHelpersTsConfig() {
   return fs.copyFile(
-    "tests/helpers/tsconfig.json",
-    "build/tests/helpers/tsconfig.json"
+    "tests/helpers/test-tsconfig.json",
+    "build/tests/helpers/test-tsconfig.json"
   );
 }
 
