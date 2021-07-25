@@ -203,11 +203,11 @@ The [below section](#supported-rules) gives details on which rules are enabled b
 
 :see_no_evil: = `no-object-orientation` Ruleset.
 
-| Name                                                         | Description                                                              | <span title="No Object-Orientation">:see_no_evil:</span> | <span title="Lite">:hear_no_evil:</span> | <span title="Recommended">:speak_no_evil:</span> | :wrench: |   :blue_heart:    |
-| ------------------------------------------------------------ | ------------------------------------------------------------------------ | :------------------------------------------------------: | :--------------------------------------: | :----------------------------------------------: | :------: | :---------------: |
-| [`no-class`](./docs/rules/no-class.md)                       | Disallow classes                                                         |                    :heavy_check_mark:                    |            :heavy_check_mark:            |                :heavy_check_mark:                |          |                   |
-| [`no-mixed-type`](./docs/rules/no-mixed-type.md)             | Restrict types so that only members of the same kind are allowed in them |                    :heavy_check_mark:                    |            :heavy_check_mark:            |                :heavy_check_mark:                |          | :thought_balloon: |
-| [`no-this-expression`](./docs/rules/no-this-expression.md)   | Disallow `this` access                                                   |                    :heavy_check_mark:                    |            :heavy_check_mark:            |                :heavy_check_mark:                |          |                   |
+| Name                                                       | Description                                                              | <span title="No Object-Orientation">:see_no_evil:</span> | <span title="Lite">:hear_no_evil:</span> | <span title="Recommended">:speak_no_evil:</span> | :wrench: |   :blue_heart:    |
+| ---------------------------------------------------------- | ------------------------------------------------------------------------ | :------------------------------------------------------: | :--------------------------------------: | :----------------------------------------------: | :------: | :---------------: |
+| [`no-class`](./docs/rules/no-class.md)                     | Disallow classes                                                         |                    :heavy_check_mark:                    |            :heavy_check_mark:            |                :heavy_check_mark:                |          |                   |
+| [`no-mixed-type`](./docs/rules/no-mixed-type.md)           | Restrict types so that only members of the same kind are allowed in them |                    :heavy_check_mark:                    |            :heavy_check_mark:            |                :heavy_check_mark:                |          | :thought_balloon: |
+| [`no-this-expression`](./docs/rules/no-this-expression.md) | Disallow `this` access                                                   |                    :heavy_check_mark:                    |            :heavy_check_mark:            |                :heavy_check_mark:                |          |                   |
 
 ### No Statements Rules
 
@@ -244,7 +244,7 @@ The [below section](#supported-rules) gives details on which rules are enabled b
 
 | Name                                           | Description             | <span title="Stylistic">:see_no_evil:</span> | <span title="Lite">:hear_no_evil:</span> | <span title="Recommended">:speak_no_evil:</span> | :wrench: |   :blue_heart:    |
 | ---------------------------------------------- | ----------------------- | :------------------------------------------: | :--------------------------------------: | :----------------------------------------------: | :------: | :---------------: |
-| [`prefer-tacit`](./docs/rules/prefer-tacit.md) | Tacit/Point-Free style. |              :heavy_check_mark:              |                                          |                                                  | :wrench: | :thought_balloon: |
+| [`prefer-tacit`](./docs/rules/prefer-tacit.md) | Tacit/Point-Free style. |              :heavy_check_mark:              |            :heavy_check_mark:            |                :heavy_check_mark:                | :wrench: | :thought_balloon: |
 
 ## Recommended standard rules
 
