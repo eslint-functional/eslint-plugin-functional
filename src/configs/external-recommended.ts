@@ -10,14 +10,9 @@ const config: Linter.Config = {
     {
       files: ["*.ts", "*.tsx"],
       rules: {
-        "@typescript-eslint/explicit-function-return-type": [
-          "error",
-          {
-            allowExpressions: true,
-            allowTypedFunctionExpressions: true,
-            allowHigherOrderFunctions: true,
-          },
-        ],
+        "@typescript-eslint/prefer-readonly": "error",
+        "@typescript-eslint/prefer-readonly-parameter-types": "warn",
+        "@typescript-eslint/switch-exhaustiveness-check": "error",
       },
     },
   ],
