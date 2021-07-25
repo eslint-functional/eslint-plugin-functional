@@ -38,16 +38,16 @@ const tests: ReadonlyArray<ValidTestCase> = [
     }`,
     optionsSet: [[]],
   },
-  // Should not fail on ReadonlyArray type alias.
+  // Should not fail on type alias.
   {
-    code: `type Foo = ReadonlyArray<string>;`,
+    code: `type Foo = Array<string>;`,
     optionsSet: [[]],
   },
-  // Should not fail on ReadonlyArray type alias in local type.
+  // Should not fail on type alias in local type.
   {
     code: dedent`
     function foo() {
-      type Foo = ReadonlyArray<string>;
+      type Foo = Array<string>;
     }`,
     optionsSet: [[]],
   },
@@ -214,7 +214,7 @@ const tests: ReadonlyArray<ValidTestCase> = [
   },
   // Type literal in array template parameter with readonly should not produce failures.
   {
-    code: `type foo = ReadonlyArray<{ readonly type: string, readonly code: string }>;`,
+    code: `let foo: ReadonlyArray<{ readonly type: string, readonly code: string }>;`,
     optionsSet: [[]],
   },
   // Type literal with readonly on members should not produce failures.
@@ -348,7 +348,7 @@ const tests: ReadonlyArray<ValidTestCase> = [
   },
   // Ignore Mutable Collections (Array, Tuple, Set, Map)
   {
-    code: dedent`type Foo = Array<string>;`,
+    code: dedent`let Foo: Array<string>;`,
     optionsSet: [[{ ignoreCollections: true }]],
   },
   {
@@ -360,7 +360,7 @@ const tests: ReadonlyArray<ValidTestCase> = [
     optionsSet: [[{ ignoreCollections: true, checkImplicit: true }]],
   },
   {
-    code: dedent`type Foo = [string, string];`,
+    code: dedent`let Foo: [string, string];`,
     optionsSet: [[{ ignoreCollections: true }]],
   },
   {
@@ -372,7 +372,7 @@ const tests: ReadonlyArray<ValidTestCase> = [
     optionsSet: [[{ ignoreCollections: true, checkImplicit: true }]],
   },
   {
-    code: dedent`type Foo = Set<string, string>;`,
+    code: dedent`let Foo: Set<string, string>;`,
     optionsSet: [[{ ignoreCollections: true }]],
   },
   {
@@ -380,7 +380,7 @@ const tests: ReadonlyArray<ValidTestCase> = [
     optionsSet: [[{ ignoreCollections: true }]],
   },
   {
-    code: dedent`type Foo = Map<string, string>;`,
+    code: dedent`let Foo: Map<string, string>;`,
     optionsSet: [[{ ignoreCollections: true }]],
   },
   {

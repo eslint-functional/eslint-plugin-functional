@@ -314,88 +314,6 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       },
     ],
   },
-  // Should fail on Array type alias.
-  {
-    code: `type Foo = Array<string>;`,
-    optionsSet: [[]],
-    output: `type Foo = ReadonlyArray<string>;`,
-    errors: [
-      {
-        messageId: "type",
-        type: "TSTypeReference",
-        line: 1,
-        column: 12,
-      },
-    ],
-  },
-  // Should fail on Array as type member.
-  {
-    code: dedent`
-      function foo() {
-        type Foo = {
-          readonly bar: Array<string>
-        }
-      }`,
-    optionsSet: [[]],
-    output: dedent`
-      function foo() {
-        type Foo = {
-          readonly bar: ReadonlyArray<string>
-        }
-      }`,
-    errors: [
-      {
-        messageId: "type",
-        type: "TSTypeReference",
-        line: 3,
-        column: 19,
-      },
-    ],
-  },
-  // Should fail on Array type alias in local type.
-  {
-    code: dedent`
-      function foo() {
-        type Foo = Array<string>;
-      }`,
-    optionsSet: [[]],
-    output: dedent`
-      function foo() {
-        type Foo = ReadonlyArray<string>;
-      }`,
-    errors: [
-      {
-        messageId: "type",
-        type: "TSTypeReference",
-        line: 2,
-        column: 14,
-      },
-    ],
-  },
-  // Should fail on Array as type member in local type.
-  {
-    code: dedent`
-      function foo() {
-        type Foo = {
-          readonly bar: Array<string>
-        }
-      }`,
-    optionsSet: [[]],
-    output: dedent`
-      function foo() {
-        type Foo = {
-          readonly bar: ReadonlyArray<string>
-        }
-      }`,
-    errors: [
-      {
-        messageId: "type",
-        type: "TSTypeReference",
-        line: 3,
-        column: 19,
-      },
-    ],
-  },
   // Should fail on Array type in variable declaration.
   {
     code: `const foo: Array<string> = [];`,
@@ -629,34 +547,6 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         type: "TSIndexSignature",
         line: 1,
         column: 12,
-      },
-    ],
-  },
-  // Type literal in property template parameter without readonly should produce failures.
-  {
-    code: dedent`
-      type foo = ReadonlyArray<{
-        type: string,
-        code: string,
-      }>;`,
-    optionsSet: [[]],
-    output: dedent`
-      type foo = ReadonlyArray<{
-        readonly type: string,
-        readonly code: string,
-      }>;`,
-    errors: [
-      {
-        messageId: "property",
-        type: "TSPropertySignature",
-        line: 2,
-        column: 3,
-      },
-      {
-        messageId: "property",
-        type: "TSPropertySignature",
-        line: 3,
-        column: 3,
       },
     ],
   },
@@ -1085,6 +975,84 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         type: "TSArrayType",
         line: 1,
         column: 59,
+      },
+    ],
+  },
+  // Should fail when using an mutable type alias in variable declaration.
+  {
+    code: dedent`
+      type Foo = Array<string>;
+      let foo: Foo;`,
+    optionsSet: [[]],
+    errors: [
+      {
+        messageId: "type",
+        type: "TSTypeReference",
+        line: 2,
+        column: 20,
+      },
+    ],
+  },
+  // Should fail when using an mutable type alias in function param.
+  {
+    code: dedent`
+      type Foo = Array<string>;
+      function foo(param: Foo) {}`,
+    optionsSet: [[]],
+    errors: [
+      {
+        messageId: "type",
+        type: "TSTypeReference",
+        line: 2,
+        column: 20,
+      },
+    ],
+  },
+  // Should fail when using an mutable type alias of type literal without readonly modifer in variable declaration.
+  {
+    code: dedent`
+      type Foo = ReadonlyArray<{
+        type: string,
+        code: string,
+      }>;
+      let foo: Foo;`,
+    optionsSet: [[]],
+    errors: [
+      {
+        messageId: "property",
+        type: "TSPropertySignature",
+        line: 2,
+        column: 3,
+      },
+      {
+        messageId: "property",
+        type: "TSPropertySignature",
+        line: 3,
+        column: 3,
+      },
+    ],
+  },
+  // Should fail when using an mutable type alias of type literal without readonly modifer in function param.
+  {
+    code: dedent`
+      type Foo = ReadonlyArray<{
+        type: string,
+        code: string,
+      }>;
+      function foo(param: Foo) {}`,
+    optionsSet: [[]],
+    errors: [
+      {
+        messageId: "property",
+        type: "TSPropertySignature",
+        line: 2,
+        column: 3,
+      },
+      {
+        messageId: "property",
+        type: "TSPropertySignature",
+        line: 3,
+        column: 3,
       },
     ],
   },
