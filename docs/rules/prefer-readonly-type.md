@@ -106,7 +106,7 @@ The default options:
 ```ts
 {
   allowLocalMutation: false,
-  allowMutableReturnType: false,
+  allowMutableReturnType: true,
   checkImplicit: false,
   ignoreClass: false,
   ignoreInterface: false,

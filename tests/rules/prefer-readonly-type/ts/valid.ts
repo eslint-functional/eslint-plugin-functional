@@ -56,28 +56,28 @@ const tests: ReadonlyArray<ValidTestCase> = [
     code: `const foo: ReadonlyArray<string> = [];`,
     optionsSet: [[]],
   },
-  // Allow return type.
+  // Allow mutable return type.
   {
     code: dedent`
     function foo(...numbers: ReadonlyArray<number>): Array<number> {}
     function bar(...numbers: readonly number[]): number[] {}`,
-    optionsSet: [[{ allowMutableReturnType: true }]],
+    optionsSet: [],
   },
-  // Allow return type.
+  // Allow mutable return type.
   {
     code: dedent`
     const foo = function(...numbers: ReadonlyArray<number>): Array<number> {}
     const bar = function(...numbers: readonly number[]): number[] {}`,
-    optionsSet: [[{ allowMutableReturnType: true }]],
+    optionsSet: [],
   },
-  // Allow return type.
+  // Allow mutable return type.
   {
     code: dedent`
     const foo = (...numbers: ReadonlyArray<number>): Array<number> =>  {}
     const bar = (...numbers: readonly number[]): number[] =>  {}`,
-    optionsSet: [[{ allowMutableReturnType: true }]],
+    optionsSet: [],
   },
-  // Allow return type.
+  // Allow mutable return type.
   {
     code: dedent`
     class Foo {
@@ -88,47 +88,47 @@ const tests: ReadonlyArray<ValidTestCase> = [
       foo(...numbers: readonly number[]): number[] {
       }
     }`,
-    optionsSet: [[{ allowMutableReturnType: true }]],
+    optionsSet: [],
   },
-  // Allow return type with Type Arguments.
+  // Allow mutable return type with Type Arguments.
   {
     code: dedent`
     function foo(...numbers: ReadonlyArray<number>): Promise<Array<number>> {}
     function foo(...numbers: ReadonlyArray<number>): Promise<number[]> {}`,
-    optionsSet: [[{ allowMutableReturnType: true }]],
+    optionsSet: [],
   },
-  // Allow return type with deep Type Arguments.
+  // Allow mutable return type with deep Type Arguments.
   {
     code: dedent`
     type Foo<T> = { readonly x: T; };
     function foo(...numbers: ReadonlyArray<number>): Promise<Foo<Array<number>>> {}
     function foo(...numbers: ReadonlyArray<number>): Promise<Foo<number[]>> {}`,
-    optionsSet: [[{ allowMutableReturnType: true }]],
+    optionsSet: [],
   },
-  // Allow return type with Type Arguments in a tuple.
+  // Allow mutable return type with Type Arguments in a tuple.
   {
     code: dedent`
     function foo(...numbers: ReadonlyArray<number>): readonly [number, Array<number>, number] {}
     function foo(...numbers: ReadonlyArray<number>): readonly [number, number[], number] {}`,
-    optionsSet: [[{ allowMutableReturnType: true }]],
+    optionsSet: [],
   },
-  // Allow return type with Type Arguments Union.
+  // Allow mutable return type with Type Arguments Union.
   {
     code: dedent`
     function foo(...numbers: ReadonlyArray<number>): { readonly a: Array<number> } | { readonly b: string[] } {}`,
-    optionsSet: [[{ allowMutableReturnType: true }]],
+    optionsSet: [],
   },
-  // Allow return type with Type Arguments Intersection.
+  // Allow mutable return type with Type Arguments Intersection.
   {
     code: dedent`
     function foo(...numbers: ReadonlyArray<number>): { readonly a: Array<number> } & { readonly b: string[] } {}`,
-    optionsSet: [[{ allowMutableReturnType: true }]],
+    optionsSet: [],
   },
-  // Allow return type with Type Arguments Conditional.
+  // Allow mutable return type with Type Arguments Conditional.
   {
     code: dedent`
     function foo<T>(x: T): T extends Array<number> ? string : number[] {}`,
-    optionsSet: [[{ allowMutableReturnType: true }]],
+    optionsSet: [],
   },
   // Allow inline mutable return type.
   {
