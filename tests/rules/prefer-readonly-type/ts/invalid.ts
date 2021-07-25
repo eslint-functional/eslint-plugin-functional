@@ -125,18 +125,12 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       }`,
     optionsSet: [[]],
     output: dedent`
-      function foo(): ReadonlyArray<string> {
+      function foo(): Array<string> {
         interface Foo {
           readonly bar: ReadonlyArray<string>
         }
       }`,
     errors: [
-      {
-        messageId: "type",
-        type: "TSTypeReference",
-        line: 1,
-        column: 17,
-      },
       {
         messageId: "type",
         type: "TSTypeReference",
@@ -155,7 +149,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       }`,
     optionsSet: [[]],
     output: dedent`
-      const foo = (): ReadonlyArray<string> => {
+      const foo = (): Array<string> => {
         interface Foo {
           readonly bar: ReadonlyArray<string>
         }
@@ -164,46 +158,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       {
         messageId: "type",
         type: "TSTypeReference",
-        line: 1,
-        column: 17,
-      },
-      {
-        messageId: "type",
-        type: "TSTypeReference",
         line: 3,
         column: 19,
-      },
-    ],
-  },
-  // Should fail on shorthand syntax Array type as return type.
-  {
-    code: dedent`
-      function foo(): number[] {
-      }`,
-    optionsSet: [[]],
-    output: dedent`
-      function foo(): readonly number[] {
-      }`,
-    errors: [
-      {
-        messageId: "array",
-        type: "TSArrayType",
-        line: 1,
-        column: 17,
-      },
-    ],
-  },
-  // Should fail on shorthand syntax Array type as return type.
-  {
-    code: `const foo = (): number[] => {}`,
-    optionsSet: [[]],
-    output: `const foo = (): readonly number[] => {}`,
-    errors: [
-      {
-        messageId: "array",
-        type: "TSArrayType",
-        line: 1,
-        column: 17,
       },
     ],
   },
@@ -331,7 +287,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
           readonly baz: ReadonlyArray<string>
         }
       ): {
-        readonly bar: ReadonlyArray<string>,
+        readonly bar: Array<string>,
         readonly baz: ReadonlyArray<string>
       } {
         let foo: {
@@ -349,12 +305,6 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         type: "TSTypeReference",
         line: 3,
         column: 19,
-      },
-      {
-        messageId: "type",
-        type: "TSTypeReference",
-        line: 7,
-        column: 17,
       },
       {
         messageId: "type",
@@ -651,17 +601,11 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   // Function Index Signatures.
   {
     code: dedent`
-      function foo(): { [source: string]: string } {
-        return undefined;
-      }
       function bar(param: { [source: string]: string }): void {
         return undefined;
       }`,
     optionsSet: [[]],
     output: dedent`
-      function foo(): { readonly [source: string]: string } {
-        return undefined;
-      }
       function bar(param: { readonly [source: string]: string }): void {
         return undefined;
       }`,
@@ -670,12 +614,6 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         messageId: "property",
         type: "TSIndexSignature",
         line: 1,
-        column: 19,
-      },
-      {
-        messageId: "property",
-        type: "TSIndexSignature",
-        line: 4,
         column: 23,
       },
     ],
@@ -899,6 +837,254 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         type: "TSPropertySignature",
         line: 3,
         column: 3,
+      },
+    ],
+  },
+  // Don't allow mutable return type.
+  {
+    code: dedent`
+      function foo(...numbers: ReadonlyArray<number>): Array<number> {}
+      function bar(...numbers: readonly number[]): number[] {}`,
+    optionsSet: [[{ allowMutableReturnType: false }]],
+    output: dedent`
+      function foo(...numbers: ReadonlyArray<number>): ReadonlyArray<number> {}
+      function bar(...numbers: readonly number[]): readonly number[] {}`,
+    errors: [
+      {
+        messageId: "type",
+        type: "TSTypeReference",
+        line: 1,
+        column: 50,
+      },
+      {
+        messageId: "array",
+        type: "TSArrayType",
+        line: 2,
+        column: 46,
+      },
+    ],
+  },
+  // Don't allow mutable return type.
+  {
+    code: dedent`
+      const foo = function(...numbers: ReadonlyArray<number>): Array<number> {}
+      const bar = function(...numbers: readonly number[]): number[] {}`,
+    optionsSet: [[{ allowMutableReturnType: false }]],
+    output: dedent`
+      const foo = function(...numbers: ReadonlyArray<number>): ReadonlyArray<number> {}
+      const bar = function(...numbers: readonly number[]): readonly number[] {}`,
+    errors: [
+      {
+        messageId: "type",
+        type: "TSTypeReference",
+        line: 1,
+        column: 58,
+      },
+      {
+        messageId: "array",
+        type: "TSArrayType",
+        line: 2,
+        column: 54,
+      },
+    ],
+  },
+  // Don't allow mutable return type.
+  {
+    code: dedent`
+      const foo = (...numbers: ReadonlyArray<number>): Array<number> => {}
+      const bar = (...numbers: readonly number[]): number[] => {}`,
+    optionsSet: [[{ allowMutableReturnType: false }]],
+    output: dedent`
+      const foo = (...numbers: ReadonlyArray<number>): ReadonlyArray<number> => {}
+      const bar = (...numbers: readonly number[]): readonly number[] => {}`,
+    errors: [
+      {
+        messageId: "type",
+        type: "TSTypeReference",
+        line: 1,
+        column: 50,
+      },
+      {
+        messageId: "array",
+        type: "TSArrayType",
+        line: 2,
+        column: 46,
+      },
+    ],
+  },
+  // Don't allow mutable return type.
+  {
+    code: dedent`
+      class Foo {
+        foo(...numbers: ReadonlyArray<number>): Array<number> {
+        }
+      }
+      class Bar {
+        foo(...numbers: readonly number[]): number[] {
+        }
+      }`,
+    optionsSet: [[{ allowMutableReturnType: false }]],
+    output: dedent`
+      class Foo {
+        foo(...numbers: ReadonlyArray<number>): ReadonlyArray<number> {
+        }
+      }
+      class Bar {
+        foo(...numbers: readonly number[]): readonly number[] {
+        }
+      }`,
+    errors: [
+      {
+        messageId: "type",
+        type: "TSTypeReference",
+        line: 2,
+        column: 43,
+      },
+      {
+        messageId: "array",
+        type: "TSArrayType",
+        line: 6,
+        column: 39,
+      },
+    ],
+  },
+  // Don't allow mutable return type with Type Arguments.
+  {
+    code: dedent`
+      function foo(...numbers: ReadonlyArray<number>): Promise<Array<number>> {}
+      function foo(...numbers: ReadonlyArray<number>): Promise<number[]> {}`,
+    optionsSet: [[{ allowMutableReturnType: false }]],
+    output: dedent`
+      function foo(...numbers: ReadonlyArray<number>): Promise<ReadonlyArray<number>> {}
+      function foo(...numbers: ReadonlyArray<number>): Promise<readonly number[]> {}`,
+    errors: [
+      {
+        messageId: "type",
+        type: "TSTypeReference",
+        line: 1,
+        column: 58,
+      },
+      {
+        messageId: "array",
+        type: "TSArrayType",
+        line: 2,
+        column: 58,
+      },
+    ],
+  },
+  // Don't allow mutable return type with deep Type Arguments.
+  {
+    code: dedent`
+      type Foo<T> = { readonly x: T; };
+      function foo(...numbers: ReadonlyArray<number>): Promise<Foo<Array<number>>> {}
+      function foo(...numbers: ReadonlyArray<number>): Promise<Foo<number[]>> {}`,
+    optionsSet: [[{ allowMutableReturnType: false }]],
+    output: dedent`
+      type Foo<T> = { readonly x: T; };
+      function foo(...numbers: ReadonlyArray<number>): Promise<Foo<ReadonlyArray<number>>> {}
+      function foo(...numbers: ReadonlyArray<number>): Promise<Foo<readonly number[]>> {}`,
+    errors: [
+      {
+        messageId: "type",
+        type: "TSTypeReference",
+        line: 2,
+        column: 62,
+      },
+      {
+        messageId: "array",
+        type: "TSArrayType",
+        line: 3,
+        column: 62,
+      },
+    ],
+  },
+  // Don't allow mutable return type with Type Arguments in a tuple.
+  {
+    code: dedent`
+      function foo(...numbers: ReadonlyArray<number>): readonly [number, Array<number>, number] {}
+      function foo(...numbers: ReadonlyArray<number>): readonly [number, number[], number] {}`,
+    optionsSet: [[{ allowMutableReturnType: false }]],
+    output: dedent`
+      function foo(...numbers: ReadonlyArray<number>): readonly [number, ReadonlyArray<number>, number] {}
+      function foo(...numbers: ReadonlyArray<number>): readonly [number, readonly number[], number] {}`,
+    errors: [
+      {
+        messageId: "type",
+        type: "TSTypeReference",
+        line: 1,
+        column: 68,
+      },
+      {
+        messageId: "array",
+        type: "TSArrayType",
+        line: 2,
+        column: 68,
+      },
+    ],
+  },
+  // Don't allow mutable return type with Type Arguments Union.
+  {
+    code: dedent`
+      function foo(...numbers: ReadonlyArray<number>): { readonly a: Array<number> } | { readonly b: string[] } {}`,
+    optionsSet: [[{ allowMutableReturnType: false }]],
+    output: dedent`
+      function foo(...numbers: ReadonlyArray<number>): { readonly a: ReadonlyArray<number> } | { readonly b: readonly string[] } {}`,
+    errors: [
+      {
+        messageId: "type",
+        type: "TSTypeReference",
+        line: 1,
+        column: 64,
+      },
+      {
+        messageId: "array",
+        type: "TSArrayType",
+        line: 1,
+        column: 96,
+      },
+    ],
+  },
+  // Don't allow mutable return type with Type Arguments Intersection.
+  {
+    code: dedent`
+      function foo(...numbers: ReadonlyArray<number>): { readonly a: Array<number> } & { readonly b: string[] } {}`,
+    optionsSet: [[{ allowMutableReturnType: false }]],
+    output: dedent`
+      function foo(...numbers: ReadonlyArray<number>): { readonly a: ReadonlyArray<number> } & { readonly b: readonly string[] } {}`,
+    errors: [
+      {
+        messageId: "type",
+        type: "TSTypeReference",
+        line: 1,
+        column: 64,
+      },
+      {
+        messageId: "array",
+        type: "TSArrayType",
+        line: 1,
+        column: 96,
+      },
+    ],
+  },
+  // Don't allow mutable return type with Type Arguments Conditional.
+  {
+    code: dedent`
+      function foo<T>(x: T): T extends Array<number> ? string : number[] {}`,
+    optionsSet: [[{ allowMutableReturnType: false }]],
+    output: dedent`
+      function foo<T>(x: T): T extends ReadonlyArray<number> ? string : readonly number[] {}`,
+    errors: [
+      {
+        messageId: "type",
+        type: "TSTypeReference",
+        line: 1,
+        column: 34,
+      },
+      {
+        messageId: "array",
+        type: "TSArrayType",
+        line: 1,
+        column: 59,
       },
     ],
   },

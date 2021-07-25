@@ -75,7 +75,7 @@ const defaultOptions: Options = {
   ignoreInterface: false,
   ignoreCollections: false,
   allowLocalMutation: false,
-  allowMutableReturnType: false,
+  allowMutableReturnType: true,
 };
 
 // The possible error messages.
