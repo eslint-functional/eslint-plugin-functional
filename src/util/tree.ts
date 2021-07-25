@@ -10,6 +10,7 @@ import {
   isMethodDefinition,
   isProperty,
   isTSInterfaceBody,
+  isTSTypeAliasDeclaration,
 } from "./typeguard";
 
 /**
@@ -79,6 +80,13 @@ export function isInReturnType(node: TSESTree.Node): boolean {
       node
     ) !== null
   );
+}
+
+/**
+ * Is the given node in a TS Type Alias Declaration.
+ */
+export function isInTSTypeAliasDeclaration(node: TSESTree.Node): boolean {
+  return getAncestorOfType(isTSTypeAliasDeclaration, node) !== null;
 }
 
 /**

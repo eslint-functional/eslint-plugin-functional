@@ -16,7 +16,7 @@ import {
 } from "~/common/ignore-options";
 import type { RuleContext, RuleMetaData, RuleResult } from "~/util/rule";
 import { createRule, getTypeOfNode } from "~/util/rule";
-import { isInReturnType } from "~/util/tree";
+import { isInReturnType, isInTSTypeAliasDeclaration } from "~/util/tree";
 import {
   isArrayType,
   isAssignmentPattern,
@@ -185,33 +185,35 @@ function checkTypeReference(
   context: RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
-  if (isIdentifier(node.typeName)) {
-    if (
-      options.ignoreCollections &&
-      mutableTypeRegex.test(node.typeName.name)
-    ) {
-      return {
-        context,
-        descriptors: [],
-      };
-    }
-    const immutableType = mutableToImmutableTypes.get(node.typeName.name);
+  if (
+    !isIdentifier(node.typeName) ||
+    (options.ignoreCollections && mutableTypeRegex.test(node.typeName.name)) ||
+    isInTSTypeAliasDeclaration(node)
+  ) {
     return {
       context,
-      descriptors:
-        immutableType !== undefined &&
-        immutableType.length > 0 &&
-        (!options.allowMutableReturnType || !isInReturnType(node))
-          ? [
-              {
-                node,
-                messageId: "type",
-                fix: (fixer) => fixer.replaceText(node.typeName, immutableType),
-              },
-            ]
-          : [],
+      descriptors: [],
     };
   }
+
+  const immutableType = mutableToImmutableTypes.get(node.typeName.name);
+  if (
+    immutableType !== undefined &&
+    immutableType.length > 0 &&
+    (!options.allowMutableReturnType || !isInReturnType(node))
+  ) {
+    return {
+      context,
+      descriptors: [
+        {
+          node,
+          messageId: "type",
+          fix: (fixer) => fixer.replaceText(node.typeName, immutableType),
+        },
+      ],
+    };
+  }
+
   return {
     context,
     descriptors: [],
