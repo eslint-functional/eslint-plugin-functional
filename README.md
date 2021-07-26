@@ -213,7 +213,7 @@ The [below section](#supported-rules) gives details on which rules are enabled b
 
 | Name                                                                   | Description                                                | <span title="No Statements">:see_no_evil:</span> | <span title="Lite">:hear_no_evil:</span> | <span title="Recommended">:speak_no_evil:</span> | :wrench: |   :blue_heart:    |
 | ---------------------------------------------------------------------- | ---------------------------------------------------------- | :----------------------------------------------: | :--------------------------------------: | :----------------------------------------------: | :------: | :---------------: |
-| [`no-conditional-statement`](./docs/rules/no-conditional-statement.md) | Disallow conditional statements (if and switch statements) |                :heavy_check_mark:                |                                          |                :heavy_check_mark:                |          |                   |
+| [`no-conditional-statement`](./docs/rules/no-conditional-statement.md) | Disallow conditional statements (if and switch statements) |                :heavy_check_mark:                |                                          |                :heavy_check_mark:                |          | :thought_balloon: |
 | [`no-expression-statement`](./docs/rules/no-expression-statement.md)   | Disallow expressions to cause side-effects                 |                :heavy_check_mark:                |                                          |                :heavy_check_mark:                |          |                   |
 | [`no-loop-statement`](./docs/rules/no-loop-statement.md)               | Disallow imperative loops                                  |                :heavy_check_mark:                |            :heavy_check_mark:            |                :heavy_check_mark:                |          |                   |
 | [`no-return-void`](./docs/rules/no-return-void.md)                     | Disallow functions that return nothing                     |                :heavy_check_mark:                |            :heavy_check_mark:            |                :heavy_check_mark:                |          | :thought_balloon: |
@@ -241,8 +241,8 @@ The [below section](#supported-rules) gives details on which rules are enabled b
 :see_no_evil: = `stylistic` Ruleset.
 
 | Name                                           | Description             | <span title="Stylistic">:see_no_evil:</span> | <span title="Lite">:hear_no_evil:</span> | <span title="Recommended">:speak_no_evil:</span> | :wrench: | :blue_heart: |
-| ---------------------------------------------- | ----------------------- | :-----------------------------------------: | :--------------------------------------: | :----------------------------------------------: | :------: | :----------: |
-| [`prefer-tacit`](./docs/rules/prefer-tacit.md) | Tacit/Point-Free style. |             :heavy_check_mark:              |                                          |                                                  | :wrench: | :blue_heart: |
+| ---------------------------------------------- | ----------------------- | :------------------------------------------: | :--------------------------------------: | :----------------------------------------------: | :------: | :----------: |
+| [`prefer-tacit`](./docs/rules/prefer-tacit.md) | Tacit/Point-Free style. |              :heavy_check_mark:              |                                          |                                                  | :wrench: | :blue_heart: |
 
 ## Recommended standard rules
 
