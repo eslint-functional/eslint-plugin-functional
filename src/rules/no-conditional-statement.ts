@@ -11,6 +11,7 @@ import {
   isBlockStatement,
   isIfStatement,
   isReturnStatement,
+  isThrowStatement,
 } from "../util/typeguard";
 
 // The name of this rule.
@@ -83,11 +84,13 @@ function getIfBranchViolations(
     (branch): branch is NonNullable<typeof branch> =>
       branch !== null &&
       !isReturnStatement(branch) &&
+      !isThrowStatement(branch) &&
       !(
         isBlockStatement(branch) &&
         branch.body.some(
           (statement) =>
             isReturnStatement(statement) ||
+            isThrowStatement(statement) ||
             // Another instance of this rule will check nested if statements.
             isIfStatement(statement)
         )
@@ -111,13 +114,17 @@ function getSwitchViolations(
     (branch) =>
       branch.consequent.length !== 0 &&
       !branch.consequent.some(isReturnStatement) &&
+      !branch.consequent.some(isThrowStatement) &&
       !(
         branch.consequent.every(isBlockStatement) &&
         (
           branch.consequent[
             branch.consequent.length - 1
           ] as TSESTree.BlockStatement
-        ).body.some(isReturnStatement)
+        ).body.some(
+          (statement) =>
+            isReturnStatement(statement) || isThrowStatement(statement)
+        )
       )
   );
 

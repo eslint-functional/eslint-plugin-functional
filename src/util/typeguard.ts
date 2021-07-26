@@ -181,6 +181,12 @@ export function isThisExpression(
   return node.type === AST_NODE_TYPES.ThisExpression;
 }
 
+export function isThrowStatement(
+  node: TSESTree.Node
+): node is TSESTree.ThrowStatement {
+  return node.type === AST_NODE_TYPES.ThrowStatement;
+}
+
 export function isTSArrayType(
   node: TSESTree.Node
 ): node is TSESTree.TSArrayType {

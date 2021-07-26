@@ -71,6 +71,60 @@ const valid: ReadonlyArray<ValidTestCase> = [
       [{ allowReturningBranches: "ifExhaustive" }],
     ],
   },
+  // Check throws
+  {
+    code: dedent`
+      function foo(i) {
+        if (i === 1) {
+          throw 1;
+        }
+      }`,
+    optionsSet: [[{ allowReturningBranches: true }]],
+  },
+  {
+    code: dedent`
+      function foo(i) {
+        if (i === 1) {
+          throw 1;
+        } else {
+          throw 2;
+        }
+      }`,
+    optionsSet: [
+      [{ allowReturningBranches: true }],
+      [{ allowReturningBranches: "ifExhaustive" }],
+    ],
+  },
+  {
+    code: dedent`
+      function foo(i) {
+        switch(i) {
+          case "a":
+            throw 1;
+          case "b":
+          case "c":
+            throw 2;
+        }
+      }`,
+    optionsSet: [[{ allowReturningBranches: true }]],
+  },
+  {
+    code: dedent`
+      function foo(i) {
+        switch(i) {
+          case "a":
+            throw 1;
+          case "b":
+            throw 2;
+          default:
+            throw 3;
+        }
+      }`,
+    optionsSet: [
+      [{ allowReturningBranches: true }],
+      [{ allowReturningBranches: "ifExhaustive" }],
+    ],
+  },
 ];
 
 // Invalid test cases.
