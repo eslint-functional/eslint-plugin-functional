@@ -309,6 +309,17 @@ const objectES6Valid: ReadonlyArray<ValidTestCase> = [
       [{ ignoreAccessorPattern: ["**.mutable*.**"] }],
     ],
   },
+  // Ignore class
+  {
+    code: dedent`
+      class Klass {
+        baz: string;
+        mutate() {
+          this.baz = "hello";
+        }
+      }`,
+    optionsSet: [[{ ignoreClass: true }]],
+  },
 ];
 
 /**
