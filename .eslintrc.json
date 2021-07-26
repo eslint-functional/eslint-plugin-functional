@@ -50,7 +50,7 @@
     "functional/no-conditional-statement": [
       "error",
       {
-        "allowReturningBranches": "ifExhaustive"
+        "allowReturningBranches": true
       }
     ],
     "functional/functional-parameters": [
