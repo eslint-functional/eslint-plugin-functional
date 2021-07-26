@@ -1,3 +1,4 @@
+import { IgnoreClassOption } from "./../common/ignore-options";
 import { TSESTree } from "@typescript-eslint/experimental-utils";
 import { all as deepMerge } from "deepmerge";
 import { JSONSchema4 } from "json-schema";
@@ -5,6 +6,7 @@ import { JSONSchema4 } from "json-schema";
 import {
   IgnoreAccessorPatternOption,
   ignoreAccessorPatternOptionSchema,
+  ignoreClassOptionSchema,
   IgnorePatternOption,
   ignorePatternOptionSchema,
   shouldIgnore,
@@ -34,6 +36,7 @@ export const name = "immutable-data" as const;
 
 // The options this rule can take.
 type Options = IgnorePatternOption &
+  IgnoreClassOption &
   IgnoreAccessorPatternOption & {
     readonly ignoreImmediateMutation: boolean;
     readonly assumeTypes:
@@ -49,6 +52,7 @@ const schema: JSONSchema4 = [
   deepMerge([
     ignorePatternOptionSchema,
     ignoreAccessorPatternOptionSchema,
+    ignoreClassOptionSchema,
     {
       type: "object",
       properties: {
@@ -82,6 +86,7 @@ const schema: JSONSchema4 = [
 
 // The default options for the rule.
 const defaultOptions: Options = {
+  ignoreClass: false,
   ignoreImmediateMutation: true,
   assumeTypes: {
     forArrays: true,
