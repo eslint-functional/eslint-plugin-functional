@@ -94,7 +94,7 @@ This rule accepts an options object of the following type:
   allowLocalMutation: boolean;
   allowMutableReturnType: boolean;
   checkImplicit: boolean;
-  ignoreClass: boolean;
+  ignoreClass: boolean | "fieldsOnly";
   ignoreInterface: boolean;
   ignoreCollections: boolean;
   ignorePattern?: string | Array<string>;

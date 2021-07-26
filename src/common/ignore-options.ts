@@ -11,6 +11,7 @@ import {
   hasID,
   hasKey,
   isAssignmentExpression,
+  isClassProperty,
   isExpressionStatement,
   isIdentifier,
   isMemberExpression,
@@ -74,14 +75,22 @@ export const ignoreAccessorPatternOptionSchema: JSONSchema4 = {
 };
 
 export type IgnoreClassOption = {
-  readonly ignoreClass: boolean;
+  readonly ignoreClass: boolean | "fieldsOnly";
 };
 
 export const ignoreClassOptionSchema: JSONSchema4 = {
   type: "object",
   properties: {
     ignoreClass: {
-      type: "boolean",
+      oneOf: [
+        {
+          type: "boolean",
+        },
+        {
+          type: "string",
+          enum: ["fieldsOnly"],
+        },
+      ],
     },
   },
   additionalProperties: false,
@@ -262,6 +271,13 @@ export function shouldIgnore(
     (options.allowLocalMutation === true && inFunctionBody(node)) ||
     // Ignore if in a class and ignoreClass is set.
     (options.ignoreClass === true && inClass(node)) ||
+    // Ignore if class field and ignoreClass is set for ignoring fields.
+    (options.ignoreClass === "fieldsOnly" &&
+      (isClassProperty(node) ||
+        (isAssignmentExpression(node) &&
+          inClass(node) &&
+          isMemberExpression(node.left) &&
+          isThisExpression(node.left.object)))) ||
     // Ignore if in an interface and ignoreInterface is set.
     (options.ignoreInterface === true && inInterface(node)) ||
     ((texts: ReadonlyArray<string>): boolean =>

@@ -318,7 +318,7 @@ const objectES6Valid: ReadonlyArray<ValidTestCase> = [
           this.baz = "hello";
         }
       }`,
-    optionsSet: [[{ ignoreClass: true }]],
+    optionsSet: [[{ ignoreClass: true }], [{ ignoreClass: "fieldsOnly" }]],
   },
 ];
 
@@ -369,6 +369,25 @@ const objectES6Invalid: ReadonlyArray<InvalidTestCase> = [
         messageId: "generic",
         type: "AssignmentExpression",
         line: 11,
+        column: 5,
+      },
+    ],
+  },
+  // Catch non-field mutation in classes.
+  {
+    code: dedent`
+      class Klass {
+        mutate() {
+          let data = { prop: 0 };
+          data.prop = 1;
+        }
+      }`,
+    optionsSet: [[{ ignoreClass: "fieldsOnly" }]],
+    errors: [
+      {
+        messageId: "generic",
+        type: "AssignmentExpression",
+        line: 4,
         column: 5,
       },
     ],

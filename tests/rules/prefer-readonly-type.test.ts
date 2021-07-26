@@ -242,7 +242,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
       const func = (x: { readonly [key in string]: number }) => {}`,
     optionsSet: [[]],
   },
-  // Ignore Classes.
+  // Ignore Class Fields.
   {
     code: dedent`
       class Klass {
@@ -250,6 +250,18 @@ const valid: ReadonlyArray<ValidTestCase> = [
         private bar: number;
         static baz: number;
         private static qux: number;
+      }`,
+    optionsSet: [[{ ignoreClass: true }], [{ ignoreClass: "fieldsOnly" }]],
+  },
+  // Ignore Classes.
+  {
+    code: dedent`
+      class Klass {
+        foo() {
+          let bar: {
+            foo: number;
+          };
+        }
       }`,
     optionsSet: [[{ ignoreClass: true }]],
   },
@@ -1244,6 +1256,34 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         type: "TSMappedType",
         line: 1,
         column: 18,
+      },
+    ],
+  },
+  // Flag non class fields.
+  {
+    code: dedent`
+      class Klass {
+        foo() {
+          let bar: {
+            foo: number;
+          };
+        }
+      }`,
+    optionsSet: [[{ ignoreClass: "fieldsOnly" }]],
+    output: dedent`
+      class Klass {
+        foo() {
+          let bar: {
+            readonly foo: number;
+          };
+        }
+      }`,
+    errors: [
+      {
+        messageId: "property",
+        type: "TSPropertySignature",
+        line: 4,
+        column: 7,
       },
     ],
   },

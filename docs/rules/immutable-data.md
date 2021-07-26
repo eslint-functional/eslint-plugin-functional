@@ -58,7 +58,7 @@ This rule accepts an options object of the following type:
         forArrays: boolean;
         forObjects: boolean;
       }
-  ignoreClass: boolean;
+  ignoreClass: boolean | "fieldsOnly";
   ignoreImmediateMutation: boolean;
   ignorePattern?: string | Array<string>;
   ignoreAccessorPattern?: string | Array<string>;
