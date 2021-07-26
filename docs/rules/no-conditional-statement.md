@@ -66,7 +66,7 @@ The default options:
 
 #### `true`
 
-The optional allows conditional statements but only if all defined branches end with a return statement.
+The optional allows conditional statements but only if all defined branches end with a return statement or other terminal.
 This allows early escapes to be used.
 
 ```js
@@ -81,7 +81,7 @@ function foo(error, data) {
 
 #### `"ifExhaustive"`
 
-This will only allow conditional statements to exists if every case is taken it to account and each has a return statement.
+This will only allow conditional statements to exists if every case is taken it to account and each has a return statement or other terminal.
 In other works, every if must have an else and every switch must have a default case.
 This allows conditional statements to be used like [do expressions](https://github.com/tc39/proposal-do-expressions).
 

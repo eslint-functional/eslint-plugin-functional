@@ -17,7 +17,7 @@ import {
 } from "../helpers/util";
 
 // Valid test cases.
-const valid: ReadonlyArray<ValidTestCase> = [
+const es3Valid: ReadonlyArray<ValidTestCase> = [
   {
     code: dedent`
       function foo(i) {
@@ -128,7 +128,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
 ];
 
 // Invalid test cases.
-const invalid: ReadonlyArray<InvalidTestCase> = [
+const es3Invalid: ReadonlyArray<InvalidTestCase> = [
   {
     code: dedent`
       if (i === 1) {
@@ -358,6 +358,70 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
   },
 ];
 
+const tsValid: ReadonlyArray<ValidTestCase> = [
+  ...es3Valid,
+  // Check never
+  {
+    code: dedent`
+      declare function neverReturn(): never;
+      function foo(i) {
+        if (i === 1) {
+          neverReturn();
+        }
+      }`,
+    optionsSet: [[{ allowReturningBranches: true }]],
+  },
+  {
+    code: dedent`
+      declare function neverReturn(): never;
+      function foo(i) {
+        if (i === 1) {
+          neverReturn();
+        } else {
+          neverReturn();
+        }
+      }`,
+    optionsSet: [
+      [{ allowReturningBranches: true }],
+      [{ allowReturningBranches: "ifExhaustive" }],
+    ],
+  },
+  {
+    code: dedent`
+      declare function neverReturn(): never;
+      function foo(i) {
+        switch(i) {
+          case "a":
+            neverReturn();
+          case "b":
+          case "c":
+            neverReturn();
+        }
+      }`,
+    optionsSet: [[{ allowReturningBranches: true }]],
+  },
+  {
+    code: dedent`
+      declare function neverReturn(): never;
+      function foo(i) {
+        switch(i) {
+          case "a":
+            neverReturn();
+          case "b":
+            neverReturn();
+          default:
+            neverReturn();
+        }
+      }`,
+    optionsSet: [
+      [{ allowReturningBranches: true }],
+      [{ allowReturningBranches: "ifExhaustive" }],
+    ],
+  },
+];
+
+const tsInvalid: ReadonlyArray<InvalidTestCase> = [...es3Invalid];
+
 // Exhaustive type test. - Not currently supported.
 // {
 //   code: dedent`
@@ -376,15 +440,15 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
 describeTsOnly("TypeScript", () => {
   const ruleTester = new RuleTester(typescript);
   ruleTester.run(name, rule, {
-    valid: processValidTestCase(valid),
-    invalid: processInvalidTestCase(invalid),
+    valid: processValidTestCase(tsValid),
+    invalid: processInvalidTestCase(tsInvalid),
   });
 });
 
 describe("JavaScript (es3)", () => {
   const ruleTester = new RuleTester(es3);
   ruleTester.run(name, rule, {
-    valid: processValidTestCase(valid),
-    invalid: processInvalidTestCase(invalid),
+    valid: processValidTestCase(es3Valid),
+    invalid: processInvalidTestCase(es3Invalid),
   });
 });
