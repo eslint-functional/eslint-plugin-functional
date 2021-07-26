@@ -7,12 +7,14 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Jest Test Current Test File",
-      "program": "${workspaceFolder}/node_modules/.bin/jest",
+      "name": "AVA Test Current Test File",
+      "program": "${workspaceFolder}/node_modules/.bin/ava",
       "args": [
-        "--runInBand",
-        "--no-coverage",
         "${relativeFile}"
+      ],
+      "outputCapture": "std",
+      "skipFiles": [
+        "<node_internals>/**/*.js"
       ],
       "sourceMaps": true,
       "console": "integratedTerminal",
