@@ -51,7 +51,7 @@
     "lint": "eslint .",
     "lint-fix": "yarn lint --fix",
     "test": "nyc ava",
-    "test-work": "ava 'tests/rules/_work.test.ts'",
+    "test-work": "TEST_ALL_FILE=1 ava",
     "verify": "yarn build && yarn lint && yarn build-tests && yarn test-compiled && rimraf build",
     "preversion": "yarn verify",
     "version": "auto-changelog -p && git add CHANGELOG.md",
