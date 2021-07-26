@@ -71,6 +71,12 @@ export function isCallExpression(
   return node.type === AST_NODE_TYPES.CallExpression;
 }
 
+export function isClassProperty(
+  node: TSESTree.Node
+): node is TSESTree.ClassProperty {
+  return node.type === AST_NODE_TYPES.ClassProperty;
+}
+
 /**
  * Is the given node a class node?
  *
