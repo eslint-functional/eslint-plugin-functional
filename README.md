@@ -9,7 +9,6 @@
 [![Coverage Status](https://codecov.io/gh/jonaskello/eslint-plugin-functional/branch/master/graph/badge.svg)](https://codecov.io/gh/jonaskello/eslint-plugin-functional)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat)](https://github.com/prettier/prettier)
 [![MIT license](https://img.shields.io/github/license/jonaskello/eslint-plugin-functional.svg?style=flat)](https://opensource.org/licenses/MIT)
-[![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/eslint-functional)
 
 An [ESLint](http://eslint.org) plugin to disable mutation and promote functional programming in JavaScript and TypeScript.
 

@@ -6,6 +6,7 @@ repository:
   private: false
   has_issues: true
   has_projects: true
+  has_discussions : true
   has_wiki: false
   has_downloads: true
   default_branch: master
