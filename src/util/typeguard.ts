@@ -399,3 +399,7 @@ export function isObjectConstructorType(
           (isUnionType(type) &&
             type.types.some((t) => isObjectConstructorType(t, false, null))));
 }
+
+export function isNeverType(type: Type): boolean {
+  return ts !== undefined && type.flags === ts.TypeFlags.Never;
+}

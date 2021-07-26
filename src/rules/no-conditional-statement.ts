@@ -3,13 +3,16 @@ import { JSONSchema4 } from "json-schema";
 
 import {
   createRule,
+  getTypeOfNode,
   RuleContext,
   RuleMetaData,
   RuleResult,
 } from "../util/rule";
 import {
   isBlockStatement,
+  isExpressionStatement,
   isIfStatement,
+  isNeverType,
   isReturnStatement,
   isThrowStatement,
 } from "../util/typeguard";
@@ -77,25 +80,76 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
  * are allowed.
  */
 function getIfBranchViolations(
-  node: TSESTree.IfStatement
+  node: TSESTree.IfStatement,
+  context: RuleContext<keyof typeof errorMessages, Options>
 ): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
   const branches = [node.consequent, node.alternate];
   const violations = branches.filter<NonNullable<typeof branches[0]>>(
-    (branch): branch is NonNullable<typeof branch> =>
-      branch !== null &&
-      !isReturnStatement(branch) &&
-      !isThrowStatement(branch) &&
-      !(
-        isBlockStatement(branch) &&
-        branch.body.some(
-          (statement) =>
-            isReturnStatement(statement) ||
-            isThrowStatement(statement) ||
-            // Another instance of this rule will check nested if statements.
-            isIfStatement(statement)
-        )
-      ) &&
-      !isIfStatement(branch)
+    (branch): branch is NonNullable<typeof branch> => {
+      if (branch === null) {
+        return false;
+      }
+
+      // Another instance of this rule will check nested if statements.
+      if (isIfStatement(branch)) {
+        return false;
+      }
+
+      if (isReturnStatement(branch)) {
+        return false;
+      }
+
+      if (isThrowStatement(branch)) {
+        return false;
+      }
+
+      if (isExpressionStatement(branch)) {
+        const expressionStatementType = getTypeOfNode(
+          branch.expression,
+          context
+        );
+
+        if (
+          expressionStatementType !== null &&
+          isNeverType(expressionStatementType)
+        ) {
+          return false;
+        }
+      }
+
+      if (isBlockStatement(branch)) {
+        if (
+          branch.body.some(
+            (statement) =>
+              isIfStatement(statement) ||
+              isReturnStatement(statement) ||
+              isThrowStatement(statement)
+          )
+        ) {
+          return false;
+        }
+
+        if (
+          branch.body.some((statement) => {
+            if (isExpressionStatement(statement)) {
+              const expressionStatementType = getTypeOfNode(
+                statement.expression,
+                context
+              );
+              return (
+                expressionStatementType !== null &&
+                isNeverType(expressionStatementType)
+              );
+            }
+            return false;
+          })
+        ) {
+          return false;
+        }
+      }
+
+      return true;
+    }
   );
 
   return violations.flatMap((node) => [
@@ -108,25 +162,73 @@ function getIfBranchViolations(
  * statements are allowed.
  */
 function getSwitchViolations(
-  node: TSESTree.SwitchStatement
+  node: TSESTree.SwitchStatement,
+  context: RuleContext<keyof typeof errorMessages, Options>
 ): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
-  const violations = node.cases.filter(
-    (branch) =>
-      branch.consequent.length !== 0 &&
-      !branch.consequent.some(isReturnStatement) &&
-      !branch.consequent.some(isThrowStatement) &&
-      !(
-        branch.consequent.every(isBlockStatement) &&
-        (
-          branch.consequent[
-            branch.consequent.length - 1
-          ] as TSESTree.BlockStatement
-        ).body.some(
+  const violations = node.cases.filter((branch) => {
+    if (branch.consequent.length === 0) {
+      return false;
+    }
+    if (
+      branch.consequent.some(
+        (statement) =>
+          isReturnStatement(statement) || isThrowStatement(statement)
+      )
+    ) {
+      return false;
+    }
+
+    if (branch.consequent.every(isBlockStatement)) {
+      const lastBlock = branch.consequent[branch.consequent.length - 1];
+
+      if (
+        lastBlock.body.some(
           (statement) =>
             isReturnStatement(statement) || isThrowStatement(statement)
         )
-      )
-  );
+      ) {
+        return false;
+      }
+
+      if (
+        lastBlock.body.some((statement) => {
+          if (isExpressionStatement(statement)) {
+            const expressionStatementType = getTypeOfNode(
+              statement.expression,
+              context
+            );
+            return (
+              expressionStatementType !== null &&
+              isNeverType(expressionStatementType)
+            );
+          }
+          return false;
+        })
+      ) {
+        return false;
+      }
+    }
+
+    if (
+      branch.consequent.some((statement) => {
+        if (isExpressionStatement(statement)) {
+          const expressionStatementType = getTypeOfNode(
+            statement.expression,
+            context
+          );
+          return (
+            expressionStatementType !== null &&
+            isNeverType(expressionStatementType)
+          );
+        }
+        return false;
+      })
+    ) {
+      return false;
+    }
+
+    return true;
+  });
 
   return violations.flatMap((node) => [
     { node, messageId: "incompleteBranch" },
@@ -166,8 +268,8 @@ function checkIfStatement(
       ? options.allowReturningBranches === "ifExhaustive"
         ? isExhaustiveIfViolation(node)
           ? [{ node, messageId: "incompleteIf" }]
-          : getIfBranchViolations(node)
-        : getIfBranchViolations(node)
+          : getIfBranchViolations(node, context)
+        : getIfBranchViolations(node, context)
       : [{ node, messageId: "unexpectedIf" }],
   };
 }
@@ -186,8 +288,8 @@ function checkSwitchStatement(
       ? options.allowReturningBranches === "ifExhaustive"
         ? isExhaustiveSwitchViolation(node)
           ? [{ node, messageId: "incompleteSwitch" }]
-          : getSwitchViolations(node)
-        : getSwitchViolations(node)
+          : getSwitchViolations(node, context)
+        : getSwitchViolations(node, context)
       : [{ node, messageId: "unexpectedSwitch" }],
   };
 }
