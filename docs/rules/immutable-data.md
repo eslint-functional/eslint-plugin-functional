@@ -75,6 +75,16 @@ The default options:
 };
 ```
 
+Note: the `lite` ruleset overrides the default options to:
+
+```ts
+{
+  assumeTypes: true,
+  ignoreClass: "fieldsOnly",
+  ignoreImmediateMutation: true,
+}
+```
+
 ### `assumeTypes`
 
 The rule take advantage of TypeScript's typing engine to check if mutation is taking place.
