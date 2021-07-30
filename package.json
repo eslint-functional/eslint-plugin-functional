@@ -64,7 +64,7 @@
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
-    "@rebeccastevens/eslint-config": "^1.0.10",
+    "@rebeccastevens/eslint-config": "^1.0.12",
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^11.0.0",
