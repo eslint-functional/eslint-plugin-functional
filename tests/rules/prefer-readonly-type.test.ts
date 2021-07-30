@@ -1287,6 +1287,28 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
       },
     ],
   },
+  // Computed properties.
+  {
+    code: dedent`
+      const propertyName = 'myProperty';
+      type Foo = {
+        [propertyName]: string;
+      };`,
+    optionsSet: [[]],
+    output: dedent`
+      const propertyName = 'myProperty';
+      type Foo = {
+        readonly [propertyName]: string;
+      };`,
+    errors: [
+      {
+        messageId: "property",
+        type: "TSPropertySignature",
+        line: 3,
+        column: 3,
+      },
+    ],
+  },
 ];
 
 describeTsOnly("TypeScript", () => {
