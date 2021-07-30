@@ -59,4 +59,4 @@ async function createTestsHelpersTsConfig() {
 }
 
 // Run the script.
-run().catch((error) => void console.error(error));
+void run();
