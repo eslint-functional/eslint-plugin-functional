@@ -264,17 +264,20 @@ Without this rule, function parameters are mutable.
 
 This rule is helpful when converting from an imperative code style to a functional one.
 
-### [@typescript-eslint/explicit-function-return-type](https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/explicit-function-return-type.md)
+### [@typescript-eslint/prefer-readonly](https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/prefer-readonly.md)
 
-For performance reasons, eslint-plugin-functional does not check implicit return types. So for example this function will return a mutable array but will not be detected:
+This rule is helpful when working with classes.
 
-```js
-function foo() {
-  return [1, 2, 3];
-}
-```
+### [@typescript-eslint/prefer-readonly-parameter-types](https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/prefer-readonly-parameter-types.md)
 
-To avoid this situation you can enable `@typescript-eslint/explicit-function-return-type`. Now the above function is forced to declare the return type and the mutability will be detected.
+Functional functions must not modify any data passed into them.
+This rule marks mutable parameters as a violation as they prevent readonly versions of that data from being passed in.
+
+However, due to many 3rd-party libraries only providing mutable versions of their types, often it can not be easy to satisfy this rule. Thus by default we only enable this rule with the "warn" serverity rather than "error".
+
+### [@typescript-eslint/switch-exhaustiveness-check](https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/switch-exhaustiveness-check.md)
+
+Although our [no-conditional-statement](./docs/rules/no-conditional-statement.md) rule also performs this check, this rule has a fixer that will implement the unimplemented cases which can be useful.
 
 ## How to contribute
 
