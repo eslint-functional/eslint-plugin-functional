@@ -114,16 +114,18 @@ function isCallerViolation(
 
       return (
         (declaration !== null &&
+          declaration !== undefined &&
           (isFunctionLike(declaration) || isTSFunctionType(declaration)) &&
           declaration.params.length === caller.arguments.length) ||
         // Check for optional params.
-        (tsDeclaration as FunctionLikeDeclaration).parameters
-          .slice(caller.arguments.length)
-          .every(
-            (param) =>
-              param.initializer !== undefined ||
-              param.questionToken !== undefined
-          )
+        ((tsDeclaration as FunctionLikeDeclaration).parameters !== undefined &&
+          (tsDeclaration as FunctionLikeDeclaration).parameters
+            .slice(caller.arguments.length)
+            .every(
+              (param) =>
+                param.initializer !== undefined ||
+                param.questionToken !== undefined
+            ))
       );
     }
   }
