@@ -145,6 +145,14 @@ const valid: ReadonlyArray<ValidTestCase> = [
       function foo<T>(x: T): T extends Array<number> ? string : number[] {}`,
     optionsSet: [[{ allowMutableReturnType: true }]],
   },
+  // Allow inline mutable return type.
+  {
+    code: dedent`
+      function foo(bar: string): { baz: number } {
+        return 1 as any;
+      }`,
+    optionsSet: [[{ allowMutableReturnType: true }]],
+  },
   // Should not fail on implicit ReadonlyArray type in variable declaration.
   {
     code: dedent`
