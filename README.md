@@ -11,7 +11,7 @@
 [![MIT license](https://img.shields.io/github/license/jonaskello/eslint-plugin-functional.svg?style=flat)](https://opensource.org/licenses/MIT)
 [![GitHub Discussions](https://img.shields.io/github/discussions/jonaskello/eslint-plugin-functional)](https://github.com/jonaskello/eslint-plugin-functional/discussions)
 
-  
+
 An [ESLint](http://eslint.org) plugin to disable mutation and promote functional programming in JavaScript and TypeScript.
 
 </div>
@@ -70,12 +70,14 @@ yarn add -D eslint eslint-plugin-functional
 To use this plugin with TypeScript, a TypeScript parser for ESLint is needed.
 We recommend [@typescript-eslint/parser](https://www.npmjs.com/package/@typescript-eslint/parser).
 
+Additionally, some rules require [tsutils](https://www.npmjs.com/package/tsutils) as a dependency.
+
 ```sh
 # Install with npm
-npm install eslint @typescript-eslint/parser eslint-plugin-functional --save-dev
+npm install eslint @typescript-eslint/parser tsutils eslint-plugin-functional --save-dev
 
 # Install with yarn
-yarn add -D eslint @typescript-eslint/parser eslint-plugin-functional
+yarn add -D eslint @typescript-eslint/parser tsutils eslint-plugin-functional
 ```
 
 ## Usage
