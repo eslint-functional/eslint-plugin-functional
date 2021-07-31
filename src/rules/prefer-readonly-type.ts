@@ -234,24 +234,28 @@ function checkProperty(
     | TSESTree.TSIndexSignature
     | TSESTree.TSParameterProperty
     | TSESTree.TSPropertySignature,
-  context: RuleContext<keyof typeof errorMessages, Options>
+  context: RuleContext<keyof typeof errorMessages, Options>,
+  options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   return {
     context,
-    descriptors: node.readonly
-      ? []
-      : [
-          {
-            node,
-            messageId: "property",
-            fix:
-              isTSIndexSignature(node) || isTSPropertySignature(node)
-                ? (fixer) => fixer.insertTextBefore(node, "readonly ")
-                : isTSParameterProperty(node)
-                ? (fixer) => fixer.insertTextBefore(node.parameter, "readonly ")
-                : (fixer) => fixer.insertTextBefore(node.key, "readonly "),
-          },
-        ],
+    descriptors:
+      !node.readonly &&
+      (!options.allowMutableReturnType || !isInReturnType(node))
+        ? [
+            {
+              node,
+              messageId: "property",
+              fix:
+                isTSIndexSignature(node) || isTSPropertySignature(node)
+                  ? (fixer) => fixer.insertTextBefore(node, "readonly ")
+                  : isTSParameterProperty(node)
+                  ? (fixer) =>
+                      fixer.insertTextBefore(node.parameter, "readonly ")
+                  : (fixer) => fixer.insertTextBefore(node.key, "readonly "),
+            },
+          ]
+        : [],
   };
 }
 
