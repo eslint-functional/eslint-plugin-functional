@@ -31,6 +31,7 @@ import {
   isTSArrayType,
   isTSIndexSignature,
   isTSParameterProperty,
+  isTSPropertySignature,
   isTSTupleType,
   isTSTypeOperator,
 } from "../util/typeguard";
@@ -243,11 +244,12 @@ function checkProperty(
           {
             node,
             messageId: "property",
-            fix: isTSIndexSignature(node)
-              ? (fixer) => fixer.insertTextBefore(node, "readonly ")
-              : isTSParameterProperty(node)
-              ? (fixer) => fixer.insertTextBefore(node.parameter, "readonly ")
-              : (fixer) => fixer.insertTextBefore(node.key, "readonly "),
+            fix:
+              isTSIndexSignature(node) || isTSPropertySignature(node)
+                ? (fixer) => fixer.insertTextBefore(node, "readonly ")
+                : isTSParameterProperty(node)
+                ? (fixer) => fixer.insertTextBefore(node.parameter, "readonly ")
+                : (fixer) => fixer.insertTextBefore(node.key, "readonly "),
           },
         ],
   };
