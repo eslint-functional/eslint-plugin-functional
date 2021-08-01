@@ -49,7 +49,7 @@ The default options:
 {
   allowNull: true,
   allowUndefined: true,
-  ignoreImplicit: true,
+  ignoreImplicit: false,
 }
 ```
 
