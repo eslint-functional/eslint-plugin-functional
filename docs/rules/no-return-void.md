@@ -39,6 +39,7 @@ This rule accepts an options object of the following type:
 {
   allowNull: boolean;
   allowUndefined: boolean;
+  ignoreImplicit: boolean;
 }
 ```
 
@@ -47,7 +48,8 @@ The default options:
 ```ts
 {
   allowNull: true,
-  allowUndefined: true
+  allowUndefined: true,
+  ignoreImplicit: true,
 }
 ```
 
@@ -58,3 +60,7 @@ If true allow returning null.
 ### allowUndefined
 
 If true allow returning undefined.
+
+### ignoreImplicit
+
+If true ignore functions that don't explicitly specify a return type.

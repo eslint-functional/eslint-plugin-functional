@@ -3,14 +3,19 @@ import { JSONSchema4 } from "json-schema";
 
 import {
   createRule,
+  getTypeOfNode,
   RuleContext,
   RuleMetaData,
   RuleResult,
 } from "../util/rule";
 import {
+  isFunctionLike,
+  isNullType,
   isTSNullKeyword,
   isTSUndefinedKeyword,
   isTSVoidKeyword,
+  isUndefinedType,
+  isVoidType,
 } from "../util/typeguard";
 
 // The name of this rule.
@@ -20,6 +25,7 @@ export const name = "no-return-void" as const;
 type Options = {
   readonly allowNull: boolean;
   readonly allowUndefined: boolean;
+  readonly ignoreImplicit: boolean;
 };
 
 // The schema for the rule options.
@@ -33,6 +39,9 @@ const schema: JSONSchema4 = [
       allowUndefined: {
         type: "boolean",
       },
+      ignoreImplicit: {
+        type: "boolean",
+      },
     },
     additionalProperties: false,
   },
@@ -42,6 +51,7 @@ const schema: JSONSchema4 = [
 const defaultOptions: Options = {
   allowNull: true,
   allowUndefined: true,
+  ignoreImplicit: true,
 };
 
 // The possible error messages.
@@ -73,17 +83,40 @@ function checkFunction(
   context: RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
+  if (node.returnType === undefined) {
+    if (!options.ignoreImplicit && isFunctionLike(node)) {
+      const functionType = getTypeOfNode(node, context);
+      const returnType = functionType
+        ?.getCallSignatures()?.[0]
+        ?.getReturnType();
+
+      if (
+        returnType !== undefined &&
+        (isVoidType(returnType) ||
+          (!options.allowNull && isNullType(returnType)) ||
+          (!options.allowUndefined && isUndefinedType(returnType)))
+      ) {
+        return {
+          context,
+          descriptors: [{ node, messageId: "generic" }],
+        };
+      }
+    }
+  } else if (
+    isTSVoidKeyword(node.returnType.typeAnnotation) ||
+    (!options.allowNull && isTSNullKeyword(node.returnType.typeAnnotation)) ||
+    (!options.allowUndefined &&
+      isTSUndefinedKeyword(node.returnType.typeAnnotation))
+  ) {
+    return {
+      context,
+      descriptors: [{ node: node.returnType, messageId: "generic" }],
+    };
+  }
+
   return {
     context,
-    descriptors:
-      node.returnType !== undefined &&
-      (isTSVoidKeyword(node.returnType.typeAnnotation) ||
-        (!options.allowNull &&
-          isTSNullKeyword(node.returnType.typeAnnotation)) ||
-        (!options.allowUndefined &&
-          isTSUndefinedKeyword(node.returnType.typeAnnotation)))
-        ? [{ node: node.returnType, messageId: "generic" }]
-        : [],
+    descriptors: [],
   };
 }
 

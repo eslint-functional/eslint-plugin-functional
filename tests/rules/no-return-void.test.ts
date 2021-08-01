@@ -38,7 +38,11 @@ const valid: ReadonlyArray<ValidTestCase> = [
       function foo(bar) {
         console.log(bar);
       }`,
-    optionsSet: [[], [{ allowNull: false }], [{ allowUndefined: false }]],
+    optionsSet: [
+      [{ ignoreImplicit: true }],
+      [{ ignoreImplicit: true, allowNull: false }],
+      [{ ignoreImplicit: true, allowUndefined: false }],
+    ],
   },
   // Allow null.
   {
@@ -116,13 +120,33 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
       function foo(bar: number): (baz: number) => void {
         return baz => { console.log(bar, baz); }
       }`,
-    optionsSet: [[]],
+    optionsSet: [[{ ignoreImplicit: true }]],
     errors: [
       {
         messageId: "generic",
         type: "TSTypeAnnotation",
         line: 1,
         column: 42,
+      },
+    ],
+  },
+  // Disallow implicit return type.
+  {
+    code: dedent`
+      function foo(bar) {
+        console.log(bar);
+      }`,
+    optionsSet: [
+      [{ ignoreImplicit: false }],
+      [{ ignoreImplicit: false, allowNull: false }],
+      [{ ignoreImplicit: false, allowUndefined: false }],
+    ],
+    errors: [
+      {
+        messageId: "generic",
+        type: "FunctionDeclaration",
+        line: 1,
+        column: 1,
       },
     ],
   },
