@@ -28,10 +28,17 @@
   },
   "ignorePatterns": ["build/", "coverage/", "lib/", "**/*.js"],
   "rules": {
+    "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-unnecessary-condition": "off",
+    "@typescript-eslint/no-unsafe-argument": "off",
+    "@typescript-eslint/no-unsafe-assignment": "off",
+    "@typescript-eslint/no-unsafe-call": "off",
+    "@typescript-eslint/no-unsafe-member-access": "off",
+    "@typescript-eslint/no-unsafe-return": "off",
     "import/no-relative-parent-imports": "error",
     "node/no-unsupported-features/es-builtins": "off",
     "node/no-unsupported-features/es-syntax": "off",
+    "promise/prefer-await-to-callbacks": "off",
     // enable once supported in all our supported node versions.
     "unicorn/prefer-node-protocol": "off"
   },

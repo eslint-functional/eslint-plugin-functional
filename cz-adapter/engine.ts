@@ -49,10 +49,13 @@ function promptUser(cz: CZ, options: Options) {
         longest >= current.length ? longest : current.length,
       0
     ) + 1;
-  const typesChoices = Object.entries(types).map(([key, type]) => ({
-    name: `${`${key}:`.padEnd(typesLength)} ${type.description}`,
-    value: key,
-  }));
+  const typesChoices = Object.entries(types).map(([key, type]) => {
+    const label = `${key}:`.padEnd(typesLength);
+    return {
+      name: `${label} ${type.description}`,
+      value: key,
+    };
+  });
 
   const scopeRulesType = new Set<string>([
     "feat",

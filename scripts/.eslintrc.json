@@ -1,5 +1,6 @@
 {
   "rules": {
+    "functional/no-return-void": "off",
     "node/no-unsupported-features/node-builtins": "off"
   }
 }

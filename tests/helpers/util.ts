@@ -27,7 +27,7 @@ export type InvalidTestCase = Omit<
  */
 export function processInvalidTestCase(
   testCases: ReadonlyArray<InvalidTestCase>
-): Array<ESLintRuleTester.InvalidTestCase> {
+): ESLintRuleTester.InvalidTestCase[] {
   return testCases.flatMap((testCase) =>
     testCase.optionsSet.map((options) => {
       const { optionsSet, ...eslintTestCase } = testCase;
@@ -45,7 +45,7 @@ export function processInvalidTestCase(
  */
 export function processValidTestCase(
   testCases: ReadonlyArray<ValidTestCase>
-): Array<ESLintRuleTester.ValidTestCase> {
+): ESLintRuleTester.ValidTestCase[] {
   // Ideally these two functions should be merged into 1 but I haven't been able
   // to get the typing information right - so for now they are two functions.
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
@@ -86,7 +86,7 @@ export type RuleTesterTests = {
   // eslint-disable-next-line functional/prefer-readonly-type
   valid?: Array<ESLintRuleTester.ValidTestCase | string>;
   // eslint-disable-next-line functional/prefer-readonly-type
-  invalid?: Array<ESLintRuleTester.InvalidTestCase>;
+  invalid?: ESLintRuleTester.InvalidTestCase[];
 };
 
 /**
