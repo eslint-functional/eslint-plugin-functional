@@ -403,3 +403,15 @@ export function isObjectConstructorType(
 export function isNeverType(type: Type): boolean {
   return ts !== undefined && type.flags === ts.TypeFlags.Never;
 }
+
+export function isVoidType(type: Type): boolean {
+  return ts !== undefined && type.flags === ts.TypeFlags.Void;
+}
+
+export function isNullType(type: Type): boolean {
+  return ts !== undefined && type.flags === ts.TypeFlags.Null;
+}
+
+export function isUndefinedType(type: Type): boolean {
+  return ts !== undefined && type.flags === ts.TypeFlags.Undefined;
+}
