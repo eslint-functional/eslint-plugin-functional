@@ -37,8 +37,8 @@ export function testWrapper(
   };
 }
 
-export const testUsing = [...Object.entries(configs)]
-  .map(
+export const testUsing = Object.fromEntries(
+  [...Object.entries(configs)].map(
     ([configName, config]) =>
       [
         configName,
@@ -57,10 +57,4 @@ export const testUsing = [...Object.entries(configs)]
         }) as TestFunction,
       ] as const
   )
-  .reduce(
-    (carry, [configName, fn]) => ({
-      ...carry,
-      [configName]: fn,
-    }),
-    {}
-  ) as Record<keyof typeof configs, TestFunction>;
+) as Record<keyof typeof configs, TestFunction>;

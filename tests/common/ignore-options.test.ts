@@ -1,5 +1,6 @@
-import type { TSESLint, TSESTree } from "@typescript-eslint/experimental-utils";
 import assert from "assert";
+
+import type { TSESLint, TSESTree } from "@typescript-eslint/experimental-utils";
 import test from "ava";
 import dedent from "dedent";
 import RuleTester from "eslint-ava-rule-tester";

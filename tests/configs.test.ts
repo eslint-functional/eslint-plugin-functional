@@ -41,7 +41,7 @@ const configs = new Map([
   [stylistic, "Stylistic"],
 ]);
 
-for (const [config, name] of [...configs.entries()]) {
+for (const [config, name] of configs.entries()) {
   test(`Config "${name}" - should not have any *JS* rules that the all config does not have`, (t) => {
     const rulesNames = Object.keys(config.rules ?? {});
     if (rulesNames.length === 0) {

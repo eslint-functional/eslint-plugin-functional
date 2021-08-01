@@ -267,9 +267,7 @@ function isExhaustiveSwitchViolation(
 ): boolean {
   return (
     // No cases defined.
-    node.cases.length === 0 ||
-      // No default case defined.
-      node.cases.every((c) => c.test !== null)
+    node.cases.every((c) => c.test !== null)
       ? isExhaustiveTypeSwitchViolation(node, context)
       : false
   );

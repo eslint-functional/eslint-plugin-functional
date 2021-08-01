@@ -2,8 +2,9 @@
  * @file Tests the index file.
  */
 
-import test from "ava";
 import { readdirSync } from "fs";
+
+import test from "ava";
 
 import plugin from "~/index";
 
