@@ -46,7 +46,7 @@ const schema: JSONSchema4 = [
 const defaultOptions: Options = {
   allowNull: true,
   allowUndefined: true,
-  ignoreImplicit: true,
+  ignoreImplicit: false,
 };
 
 // The possible error messages.
