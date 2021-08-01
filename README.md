@@ -70,15 +70,15 @@ yarn add -D eslint eslint-plugin-functional
 To use this plugin with TypeScript, a TypeScript parser for ESLint is needed.
 We recommend [@typescript-eslint/parser](https://www.npmjs.com/package/@typescript-eslint/parser).
 
-Additionally, some rules require [tsutils](https://www.npmjs.com/package/tsutils) as a dependency.
-
 ```sh
 # Install with npm
-npm install eslint @typescript-eslint/parser tsutils eslint-plugin-functional --save-dev
+npm install eslint @typescript-eslint/parser eslint-plugin-functional --save-dev
 
 # Install with yarn
-yarn add -D eslint @typescript-eslint/parser tsutils eslint-plugin-functional
+yarn add -D eslint @typescript-eslint/parser eslint-plugin-functional
 ```
+
+[tsutils](https://www.npmjs.com/package/tsutils) is also recommended as a peer dependency but if you are using [@typescript-eslint/eslint-plugin](https://www.npmjs.com/package/@typescript-eslint/eslint-plugin) then you don't need explicitly add it.
 
 ## Usage
 
