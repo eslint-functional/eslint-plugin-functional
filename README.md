@@ -7,6 +7,7 @@
 [![npm version](https://img.shields.io/npm/v/eslint-plugin-functional.svg?style=flat)](https://www.npmjs.com/package/eslint-plugin-functional)
 [![CI](https://github.com/jonaskello/eslint-plugin-functional/actions/workflows/ci.yml/badge.svg)](https://github.com/jonaskello/eslint-plugin-functional/actions/workflows/ci.yml)
 [![Coverage Status](https://codecov.io/gh/jonaskello/eslint-plugin-functional/branch/master/graph/badge.svg)](https://codecov.io/gh/jonaskello/eslint-plugin-functional)
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=flat)](https://github.com/semantic-release/semantic-release)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat)](https://github.com/prettier/prettier)
 [![MIT license](https://img.shields.io/github/license/jonaskello/eslint-plugin-functional.svg?style=flat)](https://opensource.org/licenses/MIT)
 [![GitHub Discussions](https://img.shields.io/github/discussions/jonaskello/eslint-plugin-functional)](https://github.com/jonaskello/eslint-plugin-functional/discussions)
@@ -296,13 +297,9 @@ In order to know which AST nodes are created for a snippet of TypeScript code yo
 > tl;dr: use `npx cz` instead of `git commit`.
 Commit messages must follow [Conventional Commit messages guidelines](https://www.conventionalcommits.org/en/v1.0.0/). You can use `npx cz` instead of `git commit` to run a interactive prompt to generate the commit message. We've customize the prompt specifically for this project. For more information see [commitizen](https://github.com/commitizen/cz-cli#readme).
 
-## How to publish
+### How to publish
 
-```
-yarn version --patch
-yarn version --minor
-yarn version --major
-```
+Publishing is handled by [semantic release](https://github.com/semantic-release/semantic-release#readme) - there shouldn't be any need to publish manually.
 
 ## Prior work
 

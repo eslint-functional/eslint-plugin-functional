@@ -128,3 +128,6 @@ labels:
   - name: ":blue_heart:"
     color: ffffff
     description: "Dependabot"
+  - name: "Status: Released"
+    color: c2e0c6
+    description: "It's now live."
