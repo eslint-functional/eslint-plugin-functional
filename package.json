@@ -63,6 +63,8 @@
     "escape-string-regexp": "^4.0.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^13.1.0",
+    "@commitlint/config-conventional": "^13.1.0",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@rebeccastevens/eslint-config": "^1.0.12",
     "@rollup/plugin-commonjs": "^17.0.0",
