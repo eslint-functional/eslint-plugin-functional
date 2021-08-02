@@ -23,10 +23,10 @@
   ],
   "parserOptions": {
     "ecmaVersion": 10,
-    "project": ["./tsconfig.json", "./tests/tsconfig.json"],
+    "project": ["./tsconfig.json", "./tests/tsconfig.json", "./cz-adapter/tsconfig.json"],
     "sourceType": "module"
   },
-  "ignorePatterns": ["build/", "coverage/", "lib/"],
+  "ignorePatterns": ["build/", "coverage/", "lib/", "**/*.js"],
   "rules": {
     "@typescript-eslint/no-unnecessary-condition": "off",
     "import/no-relative-parent-imports": "error",

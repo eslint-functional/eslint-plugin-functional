@@ -1,0 +1,17 @@
+{
+  "rules": {
+    "functional/no-let": ["error", {
+      "ignorePattern": "^mutable.+"
+    }],
+    "functional/no-return-void": "off",
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": true,
+        "peerDependencies": true
+      }
+    ],
+    "node/no-unsupported-features/node-builtins": "off",
+    "unicorn/prefer-module": "off"
+  }
+}
