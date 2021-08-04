@@ -22,6 +22,7 @@ const config: Linter.Config = {
         "functional/no-method-signature": "error",
         "functional/no-mixed-type": "error",
         "functional/prefer-readonly-type": "error",
+        "functional/prefer-readonly-type-alias": "error",
         "functional/prefer-tacit": ["error", { assumeTypes: false }],
         "functional/no-return-void": "error",
       },
