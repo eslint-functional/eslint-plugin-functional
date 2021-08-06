@@ -3,6 +3,14 @@ import type { JSONSchema4 } from "json-schema";
 
 import type { RuleContext, RuleMetaData, RuleResult } from "~/util/rule";
 import { createRule, isReadonly } from "~/util/rule";
+import { getParentTypeAliasDeclaration } from "~/util/tree";
+import {
+  isIdentifier,
+  isTSArrayType,
+  isTSParameterProperty,
+  isTSTupleType,
+  isTSTypeOperator,
+} from "~/util/typeguard";
 
 // The name of this rule.
 export const name = "prefer-readonly-type-alias" as const;
@@ -87,12 +95,17 @@ const defaultOptions: Options = {
 
 // The possible error messages.
 const errorMessages = {
-  mutable: "Mutable types should not be fully readonly.",
-  readonly: "Readonly types should not be mutable at all.",
-  mutableReadonly:
+  typeAliasShouldBeMutable: "Mutable types should not be fully readonly.",
+  typeAliasShouldBeReadonly: "Readonly types should not be mutable at all.",
+  typeAliasErrorMutableReadonly:
     "Configuration error - this type must be marked as both readonly and mutable.",
-  needsExplicitMarking:
+  typeAliasNeedsExplicitMarking:
     "Type must be explicity marked as either readonly or mutable.",
+  propertyShouldBeReadonly:
+    "A readonly modifier is required for this property.",
+  typeShouldBeReadonly: "Type should be readonly.",
+  tupleShouldBeReadonly: "Tuple should be readonly.",
+  arrayShouldBeReadonly: "Array should be readonly.",
 } as const;
 
 // The meta data for this rule.
@@ -108,14 +121,56 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
   schema,
 };
 
+const mutableToImmutableTypes: ReadonlyMap<string, string> = new Map<
+  string,
+  string
+>([
+  ["Array", "ReadonlyArray"],
+  ["Map", "ReadonlyMap"],
+  ["Set", "ReadonlySet"],
+]);
+
+enum TypeAliasDeclarationDetails {
+  ERROR_MUTABLE_READONLY,
+  NEEDS_EXPLICIT_MARKING,
+  IGNORE,
+  MUTABLE_OK,
+  MUTABLE_NOT_OK,
+  READONLY_OK,
+  READONLY_NOT_OK,
+}
+
+const cachedTypeAliasDeclarationsDetails = new WeakMap<
+  TSESTree.TSTypeAliasDeclaration,
+  TypeAliasDeclarationDetails
+>();
+
 /**
- * Check if the given TypeReference violates this rule.
+ * Get the details for the given type alias.
  */
-function checkTypeAliasDeclaration(
+function getTypeAliasDeclarationDetails(
   node: TSESTree.TSTypeAliasDeclaration,
   context: RuleContext<keyof typeof errorMessages, Options>,
   options: Options
-): RuleResult<keyof typeof errorMessages, Options> {
+): TypeAliasDeclarationDetails {
+  const cached = cachedTypeAliasDeclarationsDetails.get(node);
+  if (cached !== undefined) {
+    return cached;
+  }
+
+  const result = getTypeAliasDeclarationDetailsInternal(node, context, options);
+  cachedTypeAliasDeclarationsDetails.set(node, result);
+  return result;
+}
+
+/**
+ * Get the details for the given type alias.
+ */
+function getTypeAliasDeclarationDetailsInternal(
+  node: TSESTree.TSTypeAliasDeclaration,
+  context: RuleContext<keyof typeof errorMessages, Options>,
+  options: Options
+): TypeAliasDeclarationDetails {
   const blacklistPatterns = (
     Array.isArray(options.blacklist) ? options.blacklist : [options.blacklist]
   ).map((pattern) => new RegExp(pattern, "u"));
@@ -125,10 +180,7 @@ function checkTypeAliasDeclaration(
   );
 
   if (blacklisted) {
-    return {
-      context,
-      descriptors: [],
-    };
+    return TypeAliasDeclarationDetails.IGNORE;
   }
 
   const mustBeReadonlyPatterns = (
@@ -151,15 +203,7 @@ function checkTypeAliasDeclaration(
   );
 
   if (patternStatesReadonly && patternStatesMutable) {
-    return {
-      context,
-      descriptors: [
-        {
-          node: node.id,
-          messageId: "mutableReadonly",
-        },
-      ],
-    };
+    return TypeAliasDeclarationDetails.ERROR_MUTABLE_READONLY;
   }
 
   if (
@@ -168,15 +212,7 @@ function checkTypeAliasDeclaration(
     options.mustBeReadonly.requireOthersToBeMutable &&
     options.mustBeMutable.requireOthersToBeReadonly
   ) {
-    return {
-      context,
-      descriptors: [
-        {
-          node: node.id,
-          messageId: "needsExplicitMarking",
-        },
-      ],
-    };
+    return TypeAliasDeclarationDetails.NEEDS_EXPLICIT_MARKING;
   }
 
   const requiredReadonlyness =
@@ -189,52 +225,291 @@ function checkTypeAliasDeclaration(
       ? RequiredReadonlyness.MUTABLE
       : RequiredReadonlyness.EITHER;
 
-  return checkRequiredReadonlyness(
-    node,
-    context,
-    options,
-    requiredReadonlyness
-  );
+  if (requiredReadonlyness === RequiredReadonlyness.EITHER) {
+    return TypeAliasDeclarationDetails.IGNORE;
+  }
+
+  const readonly = isReadonly(node.typeAnnotation, context);
+
+  if (requiredReadonlyness === RequiredReadonlyness.MUTABLE) {
+    return readonly
+      ? TypeAliasDeclarationDetails.MUTABLE_NOT_OK
+      : TypeAliasDeclarationDetails.MUTABLE_OK;
+  }
+
+  return readonly
+    ? TypeAliasDeclarationDetails.READONLY_OK
+    : TypeAliasDeclarationDetails.READONLY_NOT_OK;
 }
 
-function checkRequiredReadonlyness(
+/**
+ * Check if the given TypeReference violates this rule.
+ */
+function checkTypeAliasDeclaration(
   node: TSESTree.TSTypeAliasDeclaration,
   context: RuleContext<keyof typeof errorMessages, Options>,
-  options: Options,
-  requiredReadonlyness: RequiredReadonlyness
+  options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
-  if (requiredReadonlyness !== RequiredReadonlyness.EITHER) {
-    const readonly = isReadonly(node.typeAnnotation, context);
+  const details = getTypeAliasDeclarationDetails(node, context, options);
 
-    if (readonly && requiredReadonlyness === RequiredReadonlyness.MUTABLE) {
+  switch (details) {
+    case TypeAliasDeclarationDetails.NEEDS_EXPLICIT_MARKING: {
       return {
         context,
         descriptors: [
           {
             node: node.id,
-            messageId: "readonly",
+            messageId: "typeAliasNeedsExplicitMarking",
           },
         ],
       };
     }
-
-    if (!readonly && requiredReadonlyness === RequiredReadonlyness.READONLY) {
+    case TypeAliasDeclarationDetails.ERROR_MUTABLE_READONLY: {
       return {
         context,
         descriptors: [
           {
             node: node.id,
-            messageId: "mutable",
+            messageId: "typeAliasErrorMutableReadonly",
           },
         ],
+      };
+    }
+    case TypeAliasDeclarationDetails.MUTABLE_NOT_OK: {
+      return {
+        context,
+        descriptors: [
+          {
+            node: node.id,
+            messageId: "typeAliasShouldBeMutable",
+          },
+        ],
+      };
+    }
+    case TypeAliasDeclarationDetails.READONLY_NOT_OK: {
+      return {
+        context,
+        descriptors: [
+          {
+            node: node.id,
+            messageId: "typeAliasShouldBeReadonly",
+          },
+        ],
+      };
+    }
+    default: {
+      return {
+        context,
+        descriptors: [],
       };
     }
   }
+}
 
-  return {
-    context,
-    descriptors: [],
-  };
+/**
+ * Check if the given ArrayType or TupleType violates this rule.
+ */
+function checkArrayOrTupleType(
+  node: TSESTree.TSArrayType | TSESTree.TSTupleType,
+  context: RuleContext<keyof typeof errorMessages, Options>,
+  options: Options
+): RuleResult<keyof typeof errorMessages, Options> {
+  const typeAlias = getParentTypeAliasDeclaration(node);
+
+  if (typeAlias === null) {
+    return {
+      context,
+      descriptors: [],
+    };
+  }
+
+  const details = getTypeAliasDeclarationDetails(typeAlias, context, options);
+
+  switch (details) {
+    case TypeAliasDeclarationDetails.READONLY_NOT_OK: {
+      return {
+        context,
+        descriptors:
+          node.parent === undefined ||
+          !isTSTypeOperator(node.parent) ||
+          node.parent.operator !== "readonly"
+            ? [
+                {
+                  node,
+                  messageId: isTSTupleType(node)
+                    ? "tupleShouldBeReadonly"
+                    : "arrayShouldBeReadonly",
+                  fix:
+                    node.parent !== undefined && isTSArrayType(node.parent)
+                      ? (fixer) => [
+                          fixer.insertTextBefore(node, "(readonly "),
+                          fixer.insertTextAfter(node, ")"),
+                        ]
+                      : (fixer) => fixer.insertTextBefore(node, "readonly "),
+                },
+              ]
+            : [],
+      };
+    }
+    default: {
+      return {
+        context,
+        descriptors: [],
+      };
+    }
+  }
+}
+
+/**
+ * Check if the given TSMappedType violates this rule.
+ */
+function checkMappedType(
+  node: TSESTree.TSMappedType,
+  context: RuleContext<keyof typeof errorMessages, Options>,
+  options: Options
+): RuleResult<keyof typeof errorMessages, Options> {
+  const typeAlias = getParentTypeAliasDeclaration(node);
+
+  if (typeAlias === null) {
+    return {
+      context,
+      descriptors: [],
+    };
+  }
+
+  const details = getTypeAliasDeclarationDetails(typeAlias, context, options);
+
+  switch (details) {
+    case TypeAliasDeclarationDetails.READONLY_NOT_OK: {
+      return {
+        context,
+        descriptors:
+          node.readonly === true || node.readonly === "+"
+            ? []
+            : [
+                {
+                  node,
+                  messageId: "propertyShouldBeReadonly",
+                  fix: (fixer) =>
+                    fixer.insertTextBeforeRange(
+                      [node.range[0] + 1, node.range[1]],
+                      " readonly"
+                    ),
+                },
+              ],
+      };
+    }
+    default: {
+      return {
+        context,
+        descriptors: [],
+      };
+    }
+  }
+}
+
+/**
+ * Check if the given TypeReference violates this rule.
+ */
+function checkTypeReference(
+  node: TSESTree.TSTypeReference,
+  context: RuleContext<keyof typeof errorMessages, Options>,
+  options: Options
+): RuleResult<keyof typeof errorMessages, Options> {
+  if (!isIdentifier(node.typeName)) {
+    return {
+      context,
+      descriptors: [],
+    };
+  }
+
+  const typeAlias = getParentTypeAliasDeclaration(node);
+
+  if (typeAlias === null) {
+    return {
+      context,
+      descriptors: [],
+    };
+  }
+
+  const details = getTypeAliasDeclarationDetails(typeAlias, context, options);
+
+  switch (details) {
+    case TypeAliasDeclarationDetails.READONLY_NOT_OK: {
+      const immutableType = mutableToImmutableTypes.get(node.typeName.name);
+
+      return {
+        context,
+        descriptors:
+          immutableType === undefined || immutableType.length === 0
+            ? []
+            : [
+                {
+                  node,
+                  messageId: "typeShouldBeReadonly",
+                  fix: (fixer) =>
+                    fixer.replaceText(node.typeName, immutableType),
+                },
+              ],
+      };
+    }
+    default: {
+      return {
+        context,
+        descriptors: [],
+      };
+    }
+  }
+}
+
+/**
+ * Check if the given property/signature node violates this rule.
+ */
+function checkProperty(
+  node:
+    | TSESTree.TSIndexSignature
+    | TSESTree.TSParameterProperty
+    | TSESTree.TSPropertySignature,
+  context: RuleContext<keyof typeof errorMessages, Options>,
+  options: Options
+): RuleResult<keyof typeof errorMessages, Options> {
+  const typeAlias = getParentTypeAliasDeclaration(node);
+
+  if (typeAlias === null) {
+    return {
+      context,
+      descriptors: [],
+    };
+  }
+
+  const details = getTypeAliasDeclarationDetails(typeAlias, context, options);
+
+  switch (details) {
+    case TypeAliasDeclarationDetails.READONLY_NOT_OK: {
+      return {
+        context,
+        descriptors:
+          node.readonly !== true
+            ? [
+                {
+                  node,
+                  messageId: "propertyShouldBeReadonly",
+                  fix: isTSParameterProperty(node)
+                    ? (fixer) =>
+                        fixer.insertTextBefore(node.parameter, "readonly ")
+                    : (fixer) => fixer.insertTextBefore(node, "readonly "),
+                },
+              ]
+            : [],
+      };
+    }
+    default: {
+      return {
+        context,
+        descriptors: [],
+      };
+    }
+  }
 }
 
 // Create the rule.
@@ -243,6 +518,13 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   meta,
   defaultOptions,
   {
+    TSArrayType: checkArrayOrTupleType,
+    TSIndexSignature: checkProperty,
+    TSMappedType: checkMappedType,
+    TSParameterProperty: checkProperty,
+    TSPropertySignature: checkProperty,
+    TSTupleType: checkArrayOrTupleType,
     TSTypeAliasDeclaration: checkTypeAliasDeclaration,
+    TSTypeReference: checkTypeReference,
   }
 );

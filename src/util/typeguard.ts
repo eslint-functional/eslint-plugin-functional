@@ -210,6 +210,12 @@ export function isTSInterfaceBody(
   return node.type === AST_NODE_TYPES.TSInterfaceBody;
 }
 
+export function isTSTypeAliasDeclaration(
+  node: TSESTree.Node
+): node is TSESTree.TSTypeAliasDeclaration {
+  return node.type === AST_NODE_TYPES.TSTypeAliasDeclaration;
+}
+
 export function isTSNullKeyword(
   node: TSESTree.Node
 ): node is TSESTree.TSNullKeyword {

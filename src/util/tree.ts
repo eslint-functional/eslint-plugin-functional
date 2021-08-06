@@ -10,6 +10,7 @@ import {
   isMethodDefinition,
   isProperty,
   isTSInterfaceBody,
+  isTSTypeAliasDeclaration,
 } from "./typeguard";
 
 /**
@@ -79,6 +80,22 @@ export function isInReturnType(node: TSESTree.Node): boolean {
       node
     ) !== null
   );
+}
+
+/**
+ * Is the given node in a type alias.
+ */
+export function getParentTypeAliasDeclaration(
+  node: TSESTree.Node
+): TSESTree.TSTypeAliasDeclaration | null {
+  return (getAncestorOfType(
+    (n): n is TSESTree.Node =>
+      n.parent !== undefined &&
+      n.parent !== null &&
+      isTSTypeAliasDeclaration(n.parent) &&
+      n.parent.typeAnnotation === n,
+    node
+  )?.parent ?? null) as TSESTree.TSTypeAliasDeclaration | null;
 }
 
 /**
