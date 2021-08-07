@@ -10,13 +10,12 @@ import {
   isMethodDefinition,
   isProperty,
   isTSInterfaceBody,
-  isTSTypeAliasDeclaration,
 } from "./typeguard";
 
 /**
  * Return the first ancestor that meets the given check criteria.
  */
-function getAncestorOfType<T extends TSESTree.Node>(
+export function getAncestorOfType<T extends TSESTree.Node>(
   checker: (node: TSESTree.Node, child: TSESTree.Node | null) => node is T,
   node: TSESTree.Node,
   child: TSESTree.Node | null = null
@@ -80,22 +79,6 @@ export function isInReturnType(node: TSESTree.Node): boolean {
       node
     ) !== null
   );
-}
-
-/**
- * Is the given node in a type alias.
- */
-export function getParentTypeAliasDeclaration(
-  node: TSESTree.Node
-): TSESTree.TSTypeAliasDeclaration | null {
-  return (getAncestorOfType(
-    (n): n is TSESTree.Node =>
-      n.parent !== undefined &&
-      n.parent !== null &&
-      isTSTypeAliasDeclaration(n.parent) &&
-      n.parent.typeAnnotation === n,
-    node
-  )?.parent ?? null) as TSESTree.TSTypeAliasDeclaration | null;
 }
 
 /**

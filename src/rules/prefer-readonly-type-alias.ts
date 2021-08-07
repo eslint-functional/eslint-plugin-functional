@@ -3,12 +3,15 @@ import type { JSONSchema4 } from "json-schema";
 
 import type { RuleContext, RuleMetaData, RuleResult } from "~/util/rule";
 import { createRule, isReadonly } from "~/util/rule";
-import { getParentTypeAliasDeclaration } from "~/util/tree";
+import { getAncestorOfType } from "~/util/tree";
 import {
   isIdentifier,
   isTSArrayType,
+  isTSIndexSignature,
+  isTSInterfaceDeclaration,
   isTSParameterProperty,
   isTSTupleType,
+  isTSTypeAliasDeclaration,
   isTSTypeOperator,
 } from "~/util/typeguard";
 
@@ -32,6 +35,7 @@ type Options = {
     readonly requireOthersToBeReadonly: boolean;
   };
   readonly blacklist: ReadonlyArray<string>;
+  readonly ignoreInterface: boolean;
 };
 
 // The schema for the rule options.
@@ -75,6 +79,9 @@ const schema: JSONSchema4 = [
           type: "string",
         },
       },
+      ignoreInterface: {
+        type: "boolean",
+      },
     },
     additionalProperties: false,
   },
@@ -83,14 +90,15 @@ const schema: JSONSchema4 = [
 // The default options for the rule.
 const defaultOptions: Options = {
   mustBeReadonly: {
-    pattern: "^Readonly",
+    pattern: "^(I?)Readonly",
     requireOthersToBeMutable: false,
   },
   mustBeMutable: {
-    pattern: "^Mutable",
+    pattern: "^(I?)Mutable",
     requireOthersToBeReadonly: true,
   },
   blacklist: ["^Mutable$"],
+  ignoreInterface: false,
 };
 
 // The possible error messages.
@@ -130,7 +138,7 @@ const mutableToImmutableTypes: ReadonlyMap<string, string> = new Map<
   ["Set", "ReadonlySet"],
 ]);
 
-enum TypeAliasDeclarationDetails {
+enum TypeReadonlynessDetails {
   ERROR_MUTABLE_READONLY,
   NEEDS_EXPLICIT_MARKING,
   IGNORE,
@@ -140,26 +148,40 @@ enum TypeAliasDeclarationDetails {
   READONLY_NOT_OK,
 }
 
-const cachedTypeAliasDeclarationsDetails = new WeakMap<
-  TSESTree.TSTypeAliasDeclaration,
-  TypeAliasDeclarationDetails
+const cachedDetails = new WeakMap<
+  TSESTree.TSInterfaceDeclaration | TSESTree.TSTypeAliasDeclaration,
+  TypeReadonlynessDetails
 >();
 
 /**
  * Get the details for the given type alias.
  */
 function getTypeAliasDeclarationDetails(
-  node: TSESTree.TSTypeAliasDeclaration,
+  node: TSESTree.Node,
   context: RuleContext<keyof typeof errorMessages, Options>,
   options: Options
-): TypeAliasDeclarationDetails {
-  const cached = cachedTypeAliasDeclarationsDetails.get(node);
+): TypeReadonlynessDetails {
+  const typeDeclaration = getTypeDeclaration(node);
+  if (typeDeclaration === null) {
+    return TypeReadonlynessDetails.IGNORE;
+  }
+
+  const indexSignature = getParentIndexSignature(node);
+  if (indexSignature !== null && getTypeDeclaration(indexSignature) !== null) {
+    return TypeReadonlynessDetails.IGNORE;
+  }
+
+  const cached = cachedDetails.get(typeDeclaration);
   if (cached !== undefined) {
     return cached;
   }
 
-  const result = getTypeAliasDeclarationDetailsInternal(node, context, options);
-  cachedTypeAliasDeclarationsDetails.set(node, result);
+  const result = getTypeAliasDeclarationDetailsInternal(
+    typeDeclaration,
+    context,
+    options
+  );
+  cachedDetails.set(typeDeclaration, result);
   return result;
 }
 
@@ -167,10 +189,10 @@ function getTypeAliasDeclarationDetails(
  * Get the details for the given type alias.
  */
 function getTypeAliasDeclarationDetailsInternal(
-  node: TSESTree.TSTypeAliasDeclaration,
+  node: TSESTree.TSInterfaceDeclaration | TSESTree.TSTypeAliasDeclaration,
   context: RuleContext<keyof typeof errorMessages, Options>,
   options: Options
-): TypeAliasDeclarationDetails {
+): TypeReadonlynessDetails {
   const blacklistPatterns = (
     Array.isArray(options.blacklist) ? options.blacklist : [options.blacklist]
   ).map((pattern) => new RegExp(pattern, "u"));
@@ -180,7 +202,7 @@ function getTypeAliasDeclarationDetailsInternal(
   );
 
   if (blacklisted) {
-    return TypeAliasDeclarationDetails.IGNORE;
+    return TypeReadonlynessDetails.IGNORE;
   }
 
   const mustBeReadonlyPatterns = (
@@ -203,7 +225,7 @@ function getTypeAliasDeclarationDetailsInternal(
   );
 
   if (patternStatesReadonly && patternStatesMutable) {
-    return TypeAliasDeclarationDetails.ERROR_MUTABLE_READONLY;
+    return TypeReadonlynessDetails.ERROR_MUTABLE_READONLY;
   }
 
   if (
@@ -212,7 +234,7 @@ function getTypeAliasDeclarationDetailsInternal(
     options.mustBeReadonly.requireOthersToBeMutable &&
     options.mustBeMutable.requireOthersToBeReadonly
   ) {
-    return TypeAliasDeclarationDetails.NEEDS_EXPLICIT_MARKING;
+    return TypeReadonlynessDetails.NEEDS_EXPLICIT_MARKING;
   }
 
   const requiredReadonlyness =
@@ -226,34 +248,44 @@ function getTypeAliasDeclarationDetailsInternal(
       : RequiredReadonlyness.EITHER;
 
   if (requiredReadonlyness === RequiredReadonlyness.EITHER) {
-    return TypeAliasDeclarationDetails.IGNORE;
+    return TypeReadonlynessDetails.IGNORE;
   }
 
-  const readonly = isReadonly(node.typeAnnotation, context);
+  const readonly = isReadonly(
+    isTSTypeAliasDeclaration(node) ? node.typeAnnotation : node.body,
+    context
+  );
 
   if (requiredReadonlyness === RequiredReadonlyness.MUTABLE) {
     return readonly
-      ? TypeAliasDeclarationDetails.MUTABLE_NOT_OK
-      : TypeAliasDeclarationDetails.MUTABLE_OK;
+      ? TypeReadonlynessDetails.MUTABLE_NOT_OK
+      : TypeReadonlynessDetails.MUTABLE_OK;
   }
 
   return readonly
-    ? TypeAliasDeclarationDetails.READONLY_OK
-    : TypeAliasDeclarationDetails.READONLY_NOT_OK;
+    ? TypeReadonlynessDetails.READONLY_OK
+    : TypeReadonlynessDetails.READONLY_NOT_OK;
 }
 
 /**
  * Check if the given TypeReference violates this rule.
  */
 function checkTypeAliasDeclaration(
-  node: TSESTree.TSTypeAliasDeclaration,
+  node: TSESTree.TSInterfaceDeclaration | TSESTree.TSTypeAliasDeclaration,
   context: RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
+  if (options.ignoreInterface && isTSInterfaceDeclaration(node)) {
+    return {
+      context,
+      descriptors: [],
+    };
+  }
+
   const details = getTypeAliasDeclarationDetails(node, context, options);
 
   switch (details) {
-    case TypeAliasDeclarationDetails.NEEDS_EXPLICIT_MARKING: {
+    case TypeReadonlynessDetails.NEEDS_EXPLICIT_MARKING: {
       return {
         context,
         descriptors: [
@@ -264,7 +296,7 @@ function checkTypeAliasDeclaration(
         ],
       };
     }
-    case TypeAliasDeclarationDetails.ERROR_MUTABLE_READONLY: {
+    case TypeReadonlynessDetails.ERROR_MUTABLE_READONLY: {
       return {
         context,
         descriptors: [
@@ -275,7 +307,7 @@ function checkTypeAliasDeclaration(
         ],
       };
     }
-    case TypeAliasDeclarationDetails.MUTABLE_NOT_OK: {
+    case TypeReadonlynessDetails.MUTABLE_NOT_OK: {
       return {
         context,
         descriptors: [
@@ -286,7 +318,7 @@ function checkTypeAliasDeclaration(
         ],
       };
     }
-    case TypeAliasDeclarationDetails.READONLY_NOT_OK: {
+    case TypeReadonlynessDetails.READONLY_NOT_OK: {
       return {
         context,
         descriptors: [
@@ -314,19 +346,10 @@ function checkArrayOrTupleType(
   context: RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
-  const typeAlias = getParentTypeAliasDeclaration(node);
-
-  if (typeAlias === null) {
-    return {
-      context,
-      descriptors: [],
-    };
-  }
-
-  const details = getTypeAliasDeclarationDetails(typeAlias, context, options);
+  const details = getTypeAliasDeclarationDetails(node, context, options);
 
   switch (details) {
-    case TypeAliasDeclarationDetails.READONLY_NOT_OK: {
+    case TypeReadonlynessDetails.READONLY_NOT_OK: {
       return {
         context,
         descriptors:
@@ -368,19 +391,10 @@ function checkMappedType(
   context: RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
-  const typeAlias = getParentTypeAliasDeclaration(node);
-
-  if (typeAlias === null) {
-    return {
-      context,
-      descriptors: [],
-    };
-  }
-
-  const details = getTypeAliasDeclarationDetails(typeAlias, context, options);
+  const details = getTypeAliasDeclarationDetails(node, context, options);
 
   switch (details) {
-    case TypeAliasDeclarationDetails.READONLY_NOT_OK: {
+    case TypeReadonlynessDetails.READONLY_NOT_OK: {
       return {
         context,
         descriptors:
@@ -423,19 +437,10 @@ function checkTypeReference(
     };
   }
 
-  const typeAlias = getParentTypeAliasDeclaration(node);
-
-  if (typeAlias === null) {
-    return {
-      context,
-      descriptors: [],
-    };
-  }
-
-  const details = getTypeAliasDeclarationDetails(typeAlias, context, options);
+  const details = getTypeAliasDeclarationDetails(node, context, options);
 
   switch (details) {
-    case TypeAliasDeclarationDetails.READONLY_NOT_OK: {
+    case TypeReadonlynessDetails.READONLY_NOT_OK: {
       const immutableType = mutableToImmutableTypes.get(node.typeName.name);
 
       return {
@@ -473,19 +478,10 @@ function checkProperty(
   context: RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
-  const typeAlias = getParentTypeAliasDeclaration(node);
-
-  if (typeAlias === null) {
-    return {
-      context,
-      descriptors: [],
-    };
-  }
-
-  const details = getTypeAliasDeclarationDetails(typeAlias, context, options);
+  const details = getTypeAliasDeclarationDetails(node, context, options);
 
   switch (details) {
-    case TypeAliasDeclarationDetails.READONLY_NOT_OK: {
+    case TypeReadonlynessDetails.READONLY_NOT_OK: {
       return {
         context,
         descriptors:
@@ -512,6 +508,45 @@ function checkProperty(
   }
 }
 
+/**
+ * Get the type alias or interface that the given node is in.
+ */
+function getTypeDeclaration(
+  node: TSESTree.Node
+): TSESTree.TSInterfaceDeclaration | TSESTree.TSTypeAliasDeclaration | null {
+  if (isTSTypeAliasDeclaration(node) || isTSInterfaceDeclaration(node)) {
+    return node;
+  }
+
+  return (getAncestorOfType(
+    (n): n is TSESTree.Node =>
+      n.parent !== undefined &&
+      n.parent !== null &&
+      ((isTSTypeAliasDeclaration(n.parent) && n.parent.typeAnnotation === n) ||
+        (isTSInterfaceDeclaration(n.parent) && n.parent.body === n)),
+    node
+  )?.parent ?? null) as
+    | TSESTree.TSInterfaceDeclaration
+    | TSESTree.TSTypeAliasDeclaration
+    | null;
+}
+
+/**
+ * Get the parent Index Signature that the given node is in.
+ */
+function getParentIndexSignature(
+  node: TSESTree.Node
+): TSESTree.TSIndexSignature | null {
+  return (getAncestorOfType(
+    (n): n is TSESTree.Node =>
+      n.parent !== undefined &&
+      n.parent !== null &&
+      isTSIndexSignature(n.parent) &&
+      n.parent.typeAnnotation === n,
+    node
+  )?.parent ?? null) as TSESTree.TSIndexSignature | null;
+}
+
 // Create the rule.
 export const rule = createRule<keyof typeof errorMessages, Options>(
   name,
@@ -520,6 +555,7 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   {
     TSArrayType: checkArrayOrTupleType,
     TSIndexSignature: checkProperty,
+    TSInterfaceDeclaration: checkTypeAliasDeclaration,
     TSMappedType: checkMappedType,
     TSParameterProperty: checkProperty,
     TSPropertySignature: checkProperty,

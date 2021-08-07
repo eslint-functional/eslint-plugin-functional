@@ -137,7 +137,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         readonly [key: string]: string
       }
       type MyType2 = {
-        readonly [key: string]: { readonly prop: string }
+        readonly [key: string]: { prop: string }
       }`,
     errors: [
       {
@@ -163,12 +163,6 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         type: "TSIndexSignature",
         line: 5,
         column: 3,
-      },
-      {
-        messageId: "propertyShouldBeReadonly",
-        type: "TSPropertySignature",
-        line: 5,
-        column: 20,
       },
     ],
   },
@@ -385,6 +379,232 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         type: "TSTypeReference",
         line: 1,
         column: 23,
+      },
+    ],
+  },
+  // Tuples.
+  {
+    code: dedent`
+      type MyType = [number, string];`,
+    optionsSet: [[]],
+    output: dedent`
+      type MyType = readonly [number, string];`,
+    errors: [
+      {
+        messageId: "typeAliasShouldBeReadonly",
+        type: "Identifier",
+        line: 1,
+        column: 6,
+      },
+      {
+        messageId: "tupleShouldBeReadonly",
+        type: "TSTupleType",
+        line: 1,
+        column: 15,
+      },
+    ],
+  },
+  // Should fail on Array type in interface.
+  {
+    code: dedent`
+      interface Foo {
+        readonly bar: Array<string>
+      }`,
+    optionsSet: [[]],
+    output: dedent`
+      interface Foo {
+        readonly bar: ReadonlyArray<string>
+      }`,
+    errors: [
+      {
+        messageId: "typeAliasShouldBeReadonly",
+        type: "Identifier",
+        line: 1,
+        column: 11,
+      },
+      {
+        messageId: "typeShouldBeReadonly",
+        type: "TSTypeReference",
+        line: 2,
+        column: 17,
+      },
+    ],
+  },
+  // Should fail on mutable index signature but not on index signature internals.
+  // https://github.com/typescript-eslint/typescript-eslint/issues/3714
+  {
+    code: dedent`
+      interface Foo {
+        [key: string]: {
+          readonly groups: Array<string>
+        }
+      }`,
+    optionsSet: [[]],
+    output: dedent`
+      interface Foo {
+        readonly [key: string]: {
+          readonly groups: Array<string>
+        }
+      }`,
+    errors: [
+      {
+        messageId: "typeAliasShouldBeReadonly",
+        type: "Identifier",
+        line: 1,
+        column: 11,
+      },
+      {
+        messageId: "propertyShouldBeReadonly",
+        type: "TSIndexSignature",
+        line: 2,
+        column: 3,
+      },
+    ],
+  },
+  // Interface Index Signatures.
+  {
+    code: dedent`
+      interface Foo {
+        [key: string]: string
+      }
+      interface Bar {
+        [key: string]: { prop: string }
+      }`,
+    optionsSet: [[]],
+    output: dedent`
+      interface Foo {
+        readonly [key: string]: string
+      }
+      interface Bar {
+        readonly [key: string]: { prop: string }
+      }`,
+    errors: [
+      {
+        messageId: "typeAliasShouldBeReadonly",
+        type: "Identifier",
+        line: 1,
+        column: 11,
+      },
+      {
+        messageId: "propertyShouldBeReadonly",
+        type: "TSIndexSignature",
+        line: 2,
+        column: 3,
+      },
+      {
+        messageId: "typeAliasShouldBeReadonly",
+        type: "Identifier",
+        line: 4,
+        column: 11,
+      },
+      {
+        messageId: "propertyShouldBeReadonly",
+        type: "TSIndexSignature",
+        line: 5,
+        column: 3,
+      },
+    ],
+  },
+  // Type literal without readonly on members should produce failures.
+  // Also verify that nested members are checked.
+  {
+    code: dedent`
+      type MyType = {
+        a: number,
+        b: ReadonlyArray<string>,
+        c: () => string,
+        d: { readonly [key: string]: string },
+        [key: string]: string,
+        readonly e: {
+          a: number,
+          b: ReadonlyArray<string>,
+          c: () => string,
+          d: { readonly [key: string]: string },
+          [key: string]: string,
+        }
+      };`,
+    optionsSet: [[]],
+    output: dedent`
+      type MyType = {
+        readonly a: number,
+        readonly b: ReadonlyArray<string>,
+        readonly c: () => string,
+        readonly d: { readonly [key: string]: string },
+        readonly [key: string]: string,
+        readonly e: {
+          readonly a: number,
+          readonly b: ReadonlyArray<string>,
+          readonly c: () => string,
+          readonly d: { readonly [key: string]: string },
+          readonly [key: string]: string,
+        }
+      };`,
+    errors: [
+      {
+        messageId: "typeAliasShouldBeReadonly",
+        type: "Identifier",
+        line: 1,
+        column: 6,
+      },
+      {
+        messageId: "propertyShouldBeReadonly",
+        type: "TSPropertySignature",
+        line: 2,
+        column: 3,
+      },
+      {
+        messageId: "propertyShouldBeReadonly",
+        type: "TSPropertySignature",
+        line: 3,
+        column: 3,
+      },
+      {
+        messageId: "propertyShouldBeReadonly",
+        type: "TSPropertySignature",
+        line: 4,
+        column: 3,
+      },
+      {
+        messageId: "propertyShouldBeReadonly",
+        type: "TSPropertySignature",
+        line: 5,
+        column: 3,
+      },
+      {
+        messageId: "propertyShouldBeReadonly",
+        type: "TSIndexSignature",
+        line: 6,
+        column: 3,
+      },
+      {
+        messageId: "propertyShouldBeReadonly",
+        type: "TSPropertySignature",
+        line: 8,
+        column: 5,
+      },
+      {
+        messageId: "propertyShouldBeReadonly",
+        type: "TSPropertySignature",
+        line: 9,
+        column: 5,
+      },
+      {
+        messageId: "propertyShouldBeReadonly",
+        type: "TSPropertySignature",
+        line: 10,
+        column: 5,
+      },
+      {
+        messageId: "propertyShouldBeReadonly",
+        type: "TSPropertySignature",
+        line: 11,
+        column: 5,
+      },
+      {
+        messageId: "propertyShouldBeReadonly",
+        type: "TSIndexSignature",
+        line: 12,
+        column: 5,
       },
     ],
   },
