@@ -13,7 +13,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       }`,
     errors: [
       {
-        messageId: "array",
+        messageId: "arrayShouldBeReadonly",
         type: "TSArrayType",
         line: 1,
         column: 26,
@@ -30,7 +30,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       }`,
     errors: [
       {
-        messageId: "type",
+        messageId: "typeShouldBeReadonly",
         type: "TSTypeReference",
         line: 1,
         column: 26,
@@ -47,7 +47,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       }`,
     errors: [
       {
-        messageId: "type",
+        messageId: "typeShouldBeReadonly",
         type: "TSTypeReference",
         line: 1,
         column: 23,
@@ -64,7 +64,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       }`,
     errors: [
       {
-        messageId: "type",
+        messageId: "typeShouldBeReadonly",
         type: "TSTypeReference",
         line: 1,
         column: 23,
@@ -84,7 +84,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       }`,
     errors: [
       {
-        messageId: "type",
+        messageId: "typeShouldBeReadonly",
         type: "TSTypeReference",
         line: 2,
         column: 17,
@@ -108,7 +108,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       }`,
     errors: [
       {
-        messageId: "type",
+        messageId: "typeShouldBeReadonly",
         type: "TSTypeReference",
         line: 3,
         column: 22,
@@ -132,7 +132,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       }`,
     errors: [
       {
-        messageId: "type",
+        messageId: "typeShouldBeReadonly",
         type: "TSTypeReference",
         line: 3,
         column: 19,
@@ -156,7 +156,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       }`,
     errors: [
       {
-        messageId: "type",
+        messageId: "typeShouldBeReadonly",
         type: "TSTypeReference",
         line: 3,
         column: 19,
@@ -176,7 +176,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       };`,
     errors: [
       {
-        messageId: "type",
+        messageId: "typeShouldBeReadonly",
         type: "TSTypeReference",
         line: 2,
         column: 12,
@@ -194,7 +194,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       }`,
     errors: [
       {
-        messageId: "tuple",
+        messageId: "tupleShouldBeReadonly",
         type: "TSTupleType",
         line: 1,
         column: 21,
@@ -211,13 +211,13 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       }`,
     errors: [
       {
-        messageId: "tuple",
+        messageId: "tupleShouldBeReadonly",
         type: "TSTupleType",
         line: 1,
         column: 21,
       },
       {
-        messageId: "tuple",
+        messageId: "tupleShouldBeReadonly",
         type: "TSTupleType",
         line: 1,
         column: 38,
@@ -234,7 +234,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       }`,
     errors: [
       {
-        messageId: "tuple",
+        messageId: "tupleShouldBeReadonly",
         type: "TSTupleType",
         line: 1,
         column: 47,
@@ -251,7 +251,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       }`,
     errors: [
       {
-        messageId: "tuple",
+        messageId: "tupleShouldBeReadonly",
         type: "TSTupleType",
         line: 1,
         column: 21,
@@ -301,13 +301,13 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       }`,
     errors: [
       {
-        messageId: "type",
+        messageId: "typeShouldBeReadonly",
         type: "TSTypeReference",
         line: 3,
         column: 19,
       },
       {
-        messageId: "type",
+        messageId: "typeShouldBeReadonly",
         type: "TSTypeReference",
         line: 11,
         column: 19,
@@ -321,7 +321,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     output: `type Foo = ReadonlyArray<string>;`,
     errors: [
       {
-        messageId: "type",
+        messageId: "typeShouldBeReadonly",
         type: "TSTypeReference",
         line: 1,
         column: 12,
@@ -345,7 +345,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       }`,
     errors: [
       {
-        messageId: "type",
+        messageId: "typeShouldBeReadonly",
         type: "TSTypeReference",
         line: 3,
         column: 19,
@@ -365,7 +365,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       }`,
     errors: [
       {
-        messageId: "type",
+        messageId: "typeShouldBeReadonly",
         type: "TSTypeReference",
         line: 2,
         column: 14,
@@ -389,7 +389,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       }`,
     errors: [
       {
-        messageId: "type",
+        messageId: "typeShouldBeReadonly",
         type: "TSTypeReference",
         line: 3,
         column: 19,
@@ -403,7 +403,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     output: `const foo: ReadonlyArray<string> = [];`,
     errors: [
       {
-        messageId: "type",
+        messageId: "typeShouldBeReadonly",
         type: "TSTypeReference",
         line: 1,
         column: 12,
@@ -417,7 +417,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     output: `const foo: readonly number[] = [1, 2, 3];`,
     errors: [
       {
-        messageId: "array",
+        messageId: "arrayShouldBeReadonly",
         type: "TSArrayType",
         line: 1,
         column: 12,
@@ -431,7 +431,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     output: `let x: Foo<ReadonlyArray<string>>;`,
     errors: [
       {
-        messageId: "type",
+        messageId: "typeShouldBeReadonly",
         type: "TSTypeReference",
         line: 1,
         column: 12,
@@ -445,7 +445,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     output: `let x: readonly (readonly string[])[];`,
     errors: [
       {
-        messageId: "array",
+        messageId: "arrayShouldBeReadonly",
         type: "TSArrayType",
         line: 1,
         column: 17,
@@ -463,13 +463,13 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       function bar(param: readonly unknown[] = [1, 2, 3]) {}`,
     errors: [
       {
-        messageId: "implicit",
+        messageId: "arrayShouldBeReadonly",
         type: "VariableDeclarator",
         line: 1,
         column: 7,
       },
       {
-        messageId: "implicit",
+        messageId: "arrayShouldBeReadonly",
         type: "AssignmentPattern",
         line: 2,
         column: 14,
@@ -495,25 +495,25 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       }`,
     errors: [
       {
-        messageId: "property",
+        messageId: "propertyShouldBeReadonly",
         type: "ClassProperty",
         line: 2,
         column: 3,
       },
       {
-        messageId: "property",
+        messageId: "propertyShouldBeReadonly",
         type: "ClassProperty",
         line: 3,
         column: 3,
       },
       {
-        messageId: "property",
+        messageId: "propertyShouldBeReadonly",
         type: "ClassProperty",
         line: 4,
         column: 3,
       },
       {
-        messageId: "property",
+        messageId: "propertyShouldBeReadonly",
         type: "ClassProperty",
         line: 5,
         column: 3,
@@ -541,19 +541,19 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       }`,
     errors: [
       {
-        messageId: "property",
+        messageId: "propertyShouldBeReadonly",
         type: "TSParameterProperty",
         line: 3,
         column: 5,
       },
       {
-        messageId: "property",
+        messageId: "propertyShouldBeReadonly",
         type: "TSParameterProperty",
         line: 4,
         column: 5,
       },
       {
-        messageId: "property",
+        messageId: "propertyShouldBeReadonly",
         type: "TSParameterProperty",
         line: 5,
         column: 5,
@@ -579,19 +579,19 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       }`,
     errors: [
       {
-        messageId: "property",
+        messageId: "propertyShouldBeReadonly",
         type: "TSIndexSignature",
         line: 2,
         column: 3,
       },
       {
-        messageId: "property",
+        messageId: "propertyShouldBeReadonly",
         type: "TSIndexSignature",
         line: 5,
         column: 3,
       },
       {
-        messageId: "property",
+        messageId: "propertyShouldBeReadonly",
         type: "TSPropertySignature",
         line: 5,
         column: 20,
@@ -611,7 +611,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       }`,
     errors: [
       {
-        messageId: "property",
+        messageId: "propertyShouldBeReadonly",
         type: "TSIndexSignature",
         line: 1,
         column: 23,
@@ -625,7 +625,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     output: `let foo: { readonly [key: string]: number };`,
     errors: [
       {
-        messageId: "property",
+        messageId: "propertyShouldBeReadonly",
         type: "TSIndexSignature",
         line: 1,
         column: 12,
@@ -647,13 +647,13 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       }>;`,
     errors: [
       {
-        messageId: "property",
+        messageId: "propertyShouldBeReadonly",
         type: "TSPropertySignature",
         line: 2,
         column: 3,
       },
       {
-        messageId: "property",
+        messageId: "propertyShouldBeReadonly",
         type: "TSPropertySignature",
         line: 3,
         column: 3,
@@ -696,61 +696,61 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       };`,
     errors: [
       {
-        messageId: "property",
+        messageId: "propertyShouldBeReadonly",
         type: "TSPropertySignature",
         line: 2,
         column: 3,
       },
       {
-        messageId: "property",
+        messageId: "propertyShouldBeReadonly",
         type: "TSPropertySignature",
         line: 3,
         column: 3,
       },
       {
-        messageId: "property",
+        messageId: "propertyShouldBeReadonly",
         type: "TSPropertySignature",
         line: 4,
         column: 3,
       },
       {
-        messageId: "property",
+        messageId: "propertyShouldBeReadonly",
         type: "TSPropertySignature",
         line: 5,
         column: 3,
       },
       {
-        messageId: "property",
+        messageId: "propertyShouldBeReadonly",
         type: "TSIndexSignature",
         line: 6,
         column: 3,
       },
       {
-        messageId: "property",
+        messageId: "propertyShouldBeReadonly",
         type: "TSPropertySignature",
         line: 8,
         column: 5,
       },
       {
-        messageId: "property",
+        messageId: "propertyShouldBeReadonly",
         type: "TSPropertySignature",
         line: 9,
         column: 5,
       },
       {
-        messageId: "property",
+        messageId: "propertyShouldBeReadonly",
         type: "TSPropertySignature",
         line: 10,
         column: 5,
       },
       {
-        messageId: "property",
+        messageId: "propertyShouldBeReadonly",
         type: "TSPropertySignature",
         line: 11,
         column: 5,
       },
       {
-        messageId: "property",
+        messageId: "propertyShouldBeReadonly",
         type: "TSIndexSignature",
         line: 12,
         column: 5,
@@ -767,7 +767,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       };`,
     errors: [
       {
-        messageId: "property",
+        messageId: "propertyShouldBeReadonly",
         type: "TSPropertySignature",
         line: 1,
         column: 21,
@@ -783,7 +783,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       const func = (x: { readonly [key in string]: number }) => {}`,
     errors: [
       {
-        messageId: "property",
+        messageId: "propertyShouldBeReadonly",
         type: "TSMappedType",
         line: 1,
         column: 18,
@@ -811,7 +811,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       }`,
     errors: [
       {
-        messageId: "property",
+        messageId: "propertyShouldBeReadonly",
         type: "TSPropertySignature",
         line: 4,
         column: 7,
@@ -833,7 +833,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       };`,
     errors: [
       {
-        messageId: "property",
+        messageId: "propertyShouldBeReadonly",
         type: "TSPropertySignature",
         line: 3,
         column: 3,
@@ -851,13 +851,13 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       function bar(...numbers: readonly number[]): readonly number[] {}`,
     errors: [
       {
-        messageId: "type",
+        messageId: "typeShouldBeReadonly",
         type: "TSTypeReference",
         line: 1,
         column: 50,
       },
       {
-        messageId: "array",
+        messageId: "arrayShouldBeReadonly",
         type: "TSArrayType",
         line: 2,
         column: 46,
@@ -875,13 +875,13 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       const bar = function(...numbers: readonly number[]): readonly number[] {}`,
     errors: [
       {
-        messageId: "type",
+        messageId: "typeShouldBeReadonly",
         type: "TSTypeReference",
         line: 1,
         column: 58,
       },
       {
-        messageId: "array",
+        messageId: "arrayShouldBeReadonly",
         type: "TSArrayType",
         line: 2,
         column: 54,
@@ -899,13 +899,13 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       const bar = (...numbers: readonly number[]): readonly number[] => {}`,
     errors: [
       {
-        messageId: "type",
+        messageId: "typeShouldBeReadonly",
         type: "TSTypeReference",
         line: 1,
         column: 50,
       },
       {
-        messageId: "array",
+        messageId: "arrayShouldBeReadonly",
         type: "TSArrayType",
         line: 2,
         column: 46,
@@ -935,13 +935,13 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       }`,
     errors: [
       {
-        messageId: "type",
+        messageId: "typeShouldBeReadonly",
         type: "TSTypeReference",
         line: 2,
         column: 43,
       },
       {
-        messageId: "array",
+        messageId: "arrayShouldBeReadonly",
         type: "TSArrayType",
         line: 6,
         column: 39,
@@ -959,13 +959,13 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       function foo(...numbers: ReadonlyArray<number>): Promise<readonly number[]> {}`,
     errors: [
       {
-        messageId: "type",
+        messageId: "typeShouldBeReadonly",
         type: "TSTypeReference",
         line: 1,
         column: 58,
       },
       {
-        messageId: "array",
+        messageId: "arrayShouldBeReadonly",
         type: "TSArrayType",
         line: 2,
         column: 58,
@@ -985,13 +985,13 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       function foo(...numbers: ReadonlyArray<number>): Promise<Foo<readonly number[]>> {}`,
     errors: [
       {
-        messageId: "type",
+        messageId: "typeShouldBeReadonly",
         type: "TSTypeReference",
         line: 2,
         column: 62,
       },
       {
-        messageId: "array",
+        messageId: "arrayShouldBeReadonly",
         type: "TSArrayType",
         line: 3,
         column: 62,
@@ -1009,13 +1009,13 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       function foo(...numbers: ReadonlyArray<number>): readonly [number, readonly number[], number] {}`,
     errors: [
       {
-        messageId: "type",
+        messageId: "typeShouldBeReadonly",
         type: "TSTypeReference",
         line: 1,
         column: 68,
       },
       {
-        messageId: "array",
+        messageId: "arrayShouldBeReadonly",
         type: "TSArrayType",
         line: 2,
         column: 68,
@@ -1031,13 +1031,13 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       function foo(...numbers: ReadonlyArray<number>): { readonly a: ReadonlyArray<number> } | { readonly b: readonly string[] } {}`,
     errors: [
       {
-        messageId: "type",
+        messageId: "typeShouldBeReadonly",
         type: "TSTypeReference",
         line: 1,
         column: 64,
       },
       {
-        messageId: "array",
+        messageId: "arrayShouldBeReadonly",
         type: "TSArrayType",
         line: 1,
         column: 96,
@@ -1053,13 +1053,13 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       function foo(...numbers: ReadonlyArray<number>): { readonly a: ReadonlyArray<number> } & { readonly b: readonly string[] } {}`,
     errors: [
       {
-        messageId: "type",
+        messageId: "typeShouldBeReadonly",
         type: "TSTypeReference",
         line: 1,
         column: 64,
       },
       {
-        messageId: "array",
+        messageId: "arrayShouldBeReadonly",
         type: "TSArrayType",
         line: 1,
         column: 96,
@@ -1075,13 +1075,13 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       function foo<T>(x: T): T extends ReadonlyArray<number> ? string : readonly number[] {}`,
     errors: [
       {
-        messageId: "type",
+        messageId: "typeShouldBeReadonly",
         type: "TSTypeReference",
         line: 1,
         column: 34,
       },
       {
-        messageId: "array",
+        messageId: "arrayShouldBeReadonly",
         type: "TSArrayType",
         line: 1,
         column: 59,

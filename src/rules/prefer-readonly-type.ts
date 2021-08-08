@@ -80,11 +80,10 @@ const defaultOptions: Options = {
 
 // The possible error messages.
 const errorMessages = {
-  array: "Only readonly arrays allowed.",
-  implicit: "Implicitly a mutable array. Only readonly arrays allowed.",
-  property: "A readonly modifier is required.",
-  tuple: "Only readonly tuples allowed.",
-  type: "Only readonly types allowed.",
+  arrayShouldBeReadonly: "Array should be readonly.",
+  propertyShouldBeReadonly: "This property should be readonly.",
+  tupleShouldBeReadonly: "Tuple should be readonly.",
+  typeShouldBeReadonly: "Type should be readonly.",
 } as const;
 
 // The meta data for this rule.
@@ -137,7 +136,9 @@ function checkArrayOrTupleType(
         ? [
             {
               node,
-              messageId: isTSTupleType(node) ? "tuple" : "array",
+              messageId: isTSTupleType(node)
+                ? "tupleShouldBeReadonly"
+                : "arrayShouldBeReadonly",
               fix:
                 node.parent !== undefined && isTSArrayType(node.parent)
                   ? (fixer) => [
@@ -166,7 +167,7 @@ function checkMappedType(
         : [
             {
               node,
-              messageId: "property",
+              messageId: "propertyShouldBeReadonly",
               fix: (fixer) =>
                 fixer.insertTextBeforeRange(
                   [node.range[0] + 1, node.range[1]],
@@ -205,7 +206,7 @@ function checkTypeReference(
           ? [
               {
                 node,
-                messageId: "type",
+                messageId: "typeShouldBeReadonly",
                 fix: (fixer) => fixer.replaceText(node.typeName, immutableType),
               },
             ]
@@ -238,7 +239,7 @@ function checkProperty(
         ? [
             {
               node,
-              messageId: "property",
+              messageId: "propertyShouldBeReadonly",
               fix:
                 isTSIndexSignature(node) || isTSPropertySignature(node)
                   ? (fixer) => fixer.insertTextBefore(node, "readonly ")
@@ -303,7 +304,7 @@ function checkForImplicitMutableArray(
           ? [
               {
                 node: declarator.node,
-                messageId: "implicit",
+                messageId: "arrayShouldBeReadonly",
                 fix: (fixer) =>
                   fixer.insertTextAfter(declarator.id, ": readonly unknown[]"),
               },
