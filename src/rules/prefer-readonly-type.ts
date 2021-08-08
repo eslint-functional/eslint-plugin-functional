@@ -39,7 +39,7 @@ type Options = AllowLocalMutationOption &
   IgnoreInterfaceOption &
   IgnorePatternOption & {
     readonly allowMutableReturnType: boolean;
-    readonly checkImplicit: boolean;
+    readonly checkForImplicitMutableArrays: boolean;
     readonly ignoreCollections: boolean;
   };
 
@@ -56,7 +56,7 @@ const schema: JSONSchema4 = [
         allowMutableReturnType: {
           type: "boolean",
         },
-        checkImplicit: {
+        checkForImplicitMutableArrays: {
           type: "boolean",
         },
         ignoreCollections: {
@@ -70,7 +70,7 @@ const schema: JSONSchema4 = [
 
 // The default options for the rule.
 const defaultOptions: Options = {
-  checkImplicit: false,
+  checkForImplicitMutableArrays: false,
   ignoreClass: false,
   ignoreInterface: false,
   ignoreCollections: false,
@@ -255,7 +255,7 @@ function checkProperty(
 /**
  * Check if the given TypeReference violates this rule.
  */
-function checkImplicitType(
+function checkForImplicitMutableArray(
   node:
     | TSESTree.ArrowFunctionExpression
     | TSESTree.FunctionDeclaration
@@ -264,7 +264,7 @@ function checkImplicitType(
   context: RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
-  if (options.checkImplicit) {
+  if (options.checkForImplicitMutableArrays) {
     type Declarator = {
       readonly id: TSESTree.Node;
       readonly init: TSESTree.Node | null;
@@ -324,10 +324,10 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   meta,
   defaultOptions,
   {
-    ArrowFunctionExpression: checkImplicitType,
+    ArrowFunctionExpression: checkForImplicitMutableArray,
     ClassProperty: checkProperty,
-    FunctionDeclaration: checkImplicitType,
-    FunctionExpression: checkImplicitType,
+    FunctionDeclaration: checkForImplicitMutableArray,
+    FunctionExpression: checkForImplicitMutableArray,
     TSArrayType: checkArrayOrTupleType,
     TSIndexSignature: checkProperty,
     TSParameterProperty: checkProperty,
@@ -335,6 +335,6 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
     TSTupleType: checkArrayOrTupleType,
     TSMappedType: checkMappedType,
     TSTypeReference: checkTypeReference,
-    VariableDeclaration: checkImplicitType,
+    VariableDeclaration: checkForImplicitMutableArray,
   }
 );

@@ -507,7 +507,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     code: dedent`
       const foo = [1, 2, 3]
       function bar(param = [1, 2, 3]) {}`,
-    optionsSet: [[{ checkImplicit: true }]],
+    optionsSet: [[{ checkForImplicitMutableArrays: true }]],
     output: dedent`
       const foo: readonly unknown[] = [1, 2, 3]
       function bar(param: readonly unknown[] = [1, 2, 3]) {}`,

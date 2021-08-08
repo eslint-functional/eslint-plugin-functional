@@ -142,7 +142,7 @@ const tests: ReadonlyArray<ValidTestCase> = [
   {
     code: dedent`
     const foo = [1, 2, 3] as const`,
-    optionsSet: [[{ checkImplicit: true }]],
+    optionsSet: [[{ checkForImplicitMutableArrays: true }]],
   },
   // Should not fail on implicit Array.
   {
@@ -357,7 +357,9 @@ const tests: ReadonlyArray<ValidTestCase> = [
   },
   {
     code: dedent`const Foo = []`,
-    optionsSet: [[{ ignoreCollections: true, checkImplicit: true }]],
+    optionsSet: [
+      [{ ignoreCollections: true, checkForImplicitMutableArrays: true }],
+    ],
   },
   {
     code: dedent`type Foo = [string, string];`,
@@ -369,7 +371,9 @@ const tests: ReadonlyArray<ValidTestCase> = [
   },
   {
     code: dedent`const Foo = ['foo', 'bar'];`,
-    optionsSet: [[{ ignoreCollections: true, checkImplicit: true }]],
+    optionsSet: [
+      [{ ignoreCollections: true, checkForImplicitMutableArrays: true }],
+    ],
   },
   {
     code: dedent`type Foo = Set<string, string>;`,
