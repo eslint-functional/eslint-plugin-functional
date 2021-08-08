@@ -199,14 +199,21 @@ const tests: ReadonlyArray<ValidTestCase> = [
   },
   // CallSignature and MethodSignature cannot have readonly modifiers and should
   // not produce failures.
-  {
-    code: dedent`
-    interface Foo {
-      (): void
-      foo(): void
-    }`,
-    optionsSet: [[]],
-  },
+  // Waiting on https://github.com/typescript-eslint/typescript-eslint/issues/1758
+  // {
+  //   code: dedent`
+  //   interface Foo {
+  //     (): void
+  //     foo(): void
+  //   }`,
+  //   optionsSet: [
+  //     [
+  //       {
+  //         treatMethodsAsReadonly: true,
+  //       },
+  //     ],
+  //   ],
+  // },
   // The literal with indexer with readonly modifier should not produce failures.
   {
     code: `let foo: { readonly [key: string]: number };`,
@@ -348,10 +355,6 @@ const tests: ReadonlyArray<ValidTestCase> = [
   },
   // Ignore Mutable Collections (Array, Tuple, Set, Map)
   {
-    code: dedent`type Foo = Array<string>;`,
-    optionsSet: [[{ ignoreCollections: true }]],
-  },
-  {
     code: dedent`const Foo: number[] = [];`,
     optionsSet: [[{ ignoreCollections: true }]],
   },
@@ -360,10 +363,6 @@ const tests: ReadonlyArray<ValidTestCase> = [
     optionsSet: [
       [{ ignoreCollections: true, checkForImplicitMutableArrays: true }],
     ],
-  },
-  {
-    code: dedent`type Foo = [string, string];`,
-    optionsSet: [[{ ignoreCollections: true }]],
   },
   {
     code: dedent`const Foo: [string, string] = ['foo', 'bar'];`,
@@ -376,20 +375,102 @@ const tests: ReadonlyArray<ValidTestCase> = [
     ],
   },
   {
-    code: dedent`type Foo = Set<string, string>;`,
-    optionsSet: [[{ ignoreCollections: true }]],
-  },
-  {
     code: dedent`const Foo: Set<string, string> = new Set();`,
-    optionsSet: [[{ ignoreCollections: true }]],
-  },
-  {
-    code: dedent`type Foo = Map<string, string>;`,
     optionsSet: [[{ ignoreCollections: true }]],
   },
   {
     code: dedent`const Foo: Map<string, string> = new Map();`,
     optionsSet: [[{ ignoreCollections: true }]],
+  },
+  // Readonly types should be readonly.
+  {
+    code: dedent`
+      type MyType = {
+        readonly a: string;
+      };`,
+    optionsSet: [[]],
+  },
+  {
+    code: dedent`
+      type ReadonlyMyType = {
+        readonly a: string;
+      };`,
+    optionsSet: [
+      [
+        {
+          aliases: {
+            mustBeReadonly: {
+              requireOthersToBeMutable: true,
+            },
+            mustBeMutable: {
+              requireOthersToBeReadonly: false,
+            },
+          },
+        },
+      ],
+    ],
+  },
+  // Readonly types should be readonly and mutable types mutable.
+  {
+    code: dedent`
+      type MutableMyType = {
+        a: string;
+      };
+      type MyType = Readonly<MutableMyType>;`,
+    optionsSet: [[]],
+  },
+  {
+    code: dedent`
+      type MyType = {
+        a: string;
+      };
+      type ReadonlyMyType = Readonly<MyType>;`,
+    optionsSet: [
+      [
+        {
+          aliases: {
+            mustBeReadonly: {
+              requireOthersToBeMutable: true,
+            },
+            mustBeMutable: {
+              requireOthersToBeReadonly: false,
+            },
+          },
+        },
+      ],
+    ],
+  },
+  // Readonly types should be readonly and mutable types mutable.
+  {
+    code: dedent`
+      type Mutable<T> = { -readonly[P in keyof T]: T[P] };
+      type MyType = {
+        readonly a: string;
+      };
+      type MutableMyType = Mutable<MyType>;`,
+    optionsSet: [[]],
+  },
+  {
+    code: dedent`
+      type Mutable<T> = { -readonly[P in keyof T]: T[P] };
+      type ReadonlyMyType = {
+        readonly a: string;
+      };
+      type MyType = Mutable<ReadonlyMyType>;`,
+    optionsSet: [
+      [
+        {
+          aliases: {
+            mustBeReadonly: {
+              requireOthersToBeMutable: true,
+            },
+            mustBeMutable: {
+              requireOthersToBeReadonly: false,
+            },
+          },
+        },
+      ],
+    ],
   },
 ];
 

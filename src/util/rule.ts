@@ -138,6 +138,21 @@ export function getTypeOfNode<Context extends RuleContext<string, BaseOptions>>(
   return constrained ?? nodeType;
 }
 
+export function isReadonly<Context extends RuleContext<string, BaseOptions>>(
+  node: TSESTree.Node,
+  context: Context
+): boolean {
+  const { parserServices } = context;
+
+  if (parserServices === undefined || parserServices.program === undefined) {
+    return false;
+  }
+
+  const checker = parserServices.program.getTypeChecker();
+  const type = getTypeOfNode(node, context);
+  return ESLintUtils.isTypeReadonly(checker, type!);
+}
+
 /**
  * Get the es tree node from the given ts node.
  */

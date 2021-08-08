@@ -9,7 +9,10 @@ import {
   isMemberExpression,
   isMethodDefinition,
   isProperty,
+  isTSIndexSignature,
   isTSInterfaceBody,
+  isTSInterfaceDeclaration,
+  isTSTypeAliasDeclaration,
 } from "./typeguard";
 
 /**
@@ -37,6 +40,45 @@ export function inFunctionBody(node: TSESTree.Node): boolean {
       node
     ) !== null
   );
+}
+
+/**
+ * Get the type alias or interface that the given node is in.
+ */
+export function getTypeDeclaration(
+  node: TSESTree.Node
+): TSESTree.TSInterfaceDeclaration | TSESTree.TSTypeAliasDeclaration | null {
+  if (isTSTypeAliasDeclaration(node) || isTSInterfaceDeclaration(node)) {
+    return node;
+  }
+
+  return (getAncestorOfType(
+    (n): n is TSESTree.Node =>
+      n.parent !== undefined &&
+      n.parent !== null &&
+      ((isTSTypeAliasDeclaration(n.parent) && n.parent.typeAnnotation === n) ||
+        (isTSInterfaceDeclaration(n.parent) && n.parent.body === n)),
+    node
+  )?.parent ?? null) as
+    | TSESTree.TSInterfaceDeclaration
+    | TSESTree.TSTypeAliasDeclaration
+    | null;
+}
+
+/**
+ * Get the parent Index Signature that the given node is in.
+ */
+export function getParentIndexSignature(
+  node: TSESTree.Node
+): TSESTree.TSIndexSignature | null {
+  return (getAncestorOfType(
+    (n): n is TSESTree.Node =>
+      n.parent !== undefined &&
+      n.parent !== null &&
+      isTSIndexSignature(n.parent) &&
+      n.parent.typeAnnotation === n,
+    node
+  )?.parent ?? null) as TSESTree.TSIndexSignature | null;
 }
 
 /**

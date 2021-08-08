@@ -84,6 +84,12 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       }`,
     errors: [
       {
+        messageId: "aliasShouldBeReadonly",
+        type: "Identifier",
+        line: 1,
+        column: 11,
+      },
+      {
         messageId: "typeShouldBeReadonly",
         type: "TSTypeReference",
         line: 2,
@@ -92,29 +98,36 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     ],
   },
   // Should fail on Array type in index interface.
-  {
-    code: dedent`
-      interface Foo {
-        readonly [key: string]: {
-          readonly groups: Array<string>
-        }
-      }`,
-    optionsSet: [[]],
-    output: dedent`
-      interface Foo {
-        readonly [key: string]: {
-          readonly groups: ReadonlyArray<string>
-        }
-      }`,
-    errors: [
-      {
-        messageId: "typeShouldBeReadonly",
-        type: "TSTypeReference",
-        line: 3,
-        column: 22,
-      },
-    ],
-  },
+  // https://github.com/typescript-eslint/typescript-eslint/issues/3714
+  // {
+  //   code: dedent`
+  //     interface Foo {
+  //       readonly [key: string]: {
+  //         readonly groups: Array<string>
+  //       }
+  //     }`,
+  //   optionsSet: [[]],
+  //   output: dedent`
+  //     interface Foo {
+  //       readonly [key: string]: {
+  //         readonly groups: ReadonlyArray<string>
+  //       }
+  //     }`,
+  //   errors: [
+  //     {
+  //       messageId: "aliasShouldBeReadonly",
+  //       type: "Identifier",
+  //       line: 1,
+  //       column: 11,
+  //     },
+  //     {
+  //       messageId: "typeShouldBeReadonly",
+  //       type: "TSTypeReference",
+  //       line: 3,
+  //       column: 22,
+  //     },
+  //   ],
+  // },
   // Should fail on Array type as function return type and in local interface.
   {
     code: dedent`
@@ -131,6 +144,12 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         }
       }`,
     errors: [
+      {
+        messageId: "aliasShouldBeReadonly",
+        type: "Identifier",
+        line: 2,
+        column: 13,
+      },
       {
         messageId: "typeShouldBeReadonly",
         type: "TSTypeReference",
@@ -156,10 +175,48 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       }`,
     errors: [
       {
+        messageId: "aliasShouldBeReadonly",
+        type: "Identifier",
+        line: 2,
+        column: 13,
+      },
+      {
         messageId: "typeShouldBeReadonly",
         type: "TSTypeReference",
         line: 3,
         column: 19,
+      },
+    ],
+  },
+  // Should fail on shorthand syntax Array type as return type.
+  {
+    code: dedent`
+      function foo(): number[] {
+      }`,
+    optionsSet: [[{ allowMutableReturnType: false }]],
+    output: dedent`
+      function foo(): readonly number[] {
+      }`,
+    errors: [
+      {
+        messageId: "arrayShouldBeReadonly",
+        type: "TSArrayType",
+        line: 1,
+        column: 17,
+      },
+    ],
+  },
+  // Should fail on shorthand syntax Array type as return type.
+  {
+    code: `const foo = (): number[] => {}`,
+    optionsSet: [[{ allowMutableReturnType: false }]],
+    output: `const foo = (): readonly number[] => {}`,
+    errors: [
+      {
+        messageId: "arrayShouldBeReadonly",
+        type: "TSArrayType",
+        line: 1,
+        column: 17,
       },
     ],
   },
@@ -321,6 +378,12 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     output: `type Foo = ReadonlyArray<string>;`,
     errors: [
       {
+        messageId: "aliasShouldBeReadonly",
+        type: "Identifier",
+        line: 1,
+        column: 6,
+      },
+      {
         messageId: "typeShouldBeReadonly",
         type: "TSTypeReference",
         line: 1,
@@ -345,6 +408,12 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       }`,
     errors: [
       {
+        messageId: "aliasShouldBeReadonly",
+        type: "Identifier",
+        line: 2,
+        column: 8,
+      },
+      {
         messageId: "typeShouldBeReadonly",
         type: "TSTypeReference",
         line: 3,
@@ -364,6 +433,12 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         type Foo = ReadonlyArray<string>;
       }`,
     errors: [
+      {
+        messageId: "aliasShouldBeReadonly",
+        type: "Identifier",
+        line: 2,
+        column: 8,
+      },
       {
         messageId: "typeShouldBeReadonly",
         type: "TSTypeReference",
@@ -388,6 +463,12 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         }
       }`,
     errors: [
+      {
+        messageId: "aliasShouldBeReadonly",
+        type: "Identifier",
+        line: 2,
+        column: 8,
+      },
       {
         messageId: "typeShouldBeReadonly",
         type: "TSTypeReference",
@@ -455,12 +536,10 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   // Should fail on implicit Array type in variable declaration.
   {
     code: dedent`
-      const foo = [1, 2, 3]
-      function bar(param = [1, 2, 3]) {}`,
+      const foo = [1, 2, 3]`,
     optionsSet: [[{ checkForImplicitMutableArrays: true }]],
     output: dedent`
-      const foo: readonly unknown[] = [1, 2, 3]
-      function bar(param: readonly unknown[] = [1, 2, 3]) {}`,
+      const foo: readonly unknown[] = [1, 2, 3]`,
     errors: [
       {
         messageId: "arrayShouldBeReadonly",
@@ -468,10 +547,20 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         line: 1,
         column: 7,
       },
+    ],
+  },
+  // Should fail on implicit Array type in function declaration.
+  {
+    code: dedent`
+      function bar(param = [1, 2, 3]) {}`,
+    optionsSet: [[{ checkForImplicitMutableArrays: true }]],
+    output: dedent`
+      function bar(param: readonly unknown[] = [1, 2, 3]) {}`,
+    errors: [
       {
         messageId: "arrayShouldBeReadonly",
         type: "AssignmentPattern",
-        line: 2,
+        line: 1,
         column: 14,
       },
     ],
@@ -575,9 +664,15 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         readonly [key: string]: string
       }
       interface Bar {
-        readonly [key: string]: { readonly prop: string }
+        readonly [key: string]: { prop: string }
       }`,
     errors: [
+      {
+        messageId: "aliasShouldBeReadonly",
+        type: "Identifier",
+        line: 1,
+        column: 11,
+      },
       {
         messageId: "propertyShouldBeReadonly",
         type: "TSIndexSignature",
@@ -585,16 +680,16 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         column: 3,
       },
       {
+        messageId: "aliasShouldBeReadonly",
+        type: "Identifier",
+        line: 4,
+        column: 11,
+      },
+      {
         messageId: "propertyShouldBeReadonly",
         type: "TSIndexSignature",
         line: 5,
         column: 3,
-      },
-      {
-        messageId: "propertyShouldBeReadonly",
-        type: "TSPropertySignature",
-        line: 5,
-        column: 20,
       },
     ],
   },
@@ -646,6 +741,12 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         readonly code: string,
       }>;`,
     errors: [
+      {
+        messageId: "aliasShouldBeReadonly",
+        type: "Identifier",
+        line: 1,
+        column: 6,
+      },
       {
         messageId: "propertyShouldBeReadonly",
         type: "TSPropertySignature",
@@ -832,6 +933,12 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         readonly [propertyName]: string;
       };`,
     errors: [
+      {
+        messageId: "aliasShouldBeReadonly",
+        type: "Identifier",
+        line: 2,
+        column: 6,
+      },
       {
         messageId: "propertyShouldBeReadonly",
         type: "TSPropertySignature",
@@ -1085,6 +1192,131 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         type: "TSArrayType",
         line: 1,
         column: 59,
+      },
+    ],
+  },
+  // Readonly types should not be mutable.
+  {
+    code: dedent`
+      type MyType = {
+        a: string;
+      };`,
+    optionsSet: [[]],
+    output: dedent`
+      type MyType = {
+        readonly a: string;
+      };`,
+    errors: [
+      {
+        messageId: "aliasShouldBeReadonly",
+        type: "Identifier",
+        line: 1,
+        column: 6,
+      },
+      {
+        messageId: "propertyShouldBeReadonly",
+        type: "TSPropertySignature",
+        line: 2,
+        column: 3,
+      },
+    ],
+  },
+  // Mutable types should not be readonly.
+  {
+    code: dedent`
+      type MyType = {
+        readonly a: string;
+      };`,
+    optionsSet: [
+      [
+        {
+          aliases: {
+            mustBeReadonly: {
+              requireOthersToBeMutable: true,
+            },
+            mustBeMutable: {
+              requireOthersToBeReadonly: false,
+            },
+          },
+        },
+      ],
+    ],
+    errors: [
+      {
+        messageId: "aliasShouldBeMutable",
+        type: "Identifier",
+        line: 1,
+        column: 6,
+      },
+    ],
+  },
+  // Mutable types should not be readonly.
+  {
+    code: dedent`
+      type MutableMyType = {
+        readonly a: string;
+      };`,
+    optionsSet: [[]],
+    errors: [
+      {
+        messageId: "aliasShouldBeMutable",
+        type: "Identifier",
+        line: 1,
+        column: 6,
+      },
+    ],
+  },
+  // Needs Explicit Marking.
+  {
+    code: dedent`
+      type MyType = {};`,
+    optionsSet: [
+      [
+        {
+          aliases: {
+            mustBeReadonly: {
+              requireOthersToBeMutable: true,
+            },
+            mustBeMutable: {
+              requireOthersToBeReadonly: true,
+            },
+          },
+        },
+      ],
+    ],
+    errors: [
+      {
+        messageId: "aliasNeedsExplicitMarking",
+        type: "Identifier",
+        line: 1,
+        column: 6,
+      },
+    ],
+  },
+  // Both Mutable and Readonly error.
+  {
+    code: dedent`
+      type MyType = {};`,
+    optionsSet: [
+      [
+        {
+          aliases: {
+            mustBeReadonly: {
+              pattern: ".*",
+            },
+            mustBeMutable: {
+              pattern: ".*",
+            },
+          },
+        },
+      ],
+    ],
+    errors: [
+      {
+        messageId: "aliasConfigErrorMutableReadonly",
+        type: "Identifier",
+        line: 1,
+        column: 6,
       },
     ],
   },
