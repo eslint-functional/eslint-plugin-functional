@@ -109,6 +109,25 @@ export const ignoreInterfaceOptionSchema: JSONSchema4["properties"] = {
 };
 
 /**
+ * The option to ignore prefix selector.
+ */
+export type IgnorePrefixSelectorOption = {
+  readonly ignorePrefixSelector?: ReadonlyArray<string> | string;
+};
+
+/**
+ * The schema for the option to ignore prefix selector.
+ */
+export const ignorePrefixSelectorOptionSchema: JSONSchema4["properties"] = {
+  ignorePrefixSelector: {
+    type: ["string", "array"],
+    items: {
+      type: "string",
+    },
+  },
+};
+
+/**
  * Should the given text be allowed?
  *
  * Test using the given pattern(s).

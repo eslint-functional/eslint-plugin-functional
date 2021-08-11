@@ -3,14 +3,18 @@ import { deepmerge } from "deepmerge-ts";
 import type { JSONSchema4 } from "json-schema";
 import type { ReadonlyDeep } from "type-fest";
 
-import type { IgnorePatternOption } from "~/common/ignore-options";
+import type {
+  IgnorePatternOption,
+  IgnorePrefixSelectorOption,
+} from "~/common/ignore-options";
 import {
   shouldIgnorePattern,
   ignorePatternOptionSchema,
+  ignorePrefixSelectorOptionSchema,
 } from "~/common/ignore-options";
 import type { ESFunction } from "~/src/util/node-types";
 import type { RuleResult } from "~/util/rule";
-import { createRule } from "~/util/rule";
+import { createRuleUsingFunction } from "~/util/rule";
 import { isIIFE, isPropertyAccess, isPropertyName } from "~/util/tree";
 import { isRestElement } from "~/util/typeguard";
 
@@ -29,6 +33,7 @@ type ParameterCountOptions = "atLeastOne" | "exactlyOne";
  */
 type Options = readonly [
   IgnorePatternOption &
+    IgnorePrefixSelectorOption &
     Readonly<{
       allowRestParameter: boolean;
       allowArgumentsKeyword: boolean;
@@ -48,39 +53,43 @@ type Options = readonly [
 const schema: JSONSchema4 = [
   {
     type: "object",
-    properties: deepmerge(ignorePatternOptionSchema, {
-      allowRestParameter: {
-        type: "boolean",
-      },
-      allowArgumentsKeyword: {
-        type: "boolean",
-      },
-      enforceParameterCount: {
-        oneOf: [
-          {
-            type: "boolean",
-            enum: [false],
-          },
-          {
-            type: "string",
-            enum: ["atLeastOne", "exactlyOne"],
-          },
-          {
-            type: "object",
-            properties: {
-              count: {
-                type: "string",
-                enum: ["atLeastOne", "exactlyOne"],
-              },
-              ignoreIIFE: {
-                type: "boolean",
-              },
+    properties: deepmerge(
+      ignorePatternOptionSchema,
+      ignorePrefixSelectorOptionSchema,
+      {
+        allowRestParameter: {
+          type: "boolean",
+        },
+        allowArgumentsKeyword: {
+          type: "boolean",
+        },
+        enforceParameterCount: {
+          oneOf: [
+            {
+              type: "boolean",
+              enum: [false],
             },
-            additionalProperties: false,
-          },
-        ],
-      },
-    }),
+            {
+              type: "string",
+              enum: ["atLeastOne", "exactlyOne"],
+            },
+            {
+              type: "object",
+              properties: {
+                count: {
+                  type: "string",
+                  enum: ["atLeastOne", "exactlyOne"],
+                },
+                ignoreIIFE: {
+                  type: "boolean",
+                },
+              },
+              additionalProperties: false,
+            },
+          ],
+        },
+      }
+    ),
     additionalProperties: false,
   },
 ];
@@ -255,14 +264,36 @@ function checkIdentifier(
 }
 
 // Create the rule.
-export const rule = createRule<keyof typeof errorMessages, Options>(
-  name,
-  meta,
-  defaultOptions,
-  {
-    FunctionDeclaration: checkFunction,
-    FunctionExpression: checkFunction,
-    ArrowFunctionExpression: checkFunction,
+export const rule = createRuleUsingFunction<
+  keyof typeof errorMessages,
+  Options
+>(name, meta, defaultOptions, (context, options) => {
+  const [optionsObject] = options;
+  const { ignorePrefixSelector } = optionsObject;
+
+  const baseFunctionSelectors = [
+    "ArrowFunctionExpression",
+    "FunctionDeclaration",
+    "FunctionExpression",
+  ];
+
+  const ignoreSelectors: ReadonlyArray<string> | undefined =
+    ignorePrefixSelector === undefined
+      ? undefined
+      : Array.isArray(ignorePrefixSelector)
+      ? ignorePrefixSelector
+      : [ignorePrefixSelector];
+
+  const fullFunctionSelectors = baseFunctionSelectors.flatMap((baseSelector) =>
+    ignoreSelectors === undefined
+      ? [baseSelector]
+      : `:not(:matches(${ignoreSelectors.join(",")})) > ${baseSelector}`
+  );
+
+  return {
+    ...Object.fromEntries(
+      fullFunctionSelectors.map((selector) => [selector, checkFunction])
+    ),
     Identifier: checkIdentifier,
-  }
-);
+  };
+});
