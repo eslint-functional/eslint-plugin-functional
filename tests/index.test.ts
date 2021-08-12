@@ -20,7 +20,7 @@ test("should have all the rules", (t) => {
     Object.prototype.hasOwnProperty.call(plugin, "rules"),
     'The plugin\'s config object should have a "rules" property.'
   );
-  t.assert(Object.keys(plugin.rules).length === ruleFiles.length);
+  t.is(ruleFiles.length, Object.keys(plugin.rules).length);
 });
 
 test("should have all the configs", (t) => {
@@ -28,5 +28,5 @@ test("should have all the configs", (t) => {
     Object.prototype.hasOwnProperty.call(plugin, "configs"),
     'The plugin\'s config object should have a "configs" property.'
   );
-  t.assert(Object.keys(plugin.configs).length === configFiles.length);
+  t.is(configFiles.length, Object.keys(plugin.configs).length);
 });
