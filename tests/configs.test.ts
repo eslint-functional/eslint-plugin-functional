@@ -14,14 +14,17 @@ import noStatements from "~/configs/no-statements";
 import stylistic from "~/configs/stylistic";
 import { rules } from "~/rules";
 
-test('Config "All" - should have all the rules', (t) => {
-  const allRules = Object.keys(rules);
+test('Config "All" - should have all the non-deprecated rules', (t) => {
+  const allRules = Object.values(rules);
+  const allNonDeprecatedRules = allRules.filter(
+    (rule) => rule.meta.deprecated !== true
+  );
 
   const configAllJSRules = Object.keys(all.rules ?? {});
   const configAllTSRules = Object.keys(all.overrides?.[0].rules ?? {});
   const configAllRules = new Set([...configAllJSRules, ...configAllTSRules]);
 
-  t.is(configAllRules.size, allRules.length);
+  t.is(configAllRules.size, allNonDeprecatedRules.length);
 });
 
 /**
