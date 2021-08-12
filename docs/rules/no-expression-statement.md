@@ -34,6 +34,12 @@ Examples of **correct** code for this rule:
 const baz = foo(bar);
 ```
 
+```js
+/* eslint functional/no-expression-statement: ["error", { "ignoreVoid": true }] */
+
+console.log("hello world");
+```
+
 ## Options
 
 This rule accepts an options object of the following type:
@@ -41,6 +47,7 @@ This rule accepts an options object of the following type:
 ```ts
 {
   ignorePattern?: string | Array<string>;
+  ignoreVoid?: boolean
 }
 ```
 
@@ -48,8 +55,13 @@ The default options:
 
 ```ts
 {
+  ignoreVoid: false
 }
 ```
+
+### `ignoreVoid`
+
+When enabled, expression of type void are not flagged as violations. This options requires TypeScript in order to work.
 
 ### `ignorePattern`
 
