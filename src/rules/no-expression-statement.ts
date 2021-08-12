@@ -1,4 +1,5 @@
 import { TSESTree } from "@typescript-eslint/experimental-utils";
+import { all as deepMerge } from "deepmerge";
 import { JSONSchema4 } from "json-schema";
 
 import {
@@ -8,22 +9,41 @@ import {
 import { isDirectivePrologue } from "../util/misc";
 import {
   createRule,
+  getTypeOfNode,
   RuleContext,
   RuleMetaData,
   RuleResult,
 } from "../util/rule";
+import { isVoidType } from "../util/typeguard";
 
 // The name of this rule.
 export const name = "no-expression-statement" as const;
 
 // The options this rule can take.
-type Options = IgnorePatternOption;
+type Options = IgnorePatternOption & {
+  readonly ignoreVoid: boolean;
+};
 
 // The schema for the rule options.
-const schema: JSONSchema4 = [ignorePatternOptionSchema];
+const schema: JSONSchema4 = [
+  deepMerge([
+    ignorePatternOptionSchema,
+    {
+      type: "object",
+      properties: {
+        ignoreVoid: {
+          type: "boolean",
+        },
+      },
+      additionalProperties: false,
+    },
+  ]),
+];
 
 // The default options for the rule.
-const defaultOptions: Options = {};
+const defaultOptions: Options = {
+  ignoreVoid: false,
+};
 
 // The possible error messages.
 const errorMessages = {
@@ -47,13 +67,32 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
  */
 function checkExpressionStatement(
   node: TSESTree.ExpressionStatement,
-  context: RuleContext<keyof typeof errorMessages, Options>
+  context: RuleContext<keyof typeof errorMessages, Options>,
+  options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
+  // Allow specifying directive prologues.
+  if (isDirectivePrologue(node)) {
+    return {
+      context,
+      descriptors: [],
+    };
+  }
+
+  if (options.ignoreVoid === true) {
+    const type = getTypeOfNode(node.expression, context);
+
+    return {
+      context,
+      descriptors:
+        type !== null && isVoidType(type)
+          ? []
+          : [{ node, messageId: "generic" }],
+    };
+  }
+
   return {
     context,
-    descriptors:
-      // Allow specifying directive prologues.
-      isDirectivePrologue(node) ? [] : [{ node, messageId: "generic" }],
+    descriptors: [{ node, messageId: "generic" }],
   };
 }
 

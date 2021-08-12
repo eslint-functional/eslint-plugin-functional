@@ -17,7 +17,7 @@ import {
 } from "../helpers/util";
 
 // Valid test cases.
-const valid: ReadonlyArray<ValidTestCase> = [
+const es3Valid: ReadonlyArray<ValidTestCase> = [
   // Defining variable should still be allowed.
   {
     code: `var x = [];`,
@@ -38,7 +38,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
 ];
 
 // Invalid test cases.
-const invalid: ReadonlyArray<InvalidTestCase> = [
+const es3Invalid: ReadonlyArray<InvalidTestCase> = [
   {
     code: dedent`
       var x = [];
@@ -68,18 +68,33 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
   },
 ];
 
+// Valid TypeScript test cases.
+const tsValid: ReadonlyArray<ValidTestCase> = [
+  ...es3Valid,
+  // Allowed ignoring void expressions.
+  {
+    code: dedent`
+      console.log("yo");
+      console.error("yo");`,
+    optionsSet: [[{ ignoreVoid: true }]],
+  },
+];
+
+// Invalid TypeScript test cases.
+const tsInvalid: ReadonlyArray<InvalidTestCase> = [...es3Invalid];
+
 describeTsOnly("TypeScript", () => {
   const ruleTester = new RuleTester(typescript);
   ruleTester.run(name, rule, {
-    valid: processValidTestCase(valid),
-    invalid: processInvalidTestCase(invalid),
+    valid: processValidTestCase(tsValid),
+    invalid: processInvalidTestCase(tsInvalid),
   });
 });
 
 describe("JavaScript (es3)", () => {
   const ruleTester = new RuleTester(es3);
   ruleTester.run(name, rule, {
-    valid: processValidTestCase(valid),
-    invalid: processInvalidTestCase(invalid),
+    valid: processValidTestCase(es3Valid),
+    invalid: processInvalidTestCase(es3Invalid),
   });
 });
