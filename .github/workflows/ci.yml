@@ -46,7 +46,7 @@ jobs:
     needs: pre_job
     if: ${{ needs.pre_job.outputs.should_skip != 'true' }}
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         os:
           - "ubuntu-latest"
