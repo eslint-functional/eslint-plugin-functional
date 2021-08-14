@@ -1,0 +1,52 @@
+{
+  "version": "0.1",
+  "language": "en",
+  "ignorePaths": [
+    "**/coverage/**",
+    "**/node_modules/**",
+    "**/lib/**",
+    "**/**/CHANGELOG.md",
+    "**/*.{json}",
+    ".cspell.json",
+    "yarn.lock",
+    ".github/workflows/**",
+    ".vscode/*.json"
+  ],
+  "dictionaries": [
+    "typescript",
+    "softwareTerms",
+    "node",
+    "en_US",
+    "npm",
+    "misc",
+    "filetypes"
+  ],
+  "ignoreRegExpList": [
+    "/```[\\w\\W]*?```/",
+    "/~~~[\\w\\W]*?~~~/",
+    "/``[\\w\\W]*?``/",
+    "/`[^`]*`/",
+    "/\\.\\/docs\\/rules\\/[^.]*.md/",
+    "/TS[^\\s]+/",
+    "\\(#.+?\\)"
+  ],
+  "words": [
+    "globstar",
+    "IIFE",
+    "IIFEs",
+    "ruleset",
+    "rulesets",
+    "typeguard",
+    "typeguards"
+  ],
+  "overrides": [
+    {
+      "filename": "**/*.{ts,js}",
+      "ignoreRegExpList": ["/@[a-z]+/", "/#(end)?region/"],
+      "includeRegExpList": [
+        "/\\/\\*[\\s\\S]*?\\*\\/|([^\\\\:]|^)\\/\\/.*$/",
+        "/(\\/\\/[^\\n\\r]*[\\n\\r]+)/"
+      ]
+    }
+  ]
+}

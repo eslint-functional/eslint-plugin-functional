@@ -14,7 +14,7 @@ jobs:
         id: skip_check
         uses: fkirc/skip-duplicate-actions@v3.4.0
         with:
-          concurrent_skipping: 'same_content'
+          concurrent_skipping: "same_content"
           paths_ignore: '[".vscode/", "**/docs/**", "**/*.md"]'
           do_not_skip: '["pull_request"]'
 
@@ -37,6 +37,9 @@ jobs:
 
       - name: Run Linting Checks
         run: yarn lint
+
+      - name: Check spelling
+        run: yarn check-spelling
 
   test:
     name: "Test - Node: ${{ matrix.node_version }} - TS: ${{ matrix.ts_version }} - OS: ${{ matrix.os }}"
