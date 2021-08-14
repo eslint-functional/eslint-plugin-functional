@@ -294,6 +294,7 @@ In order to know which AST nodes are created for a snippet of TypeScript code yo
 ### Commit Messages
 
 > tl;dr: use `npx cz` instead of `git commit`.
+
 Commit messages must follow [Conventional Commit messages guidelines](https://www.conventionalcommits.org/en/v1.0.0/). You can use `npx cz` instead of `git commit` to run a interactive prompt to generate the commit message. We've customize the prompt specifically for this project. For more information see [commitizen](https://github.com/commitizen/cz-cli#readme).
 
 ### How to publish
