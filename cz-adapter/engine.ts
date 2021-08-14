@@ -195,7 +195,7 @@ function doCommit(
         ? wrap(answers.issues!, wrapOptions)
         : false;
 
-    // Assemble the commmit message.
+    // Assemble the commit message.
     const message = arrayFilterFalsy([head, body, issues]).join("\n\n");
 
     // Print the commit message.

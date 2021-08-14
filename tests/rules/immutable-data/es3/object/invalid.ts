@@ -158,7 +158,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       },
     ],
   },
-  // Disallow Object.assign on identifers.
+  // Disallow Object.assign on identifiers.
   {
     code: dedent`
       var x = { msg1: "hello", obj: { a: 1, b: 2} };

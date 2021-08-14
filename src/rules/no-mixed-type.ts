@@ -84,9 +84,9 @@ function hasTypeElementViolations(
         carry.prevMemberType !== undefined &&
         // And different property type to previous property.
         (carry.prevMemberType !== member.type ||
-          // Or annotationed with a different type annotation.
+          // Or annotated with a different type annotation.
           (carry.prevMemberTypeAnnotation !== member.typeAnnotation &&
-            // Where one of the properties is a annotationed as a function.
+            // Where one of the properties is a annotated as a function.
             (carry.prevMemberTypeAnnotation === AST_NODE_TYPES.TSFunctionType ||
               member.typeAnnotation === AST_NODE_TYPES.TSFunctionType))),
     }),
