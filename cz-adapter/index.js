@@ -1,4 +1,6 @@
 require("ts-node").register({
+  transpileOnly: true,
+  emit: true,
   compilerOptions: {
     module: "CommonJS",
   },
