@@ -12,7 +12,6 @@
 [![MIT license](https://img.shields.io/github/license/jonaskello/eslint-plugin-functional.svg?style=flat)](https://opensource.org/licenses/MIT)
 [![GitHub Discussions](https://img.shields.io/github/discussions/jonaskello/eslint-plugin-functional)](https://github.com/jonaskello/eslint-plugin-functional/discussions)
 
-
 An [ESLint](http://eslint.org) plugin to disable mutation and promote functional programming in JavaScript and TypeScript.
 
 </div>
