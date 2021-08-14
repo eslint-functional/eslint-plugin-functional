@@ -11,7 +11,7 @@ import { testUsing } from "~/tests/helpers/testers";
  * Step 1.
  * Import the rule to test.
  */
-import { name, rule } from "~/rules/prefer-readonly-type";
+import { name, rule } from "~/rules/prefer-readonly-type-declaration";
 
 /*
  * Step 2a.
