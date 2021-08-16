@@ -17,7 +17,7 @@
         "<node_internals>/**/*.js"
       ],
       "env": {
-        "TEST_ALL_FILE": "1"
+        "TEST_ALL_FILES": "1"
       },
       "sourceMaps": true,
       "console": "integratedTerminal",
