@@ -37,6 +37,16 @@ export type ObjectConstructorType = Type & {
 };
 
 /*
+ * Basic type guards.
+ */
+
+export function isReadonlyArray(
+  value: unknown
+): value is ReadonlyArray<unknown> {
+  return Array.isArray(value);
+}
+
+/*
  * Node type guards.
  */
 

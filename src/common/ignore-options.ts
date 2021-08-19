@@ -12,6 +12,7 @@ import {
   isExpressionStatement,
   isIdentifier,
   isMemberExpression,
+  isReadonlyArray,
   isThisExpression,
   isTSArrayType,
   isTSIndexSignature,
@@ -170,9 +171,9 @@ function shouldIgnoreViaPattern(
   text: string,
   ignorePattern: ReadonlyArray<string> | string
 ): boolean {
-  const patterns: ReadonlyArray<string> = Array.isArray(ignorePattern)
+  const patterns: ReadonlyArray<string> = isReadonlyArray(ignorePattern)
     ? ignorePattern
-    : [ignorePattern as string];
+    : [ignorePattern];
 
   // One or more patterns match?
   return patterns.some((pattern) => new RegExp(pattern, "u").test(text));
@@ -234,9 +235,9 @@ function shouldIgnoreViaAccessorPattern(
   text: string,
   ignorePattern: ReadonlyArray<string> | string
 ): boolean {
-  const patterns: ReadonlyArray<string> = Array.isArray(ignorePattern)
+  const patterns: ReadonlyArray<string> = isReadonlyArray(ignorePattern)
     ? ignorePattern
-    : [ignorePattern as string];
+    : [ignorePattern];
 
   // One or more patterns match?
   return patterns.some((pattern) =>
