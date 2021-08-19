@@ -1,17 +1,48 @@
-import type { TSESLint } from "@typescript-eslint/experimental-utils";
+import type { TSESLint, TSESTree } from "@typescript-eslint/experimental-utils";
 import assert from "assert";
 import test from "ava";
 import dedent from "dedent";
 import RuleTester from "eslint-ava-rule-tester";
 
 import type {
+  AllowLocalMutationOption,
   IgnoreAccessorPatternOption,
+  IgnoreClassOption,
+  IgnoreInterfaceOption,
   IgnorePatternOption,
 } from "~/common/ignore-options";
-import { shouldIgnore } from "~/common/ignore-options";
+import {
+  shouldIgnoreClass,
+  shouldIgnoreInterface,
+  shouldIgnoreLocalMutation,
+  shouldIgnorePattern,
+} from "~/common/ignore-options";
 import { filename, configs } from "~/tests/helpers/configs";
 import { testWrapper } from "~/tests/helpers/testers";
 import { addFilename, createDummyRule } from "~/tests/helpers/util";
+import type { BaseOptions, RuleContext } from "~/util/rule";
+
+/**
+ *
+ */
+function shouldIgnore(
+  node: TSESTree.Node,
+  context: RuleContext<string, BaseOptions>,
+  options: Partial<
+    AllowLocalMutationOption &
+      IgnoreAccessorPatternOption &
+      IgnoreClassOption &
+      IgnoreInterfaceOption &
+      IgnorePatternOption
+  >
+): boolean {
+  return [
+    shouldIgnorePattern,
+    shouldIgnoreClass,
+    shouldIgnoreInterface,
+    shouldIgnoreLocalMutation,
+  ].some((testShouldIgnore) => testShouldIgnore(node, context, options));
+}
 
 /**
  * Create a dummy rule that operates on AssignmentExpression nodes.

@@ -248,52 +248,77 @@ function shouldIgnoreViaAccessorPattern(
 /**
  * Should the given node be allowed base off the following rule options?
  *
- * - IgnoreAccessorPatternOption.
- * - IgnoreClassOption.
- * - IgnoreInterfaceOption.
- * - IgnorePatternOption.
  * - AllowLocalMutationOption.
  */
-export function shouldIgnore(
+export function shouldIgnoreLocalMutation(
   node: TSESTree.Node,
   context: RuleContext<string, BaseOptions>,
-  options: Partial<
-    AllowLocalMutationOption &
-      IgnoreAccessorPatternOption &
-      IgnoreClassOption &
-      IgnoreInterfaceOption &
-      IgnorePatternOption
-  >
+  options: Partial<AllowLocalMutationOption>
+): boolean {
+  return options.allowLocalMutation === true && inFunctionBody(node);
+}
+
+/**
+ * Should the given node be allowed base off the following rule options?
+ *
+ * - IgnoreClassOption.
+ */
+export function shouldIgnoreClass(
+  node: TSESTree.Node,
+  context: RuleContext<string, BaseOptions>,
+  options: Partial<IgnoreClassOption>
 ): boolean {
   return (
-    // Allow if in a function and allowLocalMutation is set.
-    (options.allowLocalMutation === true && inFunctionBody(node)) ||
-    // Ignore if in a class and ignoreClass is set.
     (options.ignoreClass === true && inClass(node)) ||
-    // Ignore if class field and ignoreClass is set for ignoring fields.
     (options.ignoreClass === "fieldsOnly" &&
       (isClassProperty(node) ||
         (isAssignmentExpression(node) &&
           inClass(node) &&
           isMemberExpression(node.left) &&
-          isThisExpression(node.left.object)))) ||
-    // Ignore if in an interface and ignoreInterface is set.
-    (options.ignoreInterface === true && inInterface(node)) ||
-    ((texts: ReadonlyArray<string>): boolean =>
-      texts.length > 0
-        ? // Ignore if ignorePattern is set and a pattern matches.
-          (options.ignorePattern !== undefined &&
-            texts.every((text) =>
-              shouldIgnoreViaPattern(text, options.ignorePattern!)
-            )) ||
-          // Ignore if ignoreAccessorPattern is set and an accessor pattern matches.
-          (options.ignoreAccessorPattern !== undefined &&
-            texts.every((text) =>
-              shouldIgnoreViaAccessorPattern(
-                text,
-                options.ignoreAccessorPattern!
-              )
-            ))
-        : false)(getNodeIdentifierTexts(node, context))
+          isThisExpression(node.left.object))))
+  );
+}
+
+/**
+ * Should the given node be allowed base off the following rule options?
+ *
+ * - IgnoreInterfaceOption.
+ */
+export function shouldIgnoreInterface(
+  node: TSESTree.Node,
+  context: RuleContext<string, BaseOptions>,
+  options: Partial<IgnoreInterfaceOption>
+): boolean {
+  return options.ignoreInterface === true && inInterface(node);
+}
+
+/**
+ * Should the given node be allowed base off the following rule options?
+ *
+ * - IgnoreAccessorPatternOption.
+ * - IgnorePatternOption.
+ */
+export function shouldIgnorePattern(
+  node: TSESTree.Node,
+  context: RuleContext<string, BaseOptions>,
+  options: Partial<IgnoreAccessorPatternOption & IgnorePatternOption>
+): boolean {
+  const texts = getNodeIdentifierTexts(node, context);
+
+  if (texts.length === 0) {
+    return false;
+  }
+
+  return (
+    // Ignore if ignorePattern is set and a pattern matches.
+    (options.ignorePattern !== undefined &&
+      texts.every((text) =>
+        shouldIgnoreViaPattern(text, options.ignorePattern!)
+      )) ||
+    // Ignore if ignoreAccessorPattern is set and an accessor pattern matches.
+    (options.ignoreAccessorPattern !== undefined &&
+      texts.every((text) =>
+        shouldIgnoreViaAccessorPattern(text, options.ignoreAccessorPattern!)
+      ))
   );
 }

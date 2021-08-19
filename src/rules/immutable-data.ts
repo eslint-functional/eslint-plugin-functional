@@ -8,14 +8,20 @@ import type {
   IgnoreClassOption,
 } from "~/common/ignore-options";
 import {
+  shouldIgnorePattern,
+  shouldIgnoreClass,
   ignoreAccessorPatternOptionSchema,
   ignoreClassOptionSchema,
   ignorePatternOptionSchema,
-  shouldIgnore,
 } from "~/common/ignore-options";
 import { isExpected } from "~/util/misc";
-import type { RuleContext, RuleMetaData, RuleResult } from "~/util/rule";
 import { createRule, getTypeOfNode } from "~/util/rule";
+import type {
+  RuleContext,
+  RuleMetaData,
+  RuleResult,
+  ShouldIgnoreFunction,
+} from "~/util/rule";
 import { inConstructor } from "~/util/tree";
 import {
   isArrayConstructorType,
@@ -309,6 +315,20 @@ function checkCallExpression(
   };
 }
 
+const shouldIgnoreFunctions: ReadonlyArray<
+  ShouldIgnoreFunction<keyof typeof errorMessages, Options>
+> = [shouldIgnoreClass, shouldIgnorePattern];
+
+/**
+ *
+ */
+function shouldIgnore<
+  Node extends TSESTree.Node,
+  Context extends RuleContext<keyof typeof errorMessages, Options>
+>(node: Node, context: Context, options: Options): boolean {
+  return shouldIgnoreFunctions.some((test) => test(node, context, options));
+}
+
 // Create the rule.
 export const rule = createRule<keyof typeof errorMessages, Options>(
   name,
@@ -319,5 +339,7 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
     UnaryExpression: checkUnaryExpression,
     UpdateExpression: checkUpdateExpression,
     CallExpression: checkCallExpression,
-  }
+  },
+
+  shouldIgnoreFunctions
 );
