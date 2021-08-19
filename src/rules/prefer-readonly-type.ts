@@ -125,12 +125,19 @@ function checkArrayOrTupleType(
   context: RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
-  if (options.ignoreCollections) {
+  if (
+    shouldIgnoreClass(node, context, options) ||
+    shouldIgnoreInterface(node, context, options) ||
+    shouldIgnoreLocalMutation(node, context, options) ||
+    shouldIgnorePattern(node, context, options) ||
+    options.ignoreCollections
+  ) {
     return {
       context,
       descriptors: [],
     };
   }
+
   return {
     context,
     descriptors:
@@ -160,8 +167,21 @@ function checkArrayOrTupleType(
  */
 function checkMappedType(
   node: TSESTree.TSMappedType,
-  context: RuleContext<keyof typeof errorMessages, Options>
+  context: RuleContext<keyof typeof errorMessages, Options>,
+  options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
+  if (
+    shouldIgnoreClass(node, context, options) ||
+    shouldIgnoreInterface(node, context, options) ||
+    shouldIgnoreLocalMutation(node, context, options) ||
+    shouldIgnorePattern(node, context, options)
+  ) {
+    return {
+      context,
+      descriptors: [],
+    };
+  }
+
   return {
     context,
     descriptors:
@@ -189,6 +209,18 @@ function checkTypeReference(
   context: RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
+  if (
+    shouldIgnoreClass(node, context, options) ||
+    shouldIgnoreInterface(node, context, options) ||
+    shouldIgnoreLocalMutation(node, context, options) ||
+    shouldIgnorePattern(node, context, options)
+  ) {
+    return {
+      context,
+      descriptors: [],
+    };
+  }
+
   if (isIdentifier(node.typeName)) {
     if (
       options.ignoreCollections &&
@@ -234,6 +266,18 @@ function checkProperty(
   context: RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
+  if (
+    shouldIgnoreClass(node, context, options) ||
+    shouldIgnoreInterface(node, context, options) ||
+    shouldIgnoreLocalMutation(node, context, options) ||
+    shouldIgnorePattern(node, context, options)
+  ) {
+    return {
+      context,
+      descriptors: [],
+    };
+  }
+
   return {
     context,
     descriptors:
@@ -268,57 +312,64 @@ function checkImplicitType(
   context: RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
-  if (options.checkImplicit) {
-    type Declarator = {
-      readonly id: TSESTree.Node;
-      readonly init: TSESTree.Node | null;
-      readonly node: TSESTree.Node;
-    };
-
-    const declarators: ReadonlyArray<Declarator> = isFunctionLike(node)
-      ? node.params
-          .map((param) =>
-            isAssignmentPattern(param)
-              ? ({
-                  id: param.left,
-                  init: param.right,
-                  node: param,
-                } as Declarator)
-              : undefined
-          )
-          .filter((param): param is Declarator => param !== undefined)
-      : node.declarations.map(
-          (declaration) =>
-            ({
-              id: declaration.id,
-              init: declaration.init,
-              node: declaration,
-            } as Declarator)
-        );
-
+  if (
+    !options.checkImplicit ||
+    shouldIgnoreClass(node, context, options) ||
+    shouldIgnoreInterface(node, context, options) ||
+    shouldIgnoreLocalMutation(node, context, options) ||
+    shouldIgnorePattern(node, context, options)
+  ) {
     return {
       context,
-      descriptors: declarators.flatMap((declarator) =>
-        isIdentifier(declarator.id) &&
-        declarator.id.typeAnnotation === undefined &&
-        declarator.init !== null &&
-        isArrayType(getTypeOfNode(declarator.init, context)) &&
-        !options.ignoreCollections
-          ? [
-              {
-                node: declarator.node,
-                messageId: "implicit",
-                fix: (fixer) =>
-                  fixer.insertTextAfter(declarator.id, ": readonly unknown[]"),
-              },
-            ]
-          : []
-      ),
+      descriptors: [],
     };
   }
+
+  type Declarator = {
+    readonly id: TSESTree.Node;
+    readonly init: TSESTree.Node | null;
+    readonly node: TSESTree.Node;
+  };
+
+  const declarators: ReadonlyArray<Declarator> = isFunctionLike(node)
+    ? node.params
+        .map((param) =>
+          isAssignmentPattern(param)
+            ? ({
+                id: param.left,
+                init: param.right,
+                node: param,
+              } as Declarator)
+            : undefined
+        )
+        .filter((param): param is Declarator => param !== undefined)
+    : node.declarations.map(
+        (declaration) =>
+          ({
+            id: declaration.id,
+            init: declaration.init,
+            node: declaration,
+          } as Declarator)
+      );
+
   return {
     context,
-    descriptors: [],
+    descriptors: declarators.flatMap((declarator) =>
+      isIdentifier(declarator.id) &&
+      declarator.id.typeAnnotation === undefined &&
+      declarator.init !== null &&
+      isArrayType(getTypeOfNode(declarator.init, context)) &&
+      !options.ignoreCollections
+        ? [
+            {
+              node: declarator.node,
+              messageId: "implicit",
+              fix: (fixer) =>
+                fixer.insertTextAfter(declarator.id, ": readonly unknown[]"),
+            },
+          ]
+        : []
+    ),
   };
 }
 
@@ -340,11 +391,5 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
     TSMappedType: checkMappedType,
     TSTypeReference: checkTypeReference,
     VariableDeclaration: checkImplicitType,
-  },
-  [
-    shouldIgnoreClass,
-    shouldIgnoreInterface,
-    shouldIgnoreLocalMutation,
-    shouldIgnorePattern,
-  ]
+  }
 );

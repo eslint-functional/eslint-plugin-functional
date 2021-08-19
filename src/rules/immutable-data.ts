@@ -16,12 +16,7 @@ import {
 } from "~/common/ignore-options";
 import { isExpected } from "~/util/misc";
 import { createRule, getTypeOfNode } from "~/util/rule";
-import type {
-  RuleContext,
-  RuleMetaData,
-  RuleResult,
-  ShouldIgnoreFunction,
-} from "~/util/rule";
+import type { RuleContext, RuleMetaData, RuleResult } from "~/util/rule";
 import { inConstructor } from "~/util/tree";
 import {
   isArrayConstructorType,
@@ -172,16 +167,25 @@ const objectConstructorMutatorFunctions = new Set([
  */
 function checkAssignmentExpression(
   node: TSESTree.AssignmentExpression,
-  context: RuleContext<keyof typeof errorMessages, Options>
+  context: RuleContext<keyof typeof errorMessages, Options>,
+  options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
+  if (
+    !isMemberExpression(node.left) ||
+    shouldIgnoreClass(node, context, options) ||
+    shouldIgnorePattern(node, context, options)
+  ) {
+    return {
+      context,
+      descriptors: [],
+    };
+  }
+
   return {
     context,
     descriptors:
-      isMemberExpression(node.left) &&
       // Allow if in a constructor - allow for field initialization.
-      !inConstructor(node)
-        ? [{ node, messageId: "generic" }]
-        : [],
+      !inConstructor(node) ? [{ node, messageId: "generic" }] : [],
   };
 }
 
@@ -190,14 +194,24 @@ function checkAssignmentExpression(
  */
 function checkUnaryExpression(
   node: TSESTree.UnaryExpression,
-  context: RuleContext<keyof typeof errorMessages, Options>
+  context: RuleContext<keyof typeof errorMessages, Options>,
+  options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
+  if (
+    !isMemberExpression(node.argument) ||
+    shouldIgnoreClass(node, context, options) ||
+    shouldIgnorePattern(node, context, options)
+  ) {
+    return {
+      context,
+      descriptors: [],
+    };
+  }
+
   return {
     context,
     descriptors:
-      node.operator === "delete" && isMemberExpression(node.argument)
-        ? [{ node, messageId: "generic" }]
-        : [],
+      node.operator === "delete" ? [{ node, messageId: "generic" }] : [],
   };
 }
 
@@ -209,13 +223,20 @@ function checkUpdateExpression(
   context: RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
+  if (
+    !isMemberExpression(node.argument) ||
+    shouldIgnoreClass(node.argument, context, options) ||
+    shouldIgnorePattern(node.argument, context, options)
+  ) {
+    return {
+      context,
+      descriptors: [],
+    };
+  }
+
   return {
     context,
-    descriptors:
-      isMemberExpression(node.argument) &&
-      !shouldIgnore(node.argument, context, options)
-        ? [{ node, messageId: "generic" }]
-        : [],
+    descriptors: [{ node, messageId: "generic" }],
   };
 }
 
@@ -269,64 +290,72 @@ function checkCallExpression(
   context: RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
+  // Not potential object mutation?
+  if (
+    !isMemberExpression(node.callee) ||
+    !isIdentifier(node.callee.property) ||
+    shouldIgnoreClass(node.callee.object, context, options) ||
+    shouldIgnorePattern(node.callee.object, context, options)
+  ) {
+    return {
+      context,
+      descriptors: [],
+    };
+  }
+
   const assumeTypesForArrays =
     options.assumeTypes === true ||
     (options.assumeTypes !== false && options.assumeTypes.forArrays === true);
+
+  // Array mutation?
+  if (
+    arrayMutatorMethods.has(node.callee.property.name) &&
+    (!options.ignoreImmediateMutation ||
+      !isInChainCallAndFollowsNew(
+        node.callee,
+        context,
+        assumeTypesForArrays
+      )) &&
+    isArrayType(
+      getTypeOfNode(node.callee.object, context),
+      assumeTypesForArrays,
+      node.callee.object
+    )
+  ) {
+    return {
+      context,
+      descriptors: [{ node, messageId: "array" }],
+    };
+  }
+
   const assumeTypesForObjects =
     options.assumeTypes === true ||
     (options.assumeTypes !== false && options.assumeTypes.forObjects === true);
 
+  // Non-array object mutation (ex. Object.assign on identifier)?
+  if (
+    objectConstructorMutatorFunctions.has(node.callee.property.name) &&
+    node.arguments.length >= 2 &&
+    (isIdentifier(node.arguments[0]) ||
+      isMemberExpression(node.arguments[0])) &&
+    !shouldIgnoreClass(node.arguments[0], context, options) &&
+    !shouldIgnorePattern(node.arguments[0], context, options) &&
+    isObjectConstructorType(
+      getTypeOfNode(node.callee.object, context),
+      assumeTypesForObjects,
+      node.callee.object
+    )
+  ) {
+    return {
+      context,
+      descriptors: [{ node, messageId: "object" }],
+    };
+  }
+
   return {
     context,
-    descriptors:
-      // Potential object mutation?
-      isMemberExpression(node.callee) && isIdentifier(node.callee.property)
-        ? // Potential array mutation?
-          // Check if allowed here - this cannot be automatically checked beforehand.
-          !shouldIgnore(node.callee.object, context, options) &&
-          arrayMutatorMethods.has(node.callee.property.name) &&
-          (!options.ignoreImmediateMutation ||
-            !isInChainCallAndFollowsNew(
-              node.callee,
-              context,
-              assumeTypesForArrays
-            )) &&
-          isArrayType(
-            getTypeOfNode(node.callee.object, context),
-            assumeTypesForArrays,
-            node.callee.object
-          )
-          ? [{ node, messageId: "array" }]
-          : // Potential non-array object mutation (ex. Object.assign on identifier)?
-          objectConstructorMutatorFunctions.has(node.callee.property.name) &&
-            node.arguments.length >= 2 &&
-            (isIdentifier(node.arguments[0]) ||
-              isMemberExpression(node.arguments[0])) &&
-            // Check if allowed here - this cannot be automatically checked beforehand.
-            !shouldIgnore(node.arguments[0], context, options) &&
-            isObjectConstructorType(
-              getTypeOfNode(node.callee.object, context),
-              assumeTypesForObjects,
-              node.callee.object
-            )
-          ? [{ node, messageId: "object" }]
-          : []
-        : [],
+    descriptors: [],
   };
-}
-
-const shouldIgnoreFunctions: ReadonlyArray<
-  ShouldIgnoreFunction<keyof typeof errorMessages, Options>
-> = [shouldIgnoreClass, shouldIgnorePattern];
-
-/**
- *
- */
-function shouldIgnore<
-  Node extends TSESTree.Node,
-  Context extends RuleContext<keyof typeof errorMessages, Options>
->(node: Node, context: Context, options: Options): boolean {
-  return shouldIgnoreFunctions.some((test) => test(node, context, options));
 }
 
 // Create the rule.
@@ -339,7 +368,5 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
     UnaryExpression: checkUnaryExpression,
     UpdateExpression: checkUpdateExpression,
     CallExpression: checkCallExpression,
-  },
-
-  shouldIgnoreFunctions
+  }
 );

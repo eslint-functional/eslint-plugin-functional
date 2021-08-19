@@ -66,6 +66,13 @@ function checkExpressionStatement(
   context: RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
+  if (shouldIgnorePattern(node, context, options)) {
+    return {
+      context,
+      descriptors: [],
+    };
+  }
+
   // Allow specifying directive prologues.
   if (isDirectivePrologue(node)) {
     return {
@@ -99,6 +106,5 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   defaultOptions,
   {
     ExpressionStatement: checkExpressionStatement,
-  },
-  [shouldIgnorePattern]
+  }
 );
