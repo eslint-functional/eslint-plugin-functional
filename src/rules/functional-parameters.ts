@@ -187,6 +187,13 @@ function checkFunction(
   context: RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
+  if (shouldIgnorePattern(node, context, options)) {
+    return {
+      context,
+      descriptors: [],
+    };
+  }
+
   return {
     context,
     descriptors: [
@@ -204,6 +211,13 @@ function checkIdentifier(
   context: RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
+  if (shouldIgnorePattern(node, context, options)) {
+    return {
+      context,
+      descriptors: [],
+    };
+  }
+
   return {
     context,
     descriptors:
@@ -231,6 +245,5 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
     FunctionExpression: checkFunction,
     ArrowFunctionExpression: checkFunction,
     Identifier: checkIdentifier,
-  },
-  [shouldIgnorePattern]
+  }
 );

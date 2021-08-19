@@ -54,8 +54,19 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
  */
 function checkVariableDeclaration(
   node: TSESTree.VariableDeclaration,
-  context: RuleContext<keyof typeof errorMessages, Options>
+  context: RuleContext<keyof typeof errorMessages, Options>,
+  options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
+  if (
+    shouldIgnoreLocalMutation(node, context, options) ||
+    shouldIgnorePattern(node, context, options)
+  ) {
+    return {
+      context,
+      descriptors: [],
+    };
+  }
+
   return {
     context,
     descriptors: node.kind === "let" ? [{ node, messageId: "generic" }] : [],
@@ -69,6 +80,5 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   defaultOptions,
   {
     VariableDeclaration: checkVariableDeclaration,
-  },
-  [shouldIgnoreLocalMutation, shouldIgnorePattern]
+  }
 );
