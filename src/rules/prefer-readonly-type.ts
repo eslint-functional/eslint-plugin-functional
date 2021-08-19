@@ -9,6 +9,10 @@ import type {
   IgnorePatternOption,
 } from "~/common/ignore-options";
 import {
+  shouldIgnoreLocalMutation,
+  shouldIgnoreClass,
+  shouldIgnoreInterface,
+  shouldIgnorePattern,
   allowLocalMutationOptionSchema,
   ignoreClassOptionSchema,
   ignoreInterfaceOptionSchema,
@@ -336,5 +340,11 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
     TSMappedType: checkMappedType,
     TSTypeReference: checkTypeReference,
     VariableDeclaration: checkImplicitType,
-  }
+  },
+  [
+    shouldIgnoreClass,
+    shouldIgnoreInterface,
+    shouldIgnoreLocalMutation,
+    shouldIgnorePattern,
+  ]
 );

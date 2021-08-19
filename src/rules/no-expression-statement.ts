@@ -3,7 +3,10 @@ import { all as deepMerge } from "deepmerge";
 import type { JSONSchema4 } from "json-schema";
 
 import type { IgnorePatternOption } from "~/common/ignore-options";
-import { ignorePatternOptionSchema } from "~/common/ignore-options";
+import {
+  shouldIgnorePattern,
+  ignorePatternOptionSchema,
+} from "~/common/ignore-options";
 import { isDirectivePrologue } from "~/util/misc";
 import type { RuleContext, RuleMetaData, RuleResult } from "~/util/rule";
 import { createRule, getTypeOfNode } from "~/util/rule";
@@ -96,5 +99,6 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   defaultOptions,
   {
     ExpressionStatement: checkExpressionStatement,
-  }
+  },
+  [shouldIgnorePattern]
 );

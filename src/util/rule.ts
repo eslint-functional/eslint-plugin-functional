@@ -3,7 +3,6 @@ import { ESLintUtils } from "@typescript-eslint/experimental-utils";
 import type { Rule } from "eslint";
 import type { Node, Type } from "typescript";
 
-import { shouldIgnore } from "~/common/ignore-options";
 import { version } from "~/package.json";
 
 export type BaseOptions = object;
@@ -47,6 +46,16 @@ export type RuleFunctionsMap<
   ) => RuleResult<MessageIds, Options>;
 };
 
+export type ShouldIgnoreFunction<
+  MessageIds extends string,
+  Options extends BaseOptions,
+  Node extends TSESTree.Node = TSESTree.Node,
+  Context extends RuleContext<MessageIds, BaseOptions> = RuleContext<
+    MessageIds,
+    BaseOptions
+  >
+> = (node: Node, context: Context, options: Options) => boolean;
+
 // This function can't be functional as it needs to interact with 3rd-party
 // libraries that aren't functional.
 /* eslint-disable functional/no-return-void, functional/no-conditional-statement, functional/no-expression-statement */
@@ -66,10 +75,17 @@ function checkNode<
     options: Options
   ) => RuleResult<MessageIds, Options>,
   context: Context,
-  options: Options
+  options: Options,
+  shouldIgnoreFunctions: ReadonlyArray<
+    ShouldIgnoreFunction<MessageIds, Options, Node, Context>
+  >
 ): (node: Node) => void {
   return (node: Node) => {
-    if (!shouldIgnore(node, context, options)) {
+    if (
+      !shouldIgnoreFunctions.some((shouldIgnore) =>
+        shouldIgnore(node, context, options)
+      )
+    ) {
       const result = check(node, context, options);
 
       // eslint-disable-next-line functional/no-loop-statement -- can't really be avoided.
@@ -91,7 +107,10 @@ export function createRule<
   name: string,
   meta: RuleMetaData<MessageIds>,
   defaultOptions: Options,
-  ruleFunctionsMap: RuleFunctionsMap<MessageIds, Options>
+  ruleFunctionsMap: RuleFunctionsMap<MessageIds, Options>,
+  shouldIgnoreFunctions: ReadonlyArray<
+    ShouldIgnoreFunction<MessageIds, Options>
+  > = []
 ): Rule.RuleModule {
   return ESLintUtils.RuleCreator(
     (name) =>
@@ -107,7 +126,7 @@ export function createRule<
       Object.fromEntries(
         Object.entries(ruleFunctionsMap).map(([nodeSelector, ruleFunction]) => [
           nodeSelector,
-          checkNode(ruleFunction, context, options),
+          checkNode(ruleFunction, context, options, shouldIgnoreFunctions),
         ])
       ),
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */

@@ -7,6 +7,8 @@ import type {
   IgnorePatternOption,
 } from "~/common/ignore-options";
 import {
+  shouldIgnorePattern,
+  shouldIgnoreLocalMutation,
   allowLocalMutationOptionSchema,
   ignorePatternOptionSchema,
 } from "~/common/ignore-options";
@@ -67,5 +69,6 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   defaultOptions,
   {
     VariableDeclaration: checkVariableDeclaration,
-  }
+  },
+  [shouldIgnoreLocalMutation, shouldIgnorePattern]
 );
