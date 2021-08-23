@@ -27,9 +27,46 @@ const valid: ReadonlyArray<ValidTestCase> = [
   },
   {
     code: dedent`
+      interface Foo extends Readonly<{
+        methodSignature(): void
+      }>{}`,
+    optionsSet: [[]],
+  },
+  {
+    code: dedent`
+      interface Foo extends Bar, Readonly<Baz & {
+        methodSignature(): void
+      }>{}`,
+    optionsSet: [[]],
+  },
+  {
+    code: dedent`
       type Foo2 = {
         bar: (a: number, b: string) => number
       }`,
+    optionsSet: [[]],
+  },
+  {
+    code: dedent`
+      type Foo = Readonly<{
+        methodSignature(): void
+      }>`,
+    optionsSet: [[]],
+  },
+  {
+    code: dedent`
+      type Foo = Bar & Readonly<Baz & {
+        methodSignature(): void
+      }>`,
+    optionsSet: [[]],
+  },
+  {
+    code: dedent`
+      type Foo = Bar & Readonly<Baz & {
+        nested: Readonly<{
+          methodSignature(): void
+        }>
+      }>`,
     optionsSet: [[]],
   },
 ];
@@ -63,6 +100,38 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         type: "TSMethodSignature",
         line: 2,
         column: 3,
+      },
+    ],
+  },
+  {
+    code: dedent`
+      type Foo = Bar & Readonly<Baz> & {
+        methodSignature(): void
+      }`,
+    optionsSet: [[]],
+    errors: [
+      {
+        messageId: "generic",
+        type: "TSMethodSignature",
+        line: 2,
+        column: 3,
+      },
+    ],
+  },
+  {
+    code: dedent`
+      type Foo = Bar & Readonly<Baz & {
+        nested: {
+          methodSignature(): void
+        }
+      }>`,
+    optionsSet: [[]],
+    errors: [
+      {
+        messageId: "generic",
+        type: "TSMethodSignature",
+        line: 3,
+        column: 5,
       },
     ],
   },

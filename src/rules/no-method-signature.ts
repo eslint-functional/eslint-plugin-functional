@@ -56,6 +56,7 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   meta,
   defaultOptions,
   {
-    TSMethodSignature: checkTSMethodSignature,
+    ':matches(TSInterfaceBody, TSTypeAliasDeclaration > TSIntersectionType > TSTypeLiteral, TSTypeAliasDeclaration > TSTypeLiteral, TSTypeAliasDeclaration > TSTypeReference:not([typeName.name="Readonly"]) > TSTypeParameterInstantiation > TSIntersectionType > TSTypeLiteral, TSTypeLiteral > TSPropertySignature > TSTypeAnnotation > TSTypeLiteral) > TSMethodSignature':
+      checkTSMethodSignature,
   }
 );
