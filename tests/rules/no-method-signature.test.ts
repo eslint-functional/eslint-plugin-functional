@@ -71,13 +71,13 @@ const valid: ReadonlyArray<ValidTestCase> = [
   },
   {
     code: dedent`
-      type Foo = Bar & Readonly<Baz & {
+      interface Foo extends Bar, Readonly<Baz & {
         readonly nested: {
           deepNested: Readonly<{
             methodSignature(): void
           }>
         }
-      }>`,
+      }>{}`,
     optionsSet: [[]],
   },
 ];
@@ -148,13 +148,13 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
   },
   {
     code: dedent`
-      type Foo = Bar & Readonly<Baz & {
+      interface Foo extends Bar, Readonly<Baz & {
         readonly nested: Readonly<{
           deepNested: {
             methodSignature(): void
           }
         }>
-      }>`,
+      }>{}`,
     optionsSet: [[]],
     errors: [
       {
