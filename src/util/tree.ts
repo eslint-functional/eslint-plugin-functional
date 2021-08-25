@@ -1,4 +1,4 @@
-import { TSESTree } from "@typescript-eslint/experimental-utils";
+import { ASTUtils, TSESTree } from "@typescript-eslint/experimental-utils";
 
 import {
   isCallExpression,
@@ -10,6 +10,10 @@ import {
   isMethodDefinition,
   isProperty,
   isTSInterfaceBody,
+  isTSInterfaceHeritage,
+  isTSTypeAnnotation,
+  isTSTypeLiteral,
+  isTSTypeReference,
 } from "./typeguard";
 
 /**
@@ -44,6 +48,29 @@ export function inFunctionBody(node: TSESTree.Node): boolean {
  */
 export function inClass(node: TSESTree.Node): boolean {
   return getAncestorOfType(isClassLike, node) !== null;
+}
+
+/**
+ * Test if the given node is shallowly inside a `Readonly<{...}>`.
+ */
+export function inReadonly(node: TSESTree.Node): boolean {
+  // For nested cases, we shouldn't look for any parent, but the immediate parent.
+  if (
+    node.parent &&
+    isTSTypeLiteral(node.parent) &&
+    node.parent.parent &&
+    isTSTypeAnnotation(node.parent.parent)
+  ) {
+    return false;
+  }
+
+  const expressionOrTypeName =
+    getAncestorOfType(isTSTypeReference, node)?.typeName ??
+    getAncestorOfType(isTSInterfaceHeritage, node)?.expression;
+  return (
+    ASTUtils.isIdentifier(expressionOrTypeName) &&
+    expressionOrTypeName.name === "Readonly"
+  );
 }
 
 /**
