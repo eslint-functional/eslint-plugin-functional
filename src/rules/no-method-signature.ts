@@ -7,6 +7,7 @@ import {
   RuleMetaData,
   RuleResult,
 } from "../util/rule";
+import { inReadonly } from "../util/tree";
 
 // The name of this rule.
 export const name = "no-method-signature" as const;
@@ -46,6 +47,10 @@ function checkTSMethodSignature(
   node: TSESTree.TSMethodSignature,
   context: RuleContext<keyof typeof errorMessages, Options>
 ): RuleResult<keyof typeof errorMessages, Options> {
+  if (inReadonly(node)) {
+    return { context, descriptors: [] };
+  }
+
   // All TS method signatures violate this rule.
   return { context, descriptors: [{ node, messageId: "generic" }] };
 }
@@ -56,7 +61,6 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   meta,
   defaultOptions,
   {
-    ':matches(TSInterfaceBody, TSTypeAliasDeclaration > TSIntersectionType > TSTypeLiteral, TSTypeAliasDeclaration > TSTypeLiteral, TSTypeAliasDeclaration > TSTypeReference:not([typeName.name="Readonly"]) > TSTypeParameterInstantiation > TSIntersectionType > TSTypeLiteral, TSTypeLiteral > TSPropertySignature > TSTypeAnnotation > TSTypeLiteral) > TSMethodSignature':
-      checkTSMethodSignature,
+    TSMethodSignature: checkTSMethodSignature,
   }
 );

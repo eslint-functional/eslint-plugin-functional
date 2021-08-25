@@ -69,6 +69,17 @@ const valid: ReadonlyArray<ValidTestCase> = [
       }>`,
     optionsSet: [[]],
   },
+  {
+    code: dedent`
+      type Foo = Bar & Readonly<Baz & {
+        readonly nested: {
+          deepNested: Readonly<{
+            methodSignature(): void
+          }>
+        }
+      }>`,
+    optionsSet: [[]],
+  },
 ];
 
 // Invalid test cases.
@@ -132,6 +143,25 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
         type: "TSMethodSignature",
         line: 3,
         column: 5,
+      },
+    ],
+  },
+  {
+    code: dedent`
+      type Foo = Bar & Readonly<Baz & {
+        readonly nested: Readonly<{
+          deepNested: {
+            methodSignature(): void
+          }
+        }>
+      }>`,
+    optionsSet: [[]],
+    errors: [
+      {
+        messageId: "generic",
+        type: "TSMethodSignature",
+        line: 4,
+        column: 7,
       },
     ],
   },

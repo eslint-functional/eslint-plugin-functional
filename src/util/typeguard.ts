@@ -211,6 +211,12 @@ export function isTSInterfaceBody(
   return node.type === AST_NODE_TYPES.TSInterfaceBody;
 }
 
+export function isTSInterfaceHeritage(
+  node: TSESTree.Node
+): node is TSESTree.TSInterfaceHeritage {
+  return node.type === AST_NODE_TYPES.TSInterfaceHeritage;
+}
+
 export function isTSNullKeyword(
   node: TSESTree.Node
 ): node is TSESTree.TSNullKeyword {
