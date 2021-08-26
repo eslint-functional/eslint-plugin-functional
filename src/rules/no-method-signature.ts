@@ -13,13 +13,28 @@ import { inReadonly } from "../util/tree";
 export const name = "no-method-signature" as const;
 
 // The options this rule can take.
-type Options = {};
+type Options = {
+  readonly ignoreIfReadonly: boolean;
+};
 
 // The schema for the rule options.
-const schema: JSONSchema4 = [];
+const schema: JSONSchema4 = [
+  {
+    type: "object",
+    properties: {
+      ignoreIfReadonly: {
+        type: "boolean",
+        default: true,
+      },
+    },
+    additionalProperties: false,
+  },
+];
 
 // The default options for the rule.
-const defaultOptions: Options = {};
+const defaultOptions: Options = {
+  ignoreIfReadonly: true,
+};
 
 // The possible error messages.
 const errorMessages = {
@@ -45,9 +60,10 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
  */
 function checkTSMethodSignature(
   node: TSESTree.TSMethodSignature,
-  context: RuleContext<keyof typeof errorMessages, Options>
+  context: RuleContext<keyof typeof errorMessages, Options>,
+  { ignoreIfReadonly }: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
-  if (inReadonly(node)) {
+  if (ignoreIfReadonly && inReadonly(node)) {
     return { context, descriptors: [] };
   }
 
