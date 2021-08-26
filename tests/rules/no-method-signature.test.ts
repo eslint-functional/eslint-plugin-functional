@@ -165,6 +165,25 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
       },
     ],
   },
+  {
+    code: dedent`
+      interface Foo extends Bar, Readonly<Baz & {
+        readonly nested: {
+          deepNested: Readonly<{
+            methodSignature(): void
+          }>
+        }
+      }>{}`,
+    optionsSet: [[{ ignoreIfReadonly: false }]],
+    errors: [
+      {
+        messageId: "generic",
+        type: "TSMethodSignature",
+        line: 4,
+        column: 7,
+      },
+    ],
+  },
 ];
 
 describeTsOnly("TypeScript", () => {
