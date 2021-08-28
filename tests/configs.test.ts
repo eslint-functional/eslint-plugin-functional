@@ -34,8 +34,8 @@ const configs = new Map([
   [currying, "Currying"],
   [functional, "Functional"],
   [functionalLite, "Functional Lite"],
-  [noExceptions, "No Mutations"],
-  [noMutations, "No Exceptions"],
+  [noExceptions, "No Exceptions"],
+  [noMutations, "No Mutations"],
   [noObjectOrientation, "No Object Orientation"],
   [noStatements, "No Statements"],
   [stylistic, "Stylistic"],
@@ -48,7 +48,11 @@ for (const [config, name] of [...configs.entries()]) {
       t.pass("no tests");
     }
     for (const rule of rulesNames) {
-      t.not(all.rules?.[rule], undefined);
+      t.not(
+        all.rules?.[rule],
+        undefined,
+        `"${rule}" should be in "${name}" config as not in "All" config`
+      );
     }
   });
 
@@ -58,7 +62,11 @@ for (const [config, name] of [...configs.entries()]) {
       t.pass("no tests");
     }
     for (const rule of rulesNames) {
-      t.not(all.overrides?.[0].rules?.[rule], undefined);
+      t.not(
+        all.overrides?.[0].rules?.[rule],
+        undefined,
+        `"${rule}" should be in "${name}" config as not in "All" config`
+      );
     }
   });
 }
