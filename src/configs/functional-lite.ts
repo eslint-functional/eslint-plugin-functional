@@ -1,9 +1,9 @@
-import deepMerge from "deepmerge";
+import { deepmerge } from "deepmerge-ts";
 import type { Linter } from "eslint";
 
 import functional from "./functional";
 
-const config: Linter.Config = deepMerge(functional, {
+const config: Linter.Config = deepmerge(functional, {
   rules: {
     "functional/immutable-data": ["error", { ignoreClass: "fieldsOnly" }],
     "functional/no-conditional-statement": "off",
@@ -16,6 +16,6 @@ const config: Linter.Config = deepMerge(functional, {
       },
     ],
   },
-});
+} as Linter.Config);
 
 export default config;

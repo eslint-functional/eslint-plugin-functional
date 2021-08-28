@@ -1,5 +1,5 @@
 import type { TSESTree } from "@typescript-eslint/experimental-utils";
-import { all as deepMerge } from "deepmerge";
+import { deepmerge } from "deepmerge-ts";
 import type { JSONSchema4 } from "json-schema";
 
 import type {
@@ -47,7 +47,7 @@ type Options = IgnoreAccessorPatternOption &
 
 // The schema for the rule options.
 const schema: JSONSchema4 = [
-  deepMerge([
+  deepmerge(
     ignorePatternOptionSchema,
     ignoreAccessorPatternOptionSchema,
     ignoreClassOptionSchema,
@@ -78,8 +78,8 @@ const schema: JSONSchema4 = [
         },
       },
       additionalProperties: false,
-    },
-  ]),
+    }
+  ),
 ];
 
 // The default options for the rule.

@@ -1,5 +1,5 @@
 import type { TSESTree } from "@typescript-eslint/experimental-utils";
-import { all as deepMerge } from "deepmerge";
+import { deepmerge } from "deepmerge-ts";
 import type { JSONSchema4 } from "json-schema";
 
 import type { IgnorePatternOption } from "~/common/ignore-options";
@@ -32,46 +32,43 @@ type Options = IgnorePatternOption & {
 
 // The schema for the rule options.
 const schema: JSONSchema4 = [
-  deepMerge([
-    ignorePatternOptionSchema,
-    {
-      type: "object",
-      properties: {
-        allowRestParameter: {
-          type: "boolean",
-        },
-        allowArgumentsKeyword: {
-          type: "boolean",
-        },
-        enforceParameterCount: {
-          oneOf: [
-            {
-              type: "boolean",
-              enum: [false],
-            },
-            {
-              type: "string",
-              enum: ["atLeastOne", "exactlyOne"],
-            },
-            {
-              type: "object",
-              properties: {
-                count: {
-                  type: "string",
-                  enum: ["atLeastOne", "exactlyOne"],
-                },
-                ignoreIIFE: {
-                  type: "boolean",
-                },
-              },
-              additionalProperties: false,
-            },
-          ],
-        },
+  deepmerge(ignorePatternOptionSchema, {
+    type: "object",
+    properties: {
+      allowRestParameter: {
+        type: "boolean",
       },
-      additionalProperties: false,
+      allowArgumentsKeyword: {
+        type: "boolean",
+      },
+      enforceParameterCount: {
+        oneOf: [
+          {
+            type: "boolean",
+            enum: [false],
+          },
+          {
+            type: "string",
+            enum: ["atLeastOne", "exactlyOne"],
+          },
+          {
+            type: "object",
+            properties: {
+              count: {
+                type: "string",
+                enum: ["atLeastOne", "exactlyOne"],
+              },
+              ignoreIIFE: {
+                type: "boolean",
+              },
+            },
+            additionalProperties: false,
+          },
+        ],
+      },
     },
-  ]),
+    additionalProperties: false,
+  }),
 ];
 
 // The default options for the rule.

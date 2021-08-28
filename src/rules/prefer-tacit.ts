@@ -1,6 +1,6 @@
 import type { TSESTree } from "@typescript-eslint/experimental-utils";
 import type { ReportDescriptor } from "@typescript-eslint/experimental-utils/dist/ts-eslint";
-import { all as deepMerge } from "deepmerge";
+import { deepmerge } from "deepmerge-ts";
 import type { JSONSchema4 } from "json-schema";
 import type { FunctionLikeDeclaration, Type } from "typescript";
 
@@ -31,35 +31,32 @@ type Options = IgnorePatternOption & {
 
 // The schema for the rule options.
 const schema: JSONSchema4 = [
-  deepMerge([
-    ignorePatternOptionSchema,
-    {
-      type: "object",
-      properties: {
-        ignoreImmediateMutation: {
-          type: "boolean",
-        },
-        assumeTypes: {
-          oneOf: [
-            {
-              type: "boolean",
-              enum: [false],
-            },
-            {
-              type: "object",
-              properties: {
-                allowFixer: {
-                  type: "boolean",
-                },
-              },
-              additionalProperties: false,
-            },
-          ],
-        },
+  deepmerge(ignorePatternOptionSchema, {
+    type: "object",
+    properties: {
+      ignoreImmediateMutation: {
+        type: "boolean",
       },
-      additionalProperties: false,
+      assumeTypes: {
+        oneOf: [
+          {
+            type: "boolean",
+            enum: [false],
+          },
+          {
+            type: "object",
+            properties: {
+              allowFixer: {
+                type: "boolean",
+              },
+            },
+            additionalProperties: false,
+          },
+        ],
+      },
     },
-  ]),
+    additionalProperties: false,
+  }),
 ];
 
 // The default options for the rule.

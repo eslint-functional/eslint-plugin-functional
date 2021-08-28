@@ -62,7 +62,7 @@
   },
   "dependencies": {
     "@typescript-eslint/experimental-utils": "^4.9.1",
-    "deepmerge": "^4.2.2",
+    "deepmerge-ts": "^1.0.1",
     "escape-string-regexp": "^4.0.0"
   },
   "devDependencies": {
