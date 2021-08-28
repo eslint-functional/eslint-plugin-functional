@@ -1,5 +1,5 @@
 import type { TSESTree } from "@typescript-eslint/experimental-utils";
-import { all as deepMerge } from "deepmerge";
+import { deepmerge } from "deepmerge-ts";
 import type { JSONSchema4 } from "json-schema";
 
 import type { IgnorePatternOption } from "~/common/ignore-options";
@@ -22,18 +22,15 @@ type Options = IgnorePatternOption & {
 
 // The schema for the rule options.
 const schema: JSONSchema4 = [
-  deepMerge([
-    ignorePatternOptionSchema,
-    {
-      type: "object",
-      properties: {
-        ignoreVoid: {
-          type: "boolean",
-        },
+  deepmerge(ignorePatternOptionSchema, {
+    type: "object",
+    properties: {
+      ignoreVoid: {
+        type: "boolean",
       },
-      additionalProperties: false,
     },
-  ]),
+    additionalProperties: false,
+  }),
 ];
 
 // The default options for the rule.

@@ -1,5 +1,5 @@
 import type { TSESTree } from "@typescript-eslint/experimental-utils";
-import { all as deepMerge } from "deepmerge";
+import { deepmerge } from "deepmerge-ts";
 import type { JSONSchema4 } from "json-schema";
 
 import type {
@@ -23,7 +23,7 @@ type Options = AllowLocalMutationOption & IgnorePatternOption;
 
 // The schema for the rule options.
 const schema: JSONSchema4 = [
-  deepMerge([allowLocalMutationOptionSchema, ignorePatternOptionSchema]),
+  deepmerge(allowLocalMutationOptionSchema, ignorePatternOptionSchema),
 ];
 
 // The default options for the rule.

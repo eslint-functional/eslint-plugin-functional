@@ -1,4 +1,4 @@
-import { all as deepMerge } from "deepmerge";
+import { deepmerge } from "deepmerge-ts";
 import type { Linter } from "eslint";
 
 import currying from "~/configs/currying";
@@ -8,13 +8,13 @@ import noObjectOrientation from "~/configs/no-object-orientation";
 import noStatements from "~/configs/no-statements";
 import stylistic from "~/configs/stylistic";
 
-const config: Linter.Config = deepMerge([
+const config: Linter.Config = deepmerge(
   currying,
   noMutations,
   noExceptions,
   noObjectOrientation,
   noStatements,
-  stylistic,
-]);
+  stylistic
+);
 
 export default config;
