@@ -57,10 +57,11 @@ const errorMessages = {
  * The meta data for this rule.
  */
 const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
+  deprecated: true,
+  replacedBy: ["prefer-readonly-type-declaration"],
   type: "suggestion",
   docs: {
-    description:
-      "Prefer property signatures with readonly modifiers over method signatures.",
+    description: "Prefer property signatures over method signatures.",
     recommended: "warn",
   },
   messages: errorMessages,
