@@ -118,6 +118,12 @@ export function isExpressionStatement(
   return node.type === AST_NODE_TYPES.ExpressionStatement;
 }
 
+export function isForStatement(
+  node: TSESTree.Node
+): node is TSESTree.ForStatement {
+  return node.type === AST_NODE_TYPES.ForStatement;
+}
+
 export function isFunctionDeclaration(
   node: TSESTree.Node
 ): node is TSESTree.FunctionDeclaration {
