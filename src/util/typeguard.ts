@@ -65,6 +65,12 @@ export function isBlockStatement(
   return node.type === AST_NODE_TYPES.BlockStatement;
 }
 
+export function isBreakStatement(
+  node: TSESTree.Node
+): node is TSESTree.BreakStatement {
+  return node.type === AST_NODE_TYPES.BreakStatement;
+}
+
 export function isCallExpression(
   node: TSESTree.Node
 ): node is TSESTree.CallExpression {
@@ -89,6 +95,12 @@ export function isClassLike(
     node.type === AST_NODE_TYPES.ClassDeclaration ||
     node.type === AST_NODE_TYPES.ClassExpression
   );
+}
+
+export function isContinueStatement(
+  node: TSESTree.Node
+): node is TSESTree.ContinueStatement {
+  return node.type === AST_NODE_TYPES.ContinueStatement;
 }
 
 export function isExpressionStatement(

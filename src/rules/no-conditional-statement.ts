@@ -13,6 +13,8 @@ import {
 } from "../util/rule";
 import {
   isBlockStatement,
+  isBreakStatement,
+  isContinueStatement,
   isExpressionStatement,
   isIfStatement,
   isNeverType,
@@ -89,20 +91,15 @@ function getIfBranchViolations(
   const branches = [node.consequent, node.alternate];
   const violations = branches.filter<NonNullable<typeof branches[0]>>(
     (branch): branch is NonNullable<typeof branch> => {
-      if (branch === null) {
-        return false;
-      }
-
-      // Another instance of this rule will check nested if statements.
-      if (isIfStatement(branch)) {
-        return false;
-      }
-
-      if (isReturnStatement(branch)) {
-        return false;
-      }
-
-      if (isThrowStatement(branch)) {
+      if (
+        branch === null ||
+        // Another instance of this rule will check nested if statements.
+        isIfStatement(branch) ||
+        isReturnStatement(branch) ||
+        isThrowStatement(branch) ||
+        isBreakStatement(branch) ||
+        isContinueStatement(branch)
+      ) {
         return false;
       }
 
@@ -126,7 +123,9 @@ function getIfBranchViolations(
             (statement) =>
               isIfStatement(statement) ||
               isReturnStatement(statement) ||
-              isThrowStatement(statement)
+              isThrowStatement(statement) ||
+              isBreakStatement(statement) ||
+              isContinueStatement(statement)
           )
         ) {
           return false;
@@ -175,7 +174,10 @@ function getSwitchViolations(
     if (
       branch.consequent.some(
         (statement) =>
-          isReturnStatement(statement) || isThrowStatement(statement)
+          isReturnStatement(statement) ||
+          isThrowStatement(statement) ||
+          isBreakStatement(statement) ||
+          isContinueStatement(statement)
       )
     ) {
       return false;
@@ -187,7 +189,10 @@ function getSwitchViolations(
       if (
         lastBlock.body.some(
           (statement) =>
-            isReturnStatement(statement) || isThrowStatement(statement)
+            isReturnStatement(statement) ||
+            isThrowStatement(statement) ||
+            isBreakStatement(statement) ||
+            isContinueStatement(statement)
         )
       ) {
         return false;
