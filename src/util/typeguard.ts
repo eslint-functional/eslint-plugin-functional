@@ -187,6 +187,12 @@ export function isReturnStatement(
   return node.type === AST_NODE_TYPES.ReturnStatement;
 }
 
+export function isSwitchStatement(
+  node: TSESTree.Node
+): node is TSESTree.SwitchStatement {
+  return node.type === AST_NODE_TYPES.SwitchStatement;
+}
+
 export function isThisExpression(
   node: TSESTree.Node
 ): node is TSESTree.ThisExpression {

@@ -19,6 +19,7 @@ import {
   isIfStatement,
   isNeverType,
   isReturnStatement,
+  isSwitchStatement,
   isThrowStatement,
 } from "../util/typeguard";
 
@@ -81,6 +82,23 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
 };
 
 /**
+ * Is the given statement, when inside an if statement, a returning branch?
+ *
+ * @param statement
+ * @returns
+ */
+function isIfReturningBranch(statement: TSESTree.Statement) {
+  return (
+    // Another instance of this rule will check nested if statements.
+    isIfStatement(statement) ||
+    isReturnStatement(statement) ||
+    isThrowStatement(statement) ||
+    isBreakStatement(statement) ||
+    isContinueStatement(statement)
+  );
+}
+
+/**
  * Get all of the violations in the given if statement assuming if statements
  * are allowed.
  */
@@ -91,15 +109,7 @@ function getIfBranchViolations(
   const branches = [node.consequent, node.alternate];
   const violations = branches.filter<NonNullable<typeof branches[0]>>(
     (branch): branch is NonNullable<typeof branch> => {
-      if (
-        branch === null ||
-        // Another instance of this rule will check nested if statements.
-        isIfStatement(branch) ||
-        isReturnStatement(branch) ||
-        isThrowStatement(branch) ||
-        isBreakStatement(branch) ||
-        isContinueStatement(branch)
-      ) {
+      if (branch === null || isIfReturningBranch(branch)) {
         return false;
       }
 
@@ -118,16 +128,7 @@ function getIfBranchViolations(
       }
 
       if (isBlockStatement(branch)) {
-        if (
-          branch.body.some(
-            (statement) =>
-              isIfStatement(statement) ||
-              isReturnStatement(statement) ||
-              isThrowStatement(statement) ||
-              isBreakStatement(statement) ||
-              isContinueStatement(statement)
-          )
-        ) {
+        if (branch.body.some(isIfReturningBranch)) {
           return false;
         }
 
@@ -160,6 +161,21 @@ function getIfBranchViolations(
 }
 
 /**
+ * Is the given statement, when inside a switch statement, a returning branch?
+ *
+ * @param statement
+ * @returns
+ */
+function isSwitchReturningBranch(statement: TSESTree.Statement) {
+  return (
+    // Another instance of this rule will check nested switch statements.
+    isSwitchStatement(statement) ||
+    isReturnStatement(statement) ||
+    isThrowStatement(statement)
+  );
+}
+
+/**
  * Get all of the violations in the given switch statement assuming switch
  * statements are allowed.
  */
@@ -171,30 +187,14 @@ function getSwitchViolations(
     if (branch.consequent.length === 0) {
       return false;
     }
-    if (
-      branch.consequent.some(
-        (statement) =>
-          isReturnStatement(statement) ||
-          isThrowStatement(statement) ||
-          isBreakStatement(statement) ||
-          isContinueStatement(statement)
-      )
-    ) {
+    if (branch.consequent.some(isSwitchReturningBranch)) {
       return false;
     }
 
     if (branch.consequent.every(isBlockStatement)) {
       const lastBlock = branch.consequent[branch.consequent.length - 1];
 
-      if (
-        lastBlock.body.some(
-          (statement) =>
-            isReturnStatement(statement) ||
-            isThrowStatement(statement) ||
-            isBreakStatement(statement) ||
-            isContinueStatement(statement)
-        )
-      ) {
+      if (lastBlock.body.some(isSwitchReturningBranch)) {
         return false;
       }
 

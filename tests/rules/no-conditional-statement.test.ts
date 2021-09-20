@@ -149,38 +149,6 @@ const es3Valid: ReadonlyArray<ValidTestCase> = [
       [{ allowReturningBranches: "ifExhaustive" }],
     ],
   },
-  {
-    code: dedent`
-      for(var i = 0; i < j; i++) {
-        switch(i) {
-          case "a":
-            break;
-          case "b":
-          case "c":
-            continue;
-        }
-      }`,
-    optionsSet: [[{ allowReturningBranches: true }]],
-  },
-  {
-    code: dedent`
-      function foo(j) {
-        for(var i = 0; i < j; i++) {
-          switch(i) {
-            case "a":
-              break;
-            case "b":
-              continue;
-            default:
-              return 3;
-          }
-        }
-      }`,
-    optionsSet: [
-      [{ allowReturningBranches: true }],
-      [{ allowReturningBranches: "ifExhaustive" }],
-    ],
-  },
 ];
 
 // Invalid test cases.
@@ -300,7 +268,7 @@ const es3Invalid: ReadonlyArray<InvalidTestCase> = [
           case "b":
             return 2;
           default:
-            console.log("?");
+            break;
         }
       }`,
     optionsSet: [[{ allowReturningBranches: true }]],
@@ -399,7 +367,7 @@ const es3Invalid: ReadonlyArray<InvalidTestCase> = [
           case "b":
             return 2;
           default:
-            console.log("?");
+            break;
         }
       }`,
     optionsSet: [[{ allowReturningBranches: "ifExhaustive" }]],
