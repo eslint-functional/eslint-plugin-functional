@@ -9,6 +9,8 @@ Doing so creates extra inline lambdas that slow the runtime down.
 
 Examples of **incorrect** code for this rule:
 
+<!-- eslint-skip -->
+
 ```ts
 /* eslint functional/prefer-tacit: "error" */
 
@@ -36,20 +38,20 @@ const foo = f;
 This rule accepts an options object of the following type:
 
 ```ts
-{
+type Options = {
   assumeTypes:
     | false
     | {
         allowFixer: boolean;
       }
-  ignorePattern?: string | Array<string>;
+  ignorePattern?: string[] | string;
 }
 ```
 
 The default options:
 
 ```ts
-{
+const defaults = {
   assumeTypes: false,
 };
 ```
@@ -60,6 +62,8 @@ The rule take advantage of TypeScript's typing engine to check if callback wrapp
 
 This option will make the rule assume that the function only accepts the arguments given to it in the wrapper.
 However this may result in some false positives being picked up.
+
+<!-- eslint-disable functional/prefer-tacit -->
 
 ```js
 const foo = x => f(x);    // If `f` only accepts one parameter then this is violation of the rule.

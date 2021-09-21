@@ -13,6 +13,8 @@ It should be noted however that the `PropertySignature` form for declaring funct
 
 Examples of **incorrect** code for this rule:
 
+<!-- eslint-skip -->
+
 ```ts
 /* eslint functional/no-method-signature: "error" */
 
@@ -40,7 +42,7 @@ type Foo = Readonly<{
 This rule accepts an options object of the following type:
 
 ```ts
-{
+type Options = {
   ignoreIfReadonly: boolean;
 }
 ```
@@ -48,7 +50,7 @@ This rule accepts an options object of the following type:
 The default options:
 
 ```ts
-{
+const defaults = {
   ignoreIfReadonly: true
 }
 ```
@@ -58,6 +60,8 @@ The default options:
 If set to `false`, this option allows for the use of method signatures if they are wrapped in the `Readonly` type.
 
 Examples of **incorrect** code for this rule:
+
+<!-- eslint-skip -->
 
 ```ts
 /* eslint functional/no-method-signature: ["error", { "ignoreIfReadonly": false } ] */

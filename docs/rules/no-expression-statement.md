@@ -8,17 +8,23 @@ When you call a function and don’t use it’s return value, chances are high t
 
 Examples of **incorrect** code for this rule:
 
+<!-- eslint-skip -->
+
 ```js
 /* eslint functional/no-expression-statement: "error" */
 
 console.log("Hello world!");
 ```
 
+<!-- eslint-skip -->
+
 ```js
 /* eslint functional/no-expression-statement: "error" */
 
 array.push(3);
 ```
+
+<!-- eslint-skip -->
 
 ```js
 /* eslint functional/no-expression-statement: "error" */
@@ -34,6 +40,8 @@ Examples of **correct** code for this rule:
 const baz = foo(bar);
 ```
 
+<!-- eslint-skip -->
+
 ```js
 /* eslint functional/no-expression-statement: ["error", { "ignoreVoid": true }] */
 
@@ -45,8 +53,8 @@ console.log("hello world");
 This rule accepts an options object of the following type:
 
 ```ts
-{
-  ignorePattern?: string | Array<string>;
+type Options = {
+  ignorePattern?: string[] | string;
   ignoreVoid?: boolean
 }
 ```
@@ -54,7 +62,7 @@ This rule accepts an options object of the following type:
 The default options:
 
 ```ts
-{
+const defaults = {
   ignoreVoid: false
 }
 ```

@@ -8,6 +8,8 @@ Try statements are not part of functional programming. See [no-throw-statement](
 
 Examples of **incorrect** code for this rule:
 
+<!-- eslint-skip -->
+
 ```js
 /* eslint functional/no-try-statement: "error" */
 
@@ -23,7 +25,7 @@ Examples of **correct** code for this rule:
 ```js
 /* eslint functional/no-try-statement: "error" */
 
-doSomethingThatMightGoWrong() // <-- Returns a Promise.
+doSomethingThatMightGoWrong() // <-- Returns a Promise
   .catch((error) => {
     // Handle error.
   });
@@ -34,7 +36,7 @@ doSomethingThatMightGoWrong() // <-- Returns a Promise.
 This rule accepts an options object of the following type:
 
 ```ts
-{
+type Options = {
   allowCatch: boolean;
   allowFinally: boolean;
 }
@@ -43,7 +45,7 @@ This rule accepts an options object of the following type:
 The default options:
 
 ```ts
-{
+const defaults = {
   allowCatch: false,
   allowFinally: false
 }

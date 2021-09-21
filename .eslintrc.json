@@ -23,7 +23,11 @@
   ],
   "parserOptions": {
     "ecmaVersion": 10,
-    "project": ["./tsconfig.json", "./tests/tsconfig.json", "./cz-adapter/tsconfig.json"],
+    "project": [
+      "./tsconfig.json",
+      "./tests/tsconfig.json",
+      "./cz-adapter/tsconfig.json"
+    ],
     "sourceType": "module"
   },
   "ignorePatterns": ["build/", "coverage/", "lib/", "**/*.js"],
@@ -52,6 +56,77 @@
         "functional/no-conditional-statement": "off",
         "functional/no-expression-statement": "off",
         "functional/no-throw-statement": "off"
+      }
+    },
+    // FIXME: This override is defined in the upsteam; it shouldn't need to be redefined here. Why?
+    {
+      "files": ["**/*.md/**"],
+      "parserOptions": {
+        "project": null
+      },
+      "rules": {
+        "@typescript-eslint/await-thenable": "off",
+        "@typescript-eslint/consistent-type-definitions": "off",
+        "@typescript-eslint/dot-notation": "off",
+        "@typescript-eslint/explicit-member-accessibility": "off",
+        "@typescript-eslint/no-confusing-void-expression": "off",
+        "@typescript-eslint/no-empty-function": "off",
+        "@typescript-eslint/no-floating-promises": "off",
+        "@typescript-eslint/no-for-in-array": "off",
+        "@typescript-eslint/no-implied-eval": "off",
+        "@typescript-eslint/no-misused-promises": "off",
+        "@typescript-eslint/no-throw-literal": "off",
+        "@typescript-eslint/no-unnecessary-type-assertion": "off",
+        "@typescript-eslint/no-unsafe-assignment": "off",
+        "@typescript-eslint/no-unsafe-call": "off",
+        "@typescript-eslint/no-unsafe-member-access": "off",
+        "@typescript-eslint/no-unsafe-return": "off",
+        "@typescript-eslint/no-unused-expressions": "off",
+        "@typescript-eslint/no-unused-vars": "off",
+        "@typescript-eslint/non-nullable-type-assertion-style": "off",
+        "@typescript-eslint/prefer-includes": "off",
+        "@typescript-eslint/prefer-nullish-coalescing": "off",
+        "@typescript-eslint/prefer-readonly-parameter-types": "off",
+        "@typescript-eslint/prefer-readonly": "off",
+        "@typescript-eslint/prefer-regexp-exec": "off",
+        "@typescript-eslint/prefer-string-starts-ends-with": "off",
+        "@typescript-eslint/promise-function-async": "off",
+        "@typescript-eslint/require-await": "off",
+        "@typescript-eslint/restrict-plus-operands": "off",
+        "@typescript-eslint/restrict-template-expressions": "off",
+        "@typescript-eslint/strict-boolean-expressions": "off",
+        "@typescript-eslint/switch-exhaustiveness-check": "off",
+        "@typescript-eslint/unbound-method": "off",
+        "functional/functional-parameters": "off",
+        "functional/immutable-data": "off",
+        "functional/no-class": "off",
+        "functional/no-expression-statement": "off",
+        "functional/no-let": "off",
+        "functional/no-loop-statement": "off",
+        "functional/no-return-void": "off",
+        "functional/no-this-expression": "off",
+        "functional/no-throw-statement": "off",
+        "functional/no-try-statement": "off",
+        "functional/prefer-readonly-type": "off",
+        "import/no-unresolved": "off",
+        "init-declarations": "off",
+        "jsdoc/require-jsdoc": "off",
+        "no-console": "off",
+        "no-empty": "off",
+        "no-invalid-this": "off",
+        "no-undef": "off",
+        "no-useless-return": "off",
+        "node/handle-callback-err": "off",
+        "prefer-const": "off",
+        "prettier/prettier": "off",
+        "sonarjs/no-extra-arguments": "off",
+        "sonarjs/no-unused-collection": "off",
+        "unicorn/prefer-optional-catch-binding": "off",
+        "unicorn/prefer-top-level-await": "off",
+
+        "dot-notation": "error",
+        "no-implied-eval": "error",
+        "require-await": "error"
       }
     }
   ]

@@ -9,6 +9,8 @@ As an alternative a function should return an error or in the case of an async f
 
 Examples of **incorrect** code for this rule:
 
+<!-- eslint-skip -->
+
 ```js
 /* eslint functional/no-throw-statement: "error" */
 

@@ -10,6 +10,8 @@ The readonly modifier must appear on property signatures in interfaces, property
 
 Examples of **incorrect** code for this rule:
 
+<!-- eslint-skip -->
+
 ```ts
 /* eslint functional/prefer-readonly-type: "error" */
 
@@ -53,9 +55,11 @@ This is just as effective as using `Object.freeze()` to prevent mutations. Howev
 
 The `readonly` modifier also works on indexers:
 
+<!-- eslint-disable @typescript-eslint/consistent-indexed-object-style -->
+
 ```ts
 const foo: { readonly [key: string]: number } = { a: 1, b: 2 };
-foo["a"] = 3; // Error: Index signature only permits reading
+foo.a = 3; // Error: Index signature only permits reading
 ```
 
 ### Benefits of using `readonly T[]`
@@ -67,7 +71,7 @@ interface Point {
   readonly x: number;
   readonly y: number;
 }
-const points: Array<Point> = [{ x: 23, y: 44 }];
+const points: Point[] = [{ x: 23, y: 44 }];
 points.push({ x: 1, y: 2 }); // This is perfectly valid.
 ```
 
@@ -90,21 +94,21 @@ points.push({ x: 1, y: 2 }); // Unresolved method push()
 This rule accepts an options object of the following type:
 
 ```ts
-{
+type Options = {
   allowLocalMutation: boolean;
   allowMutableReturnType: boolean;
   checkImplicit: boolean;
   ignoreClass: boolean | "fieldsOnly";
   ignoreInterface: boolean;
   ignoreCollections: boolean;
-  ignorePattern?: string | Array<string>;
+  ignorePattern?: string[] | string;
 }
 ```
 
 The default options:
 
 ```ts
-{
+const defaults = {
   allowLocalMutation: false,
   allowMutableReturnType: false,
   checkImplicit: false,
@@ -130,8 +134,10 @@ A boolean to specify if checking for `readonly` should apply to classes. `false`
 
 Examples of **incorrect** code for the `{ "ignoreClass": false }` option:
 
+<!-- eslint-skip -->
+
 ```ts
-/* eslint functional/readonly: ["error", { "ignoreClass": false }] */
+/* eslint functional/prefer-readonly-type: ["error", { "ignoreClass": false }] */
 
 class {
   myprop: string;
@@ -141,7 +147,7 @@ class {
 Examples of **correct** code for the `{ "ignoreClass": true }` option:
 
 ```ts
-/* eslint functional/readonly: ["error", { "ignoreClass": true }] */
+/* eslint functional/prefer-readonly-type: ["error", { "ignoreClass": true }] */
 
 class {
   myprop: string;
@@ -154,10 +160,12 @@ A boolean to specify if checking for `readonly` should apply to interfaces. `fal
 
 Examples of **incorrect** code for the `{ "ignoreInterface": false }` option:
 
-```ts
-/* eslint functional/readonly: ["error", { "ignoreInterface": false }] */
+<!-- eslint-skip -->
 
-interface {
+```ts
+/* eslint functional/prefer-readonly-type: ["error", { "ignoreInterface": false }] */
+
+interface I {
   myprop: string;
 }
 ```
@@ -165,9 +173,9 @@ interface {
 Examples of **correct** code for the `{ "ignoreInterface": true }` option:
 
 ```ts
-/* eslint functional/readonly: ["error", { "ignoreInterface": true }] */
+/* eslint functional/prefer-readonly-type: ["error", { "ignoreInterface": true }] */
 
-interface {
+interface I {
   myprop: string;
 }
 ```
@@ -178,8 +186,10 @@ A boolean to specify if checking for `readonly` should apply to mutable collecti
 
 Examples of **incorrect** code for the `{ "ignoreCollections": false }` option:
 
+<!-- eslint-skip -->
+
 ```ts
-/* eslint functional/readonly: ["error", { "ignoreCollections": false }] */
+/* eslint functional/prefer-readonly-type: ["error", { "ignoreCollections": false }] */
 
 const foo: number[] = [];
 const bar: [string, string] = ["foo", "bar"];
@@ -190,7 +200,7 @@ const qux: Map<string, string> = new Map();
 Examples of **correct** code for the `{ "ignoreCollections": true }` option:
 
 ```ts
-/* eslint functional/readonly: ["error", { "ignoreCollections": true }] */
+/* eslint functional/prefer-readonly-type: ["error", { "ignoreCollections": true }] */
 
 const foo: number[] = [];
 const bar: [string, string] = ["foo", "bar"];

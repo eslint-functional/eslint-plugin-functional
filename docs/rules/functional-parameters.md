@@ -13,6 +13,8 @@ Note: With an unknown number of parameters, currying functions is a lot more dif
 
 Examples of **incorrect** code for this rule:
 
+<!-- eslint-skip -->
+
 ```js
 /* eslint functional/functional-parameters: "error" */
 
@@ -20,6 +22,8 @@ function add() {
   return arguments.reduce((sum, number) => sum + number, 0);
 }
 ```
+
+<!-- eslint-skip -->
 
 ```js
 /* eslint functional/functional-parameters: "error" */
@@ -44,21 +48,21 @@ function add(numbers) {
 This rule accepts an options object of the following type:
 
 ```ts
-{
+type Options = {
   allowRestParameter: boolean;
   allowArgumentsKeyword: boolean;
-  enforceParameterCount: false | "atLeastOne" | "exactlyOne" | {
+  enforceParameterCount: "atLeastOne" | "exactlyOne" | false | {
     count: "atLeastOne" | "exactlyOne";
     ignoreIIFE: boolean;
   };
-  ignorePattern?: string | Array<string>;
+  ignorePattern?: string[] | string;
 }
 ```
 
 The default options:
 
 ```ts
-{
+const defaults = {
   allowRestParameter: false,
   allowArgumentsKeyword: false,
   enforceParameterCount: {
@@ -71,7 +75,7 @@ The default options:
 Note: the `lite` ruleset overrides the default options to:
 
 ```ts
-{
+const liteDefaults = {
   allowRestParameter: false,
   allowArgumentsKeyword: false,
   enforceParameterCount: false
@@ -107,6 +111,8 @@ Require all functions to have exactly one parameter.
 Any function that take takes multiple parameter can be rewritten as a higher-order function that only takes one.
 
 Example:
+
+<!-- eslint-disable no-redeclare -->
 
 ```js
 // This function

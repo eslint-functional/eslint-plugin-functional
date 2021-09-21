@@ -12,6 +12,8 @@ If your view is the latter you can use the `no-promise-reject` rule to disallow 
 
 Examples of **incorrect** code for this rule:
 
+<!-- eslint-skip -->
+
 ```js
 /* eslint functional/no-promise-reject: "error" */
 
