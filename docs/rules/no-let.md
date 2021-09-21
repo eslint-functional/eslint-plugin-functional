@@ -8,17 +8,20 @@ In functional programming variables should not be mutable; use `const` instead.
 
 Examples of **incorrect** code for this rule:
 
+<!-- eslint-skip -->
+
 ```js
 /* eslint functional/no-let: "error" */
 
 let x = 5;
 ```
 
+<!-- eslint-skip -->
+
 ```js
 /* eslint functional/no-let: "error" */
 
 for (let i = 0; i < array.length; i++) {
-
 }
 ```
 
@@ -49,16 +52,16 @@ for (const [index, element] of array.entries()) {
 This rule accepts an options object of the following type:
 
 ```ts
-{
+type Options = {
   allowLocalMutation: boolean;
-  ignorePattern?: string | Array<string>;
+  ignorePattern?: string[] | string;
 }
 ```
 
 The default options:
 
 ```ts
-{
+const defaults = {
   allowLocalMutation: false
 }
 ```

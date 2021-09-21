@@ -17,7 +17,7 @@ So in order to create an escape hatch similar to how it is done in reason the `i
 For example if you configure it to allow variables with names that has the prefix "mutable" you can emulate the above example in TypeScript like this:
 
 ```ts
-type person = {
+type Person = {
   readonly name: string;
   mutableAge: number; // This is OK with ignorePattern = "^mutable"
 };

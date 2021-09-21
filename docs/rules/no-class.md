@@ -6,6 +6,8 @@ Disallow use of the `class` keyword.
 
 Examples of **incorrect** code for this rule:
 
+<!-- eslint-skip -->
+
 ```js
 /* eslint functional/no-class: "error" */
 
@@ -48,7 +50,7 @@ Thanks to libraries like [recompose](https://github.com/acdlite/recompose) and R
 
 ```js
 const Message = React.createClass({
-  render: function () {
+  render() {
     return <div>{this.props.message}</div>; // <- no this allowed
   },
 });

@@ -13,6 +13,8 @@ We recommend using the rule [@typescript-eslint/explicit-function-return-type](h
 
 Examples of **incorrect** code for this rule:
 
+<!-- eslint-skip -->
+
 ```ts
 /* eslint functional/no-return-void: "error" */
 
@@ -36,7 +38,7 @@ function updateText(value: string): string {
 This rule accepts an options object of the following type:
 
 ```ts
-{
+type Options = {
   allowNull: boolean;
   allowUndefined: boolean;
   ignoreImplicit: boolean;
@@ -46,7 +48,7 @@ This rule accepts an options object of the following type:
 The default options:
 
 ```ts
-{
+const defaults = {
   allowNull: true,
   allowUndefined: true,
   ignoreImplicit: false,

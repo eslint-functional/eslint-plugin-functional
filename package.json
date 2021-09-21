@@ -69,7 +69,7 @@
     "@commitlint/cli": "^13.1.0",
     "@commitlint/config-conventional": "^13.1.0",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
-    "@rebeccastevens/eslint-config": "^1.0.12",
+    "@rebeccastevens/eslint-config": "^1.1.3",
     "@rollup/plugin-commonjs": "^20.0.0",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^13.0.4",

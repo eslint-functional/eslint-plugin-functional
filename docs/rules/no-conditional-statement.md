@@ -11,6 +11,8 @@ For more background see this [blog post](https://hackernoon.com/rethinking-javas
 
 Examples of **incorrect** code for this rule:
 
+<!-- eslint-skip -->
+
 ```js
 /* eslint functional/no-conditional-statement: "error" */
 
@@ -49,7 +51,7 @@ function foo(x, y) {
 This rule accepts an options object of the following type:
 
 ```ts
-{
+type Options = {
   allowReturningBranches: boolean | "ifExhaustive";
 }
 ```
@@ -57,7 +59,7 @@ This rule accepts an options object of the following type:
 The default options:
 
 ```ts
-{
+const defaults = {
   allowReturningBranches: false
 }
 ```
@@ -94,6 +96,7 @@ const x = (() => {
       return 2;
     default:
       return 0;
+  }
 })();
 ```
 

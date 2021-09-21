@@ -8,6 +8,8 @@ Mixing functions and data properties in the same type is a sign of object-orient
 
 Examples of **incorrect** code for this rule:
 
+<!-- eslint-skip -->
+
 ```ts
 /* eslint functional/no-mixed-type: "error" */
 
@@ -47,7 +49,7 @@ For example union and intersection types will not be checked.
 This rule accepts an options object of the following type:
 
 ```ts
-{
+type Options = {
   checkInterfaces: boolean;
   checkTypeLiterals: boolean;
 }
@@ -56,7 +58,7 @@ This rule accepts an options object of the following type:
 The default options:
 
 ```ts
-{
+const defaults = {
   checkInterfaces: true,
   checkTypeLiterals: true
 }

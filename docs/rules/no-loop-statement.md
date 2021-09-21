@@ -11,6 +11,8 @@ For more background see this [blog post](https://hackernoon.com/rethinking-javas
 
 Examples of **incorrect** code for this rule:
 
+<!-- eslint-skip -->
+
 ```js
 /* eslint functional/no-loop-statement: "error" */
 
@@ -21,13 +23,15 @@ for (let i = 0; i < numbers.length; i++) {
 }
 ```
 
+<!-- eslint-skip -->
+
 ```js
 /* eslint functional/no-loop-statement: "error" */
 
 const numbers = [1, 2, 3];
 let sum = 0;
-for (let i = 0; i < numbers.length; i++) {
-  sum += numbers[i];
+for (const number of numbers) {
+  sum += number;
 }
 ```
 

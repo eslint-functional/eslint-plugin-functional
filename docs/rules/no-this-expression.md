@@ -5,6 +5,8 @@ See the its docs for more info.
 
 Examples of **incorrect** code for this rule:
 
+<!-- eslint-skip -->
+
 ```js
 /* eslint functional/no-this-expression: "error" */
 
