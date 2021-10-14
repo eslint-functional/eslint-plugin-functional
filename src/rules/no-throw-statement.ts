@@ -30,7 +30,6 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     description: "Disallow throwing exceptions.",
-    category: "Best Practices",
     recommended: false,
   },
   messages: errorMessages,

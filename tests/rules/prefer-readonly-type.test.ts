@@ -961,25 +961,25 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
     errors: [
       {
         messageId: "property",
-        type: "ClassProperty",
+        type: "PropertyDefinition",
         line: 2,
         column: 3,
       },
       {
         messageId: "property",
-        type: "ClassProperty",
+        type: "PropertyDefinition",
         line: 3,
         column: 3,
       },
       {
         messageId: "property",
-        type: "ClassProperty",
+        type: "PropertyDefinition",
         line: 4,
         column: 3,
       },
       {
         messageId: "property",
-        type: "ClassProperty",
+        type: "PropertyDefinition",
         line: 5,
         column: 3,
       },

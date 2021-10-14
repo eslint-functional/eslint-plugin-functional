@@ -106,7 +106,6 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     description: "Enforce treating data as immutable.",
-    category: "Best Practices",
     recommended: "error",
   },
   messages: errorMessages,

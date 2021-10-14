@@ -37,7 +37,6 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     description: "Prefer Type Literals over Interfaces.",
-    category: "Best Practices",
     recommended: false,
   },
   messages: errorMessages,

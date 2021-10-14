@@ -48,7 +48,6 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
   docs: {
     description:
       "Prefer property signatures with readonly modifiers over method signatures.",
-    category: "Best Practices",
     recommended: "error",
   },
   messages: errorMessages,

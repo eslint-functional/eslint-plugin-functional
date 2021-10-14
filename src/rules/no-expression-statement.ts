@@ -55,7 +55,6 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     description: "Disallow expression statements.",
-    category: "Best Practices",
     recommended: false,
   },
   messages: errorMessages,
