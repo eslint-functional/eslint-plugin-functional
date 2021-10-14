@@ -12,7 +12,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
         constructor() {
           this.baz = "hello";
         }
-      }`,
+      }
+    `,
     optionsSet: [[]],
   },
   // IgnoreAccessorPattern - classes.
@@ -22,7 +23,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
         mutate() {
           this.mutableField = 0;
         }
-      }`,
+      }
+    `,
     optionsSet: [
       [{ ignoreAccessorPattern: ["this.*.**"] }],
       [{ ignoreAccessorPattern: ["**.mutable*"] }],
@@ -37,7 +39,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
         mutate() {
           this.baz = "hello";
         }
-      }`,
+      }
+    `,
     optionsSet: [[{ ignoreClass: true }], [{ ignoreClass: "fieldsOnly" }]],
   },
 ];

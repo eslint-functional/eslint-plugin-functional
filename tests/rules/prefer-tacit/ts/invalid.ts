@@ -7,11 +7,13 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   {
     code: dedent`
       function f(x) {}
-      const foo = x => f(x);`,
+      const foo = x => f(x);
+    `,
     optionsSet: [[]],
     output: dedent`
       function f(x) {}
-      const foo = f;`,
+      const foo = f;
+    `,
     errors: [
       {
         messageId: "generic",
@@ -25,11 +27,13 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   {
     code: dedent`
       const f = function(x) {}
-      const foo = x => f(x);`,
+      const foo = x => f(x);
+    `,
     optionsSet: [[]],
     output: dedent`
       const f = function(x) {}
-      const foo = f;`,
+      const foo = f;
+    `,
     errors: [
       {
         messageId: "generic",
@@ -43,11 +47,13 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   {
     code: dedent`
       const f = x => {}
-      const foo = x => f(x);`,
+      const foo = x => f(x);
+    `,
     optionsSet: [[]],
     output: dedent`
       const f = x => {}
-      const foo = f;`,
+      const foo = f;
+    `,
     errors: [
       {
         messageId: "generic",
@@ -62,12 +68,14 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     code: dedent`
       type F = (x) => {};
       const f = undefined as unknown as F;
-      const foo = x => f(x);`,
+      const foo = x => f(x);
+    `,
     optionsSet: [[]],
     output: dedent`
       type F = (x) => {};
       const f = undefined as unknown as F;
-      const foo = f;`,
+      const foo = f;
+    `,
     errors: [
       {
         messageId: "generic",
@@ -81,11 +89,13 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   {
     code: dedent`
       function f(x: number, y?: number) {}
-      const foo = x => f(x);`,
+      const foo = x => f(x);
+    `,
     optionsSet: [[]],
     output: dedent`
       function f(x: number, y?: number) {}
-      const foo = f;`,
+      const foo = f;
+    `,
     errors: [
       {
         messageId: "generic",

@@ -23,7 +23,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     code: `const foo = x => f(x);`,
     optionsSet: [[{ assumeTypes: { allowFixer: true } }]],
     output: dedent`
-      const foo = f;`,
+      const foo = f;
+    `,
     errors: [
       {
         messageId: "generic",
@@ -37,11 +38,13 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   {
     code: dedent`
       function f(x, y = 10) {}
-      const foo = x => f(x);`,
+      const foo = x => f(x);
+    `,
     optionsSet: [[{ assumeTypes: { allowFixer: true } }]],
     output: dedent`
       function f(x, y = 10) {}
-      const foo = f;`,
+      const foo = f;
+    `,
     errors: [
       {
         messageId: "generic",

@@ -8,7 +8,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
       function foo() {
         let x;
         let y = 0;
-      }`,
+      }
+    `,
     optionsSet: [[{ allowLocalMutation: true }]],
   },
   {
@@ -16,7 +17,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
       const foo = () => {
         let x;
         let y = 0;
-      }`,
+      }
+    `,
     optionsSet: [[{ allowLocalMutation: true }]],
   },
   {
@@ -26,19 +28,22 @@ const tests: ReadonlyArray<ValidTestCase> = [
           let x;
           let y = 0;
         }
-      }`,
+      }
+    `,
     optionsSet: [[{ allowLocalMutation: true }]],
   },
   {
     code: dedent`
       let mutable;
-      let mutableX`,
+      let mutableX
+    `,
     optionsSet: [[{ ignorePattern: "^mutable" }]],
   },
   {
     code: dedent`
       let mutable = 0;
-      let mutableX = 0`,
+      let mutableX = 0
+    `,
     optionsSet: [[{ ignorePattern: "^mutable" }]],
   },
   {
@@ -58,7 +63,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
       function foo() {
         let mutableX;
         let mutableY = 0;
-      }`,
+      }
+    `,
     optionsSet: [[{ ignorePattern: "^mutable" }]],
   },
   {
@@ -66,7 +72,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
       const foo = () => {
         let mutableX;
         let mutableY = 0;
-      }`,
+      }
+    `,
     optionsSet: [[{ ignorePattern: "^mutable" }]],
   },
   {
@@ -76,19 +83,22 @@ const tests: ReadonlyArray<ValidTestCase> = [
           let mutableX;
           let mutableY = 0;
         }
-      }`,
+      }
+    `,
     optionsSet: [[{ ignorePattern: "^mutable" }]],
   },
   {
     code: dedent`
       let Mutable;
-      let xMutable`,
+      let xMutable
+    `,
     optionsSet: [[{ ignorePattern: "Mutable$" }]],
   },
   {
     code: dedent`
       let Mutable = 0;
-      let xMutable = 0`,
+      let xMutable = 0
+    `,
     optionsSet: [[{ ignorePattern: "Mutable$" }]],
   },
   {
@@ -108,7 +118,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
       function foo() {
         let xMutable;
         let yMutable = 0;
-      }`,
+      }
+    `,
     optionsSet: [[{ ignorePattern: "Mutable$" }]],
   },
   {
@@ -116,7 +127,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
       const foo = () => {
         let xMutable;
         let yMutable = 0;
-      }`,
+      }
+    `,
     optionsSet: [[{ ignorePattern: "Mutable$" }]],
   },
   {
@@ -126,7 +138,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
           let xMutable;
           let yMutable = 0;
         }
-      }`,
+      }
+    `,
     optionsSet: [[{ ignorePattern: "Mutable$" }]],
   },
 ];

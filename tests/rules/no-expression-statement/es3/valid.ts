@@ -12,7 +12,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
   {
     code: dedent`
       console.log("yo");
-      console.error("yo");`,
+      console.error("yo");
+    `,
     optionsSet: [[{ ignorePattern: "^console\\." }]],
   },
   // Allow specifying directive prologues.

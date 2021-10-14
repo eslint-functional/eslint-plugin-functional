@@ -7,7 +7,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     code: dedent`
       interface Foo {
         bar(a: number, b: string): number;
-      }`,
+      }
+    `,
     optionsSet: [[]],
     errors: [
       {
@@ -22,7 +23,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     code: dedent`
       type Foo2 = {
         bar(a: number, b: string): number
-      }`,
+      }
+    `,
     optionsSet: [[]],
     errors: [
       {
@@ -37,7 +39,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     code: dedent`
       type Foo = Bar & Readonly<Baz> & {
         methodSignature(): void
-      }`,
+      }
+    `,
     optionsSet: [[]],
     errors: [
       {
@@ -54,7 +57,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         nested: {
           methodSignature(): void
         }
-      }>`,
+      }>
+    `,
     optionsSet: [[]],
     errors: [
       {
@@ -73,7 +77,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
             methodSignature(): void
           }
         }>
-      }>{}`,
+      }>{}
+    `,
     optionsSet: [[]],
     errors: [
       {
@@ -92,7 +97,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
             methodSignature(): void
           }>
         }
-      }>{}`,
+      }>{}
+    `,
     optionsSet: [[{ ignoreIfReadonly: false }]],
     errors: [
       {

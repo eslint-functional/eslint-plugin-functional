@@ -10,7 +10,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
             return Promise.resolve(new Error("foo"))
         }
         return Promise.resolve(10)
-      }`,
+      }
+    `,
     optionsSet: [[]],
   },
 ];

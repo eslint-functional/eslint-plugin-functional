@@ -29,7 +29,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   {
     code: dedent`
       var error = new Error();
-      throw error;`,
+      throw error;
+    `,
     optionsSet: [[]],
     errors: [
       {

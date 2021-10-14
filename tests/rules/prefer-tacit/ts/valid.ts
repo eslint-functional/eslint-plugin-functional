@@ -7,21 +7,24 @@ const tests: ReadonlyArray<ValidTestCase> = [
   {
     code: dedent`
       function f(x, y) {}
-      const foo = x => f(x);`,
+      const foo = x => f(x);
+    `,
     optionsSet: [[]],
   },
   // FunctionExpression.
   {
     code: dedent`
       const f = function(x, y) {}
-      const foo = x => f(x);`,
+      const foo = x => f(x);
+    `,
     optionsSet: [[]],
   },
   // ArrowFunction.
   {
     code: dedent`
       const f = (x, y) => {}
-      const foo = x => f(x);`,
+      const foo = x => f(x);
+    `,
     optionsSet: [[]],
   },
   // TypeAlias.
@@ -29,7 +32,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
     code: dedent`
       type F = (x, y) => {};
       const f = undefined as unknown as F;
-      const foo = x => f(x);`,
+      const foo = x => f(x);
+    `,
     optionsSet: [[]],
   },
 ];

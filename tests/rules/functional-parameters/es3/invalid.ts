@@ -7,7 +7,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     code: dedent`
       function foo() {
         console.log("hello world");
-      }`,
+      }
+    `,
     optionsSet: [[]],
     errors: [
       {
@@ -22,7 +23,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     code: dedent`
       (function() {
         console.log("hello world");
-      })();`,
+      })();
+    `,
     optionsSet: [[{ enforceParameterCount: { ignoreIIFE: false } }]],
     errors: [
       {
@@ -37,7 +39,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     code: dedent`
       function foo(bar) {
         console.log(arguments);
-      }`,
+      }
+    `,
     optionsSet: [[]],
     errors: [
       {
@@ -52,7 +55,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     code: dedent`
       function foo() {
         console.log("bar");
-      }`,
+      }
+    `,
     optionsSet: [[{ enforceParameterCount: "atLeastOne" }]],
     errors: [
       {
@@ -67,7 +71,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     code: dedent`
       function foo() {
         console.log("bar");
-      }`,
+      }
+    `,
     optionsSet: [[{ enforceParameterCount: "exactlyOne" }]],
     errors: [
       {
@@ -82,7 +87,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     code: dedent`
       function foo(bar, baz) {
         console.log(bar, baz);
-      }`,
+      }
+    `,
     optionsSet: [[{ enforceParameterCount: "exactlyOne" }]],
     errors: [
       {

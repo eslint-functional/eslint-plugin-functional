@@ -7,7 +7,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
   {
     code: dedent`
       console.log("yo");
-      console.error("yo");`,
+      console.error("yo");
+    `,
     optionsSet: [[{ ignoreVoid: true }]],
   },
 ];

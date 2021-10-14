@@ -104,7 +104,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       function foo() {
         let x;
         let y = 0;
-      }`,
+      }
+    `,
     optionsSet: [[], [{ ignorePattern: "^mutable" }]],
     errors: [
       {
@@ -126,7 +127,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       const foo = () => {
         let x;
         let y = 0;
-      }`,
+      }
+    `,
     optionsSet: [[], [{ ignorePattern: "^mutable" }]],
     errors: [
       {
@@ -150,7 +152,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
           let x;
           let y = 0;
         }
-      }`,
+      }
+    `,
     optionsSet: [[], [{ ignorePattern: "^mutable" }]],
     errors: [
       {

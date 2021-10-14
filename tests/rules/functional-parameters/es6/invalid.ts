@@ -7,7 +7,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     code: dedent`
       (() => {
         console.log("hello world");
-      })();`,
+      })();
+    `,
     optionsSet: [[{ enforceParameterCount: { ignoreIIFE: false } }]],
     errors: [
       {
@@ -22,7 +23,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     code: dedent`
       function foo(...bar) {
         console.log(bar);
-      }`,
+      }
+    `,
     optionsSet: [[]],
     errors: [
       {

@@ -7,14 +7,16 @@ const tests: ReadonlyArray<ValidTestCase> = [
     code: dedent`
       function foo(bar) {
         return bar + 1;
-      }`,
+      }
+    `,
     optionsSet: [[], [{ allowNull: false }], [{ allowUndefined: false }]],
   },
   {
     code: dedent`
       function foo(bar: number): number {
         return bar + 1;
-      }`,
+      }
+    `,
     optionsSet: [[], [{ allowNull: false }], [{ allowUndefined: false }]],
   },
   // Ignore implicit return types.
@@ -22,7 +24,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
     code: dedent`
       function foo(bar) {
         console.log(bar);
-      }`,
+      }
+    `,
     optionsSet: [
       [{ ignoreImplicit: true }],
       [{ ignoreImplicit: true, allowNull: false }],
@@ -34,7 +37,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
     code: dedent`
       function foo(): null {
         return null;
-      }`,
+      }
+    `,
     optionsSet: [[], [{ allowNull: true }], [{ allowUndefined: false }]],
   },
   // Allow undefined.
@@ -42,7 +46,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
     code: dedent`
       function foo(): undefined {
         return undefined;
-      }`,
+      }
+    `,
     optionsSet: [[], [{ allowNull: false }], [{ allowUndefined: true }]],
   },
 ];

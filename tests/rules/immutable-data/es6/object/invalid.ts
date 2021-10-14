@@ -6,7 +6,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   {
     code: dedent`
       const x = {a: 1};
-      x.a **= 1;`,
+      x.a **= 1;
+    `,
     optionsSet: [[]],
     errors: [
       {
@@ -32,7 +33,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
           this.bar = 2;
           this.baz = 3;
         }
-      }`,
+      }
+    `,
     optionsSet: [[]],
     errors: [
       {
@@ -57,7 +59,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
           let data = { prop: 0 };
           data.prop = 1;
         }
-      }`,
+      }
+    `,
     optionsSet: [[{ ignoreClass: "fieldsOnly" }]],
     errors: [
       {
