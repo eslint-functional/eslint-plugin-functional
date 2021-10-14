@@ -27,7 +27,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       ++x.a;
       --x.a;
       if (x.a = 2) {}
-      if (x.a++) {}`,
+      if (x.a++) {}
+    `,
     optionsSet: [[]],
     errors: [
       {
@@ -164,7 +165,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       var x = { msg1: "hello", obj: { a: 1, b: 2} };
 
       var a = Object.assign(x, { msg2: "world" });
-      var b = Object.assign(x.obj, { msg2: "world" });`,
+      var b = Object.assign(x.obj, { msg2: "world" });
+    `,
     optionsSet: [[]],
     errors: [
       {
@@ -187,7 +189,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       var foo = { a: 1 };
       Object.defineProperties(foo, { b: { value: 2, writable: false }});
       Object.defineProperty(foo, "c", { value: 3, writable: false });
-      Object.setPrototypeOf(foo, null);`,
+      Object.setPrototypeOf(foo, null);
+    `,
     optionsSet: [[{ assumeTypes: true }]],
     errors: [
       {

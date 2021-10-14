@@ -10,7 +10,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
             return Promise.reject(new Error("bar"))
         }
         return Promise.resolve(10)
-      }`,
+      }
+    `,
     optionsSet: [[]],
     errors: [
       {

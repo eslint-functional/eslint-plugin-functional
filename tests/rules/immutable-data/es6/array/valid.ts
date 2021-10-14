@@ -15,7 +15,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
       x >>>= 1;
       x &= 1;
       x |= 1;
-      x ^= 1;`,
+      x ^= 1;
+    `,
     optionsSet: [[]],
   },
 ];

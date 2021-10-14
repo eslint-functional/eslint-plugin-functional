@@ -7,7 +7,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     code: dedent`
       if (i === 1) {
         x = 2;
-      }`,
+      }
+    `,
     optionsSet: [[]],
     errors: [
       {
@@ -32,7 +33,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         default:
           y = 3;
           break;
-      }`,
+      }
+    `,
     optionsSet: [[]],
     errors: [
       {
@@ -50,7 +52,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
           return 1;
         }
         return 0;
-      }`,
+      }
+    `,
     optionsSet: [[]],
     errors: [
       {
@@ -72,7 +75,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
           default:
             return 3;
         }
-      }`,
+      }
+    `,
     optionsSet: [[]],
     errors: [
       {
@@ -92,7 +96,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         if (i === 2) console.log("baz");
         else return 3;
         return 0;
-      }`,
+      }
+    `,
     optionsSet: [[{ allowReturningBranches: true }]],
     errors: [
       {
@@ -120,7 +125,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
           default:
             break;
         }
-      }`,
+      }
+    `,
     optionsSet: [[{ allowReturningBranches: true }]],
     errors: [
       {
@@ -141,7 +147,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
             console.log("bar");
           }
         }
-      }`,
+      }
+    `,
     optionsSet: [[{ allowReturningBranches: true }]],
     errors: [
       {
@@ -158,7 +165,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         if (i === 1) {
           return 1;
         }
-      }`,
+      }
+    `,
     optionsSet: [[{ allowReturningBranches: "ifExhaustive" }]],
     errors: [
       {
@@ -177,7 +185,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         } else {
           console.log(1);
         }
-      }`,
+      }
+    `,
     optionsSet: [[{ allowReturningBranches: "ifExhaustive" }]],
     errors: [
       {
@@ -197,7 +206,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
           case "b":
             return 2;
         }
-      }`,
+      }
+    `,
     optionsSet: [[{ allowReturningBranches: "ifExhaustive" }]],
     errors: [
       {
@@ -219,7 +229,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
           default:
             break;
         }
-      }`,
+      }
+    `,
     optionsSet: [[{ allowReturningBranches: "ifExhaustive" }]],
     errors: [
       {

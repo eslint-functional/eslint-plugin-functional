@@ -278,7 +278,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       y[0].z.shift();
       y[0].z.sort();
       y[0].z.splice(0, 1, 9);
-      y[0].z.unshift(6);`,
+      y[0].z.unshift(6);
+    `,
     optionsSet: [[{ assumeTypes: true }]],
     errors: [
       {
@@ -403,7 +404,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       [0, 1, 2].shift();
       [0, 1, 2].sort();
       [0, 1, 2].splice(0, 1, 9);
-      [0, 1, 2].unshift(6)`,
+      [0, 1, 2].unshift(6)
+    `,
     optionsSet: [[{ ignoreImmediateMutation: false }]],
     errors: [
       {

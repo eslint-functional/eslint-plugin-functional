@@ -9,7 +9,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
         if (i === 1) {
           return 1;
         }
-      }`,
+      }
+    `,
     optionsSet: [[{ allowReturningBranches: true }]],
   },
   {
@@ -20,7 +21,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
         } else {
           return 0;
         }
-      }`,
+      }
+    `,
     optionsSet: [
       [{ allowReturningBranches: true }],
       [{ allowReturningBranches: "ifExhaustive" }],
@@ -36,7 +38,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
           case "c":
             return 2;
         }
-      }`,
+      }
+    `,
     optionsSet: [[{ allowReturningBranches: true }]],
   },
   {
@@ -50,7 +53,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
           default:
             return 3;
         }
-      }`,
+      }
+    `,
     optionsSet: [
       [{ allowReturningBranches: true }],
       [{ allowReturningBranches: "ifExhaustive" }],
@@ -63,7 +67,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
         if (e === 1) {
           break;
         }
-      }`,
+      }
+    `,
     optionsSet: [[{ allowReturningBranches: true }]],
   },
   {
@@ -74,7 +79,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
         } else {
           continue;
         }
-      }`,
+      }
+    `,
     optionsSet: [
       [{ allowReturningBranches: true }],
       [{ allowReturningBranches: "ifExhaustive" }],

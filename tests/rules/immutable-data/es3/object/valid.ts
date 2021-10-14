@@ -10,7 +10,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
       var z = x["a"];
       if (x.a && y.a) {}
       var w = ~x.a;
-      if (!x.a) {}`,
+      if (!x.a) {}
+    `,
     optionsSet: [[]],
   },
   // Allow Object.assign() on non identifiers.
@@ -21,20 +22,23 @@ const tests: ReadonlyArray<ValidTestCase> = [
 
       var a = Object.assign({}, { msg: "hello world" });
       var b = Object.assign(bar(1, 2, 3), { d: 4 });
-      var c = Object.assign(x.func(), { d: 4 });`,
+      var c = Object.assign(x.func(), { d: 4 });
+    `,
     optionsSet: [[]],
   },
   // IgnorePattern - objects.
   {
     code: dedent`
       var mutableVar = { a: 1 };
-      delete mutableVar.a;`,
+      delete mutableVar.a;
+    `,
     optionsSet: [[{ ignorePattern: ["^mutable"] }]],
   },
   {
     code: dedent`
       var mutableVar = { a: 1 };
-      Object.assign(mutableVar, { b: 2 });`,
+      Object.assign(mutableVar, { b: 2 });
+    `,
     optionsSet: [[{ ignorePattern: ["^mutable"] }]],
   },
   // IgnoreAccessorPattern - objects.
@@ -42,7 +46,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
     code: dedent`
       var mutableVar = { a: 1 };
       mutableVar.a = 0;
-      mutableVar.a++;`,
+      mutableVar.a++;
+    `,
     optionsSet: [
       [{ ignoreAccessorPattern: ["**.mutable*.a"] }],
       [{ ignoreAccessorPattern: ["**.mutable*.*"] }],

@@ -9,7 +9,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
       type Foo = {
         bar: string;
         zoo: number;
-      };`,
+      };
+    `,
     optionsSet: [[], [{ checkInterfaces: false }]],
   },
   {
@@ -17,7 +18,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
       interface Foo {
         bar: string;
         zoo: number;
-      }`,
+      }
+    `,
     optionsSet: [[], [{ checkTypeLiterals: false }]],
   },
   // Only functions should not produce failures
@@ -26,7 +28,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
       type Foo = {
         bar: string;
         zoo: number;
-      };`,
+      };
+    `,
     optionsSet: [[], [{ checkInterfaces: false }]],
   },
   {
@@ -34,7 +37,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
       interface Foo {
         bar: string;
         zoo: number;
-      }`,
+      }
+    `,
     optionsSet: [[], [{ checkTypeLiterals: false }]],
   },
   // Only indexer should not produce failures
@@ -42,14 +46,16 @@ const tests: ReadonlyArray<ValidTestCase> = [
     code: dedent`
       type Foo = {
         [key: string]: string;
-      };`,
+      };
+    `,
     optionsSet: [[], [{ checkInterfaces: false }]],
   },
   {
     code: dedent`
       interface Foo {
         [key: string]: string;
-      }`,
+      }
+    `,
     optionsSet: [[], [{ checkTypeLiterals: false }]],
   },
   // Check Off.
@@ -58,7 +64,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
       type Foo = {
         bar: string;
         zoo(): number;
-      };`,
+      };
+    `,
     optionsSet: [[{ checkTypeLiterals: false }]],
   },
   {
@@ -66,7 +73,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
       interface Foo {
         bar: string;
         zoo(): number;
-      }`,
+      }
+    `,
     optionsSet: [[{ checkInterfaces: false }]],
   },
   // Mixing properties and functions (PropertySignature) should produce failures.
@@ -75,7 +83,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
       type Foo = {
         bar: string;
         zoo: () => number;
-      };`,
+      };
+    `,
     optionsSet: [[{ checkTypeLiterals: false }]],
   },
   {
@@ -83,7 +92,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
       interface Foo {
         bar: string;
         zoo: () => number;
-      }`,
+      }
+    `,
     optionsSet: [[{ checkInterfaces: false }]],
   },
 ];

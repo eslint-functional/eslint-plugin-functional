@@ -65,12 +65,14 @@ const tests: ReadonlyArray<
   // Exact match.
   {
     code: dedent`
-      mutable = 0;`,
+      mutable = 0;
+    `,
     options: [true, { ignoreAccessorPattern: "mutable" }],
   },
   {
     code: dedent`
-      mutable.foo = 0;`,
+      mutable.foo = 0;
+    `,
     options: [true, { ignoreAccessorPattern: "mutable.foo" }],
   },
   {
@@ -79,14 +81,16 @@ const tests: ReadonlyArray<
       xxx_mutable_xxx = 0;
       mutable.foo.bar = 0;
       mutable.foo[0] = 0;
-      mutable.foo["foo-bar"] = 0;`,
+      mutable.foo["foo-bar"] = 0;
+    `,
     options: [false, { ignoreAccessorPattern: "mutable" }],
   },
   // Prefix match.
   {
     code: dedent`
       mutable_ = 0;
-      mutable_xxx = 0;`,
+      mutable_xxx = 0;
+    `,
     options: [true, { ignoreAccessorPattern: "mutable_*" }],
   },
   {
@@ -95,14 +99,16 @@ const tests: ReadonlyArray<
       xxx_mutable_xxx = 0;
       mutable_xxx.foo = 0;
       mutable_xxx[0] = 0;
-      mutable_xxx["foo-bar"] = 0;`,
+      mutable_xxx["foo-bar"] = 0;
+    `,
     options: [false, { ignoreAccessorPattern: "mutable_*" }],
   },
   // Suffix match.
   {
     code: dedent`
       _mutable = 0;
-      xxx_mutable = 0;`,
+      xxx_mutable = 0;
+    `,
     options: [true, { ignoreAccessorPattern: "*_mutable" }],
   },
   {
@@ -111,13 +117,15 @@ const tests: ReadonlyArray<
       xxx_mutable_xxx = 0;
       xxx_mutable.foo = 0;
       xxx_mutable[0] = 0;
-      xxx_mutable["foo-bar"] = 0;`,
+      xxx_mutable["foo-bar"] = 0;
+    `,
     options: [false, { ignoreAccessorPattern: "*_mutable" }],
   },
   // Middle match.
   {
     code: dedent`
-      xxx_mutable_xxx = 0;`,
+      xxx_mutable_xxx = 0;
+    `,
     options: [true, { ignoreAccessorPattern: "*_mutable_*" }],
   },
   {
@@ -125,7 +133,8 @@ const tests: ReadonlyArray<
       x = 0;
       xxx_mutable_xxx.foo = 0;
       xxx_mutable_xxx[0] = 0;
-      xxx_mutable_xxx["foo-bar"] = 0;`,
+      xxx_mutable_xxx["foo-bar"] = 0;
+    `,
     options: [false, { ignoreAccessorPattern: "*_mutable_*" }],
   },
   // Mutable properties.
@@ -133,7 +142,8 @@ const tests: ReadonlyArray<
     code: dedent`
       mutable_xxx.foo = 0;
       mutable_xxx[0] = 0;
-      mutable_xxx["foo-bar"] = 0;`,
+      mutable_xxx["foo-bar"] = 0;
+    `,
     options: [true, { ignoreAccessorPattern: "mutable_*.*" }],
   },
   {
@@ -141,7 +151,8 @@ const tests: ReadonlyArray<
       mutable_xxx = 0;
       mutable_xxx.foo.bar = 0;
       mutable_xxx.foo[0] = 0;
-      mutable_xxx.foo["foo-bar"] = 0;`,
+      mutable_xxx.foo["foo-bar"] = 0;
+    `,
     options: [false, { ignoreAccessorPattern: "mutable_*.*" }],
   },
   // Mutable deep properties.
@@ -152,12 +163,14 @@ const tests: ReadonlyArray<
       mutable_xxx.foo.bar = [0, 1, 2];
       mutable_xxx.foo = 0;
       mutable_xxx[0] = 0;
-      mutable_xxx["foo-bar"] = 0;`,
+      mutable_xxx["foo-bar"] = 0;
+    `,
     options: [true, { ignoreAccessorPattern: "mutable_*.*.**" }],
   },
   {
     code: dedent`
-      mutable_xxx = 0;`,
+      mutable_xxx = 0;
+    `,
     options: [false, { ignoreAccessorPattern: "mutable_*.*.**" }],
   },
   // Mutable deep properties and container.
@@ -169,7 +182,8 @@ const tests: ReadonlyArray<
       mutable_xxx.foo = 0;
       mutable_xxx[0] = 0;
       mutable_xxx["foo-bar"] = 0;
-      mutable_xxx = 0;`,
+      mutable_xxx = 0;
+    `,
     options: [true, { ignoreAccessorPattern: "mutable_*.**" }],
   },
 ];
@@ -192,7 +206,8 @@ const assignmentExpressionTests: ReadonlyArray<
       mutable_ = 0;
       mutable_xxx = 0;
       mutable_xxx.foo = 0;
-      mutable_xxx[0] = 0;`,
+      mutable_xxx[0] = 0;
+    `,
     options: [true, { ignorePattern: "^mutable_" }],
   },
   // Suffix match.
@@ -200,19 +215,22 @@ const assignmentExpressionTests: ReadonlyArray<
     code: dedent`
       _mutable = 0;
       xxx_mutable = 0;
-      foo.xxx_mutable = 0;`,
+      foo.xxx_mutable = 0;
+    `,
     options: [true, { ignorePattern: "_mutable$" }],
   },
   // Middle match.
   {
     code: dedent`
-      mutable = 0;`,
+      mutable = 0;
+    `,
     options: [true, { ignorePattern: "^mutable$" }],
   },
   {
     code: dedent`
       mutable.foo.bar = 0;
-      mutable.bar[0] = 0;`,
+      mutable.bar[0] = 0;
+    `,
     options: [false, { ignorePattern: "^mutable$" }],
   },
 ];
@@ -233,17 +251,20 @@ const expressionStatementTests: ReadonlyArray<
 > = [
   {
     code: dedent`
-      const x = 0;`,
+      const x = 0;
+    `,
     options: [true, { ignorePattern: "^const x" }],
   },
   {
     code: dedent`
-      const x = 0;`,
+      const x = 0;
+    `,
     options: [true, { ignorePattern: "= 0;$" }],
   },
   {
     code: dedent`
-      const x = 0;`,
+      const x = 0;
+    `,
     options: [true, { ignorePattern: "^const x = 0;$" }],
   },
 ];

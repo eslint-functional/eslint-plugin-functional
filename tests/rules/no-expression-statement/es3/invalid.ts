@@ -6,7 +6,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   {
     code: dedent`
       var x = [];
-      x.push(1);`,
+      x.push(1);
+    `,
     optionsSet: [[]],
     errors: [
       {

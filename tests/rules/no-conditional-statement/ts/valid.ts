@@ -14,7 +14,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
           case "b":
             return 2;
         }
-      }`,
+      }
+    `,
     optionsSet: [[{ allowReturningBranches: "ifExhaustive" }]],
   },
   // Check throws
@@ -24,7 +25,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
         if (i === 1) {
           throw 1;
         }
-      }`,
+      }
+    `,
     optionsSet: [[{ allowReturningBranches: true }]],
   },
   {
@@ -35,7 +37,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
         } else {
           throw 2;
         }
-      }`,
+      }
+    `,
     optionsSet: [
       [{ allowReturningBranches: true }],
       [{ allowReturningBranches: "ifExhaustive" }],
@@ -51,7 +54,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
           case "c":
             throw 2;
         }
-      }`,
+      }
+    `,
     optionsSet: [[{ allowReturningBranches: true }]],
   },
   {
@@ -65,7 +69,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
           default:
             throw 3;
         }
-      }`,
+      }
+    `,
     optionsSet: [
       [{ allowReturningBranches: true }],
       [{ allowReturningBranches: "ifExhaustive" }],
@@ -79,7 +84,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
         if (i === 1) {
           neverReturn();
         }
-      }`,
+      }
+    `,
     optionsSet: [[{ allowReturningBranches: true }]],
   },
   {
@@ -91,7 +97,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
         } else {
           neverReturn();
         }
-      }`,
+      }
+    `,
     optionsSet: [
       [{ allowReturningBranches: true }],
       [{ allowReturningBranches: "ifExhaustive" }],
@@ -108,7 +115,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
           case "c":
             neverReturn();
         }
-      }`,
+      }
+    `,
     optionsSet: [[{ allowReturningBranches: true }]],
   },
   {
@@ -123,7 +131,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
           default:
             neverReturn();
         }
-      }`,
+      }
+    `,
     optionsSet: [
       [{ allowReturningBranches: true }],
       [{ allowReturningBranches: "ifExhaustive" }],
@@ -140,7 +149,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
           case "b":
             return 2;
         }
-      }`,
+      }
+    `,
     optionsSet: [
       [{ allowReturningBranches: true }],
       [{ allowReturningBranches: "ifExhaustive" }],

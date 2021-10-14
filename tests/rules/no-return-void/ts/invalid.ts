@@ -6,9 +6,10 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   // Disallow void.
   {
     code: dedent`
-    function foo(bar: number): void {
-      console.log(bar);
-    }`,
+      function foo(bar: number): void {
+        console.log(bar);
+      }
+    `,
     optionsSet: [[]],
     errors: [
       {
@@ -22,10 +23,11 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   // Disallow undefined.
   {
     code: dedent`
-    function foo(bar: number): undefined {
-      console.log(bar);
-      return undefined;
-    }`,
+      function foo(bar: number): undefined {
+        console.log(bar);
+        return undefined;
+      }
+    `,
     optionsSet: [[{ allowUndefined: false }]],
     errors: [
       {
@@ -39,10 +41,11 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   // Disallow null.
   {
     code: dedent`
-    function foo(bar: number): null {
-      console.log(bar);
-      return null;
-    }`,
+      function foo(bar: number): null {
+        console.log(bar);
+        return null;
+      }
+    `,
     optionsSet: [[{ allowNull: false }]],
     errors: [
       {
@@ -56,9 +59,10 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   // Disallow higher-order function void.
   {
     code: dedent`
-    function foo(bar: number): (baz: number) => void {
-      return baz => { console.log(bar, baz); }
-    }`,
+      function foo(bar: number): (baz: number) => void {
+        return baz => { console.log(bar, baz); }
+      }
+    `,
     optionsSet: [[{ ignoreImplicit: true }]],
     errors: [
       {
@@ -74,7 +78,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     code: dedent`
       function foo(bar) {
         console.log(bar);
-      }`,
+      }
+    `,
     optionsSet: [
       [{ ignoreImplicit: false }],
       [{ ignoreImplicit: false, allowNull: false }],

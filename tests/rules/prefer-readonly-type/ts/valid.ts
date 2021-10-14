@@ -6,36 +6,41 @@ const tests: ReadonlyArray<ValidTestCase> = [
   // Should not fail on explicit ReadonlyArray parameter.
   {
     code: dedent`
-    function foo(...numbers: ReadonlyArray<number>) {
-    }`,
+      function foo(...numbers: ReadonlyArray<number>) {
+      }
+    `,
     optionsSet: [[]],
   },
   {
     code: dedent`
-    function foo(...numbers: readonly number[]) {
-    }`,
+      function foo(...numbers: readonly number[]) {
+      }
+    `,
     optionsSet: [[]],
   },
   // Should not fail on explicit ReadonlyArray return type.
   {
     code: dedent`
-    function foo(): ReadonlyArray<number> {
-      return [1, 2, 3];
-    }`,
+      function foo(): ReadonlyArray<number> {
+        return [1, 2, 3];
+      }
+    `,
     optionsSet: [[]],
   },
   {
     code: dedent`
-    const foo = (): ReadonlyArray<number> => {
-      return [1, 2, 3];
-    }`,
+      const foo = (): ReadonlyArray<number> => {
+        return [1, 2, 3];
+      }
+    `,
     optionsSet: [[]],
   },
   // ReadonlyArray Tuple.
   {
     code: dedent`
-    function foo(tuple: readonly [number, string, readonly [number, string]]) {
-    }`,
+      function foo(tuple: readonly [number, string, readonly [number, string]]) {
+      }
+    `,
     optionsSet: [[]],
   },
   // Should not fail on ReadonlyArray type alias.
@@ -46,9 +51,10 @@ const tests: ReadonlyArray<ValidTestCase> = [
   // Should not fail on ReadonlyArray type alias in local type.
   {
     code: dedent`
-    function foo() {
-      type Foo = ReadonlyArray<string>;
-    }`,
+      function foo() {
+        type Foo = ReadonlyArray<string>;
+      }
+    `,
     optionsSet: [[]],
   },
   // Should not fail on ReadonlyArray in variable declaration.
@@ -59,75 +65,85 @@ const tests: ReadonlyArray<ValidTestCase> = [
   // Allow return type.
   {
     code: dedent`
-    function foo(...numbers: ReadonlyArray<number>): Array<number> {}
-    function bar(...numbers: readonly number[]): number[] {}`,
+      function foo(...numbers: ReadonlyArray<number>): Array<number> {}
+      function bar(...numbers: readonly number[]): number[] {}
+    `,
     optionsSet: [[{ allowMutableReturnType: true }]],
   },
   // Allow return type.
   {
     code: dedent`
-    const foo = function(...numbers: ReadonlyArray<number>): Array<number> {}
-    const bar = function(...numbers: readonly number[]): number[] {}`,
+      const foo = function(...numbers: ReadonlyArray<number>): Array<number> {}
+      const bar = function(...numbers: readonly number[]): number[] {}
+    `,
     optionsSet: [[{ allowMutableReturnType: true }]],
   },
   // Allow return type.
   {
     code: dedent`
-    const foo = (...numbers: ReadonlyArray<number>): Array<number> =>  {}
-    const bar = (...numbers: readonly number[]): number[] =>  {}`,
+      const foo = (...numbers: ReadonlyArray<number>): Array<number> =>  {}
+      const bar = (...numbers: readonly number[]): number[] =>  {}
+    `,
     optionsSet: [[{ allowMutableReturnType: true }]],
   },
   // Allow return type.
   {
     code: dedent`
-    class Foo {
-      foo(...numbers: ReadonlyArray<number>): Array<number> {
+      class Foo {
+        foo(...numbers: ReadonlyArray<number>): Array<number> {
+        }
       }
-    }
-    class Bar {
-      foo(...numbers: readonly number[]): number[] {
+      class Bar {
+        foo(...numbers: readonly number[]): number[] {
+        }
       }
-    }`,
+    `,
     optionsSet: [[{ allowMutableReturnType: true }]],
   },
   // Allow return type with Type Arguments.
   {
     code: dedent`
-    function foo(...numbers: ReadonlyArray<number>): Promise<Array<number>> {}
-    function foo(...numbers: ReadonlyArray<number>): Promise<number[]> {}`,
+      function foo(...numbers: ReadonlyArray<number>): Promise<Array<number>> {}
+      function foo(...numbers: ReadonlyArray<number>): Promise<number[]> {}
+    `,
     optionsSet: [[{ allowMutableReturnType: true }]],
   },
   // Allow return type with deep Type Arguments.
   {
     code: dedent`
-    type Foo<T> = { readonly x: T; };
-    function foo(...numbers: ReadonlyArray<number>): Promise<Foo<Array<number>>> {}
-    function foo(...numbers: ReadonlyArray<number>): Promise<Foo<number[]>> {}`,
+      type Foo<T> = { readonly x: T; };
+      function foo(...numbers: ReadonlyArray<number>): Promise<Foo<Array<number>>> {}
+      function foo(...numbers: ReadonlyArray<number>): Promise<Foo<number[]>> {}
+    `,
     optionsSet: [[{ allowMutableReturnType: true }]],
   },
   // Allow return type with Type Arguments in a tuple.
   {
     code: dedent`
-    function foo(...numbers: ReadonlyArray<number>): readonly [number, Array<number>, number] {}
-    function foo(...numbers: ReadonlyArray<number>): readonly [number, number[], number] {}`,
+      function foo(...numbers: ReadonlyArray<number>): readonly [number, Array<number>, number] {}
+      function foo(...numbers: ReadonlyArray<number>): readonly [number, number[], number] {}
+    `,
     optionsSet: [[{ allowMutableReturnType: true }]],
   },
   // Allow return type with Type Arguments Union.
   {
     code: dedent`
-    function foo(...numbers: ReadonlyArray<number>): { readonly a: Array<number> } | { readonly b: string[] } {}`,
+      function foo(...numbers: ReadonlyArray<number>): { readonly a: Array<number> } | { readonly b: string[] } {}
+    `,
     optionsSet: [[{ allowMutableReturnType: true }]],
   },
   // Allow return type with Type Arguments Intersection.
   {
     code: dedent`
-    function foo(...numbers: ReadonlyArray<number>): { readonly a: Array<number> } & { readonly b: string[] } {}`,
+      function foo(...numbers: ReadonlyArray<number>): { readonly a: Array<number> } & { readonly b: string[] } {}
+    `,
     optionsSet: [[{ allowMutableReturnType: true }]],
   },
   // Allow return type with Type Arguments Conditional.
   {
     code: dedent`
-    function foo<T>(x: T): T extends Array<number> ? string : number[] {}`,
+      function foo<T>(x: T): T extends Array<number> ? string : number[] {}
+    `,
     optionsSet: [[{ allowMutableReturnType: true }]],
   },
   // Allow inline mutable return type.
@@ -135,76 +151,83 @@ const tests: ReadonlyArray<ValidTestCase> = [
     code: dedent`
       function foo(bar: string): { baz: number } {
         return 1 as any;
-      }`,
+      }
+    `,
     optionsSet: [[{ allowMutableReturnType: true }]],
   },
   // Should not fail on implicit ReadonlyArray type in variable declaration.
   {
     code: dedent`
-    const foo = [1, 2, 3] as const`,
+      const foo = [1, 2, 3] as const
+    `,
     optionsSet: [[{ checkImplicit: true }]],
   },
   // Should not fail on implicit Array.
   {
     code: dedent`
-    const foo = [1, 2, 3]
-    function bar(param = [1, 2, 3]) {}`,
+      const foo = [1, 2, 3]
+      function bar(param = [1, 2, 3]) {}
+    `,
     optionsSet: [[]],
   },
   // Interface with readonly modifiers should not produce failures.
   {
     code: dedent`
-    interface Foo {
-      readonly a: number,
-      readonly b: ReadonlyArray<string>,
-      readonly c: () => string,
-      readonly d: { readonly [key: string]: string },
-      readonly [key: string]: string,
-    }`,
-    optionsSet: [[]],
-  },
-  // PropertySignature and IndexSignature members without readonly modifier
-  // should produce failures. Also verify that nested members are checked.
-  {
-    code: dedent`
-    interface Foo {
-      readonly a: number,
-      readonly b: ReadonlyArray<string>,
-      readonly c: () => string,
-      readonly d: { readonly [key: string]: string },
-      readonly [key: string]: string,
-      readonly e: {
+      interface Foo {
         readonly a: number,
         readonly b: ReadonlyArray<string>,
         readonly c: () => string,
         readonly d: { readonly [key: string]: string },
         readonly [key: string]: string,
       }
-    }`,
+    `,
+    optionsSet: [[]],
+  },
+  // PropertySignature and IndexSignature members without readonly modifier
+  // should produce failures. Also verify that nested members are checked.
+  {
+    code: dedent`
+      interface Foo {
+        readonly a: number,
+        readonly b: ReadonlyArray<string>,
+        readonly c: () => string,
+        readonly d: { readonly [key: string]: string },
+        readonly [key: string]: string,
+        readonly e: {
+          readonly a: number,
+          readonly b: ReadonlyArray<string>,
+          readonly c: () => string,
+          readonly d: { readonly [key: string]: string },
+          readonly [key: string]: string,
+        }
+      }
+    `,
     optionsSet: [[]],
   },
   // Class with parameter properties.
   {
     code: dedent`
-    class Klass {
-      constructor (
-        nonParameterProp: string,
-        readonly readonlyProp: string,
-        public readonly publicReadonlyProp: string,
-        protected readonly protectedReadonlyProp: string,
-        private readonly privateReadonlyProp: string,
-    ) { }
-  }`,
+      class Klass {
+          constructor (
+            nonParameterProp: string,
+            readonly readonlyProp: string,
+            public readonly publicReadonlyProp: string,
+            protected readonly protectedReadonlyProp: string,
+            private readonly privateReadonlyProp: string,
+        ) { }
+      }
+    `,
     optionsSet: [[]],
   },
   // CallSignature and MethodSignature cannot have readonly modifiers and should
   // not produce failures.
   {
     code: dedent`
-    interface Foo {
-      (): void
-      foo(): void
-    }`,
+      interface Foo {
+        (): void
+        foo(): void
+      }
+    `,
     optionsSet: [[]],
   },
   // The literal with indexer with readonly modifier should not produce failures.
@@ -220,130 +243,142 @@ const tests: ReadonlyArray<ValidTestCase> = [
   // Type literal with readonly on members should not produce failures.
   {
     code: dedent`
-    let foo: {
-      readonly a: number,
-      readonly b: ReadonlyArray<string>,
-      readonly c: () => string,
-      readonly d: { readonly [key: string]: string }
-      readonly [key: string]: string
-    };`,
+      let foo: {
+        readonly a: number,
+        readonly b: ReadonlyArray<string>,
+        readonly c: () => string,
+        readonly d: { readonly [key: string]: string }
+        readonly [key: string]: string
+      };
+    `,
     optionsSet: [[]],
   },
   // Mapped types with readonly on members should not produce failures.
   {
     code: dedent`
-    const func = (x: { readonly [key in string]: number }) => {}`,
+      const func = (x: { readonly [key in string]: number }) => {}
+    `,
     optionsSet: [[]],
   },
   // Ignore Classes.
   {
     code: dedent`
-    class Klass {
-      foo: number;
-      private bar: number;
-      static baz: number;
-      private static qux: number;
-    }`,
+      class Klass {
+        foo: number;
+        private bar: number;
+        static baz: number;
+        private static qux: number;
+      }
+    `,
     optionsSet: [[{ ignoreClass: true }]],
   },
   // Ignore Interfaces.
   {
     code: dedent`
-    interface Foo {
-      foo: number,
-      bar: ReadonlyArray<string>,
-      baz: () => string,
-      qux: { [key: string]: string }
-    }`,
+      interface Foo {
+        foo: number,
+        bar: ReadonlyArray<string>,
+        baz: () => string,
+        qux: { [key: string]: string }
+      }
+    `,
     optionsSet: [[{ ignoreInterface: true }]],
   },
   // Allow Local.
   {
     code: dedent`
-    function foo() {
-      let foo: {
-        a: number,
-        b: ReadonlyArray<string>,
-        c: () => string,
-        d: { [key: string]: string },
-        [key: string]: string,
-        readonly d: {
+      function foo() {
+        let foo: {
           a: number,
           b: ReadonlyArray<string>,
           c: () => string,
           d: { [key: string]: string },
           [key: string]: string,
+          readonly d: {
+            a: number,
+            b: ReadonlyArray<string>,
+            c: () => string,
+            d: { [key: string]: string },
+            [key: string]: string,
+          }
         }
-      }
-    };`,
+      };
+    `,
     optionsSet: [[{ allowLocalMutation: true }]],
   },
   // Ignore Prefix.
   {
     code: dedent`
-    let mutableFoo: string[] = [];`,
+      let mutableFoo: string[] = [];
+    `,
     optionsSet: [[{ ignorePattern: "^mutable" }]],
   },
   {
     code: dedent`
-    let foo: {
-      mutableA: number,
-      mutableB: ReadonlyArray<string>,
-      mutableC: () => string,
-      mutableD: { readonly [key: string]: string },
-      mutableE: {
+      let foo: {
         mutableA: number,
         mutableB: ReadonlyArray<string>,
         mutableC: () => string,
         mutableD: { readonly [key: string]: string },
-      }
-    };`,
+        mutableE: {
+          mutableA: number,
+          mutableB: ReadonlyArray<string>,
+          mutableC: () => string,
+          mutableD: { readonly [key: string]: string },
+        }
+      };
+    `,
     optionsSet: [[{ ignorePattern: "^mutable" }]],
   },
   {
     code: dedent`
-    class Klass {
-      mutableA: string;
-      private mutableB: string;
-    }`,
+      class Klass {
+        mutableA: string;
+        private mutableB: string;
+      }
+    `,
     optionsSet: [[{ ignorePattern: "^mutable" }]],
   },
   // Ignore Suffix.
   {
     code: dedent`
-    let fooMutable: string[] = [];`,
+      let fooMutable: string[] = [];
+    `,
     optionsSet: [[{ ignorePattern: "Mutable$" }]],
   },
   {
     code: dedent`
-    let foo: {
-      aMutable: number,
-      bMutable: ReadonlyArray<string>,
-      cMutable: () => string,
-      dMutable: { readonly [key: string]: string },
-      eMutable: {
+      let foo: {
         aMutable: number,
         bMutable: ReadonlyArray<string>,
         cMutable: () => string,
         dMutable: { readonly [key: string]: string },
-      }
-    };`,
+        eMutable: {
+          aMutable: number,
+          bMutable: ReadonlyArray<string>,
+          cMutable: () => string,
+          dMutable: { readonly [key: string]: string },
+        }
+      };
+    `,
     optionsSet: [[{ ignorePattern: "Mutable$" }]],
   },
   {
     code: dedent`
-    class Klass {
-      AMutable: string;
-      private BMutable: string;
-    }`,
+      class Klass {
+        AMutable: string;
+        private BMutable: string;
+      }
+    `,
     optionsSet: [[{ ignorePattern: "Mutable$" }]],
   },
   // Allow mutable TSIndexSignature.
   {
     code: dedent`
-    const mutableResult: {
-      [key: string]: string
-    } = {};`,
+      const mutableResult: {
+        [key: string]: string
+      } = {};
+    `,
     optionsSet: [[{ ignorePattern: "^mutable" }]],
   },
   // Ignore Mutable Collections (Array, Tuple, Set, Map)

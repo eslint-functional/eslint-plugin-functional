@@ -9,7 +9,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       type Foo = {
         bar: string;
         zoo(): number;
-      };`,
+      };
+    `,
     optionsSet: [[], [{ checkInterfaces: false }]],
     errors: [
       {
@@ -25,7 +26,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       interface Foo {
         bar: string;
         zoo(): number;
-      }`,
+      }
+    `,
     optionsSet: [[], [{ checkTypeLiterals: false }]],
     errors: [
       {
@@ -42,7 +44,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       type Foo = {
         bar: string;
         zoo: () => number;
-      };`,
+      };
+    `,
     optionsSet: [[], [{ checkInterfaces: false }]],
     errors: [
       {
@@ -58,7 +61,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       interface Foo {
         bar: string;
         zoo: () => number;
-      }`,
+      }
+    `,
     optionsSet: [[], [{ checkTypeLiterals: false }]],
     errors: [
       {
