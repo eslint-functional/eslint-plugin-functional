@@ -62,7 +62,7 @@
     "verify": "yarn build && yarn lint && yarn build-tests && yarn test-compiled && rimraf build"
   },
   "dependencies": {
-    "@typescript-eslint/experimental-utils": "^4.31.1",
+    "@typescript-eslint/experimental-utils": "^5.0.0",
     "deepmerge-ts": "^1.0.1",
     "escape-string-regexp": "^4.0.0"
   },
@@ -70,7 +70,7 @@
     "@commitlint/cli": "^13.1.0",
     "@commitlint/config-conventional": "^13.1.0",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
-    "@rebeccastevens/eslint-config": "^1.1.3",
+    "@rebeccastevens/eslint-config": "^1.1.4",
     "@rollup/plugin-commonjs": "^20.0.0",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^13.0.4",
@@ -82,14 +82,14 @@
     "@semantic-release/npm": "^8.0.0",
     "@semantic-release/release-notes-generator": "^10.0.2",
     "@types/dedent": "^0.7.0",
-    "@types/eslint": "^7.2.6",
+    "@types/eslint": "^7.28.1",
     "@types/estree": "^0.0.50",
     "@types/node": "16.10.2",
     "@types/rollup-plugin-auto-external": "^2.0.2",
-    "@typescript-eslint/eslint-plugin": "^4.28.4",
-    "@typescript-eslint/parser": "^4.28.4",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
     "ava": "^3.15.0",
-    "babel-eslint": "^10.0.2",
+    "babel-eslint": "^10.1.0",
     "chalk": "^4.1.2",
     "codecov": "^3.8.1",
     "commitizen": "^4.2.4",
@@ -97,22 +97,22 @@
     "cross-env": "^7.0.3",
     "cspell": "^5.7.0",
     "dedent": "^0.7.0",
-    "eslint": "^7.31.0",
+    "eslint": "^8.0.1",
     "eslint-ava-rule-tester": "^4.0.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-import-resolver-typescript": "^2.4.0",
     "eslint-plugin-ava": "^13.0.0",
     "eslint-plugin-eslint-comments": "^3.2.0",
-    "eslint-plugin-eslint-plugin": "^3.4.0",
-    "eslint-plugin-import": "^2.23.4",
-    "eslint-plugin-jsdoc": "^36.1.0",
+    "eslint-plugin-eslint-plugin": "^3.6.1",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-jsdoc": "^36.1.1",
     "eslint-plugin-markdown": "^2.2.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-optimize-regex": "^1.2.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-sonarjs": "^0.10.0",
-    "eslint-plugin-unicorn": "^36.0.0",
+    "eslint-plugin-unicorn": "^37.0.1",
     "espree": "^9.0.0",
     "husky": "^7.0.2",
     "json-schema": "^0.3.0",
@@ -134,7 +134,7 @@
     "word-wrap": "^1.2.3"
   },
   "peerDependencies": {
-    "eslint": "^5.0.0 || ^6.0.0 || ^7.0.0",
+    "eslint": "^8.0.0",
     "tsutils": "^3.0.0",
     "typescript": "^3.4.1 || ^4.0.0"
   },
@@ -147,6 +147,6 @@
     }
   },
   "engines": {
-    "node": ">=12.4.0"
+    "node": "^12.22.0 || ^14.17.0 || >=16.0.0"
   }
 }

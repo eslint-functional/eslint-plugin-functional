@@ -48,7 +48,6 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
   docs: {
     description:
       "Restrict types so that only members of the same kind of are allowed in them.",
-    category: "Best Practices",
     recommended: "error",
   },
   messages: errorMessages,

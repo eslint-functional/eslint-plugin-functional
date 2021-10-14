@@ -65,7 +65,6 @@ export function createDummyRule(
     type: "suggestion",
     docs: {
       description: "Disallow mutable variables.",
-      category: "Best Practices",
       recommended: "error",
       url: "",
     },
