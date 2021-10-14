@@ -14,10 +14,12 @@ function getBoolean(value) {
 }
 
 const useCompiledTests = getBoolean(process.env.USE_COMPILED_TESTS);
-const testAllFiles = getBoolean(process.env.TEST_ALL_FILES);
+const onlyTestWorkFile = getBoolean(process.env.ONLY_TEST_WORK_FILE);
 
 const avaCommonConfig = {
-  files: testAllFiles ? ["tests/**/*.test.*"] : ["tests/**/!(work)*.test.*"],
+  files: onlyTestWorkFile
+    ? ["tests/rules/work.test.*"]
+    : ["tests/**/!(work)*.test.*"],
   timeout: "5m",
 };
 

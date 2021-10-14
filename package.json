@@ -57,7 +57,8 @@
     "lint-js": "eslint .",
     "lint-md": "markdownlint \"**/*.md\" --config=.markdownlint.json --ignore-path=.markdownlintignore",
     "test": "nyc ava",
-    "test-work": "TEST_ALL_FILES=1 ava",
+    "test-compiled": "USE_COMPILED_TESTS=1 ava",
+    "test-work": "ONLY_TEST_WORK_FILE=1 ava",
     "verify": "yarn build && yarn lint && yarn build-tests && yarn test-compiled && rimraf build"
   },
   "dependencies": {

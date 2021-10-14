@@ -55,7 +55,4 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
  * Run test with `yarn test-work` or to debug in vscode, press F5 (with this
  * file open and focused).
  */
-testUsing.typescript(name, rule, {
-  valid: valid,
-  invalid: invalid,
-});
+testUsing.typescript(name, rule, { valid, invalid });
