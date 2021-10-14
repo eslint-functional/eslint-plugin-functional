@@ -46,7 +46,6 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     description: "Disallow try-catch[-finally] and try-finally patterns.",
-    category: "Best Practices",
     recommended: "error",
   },
   messages: errorMessages,

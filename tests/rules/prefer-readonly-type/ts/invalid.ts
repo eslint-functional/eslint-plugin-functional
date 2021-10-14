@@ -6,11 +6,13 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   {
     code: dedent`
       function foo(...numbers: number[]) {
-      }`,
+      }
+    `,
     optionsSet: [[]],
     output: dedent`
       function foo(...numbers: readonly number[]) {
-      }`,
+      }
+    `,
     errors: [
       {
         messageId: "array",
@@ -23,11 +25,13 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   {
     code: dedent`
       function foo(...numbers: Array<number>) {
-      }`,
+      }
+    `,
     optionsSet: [[]],
     output: dedent`
       function foo(...numbers: ReadonlyArray<number>) {
-      }`,
+      }
+    `,
     errors: [
       {
         messageId: "type",
@@ -40,11 +44,13 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   {
     code: dedent`
       function foo(numbers: Set<number>) {
-      }`,
+      }
+    `,
     optionsSet: [[]],
     output: dedent`
       function foo(numbers: ReadonlySet<number>) {
-      }`,
+      }
+    `,
     errors: [
       {
         messageId: "type",
@@ -57,11 +63,13 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   {
     code: dedent`
       function foo(numbers: Map<number, string>) {
-      }`,
+      }
+    `,
     optionsSet: [[]],
     output: dedent`
       function foo(numbers: ReadonlyMap<number, string>) {
-      }`,
+      }
+    `,
     errors: [
       {
         messageId: "type",
@@ -76,12 +84,14 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     code: dedent`
       interface Foo {
         readonly bar: Array<string>
-      }`,
+      }
+    `,
     optionsSet: [[]],
     output: dedent`
       interface Foo {
         readonly bar: ReadonlyArray<string>
-      }`,
+      }
+    `,
     errors: [
       {
         messageId: "type",
@@ -98,14 +108,16 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         readonly [key: string]: {
           readonly groups: Array<string>
         }
-      }`,
+      }
+    `,
     optionsSet: [[]],
     output: dedent`
       interface Foo {
         readonly [key: string]: {
           readonly groups: ReadonlyArray<string>
         }
-      }`,
+      }
+    `,
     errors: [
       {
         messageId: "type",
@@ -122,14 +134,16 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         interface Foo {
           readonly bar: Array<string>
         }
-      }`,
+      }
+    `,
     optionsSet: [[]],
     output: dedent`
       function foo(): ReadonlyArray<string> {
         interface Foo {
           readonly bar: ReadonlyArray<string>
         }
-      }`,
+      }
+    `,
     errors: [
       {
         messageId: "type",
@@ -152,14 +166,16 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         interface Foo {
           readonly bar: Array<string>
         }
-      }`,
+      }
+    `,
     optionsSet: [[]],
     output: dedent`
       const foo = (): ReadonlyArray<string> => {
         interface Foo {
           readonly bar: ReadonlyArray<string>
         }
-      }`,
+      }
+    `,
     errors: [
       {
         messageId: "type",
@@ -179,11 +195,13 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   {
     code: dedent`
       function foo(): number[] {
-      }`,
+      }
+    `,
     optionsSet: [[]],
     output: dedent`
       function foo(): readonly number[] {
-      }`,
+      }
+    `,
     errors: [
       {
         messageId: "array",
@@ -212,12 +230,14 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     code: dedent`
       const foo = function (): string {
         let bar: Array<string>;
-      };`,
+      };
+    `,
     optionsSet: [[]],
     output: dedent`
       const foo = function (): string {
         let bar: ReadonlyArray<string>;
-      };`,
+      };
+    `,
     errors: [
       {
         messageId: "type",
@@ -231,11 +251,13 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   {
     code: dedent`
       function foo(tuple: [number, string]) {
-      }`,
+      }
+    `,
     optionsSet: [[]],
     output: dedent`
       function foo(tuple: readonly [number, string]) {
-      }`,
+      }
+    `,
     errors: [
       {
         messageId: "tuple",
@@ -248,11 +270,13 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   {
     code: dedent`
       function foo(tuple: [number, string, [number, string]]) {
-      }`,
+      }
+    `,
     optionsSet: [[]],
     output: dedent`
       function foo(tuple: readonly [number, string, readonly [number, string]]) {
-      }`,
+      }
+    `,
     errors: [
       {
         messageId: "tuple",
@@ -271,11 +295,13 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   {
     code: dedent`
       function foo(tuple: readonly [number, string, [number, string]]) {
-      }`,
+      }
+    `,
     optionsSet: [[]],
     output: dedent`
       function foo(tuple: readonly [number, string, readonly [number, string]]) {
-      }`,
+      }
+    `,
     errors: [
       {
         messageId: "tuple",
@@ -288,11 +314,13 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   {
     code: dedent`
       function foo(tuple: [number, string, readonly [number, string]]) {
-      }`,
+      }
+    `,
     optionsSet: [[]],
     output: dedent`
       function foo(tuple: readonly [number, string, readonly [number, string]]) {
-      }`,
+      }
+    `,
     errors: [
       {
         messageId: "tuple",
@@ -322,7 +350,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
           baz: ["world"]
         };
         return foo;
-      }`,
+      }
+    `,
     optionsSet: [[]],
     output: dedent`
       function foo(
@@ -342,7 +371,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
           baz: ["world"]
         };
         return foo;
-      }`,
+      }
+    `,
     errors: [
       {
         messageId: "type",
@@ -385,14 +415,16 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         type Foo = {
           readonly bar: Array<string>
         }
-      }`,
+      }
+    `,
     optionsSet: [[]],
     output: dedent`
       function foo() {
         type Foo = {
           readonly bar: ReadonlyArray<string>
         }
-      }`,
+      }
+    `,
     errors: [
       {
         messageId: "type",
@@ -407,12 +439,14 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     code: dedent`
       function foo() {
         type Foo = Array<string>;
-      }`,
+      }
+    `,
     optionsSet: [[]],
     output: dedent`
       function foo() {
         type Foo = ReadonlyArray<string>;
-      }`,
+      }
+    `,
     errors: [
       {
         messageId: "type",
@@ -429,14 +463,16 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         type Foo = {
           readonly bar: Array<string>
         }
-      }`,
+      }
+    `,
     optionsSet: [[]],
     output: dedent`
       function foo() {
         type Foo = {
           readonly bar: ReadonlyArray<string>
         }
-      }`,
+      }
+    `,
     errors: [
       {
         messageId: "type",
@@ -506,11 +542,13 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   {
     code: dedent`
       const foo = [1, 2, 3]
-      function bar(param = [1, 2, 3]) {}`,
+      function bar(param = [1, 2, 3]) {}
+    `,
     optionsSet: [[{ checkImplicit: true }]],
     output: dedent`
       const foo: readonly unknown[] = [1, 2, 3]
-      function bar(param: readonly unknown[] = [1, 2, 3]) {}`,
+      function bar(param: readonly unknown[] = [1, 2, 3]) {}
+    `,
     errors: [
       {
         messageId: "implicit",
@@ -534,7 +572,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         private bar: number;
         static baz: number;
         private static qux: number;
-      }`,
+      }
+    `,
     optionsSet: [[]],
     output: dedent`
       class Klass {
@@ -542,29 +581,30 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         private readonly bar: number;
         static readonly baz: number;
         private static readonly qux: number;
-      }`,
+      }
+    `,
     errors: [
       {
         messageId: "property",
-        type: "ClassProperty",
+        type: "PropertyDefinition",
         line: 2,
         column: 3,
       },
       {
         messageId: "property",
-        type: "ClassProperty",
+        type: "PropertyDefinition",
         line: 3,
         column: 3,
       },
       {
         messageId: "property",
-        type: "ClassProperty",
+        type: "PropertyDefinition",
         line: 4,
         column: 3,
       },
       {
         messageId: "property",
-        type: "ClassProperty",
+        type: "PropertyDefinition",
         line: 5,
         column: 3,
       },
@@ -579,7 +619,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
           protected protectedProp: string,
           private privateProp: string,
       ) { }
-      }`,
+      }
+    `,
     optionsSet: [[]],
     output: dedent`
       class Klass {
@@ -588,7 +629,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
           protected readonly protectedProp: string,
           private readonly privateProp: string,
       ) { }
-      }`,
+      }
+    `,
     errors: [
       {
         messageId: "property",
@@ -618,7 +660,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       }
       interface Bar {
         [key: string]: { prop: string }
-      }`,
+      }
+    `,
     optionsSet: [[]],
     output: dedent`
       interface Foo {
@@ -626,7 +669,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       }
       interface Bar {
         readonly [key: string]: { readonly prop: string }
-      }`,
+      }
+    `,
     errors: [
       {
         messageId: "property",
@@ -656,7 +700,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       }
       function bar(param: { [source: string]: string }): void {
         return undefined;
-      }`,
+      }
+    `,
     optionsSet: [[]],
     output: dedent`
       function foo(): { readonly [source: string]: string } {
@@ -664,7 +709,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       }
       function bar(param: { readonly [source: string]: string }): void {
         return undefined;
-      }`,
+      }
+    `,
     errors: [
       {
         messageId: "property",
@@ -700,13 +746,15 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       type foo = ReadonlyArray<{
         type: string,
         code: string,
-      }>;`,
+      }>;
+    `,
     optionsSet: [[]],
     output: dedent`
       type foo = ReadonlyArray<{
         readonly type: string,
         readonly code: string,
-      }>;`,
+      }>;
+    `,
     errors: [
       {
         messageId: "property",
@@ -739,7 +787,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
           d: { readonly [key: string]: string },
           [key: string]: string,
         }
-      };`,
+      };
+    `,
     optionsSet: [[]],
     output: dedent`
       let foo: {
@@ -755,7 +804,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
           readonly d: { readonly [key: string]: string },
           readonly [key: string]: string,
         }
-      };`,
+      };
+    `,
     errors: [
       {
         messageId: "property",
@@ -822,11 +872,13 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   {
     code: dedent`
       function foo(bar: { x: number }) {
-      };`,
+      };
+    `,
     optionsSet: [[{ allowLocalMutation: true }]],
     output: dedent`
       function foo(bar: { readonly x: number }) {
-      };`,
+      };
+    `,
     errors: [
       {
         messageId: "property",
@@ -839,10 +891,12 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   // Mapped type without readonly.
   {
     code: dedent`
-      const func = (x: { [key in string]: number }) => {}`,
+      const func = (x: { [key in string]: number }) => {}
+    `,
     optionsSet: [[]],
     output: dedent`
-      const func = (x: { readonly [key in string]: number }) => {}`,
+      const func = (x: { readonly [key in string]: number }) => {}
+    `,
     errors: [
       {
         messageId: "property",
@@ -861,7 +915,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
             foo: number;
           };
         }
-      }`,
+      }
+    `,
     optionsSet: [[{ ignoreClass: "fieldsOnly" }]],
     output: dedent`
       class Klass {
@@ -870,7 +925,8 @@ const tests: ReadonlyArray<InvalidTestCase> = [
             readonly foo: number;
           };
         }
-      }`,
+      }
+    `,
     errors: [
       {
         messageId: "property",
@@ -886,13 +942,15 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       const propertyName = 'myProperty';
       type Foo = {
         [propertyName]: string;
-      };`,
+      };
+    `,
     optionsSet: [[]],
     output: dedent`
       const propertyName = 'myProperty';
       type Foo = {
         readonly [propertyName]: string;
-      };`,
+      };
+    `,
     errors: [
       {
         messageId: "property",

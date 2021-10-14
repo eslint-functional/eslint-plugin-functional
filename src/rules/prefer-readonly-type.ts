@@ -96,7 +96,6 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     description: "Prefer readonly array over mutable arrays.",
-    category: "Best Practices",
     recommended: "error",
   },
   messages: errorMessages,
@@ -259,7 +258,7 @@ function checkTypeReference(
  */
 function checkProperty(
   node:
-    | TSESTree.ClassProperty
+    | TSESTree.PropertyDefinition
     | TSESTree.TSIndexSignature
     | TSESTree.TSParameterProperty
     | TSESTree.TSPropertySignature,
@@ -380,7 +379,7 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   defaultOptions,
   {
     ArrowFunctionExpression: checkImplicitType,
-    ClassProperty: checkProperty,
+    PropertyDefinition: checkProperty,
     FunctionDeclaration: checkImplicitType,
     FunctionExpression: checkImplicitType,
     TSArrayType: checkArrayOrTupleType,

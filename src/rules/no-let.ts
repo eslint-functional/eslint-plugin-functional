@@ -41,7 +41,6 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     description: "Disallow mutable variables.",
-    category: "Best Practices",
     recommended: "error",
   },
   messages: errorMessages,

@@ -59,7 +59,6 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     description: "Disallow functions that don't return anything.",
-    category: "Best Practices",
     recommended: "error",
   },
   messages: errorMessages,

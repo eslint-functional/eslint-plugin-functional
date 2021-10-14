@@ -8,7 +8,7 @@ import {
   hasID,
   hasKey,
   isAssignmentExpression,
-  isClassProperty,
+  isPropertyDefinition,
   isExpressionStatement,
   isIdentifier,
   isMemberExpression,
@@ -271,7 +271,7 @@ export function shouldIgnoreClass(
   return (
     (options.ignoreClass === true && inClass(node)) ||
     (options.ignoreClass === "fieldsOnly" &&
-      (isClassProperty(node) ||
+      (isPropertyDefinition(node) ||
         (isAssignmentExpression(node) &&
           inClass(node) &&
           isMemberExpression(node.left) &&

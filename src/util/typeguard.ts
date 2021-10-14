@@ -86,10 +86,10 @@ export function isCallExpression(
   return node.type === AST_NODE_TYPES.CallExpression;
 }
 
-export function isClassProperty(
+export function isPropertyDefinition(
   node: TSESTree.Node
-): node is TSESTree.ClassProperty {
-  return node.type === AST_NODE_TYPES.ClassProperty;
+): node is TSESTree.PropertyDefinition {
+  return node.type === AST_NODE_TYPES.PropertyDefinition;
 }
 
 /**
