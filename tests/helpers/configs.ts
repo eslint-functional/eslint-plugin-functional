@@ -12,30 +12,34 @@ export const typescript: Linter.Config = {
 };
 
 export const es9: Linter.Config = {
-  parser: require.resolve("babel-eslint"),
+  parser: require.resolve("@babel/eslint-parser"),
   parserOptions: {
     ecmaVersion: 9,
+    requireConfigFile: false,
   },
 };
 
 export const es8: Linter.Config = {
-  parser: require.resolve("babel-eslint"),
+  parser: require.resolve("@babel/eslint-parser"),
   parserOptions: {
     ecmaVersion: 8,
+    requireConfigFile: false,
   },
 };
 
 export const es7: Linter.Config = {
-  parser: require.resolve("babel-eslint"),
+  parser: require.resolve("@babel/eslint-parser"),
   parserOptions: {
     ecmaVersion: 7,
+    requireConfigFile: false,
   },
 };
 
 export const es6: Linter.Config = {
-  parser: require.resolve("babel-eslint"),
+  parser: require.resolve("@babel/eslint-parser"),
   parserOptions: {
     ecmaVersion: 6,
+    requireConfigFile: false,
   },
 };
 
