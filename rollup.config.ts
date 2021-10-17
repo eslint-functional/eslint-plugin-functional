@@ -1,7 +1,6 @@
 /**
  * Rollup Config.
  */
-// @ts-check
 
 import rollupPluginCommonjs from "@rollup/plugin-commonjs";
 import rollupPluginJSON from "@rollup/plugin-json";

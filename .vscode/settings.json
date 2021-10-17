@@ -3,27 +3,35 @@
     ".nyc_output": true,
     "coverage": true,
     "cz-adapter/index.js": true,
+    "ava.config.cjs": true,
+    "rollup.config.cjs": true
   },
   "files.trimTrailingWhitespace": true,
   "search.exclude": {
     "**/.git/": true,
     "**/.nyc_output/": true,
-    "**/yarn.lock": true,
     ".vscode/": true,
     "build/": true,
     "lib/": true,
+    "ava.config.cjs": true,
+    "rollup.config.cjs": true,
+    "yarn.lock": true
   },
   "typescript.tsdk": "./node_modules/typescript/lib",
+  "files.associations": {
+    ".markdownlint.json": "jsonc",
+    ".markdownlintignore": "ignore"
+  },
   "[json]": {
     "editor.defaultFormatter": "vscode.json-language-features",
-    "editor.formatOnSave": false,
+    "editor.formatOnSave": true
   },
   "[jsonc]": {
     "editor.defaultFormatter": "vscode.json-language-features",
-    "editor.formatOnSave": false,
+    "editor.formatOnSave": true
   },
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true,
-  },
+    "editor.formatOnSave": true
+  }
 }

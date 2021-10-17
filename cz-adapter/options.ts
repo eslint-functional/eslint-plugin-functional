@@ -49,11 +49,11 @@ const types = {
 };
 
 const defaults: {
-  readonly defaultType?: string;
-  readonly defaultScope?: string;
-  readonly defaultSubject?: string;
-  readonly defaultBody?: string;
-  readonly defaultIssues?: string;
+  readonly defaultType: string | undefined;
+  readonly defaultScope: string | undefined;
+  readonly defaultSubject: string | undefined;
+  readonly defaultBody: string | undefined;
+  readonly defaultIssues: string | undefined;
 } = {
   defaultType: process.env.CZ_TYPE,
   defaultScope: process.env.CZ_SCOPE,

@@ -1,9 +1,7 @@
-// @ts-check
-
 /**
  * Get the intended boolean value from the given string.
  */
-function getBoolean(value) {
+function getBoolean(value: unknown) {
   if (value === undefined) {
     return false;
   }

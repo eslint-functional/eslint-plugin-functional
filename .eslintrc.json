@@ -30,7 +30,7 @@
     ],
     "sourceType": "module"
   },
-  "ignorePatterns": ["build/", "coverage/", "lib/", "**/*.js"],
+  "ignorePatterns": ["/build/", "/coverage/", "/lib/", "/**/*.cjs", "/**/*.js"],
   "rules": {
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-unnecessary-condition": "off",
