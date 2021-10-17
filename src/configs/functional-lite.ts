@@ -16,6 +16,19 @@ const overrides: Linter.Config = {
       },
     ],
   },
+  overrides: [
+    {
+      files: ["*.ts", "*.tsx"],
+      rules: {
+        "functional/prefer-readonly-type-declaration": [
+          "error",
+          {
+            readonlyAliasPatterns: "^I?Readonly.+$",
+          },
+        ],
+      },
+    },
+  ],
 };
 
 const config: Linter.Config = deepmerge(functional, overrides);

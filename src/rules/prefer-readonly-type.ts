@@ -111,6 +111,11 @@ const errorMessages = {
  * The meta data for this rule.
  */
 const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
+  deprecated: true,
+  replacedBy: [
+    "prefer-readonly-type-declaration",
+    "@typescript-eslint/prefer-readonly-parameter-types",
+  ],
   type: "suggestion",
   docs: {
     description: "Prefer readonly array over mutable arrays.",

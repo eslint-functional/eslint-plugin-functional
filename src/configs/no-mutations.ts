@@ -10,7 +10,7 @@ const config: Linter.Config = {
       files: ["*.ts", "*.tsx"],
       rules: {
         "functional/no-method-signature": "warn",
-        "functional/prefer-readonly-type": "error",
+        "functional/prefer-readonly-type-declaration": "error",
       },
     },
   ],

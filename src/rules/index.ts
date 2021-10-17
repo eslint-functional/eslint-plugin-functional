@@ -13,6 +13,7 @@ import * as noThisExpression from "./no-this-expression";
 import * as noThrowStatement from "./no-throw-statement";
 import * as noTryStatement from "./no-try-statement";
 import * as preferReadonlyTypes from "./prefer-readonly-type";
+import * as preferReadonlyTypesDeclaration from "./prefer-readonly-type-declaration";
 import * as preferTacit from "./prefer-tacit";
 
 /**
@@ -34,5 +35,6 @@ export const rules = {
   [noThrowStatement.name]: noThrowStatement.rule,
   [noTryStatement.name]: noTryStatement.rule,
   [preferReadonlyTypes.name]: preferReadonlyTypes.rule,
+  [preferReadonlyTypesDeclaration.name]: preferReadonlyTypesDeclaration.rule,
   [preferTacit.name]: preferTacit.rule,
 };

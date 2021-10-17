@@ -1,3 +1,5 @@
+import type { ReadonlynessOptions } from "@typescript-eslint/type-utils";
+import { isTypeReadonly } from "@typescript-eslint/type-utils";
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { ESLintUtils } from "@typescript-eslint/utils";
 import type { Rule } from "eslint";
@@ -130,6 +132,25 @@ export function getTypeOfNode<
   );
   const constrained = checker.getBaseConstraintOfType(nodeType);
   return constrained ?? nodeType;
+}
+
+/**
+ * Is the given node readonly?
+ */
+export function isReadonly<Context extends RuleContext<string, BaseOptions>>(
+  node: TSESTree.Node,
+  context: Context,
+  readonlynessOptions: ReadonlynessOptions
+): boolean {
+  const { parserServices } = context;
+
+  if (parserServices === undefined || parserServices.program === undefined) {
+    return false;
+  }
+
+  const checker = parserServices.program.getTypeChecker();
+  const type = getTypeOfNode(node, context);
+  return isTypeReadonly(checker, type!, readonlynessOptions);
 }
 
 /**

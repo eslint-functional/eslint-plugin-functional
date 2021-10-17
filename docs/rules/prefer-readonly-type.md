@@ -1,6 +1,8 @@
 # Prefer readonly types over mutable types (prefer-readonly-type)
 
-This rule enforces use of the readonly modifier and readonly types.
+## :warning: This rule is deprecated
+
+This rule has been replaced by [prefer-readonly-type-declaration](./prefer-readonly-type-declaration.md) and [@typescript-eslint/prefer-readonly-parameter-types](https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/prefer-readonly-parameter-types.md)
 
 ## Rule Details
 
