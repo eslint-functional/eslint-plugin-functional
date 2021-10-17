@@ -44,7 +44,9 @@
     "node/no-unsupported-features/es-syntax": "off",
     "promise/prefer-await-to-callbacks": "off",
     // enable once supported in all our supported node versions.
-    "unicorn/prefer-node-protocol": "off"
+    "unicorn/prefer-node-protocol": "off",
+    // only available for node >= 16
+    "unicorn/prefer-string-replace-all": "off"
   },
   "overrides": [
     // Top level files.
