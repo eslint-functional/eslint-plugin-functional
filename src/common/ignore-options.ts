@@ -216,7 +216,7 @@ function accessorPatternMatch(
       )
     : // Text matches pattern?
       new RegExp(
-        `^${escapeRegExp(pattern).replaceAll("\\*", ".*")}$`,
+        `^${escapeRegExp(pattern).replace(/\\\*/gu, ".*")}$`,
         "u"
       ).test(textParts[0]) &&
       accessorPatternMatch(
