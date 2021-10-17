@@ -15,7 +15,7 @@ In order for the parser to have access to type information, it needs access to y
 
 ### Example config
 
-```json
+```jsonc
 {
   "root": true,
   "parser": "@typescript-eslint/parser",
