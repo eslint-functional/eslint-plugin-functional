@@ -6,7 +6,7 @@ plugins:
   - - "@semantic-release/changelog"
     - changelogTitle: "# Changelog
 
-        All notable changes to this project will be documented in this file."
+        All notable changes to this project will be documented in this file. Dates are displayed in UTC."
   - "@semantic-release/git"
   - "@semantic-release/npm"
   - - "@semantic-release/github"
