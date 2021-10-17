@@ -1,4 +1,39 @@
 # Changelog
+All notable changes to this project will be documented in this file. Dates are displayed in UTC.
+
+# [4.0.0](https://github.com/jonaskello/eslint-plugin-functional/compare/v3.7.2...v4.0.0) (2021-10-17)
+
+
+### Bug Fixes
+
+* bring rule meta data "recommended" into line with the recommend config ([3c4a042](https://github.com/jonaskello/eslint-plugin-functional/commit/3c4a042767aaccc55b76f42a5a1efb1e4b35d172))
+
+
+### chore
+
+* remove deprecated rule: prefer-type-literal ([3a54331](https://github.com/jonaskello/eslint-plugin-functional/commit/3a543312388232a2348545ae7ab7ab18965e3282))
+* remove deprecated stylitic ruleset ([2b96760](https://github.com/jonaskello/eslint-plugin-functional/commit/2b967606b065eac90b13fe24524c433401736440))
+* update minimum required node version to 12 ([97acb3f](https://github.com/jonaskello/eslint-plugin-functional/commit/97acb3fa8fd82a600861637e540cf1d8bf3a7ce3))
+
+
+### Features
+
+* add an off preset ([686b7fe](https://github.com/jonaskello/eslint-plugin-functional/commit/686b7fe581fe6d451c53f3a84d95338f2e1c5ede))
+* add stylistic rules to lite and recommended rule sets ([b81b4c7](https://github.com/jonaskello/eslint-plugin-functional/commit/b81b4c72e86d97768a16e64faedf0b53ffad10d5))
+* **external-recommended:** update recommended external rules ([353acb3](https://github.com/jonaskello/eslint-plugin-functional/commit/353acb34e08bb5e92e682793dd515e2af072e1c6))
+* **no-return-void:** implicit types are now checked by default ([2adbe14](https://github.com/jonaskello/eslint-plugin-functional/commit/2adbe14ac4f91e8c49eca59c785ca5ba3cf070a7))
+* **prefer-tacit:** disable prefer-tacit by default in recommended and lite configs ([6f9204d](https://github.com/jonaskello/eslint-plugin-functional/commit/6f9204dadaff56ebde5d69c7dbce001a3bd47e94))
+
+
+### BREAKING CHANGES
+
+* **no-return-void:** implicit types are now checked by default
+* **external-recommended:** update recommended external rules
+* rule "prefer-type-literal" has been removed.
+* removed stylitic ruleset in favor of stylistic ruleset
+* Node ^12.22.0 or ^14.17.0 or >=16.0.0 is now required
+
+# Changelog
 
 All notable changes to this project will be documented in this file.
 
