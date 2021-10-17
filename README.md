@@ -152,6 +152,7 @@ Presets:
 
 - **Recommended** (plugin:functional/recommended)
 - **Lite** (plugin:functional/lite)
+- **Off** (plugin:functional/off)
 
 Categorized:
 

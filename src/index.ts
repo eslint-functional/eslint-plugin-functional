@@ -9,6 +9,7 @@ import noExceptions from "~/configs/no-exceptions";
 import noMutations from "~/configs/no-mutations";
 import noObjectOrientation from "~/configs/no-object-orientation";
 import noStatements from "~/configs/no-statements";
+import off from "~/configs/off";
 import stylistic from "~/configs/stylistic";
 import { rules } from "~/rules";
 
@@ -24,6 +25,7 @@ const config: EslintPluginConfig = {
     recommended: functional,
     "external-recommended": externalRecommended,
     lite: functionalLite,
+    off,
     "no-mutations": noMutations,
     "no-exceptions": noExceptions,
     "no-object-orientation": noObjectOrientation,
