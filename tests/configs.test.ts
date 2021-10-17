@@ -11,20 +11,38 @@ import noExceptions from "~/configs/no-exceptions";
 import noMutations from "~/configs/no-mutations";
 import noObjectOrientation from "~/configs/no-object-orientation";
 import noStatements from "~/configs/no-statements";
+import off from "~/configs/off";
 import stylistic from "~/configs/stylistic";
 import { rules } from "~/rules";
 
-test('Config "All" - should have all the non-deprecated rules', (t) => {
-  const allRules = Object.values(rules);
-  const allNonDeprecatedRules = allRules.filter(
-    (rule) => rule.meta.deprecated !== true
-  );
+const allRules = Object.values(rules);
+const allNonDeprecatedRules = allRules.filter(
+  (rule) => rule.meta.deprecated !== true
+);
 
+test('Config "All" - should have all the non-deprecated rules', (t) => {
   const configAllJSRules = Object.keys(all.rules ?? {});
   const configAllTSRules = Object.keys(all.overrides?.[0].rules ?? {});
   const configAllRules = new Set([...configAllJSRules, ...configAllTSRules]);
 
   t.is(configAllRules.size, allNonDeprecatedRules.length);
+});
+
+test('Config "Off" - should have all the rules "All" has but turned off', (t) => {
+  const configOffJSRules = Object.keys(off.rules ?? {});
+  const configOffTSRules = Object.keys(off.overrides?.[0].rules ?? {});
+  const configOffRules = new Set([...configOffJSRules, ...configOffTSRules]);
+
+  t.is(configOffRules.size, allNonDeprecatedRules.length);
+
+  for (const [name, value] of Object.entries(off.rules)) {
+    const severity = Array.isArray(value) ? value[0] : value;
+    t.is(
+      severity,
+      "off",
+      `Rule "${name}"" should be turned off in the off config.`
+    );
+  }
 });
 
 /**
