@@ -65,6 +65,14 @@ function promptUser(cz: CZ, options: Options) {
     "test",
   ]);
 
+  const possibleBreakingRulesType = new Set<string>([
+    "feat",
+    "fix",
+    "perf",
+    "refactor",
+    "revert",
+  ]);
+
   return cz.prompt([
     {
       type: "list",
@@ -99,6 +107,9 @@ function promptUser(cz: CZ, options: Options) {
       name: "isBreaking",
       message: "Are there any breaking changes?",
       default: false,
+      when: (answers: Answers) => {
+        return possibleBreakingRulesType.has(answers.type);
+      },
     },
     {
       type: "input",
