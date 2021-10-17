@@ -20,14 +20,14 @@ export const configs = {
   es11: {
     parser: require.resolve(babelParser),
     parserOptions: {
-      ecmaVersion: 9,
+      ecmaVersion: 11,
     },
   } as Linter.Config,
 
   es10: {
     parser: require.resolve(babelParser),
     parserOptions: {
-      ecmaVersion: 9,
+      ecmaVersion: 10,
     },
   } as Linter.Config,
 
