@@ -47,6 +47,7 @@
     "@typescript-eslint/prefer-readonly-parameter-types": "warn",
     "import/no-relative-parent-imports": "error",
     "functional/prefer-readonly-type": "off",
+    "functional/prefer-readonly-type-declaration": "warn",
     "node/no-unsupported-features/es-builtins": "off",
     "node/no-unsupported-features/es-syntax": "off",
     "promise/prefer-await-to-callbacks": "off",
@@ -115,6 +116,12 @@
       ],
       "rules": {
         "jsdoc/require-jsdoc": "off"
+      }
+    },
+    {
+      "files": ["**/*.md/**"],
+      "rules": {
+        "functional/prefer-readonly-type-declaration": "off"
       }
     },
     // FIXME: This override is defined in the upsteam; it shouldn't need to be redefined here. Why?
