@@ -160,7 +160,7 @@ function getCallDescriptors(
             // Unless user specifies they want it.
             (typeof options.assumeTypes === "object" &&
               !options.assumeTypes.allowFixer)
-              ? undefined
+              ? null
               : (fixer) => fixer.replaceText(node, calleeName),
         },
       ];

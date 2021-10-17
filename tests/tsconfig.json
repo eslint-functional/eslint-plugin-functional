@@ -6,6 +6,7 @@
     "skipLibCheck": true,
     "declaration": false,
     // Turn off strict checks to make debugging nicer.
-    "strict": false
+    "strict": false,
+    "exactOptionalPropertyTypes": false
   }
 }

@@ -1,12 +1,26 @@
 {
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
     "esModuleInterop": true,
+    "exactOptionalPropertyTypes": true,
     "forceConsistentCasingInFileNames": true,
     "importHelpers": false,
-    "lib": [
-      "ESNext"
-    ],
+    "lib": ["ESNext"],
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "newLine": "LF",
+    "noEmitOnError": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "pretty": true,
+    "resolveJsonModule": true,
+    "sourceMap": false,
+    "strict": true,
+    "alwaysStrict": true,
+    "target": "ES2018",
     "baseUrl": ".",
     "paths": {
       "~/*": ["./*"],
@@ -18,13 +32,6 @@
       "~/util/*": ["src/util/*"],
       "~/conditional-imports/*": ["src/util/conditional-imports/*"],
       "~/tests/*": ["tests/*"]
-    },
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "newLine": "LF",
-    "noEmitOnError": true,
-    "resolveJsonModule": true,
-    "strict": true,
-    "target": "ES2018"
+    }
   }
 }

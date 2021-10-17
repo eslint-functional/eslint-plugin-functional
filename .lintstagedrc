@@ -1,8 +1,5 @@
 {
-  "./**/*.{json,yml}": [
-    "prettier --write"
-  ],
-  "./**/*.md": [
+  "./**/*.{md,json,jsonc,yml}": [
     "prettier --write"
   ],
   "./**/*.ts": [
