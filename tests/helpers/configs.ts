@@ -5,7 +5,7 @@ import type { Linter } from "eslint";
 export const filename = path.join(__dirname, "file.ts");
 
 const typescriptParser = "@typescript-eslint/parser";
-const babelParser = "babel-eslint";
+const babelParser = typescriptParser; // Switch to "babel-eslint" once https://github.com/babel/babel/issues/13712 is fixed;
 const espreeParser = "espree";
 
 export const configs = {
