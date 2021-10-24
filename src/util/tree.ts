@@ -4,6 +4,7 @@ import type { TSESTree } from "@typescript-eslint/experimental-utils";
 import {
   isCallExpression,
   isClassLike,
+  isDefined,
   isFunctionExpressionLike,
   isFunctionLike,
   isIdentifier,
@@ -27,9 +28,9 @@ function getAncestorOfType<T extends TSESTree.Node>(
 ): T | null {
   return checker(node, child)
     ? node
-    : node.parent === null || node.parent === undefined
-    ? null
-    : getAncestorOfType(checker, node.parent, node);
+    : isDefined(node.parent)
+    ? getAncestorOfType(checker, node.parent, node)
+    : null;
 }
 
 /**
@@ -57,11 +58,9 @@ export function inClass(node: TSESTree.Node): boolean {
 export function inReadonly(node: TSESTree.Node): boolean {
   // For nested cases, we shouldn't look for any parent, but the immediate parent.
   if (
-    node.parent !== null &&
-    node.parent !== undefined &&
+    isDefined(node.parent) &&
     isTSTypeLiteral(node.parent) &&
-    node.parent.parent !== null &&
-    node.parent.parent !== undefined &&
+    isDefined(node.parent.parent) &&
     isTSTypeAnnotation(node.parent.parent)
   ) {
     return false;
@@ -102,8 +101,7 @@ export function isInReturnType(node: TSESTree.Node): boolean {
   return (
     getAncestorOfType(
       (n): n is TSESTree.Node =>
-        n.parent !== undefined &&
-        n.parent !== null &&
+        isDefined(n.parent) &&
         isFunctionLike(n.parent) &&
         n.parent.returnType === n,
       node

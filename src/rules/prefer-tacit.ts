@@ -11,6 +11,7 @@ import { createRule, getESTreeNode, getTypeOfNode } from "~/util/rule";
 import {
   isBlockStatement,
   isCallExpression,
+  isDefined,
   isFunctionLike,
   isIdentifier,
   isReturnStatement,
@@ -101,8 +102,7 @@ function isCallerViolation(
   const declaration = getESTreeNode(tsDeclaration, context);
 
   return (
-    (declaration !== null &&
-      declaration !== undefined &&
+    (isDefined(declaration) &&
       (isFunctionLike(declaration) || isTSFunctionType(declaration)) &&
       declaration.params.length === caller.arguments.length) ||
     // Check for optional params.
