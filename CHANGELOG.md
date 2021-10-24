@@ -1,6 +1,14 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+## [4.0.2](https://github.com/jonaskello/eslint-plugin-functional/compare/v4.0.1...v4.0.2) (2021-10-24)
+
+
+### Bug Fixes
+
+* get the coorect identifier text of values in object expressions ([#285](https://github.com/jonaskello/eslint-plugin-functional/issues/285)) ([a267af6](https://github.com/jonaskello/eslint-plugin-functional/commit/a267af6267e4e4c1b76a272520249654555f75df))
+* off config no longer contains "overrides" ([#286](https://github.com/jonaskello/eslint-plugin-functional/issues/286)) ([5ad533d](https://github.com/jonaskello/eslint-plugin-functional/commit/5ad533d4d750624fa5791fd9d8a53292e3991846))
+
 ## [4.0.1](https://github.com/jonaskello/eslint-plugin-functional/compare/v4.0.0...v4.0.1) (2021-10-24)
 
 
