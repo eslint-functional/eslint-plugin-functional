@@ -11,11 +11,14 @@ function getBoolean(value: unknown) {
     : Boolean(asNumber);
 }
 
+const testAllFiles = getBoolean(process.env.TEST_ALL_FILES);
 const useCompiledTests = getBoolean(process.env.USE_COMPILED_TESTS);
 const onlyTestWorkFile = getBoolean(process.env.ONLY_TEST_WORK_FILE);
 
 const avaCommonConfig = {
-  files: onlyTestWorkFile
+  files: testAllFiles
+    ? ["tests/rules/*.test.*"]
+    : onlyTestWorkFile
     ? ["tests/rules/work.test.*"]
     : ["tests/**/!(work)*.test.*"],
   timeout: "5m",
