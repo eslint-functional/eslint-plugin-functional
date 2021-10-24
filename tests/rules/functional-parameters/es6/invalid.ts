@@ -35,6 +35,27 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       },
     ],
   },
+  {
+    code: dedent`
+      const obj = {
+        foo(...params) {
+          console.log(params);
+        },
+        bar(...params) {
+          console.log(params);
+        },
+      }
+    `,
+    optionsSet: [[{ ignorePattern: "^foo" }]],
+    errors: [
+      {
+        messageId: "restParam",
+        type: "RestElement",
+        line: 5,
+        column: 7,
+      },
+    ],
+  },
 ];
 
 export default tests;
