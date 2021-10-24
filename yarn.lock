@@ -1154,10 +1154,10 @@
   dependencies:
     "@octokit/openapi-types" "^11.2.0"
 
-"@rebeccastevens/eslint-config@^1.1.4":
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/@rebeccastevens/eslint-config/-/eslint-config-1.1.4.tgz#97e656678d97fa3941f6aa817b1eda9a92ac6a98"
-  integrity sha512-nEWzZDhuSwYXVQ48Scovcrlw2WaXekEo1xSiZxBqRo3WyXLf2CsyJYi3wq3DoCIsPpBPmzZ8RostREw/vPDedw==
+"@rebeccastevens/eslint-config@^1.1.5":
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/@rebeccastevens/eslint-config/-/eslint-config-1.1.5.tgz#9b640323c99f0969f0aa59a3198f5609b3f82e94"
+  integrity sha512-Gd/g6CqCPOuycycsD3RFAaQ84wobusEA+60dyXvODj66nLaqvS78HcCrWbL69Y28XL5SuXJB8ukB/LK52AbE3A==
   dependencies:
     deepmerge-ts "^1.0.1"
 

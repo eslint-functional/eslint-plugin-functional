@@ -8,6 +8,7 @@ import {
   hasID,
   hasKey,
   isAssignmentExpression,
+  isDefined,
   isPropertyDefinition,
   isExpressionStatement,
   isIdentifier,
@@ -115,34 +116,34 @@ function getNodeIdentifierText(
   node: TSESTree.Node | null | undefined,
   context: RuleContext<string, BaseOptions>
 ): string | undefined {
-  return node === undefined || node === null
-    ? undefined
-    : isIdentifier(node)
-    ? node.name
-    : hasID(node)
-    ? getNodeIdentifierText(node.id, context)
-    : hasKey(node)
-    ? getNodeIdentifierText(node.key, context)
-    : isAssignmentExpression(node)
-    ? getNodeIdentifierText(node.left, context)
-    : isMemberExpression(node)
-    ? `${getNodeIdentifierText(node.object, context)}.${getNodeIdentifierText(
-        node.property,
-        context
-      )}`
-    : isThisExpression(node)
-    ? "this"
-    : isUnaryExpression(node)
-    ? getNodeIdentifierText(node.argument, context)
-    : isExpressionStatement(node)
-    ? context.getSourceCode().getText(node)
-    : isTSArrayType(node) ||
-      isTSIndexSignature(node) ||
-      isTSTupleType(node) ||
-      isTSTypeAnnotation(node) ||
-      isTSTypeLiteral(node) ||
-      isTSTypeReference(node)
-    ? getNodeIdentifierText(node.parent, context)
+  return isDefined(node)
+    ? isIdentifier(node)
+      ? node.name
+      : hasID(node) && isDefined(node.id)
+      ? getNodeIdentifierText(node.id, context)
+      : hasKey(node) && isDefined(node.key)
+      ? getNodeIdentifierText(node.key, context)
+      : isAssignmentExpression(node)
+      ? getNodeIdentifierText(node.left, context)
+      : isMemberExpression(node)
+      ? `${getNodeIdentifierText(node.object, context)}.${getNodeIdentifierText(
+          node.property,
+          context
+        )}`
+      : isThisExpression(node)
+      ? "this"
+      : isUnaryExpression(node)
+      ? getNodeIdentifierText(node.argument, context)
+      : isExpressionStatement(node)
+      ? context.getSourceCode().getText(node)
+      : isTSArrayType(node) ||
+        isTSIndexSignature(node) ||
+        isTSTupleType(node) ||
+        isTSTypeAnnotation(node) ||
+        isTSTypeLiteral(node) ||
+        isTSTypeReference(node)
+      ? getNodeIdentifierText(node.parent, context)
+      : undefined
     : undefined;
 }
 

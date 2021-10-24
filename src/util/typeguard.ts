@@ -334,6 +334,10 @@ export function hasKey(
   return Object.prototype.hasOwnProperty.call(node, "key");
 }
 
+export function isDefined<T>(value: T | null | undefined): value is T {
+  return value !== null && value !== undefined;
+}
+
 /*
  * TS types type guards.
  */
