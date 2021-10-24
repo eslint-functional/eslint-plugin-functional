@@ -10,6 +10,7 @@ import {
   isIdentifier,
   isMemberExpression,
   isMethodDefinition,
+  isObjectExpression,
   isProperty,
   isTSInterfaceBody,
   isTSInterfaceHeritage,
@@ -141,4 +142,37 @@ export function isIIFE(node: TSESTree.Node): boolean {
     isCallExpression(node.parent) &&
     node.parent.callee === node
   );
+}
+
+/**
+ * Get the key the given node is assigned to in its parent ObjectExpression.
+ */
+export function getKeyOfValueInObjectExpression(
+  node: TSESTree.Node
+): string | null {
+  if (!isDefined(node.parent)) {
+    return null;
+  }
+
+  const objectExpression = getAncestorOfType(isObjectExpression, node);
+  if (objectExpression === null) {
+    return null;
+  }
+
+  const objectExpressionProps = objectExpression.properties.filter(
+    (prop) => isProperty(prop) && prop.value === node
+  );
+  if (objectExpressionProps.length !== 1) {
+    return null;
+  }
+
+  const objectExpressionProp = objectExpressionProps[0];
+  if (
+    !isProperty(objectExpressionProp) ||
+    !isIdentifier(objectExpressionProp.key)
+  ) {
+    return null;
+  }
+
+  return objectExpressionProp.key.name;
 }

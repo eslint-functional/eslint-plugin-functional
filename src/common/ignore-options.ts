@@ -3,7 +3,12 @@ import escapeRegExp from "escape-string-regexp";
 import type { JSONSchema4 } from "json-schema";
 
 import type { BaseOptions, RuleContext } from "~/util/rule";
-import { inClass, inFunctionBody, inInterface } from "~/util/tree";
+import {
+  getKeyOfValueInObjectExpression,
+  inClass,
+  inFunctionBody,
+  inInterface,
+} from "~/util/tree";
 import {
   hasID,
   hasKey,
@@ -116,35 +121,48 @@ function getNodeIdentifierText(
   node: TSESTree.Node | null | undefined,
   context: RuleContext<string, BaseOptions>
 ): string | undefined {
-  return isDefined(node)
-    ? isIdentifier(node)
-      ? node.name
-      : hasID(node) && isDefined(node.id)
-      ? getNodeIdentifierText(node.id, context)
-      : hasKey(node) && isDefined(node.key)
-      ? getNodeIdentifierText(node.key, context)
-      : isAssignmentExpression(node)
-      ? getNodeIdentifierText(node.left, context)
-      : isMemberExpression(node)
-      ? `${getNodeIdentifierText(node.object, context)}.${getNodeIdentifierText(
-          node.property,
-          context
-        )}`
-      : isThisExpression(node)
-      ? "this"
-      : isUnaryExpression(node)
-      ? getNodeIdentifierText(node.argument, context)
-      : isExpressionStatement(node)
-      ? context.getSourceCode().getText(node)
-      : isTSArrayType(node) ||
-        isTSIndexSignature(node) ||
-        isTSTupleType(node) ||
-        isTSTypeAnnotation(node) ||
-        isTSTypeLiteral(node) ||
-        isTSTypeReference(node)
-      ? getNodeIdentifierText(node.parent, context)
-      : undefined
-    : undefined;
+  if (!isDefined(node)) {
+    return undefined;
+  }
+
+  const identifierText = isIdentifier(node)
+    ? node.name
+    : hasID(node) && isDefined(node.id)
+    ? getNodeIdentifierText(node.id, context)
+    : hasKey(node) && isDefined(node.key)
+    ? getNodeIdentifierText(node.key, context)
+    : isAssignmentExpression(node)
+    ? getNodeIdentifierText(node.left, context)
+    : isMemberExpression(node)
+    ? `${getNodeIdentifierText(node.object, context)}.${getNodeIdentifierText(
+        node.property,
+        context
+      )}`
+    : isThisExpression(node)
+    ? "this"
+    : isUnaryExpression(node)
+    ? getNodeIdentifierText(node.argument, context)
+    : isExpressionStatement(node)
+    ? context.getSourceCode().getText(node)
+    : isTSArrayType(node) ||
+      isTSIndexSignature(node) ||
+      isTSTupleType(node) ||
+      isTSTypeAnnotation(node) ||
+      isTSTypeLiteral(node) ||
+      isTSTypeReference(node)
+    ? getNodeIdentifierText(node.parent, context)
+    : null;
+
+  if (identifierText !== null) {
+    return identifierText;
+  }
+
+  const keyInObjectExpression = getKeyOfValueInObjectExpression(node);
+  if (keyInObjectExpression !== null) {
+    return keyInObjectExpression;
+  }
+
+  return undefined;
 }
 
 /**
