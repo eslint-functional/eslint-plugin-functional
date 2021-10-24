@@ -119,9 +119,9 @@ function getNodeIdentifierText(
   return isDefined(node)
     ? isIdentifier(node)
       ? node.name
-      : hasID(node)
+      : hasID(node) && isDefined(node.id)
       ? getNodeIdentifierText(node.id, context)
-      : hasKey(node)
+      : hasKey(node) && isDefined(node.key)
       ? getNodeIdentifierText(node.key, context)
       : isAssignmentExpression(node)
       ? getNodeIdentifierText(node.left, context)
