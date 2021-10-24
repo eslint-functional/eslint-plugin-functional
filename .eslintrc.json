@@ -17,7 +17,6 @@
     "@rebeccastevens/eslint-config/modern",
     "@rebeccastevens/eslint-config/typescript",
     "@rebeccastevens/eslint-config/common-overrides",
-    "plugin:eslint-plugin/recommended",
     "plugin:prettier/recommended",
     "prettier"
   ],
@@ -59,6 +58,12 @@
         "functional/no-expression-statement": "off",
         "functional/no-throw-statement": "off"
       }
+    },
+    // Source files.
+    {
+      "files": ["src/**/*"],
+      "extends": ["plugin:eslint-plugin/recommended"],
+      "rules": {}
     },
     // FIXME: This override is defined in the upsteam; it shouldn't need to be redefined here. Why?
     {
