@@ -180,6 +180,12 @@ export function isNewExpression(
   return node.type === AST_NODE_TYPES.NewExpression;
 }
 
+export function isObjectExpression(
+  node: TSESTree.Node
+): node is TSESTree.ObjectExpression {
+  return node.type === AST_NODE_TYPES.ObjectExpression;
+}
+
 export function isProperty(node: TSESTree.Node): node is TSESTree.Property {
   return node.type === AST_NODE_TYPES.Property;
 }

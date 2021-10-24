@@ -27,6 +27,16 @@ const tests: ReadonlyArray<ValidTestCase> = [
     `,
     optionsSet: [[{ ignorePattern: "^foo" }]],
   },
+  {
+    code: dedent`
+      const baz = {
+        foo(...bar) {
+          console.log(bar);
+        }
+      }
+    `,
+    optionsSet: [[{ ignorePattern: "^foo" }]],
+  },
 ];
 
 export default tests;
