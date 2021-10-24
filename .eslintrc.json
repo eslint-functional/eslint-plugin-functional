@@ -50,24 +50,18 @@
   "overrides": [
     // Top level files.
     {
-      "files": ["*"],
-      "rules": {
-        "functional/immutable-data": "off",
-        "functional/functional-parameters": "off",
-        "functional/no-conditional-statement": "off",
-        "functional/no-expression-statement": "off",
-        "functional/no-throw-statement": "off"
-      }
+      "files": ["./*"],
+      "extends": ["plugin:functional/off"]
     },
     // Source files.
     {
-      "files": ["src/**/*"],
+      "files": ["./src/**/*"],
       "extends": ["plugin:eslint-plugin/recommended"],
       "rules": {}
     },
     // FIXME: This override is defined in the upsteam; it shouldn't need to be redefined here. Why?
     {
-      "files": ["**/*.md/**"],
+      "files": ["./**/*.md/**"],
       "parserOptions": {
         "project": null
       },

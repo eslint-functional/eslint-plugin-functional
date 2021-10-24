@@ -1,9 +1,6 @@
 {
+  "extends": ["plugin:functional/off"],
   "rules": {
-    "functional/no-let": ["error", {
-      "ignorePattern": "^mutable.+"
-    }],
-    "functional/no-return-void": "off",
     "import/no-extraneous-dependencies": [
       "error",
       {
