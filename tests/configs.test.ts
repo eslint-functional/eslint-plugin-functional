@@ -30,10 +30,9 @@ test('Config "All" - should have all the non-deprecated rules', (t) => {
 
 test('Config "Off" - should have all the rules "All" has but turned off', (t) => {
   const configOffJSRules = Object.keys(off.rules ?? {});
-  const configOffTSRules = Object.keys(off.overrides?.[0].rules ?? {});
-  const configOffRules = new Set([...configOffJSRules, ...configOffTSRules]);
+  t.is(configOffJSRules.length, allNonDeprecatedRules.length);
 
-  t.is(configOffRules.size, allNonDeprecatedRules.length);
+  t.is(off.overrides, undefined, '"Off" config should not have overrides');
 
   for (const [name, value] of Object.entries(off.rules)) {
     const severity = Array.isArray(value) ? value[0] : value;
