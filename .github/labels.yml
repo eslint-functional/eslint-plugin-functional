@@ -68,6 +68,9 @@
 - name: "Status: Awaiting Response"
   color: fef2c0
   description: "Issue or PR awaits response from the creator."
+- name: "Status: Awaiting Feedback"
+  color: fef2c0
+  description: "Issue or PR awaits feedback from the community."
 - name: "Status: Blocked"
   color: fef2c0
   description: "Progress on this issue is currently not possible."
