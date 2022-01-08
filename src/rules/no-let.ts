@@ -14,20 +14,33 @@ import {
 } from "~/common/ignore-options";
 import type { RuleContext, RuleMetaData, RuleResult } from "~/util/rule";
 import { createRule } from "~/util/rule";
+import { inForLoopInitializer } from "~/util/tree";
 
 // The name of this rule.
 export const name = "no-let" as const;
 
 // The options this rule can take.
-type Options = AllowLocalMutationOption & IgnorePatternOption;
+type Options = AllowLocalMutationOption &
+  IgnorePatternOption & {
+    readonly allowInForLoopInit: boolean;
+  };
 
 // The schema for the rule options.
 const schema: JSONSchema4 = [
-  deepmerge(allowLocalMutationOptionSchema, ignorePatternOptionSchema),
+  deepmerge(allowLocalMutationOptionSchema, ignorePatternOptionSchema, {
+    type: "object",
+    properties: {
+      allowInForLoopInit: {
+        type: "boolean",
+      },
+    },
+    additionalProperties: false,
+  }),
 ];
 
 // The default options for the rule.
 const defaultOptions: Options = {
+  allowInForLoopInit: false,
   allowLocalMutation: false,
 };
 
@@ -57,8 +70,10 @@ function checkVariableDeclaration(
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   if (
+    node.kind !== "let" ||
     shouldIgnoreLocalMutation(node, context, options) ||
-    shouldIgnorePattern(node, context, options)
+    shouldIgnorePattern(node, context, options) ||
+    (options.allowInForLoopInit && inForLoopInitializer(node))
   ) {
     return {
       context,
@@ -68,7 +83,7 @@ function checkVariableDeclaration(
 
   return {
     context,
-    descriptors: node.kind === "let" ? [{ node, messageId: "generic" }] : [],
+    descriptors: [{ node, messageId: "generic" }],
   };
 }
 

@@ -142,6 +142,10 @@ const tests: ReadonlyArray<ValidTestCase> = [
     `,
     optionsSet: [[{ ignorePattern: "Mutable$" }]],
   },
+  {
+    code: `for (let x = 0; x < 1; x++);`,
+    optionsSet: [[{ allowInForLoopInit: true }]],
+  },
 ];
 
 export default tests;
