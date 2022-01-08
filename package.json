@@ -69,6 +69,7 @@
   "devDependencies": {
     "@commitlint/cli": "^13.2.1",
     "@commitlint/config-conventional": "^14.1.0",
+    "@google/semantic-release-replace-plugin": "^1.1.0",
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@rebeccastevens/eslint-config": "^1.1.5",
     "@rollup/plugin-commonjs": "^21.0.0",
