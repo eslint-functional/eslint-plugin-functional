@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+# [4.1.0](https://github.com/jonaskello/eslint-plugin-functional/compare/v4.0.2...v4.1.0) (2022-01-08)
+
+
+### Features
+
+* **no-let:** add option to allow lets inside of for loop initializers ([#306](https://github.com/jonaskello/eslint-plugin-functional/issues/306)) ([71769f3](https://github.com/jonaskello/eslint-plugin-functional/commit/71769f3f4c9cda0b30fd2ec440c89b99a7c5297f))
+
 ## [4.0.2](https://github.com/jonaskello/eslint-plugin-functional/compare/v4.0.1...v4.0.2) (2021-10-24)
 
 
