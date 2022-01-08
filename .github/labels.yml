@@ -24,7 +24,7 @@
   description: "Enhancement of the code, not introducing new features."
 - name: "Type: Idea"
   color: fef2c0
-  description: "Marks an idea, which might be excepted and implemented."
+  description: "Marks an idea, which might be accepted and implemented."
 - name: "Type: Feature"
   color: 0e8a16
   description: "New features or options."
