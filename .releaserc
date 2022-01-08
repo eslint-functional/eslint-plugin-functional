@@ -1,5 +1,8 @@
 branches:
   - master
+  - name: next
+    channel: next
+    prerelease: beta
 plugins:
   - "@semantic-release/commit-analyzer"
   - "@semantic-release/release-notes-generator"
@@ -11,4 +14,4 @@ plugins:
   - "@semantic-release/npm"
   - - "@semantic-release/github"
     - releasedLabels:
-        - "Status: Released"
+        - "<%= nextRelease.channel === 'next' ? 'Status: Beta Released' : 'Status: Released' %>"
