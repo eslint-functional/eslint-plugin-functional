@@ -3,7 +3,8 @@ import { ESLintUtils } from "@typescript-eslint/experimental-utils";
 import type { Rule } from "eslint";
 import type { Node, Type } from "typescript";
 
-import { version } from "~/package.json";
+// eslint-disable-next-line @typescript-eslint/naming-convention, no-underscore-dangle -- This is a special var.
+const __VERSION__ = "0.0.0-development";
 
 export type BaseOptions = object;
 
@@ -92,7 +93,7 @@ export function createRule<
 ): Rule.RuleModule {
   return ESLintUtils.RuleCreator(
     (name) =>
-      `https://github.com/jonaskello/eslint-plugin-functional/blob/v${version}/docs/rules/${name}.md`
+      `https://github.com/jonaskello/eslint-plugin-functional/blob/v${__VERSION__}/docs/rules/${name}.md`
   )({
     name,
     meta,
