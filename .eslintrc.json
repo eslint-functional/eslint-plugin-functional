@@ -90,6 +90,13 @@
         "jsdoc/require-jsdoc": "off"
       }
     },
+    {
+      "files": ["**/*.md/**"],
+      "rules": {
+        "@typescript-eslint/array-type": "off",
+        "functional/no-mixed-type": "off"
+      }
+    },
     // FIXME: This override is defined in the upsteam; it shouldn't need to be redefined here. Why?
     {
       "files": ["./**/*.md/**"],

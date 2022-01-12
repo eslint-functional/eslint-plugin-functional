@@ -12,6 +12,7 @@ import * as noReturnVoid from "./no-return-void";
 import * as noThisExpression from "./no-this-expression";
 import * as noThrowStatement from "./no-throw-statement";
 import * as noTryStatement from "./no-try-statement";
+import * as preferReadonlyReturnTypes from "./prefer-readonly-return-types";
 import * as preferReadonlyTypes from "./prefer-readonly-type";
 import * as preferTacit from "./prefer-tacit";
 
@@ -33,6 +34,7 @@ export const rules = {
   [noThisExpression.name]: noThisExpression.rule,
   [noThrowStatement.name]: noThrowStatement.rule,
   [noTryStatement.name]: noTryStatement.rule,
+  [preferReadonlyReturnTypes.name]: preferReadonlyReturnTypes.rule,
   [preferReadonlyTypes.name]: preferReadonlyTypes.rule,
   [preferTacit.name]: preferTacit.rule,
 };

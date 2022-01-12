@@ -63,6 +63,7 @@
   },
   "dependencies": {
     "@typescript-eslint/utils": "^5.10.0",
+    "@typescript-eslint/type-utils": "^5.10.0",
     "deepmerge-ts": "^2.0.1",
     "escape-string-regexp": "^4.0.0"
   },
