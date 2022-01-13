@@ -31,6 +31,7 @@ const arr = [0, 1, 2];
 
 arr[0] = 4; // <- Modifying an array is not allowed.
 arr.length = 1; // <- Modifying an array is not allowed.
+delete arr[1]; // <- Modifying an existing array is not allowed.
 arr.push(3); // <- Modifying an array is not allowed.
 ```
 
