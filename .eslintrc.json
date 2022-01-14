@@ -29,7 +29,13 @@
     ],
     "sourceType": "module"
   },
-  "ignorePatterns": ["/build/", "/coverage/", "/lib/", "/**/*.cjs", "/**/*.js"],
+  "ignorePatterns": [
+    "/build/",
+    "/coverage/",
+    "/lib/",
+    "/**/*.cjs",
+    "/**/*.js"
+  ],
   "rules": {
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-unnecessary-condition": "off",
@@ -54,26 +60,68 @@
   "overrides": [
     // Top level files.
     {
-      "files": ["./*"],
-      "extends": ["plugin:functional/off"]
+      "files": [
+        "./*"
+      ],
+      "extends": [
+        "plugin:functional/off"
+      ]
     },
     // Source files.
     {
-      "files": ["./src/**/*"],
-      "extends": ["plugin:eslint-plugin/recommended"],
+      "files": [
+        "./src/**/*"
+      ],
+      "extends": [
+        "plugin:eslint-plugin/recommended"
+      ],
       "rules": {
         "functional/no-expression-statement": "error"
       }
     },
+    // Rule util file.
     {
-      "files": ["./src/util/typeguard.ts", "./tests/**/*", "./cz-adapter/**/*"],
+      "files": [
+        "./src/util/rule.ts"
+      ],
+      "rules": {
+        "@typescript-eslint/prefer-readonly-parameter-types": "warn"
+      }
+    },
+    // Typeguard files.
+    {
+      "files": [
+        "./src/util/typeguard.ts"
+      ],
+      "rules": {
+        "jsdoc/require-jsdoc": "off"
+      }
+    },
+    // Test files.
+    {
+      "files": [
+        "./tests/**/*"
+      ],
+      "rules": {
+        "jsdoc/require-jsdoc": "off"
+      }
+    },
+    // CZ Adapter files.
+    {
+      "files": [
+        "./src/util/typeguard.ts",
+        "./tests/**/*",
+        "./cz-adapter/**/*"
+      ],
       "rules": {
         "jsdoc/require-jsdoc": "off"
       }
     },
     // FIXME: This override is defined in the upsteam; it shouldn't need to be redefined here. Why?
     {
-      "files": ["./**/*.md/**"],
+      "files": [
+        "./**/*.md/**"
+      ],
       "parserOptions": {
         "project": null
       },
@@ -136,7 +184,6 @@
         "sonarjs/no-unused-collection": "off",
         "unicorn/prefer-optional-catch-binding": "off",
         "unicorn/prefer-top-level-await": "off",
-
         "dot-notation": "error",
         "no-implied-eval": "error",
         "require-await": "error"
