@@ -1,9 +1,9 @@
-import type { TSESTree } from "@typescript-eslint/experimental-utils";
-import { AST_NODE_TYPES } from "@typescript-eslint/experimental-utils";
+import type { TSESTree } from "@typescript-eslint/utils";
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
+import type { ReadonlyDeep } from "type-fest";
 
 /**
- * Returns a function that checks if the given value is the same as the expected
- * value.
+ * Higher order function to check if the two given values are the same.
  */
 export function isExpected<T>(expected: T): (actual: T) => boolean {
   return (actual) => actual === expected;
@@ -13,7 +13,7 @@ export function isExpected<T>(expected: T): (actual: T) => boolean {
  * Does the given ExpressionStatement specify directive prologues.
  */
 export function isDirectivePrologue(
-  node: TSESTree.ExpressionStatement
+  node: ReadonlyDeep<TSESTree.ExpressionStatement>
 ): boolean {
   return (
     node.expression.type === AST_NODE_TYPES.Literal &&

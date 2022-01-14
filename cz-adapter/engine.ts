@@ -5,16 +5,16 @@ import { rules } from "~/rules";
 
 import type { Options } from "./options";
 
-type Answers = {
-  readonly type: string;
-  readonly scope?: string;
-  readonly scopeRules?: string;
-  readonly subject: string;
-  readonly body?: string;
-  readonly isBreaking: boolean;
-  readonly isIssueAffected: boolean;
-  readonly issues?: string;
-};
+type Answers = Readonly<{
+  type: string;
+  scope?: string;
+  scopeRules?: string;
+  subject: string;
+  body?: string;
+  isBreaking: boolean;
+  isIssueAffected: boolean;
+  issues?: string;
+}>;
 
 type CZ = any;
 

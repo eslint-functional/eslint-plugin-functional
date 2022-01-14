@@ -1,21 +1,30 @@
-import type { TSESTree } from "@typescript-eslint/experimental-utils";
-import { AST_NODE_TYPES } from "@typescript-eslint/experimental-utils";
+import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import type { JSONSchema4 } from "json-schema";
+import type { ReadonlyDeep } from "type-fest";
 
-import type { RuleContext, RuleMetaData, RuleResult } from "~/util/rule";
+import type { RuleResult } from "~/util/rule";
 import { createRule } from "~/util/rule";
 import { isTSPropertySignature, isTSTypeLiteral } from "~/util/typeguard";
 
-// The name of this rule.
+/**
+ * The name of this rule.
+ */
 export const name = "no-mixed-type" as const;
 
-// The options this rule can take.
-type Options = {
-  readonly checkInterfaces: boolean;
-  readonly checkTypeLiterals: boolean;
-};
+/**
+ * The options this rule can take.
+ */
+type Options = readonly [
+  Readonly<{
+    checkInterfaces: boolean;
+    checkTypeLiterals: boolean;
+  }>
+];
 
-// The schema for the rule options.
+/**
+ * The schema for the rule options.
+ */
 const schema: JSONSchema4 = [
   {
     type: "object",
@@ -31,19 +40,27 @@ const schema: JSONSchema4 = [
   },
 ];
 
-// The default options for the rule.
-const defaultOptions: Options = {
-  checkInterfaces: true,
-  checkTypeLiterals: true,
-};
+/**
+ * The default options for the rule.
+ */
+const defaultOptions: Options = [
+  {
+    checkInterfaces: true,
+    checkTypeLiterals: true,
+  },
+];
 
-// The possible error messages.
+/**
+ * The possible error messages.
+ */
 const errorMessages = {
   generic: "Only the same kind of members allowed in types.",
 } as const;
 
-// The meta data for this rule.
-const meta: RuleMetaData<keyof typeof errorMessages> = {
+/**
+ * The meta data for this rule.
+ */
+const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     description:
@@ -58,7 +75,7 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
  * Does the given type elements violate the rule.
  */
 function hasTypeElementViolations(
-  typeElements: ReadonlyArray<TSESTree.TypeElement>
+  typeElements: ReadonlyArray<ReadonlyDeep<TSESTree.TypeElement>>
 ): boolean {
   type CarryType = {
     readonly prevMemberType: AST_NODE_TYPES | undefined;
@@ -101,14 +118,18 @@ function hasTypeElementViolations(
  * Check if the given TSInterfaceDeclaration violates this rule.
  */
 function checkTSInterfaceDeclaration(
-  node: TSESTree.TSInterfaceDeclaration,
-  context: RuleContext<keyof typeof errorMessages, Options>,
+  node: ReadonlyDeep<TSESTree.TSInterfaceDeclaration>,
+  context: ReadonlyDeep<
+    TSESLint.RuleContext<keyof typeof errorMessages, Options>
+  >,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
+  const [{ checkInterfaces }] = options;
+
   return {
     context,
     descriptors:
-      options.checkInterfaces && hasTypeElementViolations(node.body.body)
+      checkInterfaces && hasTypeElementViolations(node.body.body)
         ? [{ node, messageId: "generic" }]
         : [],
   };
@@ -118,14 +139,18 @@ function checkTSInterfaceDeclaration(
  * Check if the given TSTypeAliasDeclaration violates this rule.
  */
 function checkTSTypeAliasDeclaration(
-  node: TSESTree.TSTypeAliasDeclaration,
-  context: RuleContext<keyof typeof errorMessages, Options>,
+  node: ReadonlyDeep<TSESTree.TSTypeAliasDeclaration>,
+  context: ReadonlyDeep<
+    TSESLint.RuleContext<keyof typeof errorMessages, Options>
+  >,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
+  const [{ checkTypeLiterals }] = options;
+
   return {
     context,
     descriptors:
-      options.checkTypeLiterals &&
+      checkTypeLiterals &&
       isTSTypeLiteral(node.typeAnnotation) &&
       hasTypeElementViolations(node.typeAnnotation.members)
         ? [{ node, messageId: "generic" }]

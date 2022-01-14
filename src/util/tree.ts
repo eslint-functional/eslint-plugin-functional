@@ -1,5 +1,5 @@
-import { ASTUtils } from "@typescript-eslint/experimental-utils";
-import type { TSESTree } from "@typescript-eslint/experimental-utils";
+import type { TSESTree } from "@typescript-eslint/utils";
+import type { ReadonlyDeep } from "type-fest";
 
 import {
   isCallExpression,
@@ -23,10 +23,13 @@ import {
 /**
  * Return the first ancestor that meets the given check criteria.
  */
-function getAncestorOfType<T extends TSESTree.Node>(
-  checker: (node: TSESTree.Node, child: TSESTree.Node | null) => node is T,
-  node: TSESTree.Node,
-  child: TSESTree.Node | null = null
+function getAncestorOfType<T extends ReadonlyDeep<TSESTree.Node>>(
+  checker: (
+    node: ReadonlyDeep<TSESTree.Node>,
+    child: ReadonlyDeep<TSESTree.Node> | null
+  ) => node is T,
+  node: ReadonlyDeep<TSESTree.Node>,
+  child: ReadonlyDeep<TSESTree.Node> | null = null
 ): T | null {
   return checker(node, child)
     ? node
@@ -41,7 +44,10 @@ function getAncestorOfType<T extends TSESTree.Node>(
  * @param node - The node to test.
  * @param async - Whether the function must be async or sync. Use `undefined` for either.
  */
-export function inFunctionBody(node: TSESTree.Node, async?: boolean): boolean {
+export function inFunctionBody(
+  node: ReadonlyDeep<TSESTree.Node>,
+  async?: boolean
+): boolean {
   const functionNode = getAncestorOfType(
     (
       n,
@@ -62,14 +68,16 @@ export function inFunctionBody(node: TSESTree.Node, async?: boolean): boolean {
 /**
  * Test if the given node is in a class.
  */
-export function inClass(node: TSESTree.Node): boolean {
+export function inClass(node: ReadonlyDeep<TSESTree.Node>): boolean {
   return getAncestorOfType(isClassLike, node) !== null;
 }
 
 /**
  * Test if the given node is in a for loop initializer.
  */
-export function inForLoopInitializer(node: TSESTree.Node): boolean {
+export function inForLoopInitializer(
+  node: ReadonlyDeep<TSESTree.Node>
+): boolean {
   return (
     getAncestorOfType(
       (n, c): n is TSESTree.ForStatement => isForStatement(n) && n.init === c,
@@ -81,7 +89,7 @@ export function inForLoopInitializer(node: TSESTree.Node): boolean {
 /**
  * Test if the given node is shallowly inside a `Readonly<{...}>`.
  */
-export function inReadonly(node: TSESTree.Node): boolean {
+export function inReadonly(node: ReadonlyDeep<TSESTree.Node>): boolean {
   // For nested cases, we shouldn't look for any parent, but the immediate parent.
   if (
     isDefined(node.parent) &&
@@ -96,7 +104,8 @@ export function inReadonly(node: TSESTree.Node): boolean {
     getAncestorOfType(isTSTypeReference, node)?.typeName ??
     getAncestorOfType(isTSInterfaceHeritage, node)?.expression;
   return (
-    ASTUtils.isIdentifier(expressionOrTypeName) &&
+    expressionOrTypeName !== undefined &&
+    isIdentifier(expressionOrTypeName) &&
     expressionOrTypeName.name === "Readonly"
   );
 }
@@ -104,14 +113,14 @@ export function inReadonly(node: TSESTree.Node): boolean {
 /**
  * Test if the given node is in a TS Property Signature.
  */
-export function inInterface(node: TSESTree.Node): boolean {
+export function inInterface(node: ReadonlyDeep<TSESTree.Node>): boolean {
   return getAncestorOfType(isTSInterfaceBody, node) !== null;
 }
 
 /**
  * Test if the given node is in a Constructor.
  */
-export function inConstructor(node: TSESTree.Node): boolean {
+export function inConstructor(node: ReadonlyDeep<TSESTree.Node>): boolean {
   const methodDefinition = getAncestorOfType(isMethodDefinition, node);
   return (
     methodDefinition !== null &&
@@ -123,7 +132,7 @@ export function inConstructor(node: TSESTree.Node): boolean {
 /**
  * Is the given node in the return type.
  */
-export function isInReturnType(node: TSESTree.Node): boolean {
+export function isInReturnType(node: ReadonlyDeep<TSESTree.Node>): boolean {
   return (
     getAncestorOfType(
       (n): n is TSESTree.Node =>
@@ -138,7 +147,9 @@ export function isInReturnType(node: TSESTree.Node): boolean {
 /**
  * Is the given identifier a property of an object?
  */
-export function isPropertyAccess(node: TSESTree.Identifier): boolean {
+export function isPropertyAccess(
+  node: ReadonlyDeep<TSESTree.Identifier>
+): boolean {
   return (
     node.parent !== undefined &&
     isMemberExpression(node.parent) &&
@@ -149,7 +160,9 @@ export function isPropertyAccess(node: TSESTree.Identifier): boolean {
 /**
  * Is the given identifier a property name?
  */
-export function isPropertyName(node: TSESTree.Identifier): boolean {
+export function isPropertyName(
+  node: ReadonlyDeep<TSESTree.Identifier>
+): boolean {
   return (
     node.parent !== undefined &&
     isProperty(node.parent) &&
@@ -160,7 +173,7 @@ export function isPropertyName(node: TSESTree.Identifier): boolean {
 /**
  * Is the given function an IIFE?
  */
-export function isIIFE(node: TSESTree.Node): boolean {
+export function isIIFE(node: ReadonlyDeep<TSESTree.Node>): boolean {
   return (
     isFunctionExpressionLike(node) &&
     node.parent !== undefined &&
@@ -173,7 +186,7 @@ export function isIIFE(node: TSESTree.Node): boolean {
  * Get the key the given node is assigned to in its parent ObjectExpression.
  */
 export function getKeyOfValueInObjectExpression(
-  node: TSESTree.Node
+  node: ReadonlyDeep<TSESTree.Node>
 ): string | null {
   if (!isDefined(node.parent)) {
     return null;

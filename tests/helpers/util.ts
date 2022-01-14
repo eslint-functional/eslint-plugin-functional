@@ -1,9 +1,10 @@
-import type { TSESLint } from "@typescript-eslint/experimental-utils";
+import type { TSESLint } from "@typescript-eslint/utils";
 import type { Rule, RuleTester as ESLintRuleTester } from "eslint";
+import type { ReadonlyDeep } from "type-fest";
 
 import ts from "~/conditional-imports/typescript";
 
-import { filename } from "./configs";
+import { filename as dummyFilename } from "./configs";
 
 type OptionsSet = {
   /**
@@ -13,11 +14,14 @@ type OptionsSet = {
   readonly optionsSet: ReadonlyArray<any>;
 };
 
-export type ValidTestCase = Omit<ESLintRuleTester.ValidTestCase, "options"> &
+export type ValidTestCase = Omit<
+  ReadonlyDeep<ESLintRuleTester.ValidTestCase>,
+  "options"
+> &
   OptionsSet;
 
 export type InvalidTestCase = Omit<
-  ESLintRuleTester.InvalidTestCase,
+  ReadonlyDeep<ESLintRuleTester.InvalidTestCase>,
   "options"
 > &
   OptionsSet;
@@ -32,10 +36,10 @@ export function processInvalidTestCase(
     testCase.optionsSet.map((options) => {
       const { optionsSet, ...eslintTestCase } = testCase;
       return {
-        filename,
+        filename: dummyFilename,
         ...eslintTestCase,
         options,
-      };
+      } as ESLintRuleTester.InvalidTestCase;
     })
   );
 }
@@ -58,7 +62,7 @@ export function processValidTestCase(
 export function createDummyRule(
   create: (
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    context: TSESLint.RuleContext<"generic", any>
+    context: ReadonlyDeep<TSESLint.RuleContext<"generic", any>>
   ) => TSESLint.RuleListener
 ): Rule.RuleModule {
   const meta: TSESLint.RuleMetaData<"generic"> = {
@@ -82,9 +86,7 @@ export function createDummyRule(
 }
 
 export type RuleTesterTests = {
-  // eslint-disable-next-line functional/prefer-readonly-type
   valid?: Array<ESLintRuleTester.ValidTestCase | string>;
-  // eslint-disable-next-line functional/prefer-readonly-type
   invalid?: ESLintRuleTester.InvalidTestCase[];
 };
 
@@ -93,11 +95,14 @@ export type RuleTesterTests = {
  */
 export function addFilename(
   filename: string,
-  tests: RuleTesterTests
+  tests: ReadonlyDeep<RuleTesterTests>
 ): RuleTesterTests {
   const { valid, invalid } = tests;
   return {
-    invalid: invalid?.map((test) => ({ ...test, filename })),
+    invalid: invalid?.map((test) => ({
+      ...(test as ESLintRuleTester.InvalidTestCase),
+      filename,
+    })),
     valid: valid?.map((test) =>
       typeof test === "string"
         ? { code: test, filename }

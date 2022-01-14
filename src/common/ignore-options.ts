@@ -1,8 +1,9 @@
-import type { TSESTree } from "@typescript-eslint/experimental-utils";
+import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import escapeRegExp from "escape-string-regexp";
 import type { JSONSchema4 } from "json-schema";
+import type { ReadonlyDeep } from "type-fest";
 
-import type { BaseOptions, RuleContext } from "~/util/rule";
+import type { BaseOptions } from "~/util/rule";
 import {
   getKeyOfValueInObjectExpression,
   inClass,
@@ -30,96 +31,106 @@ import {
   isVariableDeclaration,
 } from "~/util/typeguard";
 
+/**
+ * The option to allow local mutations.
+ */
 export type AllowLocalMutationOption = {
   readonly allowLocalMutation: boolean;
 };
 
-export const allowLocalMutationOptionSchema: JSONSchema4 = {
-  type: "object",
-  properties: {
-    allowLocalMutation: {
-      type: "boolean",
-    },
+/**
+ * The schema for the option to allow local mutations.
+ */
+export const allowLocalMutationOptionSchema: JSONSchema4["properties"] = {
+  allowLocalMutation: {
+    type: "boolean",
   },
-  additionalProperties: false,
 };
 
+/**
+ * The option to ignore patterns.
+ */
 export type IgnorePatternOption = {
   readonly ignorePattern?: ReadonlyArray<string> | string;
 };
 
-export const ignorePatternOptionSchema: JSONSchema4 = {
-  type: "object",
-  properties: {
-    ignorePattern: {
-      type: ["string", "array"],
-      items: {
-        type: "string",
-      },
+/**
+ * The schema for the option to ignore patterns.
+ */
+export const ignorePatternOptionSchema: JSONSchema4["properties"] = {
+  ignorePattern: {
+    type: ["string", "array"],
+    items: {
+      type: "string",
     },
   },
-  additionalProperties: false,
 };
 
+/**
+ * The option to ignore accessor patterns.
+ */
 export type IgnoreAccessorPatternOption = {
   readonly ignoreAccessorPattern?: ReadonlyArray<string> | string;
 };
 
-export const ignoreAccessorPatternOptionSchema: JSONSchema4 = {
-  type: "object",
-  properties: {
-    ignoreAccessorPattern: {
-      type: ["string", "array"],
-      items: {
-        type: "string",
-      },
+/**
+ * The schema for the option to ignore accessor patterns.
+ */
+export const ignoreAccessorPatternOptionSchema: JSONSchema4["properties"] = {
+  ignoreAccessorPattern: {
+    type: ["string", "array"],
+    items: {
+      type: "string",
     },
   },
-  additionalProperties: false,
 };
 
+/**
+ * The option to ignore classes.
+ */
 export type IgnoreClassOption = {
   readonly ignoreClass: boolean | "fieldsOnly";
 };
 
-export const ignoreClassOptionSchema: JSONSchema4 = {
-  type: "object",
-  properties: {
-    ignoreClass: {
-      oneOf: [
-        {
-          type: "boolean",
-        },
-        {
-          type: "string",
-          enum: ["fieldsOnly"],
-        },
-      ],
-    },
+/**
+ * The schema for the option to ignore classes.
+ */
+export const ignoreClassOptionSchema: JSONSchema4["properties"] = {
+  ignoreClass: {
+    oneOf: [
+      {
+        type: "boolean",
+      },
+      {
+        type: "string",
+        enum: ["fieldsOnly"],
+      },
+    ],
   },
-  additionalProperties: false,
 };
 
+/**
+ * The option to ignore interfaces.
+ */
 export type IgnoreInterfaceOption = {
   readonly ignoreInterface: boolean;
 };
 
-export const ignoreInterfaceOptionSchema: JSONSchema4 = {
-  type: "object",
-  properties: {
-    ignoreInterface: {
-      type: "boolean",
-    },
+/**
+ * The schema for the option to ignore interfaces.
+ */
+export const ignoreInterfaceOptionSchema: JSONSchema4["properties"] = {
+  ignoreInterface: {
+    type: "boolean",
   },
-  additionalProperties: false,
 };
 
 /**
  * Get the identifier text of the given node.
  */
 function getNodeIdentifierText(
-  node: TSESTree.Node | null | undefined,
-  context: RuleContext<string, BaseOptions>
+  node: ReadonlyDeep<TSESTree.Node> | null | undefined,
+  context: ReadonlyDeep<TSESLint.RuleContext<string, BaseOptions>>
 ): string | undefined {
   if (!isDefined(node)) {
     return undefined;
@@ -143,7 +154,7 @@ function getNodeIdentifierText(
     : isUnaryExpression(node)
     ? getNodeIdentifierText(node.argument, context)
     : isExpressionStatement(node)
-    ? context.getSourceCode().getText(node)
+    ? context.getSourceCode().getText(node as TSESTree.Node)
     : isTSArrayType(node) ||
       isTSIndexSignature(node) ||
       isTSTupleType(node) ||
@@ -169,8 +180,8 @@ function getNodeIdentifierText(
  * Get all the identifier texts of the given node.
  */
 function getNodeIdentifierTexts(
-  node: TSESTree.Node,
-  context: RuleContext<string, BaseOptions>
+  node: ReadonlyDeep<TSESTree.Node>,
+  context: ReadonlyDeep<TSESLint.RuleContext<string, BaseOptions>>
 ): ReadonlyArray<string> {
   return (
     isVariableDeclaration(node)
@@ -270,11 +281,11 @@ function shouldIgnoreViaAccessorPattern(
  * - AllowLocalMutationOption.
  */
 export function shouldIgnoreLocalMutation(
-  node: TSESTree.Node,
-  context: RuleContext<string, BaseOptions>,
-  options: Partial<AllowLocalMutationOption>
+  node: ReadonlyDeep<TSESTree.Node>,
+  context: ReadonlyDeep<TSESLint.RuleContext<string, BaseOptions>>,
+  { allowLocalMutation }: Partial<AllowLocalMutationOption>
 ): boolean {
-  return options.allowLocalMutation === true && inFunctionBody(node);
+  return allowLocalMutation === true && inFunctionBody(node);
 }
 
 /**
@@ -283,13 +294,13 @@ export function shouldIgnoreLocalMutation(
  * - IgnoreClassOption.
  */
 export function shouldIgnoreClass(
-  node: TSESTree.Node,
-  context: RuleContext<string, BaseOptions>,
-  options: Partial<IgnoreClassOption>
+  node: ReadonlyDeep<TSESTree.Node>,
+  context: ReadonlyDeep<TSESLint.RuleContext<string, BaseOptions>>,
+  { ignoreClass }: Partial<IgnoreClassOption>
 ): boolean {
   return (
-    (options.ignoreClass === true && inClass(node)) ||
-    (options.ignoreClass === "fieldsOnly" &&
+    (ignoreClass === true && inClass(node)) ||
+    (ignoreClass === "fieldsOnly" &&
       (isPropertyDefinition(node) ||
         (isAssignmentExpression(node) &&
           inClass(node) &&
@@ -304,11 +315,11 @@ export function shouldIgnoreClass(
  * - IgnoreInterfaceOption.
  */
 export function shouldIgnoreInterface(
-  node: TSESTree.Node,
-  context: RuleContext<string, BaseOptions>,
-  options: Partial<IgnoreInterfaceOption>
+  node: ReadonlyDeep<TSESTree.Node>,
+  context: ReadonlyDeep<TSESLint.RuleContext<string, BaseOptions>>,
+  { ignoreInterface }: Partial<IgnoreInterfaceOption>
 ): boolean {
-  return options.ignoreInterface === true && inInterface(node);
+  return ignoreInterface === true && inInterface(node);
 }
 
 /**
@@ -318,9 +329,12 @@ export function shouldIgnoreInterface(
  * - IgnorePatternOption.
  */
 export function shouldIgnorePattern(
-  node: TSESTree.Node,
-  context: RuleContext<string, BaseOptions>,
-  options: Partial<IgnoreAccessorPatternOption & IgnorePatternOption>
+  node: ReadonlyDeep<TSESTree.Node>,
+  context: ReadonlyDeep<TSESLint.RuleContext<string, BaseOptions>>,
+  {
+    ignorePattern,
+    ignoreAccessorPattern,
+  }: Partial<IgnoreAccessorPatternOption & IgnorePatternOption>
 ): boolean {
   const texts = getNodeIdentifierTexts(node, context);
 
@@ -330,14 +344,12 @@ export function shouldIgnorePattern(
 
   return (
     // Ignore if ignorePattern is set and a pattern matches.
-    (options.ignorePattern !== undefined &&
-      texts.every((text) =>
-        shouldIgnoreViaPattern(text, options.ignorePattern!)
-      )) ||
+    (ignorePattern !== undefined &&
+      texts.every((text) => shouldIgnoreViaPattern(text, ignorePattern))) ||
     // Ignore if ignoreAccessorPattern is set and an accessor pattern matches.
-    (options.ignoreAccessorPattern !== undefined &&
+    (ignoreAccessorPattern !== undefined &&
       texts.every((text) =>
-        shouldIgnoreViaAccessorPattern(text, options.ignoreAccessorPattern!)
+        shouldIgnoreViaAccessorPattern(text, ignoreAccessorPattern)
       ))
   );
 }

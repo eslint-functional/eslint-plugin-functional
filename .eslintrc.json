@@ -38,14 +38,18 @@
     "@typescript-eslint/no-unsafe-call": "off",
     "@typescript-eslint/no-unsafe-member-access": "off",
     "@typescript-eslint/no-unsafe-return": "off",
+    "@typescript-eslint/prefer-readonly-parameter-types": "warn",
     "import/no-relative-parent-imports": "error",
+    "functional/prefer-readonly-type": "off",
     "node/no-unsupported-features/es-builtins": "off",
     "node/no-unsupported-features/es-syntax": "off",
     "promise/prefer-await-to-callbacks": "off",
     // enable once supported in all our supported node versions.
     "unicorn/prefer-node-protocol": "off",
     // only available for node >= 16
-    "unicorn/prefer-string-replace-all": "off"
+    "unicorn/prefer-string-replace-all": "off",
+    // only available for node >= 16
+    "unicorn/prefer-top-level-await": "off"
   },
   "overrides": [
     // Top level files.
@@ -57,7 +61,15 @@
     {
       "files": ["./src/**/*"],
       "extends": ["plugin:eslint-plugin/recommended"],
-      "rules": {}
+      "rules": {
+        "functional/no-expression-statement": "error"
+      }
+    },
+    {
+      "files": ["./src/util/typeguard.ts", "./tests/**/*", "./cz-adapter/**/*"],
+      "rules": {
+        "jsdoc/require-jsdoc": "off"
+      }
     },
     // FIXME: This override is defined in the upsteam; it shouldn't need to be redefined here. Why?
     {

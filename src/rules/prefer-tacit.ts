@@ -1,11 +1,12 @@
-import type { TSESLint, TSESTree } from "@typescript-eslint/experimental-utils";
+import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { deepmerge } from "deepmerge-ts";
 import type { JSONSchema4 } from "json-schema";
+import type { ReadonlyDeep } from "type-fest";
 import type { FunctionLikeDeclaration, Type } from "typescript";
 
 import type { IgnorePatternOption } from "~/common/ignore-options";
 import { ignorePatternOptionSchema } from "~/common/ignore-options";
-import type { RuleContext, RuleMetaData, RuleResult } from "~/util/rule";
+import type { RuleResult } from "~/util/rule";
 import { createRule, getESTreeNode, getTypeOfNode } from "~/util/rule";
 import {
   isBlockStatement,
@@ -17,23 +18,32 @@ import {
   isTSFunctionType,
 } from "~/util/typeguard";
 
-// The name of this rule.
+/**
+ * The name of this rule.
+ */
 export const name = "prefer-tacit" as const;
 
-// The options this rule can take.
-type Options = IgnorePatternOption & {
-  readonly assumeTypes:
-    | false
-    | {
-        readonly allowFixer: boolean;
-      };
-};
+/**
+ * The options this rule can take.
+ */
+type Options = readonly [
+  IgnorePatternOption &
+    Readonly<{
+      assumeTypes:
+        | false
+        | Readonly<{
+            allowFixer: boolean;
+          }>;
+    }>
+];
 
-// The schema for the rule options.
+/**
+ * The schema for the rule options.
+ */
 const schema: JSONSchema4 = [
-  deepmerge(ignorePatternOptionSchema, {
+  {
     type: "object",
-    properties: {
+    properties: deepmerge(ignorePatternOptionSchema, {
       ignoreImmediateMutation: {
         type: "boolean",
       },
@@ -54,23 +64,31 @@ const schema: JSONSchema4 = [
           },
         ],
       },
-    },
+    }),
     additionalProperties: false,
-  }),
+  },
 ];
 
-// The default options for the rule.
-const defaultOptions: Options = {
-  assumeTypes: false,
-};
+/**
+ * The default options for the rule.
+ */
+const defaultOptions: Options = [
+  {
+    assumeTypes: false,
+  },
+];
 
-// The possible error messages.
+/**
+ * The possible error messages.
+ */
 const errorMessages = {
   generic: "Potentially unnecessary function wrapper.",
 } as const;
 
-// The meta data for this rule.
-const meta: RuleMetaData<keyof typeof errorMessages> = {
+/**
+ * The meta data for this rule.
+ */
+const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     description: "Replaces `x => f(x)` with just `f`.",
@@ -85,9 +103,12 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
  * From the callee's type, does it follow that the caller violates this rule.
  */
 function isCallerViolation(
-  caller: TSESTree.CallExpression,
+  caller: ReadonlyDeep<TSESTree.CallExpression>,
+  // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types -- ignore TS Type
   calleeType: Type,
-  context: RuleContext<keyof typeof errorMessages, Options>
+  context: ReadonlyDeep<
+    TSESLint.RuleContext<keyof typeof errorMessages, Options>
+  >
 ): boolean {
   if (calleeType.symbol === undefined) {
     return false;
@@ -120,13 +141,17 @@ function isCallerViolation(
  */
 function getCallDescriptors(
   node:
-    | TSESTree.ArrowFunctionExpression
-    | TSESTree.FunctionDeclaration
-    | TSESTree.FunctionExpression,
-  context: RuleContext<keyof typeof errorMessages, Options>,
+    | ReadonlyDeep<TSESTree.ArrowFunctionExpression>
+    | ReadonlyDeep<TSESTree.FunctionDeclaration>
+    | ReadonlyDeep<TSESTree.FunctionExpression>,
+  context: ReadonlyDeep<
+    TSESLint.RuleContext<keyof typeof errorMessages, Options>
+  >,
   options: Options,
-  caller: TSESTree.CallExpression
-): Array<TSESLint.ReportDescriptor<keyof typeof errorMessages>> {
+  caller: ReadonlyDeep<TSESTree.CallExpression>
+): Array<ReadonlyDeep<TSESLint.ReportDescriptor<keyof typeof errorMessages>>> {
+  const [{ assumeTypes }] = options;
+
   if (
     isIdentifier(caller.callee) &&
     node.params.length === caller.arguments.length &&
@@ -142,7 +167,7 @@ function getCallDescriptors(
     const calleeType = getTypeOfNode(caller.callee, context);
     const assumingTypes =
       (calleeType === null || calleeType.symbol === undefined) &&
-      options.assumeTypes !== false;
+      assumeTypes !== false;
 
     if (
       assumingTypes ||
@@ -155,12 +180,11 @@ function getCallDescriptors(
           messageId: "generic",
           fix:
             // No fixer when assuming types as this is dangerous.
-            (typeof options.assumeTypes !== "object" && assumingTypes) ||
+            (typeof assumeTypes !== "object" && assumingTypes) ||
             // Unless user specifies they want it.
-            (typeof options.assumeTypes === "object" &&
-              !options.assumeTypes.allowFixer)
+            (typeof assumeTypes === "object" && !assumeTypes.allowFixer)
               ? null
-              : (fixer) => fixer.replaceText(node, calleeName),
+              : (fixer) => fixer.replaceText(node as TSESTree.Node, calleeName),
         },
       ];
     }
@@ -174,12 +198,14 @@ function getCallDescriptors(
  */
 function getDirectCallDescriptors(
   node:
-    | TSESTree.ArrowFunctionExpression
-    | TSESTree.FunctionDeclaration
-    | TSESTree.FunctionExpression,
-  context: RuleContext<keyof typeof errorMessages, Options>,
+    | ReadonlyDeep<TSESTree.ArrowFunctionExpression>
+    | ReadonlyDeep<TSESTree.FunctionDeclaration>
+    | ReadonlyDeep<TSESTree.FunctionExpression>,
+  context: ReadonlyDeep<
+    TSESLint.RuleContext<keyof typeof errorMessages, Options>
+  >,
   options: Options
-): Array<TSESLint.ReportDescriptor<keyof typeof errorMessages>> {
+): Array<ReadonlyDeep<TSESLint.ReportDescriptor<keyof typeof errorMessages>>> {
   if (isCallExpression(node.body)) {
     return getCallDescriptors(node, context, options, node.body);
   }
@@ -191,12 +217,14 @@ function getDirectCallDescriptors(
  */
 function getNestedCallDescriptors(
   node:
-    | TSESTree.ArrowFunctionExpression
-    | TSESTree.FunctionDeclaration
-    | TSESTree.FunctionExpression,
-  context: RuleContext<keyof typeof errorMessages, Options>,
+    | ReadonlyDeep<TSESTree.ArrowFunctionExpression>
+    | ReadonlyDeep<TSESTree.FunctionDeclaration>
+    | ReadonlyDeep<TSESTree.FunctionExpression>,
+  context: ReadonlyDeep<
+    TSESLint.RuleContext<keyof typeof errorMessages, Options>
+  >,
   options: Options
-): Array<TSESLint.ReportDescriptor<keyof typeof errorMessages>> {
+): Array<ReadonlyDeep<TSESLint.ReportDescriptor<keyof typeof errorMessages>>> {
   if (
     isBlockStatement(node.body) &&
     node.body.body.length === 1 &&
@@ -219,10 +247,12 @@ function getNestedCallDescriptors(
  */
 function checkFunction(
   node:
-    | TSESTree.ArrowFunctionExpression
-    | TSESTree.FunctionDeclaration
-    | TSESTree.FunctionExpression,
-  context: RuleContext<keyof typeof errorMessages, Options>,
+    | ReadonlyDeep<TSESTree.ArrowFunctionExpression>
+    | ReadonlyDeep<TSESTree.FunctionDeclaration>
+    | ReadonlyDeep<TSESTree.FunctionExpression>,
+  context: ReadonlyDeep<
+    TSESLint.RuleContext<keyof typeof errorMessages, Options>
+  >,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   return {
