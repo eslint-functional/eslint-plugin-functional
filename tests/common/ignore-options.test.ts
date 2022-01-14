@@ -1,9 +1,10 @@
 import assert from "assert";
 
-import type { TSESLint, TSESTree } from "@typescript-eslint/experimental-utils";
+import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import test from "ava";
 import dedent from "dedent";
 import RuleTester from "eslint-ava-rule-tester";
+import type { ReadonlyDeep } from "type-fest";
 
 import type {
   AllowLocalMutationOption,
@@ -21,14 +22,11 @@ import {
 import { filename, configs } from "~/tests/helpers/configs";
 import { testWrapper } from "~/tests/helpers/testers";
 import { addFilename, createDummyRule } from "~/tests/helpers/util";
-import type { BaseOptions, RuleContext } from "~/util/rule";
+import type { BaseOptions } from "~/util/rule";
 
-/**
- *
- */
 function shouldIgnore(
-  node: TSESTree.Node,
-  context: RuleContext<string, BaseOptions>,
+  node: ReadonlyDeep<TSESTree.Node>,
+  context: ReadonlyDeep<TSESLint.RuleContext<string, BaseOptions>>,
   options: Partial<
     AllowLocalMutationOption &
       IgnoreAccessorPatternOption &

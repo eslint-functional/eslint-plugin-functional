@@ -1,7 +1,8 @@
-import type { TSESTree } from "@typescript-eslint/experimental-utils";
+import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
 import type { JSONSchema4 } from "json-schema";
+import type { ReadonlyDeep } from "type-fest";
 
-import type { RuleContext, RuleMetaData, RuleResult } from "~/util/rule";
+import type { RuleResult } from "~/util/rule";
 import { createRule, getTypeOfNode } from "~/util/rule";
 import {
   isFunctionLike,
@@ -13,17 +14,25 @@ import {
   isVoidType,
 } from "~/util/typeguard";
 
-// The name of this rule.
+/**
+ * The name of this rule.
+ */
 export const name = "no-return-void" as const;
 
-// The options this rule can take.
-type Options = {
-  readonly allowNull: boolean;
-  readonly allowUndefined: boolean;
-  readonly ignoreImplicit: boolean;
-};
+/**
+ * The options this rule can take.
+ */
+type Options = readonly [
+  Readonly<{
+    allowNull: boolean;
+    allowUndefined: boolean;
+    ignoreImplicit: boolean;
+  }>
+];
 
-// The schema for the rule options.
+/**
+ * The schema for the rule options.
+ */
 const schema: JSONSchema4 = [
   {
     type: "object",
@@ -42,20 +51,28 @@ const schema: JSONSchema4 = [
   },
 ];
 
-// The default options for the rule.
-const defaultOptions: Options = {
-  allowNull: true,
-  allowUndefined: true,
-  ignoreImplicit: false,
-};
+/**
+ * The default options for the rule.
+ */
+const defaultOptions: Options = [
+  {
+    allowNull: true,
+    allowUndefined: true,
+    ignoreImplicit: false,
+  },
+];
 
-// The possible error messages.
+/**
+ * The possible error messages.
+ */
 const errorMessages = {
   generic: "Function must return a value.",
 } as const;
 
-// The meta data for this rule.
-const meta: RuleMetaData<keyof typeof errorMessages> = {
+/**
+ * The meta data for this rule.
+ */
+const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     description: "Disallow functions that don't return anything.",
@@ -70,15 +87,19 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
  */
 function checkFunction(
   node:
-    | TSESTree.ArrowFunctionExpression
-    | TSESTree.FunctionDeclaration
-    | TSESTree.FunctionExpression
-    | TSESTree.TSFunctionType,
-  context: RuleContext<keyof typeof errorMessages, Options>,
+    | ReadonlyDeep<TSESTree.ArrowFunctionExpression>
+    | ReadonlyDeep<TSESTree.FunctionDeclaration>
+    | ReadonlyDeep<TSESTree.FunctionExpression>
+    | ReadonlyDeep<TSESTree.TSFunctionType>,
+  context: ReadonlyDeep<
+    TSESLint.RuleContext<keyof typeof errorMessages, Options>
+  >,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
+  const [{ ignoreImplicit, allowNull, allowUndefined }] = options;
+
   if (node.returnType === undefined) {
-    if (!options.ignoreImplicit && isFunctionLike(node)) {
+    if (!ignoreImplicit && isFunctionLike(node)) {
       const functionType = getTypeOfNode(node, context);
       const returnType = functionType
         ?.getCallSignatures()?.[0]
@@ -87,8 +108,8 @@ function checkFunction(
       if (
         returnType !== undefined &&
         (isVoidType(returnType) ||
-          (!options.allowNull && isNullType(returnType)) ||
-          (!options.allowUndefined && isUndefinedType(returnType)))
+          (!allowNull && isNullType(returnType)) ||
+          (!allowUndefined && isUndefinedType(returnType)))
       ) {
         return {
           context,
@@ -98,9 +119,8 @@ function checkFunction(
     }
   } else if (
     isTSVoidKeyword(node.returnType.typeAnnotation) ||
-    (!options.allowNull && isTSNullKeyword(node.returnType.typeAnnotation)) ||
-    (!options.allowUndefined &&
-      isTSUndefinedKeyword(node.returnType.typeAnnotation))
+    (!allowNull && isTSNullKeyword(node.returnType.typeAnnotation)) ||
+    (!allowUndefined && isTSUndefinedKeyword(node.returnType.typeAnnotation))
   ) {
     return {
       context,

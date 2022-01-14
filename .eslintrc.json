@@ -39,6 +39,7 @@
     "@typescript-eslint/no-unsafe-member-access": "off",
     "@typescript-eslint/no-unsafe-return": "off",
     "import/no-relative-parent-imports": "error",
+    "functional/prefer-readonly-type": "off",
     "node/no-unsupported-features/es-builtins": "off",
     "node/no-unsupported-features/es-syntax": "off",
     "promise/prefer-await-to-callbacks": "off",
@@ -57,7 +58,37 @@
     {
       "files": ["./src/**/*"],
       "extends": ["plugin:eslint-plugin/recommended"],
-      "rules": {}
+      "rules": {
+        "functional/no-expression-statement": "error"
+      }
+    },
+    // Rule util file.
+    {
+      "files": ["./src/util/rule.ts"],
+      "rules": {
+        "@typescript-eslint/prefer-readonly-parameter-types": "warn"
+      }
+    },
+    // Typeguard files.
+    {
+      "files": ["./src/util/typeguard.ts"],
+      "rules": {
+        "jsdoc/require-jsdoc": "off"
+      }
+    },
+    // Test files.
+    {
+      "files": ["./tests/**/*"],
+      "rules": {
+        "jsdoc/require-jsdoc": "off"
+      }
+    },
+    // CZ Adapter files.
+    {
+      "files": ["./cz-adapter/**/*"],
+      "rules": {
+        "jsdoc/require-jsdoc": "off"
+      }
     },
     // FIXME: This override is defined in the upsteam; it shouldn't need to be redefined here. Why?
     {

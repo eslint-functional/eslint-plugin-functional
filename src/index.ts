@@ -13,9 +13,12 @@ import off from "~/configs/off";
 import stylistic from "~/configs/stylistic";
 import { rules } from "~/rules";
 
+/**
+ * The config type object ESLint is expecting.
+ */
 type EslintPluginConfig = {
-  readonly rules: Record<string, Rule.RuleModule>;
-  readonly configs: Record<string, Linter.Config>;
+  rules: Record<string, Rule.RuleModule>;
+  configs: Record<string, Linter.Config>;
 };
 
 const config: EslintPluginConfig = {

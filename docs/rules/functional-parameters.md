@@ -112,7 +112,7 @@ Any function that take takes multiple parameter can be rewritten as a higher-ord
 
 Example:
 
-<!-- eslint-disable no-redeclare -->
+<!-- eslint-disable @typescript-eslint/no-redeclare -->
 
 ```js
 // This function
