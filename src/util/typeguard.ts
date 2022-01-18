@@ -246,8 +246,8 @@ export function isTSIndexSignature(
 }
 
 export function isTSInterfaceDeclaration(
-  node: TSESTree.Node
-): node is TSESTree.TSInterfaceDeclaration {
+  node: ReadonlyDeep<TSESTree.Node>
+): node is ReadonlyDeep<TSESTree.TSInterfaceDeclaration> {
   return node.type === AST_NODE_TYPES.TSInterfaceDeclaration;
 }
 
@@ -264,8 +264,8 @@ export function isTSInterfaceHeritage(
 }
 
 export function isTSTypeAliasDeclaration(
-  node: TSESTree.Node
-): node is TSESTree.TSTypeAliasDeclaration {
+  node: ReadonlyDeep<TSESTree.Node>
+): node is ReadonlyDeep<TSESTree.TSTypeAliasDeclaration> {
   return node.type === AST_NODE_TYPES.TSTypeAliasDeclaration;
 }
 

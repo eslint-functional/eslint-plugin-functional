@@ -137,10 +137,12 @@ export function getTypeOfNode<
 /**
  * Is the given node readonly?
  */
-export function isReadonly<Context extends RuleContext<string, BaseOptions>>(
-  node: TSESTree.Node,
+export function isReadonly<
+  Context extends ReadonlyDeep<TSESLint.RuleContext<string, BaseOptions>>
+>(
+  node: ReadonlyDeep<TSESTree.Node>,
   context: Context,
-  readonlynessOptions: ReadonlynessOptions
+  readonlynessOptions: ReadonlyDeep<ReadonlynessOptions>
 ): boolean {
   const { parserServices } = context;
 
