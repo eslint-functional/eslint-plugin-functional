@@ -73,6 +73,8 @@ If set, `let`s inside of for a loop initializer are allowed. This does not inclu
 
 Examples of **correct** code for this rule:
 
+<!-- eslint-disable @typescript-eslint/prefer-for-of -->
+
 ```js
 /* eslint functional/no-let: ["error", { "allowInForLoopInit": true } ] */
 

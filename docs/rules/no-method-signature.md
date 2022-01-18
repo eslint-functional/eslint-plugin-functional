@@ -25,6 +25,8 @@ type Foo = {
 
 Examples of **correct** code for this rule:
 
+<!-- eslint-disable @typescript-eslint/no-redeclare -->
+
 ```ts
 /* eslint functional/no-method-signature: "error" */
 
