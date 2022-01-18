@@ -69,7 +69,7 @@ const defaults = {
 
 ### `allowInForLoopInit`
 
-If set, `let`s inside of for a loop initializer are allowed. This does not include for...of or for...in loops.
+If set, `let`s inside of for a loop initializer are allowed. This does not include for...of or for...in loops as they should use `const` instead.
 
 Examples of **correct** code for this rule:
 
