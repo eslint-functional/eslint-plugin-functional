@@ -9,7 +9,7 @@ In functional programming functions must return something, they cannot return no
 By default, this rule allows function to return `undefined` and `null`.
 
 Note: For performance reasons, this rule does not check implicit return types.
-We recommend using the rule [@typescript-eslint/explicit-function-return-type](https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/explicit-function-return-type.md) in conjunction with this rule.
+We recommend using the rule [@typescript-eslint/explicit-function-return-type](https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/explicit-function-return-type.md) in conjunction with this rule.
 
 Examples of **incorrect** code for this rule:
 
