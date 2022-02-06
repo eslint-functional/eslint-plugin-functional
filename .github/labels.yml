@@ -97,9 +97,12 @@
 - name: "Resolution: Won't Fix"
   color: e6e6e6
   description: "A real bug or issue, but the issue is not impactful enough to spend time on."
-- name: "Resolution: Done/Fixed"
+- name: "Resolution: Fixed"
   color: c2e0c6
-  description: "The bug/issue has been fixed/completed."
+  description: "The issue has been fixed."
+- name: "Resolution: Added"
+  color: c2e0c6
+  description: "This has been added to the project."
 
 # Bots
 - name: ":blue_heart:"
