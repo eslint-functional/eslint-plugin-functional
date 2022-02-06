@@ -28,9 +28,11 @@ const testNames = new Map<string, number>();
  * is given to each rule.
  */
 export function testWrapper(
-  avaTest: (title: string, callback: Implementation<unknown>) => void
+  // eslint-disable-next-line functional/prefer-readonly-type
+  avaTest: (title: string, callback: Implementation<unknown[]>) => void
 ) {
-  return (title: string, callback: Implementation<unknown>) => {
+  // eslint-disable-next-line functional/prefer-readonly-type
+  return (title: string, callback: Implementation<unknown[]>) => {
     const count = (testNames.get(title) ?? 0) + 1;
     testNames.set(title, count);
     avaTest(`v${count} - ${title}`, callback);
