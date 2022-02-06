@@ -1,5 +1,4 @@
-import type { TSESTree } from "@typescript-eslint/experimental-utils";
-import type { ReportDescriptor } from "@typescript-eslint/experimental-utils/dist/ts-eslint";
+import type { TSESLint, TSESTree } from "@typescript-eslint/experimental-utils";
 import { deepmerge } from "deepmerge-ts";
 import type { JSONSchema4 } from "json-schema";
 import type { FunctionLikeDeclaration, Type } from "typescript";
@@ -127,7 +126,7 @@ function getCallDescriptors(
   context: RuleContext<keyof typeof errorMessages, Options>,
   options: Options,
   caller: TSESTree.CallExpression
-): Array<ReportDescriptor<keyof typeof errorMessages>> {
+): Array<TSESLint.ReportDescriptor<keyof typeof errorMessages>> {
   if (
     isIdentifier(caller.callee) &&
     node.params.length === caller.arguments.length &&
@@ -180,7 +179,7 @@ function getDirectCallDescriptors(
     | TSESTree.FunctionExpression,
   context: RuleContext<keyof typeof errorMessages, Options>,
   options: Options
-): Array<ReportDescriptor<keyof typeof errorMessages>> {
+): Array<TSESLint.ReportDescriptor<keyof typeof errorMessages>> {
   if (isCallExpression(node.body)) {
     return getCallDescriptors(node, context, options, node.body);
   }
@@ -197,7 +196,7 @@ function getNestedCallDescriptors(
     | TSESTree.FunctionExpression,
   context: RuleContext<keyof typeof errorMessages, Options>,
   options: Options
-): Array<ReportDescriptor<keyof typeof errorMessages>> {
+): Array<TSESLint.ReportDescriptor<keyof typeof errorMessages>> {
   if (
     isBlockStatement(node.body) &&
     node.body.body.length === 1 &&
