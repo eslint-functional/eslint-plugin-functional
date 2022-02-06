@@ -41,4 +41,38 @@ async function divide(x, y) {
 
 ## Options
 
-The rule does not accept any options.
+This rule accepts an options object of the following type:
+
+```ts
+type Options = {
+  allowInAsyncFunctions: boolean;
+}
+```
+
+The default options:
+
+```ts
+const defaults = {
+  allowInAsyncFunctions: false,
+}
+```
+
+### `allowInAsyncFunctions`
+
+If true, throw statements will be allowed within async functions.\
+This essentially allows throw statements to be used as return statements for errors.
+
+Examples of **correct** code for this rule:
+
+```js
+/* eslint functional/no-throw-statement: ["error", { "allowInAsyncFunctions": true }] */
+
+async function divide(x, y) {
+  const [xv, yv] = await Promise.all([x, y]);
+
+  if (yv === 0) {
+    throw new Error("Cannot divide by zero.");
+  }
+  return xv / yv;
+}
+```

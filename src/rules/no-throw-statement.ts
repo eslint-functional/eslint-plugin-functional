@@ -1,6 +1,7 @@
 import type { TSESTree } from "@typescript-eslint/experimental-utils";
 import type { JSONSchema4 } from "json-schema";
 
+import { inFunctionBody } from "~/src/util/tree";
 import type { RuleContext, RuleMetaData, RuleResult } from "~/util/rule";
 import { createRule } from "~/util/rule";
 
@@ -8,13 +9,27 @@ import { createRule } from "~/util/rule";
 export const name = "no-throw-statement" as const;
 
 // The options this rule can take.
-type Options = {};
+type Options = {
+  readonly allowInAsyncFunctions: boolean;
+};
 
 // The schema for the rule options.
-const schema: JSONSchema4 = [];
+const schema: JSONSchema4 = [
+  {
+    type: "object",
+    properties: {
+      allowInAsyncFunctions: {
+        type: "boolean",
+      },
+    },
+    additionalProperties: false,
+  },
+];
 
 // The default options for the rule.
-const defaultOptions: Options = {};
+const defaultOptions: Options = {
+  allowInAsyncFunctions: false,
+};
 
 // The possible error messages.
 const errorMessages = {
@@ -37,10 +52,17 @@ const meta: RuleMetaData<keyof typeof errorMessages> = {
  */
 function checkThrowStatement(
   node: TSESTree.ThrowStatement,
-  context: RuleContext<keyof typeof errorMessages, Options>
+  context: RuleContext<keyof typeof errorMessages, Options>,
+  options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
-  // All throw statements violate this rule.
-  return { context, descriptors: [{ node, messageId: "generic" }] };
+  if (!options.allowInAsyncFunctions || !inFunctionBody(node, true)) {
+    return { context, descriptors: [{ node, messageId: "generic" }] };
+  }
+
+  return {
+    context,
+    descriptors: [],
+  };
 }
 
 // Create the rule.
