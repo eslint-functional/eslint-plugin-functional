@@ -37,13 +37,25 @@ function getAncestorOfType<T extends TSESTree.Node>(
 
 /**
  * Test if the given node is in a function's body.
+ *
+ * @param node - The node to test.
+ * @param async - Whether the function must be async or sync. Use `undefined` for either.
  */
-export function inFunctionBody(node: TSESTree.Node): boolean {
+export function inFunctionBody(node: TSESTree.Node, async?: boolean): boolean {
+  const functionNode = getAncestorOfType(
+    (
+      n,
+      c
+    ): n is
+      | TSESTree.ArrowFunctionExpression
+      | TSESTree.FunctionDeclaration
+      | TSESTree.FunctionExpression => isFunctionLike(n) && n.body === c,
+    node
+  );
+
   return (
-    getAncestorOfType(
-      (n, c): n is TSESTree.Node => isFunctionLike(n) && n.body === c,
-      node
-    ) !== null
+    functionNode !== null &&
+    (async === undefined || functionNode.async === async)
   );
 }
 
