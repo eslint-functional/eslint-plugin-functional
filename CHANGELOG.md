@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+# [4.2.0](https://github.com/jonaskello/eslint-plugin-functional/compare/v4.1.1...v4.2.0) (2022-02-06)
+
+
+### Features
+
+* **no-throw-statement:** add an option to allow throw statements within async functions ([#330](https://github.com/jonaskello/eslint-plugin-functional/issues/330)) ([7cee76b](https://github.com/jonaskello/eslint-plugin-functional/commit/7cee76b0baeeea20dc32546c133b35f2dc12e01d))
+
 ## [4.1.1](https://github.com/jonaskello/eslint-plugin-functional/compare/v4.1.0...v4.1.1) (2022-01-08)
 
 
