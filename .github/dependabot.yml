@@ -1,9 +1,17 @@
 version: 2
 updates:
-  - package-ecosystem: "npm"
-    directory: "/"
+  - package-ecosystem: npm
+    directory: /
     schedule:
-      interval: "monthly"
+      interval: monthly
+    labels:
+      - "Type: Maintenance"
+      - ":blue_heart:"
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
     labels:
       - "Type: Maintenance"
       - ":blue_heart:"
