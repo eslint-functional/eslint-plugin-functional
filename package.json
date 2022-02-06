@@ -91,7 +91,7 @@
     "@typescript-eslint/parser": "^5.0.0",
     "ava": "^3.15.0",
     "babel-eslint": "^10.1.0",
-    "chalk": "^5.0.0",
+    "chalk": "^4.1.2",
     "codecov": "^3.8.1",
     "commitizen": "^4.2.4",
     "conventional-commit-types": "^3.0.0",
