@@ -1,4 +1,5 @@
 import { types as conventionalCommitTypes } from "conventional-commit-types";
+import type { ReadonlyDeep } from "type-fest";
 
 // Override the descriptions of some of the types.
 const types = {
@@ -48,13 +49,13 @@ const types = {
   },
 };
 
-const defaults: {
-  readonly defaultType: string | undefined;
-  readonly defaultScope: string | undefined;
-  readonly defaultSubject: string | undefined;
-  readonly defaultBody: string | undefined;
-  readonly defaultIssues: string | undefined;
-} = {
+const defaults: Readonly<{
+  defaultType: string | undefined;
+  defaultScope: string | undefined;
+  defaultSubject: string | undefined;
+  defaultBody: string | undefined;
+  defaultIssues: string | undefined;
+}> = {
   defaultType: process.env.CZ_TYPE,
   defaultScope: process.env.CZ_SCOPE,
   defaultSubject: process.env.CZ_SUBJECT,
@@ -71,6 +72,6 @@ const options = {
   maxLineWidth: 100,
 };
 
-export type Options = typeof options;
+export type Options = ReadonlyDeep<typeof options>;
 
 export default options;

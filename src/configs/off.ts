@@ -2,6 +2,9 @@ import type { Linter } from "eslint";
 
 import all from "./all";
 
+/**
+ * Turn the given rules off.
+ */
 function turnRulesOff(rules: ReadonlyArray<string>): Linter.Config["rules"] {
   return rules === undefined
     ? undefined
