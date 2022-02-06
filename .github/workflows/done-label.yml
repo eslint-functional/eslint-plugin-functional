@@ -1,0 +1,15 @@
+name: Apply Done Label
+
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  run:
+    name: "Update Labels"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: RebeccaStevens/issue-closed-labeler-action@latest
+        with:
+          rules: '[{"condition":"Type: Bug","add":"Resolution: Fixed"},{"condition":["some",["Type: Feature","Type: Enhancement"]],"add":"Resolution: Added"}]'
