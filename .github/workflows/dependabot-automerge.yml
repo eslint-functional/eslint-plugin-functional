@@ -13,7 +13,7 @@ jobs:
         uses: WyriHaximus/github-action-wait-for-status@v1
         with:
           ignoreActions: automerge
-          checkInterval: 60
+          checkInterval: 120
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
