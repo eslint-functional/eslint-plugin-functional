@@ -60,7 +60,6 @@ jobs:
           - "3.4.1"
           - "JS"
     runs-on: ${{ matrix.os }}
-    continue-on-error: ${{ matrix.ts_version == 'next' }}
     env:
       REPORT_COVERAGE: ${{ fromJSON('["false", "true"]')[matrix.ts_version == 'latest' && matrix.node_version == '16' && matrix.os != 'ubuntu-latest'] }}
     steps:
@@ -102,6 +101,7 @@ jobs:
         run: node -e 'const fs = require("fs"); const tsconfig = require("./tsconfig.base.json"); delete tsconfig.compilerOptions.exactOptionalPropertyTypes; fs.writeFileSync("./tsconfig.base.json", JSON.stringify(tsconfig));'
 
       - name: Run Tests
+        continue-on-error: ${{ matrix.ts_version == 'next' }}
         run: yarn test
         env:
           USE_COMPILED_TESTS: ${{ env.REPORT_COVERAGE == 'false' }}
