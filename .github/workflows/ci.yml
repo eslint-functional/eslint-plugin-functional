@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup NodeJs
         uses: actions/setup-node@v3
@@ -65,7 +65,7 @@ jobs:
       REPORT_COVERAGE: ${{ fromJSON('["false", "true"]')[matrix.ts_version == 'latest' && matrix.node_version == '16' && matrix.os != 'ubuntu-latest'] }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           # Fetch all commits for codecov.
           fetch-depth: ${{ fromJSON('[0, 1]')[ env.REPORT_COVERAGE == 'true'] }}
