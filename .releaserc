@@ -4,7 +4,29 @@ branches:
     channel: next
     prerelease: beta
 plugins:
-  - "@semantic-release/commit-analyzer"
+  - - "@semantic-release/commit-analyzer"
+    - preset: angular
+      releaseRules:
+        - breaking: true
+          release: major
+        - type: feat
+          release: minor
+        - type: fix
+          release: patch
+        - type: perf
+          release: patch
+        - type: build
+          scope: deps
+          release: patch
+        - type: build
+          scope: release-patch
+          release: patch
+        - type: build
+          scope: release-minor
+          release: minor
+        - type: build
+          scope: release-major
+          release: major
   - "@semantic-release/release-notes-generator"
   - - "@semantic-release/changelog"
     - changelogTitle: "# Changelog
@@ -12,20 +34,20 @@ plugins:
         All notable changes to this project will be documented in this file. Dates are displayed in UTC."
   - - "@google/semantic-release-replace-plugin"
     - replacements:
-      - files:
-          - "./lib/**/*"
-        from: "\\$\\{__VERSION__\\}"
-        to: "${nextRelease.version}"
-        results:
-          - file: "./lib/index.js"
-            hasChanged: true
-            numMatches: 1
-            numReplacements: 1
-          - file: "./lib/index.mjs"
-            hasChanged: true
-            numMatches: 1
-            numReplacements: 1
-        countMatches: true
+        - files:
+            - "./lib/**/*"
+          from: "\\$\\{__VERSION__\\}"
+          to: "${nextRelease.version}"
+          results:
+            - file: "./lib/index.js"
+              hasChanged: true
+              numMatches: 1
+              numReplacements: 1
+            - file: "./lib/index.mjs"
+              hasChanged: true
+              numMatches: 1
+              numReplacements: 1
+          countMatches: true
   - "@semantic-release/git"
   - "@semantic-release/npm"
   - - "@semantic-release/github"
