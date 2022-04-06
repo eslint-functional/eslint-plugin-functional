@@ -230,11 +230,7 @@ function getSwitchViolations(
       }
     }
 
-    if (branch.consequent.some(isNeverExpressions)) {
-      return false;
-    }
-
-    return true;
+    return !branch.consequent.some(isNeverExpressions);
   });
 
   return violations.flatMap(incompleteBranchViolation);

@@ -965,12 +965,12 @@
   dependencies:
     "@octokit/openapi-types" "^11.2.0"
 
-"@rebeccastevens/eslint-config@^1.3.0":
-  version "1.3.9"
-  resolved "https://registry.yarnpkg.com/@rebeccastevens/eslint-config/-/eslint-config-1.3.9.tgz#473110953e09d84971e935d365f1ae24e29e7b29"
-  integrity sha512-iAek3Gir1DDq5c43C0EyCK47NmtCyeynBiuxcp6i/CwGq3DpLH2hA3kZbdBVAvhNvev7x7PaObfU9pmzlc7gRA==
+"@rebeccastevens/eslint-config@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@rebeccastevens/eslint-config/-/eslint-config-1.3.0.tgz#88c679ad33f42d0439ad477421fe2ba4a7dd129a"
+  integrity sha512-VemuB1kTpY5p4eYlycG38v+15/Cnt5Shgd5ukeR2BjROGJ+feqZyCc0jU7HbKqr8bjVH8DOCXEacoj37AYwB8g==
   dependencies:
-    deepmerge-ts "^4.0.0"
+    deepmerge-ts "^2.0.1"
 
 "@rollup/plugin-commonjs@^21.0.1":
   version "21.0.1"
@@ -2655,13 +2655,6 @@ deepmerge-ts@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/deepmerge-ts/-/deepmerge-ts-2.0.1.tgz#08e3bf4b535736a360c57fb162ddbffc253fe9f2"
   integrity sha512-7xeG0xMleW+gyrtUsdOeR6tCLwkyYDh3koIuvc8TxBcDh3WlaBQiEbFwEzk8clKomJZMhmoyxo7Y9CRrrrLVlg==
-  dependencies:
-    is-plain-object "^5.0.0"
-
-deepmerge-ts@^4.0.0:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/deepmerge-ts/-/deepmerge-ts-4.0.2.tgz#bd037971aa34115349591f88afd018771a94d475"
-  integrity sha512-ga2TwzfJYOE/NvbpsCvsXsXofrK50tKPs7QM0fykyrIHpZG3aHBELbCc8SnrxoP4LGCdxYGbe1fcoe46iVBG1w==
   dependencies:
     is-plain-object "^5.0.0"
 
