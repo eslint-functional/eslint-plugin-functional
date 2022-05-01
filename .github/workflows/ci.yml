@@ -107,7 +107,7 @@ jobs:
           USE_COMPILED_TESTS: ${{ env.REPORT_COVERAGE == 'false' }}
 
       - name: Report coverage
-        uses: codecov/codecov-action@v2.1.0
+        uses: codecov/codecov-action@v3.1.0
         if: env.REPORT_COVERAGE == 'true'
         with:
           file: coverage/lcov.info
