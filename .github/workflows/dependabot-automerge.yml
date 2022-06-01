@@ -19,7 +19,7 @@ jobs:
 
       - name: "Merge"
         if: steps.waitforstatuschecks.outputs.status == 'success'
-        uses: pascalgn/automerge-action@v0.15.2
+        uses: pascalgn/automerge-action@v0.15.3
         env:
           MERGE_LABELS: ":blue_heart:,!Status: On Hold"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
