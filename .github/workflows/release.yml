@@ -21,8 +21,11 @@ jobs:
         with:
           node-version: "lts/*"
 
+      - run: npm install -g yarn
+      - run: corepack enable
+
       - name: Install dependencies
-        run: yarn install --frozen-lockfile --ignore-scripts
+        run: yarn install --immutable
 
       - name: Build & Verify
         run: yarn verify

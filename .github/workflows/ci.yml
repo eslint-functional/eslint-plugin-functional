@@ -32,8 +32,11 @@ jobs:
         with:
           node-version: "lts/*"
 
+      - run: npm install -g yarn
+      - run: corepack enable
+
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile --ignore-scripts --ignore-engines
+        run: yarn install --immutable
 
       - name: Run Linting Checks
         run: yarn lint
@@ -75,8 +78,11 @@ jobs:
         with:
           node-version: "16"
 
+      - run: npm install -g yarn
+      - run: corepack enable
+
       - name: Install Dependencies
-        run: yarn install --frozen-lockfile --ignore-scripts --ignore-engines
+        run: yarn install --immutable
 
       - name: Build
         run: yarn build
@@ -90,12 +96,15 @@ jobs:
         with:
           node-version: ${{ matrix.node_version }}
 
+      - run: npm install -g yarn
+      - run: corepack enable
+
       - name: Remove Dev TypeScript
-        run: yarn remove typescript --ignore-engines
+        run: yarn remove typescript
 
       - name: Add TypeScript "${{ matrix.ts_version }}"
         if: matrix.ts_version != 'JS'
-        run: yarn add -D typescript@"${{ matrix.ts_version }}" --ignore-engines
+        run: yarn add -D typescript@"${{ matrix.ts_version }}"
 
       - name: Remove incompatible settings for ts 3.4.1
         if: matrix.ts_version == '3.4.1'
