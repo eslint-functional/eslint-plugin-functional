@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+## [4.2.2](https://github.com/jonaskello/eslint-plugin-functional/compare/v4.2.1...v4.2.2) (2022-07-22)
+
+
+### Bug Fixes
+
+* typos and tighten a sentence ([9da0455](https://github.com/jonaskello/eslint-plugin-functional/commit/9da0455bf8cb64db0c7cc59e4c8b61a63dce1c2b))
+
 ## [4.2.1](https://github.com/jonaskello/eslint-plugin-functional/compare/v4.2.0...v4.2.1) (2022-04-06)
 
 # [4.2.0](https://github.com/jonaskello/eslint-plugin-functional/compare/v4.1.1...v4.2.0) (2022-02-06)
