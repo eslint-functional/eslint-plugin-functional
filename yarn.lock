@@ -5227,19 +5227,19 @@ minimatch@^3.0.4, minimatch@^3.1.2:
   dependencies:
     brace-expansion "^1.1.7"
 
-minimatch@~3.0.5:
-  version "3.0.8"
-  resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.0.8.tgz#5e6a59bd11e2ab0de1cfb843eb2d82e546c321c1"
-  integrity sha512-6FsRAQsxQ61mw+qP1ZzbL9Bc78x2p5OqNgNpnoAFLTrX8n5Kxph0CsnhmKKNXTWjXqU5L0pGPR7hYk+XWZr60Q==
-  dependencies:
-    brace-expansion "^1.1.7"
-
 minimatch@^5.0.1:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-5.1.0.tgz#1717b464f4971b144f6aabe8f2d0b8e4511e09c7"
   integrity sha512-9TPBGGak4nHfGZsPBohm9AWg6NoT7QTCehS3BIJABslyZbzxfV78QM2Y6+i741OPZIafFAaiiEMh5OyIrJPgtg==
   dependencies:
     brace-expansion "^2.0.1"
+
+minimatch@~3.0.5:
+  version "3.0.8"
+  resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.0.8.tgz#5e6a59bd11e2ab0de1cfb843eb2d82e546c321c1"
+  integrity sha512-6FsRAQsxQ61mw+qP1ZzbL9Bc78x2p5OqNgNpnoAFLTrX8n5Kxph0CsnhmKKNXTWjXqU5L0pGPR7hYk+XWZr60Q==
+  dependencies:
+    brace-expansion "^1.1.7"
 
 minimist-options@4.1.0:
   version "4.1.0"
@@ -6503,9 +6503,9 @@ rollup-plugin-auto-external@^2.0.0:
     semver "^5.5.0"
 
 rollup@>=2.0.0, rollup@^2.67.0:
-  version "2.75.5"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.75.5.tgz#7985c1962483235dd07966f09fdad5c5f89f16d0"
-  integrity sha512-JzNlJZDison3o2mOxVmb44Oz7t74EfSd1SQrplQk0wSaXV7uLQXtVdHbxlcT3w+8tZ1TL4r/eLfc7nAbz38BBA==
+  version "2.77.0"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.77.0.tgz#749eaa5ac09b6baa52acc076bc46613eddfd53f4"
+  integrity sha512-vL8xjY4yOQEw79DvyXLijhnhh+R/O9zpF/LEgkCebZFtb6ELeN9H3/2T0r8+mp+fFTBHZ5qGpOpW2ela2zRt3g==
   optionalDependencies:
     fsevents "~2.3.2"
 
