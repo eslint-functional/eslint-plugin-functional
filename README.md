@@ -1,6 +1,6 @@
 <div align="center">
 
-![eslint-logo](docs/assets/eslint-logo.svg?sanitize=true)
+![eslint-logo](docs/assets/eslint-functional-logo.png?sanitize=true)
 
 # eslint-plugin-functional
 
