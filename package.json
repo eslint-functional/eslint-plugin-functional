@@ -64,7 +64,7 @@
   "dependencies": {
     "@typescript-eslint/utils": "^5.10.2",
     "deepmerge-ts": "^4.0.3",
-    "escape-string-regexp": "^4.0.0"
+    "escape-string-regexp": "^5.0.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.1.0",
