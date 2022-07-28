@@ -88,7 +88,7 @@ export function createRule<
 ) {
   return ESLintUtils.RuleCreator(
     (ruleName) =>
-      `https://github.com/jonaskello/eslint-plugin-functional/blob/v${__VERSION__}/docs/rules/${ruleName}.md`
+      `https://github.com/eslint-functional/eslint-plugin-functional/blob/v${__VERSION__}/docs/rules/${ruleName}.md`
   )({
     name,
     meta,

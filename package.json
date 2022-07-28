@@ -11,13 +11,13 @@
     "immutability",
     "immutable"
   ],
-  "homepage": "https://github.com/jonaskello/eslint-plugin-functional#readme",
+  "homepage": "https://github.com/eslint-functional/eslint-plugin-functional#readme",
   "bugs": {
-    "url": "https://github.com/jonaskello/eslint-plugin-functional/issues"
+    "url": "https://github.com/eslint-functional/eslint-plugin-functional/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jonaskello/eslint-plugin-functional"
+    "url": "git+https://github.com/eslint-functional/eslint-plugin-functional"
   },
   "license": "MIT",
   "author": "Jonas Kello",
@@ -64,7 +64,7 @@
   "dependencies": {
     "@typescript-eslint/utils": "^5.10.2",
     "deepmerge-ts": "^4.0.3",
-    "escape-string-regexp": "^5.0.0"
+    "escape-string-regexp": "^4.0.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.1.0",
@@ -150,6 +150,7 @@
       "optional": true
     }
   },
+  "packageManager": "yarn@3.2.1",
   "engines": {
     "node": "^12.22.0 || ^14.17.0 || >=16.0.0"
   }
