@@ -5,12 +5,12 @@
 # eslint-plugin-functional
 
 [![npm version](https://img.shields.io/npm/v/eslint-plugin-functional.svg?style=flat)](https://www.npmjs.com/package/eslint-plugin-functional)
-[![CI](https://github.com/jonaskello/eslint-plugin-functional/actions/workflows/ci.yml/badge.svg)](https://github.com/jonaskello/eslint-plugin-functional/actions/workflows/ci.yml)
-[![Coverage Status](https://codecov.io/gh/jonaskello/eslint-plugin-functional/branch/main/graph/badge.svg)](https://codecov.io/gh/jonaskello/eslint-plugin-functional)
+[![CI](https://github.com/eslint-functional/eslint-plugin-functional/actions/workflows/ci.yml/badge.svg)](https://github.com/eslint-functional/eslint-plugin-functional/actions/workflows/ci.yml)
+[![Coverage Status](https://codecov.io/gh/eslint-functional/eslint-plugin-functional/branch/main/graph/badge.svg)](https://codecov.io/gh/eslint-functional/eslint-plugin-functional)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=flat)](https://github.com/semantic-release/semantic-release)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat)](https://github.com/prettier/prettier)
-[![MIT license](https://img.shields.io/github/license/jonaskello/eslint-plugin-functional.svg?style=flat)](https://opensource.org/licenses/MIT)
-[![GitHub Discussions](https://img.shields.io/github/discussions/jonaskello/eslint-plugin-functional)](https://github.com/jonaskello/eslint-plugin-functional/discussions)
+[![MIT license](https://img.shields.io/github/license/eslint-functional/eslint-plugin-functional.svg?style=flat)](https://opensource.org/licenses/MIT)
+[![GitHub Discussions](https://img.shields.io/github/discussions/eslint-functional/eslint-plugin-functional)](https://github.com/eslint-functional/eslint-plugin-functional/discussions)
 
 An [ESLint](http://eslint.org) plugin to disable mutation and promote functional programming in JavaScript and TypeScript.
 

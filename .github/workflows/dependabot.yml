@@ -1,0 +1,49 @@
+name: "Dependabot"
+
+on:
+  pull_request_target:
+
+jobs:
+  fix-lockfile:
+    runs-on: ubuntu-latest
+    if: |
+      github.actor == 'dependabot[bot]' &&
+      contains(github.event.pull_request.head.ref, 'dependabot/npm_and_yarn/')
+    env:
+      YARN_ENABLE_SCRIPTS: false
+      YARN_ENABLE_IMMUTABLE_INSTALLS: false
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 2
+
+      - run: git lfs pull --include .yarn/
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "lts/*"
+
+      - name: Restore cache
+        uses: actions/cache@v3
+        with:
+          path: .yarn/cache
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ runner.os }}-yarn-
+
+      - run: git checkout HEAD~1 yarn.lock
+
+      - run: yarn install --mode=skip-build
+
+      - run: yarn dedupe
+
+      - name: Commit yarn.lock
+        run: |
+          git config user.name "dependabot-fix"
+          git config user.email "dependabot-fix@example.com"
+          git add yarn.lock
+          git commit -m '[dependabot skip] Fix yarn.lock'
+          git push

@@ -66,6 +66,13 @@
       }
     },
     {
+      "files": ["./src/configs/**/*", "./src/index.ts"],
+      "extends": ["plugin:eslint-plugin/recommended"],
+      "rules": {
+        "@typescript-eslint/naming-convention": "off"
+      }
+    },
+    {
       "files": ["./src/util/typeguard.ts", "./tests/**/*", "./cz-adapter/**/*"],
       "rules": {
         "jsdoc/require-jsdoc": "off"
