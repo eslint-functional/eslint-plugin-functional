@@ -39,11 +39,12 @@ This rule accepts an options object of the following type:
 
 ```ts
 type Options = {
-  assumeTypes:
+  assumeTypes?:
     | false
     | {
         allowFixer: boolean;
-      }
+      };
+  allowTypeParameters?: boolean;
   ignorePattern?: string[] | string;
 }
 ```
@@ -53,6 +54,7 @@ The default options:
 ```ts
 const defaults = {
   assumeTypes: false,
+  allowTypeParameters: false
 };
 ```
 
@@ -78,6 +80,18 @@ When set types will be assumed.
 
 This option states whether the auto fixer should be enabled for violations that are found when assuming types (violations found without assuming types will ignore this option).
 Because when assuming types, false positives may be found, it's recommended to set this option to `false`.
+
+### `allowTypeParameters`
+
+This option is only useful when using TypeScript. This rule doesn’t inspect type parameters when calling generic function with one ore more type parameters by default.
+
+```ts
+function foo<T>() {}
+const bar = () => foo<string>();
+```
+
+This example causes a problem to be reported when `allowTypeParameters` is `false`.
+Setting `allowTypeParameters` to `true` will allow functions to call another function while specifying the type parameters.
 
 ### `ignorePattern`
 

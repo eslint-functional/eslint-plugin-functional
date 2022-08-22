@@ -34,6 +34,7 @@ type Options = readonly [
         | Readonly<{
             allowFixer: boolean;
           }>;
+      allowTypeParameters: boolean;
     }>
 ];
 
@@ -64,6 +65,9 @@ const schema: JSONSchema4 = [
           },
         ],
       },
+      allowTypeParameters: {
+        type: "boolean",
+      },
     }),
     additionalProperties: false,
   },
@@ -75,6 +79,7 @@ const schema: JSONSchema4 = [
 const defaultOptions: Options = [
   {
     assumeTypes: false,
+    allowTypeParameters: false,
   },
 ];
 
@@ -150,7 +155,15 @@ function getCallDescriptors(
   options: Options,
   caller: ReadonlyDeep<TSESTree.CallExpression>
 ): Array<ReadonlyDeep<TSESLint.ReportDescriptor<keyof typeof errorMessages>>> {
-  const [{ assumeTypes }] = options;
+  const [{ assumeTypes, allowTypeParameters }] = options;
+
+  if (
+    allowTypeParameters &&
+    caller.typeParameters !== undefined &&
+    caller.typeParameters.params.length > 0
+  ) {
+    return [];
+  }
 
   if (
     isIdentifier(caller.callee) &&

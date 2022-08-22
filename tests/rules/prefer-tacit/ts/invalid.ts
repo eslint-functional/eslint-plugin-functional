@@ -105,6 +105,26 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       },
     ],
   },
+  // Type parameters when allowTypeParameters is false
+  {
+    code: dedent`
+      function f<T>(x: T): T {}
+      const foo = x => f<number>(x);
+    `,
+    optionsSet: [[{ allowTypeParameters: false }]],
+    output: dedent`
+      function f<T>(x: T): T {}
+      const foo = f;
+    `,
+    errors: [
+      {
+        messageId: "generic",
+        type: "ArrowFunctionExpression",
+        line: 2,
+        column: 13,
+      },
+    ],
+  },
 ];
 
 export default tests;

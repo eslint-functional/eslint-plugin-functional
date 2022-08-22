@@ -36,6 +36,14 @@ const tests: ReadonlyArray<ValidTestCase> = [
     `,
     optionsSet: [[]],
   },
+  // Type parameters when allowTypeParameters is false
+  {
+    code: dedent`
+      function f<T>(x: T): T {}
+      const foo = x => f<number>(x);
+    `,
+    optionsSet: [[{ allowTypeParameters: true }]],
+  },
 ];
 
 export default tests;
