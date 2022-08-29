@@ -141,15 +141,35 @@ type FunctionNode =
   | ReadonlyDeep<TSESTree.FunctionDeclaration>
   | ReadonlyDeep<TSESTree.FunctionExpression>;
 
+function fixFunctionCallToReference(
+  fixer: TSESLint.RuleFixer,
+  node: FunctionNode,
+  caller: ReadonlyDeep<TSESTree.CallExpression>,
+  callee: ReadonlyDeep<TSESTree.Identifier>
+): TSESLint.RuleFix[] {
+  const calleeName = callee.name;
+
+  if (
+    caller.typeParameters !== undefined &&
+    caller.typeParameters.params.length > 0
+  ) {
+    return [
+      fixer.removeRange([node.range[0], callee.range[0]]),
+      fixer.removeRange([caller.typeParameters.range[1], node.range[1]]),
+    ];
+  }
+
+  return [fixer.replaceText(node as TSESTree.Node, calleeName)];
+}
+
 /**
  * Creates the fixer function that returns the instruction how to fix violations of this rule to valid code
  */
 function buildFixer(
   node: FunctionNode,
+  caller: ReadonlyDeep<TSESTree.CallExpression>,
   callee: ReadonlyDeep<TSESTree.Identifier>
 ): TSESLint.ReportFixFunction {
-  const calleeName = callee.name;
-
   return (fixer) => {
     if (node.type === "FunctionDeclaration") {
       if (node.id === null) {
@@ -162,11 +182,11 @@ function buildFixer(
           `const ${node.id.name} = `
         ),
         fixer.insertTextAfter(node as TSESTree.Node, `;`),
-        fixer.replaceText(node as TSESTree.Node, calleeName),
+        ...fixFunctionCallToReference(fixer, node, caller, callee),
       ];
     }
 
-    return fixer.replaceText(node as TSESTree.Node, calleeName);
+    return fixFunctionCallToReference(fixer, node, caller, callee);
   };
 }
 
@@ -214,7 +234,7 @@ function getCallDescriptors(
             // Unless user specifies they want it.
             (typeof assumeTypes === "object" && !assumeTypes.allowFixer)
               ? null
-              : buildFixer(node, caller.callee),
+              : buildFixer(node, caller, caller.callee),
         },
       ];
     }
