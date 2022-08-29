@@ -136,14 +136,45 @@ function isCallerViolation(
   );
 }
 
+type FunctionNode =
+  | ReadonlyDeep<TSESTree.ArrowFunctionExpression>
+  | ReadonlyDeep<TSESTree.FunctionDeclaration>
+  | ReadonlyDeep<TSESTree.FunctionExpression>;
+
+/**
+ * Creates the fixer function that returns the instruction how to fix violations of this rule to valid code
+ */
+function buildFixer(
+  node: FunctionNode,
+  callee: ReadonlyDeep<TSESTree.Identifier>
+): TSESLint.ReportFixFunction {
+  const calleeName = callee.name;
+
+  return (fixer) => {
+    if (node.type === "FunctionDeclaration") {
+      if (node.id === null) {
+        return [];
+      }
+
+      return [
+        fixer.insertTextBefore(
+          node as TSESTree.Node,
+          `const ${node.id.name} = `
+        ),
+        fixer.insertTextAfter(node as TSESTree.Node, `;`),
+        fixer.replaceText(node as TSESTree.Node, calleeName),
+      ];
+    }
+
+    return fixer.replaceText(node as TSESTree.Node, calleeName);
+  };
+}
+
 /**
  * Check for violations based on the given caller.
  */
 function getCallDescriptors(
-  node:
-    | ReadonlyDeep<TSESTree.ArrowFunctionExpression>
-    | ReadonlyDeep<TSESTree.FunctionDeclaration>
-    | ReadonlyDeep<TSESTree.FunctionExpression>,
+  node: FunctionNode,
   context: ReadonlyDeep<
     TSESLint.RuleContext<keyof typeof errorMessages, Options>
   >,
@@ -173,7 +204,6 @@ function getCallDescriptors(
       assumingTypes ||
       (calleeType !== null && isCallerViolation(caller, calleeType, context))
     ) {
-      const calleeName = caller.callee.name;
       return [
         {
           node,
@@ -184,7 +214,7 @@ function getCallDescriptors(
             // Unless user specifies they want it.
             (typeof assumeTypes === "object" && !assumeTypes.allowFixer)
               ? null
-              : (fixer) => fixer.replaceText(node as TSESTree.Node, calleeName),
+              : buildFixer(node, caller.callee),
         },
       ];
     }
@@ -197,10 +227,7 @@ function getCallDescriptors(
  * Check for violations in the form: `x => f(x)`.
  */
 function getDirectCallDescriptors(
-  node:
-    | ReadonlyDeep<TSESTree.ArrowFunctionExpression>
-    | ReadonlyDeep<TSESTree.FunctionDeclaration>
-    | ReadonlyDeep<TSESTree.FunctionExpression>,
+  node: FunctionNode,
   context: ReadonlyDeep<
     TSESLint.RuleContext<keyof typeof errorMessages, Options>
   >,
@@ -216,10 +243,7 @@ function getDirectCallDescriptors(
  * Check for violations in the form: `x => { return f(x); }`.
  */
 function getNestedCallDescriptors(
-  node:
-    | ReadonlyDeep<TSESTree.ArrowFunctionExpression>
-    | ReadonlyDeep<TSESTree.FunctionDeclaration>
-    | ReadonlyDeep<TSESTree.FunctionExpression>,
+  node: FunctionNode,
   context: ReadonlyDeep<
     TSESLint.RuleContext<keyof typeof errorMessages, Options>
   >,
@@ -246,10 +270,7 @@ function getNestedCallDescriptors(
  * Check if the given function node violates this rule.
  */
 function checkFunction(
-  node:
-    | ReadonlyDeep<TSESTree.ArrowFunctionExpression>
-    | ReadonlyDeep<TSESTree.FunctionDeclaration>
-    | ReadonlyDeep<TSESTree.FunctionExpression>,
+  node: FunctionNode,
   context: ReadonlyDeep<
     TSESLint.RuleContext<keyof typeof errorMessages, Options>
   >,

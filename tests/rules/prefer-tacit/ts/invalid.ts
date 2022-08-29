@@ -23,6 +23,45 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       },
     ],
   },
+  {
+    code: dedent`
+      function f(x) {}
+      function foo(x) { return f(x); }
+    `,
+    optionsSet: [[]],
+    output: dedent`
+      function f(x) {}
+      const foo = f;
+    `,
+    errors: [
+      {
+        messageId: "generic",
+        type: "FunctionDeclaration",
+        line: 2,
+        column: 1,
+      },
+    ],
+  },
+  // FunctionDeclaration without name
+  {
+    code: dedent`
+      function f(x) {}
+      export default function (x) { return f(x); }
+    `,
+    optionsSet: [[]],
+    output: dedent`
+      function f(x) {}
+      export default function (x) { return f(x); }
+    `,
+    errors: [
+      {
+        messageId: "generic",
+        type: "FunctionDeclaration",
+        line: 2,
+        column: 16,
+      },
+    ],
+  },
   // FunctionExpression.
   {
     code: dedent`
