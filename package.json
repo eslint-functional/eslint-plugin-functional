@@ -61,6 +61,9 @@
     "test-work": "ONLY_TEST_WORK_FILE=1 ava",
     "verify": "yarn build && yarn lint && yarn build-tests && yarn test-compiled && rimraf build"
   },
+  "resolutions": {
+    "npm/chalk": "^4.1.2"
+  },
   "dependencies": {
     "@typescript-eslint/utils": "^5.10.2",
     "deepmerge-ts": "^4.0.3",
