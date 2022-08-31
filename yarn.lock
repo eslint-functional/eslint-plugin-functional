@@ -1739,6 +1739,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/semver@npm:^7.3.12":
+  version: 7.3.12
+  resolution: "@types/semver@npm:7.3.12"
+  checksum: 35536b2fc5602904f21cae681f6c9498e177dab3f54ae37c92f9a1b7e43c35f18bcd81e1c98c1cf0d33ee046bb06c771e9928c1c00a401d56a03f56549252a15
+  languageName: node
+  linkType: hard
+
 "@types/unist@npm:*, @types/unist@npm:^2.0.2":
   version: 2.0.6
   resolution: "@types/unist@npm:2.0.6"
@@ -4091,6 +4098,7 @@ __metadata:
     "@types/estree": ^0.0.51
     "@types/node": 18.0.0
     "@types/rollup-plugin-auto-external": ^2.0.2
+    "@types/semver": ^7.3.12
     "@typescript-eslint/eslint-plugin": ^5.10.2
     "@typescript-eslint/parser": ^5.10.2
     "@typescript-eslint/utils": ^5.10.2
@@ -4135,6 +4143,7 @@ __metadata:
     rollup: ^2.67.0
     rollup-plugin-auto-external: ^2.0.0
     semantic-release: ^19.0.2
+    semver: ^7.3.7
     ts-node: ^10.4.0
     tsc-prog: ^2.2.1
     tsconfig-paths: ^3.12.0

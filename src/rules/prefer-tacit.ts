@@ -1,11 +1,13 @@
 import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { deepmerge } from "deepmerge-ts";
 import type { JSONSchema4 } from "json-schema";
+import * as semver from "semver";
 import type { ReadonlyDeep } from "type-fest";
 import type { FunctionLikeDeclaration, Type } from "typescript";
 
 import type { IgnorePatternOption } from "~/common/ignore-options";
 import { ignorePatternOptionSchema } from "~/common/ignore-options";
+import ts from "~/conditional-imports/typescript";
 import type { RuleResult } from "~/util/rule";
 import { createRule, getESTreeNode, getTypeOfNode } from "~/util/rule";
 import {
@@ -100,6 +102,15 @@ const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
 };
 
 /**
+ * Is the version of TypeScript being used 4.7 or newer?
+ */
+const isTS4dot7 =
+  ts !== undefined &&
+  semver.satisfies(ts.version, `>= 4.7.0 || >= 4.7.1-rc || >= 4.7.0-beta`, {
+    includePrerelease: true,
+  });
+
+/**
  * From the callee's type, does it follow that the caller violates this rule.
  */
 function isCallerViolation(
@@ -146,17 +157,20 @@ function fixFunctionCallToReference(
   node: FunctionNode,
   caller: ReadonlyDeep<TSESTree.CallExpression>,
   callee: ReadonlyDeep<TSESTree.Identifier>
-): TSESLint.RuleFix[] {
+): TSESLint.RuleFix[] | null {
   const calleeName = callee.name;
 
+  // Fix to Instantiation Expression.
   if (
     caller.typeParameters !== undefined &&
     caller.typeParameters.params.length > 0
   ) {
-    return [
-      fixer.removeRange([node.range[0], callee.range[0]]),
-      fixer.removeRange([caller.typeParameters.range[1], node.range[1]]),
-    ];
+    return isTS4dot7
+      ? [
+          fixer.removeRange([node.range[0], callee.range[0]]),
+          fixer.removeRange([caller.typeParameters.range[1], node.range[1]]),
+        ]
+      : null;
   }
 
   return [fixer.replaceText(node as TSESTree.Node, calleeName)];
@@ -171,9 +185,19 @@ function buildFixer(
   callee: ReadonlyDeep<TSESTree.Identifier>
 ): TSESLint.ReportFixFunction {
   return (fixer) => {
+    const functionCallToReference = fixFunctionCallToReference(
+      fixer,
+      node,
+      caller,
+      callee
+    );
+    if (functionCallToReference === null) {
+      return null;
+    }
+
     if (node.type === "FunctionDeclaration") {
       if (node.id === null) {
-        return [];
+        return null;
       }
 
       return [
@@ -182,11 +206,11 @@ function buildFixer(
           `const ${node.id.name} = `
         ),
         fixer.insertTextAfter(node as TSESTree.Node, `;`),
-        ...fixFunctionCallToReference(fixer, node, caller, callee),
+        ...functionCallToReference,
       ];
     }
 
-    return fixFunctionCallToReference(fixer, node, caller, callee);
+    return functionCallToReference;
   };
 }
 

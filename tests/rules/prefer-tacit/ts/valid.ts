@@ -36,13 +36,6 @@ const tests: ReadonlyArray<ValidTestCase> = [
     `,
     optionsSet: [[]],
   },
-  // Instantiation Expression
-  {
-    code: dedent`
-      const foo = f<number>;
-    `,
-    optionsSet: [[]],
-  },
 ];
 
 export default tests;
