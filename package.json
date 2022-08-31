@@ -91,7 +91,7 @@
     "@types/semver": "^7.3.12",
     "@typescript-eslint/eslint-plugin": "^5.10.2",
     "@typescript-eslint/parser": "^5.10.2",
-    "ava": "^4.0.1",
+    "ava": "^4.3.3",
     "babel-eslint": "^10.1.0",
     "chalk": "^4.1.2",
     "codecov": "^3.8.2",
