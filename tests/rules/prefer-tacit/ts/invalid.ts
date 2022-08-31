@@ -144,6 +144,26 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       },
     ],
   },
+  // Type parameters
+  {
+    code: dedent`
+      function f<T>(x: T): T {}
+      export default function (x) { return f<number>(x); }
+    `,
+    optionsSet: [[]],
+    output: dedent`
+      function f<T>(x: T): T {}
+      export default function (x) { return f<number>(x); }
+    `,
+    errors: [
+      {
+        messageId: "generic",
+        type: "FunctionDeclaration",
+        line: 2,
+        column: 16,
+      },
+    ],
+  },
 ];
 
 export default tests;
