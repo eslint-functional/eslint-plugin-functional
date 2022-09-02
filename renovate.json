@@ -1,0 +1,47 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:base", "schedule:monthly"],
+  "postUpdateOptions": ["yarnDedupeHighest"],
+  "labels": ["Type: Maintenance", ":blue_heart:"],
+  "automerge": true,
+  "automergeStrategy": "rebase",
+  "semanticCommits": "enabled",
+  "prHourlyLimit": 0,
+  "prConcurrentLimit": 0,
+  "major": {
+    "automerge": false
+  },
+  "packageRules": [
+    {
+      "groupName": "dependencies",
+      "matchManagers": ["npm"],
+      "matchDepTypes": ["dependencies"],
+      "rangeStrategy": "update-lockfile",
+      "semanticCommitType": "build",
+      "semanticCommitScope": "deps"
+    },
+    {
+      "groupName": "devDependencies",
+      "matchManagers": ["npm"],
+      "matchDepTypes": ["devDependencies"],
+      "rangeStrategy": "update-lockfile",
+      "semanticCommitType": "build",
+      "semanticCommitScope": "dev-deps"
+    },
+    {
+      "groupName": "github actions",
+      "matchManagers": ["github-actions"],
+      "rangeStrategy": "replace",
+      "semanticCommitType": "ci",
+      "semanticCommitScope": "dev-deps"
+    },
+    {
+      "matchPackageNames": ["escape-string-regexp"],
+      "allowedVersions": "<5"
+    },
+    {
+      "matchPackageNames": ["chalk"],
+      "allowedVersions": "<5"
+    }
+  ]
+}
