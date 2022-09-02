@@ -1562,10 +1562,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/estree@npm:*, @types/estree@npm:^0.0.51":
-  version: 0.0.51
-  resolution: "@types/estree@npm:0.0.51"
-  checksum: e56a3bcf759fd9185e992e7fdb3c6a5f81e8ff120e871641607581fb3728d16c811702a7d40fa5f869b7f7b4437ab6a87eb8d98ffafeee51e85bbe955932a189
+"@types/estree@npm:*, @types/estree@npm:^0.0.52":
+  version: 0.0.52
+  resolution: "@types/estree@npm:0.0.52"
+  checksum: d1cba22160e7aebf865ea0dbc30807bee272fdafdb57d8dd25749f4b312cd9a99e9e933340b7b26284d7a47c8805aba43bb46cf5f1df00cdaaec67bbdc894d4a
   languageName: node
   linkType: hard
 
@@ -3997,7 +3997,7 @@ __metadata:
     "@semantic-release/release-notes-generator": ^10.0.3
     "@types/dedent": ^0.7.0
     "@types/eslint": ^8.4.1
-    "@types/estree": ^0.0.51
+    "@types/estree": ^0.0.52
     "@types/node": 18.0.0
     "@types/rollup-plugin-auto-external": ^2.0.2
     "@types/semver": ^7.3.12
