@@ -12,6 +12,9 @@ jobs:
     outputs:
       should_skip: ${{ steps.skip_check.outputs.should_skip }}
     steps:
+      - name: Actor
+        run: echo "${{ github.actor }}"
+
       - name: Skip Duplicate Actions
         id: skip_check
         uses: fkirc/skip-duplicate-actions@v4.0.0
