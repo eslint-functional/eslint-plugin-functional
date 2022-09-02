@@ -6,6 +6,8 @@ on:
 
 jobs:
   pre_job:
+    # Don't run for dependabot, wait for the dependabot-fix
+    if: github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
     outputs:
       should_skip: ${{ steps.skip_check.outputs.should_skip }}

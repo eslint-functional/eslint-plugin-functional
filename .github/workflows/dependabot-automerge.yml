@@ -5,7 +5,7 @@ on:
 
 jobs:
   automerge:
-    if: github.actor == 'dependabot[bot]'
+    if: github.actor == 'dependabot-fix[bot]'
     runs-on: ubuntu-latest
     steps:
       - name: Wait for status checks
