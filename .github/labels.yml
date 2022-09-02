@@ -107,7 +107,7 @@
 # Bots
 - name: ":blue_heart:"
   color: ffffff
-  description: "Dependabot"
+  description: "Renovate"
 - name: "Status: Released"
   color: c2e0c6
   description: "It's now live."
