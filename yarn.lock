@@ -1798,6 +1798,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@typescript-eslint/scope-manager@npm:5.36.1":
+  version: 5.36.1
+  resolution: "@typescript-eslint/scope-manager@npm:5.36.1"
+  dependencies:
+    "@typescript-eslint/types": 5.36.1
+    "@typescript-eslint/visitor-keys": 5.36.1
+  checksum: c46497226af75baed7458838ec0bfbddf19f8084115d78b915b46a8ceb4c05619ac61da127dfd3c8ee11bc916896d57bf8b9f936b0306ce69658160f910e3ad0
+  languageName: node
+  linkType: hard
+
 "@typescript-eslint/type-utils@npm:5.30.7":
   version: 5.30.7
   resolution: "@typescript-eslint/type-utils@npm:5.30.7"
@@ -1832,6 +1842,13 @@ __metadata:
   version: 5.30.7
   resolution: "@typescript-eslint/types@npm:5.30.7"
   checksum: 2f6345bf0e2e9f392c1f62a5f96c630d4565574230a000508d923444229e51c1a05e07cef042935ca30f4f35755dbf3871b8b9da808911f578d63e6a4b897b79
+  languageName: node
+  linkType: hard
+
+"@typescript-eslint/types@npm:5.36.1":
+  version: 5.36.1
+  resolution: "@typescript-eslint/types@npm:5.36.1"
+  checksum: 10c8965c64e16bc6920dc0c62aae2b139062aca945d03df2ad6fe7c299d2faa684621d571f8d9807a67643d4e9fa5217c69d5f538f9936fc757f9df5ded57623
   languageName: node
   linkType: hard
 
@@ -1889,6 +1906,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@typescript-eslint/typescript-estree@npm:5.36.1":
+  version: 5.36.1
+  resolution: "@typescript-eslint/typescript-estree@npm:5.36.1"
+  dependencies:
+    "@typescript-eslint/types": 5.36.1
+    "@typescript-eslint/visitor-keys": 5.36.1
+    debug: ^4.3.4
+    globby: ^11.1.0
+    is-glob: ^4.0.3
+    semver: ^7.3.7
+    tsutils: ^3.21.0
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: acaf2938001673918dbbe690a353cf92e2cfabc79f74cd5946e303a8c24eb9c08ae2053dd261810ed0c9c471ebe879f386564c1b01dd2504dc84f4ce5f4dc696
+  languageName: node
+  linkType: hard
+
 "@typescript-eslint/utils@npm:5.10.2":
   version: 5.10.2
   resolution: "@typescript-eslint/utils@npm:5.10.2"
@@ -1905,7 +1940,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/utils@npm:5.30.7, @typescript-eslint/utils@npm:^5.10.2":
+"@typescript-eslint/utils@npm:5.30.7":
   version: 5.30.7
   resolution: "@typescript-eslint/utils@npm:5.30.7"
   dependencies:
@@ -1918,6 +1953,22 @@ __metadata:
   peerDependencies:
     eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
   checksum: 77b0baf069f70290214294d74fdf7c46a7ddeab322ef53f65766b0c8e59f0e6f8074beb19233be34faca5beb390ac1b932dd1c983337355674c4437b4b1e2b44
+  languageName: node
+  linkType: hard
+
+"@typescript-eslint/utils@npm:^5.10.2":
+  version: 5.36.1
+  resolution: "@typescript-eslint/utils@npm:5.36.1"
+  dependencies:
+    "@types/json-schema": ^7.0.9
+    "@typescript-eslint/scope-manager": 5.36.1
+    "@typescript-eslint/types": 5.36.1
+    "@typescript-eslint/typescript-estree": 5.36.1
+    eslint-scope: ^5.1.1
+    eslint-utils: ^3.0.0
+  peerDependencies:
+    eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
+  checksum: 77853d526af86ac508d7938916046ed4ad6374c7414981064c5122a2baa96fa234751137f481ac264a07387fd4dcec1cd26b33e29732cc58e855aae77a001d7c
   languageName: node
   linkType: hard
 
@@ -1948,6 +1999,16 @@ __metadata:
     "@typescript-eslint/types": 5.30.7
     eslint-visitor-keys: ^3.3.0
   checksum: f322972aeda3143d4c24826436357937131f7fbad102d48cfa6dfca70ac245f93b20cf7beb5f1809bda4fe8f454676a6cabf8f73e39af6724076f2b2c213ee80
+  languageName: node
+  linkType: hard
+
+"@typescript-eslint/visitor-keys@npm:5.36.1":
+  version: 5.36.1
+  resolution: "@typescript-eslint/visitor-keys@npm:5.36.1"
+  dependencies:
+    "@typescript-eslint/types": 5.36.1
+    eslint-visitor-keys: ^3.3.0
+  checksum: 45ab7c2fd455a8e4beff418bed6c9e7e1f9f66bcaad3bfaed868f97a3f8cfec1fa4faa45948af1a1c32ce573a7b1c6d10427119c257622445b06b488fefd8b49
   languageName: node
   linkType: hard
 
@@ -3501,11 +3562,9 @@ __metadata:
   linkType: hard
 
 "deepmerge-ts@npm:^4.0.3":
-  version: 4.0.3
-  resolution: "deepmerge-ts@npm:4.0.3"
-  dependencies:
-    is-plain-object: ^5.0.0
-  checksum: 4973705394bcbf13f896942491366b16b9776a1484c60f827e56fd2fa2327dc1f9634d00a5ac321a17c8099427890dcfb406fa216ba406644107281ed79a1e86
+  version: 4.2.1
+  resolution: "deepmerge-ts@npm:4.2.1"
+  checksum: 5fb2f4a6b0f2a637992ba226cb89c28b081575489f1adfcd6789d95bdfb5b8236c8c5aafc02e645fd04f16101bf7c3f3e7c58e523579c635649eb36cb113a3bb
   languageName: node
   linkType: hard
 
