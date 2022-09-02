@@ -1,6 +1,30 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:base"
+  "extends": ["config:base", "schedule:monthly"],
+  "postUpdateOptions": ["yarnDedupeHighest"],
+  "labels": ["Type: Maintenance", ":blue_heart:"],
+  "automerge": true,
+  "automergeStrategy": "rebase",
+  "semanticCommits": "enabled",
+  "semanticCommitType": "build",
+  "packageRules": [
+    {
+      "groupName": "dependencies",
+      "matchManagers": ["npm"],
+      "matchDepTypes": ["dependencies"],
+      "semanticCommitScope": "deps"
+    },
+    {
+      "groupName": "devDependencies",
+      "matchManagers": ["npm"],
+      "matchDepTypes": ["devDependencies"],
+      "semanticCommitScope": "dev-deps"
+    },
+    {
+      "groupName": "github actions",
+      "matchManagers": ["github-actions"],
+      "semanticCommitType": "ci",
+      "semanticCommitScope": "dev-deps"
+    }
   ]
 }
