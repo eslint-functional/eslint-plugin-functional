@@ -5,7 +5,9 @@ on:
 
 jobs:
   automerge:
-    if: github.actor == 'dependabot[bot]'
+    if: |
+      github.event.head_commit.author.name == 'dependabot-fix[bot]' &&
+      contains(github.event.pull_request.head.ref, 'dependabot/npm_and_yarn/')
     runs-on: ubuntu-latest
     steps:
       - name: Wait for status checks
