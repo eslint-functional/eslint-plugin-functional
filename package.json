@@ -122,7 +122,7 @@
     "eslint-plugin-tsdoc": "^0.2.14",
     "eslint-plugin-unicorn": "^40.1.0",
     "espree": "^9.3.0",
-    "husky": "^7.0.4",
+    "husky": "^8.0.0",
     "json-schema": "^0.4.0",
     "jsonc-parser": "^3.0.0",
     "lint-staged": "^12.3.3",
