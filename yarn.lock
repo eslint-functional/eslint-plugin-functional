@@ -3876,14 +3876,14 @@ __metadata:
   linkType: hard
 
 "eslint-plugin-eslint-plugin@npm:^4.1.0":
-  version: 4.2.0
-  resolution: "eslint-plugin-eslint-plugin@npm:4.2.0"
+  version: 4.4.1
+  resolution: "eslint-plugin-eslint-plugin@npm:4.4.1"
   dependencies:
     eslint-utils: ^3.0.0
     estraverse: ^5.2.0
   peerDependencies:
     eslint: ">=6.0.0"
-  checksum: 753bb131b0c7297528e345af9e5fe39c9fc53dc84d91a9acbe078ea16ed15cd41cb7b2e78a13d20ef270bc6b33fc0e09d80e6231acfa9e46286b8a7d144c4660
+  checksum: 01af66aae1f9f34401459d3397c044f4f474a36b91e3c92c6108e72f5379c4ad8b477d2044f59f82123839de9617fa56a88d718eb911ebeb38f6c506de3d1aea
   languageName: node
   linkType: hard
 
