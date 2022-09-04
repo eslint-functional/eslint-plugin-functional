@@ -5,6 +5,7 @@
   "labels": ["Type: Maintenance", ":blue_heart:"],
   "automerge": true,
   "automergeStrategy": "rebase",
+  "platformAutomerge": true,
   "semanticCommits": "enabled",
   "prHourlyLimit": 0,
   "prConcurrentLimit": 0,
