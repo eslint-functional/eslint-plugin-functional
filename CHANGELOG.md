@@ -13,6 +13,18 @@ All notable changes to this project will be documented in this file. Dates are d
 
 * **prefer-tacit:** support autofixing function calls with type parameters ([#415](https://github.com/eslint-functional/eslint-plugin-functional/issues/415)) ([e752ced](https://github.com/eslint-functional/eslint-plugin-functional/commit/e752ced76ca0df54bc03f7d6d4fec59fe694c759))
 
+# [4.3.0](https://github.com/eslint-functional/eslint-plugin-functional/compare/v4.2.2...v4.3.0) (2022-09-06)
+
+
+### Bug Fixes
+
+* **prefer-tacit:** assign callee to a new variable when autofixing function declarations ([4467d1b](https://github.com/eslint-functional/eslint-plugin-functional/commit/4467d1b98eb15852ea86db7db31bde7193f3055d))
+
+
+### Features
+
+* **prefer-tacit:** support autofixing function calls with type parameters ([#415](https://github.com/eslint-functional/eslint-plugin-functional/issues/415)) ([e752ced](https://github.com/eslint-functional/eslint-plugin-functional/commit/e752ced76ca0df54bc03f7d6d4fec59fe694c759))
+
 # [4.3.0](https://github.com/eslint-functional/eslint-plugin-functional/compare/v4.2.2...v4.3.0) (2022-09-05)
 
 
