@@ -1311,6 +1311,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pkgr/utils@npm:^2.3.1":
+  version: 2.3.1
+  resolution: "@pkgr/utils@npm:2.3.1"
+  dependencies:
+    cross-spawn: ^7.0.3
+    is-glob: ^4.0.3
+    open: ^8.4.0
+    picocolors: ^1.0.0
+    tiny-glob: ^0.2.9
+    tslib: ^2.4.0
+  checksum: 118a1971120253740121a1db0a6658c21195b7da962acf9c124b507a3df707cfc97b0b84a16edcbd4352853b182e8337da9fc6e8e3d06c60d75ae4fb42321c75
+  languageName: node
+  linkType: hard
+
 "@rebeccastevens/eslint-config@npm:1.3.0":
   version: 1.3.0
   resolution: "@rebeccastevens/eslint-config@npm:1.3.0"
@@ -3414,6 +3428,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"define-lazy-prop@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "define-lazy-prop@npm:2.0.0"
+  checksum: 0115fdb065e0490918ba271d7339c42453d209d4cb619dfe635870d906731eff3e1ade8028bb461ea27ce8264ec5e22c6980612d332895977e89c1bbc80fcee2
+  languageName: node
+  linkType: hard
+
 "define-properties@npm:^1.1.3":
   version: 1.1.3
   resolution: "define-properties@npm:1.1.3"
@@ -3598,6 +3619,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"enhanced-resolve@npm:^5.10.0":
+  version: 5.10.0
+  resolution: "enhanced-resolve@npm:5.10.0"
+  dependencies:
+    graceful-fs: ^4.2.4
+    tapable: ^2.2.0
+  checksum: 0bb9830704db271610f900e8d79d70a740ea16f251263362b0c91af545576d09fe50103496606c1300a05e588372d6f9780a9bc2e30ce8ef9b827ec8f44687ff
+  languageName: node
+  linkType: hard
+
 "entities@npm:~3.0.1":
   version: 3.0.1
   resolution: "entities@npm:3.0.1"
@@ -3749,19 +3780,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-import-resolver-typescript@npm:^2.5.0":
-  version: 2.7.1
-  resolution: "eslint-import-resolver-typescript@npm:2.7.1"
+"eslint-import-resolver-typescript@npm:^3.0.0":
+  version: 3.5.0
+  resolution: "eslint-import-resolver-typescript@npm:3.5.0"
   dependencies:
     debug: ^4.3.4
-    glob: ^7.2.0
+    enhanced-resolve: ^5.10.0
+    get-tsconfig: ^4.2.0
+    globby: ^13.1.2
+    is-core-module: ^2.10.0
     is-glob: ^4.0.3
-    resolve: ^1.22.0
-    tsconfig-paths: ^3.14.1
+    synckit: ^0.8.3
   peerDependencies:
     eslint: "*"
     eslint-plugin-import: "*"
-  checksum: 1d81b657b1f73bf95b8f0b745c0305574b91630c1db340318f3ca8918e206fce20a933b95e7c419338cc4452cb80bb2b2d92acaf01b6aa315c78a332d832545c
+  checksum: 9719d1f68b7bb0eaf8939cff2d3b02b526949f73db744877de781640650dd4d0a17d934222b9ac69e27d9f363ee4569c1aa1a2a2aab6500257517f9bf7d25976
   languageName: node
   linkType: hard
 
@@ -3891,7 +3924,7 @@ __metadata:
     eslint: ^8.8.0
     eslint-ava-rule-tester: ^4.0.0
     eslint-config-prettier: ^8.3.0
-    eslint-import-resolver-typescript: ^2.5.0
+    eslint-import-resolver-typescript: ^3.0.0
     eslint-plugin-ava: ^13.2.0
     eslint-plugin-eslint-comments: ^3.2.0
     eslint-plugin-eslint-plugin: ^5.0.0
@@ -4762,6 +4795,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"get-tsconfig@npm:^4.2.0":
+  version: 4.2.0
+  resolution: "get-tsconfig@npm:4.2.0"
+  checksum: dfae3520bee20b71a651fdc93fd29901013dfc4df9fb41a423cf3efb4468c79087ef9d3bc3d0625b6486397730991d2a749eed4985d8ab411f481319c3e931e5
+  languageName: node
+  linkType: hard
+
 "git-log-parser@npm:^1.2.0":
   version: 1.2.0
   resolution: "git-log-parser@npm:1.2.0"
@@ -4885,6 +4925,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"globalyzer@npm:0.1.0":
+  version: 0.1.0
+  resolution: "globalyzer@npm:0.1.0"
+  checksum: 419a0f95ba542534fac0842964d31b3dc2936a479b2b1a8a62bad7e8b61054faa9b0a06ad9f2e12593396b9b2621cac93358d9b3071d33723fb1778608d358a1
+  languageName: node
+  linkType: hard
+
 "globby@npm:^11.0.0, globby@npm:^11.0.1, globby@npm:^11.1.0":
   version: 11.1.0
   resolution: "globby@npm:11.1.0"
@@ -4899,7 +4946,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"globby@npm:^13.1.1":
+"globby@npm:^13.1.1, globby@npm:^13.1.2":
   version: 13.1.2
   resolution: "globby@npm:13.1.2"
   dependencies:
@@ -4909,6 +4956,13 @@ __metadata:
     merge2: ^1.4.1
     slash: ^4.0.0
   checksum: c148fcda0c981f00fb434bb94ca258f0a9d23cedbde6fb3f37098e1abde5b065019e2c63fe2aa2fad4daf2b54bf360b4d0423d85fb3a63d09ed75a2837d4de0f
+  languageName: node
+  linkType: hard
+
+"globrex@npm:^0.1.2":
+  version: 0.1.2
+  resolution: "globrex@npm:0.1.2"
+  checksum: adca162494a176ce9ecf4dd232f7b802956bb1966b37f60c15e49d2e7d961b66c60826366dc2649093cad5a0d69970cfa8875bd1695b5a1a2f33dcd2aa88da3c
   languageName: node
   linkType: hard
 
@@ -5444,12 +5498,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-core-module@npm:^2.1.0, is-core-module@npm:^2.5.0, is-core-module@npm:^2.8.1":
-  version: 2.9.0
-  resolution: "is-core-module@npm:2.9.0"
+"is-core-module@npm:^2.1.0, is-core-module@npm:^2.10.0, is-core-module@npm:^2.5.0, is-core-module@npm:^2.8.1":
+  version: 2.10.0
+  resolution: "is-core-module@npm:2.10.0"
   dependencies:
     has: ^1.0.3
-  checksum: b27034318b4b462f1c8f1dfb1b32baecd651d891a4e2d1922135daeff4141dfced2b82b07aef83ef54275c4a3526aa38da859223664d0868ca24182badb784ce
+  checksum: 0f3f77811f430af3256fa7bbc806f9639534b140f8ee69476f632c3e1eb4e28a38be0b9d1b8ecf596179c841b53576129279df95e7051d694dac4ceb6f967593
   languageName: node
   linkType: hard
 
@@ -5464,6 +5518,15 @@ __metadata:
   version: 1.0.4
   resolution: "is-decimal@npm:1.0.4"
   checksum: ed483a387517856dc395c68403a10201fddcc1b63dc56513fbe2fe86ab38766120090ecdbfed89223d84ca8b1cd28b0641b93cb6597b6e8f4c097a7c24e3fb96
+  languageName: node
+  linkType: hard
+
+"is-docker@npm:^2.0.0, is-docker@npm:^2.1.1":
+  version: 2.2.1
+  resolution: "is-docker@npm:2.2.1"
+  bin:
+    is-docker: cli.js
+  checksum: 3fef7ddbf0be25958e8991ad941901bf5922ab2753c46980b60b05c1bf9c9c2402d35e6dc32e4380b980ef5e1970a5d9d5e5aa2e02d77727c3b6b5e918474c56
   languageName: node
   linkType: hard
 
@@ -5705,6 +5768,15 @@ __metadata:
   version: 1.0.2
   resolution: "is-windows@npm:1.0.2"
   checksum: 438b7e52656fe3b9b293b180defb4e448088e7023a523ec21a91a80b9ff8cdb3377ddb5b6e60f7c7de4fa8b63ab56e121b6705fe081b3cf1b828b0a380009ad7
+  languageName: node
+  linkType: hard
+
+"is-wsl@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "is-wsl@npm:2.2.0"
+  dependencies:
+    is-docker: ^2.0.0
+  checksum: 20849846ae414997d290b75e16868e5261e86ff5047f104027026fd61d8b5a9b0b3ade16239f35e1a067b3c7cc02f70183cb661010ed16f4b6c7c93dad1b19d8
   languageName: node
   linkType: hard
 
@@ -7348,6 +7420,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"open@npm:^8.4.0":
+  version: 8.4.0
+  resolution: "open@npm:8.4.0"
+  dependencies:
+    define-lazy-prop: ^2.0.0
+    is-docker: ^2.1.1
+    is-wsl: ^2.2.0
+  checksum: e9545bec64cdbf30a0c35c1bdc310344adf8428a117f7d8df3c0af0a0a24c513b304916a6d9b11db0190ff7225c2d578885080b761ed46a3d5f6f1eebb98b63c
+  languageName: node
+  linkType: hard
+
 "opener@npm:*":
   version: 1.5.2
   resolution: "opener@npm:1.5.2"
@@ -7762,6 +7845,13 @@ __metadata:
   version: 4.0.0
   resolution: "path-type@npm:4.0.0"
   checksum: 5b1e2daa247062061325b8fdbfd1fb56dde0a448fb1455453276ea18c60685bdad23a445dc148cf87bc216be1573357509b7d4060494a6fd768c7efad833ee45
+  languageName: node
+  linkType: hard
+
+"picocolors@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "picocolors@npm:1.0.0"
+  checksum: a2e8092dd86c8396bdba9f2b5481032848525b3dc295ce9b57896f931e63fc16f79805144321f72976383fc249584672a75cc18d6777c6b757603f372f745981
   languageName: node
   linkType: hard
 
@@ -9019,6 +9109,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"synckit@npm:^0.8.3":
+  version: 0.8.4
+  resolution: "synckit@npm:0.8.4"
+  dependencies:
+    "@pkgr/utils": ^2.3.1
+    tslib: ^2.4.0
+  checksum: 83e054fe4494dab42114fc4ed36a11b85e18742d304ade3f40d3afb4ba4145d76183adba1f29e2c36e9a0a453b93a83e2387505f96a0efd901f562927a968c44
+  languageName: node
+  linkType: hard
+
+"tapable@npm:^2.2.0":
+  version: 2.2.1
+  resolution: "tapable@npm:2.2.1"
+  checksum: 3b7a1b4d86fa940aad46d9e73d1e8739335efd4c48322cb37d073eb6f80f5281889bf0320c6d8ffcfa1a0dd5bfdbd0f9d037e252ef972aca595330538aac4d51
+  languageName: node
+  linkType: hard
+
 "tar@npm:*, tar@npm:^6.1.0, tar@npm:^6.1.11, tar@npm:^6.1.2":
   version: 6.1.11
   resolution: "tar@npm:6.1.11"
@@ -9121,6 +9228,16 @@ __metadata:
   version: 1.0.0
   resolution: "time-zone@npm:1.0.0"
   checksum: e46f5a69b8c236dcd8e91e29d40d4e7a3495ed4f59888c3f84ce1d9678e20461421a6ba41233509d47dd94bc18f1a4377764838b21b584663f942b3426dcbce8
+  languageName: node
+  linkType: hard
+
+"tiny-glob@npm:^0.2.9":
+  version: 0.2.9
+  resolution: "tiny-glob@npm:0.2.9"
+  dependencies:
+    globalyzer: 0.1.0
+    globrex: ^0.1.2
+  checksum: aea5801eb6663ddf77ebb74900b8f8bd9dfcfc9b6a1cc8018cb7421590c00bf446109ff45e4b64a98e6c95ddb1255a337a5d488fb6311930e2a95334151ec9c6
   languageName: node
   linkType: hard
 
@@ -9261,7 +9378,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.1.0, tslib@npm:^2.3.1":
+"tslib@npm:^2.1.0, tslib@npm:^2.3.1, tslib@npm:^2.4.0":
   version: 2.4.0
   resolution: "tslib@npm:2.4.0"
   checksum: 8c4aa6a3c5a754bf76aefc38026134180c053b7bd2f81338cb5e5ebf96fefa0f417bff221592bf801077f5bf990562f6264fecbc42cd3309b33872cb6fc3b113
