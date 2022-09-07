@@ -278,19 +278,19 @@ function filterScope(options: Options) {
  */
 function filterSubject(options: Options) {
   return (subject: string) => {
-    let mutableSubject = subject.trim();
+    let m_subject = subject.trim();
     if (
       !options.disableSubjectLowerCase &&
-      mutableSubject.charAt(0).toLowerCase() !== mutableSubject.charAt(0)
+      m_subject.charAt(0).toLowerCase() !== m_subject.charAt(0)
     ) {
-      mutableSubject =
-        mutableSubject.charAt(0).toLowerCase() +
-        mutableSubject.slice(1, mutableSubject.length);
+      m_subject =
+        m_subject.charAt(0).toLowerCase() +
+        m_subject.slice(1, m_subject.length);
     }
     // eslint-disable-next-line functional/no-loop-statement
-    while (mutableSubject.endsWith(".")) {
-      mutableSubject = mutableSubject.slice(0, -1);
+    while (m_subject.endsWith(".")) {
+      m_subject = m_subject.slice(0, -1);
     }
-    return mutableSubject;
+    return m_subject;
   };
 }
