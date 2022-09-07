@@ -30,7 +30,7 @@ function transpileTests() {
  */
 async function createTestsTsConfig() {
   const testsTsConfig = JSONC.parse(
-    await fs.readFile("tests/tsconfig.json", { encoding: "utf-8" })
+    await fs.readFile("tests/tsconfig.json", { encoding: "utf8" })
   );
 
   const updatedTestsTsConfig = {
@@ -45,7 +45,7 @@ async function createTestsTsConfig() {
   return fs.writeFile(
     "build/tests/tsconfig.json",
     JSON.stringify(updatedTestsTsConfig, null, 2),
-    { encoding: "utf-8" }
+    { encoding: "utf8" }
   );
 }
 
