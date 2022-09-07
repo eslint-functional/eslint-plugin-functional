@@ -44,11 +44,13 @@
     "node/no-unsupported-features/es-builtins": "off",
     "node/no-unsupported-features/es-syntax": "off",
     "promise/prefer-await-to-callbacks": "off",
+    // only available for node >= 16.8
+    "unicorn/prefer-at": "off",
     // enable once supported in all our supported node versions.
     "unicorn/prefer-node-protocol": "off",
-    // only available for node >= 16
+    // only available for node >= 15.4
     "unicorn/prefer-string-replace-all": "off",
-    // only available for node >= 16
+    // only available for node >= 14.8
     "unicorn/prefer-top-level-await": "off"
   },
   "overrides": [
@@ -89,6 +91,7 @@
         "@typescript-eslint/consistent-type-definitions": "off",
         "@typescript-eslint/dot-notation": "off",
         "@typescript-eslint/explicit-member-accessibility": "off",
+        "@typescript-eslint/naming-convention": "off",
         "@typescript-eslint/no-confusing-void-expression": "off",
         "@typescript-eslint/no-empty-function": "off",
         "@typescript-eslint/no-floating-promises": "off",
