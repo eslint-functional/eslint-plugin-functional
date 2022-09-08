@@ -1328,9 +1328,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rebeccastevens/eslint-config@npm:1.3.22":
-  version: 1.3.22
-  resolution: "@rebeccastevens/eslint-config@npm:1.3.22"
+"@rebeccastevens/eslint-config@npm:1.3.23":
+  version: 1.3.23
+  resolution: "@rebeccastevens/eslint-config@npm:1.3.23"
   dependencies:
     deepmerge-ts: ^4.0.0
   peerDependencies:
@@ -1349,7 +1349,7 @@ __metadata:
     eslint-plugin-sonarjs: "*"
     eslint-plugin-tsdoc: "*"
     eslint-plugin-unicorn: "*"
-  checksum: bb22ef6d790d95e7a4405cde9d28eb351b326d30a2ec1064bbf285ae8d3c8eabca589d4a1111ad9ddd279c6a87abbd6da67166cdd1a1cf2bceba95e28c95dead
+  checksum: 30305d84d983bade4d9cc81d285dd4d801703c1f41800747fa40c79f8275f841a021dfc0606eae8cb1b29d11c6c3e962ffa91a85fce13af1e3def02e79799803
   languageName: node
   linkType: hard
 
@@ -3901,7 +3901,7 @@ __metadata:
     "@commitlint/config-conventional": ^17.0.0
     "@google/semantic-release-replace-plugin": ^1.1.0
     "@istanbuljs/nyc-config-typescript": ^1.0.2
-    "@rebeccastevens/eslint-config": 1.3.22
+    "@rebeccastevens/eslint-config": 1.3.23
     "@rollup/plugin-commonjs": ^22.0.1
     "@rollup/plugin-json": ^4.1.0
     "@rollup/plugin-node-resolve": ^14.0.0
