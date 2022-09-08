@@ -22,7 +22,7 @@ jobs:
           node-version: "lts/*"
 
       - name: Install dependencies
-        run: yarn install --immutable
+        run: yarn install --immutable --ignore-scripts
 
       - name: Build & Verify
         run: yarn verify
