@@ -32,9 +32,6 @@ jobs:
         with:
           node-version: "lts/*"
 
-      - run: npm install -g yarn
-      - run: corepack enable
-
       - name: Install Dependencies
         run: yarn install --immutable
 
@@ -81,9 +78,6 @@ jobs:
         with:
           node-version: "16"
 
-      - run: npm install -g yarn
-      - run: corepack enable
-
       - name: Install Dependencies
         run: yarn install --immutable
 
@@ -98,9 +92,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node_version }}
-
-      - run: npm install -g yarn
-      - run: corepack enable
 
       - name: Remove Dev TypeScript
         run: yarn remove typescript

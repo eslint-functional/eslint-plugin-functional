@@ -21,9 +21,6 @@ jobs:
         with:
           node-version: "lts/*"
 
-      - run: npm install -g yarn
-      - run: corepack enable
-
       - name: Install dependencies
         run: yarn install --immutable
 
