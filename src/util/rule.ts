@@ -1,4 +1,8 @@
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import type {
+  ParserServices,
+  TSESLint,
+  TSESTree,
+} from "@typescript-eslint/utils";
 import { ESLintUtils } from "@typescript-eslint/utils";
 import type { Rule } from "eslint";
 import type { ReadonlyDeep } from "type-fest";
@@ -114,19 +118,30 @@ export function createRule<
  */
 export function getTypeOfNode<
   Context extends ReadonlyDeep<TSESLint.RuleContext<string, BaseOptions>>
->(node: ReadonlyDeep<TSESTree.Node>, context: Context): Type | null {
-  const { parserServices } = context;
+>(node: ReadonlyDeep<TSESTree.Node>, context: Context): Type | null;
+export function getTypeOfNode(
+  node: ReadonlyDeep<TSESTree.Node>,
+  parserServices: ParserServices
+): Type;
+export function getTypeOfNode<
+  Context extends ReadonlyDeep<TSESLint.RuleContext<string, BaseOptions>>
+>(
+  node: ReadonlyDeep<TSESTree.Node>,
+  contextOrServices: Context | ParserServices
+): Type | null {
+  const parserServices = isParserServices(contextOrServices)
+    ? contextOrServices
+    : getParserServices(contextOrServices);
 
-  if (
-    parserServices === undefined ||
-    parserServices.program === undefined ||
-    parserServices.esTreeNodeToTSNodeMap === undefined
-  ) {
+  if (parserServices === null) {
     return null;
   }
+
   const checker = parserServices.program.getTypeChecker();
+  const { esTreeNodeToTSNodeMap } = parserServices;
+
   const nodeType = checker.getTypeAtLocation(
-    parserServices.esTreeNodeToTSNodeMap.get(node as TSESTree.Node)
+    esTreeNodeToTSNodeMap.get(node as TSESTree.Node)
   );
   const constrained = checker.getBaseConstraintOfType(nodeType);
   return constrained ?? nodeType;
@@ -137,16 +152,55 @@ export function getTypeOfNode<
  */
 export function getESTreeNode<
   Context extends ReadonlyDeep<TSESLint.RuleContext<string, BaseOptions>>
->(
-  // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types -- ignore TS Node
+>(node: TSNode, context: Context): TSESTree.Node | null;
+export function getESTreeNode(
   node: TSNode,
-  context: Context
+  parserServices: ParserServices
+): TSESTree.Node;
+export function getESTreeNode<
+  Context extends ReadonlyDeep<TSESLint.RuleContext<string, BaseOptions>>
+>(
+  node: TSNode,
+  contextOrServices: Context | ParserServices
 ): TSESTree.Node | null {
+  const parserServices = isParserServices(contextOrServices)
+    ? contextOrServices
+    : getParserServices(contextOrServices);
+
+  if (parserServices === null) {
+    return null;
+  }
+
+  return parserServices.tsNodeToESTreeNodeMap.get(node);
+}
+
+/**
+ * Get the parser services from the given context.
+ */
+function getParserServices<
+  Context extends ReadonlyDeep<TSESLint.RuleContext<string, BaseOptions>>
+>(context: Context) {
   const { parserServices } = context;
 
-  return parserServices === undefined ||
-    parserServices.program === undefined ||
-    parserServices.tsNodeToESTreeNodeMap === undefined
-    ? null
-    : parserServices.tsNodeToESTreeNodeMap.get(node);
+  if (
+    parserServices === undefined ||
+    !parserServices.hasFullTypeInformation ||
+    parserServices.program === undefined
+  ) {
+    return null;
+  }
+
+  return parserServices;
+}
+
+/**
+ * Is the given value the parser services or just the context.
+ */
+function isParserServices<
+  Context extends ReadonlyDeep<TSESLint.RuleContext<string, BaseOptions>>
+>(
+  contextOrServices: Context | ParserServices
+): contextOrServices is ParserServices {
+  // Only context has an id property and it will always have one.
+  return !Object.prototype.hasOwnProperty.call(contextOrServices, "id");
 }
