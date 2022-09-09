@@ -3874,12 +3874,13 @@ __metadata:
   linkType: hard
 
 "eslint-plugin-functional@npm:^4.2.0":
-  version: 4.2.2
-  resolution: "eslint-plugin-functional@npm:4.2.2"
+  version: 4.3.0
+  resolution: "eslint-plugin-functional@npm:4.3.0"
   dependencies:
     "@typescript-eslint/utils": ^5.10.2
     deepmerge-ts: ^4.0.3
     escape-string-regexp: ^4.0.0
+    semver: ^7.3.7
   peerDependencies:
     eslint: ^8.0.0
     tsutils: ^3.0.0
@@ -3889,7 +3890,7 @@ __metadata:
       optional: true
     typescript:
       optional: true
-  checksum: 812ce7fe3175b5beab82841482d94c428b5f7bba965f4b98394f332b7176a455347306a9ac5c3d8b52aea627257635dd7400ebc0175828b4489cf01162ed483e
+  checksum: 7d525e385eed1e0b1bfda367d1c963f31eb214825f2afee7e243974443e82b7c8a47ce464c7947b8e78a77620acf4f05e886ea963dd6587a4e59f841246aced9
   languageName: node
   linkType: hard
 
