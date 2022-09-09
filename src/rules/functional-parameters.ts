@@ -8,6 +8,7 @@ import {
   shouldIgnorePattern,
   ignorePatternOptionSchema,
 } from "~/common/ignore-options";
+import type { ESFunction } from "~/src/util/node-types";
 import type { RuleResult } from "~/util/rule";
 import { createRule } from "~/util/rule";
 import { isIIFE, isPropertyAccess, isPropertyName } from "~/util/tree";
@@ -128,10 +129,7 @@ const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
  */
 function getRestParamViolations(
   [{ allowRestParameter }]: Options,
-  node:
-    | ReadonlyDeep<TSESTree.ArrowFunctionExpression>
-    | ReadonlyDeep<TSESTree.FunctionDeclaration>
-    | ReadonlyDeep<TSESTree.FunctionExpression>
+  node: ReadonlyDeep<ESFunction>
 ): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
   return !allowRestParameter &&
     node.params.length > 0 &&
@@ -150,10 +148,7 @@ function getRestParamViolations(
  */
 function getParamCountViolations(
   [{ enforceParameterCount }]: Options,
-  node:
-    | ReadonlyDeep<TSESTree.ArrowFunctionExpression>
-    | ReadonlyDeep<TSESTree.FunctionDeclaration>
-    | ReadonlyDeep<TSESTree.FunctionExpression>
+  node: ReadonlyDeep<ESFunction>
 ): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
   if (
     enforceParameterCount === false ||
@@ -197,10 +192,7 @@ function getParamCountViolations(
  * Check if the given function node has a reset parameter this rule.
  */
 function checkFunction(
-  node:
-    | ReadonlyDeep<TSESTree.ArrowFunctionExpression>
-    | ReadonlyDeep<TSESTree.FunctionDeclaration>
-    | ReadonlyDeep<TSESTree.FunctionExpression>,
+  node: ReadonlyDeep<ESFunction>,
   context: ReadonlyDeep<
     TSESLint.RuleContext<keyof typeof errorMessages, Options>
   >,

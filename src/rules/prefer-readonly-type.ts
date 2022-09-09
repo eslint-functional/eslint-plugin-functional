@@ -19,6 +19,7 @@ import {
   ignoreInterfaceOptionSchema,
   ignorePatternOptionSchema,
 } from "~/common/ignore-options";
+import type { ESArrayTupleType } from "~/src/util/node-types";
 import type { RuleResult } from "~/util/rule";
 import { createRule, getTypeOfNode } from "~/util/rule";
 import { isInReturnType } from "~/util/tree";
@@ -138,7 +139,7 @@ const mutableTypeRegex = new RegExp(
  * Check if the given ArrayType or TupleType violates this rule.
  */
 function checkArrayOrTupleType(
-  node: ReadonlyDeep<TSESTree.TSArrayType> | ReadonlyDeep<TSESTree.TSTupleType>,
+  node: ReadonlyDeep<ESArrayTupleType>,
   context: ReadonlyDeep<
     TSESLint.RuleContext<keyof typeof errorMessages, Options>
   >,

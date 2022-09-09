@@ -8,6 +8,7 @@ import type { FunctionLikeDeclaration, Type } from "typescript";
 import type { IgnorePatternOption } from "~/common/ignore-options";
 import { ignorePatternOptionSchema } from "~/common/ignore-options";
 import ts from "~/conditional-imports/typescript";
+import type { ESFunction } from "~/src/util/node-types";
 import type { RuleResult } from "~/util/rule";
 import { createRule, getESTreeNode, getTypeOfNode } from "~/util/rule";
 import {
@@ -147,14 +148,9 @@ function isCallerViolation(
   );
 }
 
-type FunctionNode =
-  | ReadonlyDeep<TSESTree.ArrowFunctionExpression>
-  | ReadonlyDeep<TSESTree.FunctionDeclaration>
-  | ReadonlyDeep<TSESTree.FunctionExpression>;
-
 function fixFunctionCallToReference(
   fixer: TSESLint.RuleFixer,
-  node: FunctionNode,
+  node: ESFunction,
   caller: ReadonlyDeep<TSESTree.CallExpression>,
   callee: ReadonlyDeep<TSESTree.Identifier>
 ): TSESLint.RuleFix[] | null {
@@ -180,7 +176,7 @@ function fixFunctionCallToReference(
  * Creates the fixer function that returns the instruction how to fix violations of this rule to valid code
  */
 function buildFixer(
-  node: FunctionNode,
+  node: ESFunction,
   caller: ReadonlyDeep<TSESTree.CallExpression>,
   callee: ReadonlyDeep<TSESTree.Identifier>
 ): TSESLint.ReportFixFunction {
@@ -218,7 +214,7 @@ function buildFixer(
  * Check for violations based on the given caller.
  */
 function getCallDescriptors(
-  node: FunctionNode,
+  node: ESFunction,
   context: ReadonlyDeep<
     TSESLint.RuleContext<keyof typeof errorMessages, Options>
   >,
@@ -271,7 +267,7 @@ function getCallDescriptors(
  * Check for violations in the form: `x => f(x)`.
  */
 function getDirectCallDescriptors(
-  node: FunctionNode,
+  node: ESFunction,
   context: ReadonlyDeep<
     TSESLint.RuleContext<keyof typeof errorMessages, Options>
   >,
@@ -287,7 +283,7 @@ function getDirectCallDescriptors(
  * Check for violations in the form: `x => { return f(x); }`.
  */
 function getNestedCallDescriptors(
-  node: FunctionNode,
+  node: ESFunction,
   context: ReadonlyDeep<
     TSESLint.RuleContext<keyof typeof errorMessages, Options>
   >,
@@ -314,7 +310,7 @@ function getNestedCallDescriptors(
  * Check if the given function node violates this rule.
  */
 function checkFunction(
-  node: FunctionNode,
+  node: ESFunction,
   context: ReadonlyDeep<
     TSESLint.RuleContext<keyof typeof errorMessages, Options>
   >,

@@ -1,7 +1,8 @@
-import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
+import type { ESLintUtils, TSESLint } from "@typescript-eslint/utils";
 import type { JSONSchema4 } from "json-schema";
 import type { ReadonlyDeep } from "type-fest";
 
+import type { ESClass } from "~/src/util/node-types";
 import type { RuleResult } from "~/util/rule";
 import { createRule } from "~/util/rule";
 
@@ -49,9 +50,7 @@ const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
  * Check if the given class node violates this rule.
  */
 function checkClass(
-  node:
-    | ReadonlyDeep<TSESTree.ClassDeclaration>
-    | ReadonlyDeep<TSESTree.ClassExpression>,
+  node: ReadonlyDeep<ESClass>,
   context: ReadonlyDeep<
     TSESLint.RuleContext<keyof typeof errorMessages, Options>
   >
