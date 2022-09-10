@@ -24,3 +24,13 @@ export type ESLoop =
   | TSESTree.WhileStatement;
 
 export type ESArrayTupleType = TSESTree.TSArrayType | TSESTree.TSTupleType;
+
+export type ESProperty =
+  | TSESTree.PropertyDefinition
+  | TSESTree.TSIndexSignature
+  | TSESTree.TSParameterProperty
+  | TSESTree.TSPropertySignature;
+
+export type ESTypeDeclaration =
+  | TSESTree.TSInterfaceDeclaration
+  | TSESTree.TSTypeAliasDeclaration;

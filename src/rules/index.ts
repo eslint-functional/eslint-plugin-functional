@@ -1,3 +1,4 @@
+import * as enforceTypeImmutableness from "./enforce-type-declaration-immutableness";
 import * as functionalParameters from "./functional-parameters";
 import * as immutableData from "./immutable-data";
 import * as noClass from "./no-class";
@@ -19,6 +20,7 @@ import * as preferTacit from "./prefer-tacit";
  * All of the custom rules.
  */
 export const rules = {
+  [enforceTypeImmutableness.name]: enforceTypeImmutableness.rule,
   [functionalParameters.name]: functionalParameters.rule,
   [immutableData.name]: immutableData.rule,
   [noClass.name]: noClass.rule,
