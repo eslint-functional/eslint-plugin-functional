@@ -24,6 +24,7 @@ const config: Linter.Config = {
         "functional/prefer-readonly-type": "error",
         "functional/prefer-tacit": ["error", { assumeTypes: false }],
         "functional/no-return-void": "error",
+        "functional/type-declaration-immutability": "error",
       },
     },
   ],
