@@ -5,6 +5,8 @@ import type {
 } from "@typescript-eslint/utils";
 import { ESLintUtils } from "@typescript-eslint/utils";
 import type { Rule } from "eslint";
+import type { ImmutablenessOverrides } from "is-immutable-type";
+import { getTypeImmutableness, Immutableness } from "is-immutable-type";
 import type { ReadonlyDeep } from "type-fest";
 import type { Node as TSNode, Type } from "typescript";
 
@@ -145,6 +147,53 @@ export function getTypeOfNode<
   );
   const constrained = checker.getBaseConstraintOfType(nodeType);
   return constrained ?? nodeType;
+}
+
+/**
+ * Get the type immutableness of the the given node.
+ */
+export function getTypeImmutablenessOfNode<
+  Context extends ReadonlyDeep<TSESLint.RuleContext<string, BaseOptions>>
+>(
+  node: ReadonlyDeep<TSESTree.Node>,
+  context: Context,
+  overrides?: ImmutablenessOverrides
+): Immutableness;
+
+/**
+ * Get the type immutableness of the the given node.
+ */
+export function getTypeImmutablenessOfNode(
+  node: ReadonlyDeep<TSESTree.Node>,
+  parserServices: ParserServices,
+  overrides?: ImmutablenessOverrides
+): Immutableness;
+
+export function getTypeImmutablenessOfNode<
+  Context extends ReadonlyDeep<TSESLint.RuleContext<string, BaseOptions>>
+>(
+  node: ReadonlyDeep<TSESTree.Node>,
+  contextOrServices: Context | ParserServices,
+  overrides?: ImmutablenessOverrides
+): Immutableness {
+  const parserServices = isParserServices(contextOrServices)
+    ? contextOrServices
+    : getParserServices(contextOrServices);
+
+  if (parserServices === null) {
+    return Immutableness.Unknown;
+  }
+
+  const checker = parserServices.program.getTypeChecker();
+
+  const type = getTypeOfNode(node, parserServices);
+  return getTypeImmutableness(
+    checker,
+    type,
+    overrides,
+    // Don't use the global cache in testing environments as it may cause errors when switching between different config options.
+    process.env.NODE_ENV !== "test"
+  );
 }
 
 /**
