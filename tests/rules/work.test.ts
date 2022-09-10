@@ -23,6 +23,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
   //     // Valid Code.
   //   `,
   //   optionsSet: [[]],
+  //   settingsSet: [{}]
   // }
 ];
 
@@ -36,6 +37,7 @@ const invalid: ReadonlyArray<InvalidTestCase> = [
   //     // Invalid Code.
   //   `,
   //   optionsSet: [[]],
+  //   settingsSet: [{}]
   //   output: dedent`
   //     // Fixed Code - Remove if rule doesn't have a fixer.
   //   `,

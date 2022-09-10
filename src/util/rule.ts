@@ -5,8 +5,12 @@ import type {
 } from "@typescript-eslint/utils";
 import { ESLintUtils } from "@typescript-eslint/utils";
 import type { Rule } from "eslint";
+import type { ImmutabilityOverrides } from "is-immutable-type";
+import { getTypeImmutability, Immutability } from "is-immutable-type";
 import type { ReadonlyDeep } from "type-fest";
 import type { Node as TSNode, Type } from "typescript";
+
+import { getImmutabilityOverrides } from "~/settings";
 
 // eslint-disable-next-line @typescript-eslint/naming-convention, no-underscore-dangle -- This is a special var.
 const __VERSION__ = "0.0.0-development";
@@ -175,6 +179,55 @@ export function getTypeOfNode<
   );
   const constrained = checker.getBaseConstraintOfType(nodeType);
   return constrained ?? nodeType;
+}
+
+/**
+ * Get the type immutability of the the given node.
+ */
+export function getTypeImmutabilityOfNode<
+  Context extends ReadonlyDeep<TSESLint.RuleContext<string, BaseOptions>>
+>(node: ReadonlyDeep<TSESTree.Node>, context: Context): Immutability;
+
+/**
+ * Get the type immutability of the the given node.
+ */
+export function getTypeImmutabilityOfNode(
+  node: ReadonlyDeep<TSESTree.Node>,
+  parserServices: ParserServices,
+  overrides?: ImmutabilityOverrides
+): Immutability;
+
+export function getTypeImmutabilityOfNode<
+  Context extends ReadonlyDeep<TSESLint.RuleContext<string, BaseOptions>>
+>(
+  node: ReadonlyDeep<TSESTree.Node>,
+  contextOrServices: Context | ParserServices,
+  explicitOverrides?: ImmutabilityOverrides
+): Immutability {
+  const givenParserServices = isParserServices(contextOrServices);
+
+  const parserServices = givenParserServices
+    ? contextOrServices
+    : getParserServices(contextOrServices);
+
+  const overrides = givenParserServices
+    ? explicitOverrides
+    : getImmutabilityOverrides(contextOrServices.settings);
+
+  if (parserServices === null) {
+    return Immutability.Unknown;
+  }
+
+  const checker = parserServices.program.getTypeChecker();
+
+  const type = getTypeOfNode(node, parserServices);
+  return getTypeImmutability(
+    checker,
+    type,
+    overrides,
+    // Don't use the global cache in testing environments as it may cause errors when switching between different config options.
+    process.env.NODE_ENV !== "test"
+  );
 }
 
 /**
