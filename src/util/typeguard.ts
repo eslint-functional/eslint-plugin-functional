@@ -251,6 +251,12 @@ export function isTSInterfaceBody(
   return node.type === AST_NODE_TYPES.TSInterfaceBody;
 }
 
+export function isTSInterfaceDeclaration(
+  node: ReadonlyDeep<TSESTree.Node>
+): node is ReadonlyDeep<TSESTree.TSInterfaceDeclaration> {
+  return node.type === AST_NODE_TYPES.TSInterfaceDeclaration;
+}
+
 export function isTSInterfaceHeritage(
   node: ReadonlyDeep<TSESTree.Node>
 ): node is ReadonlyDeep<TSESTree.TSInterfaceHeritage> {
