@@ -1,4 +1,7 @@
-import type { TSESLint } from "@typescript-eslint/utils";
+import type {
+  SharedConfigurationSettings,
+  TSESLint,
+} from "@typescript-eslint/utils";
 import type { Rule, RuleTester as ESLintRuleTester } from "eslint";
 import type { ReadonlyDeep } from "type-fest";
 
@@ -6,25 +9,31 @@ import ts from "~/conditional-imports/typescript";
 
 import { filename as dummyFilename } from "./configs";
 
-type OptionsSet = {
+type OptionsSets = {
   /**
    * The set of options this test case should pass for.
    */
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
   readonly optionsSet: ReadonlyArray<any>;
+
+  /**
+   * The set of settings this test case should pass for.
+   */
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+  readonly settingsSet?: ReadonlyArray<SharedConfigurationSettings>;
 };
 
 export type ValidTestCase = Omit<
   ReadonlyDeep<ESLintRuleTester.ValidTestCase>,
-  "options"
+  "options" | "settings"
 > &
-  OptionsSet;
+  OptionsSets;
 
 export type InvalidTestCase = Omit<
   ReadonlyDeep<ESLintRuleTester.InvalidTestCase>,
-  "options"
+  "options" | "settings"
 > &
-  OptionsSet;
+  OptionsSets;
 
 /**
  * Convert our test cases into ones eslint test runner is expecting.
@@ -33,13 +42,17 @@ export function processInvalidTestCase(
   testCases: ReadonlyArray<InvalidTestCase>
 ): ESLintRuleTester.InvalidTestCase[] {
   return testCases.flatMap((testCase) =>
-    testCase.optionsSet.map((options) => {
-      const { optionsSet, ...eslintTestCase } = testCase;
-      return {
-        filename: dummyFilename,
-        ...eslintTestCase,
-        options,
-      } as ESLintRuleTester.InvalidTestCase;
+    testCase.optionsSet.flatMap((options) => {
+      const { optionsSet, settingsSet, ...eslintTestCase } = testCase;
+
+      return (settingsSet ?? [undefined]).map((settings) => {
+        return {
+          filename: dummyFilename,
+          ...eslintTestCase,
+          options,
+          settings,
+        } as ESLintRuleTester.InvalidTestCase;
+      });
     })
   );
 }
