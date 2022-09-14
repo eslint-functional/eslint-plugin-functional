@@ -137,9 +137,14 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   meta,
   defaultOptions,
   {
+    ArrowFunctionExpression: checkFunction,
     FunctionDeclaration: checkFunction,
     FunctionExpression: checkFunction,
-    ArrowFunctionExpression: checkFunction,
+    TSCallSignatureDeclaration: checkFunction,
+    TSConstructSignatureDeclaration: checkFunction,
+    TSDeclareFunction: checkFunction,
+    TSEmptyBodyFunctionExpression: checkFunction,
     TSFunctionType: checkFunction,
+    TSMethodSignature: checkFunction,
   }
 );
