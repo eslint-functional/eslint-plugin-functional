@@ -90,7 +90,7 @@
     "@types/dedent": "^0.7.0",
     "@types/eslint": "^8.4.1",
     "@types/estree": "^1.0.0",
-    "@types/node": "18.11.9",
+    "@types/node": "^16.11.7",
     "@types/rollup-plugin-auto-external": "^2.0.2",
     "@types/semver": "^7.3.12",
     "@typescript-eslint/eslint-plugin": "^5.10.2",
@@ -157,6 +157,6 @@
   },
   "packageManager": "yarn@3.2.4",
   "engines": {
-    "node": "^12.22.0 || ^14.17.0 || >=16.0.0"
+    "node": ">=16.10.0"
   }
 }
