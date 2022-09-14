@@ -5,7 +5,14 @@ export type ESFunction =
   | TSESTree.FunctionDeclaration
   | TSESTree.FunctionExpression;
 
-export type ESFunctionType = ESFunction | TSESTree.TSFunctionType;
+export type ESFunctionType =
+  | ESFunction
+  | TSESTree.TSCallSignatureDeclaration
+  | TSESTree.TSConstructSignatureDeclaration
+  | TSESTree.TSDeclareFunction
+  | TSESTree.TSEmptyBodyFunctionExpression
+  | TSESTree.TSFunctionType
+  | TSESTree.TSMethodSignature;
 
 export type ESClass = TSESTree.ClassDeclaration | TSESTree.ClassExpression;
 
