@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+## [4.3.1](https://github.com/eslint-functional/eslint-plugin-functional/compare/v4.3.0...v4.3.1) (2022-09-14)
+
+
+### Bug Fixes
+
+* **no-return-void:** check additional ts function types ([3db661d](https://github.com/eslint-functional/eslint-plugin-functional/commit/3db661d34d39e906ecfb489f035272b96265709a))
+
 # [4.3.0](https://github.com/eslint-functional/eslint-plugin-functional/compare/v4.2.2...v4.3.0) (2022-09-08)
 
 
