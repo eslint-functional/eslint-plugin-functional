@@ -3873,27 +3873,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-functional@npm:^4.2.0":
-  version: 4.3.1
-  resolution: "eslint-plugin-functional@npm:4.3.1"
-  dependencies:
-    "@typescript-eslint/utils": ^5.10.2
-    deepmerge-ts: ^4.0.3
-    escape-string-regexp: ^4.0.0
-    semver: ^7.3.7
-  peerDependencies:
-    eslint: ^8.0.0
-    tsutils: ^3.0.0
-    typescript: ^3.4.1 || ^4.0.0
-  peerDependenciesMeta:
-    tsutils:
-      optional: true
-    typescript:
-      optional: true
-  checksum: 86077b1096911dd591091fb56e56e4b20d3e1cc3e199bf504daa65e99edbf2a90f8fdb9b86eac52f6c04eaf9848955e6c61d30d80ef4af694f6c48704b7b4e77
-  languageName: node
-  linkType: hard
-
 "eslint-plugin-functional@workspace:.":
   version: 0.0.0-use.local
   resolution: "eslint-plugin-functional@workspace:."
@@ -3940,7 +3919,6 @@ __metadata:
     eslint-plugin-ava: ^13.2.0
     eslint-plugin-eslint-comments: ^3.2.0
     eslint-plugin-eslint-plugin: ^5.0.0
-    eslint-plugin-functional: ^4.2.0
     eslint-plugin-import: ^2.25.4
     eslint-plugin-jsdoc: ^39.0.0
     eslint-plugin-markdown: ^3.0.0
