@@ -1,7 +1,6 @@
 import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { deepmerge } from "deepmerge-ts";
-import type { ImmutablenessOverrides } from "is-immutable-type";
-import { getDefaultOverrides, Immutableness } from "is-immutable-type";
+import { Immutableness } from "is-immutable-type";
 import type { JSONSchema4 } from "json-schema";
 import type { ReadonlyDeep } from "type-fest";
 
@@ -24,7 +23,7 @@ export const name = "enforce-type-declaration-immutableness" as const;
 /**
  * How the actual immutableness should be compared to the given immutableness.
  */
-enum RuleEnforcementComparator {
+export enum RuleEnforcementComparator {
   Less = -2,
   AtMost = -1,
   Exactly = 0,
@@ -32,20 +31,13 @@ enum RuleEnforcementComparator {
   More = 2,
 }
 
-type RawOverrides = {
-  name?: string;
-  pattern?: string;
-  to: Immutableness | keyof typeof Immutableness;
-  from?: Immutableness | keyof typeof Immutableness;
-};
-
 /**
  * The options this rule can take.
  */
 type Options = ReadonlyDeep<
   [
     IgnorePatternOption & {
-      rules: Array<{
+      rules?: Array<{
         identifier: string | string[];
         immutableness: Exclude<
           Immutableness | keyof typeof Immutableness,
@@ -55,12 +47,6 @@ type Options = ReadonlyDeep<
           | RuleEnforcementComparator
           | keyof typeof RuleEnforcementComparator;
       }>;
-      overrides?:
-        | RawOverrides[]
-        | {
-            keepDefault?: boolean;
-            values?: RawOverrides[];
-          };
     }
   ]
 >;
@@ -100,105 +86,6 @@ const schema: JSONSchema4 = [
           additionalProperties: false,
         },
       },
-      overrides: {
-        oneOf: [
-          {
-            type: "object",
-            properties: {
-              keepDefault: {
-                type: "boolean",
-              },
-              values: {
-                type: "array",
-                items: {
-                  oneOf: [
-                    {
-                      type: "object",
-                      properties: {
-                        name: {
-                          type: "string",
-                        },
-                        to: {
-                          type: ["string", "number"],
-                          enum: Object.values(Immutableness),
-                        },
-                        from: {
-                          type: ["string", "number"],
-                          enum: Object.values(Immutableness),
-                        },
-                      },
-                      required: ["name", "to"],
-                      additionalProperties: false,
-                    },
-                    {
-                      type: "object",
-                      properties: {
-                        pattern: {
-                          type: "string",
-                        },
-                        to: {
-                          type: ["string", "number"],
-                          enum: Object.values(Immutableness),
-                        },
-                        from: {
-                          type: ["string", "number"],
-                          enum: Object.values(Immutableness),
-                        },
-                      },
-                      required: ["pattern", "to"],
-                      additionalProperties: false,
-                    },
-                  ],
-                },
-              },
-            },
-            additionalProperties: false,
-          },
-          {
-            type: "array",
-            items: {
-              oneOf: [
-                {
-                  type: "object",
-                  properties: {
-                    name: {
-                      type: "string",
-                    },
-                    to: {
-                      type: ["string", "number"],
-                      enum: Object.values(Immutableness),
-                    },
-                    from: {
-                      type: ["string", "number"],
-                      enum: Object.values(Immutableness),
-                    },
-                  },
-                  required: ["name", "to"],
-                  additionalProperties: false,
-                },
-                {
-                  type: "object",
-                  properties: {
-                    pattern: {
-                      type: "string",
-                    },
-                    to: {
-                      type: ["string", "number"],
-                      enum: Object.values(Immutableness),
-                    },
-                    from: {
-                      type: ["string", "number"],
-                      enum: Object.values(Immutableness),
-                    },
-                  },
-                  required: ["pattern", "to"],
-                  additionalProperties: false,
-                },
-              ],
-            },
-          },
-        ],
-      },
     }),
     additionalProperties: false,
   },
@@ -207,32 +94,7 @@ const schema: JSONSchema4 = [
 /**
  * The default options for the rule.
  */
-const defaultOptions: Options = [
-  {
-    rules: [
-      {
-        identifier: "^I?Immutable.+",
-        immutableness: Immutableness.Immutable,
-        comparator: RuleEnforcementComparator.AtLeast,
-      },
-      {
-        identifier: "^I?ReadonlyDeep.+",
-        immutableness: Immutableness.ReadonlyDeep,
-        comparator: RuleEnforcementComparator.AtLeast,
-      },
-      {
-        identifier: "^I?Readonly.+",
-        immutableness: Immutableness.ReadonlyShallow,
-        comparator: RuleEnforcementComparator.AtLeast,
-      },
-      {
-        identifier: "^I?Mutable.+",
-        immutableness: Immutableness.Mutable,
-        comparator: RuleEnforcementComparator.AtMost,
-      },
-    ],
-  },
-];
+const defaultOptions: Options = [{}];
 
 /**
  * The possible error messages.
@@ -264,40 +126,52 @@ const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
 /**
  * A rule given by the user after being upgraded.
  */
-type Rule = {
+export type ImmutablenessRule = {
   identifiers: ReadonlyArray<RegExp>;
   immutableness: Immutableness;
   comparator: RuleEnforcementComparator;
 };
 
 /**
- * Find the first rule to apply to the given node.
+ * Get the default immutableness rules.
  */
-function getRuleToApply(
-  node: ReadonlyDeep<TSESTree.Node>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
-  rules: ReadonlyDeep<Rule[]>
-): Rule | undefined {
-  const texts = getNodeIdentifierTexts(node, context);
-
-  if (texts.length === 0) {
-    return undefined;
-  }
-
-  return rules.find((rule) =>
-    rule.identifiers.some((pattern) => texts.some((text) => pattern.test(text)))
-  );
+function getDefaultImmutablenessRules(): ImmutablenessRule[] {
+  return [
+    {
+      identifiers: [/^I?Immutable.+/u],
+      immutableness: Immutableness.Immutable,
+      comparator: RuleEnforcementComparator.AtLeast,
+    },
+    {
+      identifiers: [/^I?ReadonlyDeep.+/u],
+      immutableness: Immutableness.ReadonlyDeep,
+      comparator: RuleEnforcementComparator.AtLeast,
+    },
+    {
+      identifiers: [/^I?Readonly.+/u],
+      immutableness: Immutableness.ReadonlyShallow,
+      comparator: RuleEnforcementComparator.AtLeast,
+    },
+    {
+      identifiers: [/^I?Mutable.+/u],
+      immutableness: Immutableness.Mutable,
+      comparator: RuleEnforcementComparator.AtMost,
+    },
+  ];
 }
 
 /**
  * Get all the rules that were given and upgrade them.
  */
-function getRules(optionsObject: Options[0]) {
-  const { rules: ruleOptions } = optionsObject;
+function getRules(options: Options): ImmutablenessRule[] {
+  const [optionsObject] = options;
+  const { rules: rulesOptions } = optionsObject;
 
-  return ruleOptions.map((rule): Rule => {
+  if (rulesOptions === undefined) {
+    return getDefaultImmutablenessRules();
+  }
+
+  return rulesOptions.map((rule): ImmutablenessRule => {
     const identifiers = isReadonlyArray(rule.identifier)
       ? rule.identifier.map((id) => new RegExp(id, "u"))
       : [new RegExp(rule.identifier, "u")];
@@ -323,46 +197,38 @@ function getRules(optionsObject: Options[0]) {
 }
 
 /**
- * Get all the overrides and upgrade them.
+ * Find the first rule to apply to the given node.
  */
-function getOverrides(
-  optionsObject: Options[0]
-): ImmutablenessOverrides | undefined {
-  const { overrides: overrideOptions } = optionsObject;
-
-  if (overrideOptions === undefined) {
+export function getRuleToApply(
+  node: ReadonlyDeep<TSESTree.Node>,
+  context: ReadonlyDeep<
+    TSESLint.RuleContext<keyof typeof errorMessages, Options>
+  >,
+  options: Options
+): ImmutablenessRule | undefined {
+  const rules = getRules(options);
+  if (rules.length === 0) {
     return undefined;
   }
 
-  const raw = isReadonlyArray(overrideOptions)
-    ? overrideOptions
-    : overrideOptions.values ?? [];
+  const texts = getNodeIdentifierTexts(node, context);
 
-  const upgraded = raw.map(
-    ({ name, pattern, to, from }) =>
-      ({
-        name,
-        pattern: pattern === undefined ? pattern : new RegExp(pattern, "u"),
-        to: typeof to !== "string" ? to : Immutableness[to],
-        from:
-          from === undefined
-            ? undefined
-            : typeof from !== "string"
-            ? from
-            : Immutableness[from],
-      } as ImmutablenessOverrides[number])
+  if (texts.length === 0) {
+    return undefined;
+  }
+
+  return rules.find((rule) =>
+    rule.identifiers.some((pattern) => texts.some((text) => pattern.test(text)))
   );
-
-  const keepDefault =
-    isReadonlyArray(overrideOptions) || overrideOptions.keepDefault !== false;
-
-  return keepDefault ? [...getDefaultOverrides(), ...upgraded] : upgraded;
 }
 
 /**
  * Compare the actual immutableness to the expected immutableness.
  */
-function compareImmutableness(rule: Rule, actual: Immutableness) {
+export function compareImmutableness(
+  rule: ReadonlyDeep<ImmutablenessRule>,
+  actual: Immutableness
+) {
   switch (rule.comparator) {
     case RuleEnforcementComparator.Less:
       return actual < rule.immutableness;
@@ -385,7 +251,7 @@ function getResults(
   context: ReadonlyDeep<
     TSESLint.RuleContext<keyof typeof errorMessages, Options>
   >,
-  rule: Rule,
+  rule: ImmutablenessRule,
   immutableness: Immutableness
 ): RuleResult<keyof typeof errorMessages, Options> {
   const valid = compareImmutableness(rule, immutableness);
@@ -431,9 +297,7 @@ function checkTypeDeclaration(
     };
   }
 
-  const rules = getRules(optionsObject);
-
-  const rule = getRuleToApply(node, context, rules);
+  const rule = getRuleToApply(node, context, options);
   if (rule === undefined) {
     return {
       context,
@@ -441,8 +305,7 @@ function checkTypeDeclaration(
     };
   }
 
-  const overrides = getOverrides(optionsObject);
-  const immutableness = getTypeImmutablenessOfNode(node, context, overrides);
+  const immutableness = getTypeImmutablenessOfNode(node, context);
 
   return getResults(node, context, rule, immutableness);
 }

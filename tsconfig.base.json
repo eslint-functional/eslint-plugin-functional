@@ -29,6 +29,7 @@
       "~/configs/*": ["src/configs/*"],
       "~/rules": ["src/rules"],
       "~/rules/*": ["src/rules/*"],
+      "~/settings": ["src/settings"],
       "~/util/*": ["src/util/*"],
       "~/conditional-imports/*": ["src/util/conditional-imports/*"],
       "~/tests/*": ["tests/*"]

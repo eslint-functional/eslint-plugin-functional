@@ -1,4 +1,3 @@
-import dedent from "dedent";
 import { Immutableness } from "is-immutable-type";
 
 import type { InvalidTestCase } from "~/tests/helpers/util";
@@ -268,14 +267,15 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   },
   {
     code: "type MutableSet = Set<string>;",
-    optionsSet: [
-      [
-        {
+    optionsSet: [[]],
+    settingsSet: [
+      {
+        immutableness: {
           overrides: {
             keepDefault: false,
           },
         },
-      ],
+      },
     ],
     errors: [
       {
@@ -292,9 +292,10 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   },
   {
     code: "type MutableSet = Set<string>;",
-    optionsSet: [
-      [
-        {
+    optionsSet: [[]],
+    settingsSet: [
+      {
+        immutableness: {
           overrides: {
             keepDefault: false,
             values: [
@@ -305,20 +306,20 @@ const tests: ReadonlyArray<InvalidTestCase> = [
             ],
           },
         },
-      ],
-      [
-        {
+      },
+      {
+        immutableness: {
           overrides: {
             keepDefault: false,
             values: [
               {
                 name: "Set",
-                to: Immutableness[Immutableness.Immutable],
+                to: "Immutable",
               },
             ],
           },
         },
-      ],
+      },
     ],
     errors: [
       {
