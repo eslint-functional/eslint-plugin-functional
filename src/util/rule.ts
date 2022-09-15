@@ -10,6 +10,8 @@ import { getTypeImmutableness, Immutableness } from "is-immutable-type";
 import type { ReadonlyDeep } from "type-fest";
 import type { Node as TSNode, Type } from "typescript";
 
+import { getImmutablenessOverrides } from "~/settings";
+
 // eslint-disable-next-line @typescript-eslint/naming-convention, no-underscore-dangle -- This is a special var.
 const __VERSION__ = "0.0.0-development";
 
@@ -154,11 +156,7 @@ export function getTypeOfNode<
  */
 export function getTypeImmutablenessOfNode<
   Context extends ReadonlyDeep<TSESLint.RuleContext<string, BaseOptions>>
->(
-  node: ReadonlyDeep<TSESTree.Node>,
-  context: Context,
-  overrides?: ImmutablenessOverrides
-): Immutableness;
+>(node: ReadonlyDeep<TSESTree.Node>, context: Context): Immutableness;
 
 /**
  * Get the type immutableness of the the given node.
@@ -174,11 +172,17 @@ export function getTypeImmutablenessOfNode<
 >(
   node: ReadonlyDeep<TSESTree.Node>,
   contextOrServices: Context | ParserServices,
-  overrides?: ImmutablenessOverrides
+  explicitOverrides?: ImmutablenessOverrides
 ): Immutableness {
-  const parserServices = isParserServices(contextOrServices)
+  const givenParserServices = isParserServices(contextOrServices);
+
+  const parserServices = givenParserServices
     ? contextOrServices
     : getParserServices(contextOrServices);
+
+  const overrides = givenParserServices
+    ? explicitOverrides
+    : getImmutablenessOverrides(contextOrServices.settings);
 
   if (parserServices === null) {
     return Immutableness.Unknown;

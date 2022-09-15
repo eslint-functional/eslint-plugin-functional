@@ -128,9 +128,10 @@ const tests: ReadonlyArray<ValidTestCase> = [
     code: dedent`
       type ReadonlyDeepFoo = ReadonlyDeep<{ foo: { bar: string; }; }>;
     `,
-    optionsSet: [
-      [
-        {
+    optionsSet: [[]],
+    settingsSet: [
+      {
+        immutableness: {
           overrides: [
             {
               name: "ReadonlyDeep",
@@ -138,7 +139,7 @@ const tests: ReadonlyArray<ValidTestCase> = [
             },
           ],
         },
-      ],
+      },
     ],
   },
 ];
