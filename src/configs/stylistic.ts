@@ -8,6 +8,7 @@ const config: Linter.Config = {
     {
       files: ["*.ts", "*.tsx"],
       rules: {
+        "functional/prefer-property-signatures": "error",
         "functional/prefer-tacit": ["error", { assumeTypes: false }],
       },
     },
