@@ -112,6 +112,11 @@ const errorMessages = {
  * The meta data for this rule.
  */
 const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
+  deprecated: true,
+  replacedBy: [
+    "functional/prefer-immutable-parameter-types",
+    "functional/type-declaration-immutability",
+  ],
   type: "suggestion",
   docs: {
     description: "Prefer readonly array over mutable arrays.",
