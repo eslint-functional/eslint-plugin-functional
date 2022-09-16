@@ -9,7 +9,7 @@ import { inReadonly } from "~/util/tree";
 /**
  * The name of this rule.
  */
-export const name = "no-method-signature" as const;
+export const name = "prefer-property-signatures" as const;
 
 /**
  * The options this rule can take.
@@ -49,8 +49,7 @@ const defaultOptions: Options = [
  * The possible error messages.
  */
 const errorMessages = {
-  generic:
-    "Method signature is mutable, use property signature with readonly modifier instead.",
+  generic: "Use a property signature instead of a method signature",
 } as const;
 
 /**
@@ -59,9 +58,8 @@ const errorMessages = {
 const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
-    description:
-      "Prefer property signatures with readonly modifiers over method signatures.",
-    recommended: "warn",
+    description: "Prefer property signatures over method signatures.",
+    recommended: false,
   },
   messages: errorMessages,
   schema,

@@ -1,4 +1,4 @@
-import { name, rule } from "~/rules/no-method-signature";
+import { name, rule } from "~/rules/prefer-property-signatures";
 import { testUsing } from "~/tests/helpers/testers";
 
 import tsTests from "./ts";
