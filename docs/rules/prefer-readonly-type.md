@@ -1,6 +1,10 @@
 # Prefer readonly types over mutable types (prefer-readonly-type)
 
-This rule enforces use of the readonly modifier and readonly types.
+## :warning: This rule is deprecated
+
+This rule has been replaced by
+[prefer-immutable-parameter-types](./prefer-immutable-parameter-types.md) and
+[type-declaration-immutability](./type-declaration-immutability.md).
 
 ## Rule Details
 
