@@ -1,6 +1,4 @@
-# Prefer property signatures with readonly modifiers over method signatures (no-method-signature)
-
-Prefer property signatures with readonly modifiers over method signatures.
+# Prefer property signatures over method signatures (prefer-property-signatures)
 
 ## Rule Details
 
@@ -16,7 +14,7 @@ Examples of **incorrect** code for this rule:
 <!-- eslint-skip -->
 
 ```ts
-/* eslint functional/no-method-signature: "error" */
+/* eslint functional/prefer-property-signatures: "error" */
 
 type Foo = {
   bar(): string;
@@ -28,7 +26,7 @@ Examples of **correct** code for this rule:
 <!-- eslint-disable @typescript-eslint/no-redeclare -->
 
 ```ts
-/* eslint functional/no-method-signature: "error" */
+/* eslint functional/prefer-property-signatures: "error" */
 
 type Foo = {
   readonly bar: () => string;
@@ -66,7 +64,7 @@ Examples of **incorrect** code for this rule:
 <!-- eslint-skip -->
 
 ```ts
-/* eslint functional/no-method-signature: ["error", { "ignoreIfReadonly": false } ] */
+/* eslint functional/prefer-property-signatures: ["error", { "ignoreIfReadonly": false } ] */
 
 type Foo = Readonly<{
   bar(): string;
