@@ -19,7 +19,6 @@ const config: Linter.Config = {
     {
       files: ["*.ts", "*.tsx"],
       rules: {
-        "functional/no-method-signature": "error",
         "functional/no-mixed-type": "error",
         "functional/prefer-immutable-parameter-types": "error",
         "functional/prefer-property-signatures": "error",

@@ -186,13 +186,12 @@ The [below section](#supported-rules) gives details on which rules are enabled b
 
 :see_no_evil: = `no-mutations` Ruleset.
 
-| Name                                                                                   | Description                                                                | <span title="No Mutations">:see_no_evil:</span> | <span title="Lite">:hear_no_evil:</span> | <span title="Recommended">:speak_no_evil:</span> | :wrench: |   :blue_heart:    |
-| -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | :---------------------------------------------: | :--------------------------------------: | :----------------------------------------------: | :------: | :---------------: |
-| [`immutable-data`](./docs/rules/immutable-data.md)                                     | Disallow mutating objects and arrays                                       |               :heavy_check_mark:                |            :heavy_check_mark:            |                :heavy_check_mark:                |          |   :blue_heart:    |
-| [`no-let`](./docs/rules/no-let.md)                                                     | Disallow mutable variables                                                 |               :heavy_check_mark:                |            :heavy_check_mark:            |                :heavy_check_mark:                |          |                   |
-| [`no-method-signature`](./docs/rules/no-method-signature.md)                           | Enforce property signatures with readonly modifiers over method signatures |               :heavy_check_mark:                |            :heavy_check_mark:            |                :heavy_check_mark:                |          | :thought_balloon: |
-| [`prefer-immutable-parameter-types`](./docs/rules/prefer-immutable-parameter-types.md) | Require function parameters to be typed as certain immutability            |               :heavy_check_mark:                |            :heavy_check_mark:            |                :heavy_check_mark:                |          | :thought_balloon: |
-| [`type-declaration-immutability`](./docs/rules/type-declaration-immutability.md)       | Enforce the immutability of types based on patterns                        |               :heavy_check_mark:                |            :heavy_check_mark:            |                :heavy_check_mark:                |          | :thought_balloon: |
+| Name                                                                                   | Description                                                     | <span title="No Mutations">:see_no_evil:</span> | <span title="Lite">:hear_no_evil:</span> | <span title="Recommended">:speak_no_evil:</span> | :wrench: |   :blue_heart:    |
+| -------------------------------------------------------------------------------------- | --------------------------------------------------------------- | :---------------------------------------------: | :--------------------------------------: | :----------------------------------------------: | :------: | :---------------: |
+| [`immutable-data`](./docs/rules/immutable-data.md)                                     | Disallow mutating objects and arrays                            |               :heavy_check_mark:                |            :heavy_check_mark:            |                :heavy_check_mark:                |          |   :blue_heart:    |
+| [`no-let`](./docs/rules/no-let.md)                                                     | Disallow mutable variables                                      |               :heavy_check_mark:                |            :heavy_check_mark:            |                :heavy_check_mark:                |          |                   |
+| [`prefer-immutable-parameter-types`](./docs/rules/prefer-immutable-parameter-types.md) | Require function parameters to be typed as certain immutability |               :heavy_check_mark:                |            :heavy_check_mark:            |                :heavy_check_mark:                |          | :thought_balloon: |
+| [`type-declaration-immutability`](./docs/rules/type-declaration-immutability.md)       | Enforce the immutability of types based on patterns             |               :heavy_check_mark:                |            :heavy_check_mark:            |                :heavy_check_mark:                |          | :thought_balloon: |
 
 ### No Object-Orientation Rules
 
@@ -237,9 +236,10 @@ The [below section](#supported-rules) gives details on which rules are enabled b
 
 :see_no_evil: = `stylistic` Ruleset.
 
-| Name                                           | Description             | <span title="Stylistic">:see_no_evil:</span> | <span title="Lite">:hear_no_evil:</span> | <span title="Recommended">:speak_no_evil:</span> | :wrench: | :blue_heart: |
-| ---------------------------------------------- | ----------------------- | :------------------------------------------: | :--------------------------------------: | :----------------------------------------------: | :------: | :----------: |
-| [`prefer-tacit`](./docs/rules/prefer-tacit.md) | Tacit/Point-Free style. |              :heavy_check_mark:              |            :heavy_check_mark:            |                :heavy_check_mark:                | :wrench: | :blue_heart: |
+| Name                                                                       | Description                                        | <span title="Stylistic">:see_no_evil:</span> | <span title="Lite">:hear_no_evil:</span> | <span title="Recommended">:speak_no_evil:</span> | :wrench: |   :blue_heart:    |
+| -------------------------------------------------------------------------- | -------------------------------------------------- | :------------------------------------------: | :--------------------------------------: | :----------------------------------------------: | :------: | :---------------: |
+| [`prefer-property-signatures`](./docs/rules/prefer-property-signatures.md) | Enforce property signatures over method signatures |              :heavy_check_mark:              |            :heavy_check_mark:            |                :heavy_check_mark:                |          | :thought_balloon: |
+| [`prefer-tacit`](./docs/rules/prefer-tacit.md)                             | Tacit/Point-Free style.                            |              :heavy_check_mark:              |            :heavy_check_mark:            |                :heavy_check_mark:                | :wrench: |   :blue_heart:    |
 
 ## Recommended standard rules
 
