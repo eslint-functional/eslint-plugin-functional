@@ -11,7 +11,6 @@ const config: Linter.Config = {
       rules: {
         "functional/no-method-signature": "warn",
         "functional/prefer-immutable-parameter-types": "error",
-        "functional/prefer-readonly-type": "error",
         "functional/type-declaration-immutability": "error",
       },
     },
