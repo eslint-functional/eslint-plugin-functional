@@ -126,6 +126,7 @@
         "functional/no-expression-statement": "off",
         "functional/no-let": "off",
         "functional/no-loop-statement": "off",
+        "functional/no-mixed-type": "off",
         "functional/no-return-void": "off",
         "functional/no-this-expression": "off",
         "functional/no-throw-statement": "off",
