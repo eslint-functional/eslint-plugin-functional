@@ -65,7 +65,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.ts_version == 'next' }}
     env:
-      REPORT_COVERAGE: ${{ fromJSON('["false", "true"]')[matrix.ts_version == 'latest' && matrix.node_version == '18' && matrix.os == 'ubuntu-latest'] }}
+      REPORT_COVERAGE: ${{ fromJSON('["false", "true"]')[matrix.node_version == '18' && matrix.os == 'ubuntu-latest'] }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -85,7 +85,6 @@ jobs:
         run: yarn build
 
       - name: Compile Tests
-        if: env.REPORT_COVERAGE == 'false'
         run: yarn compile-tests
 
       - name: Setup NodeJs ${{ matrix.node_version }} for testing
@@ -102,15 +101,23 @@ jobs:
 
       - name: Remove incompatible settings for ts 4.0.2
         if: matrix.ts_version == '4.0.2'
-        run: node -e 'const fs = require("fs"); const tsconfig = require("./tsconfig.base.json"); delete tsconfig.compilerOptions.exactOptionalPropertyTypes; fs.writeFileSync("./tsconfig.base.json", JSON.stringify(tsconfig));'
+        run: |
+          node -e '
+            const fs = require("fs");
+            const filename = "./tsconfig.base.json";
+            const tsConfig = require(filename);
+            delete tsConfig.compilerOptions.exactOptionalPropertyTypes;
+            const tsConfigString = JSON.stringify(tsConfig, undefined, 2);
+            fs.writeFileSync(filename, tsConfigString, { encoding: "utf8" });
+            console.log("TS Config updated successfully.");
+          '
 
       - name: Run Tests
-        run: yarn test
-        env:
-          USE_COMPILED_TESTS: ${{ env.REPORT_COVERAGE == 'false' }}
+        run: yarn test-compiled
 
       - name: Report coverage
         uses: codecov/codecov-action@v3.1.0
         if: env.REPORT_COVERAGE == 'true'
         with:
           file: coverage/lcov.info
+          flags: ${{ matrix.ts_version }}
