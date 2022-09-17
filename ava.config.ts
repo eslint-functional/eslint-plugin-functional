@@ -35,11 +35,17 @@ const avaTsConfig = {
 
 const avaJsConfig = {
   ...avaCommonConfig,
-  files: avaCommonConfig.files.map((file) => `build/${file}`),
   extensions: ["js"],
   require: ["tsconfig-paths/register"],
   environmentVariables: {
     TS_NODE_PROJECT: "build/tests/tsconfig.json",
+  },
+  typescript: {
+    rewritePaths: {
+      "src/": "build/src/",
+      "tests/": "build/tests/",
+    },
+    compile: false,
   },
 };
 

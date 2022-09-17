@@ -5,6 +5,16 @@ __metadata:
   version: 6
   cacheKey: 8
 
+"@ava/typescript@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "@ava/typescript@npm:3.0.1"
+  dependencies:
+    escape-string-regexp: ^5.0.0
+    execa: ^5.1.1
+  checksum: 3075ad519e18d6daa0e0696d44716d31bda8f6cdaad70e3da9639d39b4d1807045995d4c8688cd06698586da38f184b47c054d28d873dac3a89364c309dee982
+  languageName: node
+  linkType: hard
+
 "@babel/code-frame@npm:^7.0.0, @babel/code-frame@npm:^7.10.4":
   version: 7.12.11
   resolution: "@babel/code-frame@npm:7.12.11"
@@ -3877,6 +3887,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "eslint-plugin-functional@workspace:."
   dependencies:
+    "@ava/typescript": ^3.0.1
     "@commitlint/cli": ^17.0.0
     "@commitlint/config-conventional": ^17.0.0
     "@google/semantic-release-replace-plugin": ^1.1.0
@@ -4313,7 +4324,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"execa@npm:^5.0.0":
+"execa@npm:^5.0.0, execa@npm:^5.1.1":
   version: 5.1.1
   resolution: "execa@npm:5.1.1"
   dependencies:

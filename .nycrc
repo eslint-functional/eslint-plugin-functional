@@ -1,7 +1,8 @@
 {
   "extends": "@istanbuljs/nyc-config-typescript",
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "build/src/**/*"
   ],
   "exclude": [
     "src/util/conditional-imports/**/*"
