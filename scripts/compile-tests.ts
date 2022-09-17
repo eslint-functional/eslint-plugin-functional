@@ -18,6 +18,9 @@ function transpileTests() {
   const program = tsc.createProgramFromConfig({
     basePath: `${process.cwd()}/tests`,
     configFilePath: "tsconfig.json",
+    compilerOptions: {
+      sourceMap: true,
+    },
   });
 
   tsc.emit(program, {
