@@ -1,6 +1,8 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+## [4.3.2](https://github.com/eslint-functional/eslint-plugin-functional/compare/v4.3.1...v4.3.2) (2022-09-19)
+
 ## [4.3.1](https://github.com/eslint-functional/eslint-plugin-functional/compare/v4.3.0...v4.3.1) (2022-09-14)
 
 
