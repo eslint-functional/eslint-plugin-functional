@@ -116,7 +116,7 @@ jobs:
         run: yarn test-compiled
 
       - name: Report coverage
-        uses: codecov/codecov-action@v3.1.0
+        uses: codecov/codecov-action@v3.1.1
         if: env.REPORT_COVERAGE == 'true'
         with:
           file: coverage/lcov.info
