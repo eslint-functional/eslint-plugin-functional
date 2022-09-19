@@ -253,7 +253,7 @@ Without this rule, it is still possible to create `var` variables that are mutab
 
 ### [no-param-reassign](https://eslint.org/docs/rules/no-param-reassign)
 
-Without this rule, function parameters are mutable.
+Don't allow function parameters to be reassigned, they should be treated as constants.
 
 ### [prefer-const](https://eslint.org/docs/rules/prefer-const)
 
@@ -262,13 +262,6 @@ This rule is helpful when converting from an imperative code style to a function
 ### [@typescript-eslint/prefer-readonly](https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/prefer-readonly.md)
 
 This rule is helpful when working with classes.
-
-### [@typescript-eslint/prefer-readonly-parameter-types](https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/prefer-readonly-parameter-types.md)
-
-Functional functions must not modify any data passed into them.
-This rule marks mutable parameters as a violation as they prevent readonly versions of that data from being passed in.
-
-However, due to many 3rd-party libraries only providing mutable versions of their types, often it can not be easy to satisfy this rule. Thus by default we only enable this rule with the "warn" severity rather than "error".
 
 ### [@typescript-eslint/switch-exhaustiveness-check](https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/switch-exhaustiveness-check.md)
 
