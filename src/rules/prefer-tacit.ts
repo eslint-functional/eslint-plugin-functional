@@ -116,7 +116,6 @@ const isTS4dot7 =
  */
 function isCallerViolation(
   caller: ReadonlyDeep<TSESTree.CallExpression>,
-  // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types -- ignore TS Type
   calleeType: Type,
   context: ReadonlyDeep<
     TSESLint.RuleContext<keyof typeof errorMessages, Options>
