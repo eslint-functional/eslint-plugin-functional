@@ -361,25 +361,17 @@ export function isDefined<T>(value: T | null | undefined): value is T {
  * TS types type guards.
  */
 
-export function isUnionType(
-  // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types -- ignore TS Type
-  type: Type
-): type is UnionType {
+export function isUnionType(type: Type): type is UnionType {
   return ts !== undefined && type.flags === ts.TypeFlags.Union;
 }
 
+export function isArrayType(type: Type | null): type is ArrayType;
 export function isArrayType(
-  // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types -- ignore TS Type
-  type: Type | null
-): type is ArrayType;
-export function isArrayType(
-  // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types -- ignore TS Type
   type: Type,
   assumeType: false,
   node: null
 ): type is ArrayType;
 export function isArrayType(
-  // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types -- ignore TS Type
   type: Type | null,
   assumeType: boolean,
   node: ReadonlyDeep<TSESTree.Node | null>
@@ -390,7 +382,6 @@ export function isArrayType(
   node: ReadonlyDeep<TSESTree.Node>
 ): boolean;
 export function isArrayType(
-  // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types -- ignore TS Type
   type: Type | null,
   assumeType = false,
   node: ReadonlyDeep<TSESTree.Node> | null = null
@@ -404,17 +395,14 @@ export function isArrayType(
 }
 
 export function isArrayConstructorType(
-  // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types -- ignore TS Type
   type: Type | null
 ): type is ArrayConstructorType;
 export function isArrayConstructorType(
-  // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types -- ignore TS Type
   type: Type,
   assumeType: false,
   node: null
 ): type is ArrayConstructorType;
 export function isArrayConstructorType(
-  // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types -- ignore TS Type
   type: Type | null,
   assumeType: boolean,
   node: ReadonlyDeep<TSESTree.Node | null>
@@ -425,7 +413,6 @@ export function isArrayConstructorType(
   node: ReadonlyDeep<TSESTree.Node>
 ): boolean;
 export function isArrayConstructorType(
-  // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types -- ignore TS Type
   type: Type | null,
   assumeType = false,
   node: ReadonlyDeep<TSESTree.Node> | null = null
@@ -440,17 +427,14 @@ export function isArrayConstructorType(
 }
 
 export function isObjectConstructorType(
-  // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types -- ignore TS Type
   type: Type | null
 ): type is ObjectConstructorType;
 export function isObjectConstructorType(
-  // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types -- ignore TS Type
   type: Type,
   assumeType: false,
   node: null
 ): type is ObjectConstructorType;
 export function isObjectConstructorType(
-  // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types -- ignore TS Type
   type: Type | null,
   assumeType: boolean,
   node: ReadonlyDeep<TSESTree.Node | null>
@@ -461,7 +445,6 @@ export function isObjectConstructorType(
   node: ReadonlyDeep<TSESTree.Node>
 ): boolean;
 export function isObjectConstructorType(
-  // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types -- ignore TS Type
   type: Type | null,
   assumeType = false,
   node: ReadonlyDeep<TSESTree.Node> | null = null
@@ -475,30 +458,18 @@ export function isObjectConstructorType(
             type.types.some((t) => isObjectConstructorType(t, false, null))));
 }
 
-export function isNeverType(
-  // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types -- ignore TS Type
-  type: Type
-): boolean {
+export function isNeverType(type: Type): boolean {
   return ts !== undefined && type.flags === ts.TypeFlags.Never;
 }
 
-export function isVoidType(
-  // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types -- ignore TS Type
-  type: Type
-): boolean {
+export function isVoidType(type: Type): boolean {
   return ts !== undefined && type.flags === ts.TypeFlags.Void;
 }
 
-export function isNullType(
-  // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types -- ignore TS Type
-  type: Type
-): boolean {
+export function isNullType(type: Type): boolean {
   return ts !== undefined && type.flags === ts.TypeFlags.Null;
 }
 
-export function isUndefinedType(
-  // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types -- ignore TS Type
-  type: Type
-): boolean {
+export function isUndefinedType(type: Type): boolean {
   return ts !== undefined && type.flags === ts.TypeFlags.Undefined;
 }
