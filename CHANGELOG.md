@@ -1,6 +1,31 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+# [5.0.0-beta.1](https://github.com/eslint-functional/eslint-plugin-functional/compare/v4.3.1...v5.0.0-beta.1) (2022-09-19)
+
+
+### Build System
+
+* bump minimum supported version of node to 16.10 ([e9284c1](https://github.com/eslint-functional/eslint-plugin-functional/commit/e9284c1feb0a2c74110857c9a71d72c079fadb51))
+* bump minimum supported version of TypeScript to 4.0.2 ([01e7eb4](https://github.com/eslint-functional/eslint-plugin-functional/commit/01e7eb404461cb77bfc3cea4f4756de3c4d07ee3))
+
+
+### Features
+
+* **no-method-signature:** rename to `prefer-property-signatures` & move it to `stylistic` ruleset ([2a9033e](https://github.com/eslint-functional/eslint-plugin-functional/commit/2a9033e7d087a0c75972831e06eade3fde6981d8))
+* **prefer-immutable-parameter-types:** create rule ([cfa93dc](https://github.com/eslint-functional/eslint-plugin-functional/commit/cfa93dcad30953f55ced79aac9c48fb56296e0fa))
+* **prefer-readonly-type:** deprecated this rule ([86a6d78](https://github.com/eslint-functional/eslint-plugin-functional/commit/86a6d782b45096d9f677559f57e322df00794624))
+* remove `@typescript-eslint/prefer-readonly-parameter-types` from `external-recommended` ([60315ed](https://github.com/eslint-functional/eslint-plugin-functional/commit/60315ed0b729fa3d5d424eac49d2ba80f505de5f))
+* **type-declaration-immutability:** create rule ([7838fd2](https://github.com/eslint-functional/eslint-plugin-functional/commit/7838fd217379f9240280cb41a46be647ab6b277d))
+
+
+### BREAKING CHANGES
+
+* remove `@typescript-eslint/prefer-readonly-parameter-types` from `external-recommended`
+* **no-method-signature:** rename to `prefer-property-signatures` & move it to `stylistic` ruleset
+* bump minimum supported version of TypeScript to 4.0.2
+* bump minimum supported version of node to 16.10
+
 # [4.4.0](https://github.com/eslint-functional/eslint-plugin-functional/compare/v4.3.2...v4.4.0) (2022-09-20)
 
 
