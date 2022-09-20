@@ -1,20 +1,29 @@
 import { deepmerge } from "deepmerge-ts";
 import type { Linter } from "eslint";
 
+import * as functionalParameters from "~/rules/functional-parameters";
+import * as immutableData from "~/rules/immutable-data";
+import * as noConditionalStatement from "~/rules/no-conditional-statement";
+import * as noExpressionStatement from "~/rules/no-expression-statement";
+import * as noTryStatement from "~/rules/no-try-statement";
+
 import functional from "./functional";
 
 const overrides: Linter.Config = {
   rules: {
-    "functional/immutable-data": ["error", { ignoreClass: "fieldsOnly" }],
-    "functional/no-conditional-statement": "off",
-    "functional/no-expression-statement": "off",
-    "functional/no-try-statement": "off",
-    "functional/functional-parameters": [
+    [`functional/${functionalParameters.name}`]: [
       "error",
       {
         enforceParameterCount: false,
       },
     ],
+    [`functional/${immutableData.name}`]: [
+      "error",
+      { ignoreClass: "fieldsOnly" },
+    ],
+    [`functional/${noConditionalStatement.name}`]: "off",
+    [`functional/${noExpressionStatement.name}`]: "off",
+    [`functional/${noTryStatement.name}`]: "off",
   },
 };
 
