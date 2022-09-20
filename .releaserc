@@ -6,9 +6,14 @@ branches:
 plugins:
   - - "@semantic-release/commit-analyzer"
     - preset: angular
+      parserOpts:
+        headerPattern: '^(\w*)(?:\((.*)\))?!?: (.*)$'
+        breakingHeaderPattern: '^(\w*)(?:\((.*)\))?!: (.*)$'
       releaseRules:
         - breaking: true
           release: major
+        - revert: true
+          release: patch
         - type: feat
           release: minor
         - type: fix
@@ -19,6 +24,9 @@ plugins:
           scope: deps
           release: patch
         - type: build
+          scope: peer-deps
+          release: patch
+        - type: build
           scope: release-patch
           release: patch
         - type: build
@@ -27,7 +35,11 @@ plugins:
         - type: build
           scope: release-major
           release: major
-  - "@semantic-release/release-notes-generator"
+  - - "@semantic-release/release-notes-generator"
+    - preset: angular
+      parserOpts:
+        headerPattern: '^(\w*)(?:\((.*)\))?!?: (.*)$'
+        breakingHeaderPattern: '^(\w*)(?:\((.*)\))?!: (.*)$'
   - - "@semantic-release/changelog"
     - changelogTitle: "# Changelog
 
