@@ -29,5 +29,9 @@ test("should have all the configs", (t) => {
     Object.prototype.hasOwnProperty.call(plugin, "configs"),
     'The plugin\'s config object should have a "configs" property.'
   );
-  t.is(configFiles.length, Object.keys(plugin.configs).length);
+  t.is(
+    configFiles.length - 1,
+    Object.keys(plugin.configs).length,
+    "should have all the configs except deprecated"
+  );
 });
