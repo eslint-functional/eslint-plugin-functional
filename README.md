@@ -94,7 +94,7 @@ Enable rulesets via the "extends" property of your `.eslintrc` configuration fil
 {
   // ...
   "extends": [
-    "plugin:functional/external-recommended",
+    "plugin:functional/external-vanilla-recommended",
     "plugin:functional/recommended",
     "plugin:functional/stylistic"
   ]
@@ -137,7 +137,7 @@ See [@typescript-eslint/parser's README.md](https://github.com/typescript-eslint
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
-    "plugin:functional/external-recommended",
+    "plugin:functional/external-typescript-recommended",
     "plugin:functional/recommended",
     "plugin:functional/stylistic"
   ]
@@ -156,17 +156,18 @@ Presets:
 
 Categorized:
 
+- **Currying** (plugin:functional/currying)
+- **No Exceptions** (plugin:functional/no-exceptions)
 - **No Mutations** (plugin:functional/no-mutations)
 - **No Object Orientation** (plugin:functional/no-object-orientation)
 - **No Statements** (plugin:functional/no-statements)
-- **No Exceptions** (plugin:functional/no-exceptions)
-- **Currying** (plugin:functional/currying)
 - **Stylistic** (plugin:functional/stylistic)
 
 Other:
 
 - **All** (plugin:functional/all) - Enables all rules defined in this plugin.
-- **External Recommended** (plugin:functional/external-recommended) - Configures recommended rules not defined by this plugin.
+- **External Vanilla Recommended** (plugin:functional/external-vanilla-recommended) - Configures recommended [vanilla ESLint](https://www.npmjs.com/package/eslint) rules.
+- **External Typescript Recommended** (plugin:functional/external-typescript-recommended) - Configures recommended [TypeScript ESLint](https://www.npmjs.com/package/@typescript-eslint/eslint-plugin) rules. Enabling this ruleset will also enable the vanilla one.
 
 The [below section](#supported-rules) gives details on which rules are enabled by each ruleset.
 
@@ -186,22 +187,22 @@ The [below section](#supported-rules) gives details on which rules are enabled b
 
 :see_no_evil: = `no-mutations` Ruleset.
 
-| Name                                                                                   | Description                                                     | <span title="No Mutations">:see_no_evil:</span> | <span title="Lite">:hear_no_evil:</span> | <span title="Recommended">:speak_no_evil:</span> | :wrench: |   :blue_heart:    |
-| -------------------------------------------------------------------------------------- | --------------------------------------------------------------- | :---------------------------------------------: | :--------------------------------------: | :----------------------------------------------: | :------: | :---------------: |
-| [`immutable-data`](./docs/rules/immutable-data.md)                                     | Disallow mutating objects and arrays                            |               :heavy_check_mark:                |            :heavy_check_mark:            |                :heavy_check_mark:                |          |   :blue_heart:    |
-| [`no-let`](./docs/rules/no-let.md)                                                     | Disallow mutable variables                                      |               :heavy_check_mark:                |            :heavy_check_mark:            |                :heavy_check_mark:                |          |                   |
-| [`prefer-immutable-parameter-types`](./docs/rules/prefer-immutable-parameter-types.md) | Require function parameters to be typed as certain immutability |               :heavy_check_mark:                |            :heavy_check_mark:            |                :heavy_check_mark:                |          | :thought_balloon: |
-| [`type-declaration-immutability`](./docs/rules/type-declaration-immutability.md)       | Enforce the immutability of types based on patterns             |               :heavy_check_mark:                |            :heavy_check_mark:            |                :heavy_check_mark:                |          | :thought_balloon: |
+| Name                                                                                   | Description                              | <span title="No Mutations">:see_no_evil:</span> | <span title="Lite">:hear_no_evil:</span> | <span title="Recommended">:speak_no_evil:</span> | :wrench: |   :blue_heart:    |
+| -------------------------------------------------------------------------------------- | ---------------------------------------- | :---------------------------------------------: | :--------------------------------------: | :----------------------------------------------: | :------: | :---------------: |
+| [`immutable-data`](./docs/rules/immutable-data.md)                                     | Disallow mutating objects and arrays     |               :heavy_check_mark:                |            :heavy_check_mark:            |                :heavy_check_mark:                |          |   :blue_heart:    |
+| [`no-let`](./docs/rules/no-let.md)                                                     | Disallow mutable variables               |               :heavy_check_mark:                |            :heavy_check_mark:            |                :heavy_check_mark:                |          |                   |
+| [`prefer-immutable-parameter-types`](./docs/rules/prefer-immutable-parameter-types.md) | Require parameters to be deeply readonly |               :heavy_check_mark:                |            :heavy_check_mark:            |                :heavy_check_mark:                |          | :thought_balloon: |
+| [`type-declaration-immutability`](./docs/rules/type-declaration-immutability.md)       | Enforce type immutability with patterns  |               :heavy_check_mark:                |            :heavy_check_mark:            |                :heavy_check_mark:                |          | :thought_balloon: |
 
 ### No Object-Orientation Rules
 
 :see_no_evil: = `no-object-orientation` Ruleset.
 
-| Name                                                       | Description                                                              | <span title="No Object-Orientation">:see_no_evil:</span> | <span title="Lite">:hear_no_evil:</span> | <span title="Recommended">:speak_no_evil:</span> | :wrench: |   :blue_heart:    |
-| ---------------------------------------------------------- | ------------------------------------------------------------------------ | :------------------------------------------------------: | :--------------------------------------: | :----------------------------------------------: | :------: | :---------------: |
-| [`no-class`](./docs/rules/no-class.md)                     | Disallow classes                                                         |                    :heavy_check_mark:                    |            :heavy_check_mark:            |                :heavy_check_mark:                |          |                   |
-| [`no-mixed-type`](./docs/rules/no-mixed-type.md)           | Restrict types so that only members of the same kind are allowed in them |                    :heavy_check_mark:                    |            :heavy_check_mark:            |                :heavy_check_mark:                |          | :thought_balloon: |
-| [`no-this-expression`](./docs/rules/no-this-expression.md) | Disallow `this` access                                                   |                    :heavy_check_mark:                    |            :heavy_check_mark:            |                :heavy_check_mark:                |          |                   |
+| Name                                                       | Description                                                           | <span title="No Object-Orientation">:see_no_evil:</span> | <span title="Lite">:hear_no_evil:</span> | <span title="Recommended">:speak_no_evil:</span> | :wrench: |   :blue_heart:    |
+| ---------------------------------------------------------- | --------------------------------------------------------------------- | :------------------------------------------------------: | :--------------------------------------: | :----------------------------------------------: | :------: | :---------------: |
+| [`no-class`](./docs/rules/no-class.md)                     | Disallow classes                                                      |                    :heavy_check_mark:                    |            :heavy_check_mark:            |                :heavy_check_mark:                |          |                   |
+| [`no-mixed-type`](./docs/rules/no-mixed-type.md)           | Disallow types from containing both callable and non-callable members |                    :heavy_check_mark:                    |            :heavy_check_mark:            |                :heavy_check_mark:                |          | :thought_balloon: |
+| [`no-this-expression`](./docs/rules/no-this-expression.md) | Disallow `this` access                                                |                    :heavy_check_mark:                    |            :heavy_check_mark:            |                :heavy_check_mark:                |          |                   |
 
 ### No Statements Rules
 
@@ -238,14 +239,14 @@ The [below section](#supported-rules) gives details on which rules are enabled b
 
 | Name                                                                       | Description                                        | <span title="Stylistic">:see_no_evil:</span> | <span title="Lite">:hear_no_evil:</span> | <span title="Recommended">:speak_no_evil:</span> | :wrench: |   :blue_heart:    |
 | -------------------------------------------------------------------------- | -------------------------------------------------- | :------------------------------------------: | :--------------------------------------: | :----------------------------------------------: | :------: | :---------------: |
-| [`prefer-property-signatures`](./docs/rules/prefer-property-signatures.md) | Enforce property signatures over method signatures |              :heavy_check_mark:              |            :heavy_check_mark:            |                :heavy_check_mark:                |          | :thought_balloon: |
-| [`prefer-tacit`](./docs/rules/prefer-tacit.md)                             | Tacit/Point-Free style.                            |              :heavy_check_mark:              |            :heavy_check_mark:            |                :heavy_check_mark:                | :wrench: |   :blue_heart:    |
+| [`prefer-property-signatures`](./docs/rules/prefer-property-signatures.md) | Enforce property signatures over method signatures |              :heavy_check_mark:              |                                          |                                                  |          | :thought_balloon: |
+| [`prefer-tacit`](./docs/rules/prefer-tacit.md)                             | Tacit/Point-Free style.                            |              :heavy_check_mark:              |                                          |                                                  | :wrench: |   :blue_heart:    |
 
 ## Recommended standard rules
 
 In addition to the immutability rules above, there are a few standard rules that need to be enabled to achieve immutability.
 
-These rules are all included in the _external-recommended_ rulesets.
+These rules are what are included in the _external recommended_ rulesets.
 
 ### [no-var](https://eslint.org/docs/rules/no-var)
 
