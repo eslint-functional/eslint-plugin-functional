@@ -10,23 +10,33 @@
   "semanticCommits": "enabled",
   "prHourlyLimit": 0,
   "prConcurrentLimit": 0,
-  "major": {
-    "automerge": false
-  },
   "packageRules": [
     {
       "matchManagers": ["npm"],
       "matchDepTypes": ["dependencies"],
       "rangeStrategy": "update-lockfile",
-      "semanticCommitType": "build",
-      "semanticCommitScope": "deps"
+      "semanticCommitType": "chore",
+      "semanticCommitScope": "deps",
+      "major": {
+        "semanticCommitType": "build"
+      }
     },
     {
       "matchManagers": ["npm"],
       "matchDepTypes": ["devDependencies"],
       "rangeStrategy": "update-lockfile",
-      "semanticCommitType": "build",
+      "semanticCommitType": "chore",
       "semanticCommitScope": "dev-deps"
+    },
+    {
+      "matchManagers": ["npm"],
+      "matchDepTypes": ["peerDependencies"],
+      "rangeStrategy": "widen",
+      "semanticCommitType": "chore",
+      "semanticCommitScope": "peer-deps",
+      "major": {
+        "semanticCommitType": "build"
+      }
     },
     {
       "matchManagers": ["github-actions"],
