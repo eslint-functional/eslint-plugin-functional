@@ -2,7 +2,8 @@ import type { Linter, Rule } from "eslint";
 
 import all from "~/configs/all";
 import currying from "~/configs/currying";
-import externalRecommended from "~/configs/external-recommended";
+import externalTypeScriptRecommended from "~/configs/external-typescript-recommended";
+import externalVanillaRecommended from "~/configs/external-vanilla-recommended";
 import functional from "~/configs/functional";
 import functionalLite from "~/configs/functional-lite";
 import noExceptions from "~/configs/no-exceptions";
@@ -26,7 +27,8 @@ const config: EslintPluginConfig = {
   configs: {
     all,
     recommended: functional,
-    "external-recommended": externalRecommended,
+    "external-vanilla-recommended": externalVanillaRecommended,
+    "external-typescript-recommended": externalTypeScriptRecommended,
     lite: functionalLite,
     off,
     "no-mutations": noMutations,
