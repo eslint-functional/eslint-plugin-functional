@@ -99,6 +99,37 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       },
     ],
   },
+  {
+    code: dedent`
+      [1, 2, 3]
+        .map(
+          function(element, index) {
+            return element + index;
+          }
+        )
+        .reduce(
+          function(carry, current) {
+            return carry + current;
+          },
+          0
+        );
+    `,
+    optionsSet: [[{ enforceParameterCount: "exactlyOne" }]],
+    errors: [
+      {
+        messageId: "paramCountExactlyOne",
+        type: "FunctionExpression",
+        line: 3,
+        column: 5,
+      },
+      {
+        messageId: "paramCountExactlyOne",
+        type: "FunctionExpression",
+        line: 8,
+        column: 5,
+      },
+    ],
+  },
 ];
 
 export default tests;

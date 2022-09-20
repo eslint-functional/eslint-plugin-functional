@@ -37,6 +37,60 @@ const tests: ReadonlyArray<ValidTestCase> = [
     `,
     optionsSet: [[{ ignorePattern: "^foo" }]],
   },
+  {
+    code: dedent`
+      [1, 2, 3].reduce(
+        (carry, current) => carry + current,
+        0
+      );
+    `,
+    optionsSet: [
+      [
+        {
+          enforceParameterCount: "exactlyOne",
+          ignorePrefixSelector: "CallExpression[callee.property.name='reduce']",
+        },
+      ],
+    ],
+  },
+  {
+    code: dedent`
+      [1, 2, 3].map(
+        (element, index) => element + index,
+        0
+      );
+    `,
+    optionsSet: [
+      [
+        {
+          enforceParameterCount: "exactlyOne",
+          ignorePrefixSelector: "CallExpression[callee.property.name='map']",
+        },
+      ],
+    ],
+  },
+  {
+    code: dedent`
+      [1, 2, 3]
+        .map(
+          (element, index) => element + index
+        )
+        .reduce(
+          (carry, current) => carry + current, 0
+        );
+    `,
+    optionsSet: [
+      [
+        {
+          enforceParameterCount: "exactlyOne",
+          ignorePrefixSelector: [
+            "CallExpression[callee.property.name='reduce']",
+            "CallExpression[callee.property.name='map']",
+          ],
+        },
+      ],
+    ],
+  },
 ];
 
 export default tests;

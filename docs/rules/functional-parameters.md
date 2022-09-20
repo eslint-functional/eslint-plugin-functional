@@ -56,6 +56,7 @@ type Options = {
     ignoreIIFE: boolean;
   };
   ignorePattern?: string[] | string;
+  ignorePrefixSelector?: string[] | string;
 }
 ```
 
@@ -135,6 +136,31 @@ See [enforceParameterCount](#enforceparametercount).
 #### `enforceParameterCount.ignoreIIFE`
 
 If true, this option allows for the use of [IIFEs](https://developer.mozilla.org/en-US/docs/Glossary/IIFE) that do not have any parameters.
+
+### `ignorePrefixSelector`
+
+This allows for ignore functions where one of the given selectors matches the parent node in the AST of the function node.\
+For more information see [ESLint Selectors](https://eslint.org/docs/developer-guide/selectors).
+
+Example:
+
+With the following config:
+
+```json
+{
+  "enforceParameterCount": "exactlyOne",
+  "ignorePrefixSelector": "CallExpression[callee.property.name='reduce']"
+},
+```
+
+The following inline callback won't be flagged:
+
+```js
+const sum = [1, 2, 3].reduce(
+  (carry, current) => current,
+  0
+);
+```
 
 ### `ignorePattern`
 
