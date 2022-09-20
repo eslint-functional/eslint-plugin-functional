@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+# [4.4.0](https://github.com/eslint-functional/eslint-plugin-functional/compare/v4.3.2...v4.4.0) (2022-09-20)
+
+
+### Features
+
+* **functional-parameters:** add support for ignoring selector prefixes ([af3cbcc](https://github.com/eslint-functional/eslint-plugin-functional/commit/af3cbcc26ae282f1c515b6faa56aaced984ae217)), closes [#207](https://github.com/eslint-functional/eslint-plugin-functional/issues/207) [#244](https://github.com/eslint-functional/eslint-plugin-functional/issues/244)
+
 ## [4.3.2](https://github.com/eslint-functional/eslint-plugin-functional/compare/v4.3.1...v4.3.2) (2022-09-19)
 
 ## [4.3.1](https://github.com/eslint-functional/eslint-plugin-functional/compare/v4.3.0...v4.3.1) (2022-09-14)
