@@ -1,19 +1,17 @@
 import type { Linter } from "eslint";
 
+import * as noConditionalStatement from "~/rules/no-conditional-statement";
+import * as noExpressionStatement from "~/rules/no-expression-statement";
+import * as noLoop from "~/rules/no-loop-statement";
+import * as noReturnVoid from "~/rules/no-return-void";
+
 const config: Linter.Config = {
   rules: {
-    "functional/no-expression-statement": "error",
-    "functional/no-conditional-statement": "error",
-    "functional/no-loop-statement": "error",
+    [`functional/${noConditionalStatement.name}`]: "error",
+    [`functional/${noExpressionStatement.name}`]: "error",
+    [`functional/${noLoop.name}`]: "error",
+    [`functional/${noReturnVoid.name}`]: "error",
   },
-  overrides: [
-    {
-      files: ["*.ts", "*.tsx"],
-      rules: {
-        "functional/no-return-void": "error",
-      },
-    },
-  ],
 };
 
 export default config;
