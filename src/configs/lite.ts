@@ -7,7 +7,7 @@ import * as noConditionalStatement from "~/rules/no-conditional-statement";
 import * as noExpressionStatement from "~/rules/no-expression-statement";
 import * as noTryStatement from "~/rules/no-try-statement";
 
-import functional from "./functional";
+import functional from "./recommended";
 
 const overrides: Linter.Config = {
   rules: {
