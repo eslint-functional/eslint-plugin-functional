@@ -10,6 +10,7 @@ import noObjectOrientation from "~/configs/no-object-orientation";
 import noStatements from "~/configs/no-statements";
 import off from "~/configs/off";
 import recommended from "~/configs/recommended";
+import strict from "~/configs/strict";
 import stylistic from "~/configs/stylistic";
 import { rules } from "~/rules";
 
@@ -82,6 +83,7 @@ const configs = new Map([
   [currying, "Currying"],
   [recommended, "Recommended"],
   [lite, "Lite"],
+  [strict, "Functional Strict"],
   [noExceptions, "No Exceptions"],
   [noMutations, "No Mutations"],
   [noObjectOrientation, "No Object Orientation"],
