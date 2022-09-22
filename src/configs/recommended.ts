@@ -1,18 +1,35 @@
 import { deepmerge } from "deepmerge-ts";
 import type { Linter } from "eslint";
 
-import currying from "~/configs/currying";
-import noExceptions from "~/configs/no-exceptions";
-import noMutations from "~/configs/no-mutations";
-import noObjectOrientation from "~/configs/no-object-orientation";
-import noStatements from "~/configs/no-statements";
+import * as noConditionalStatement from "~/rules/no-conditional-statement";
+import * as noLet from "~/rules/no-let";
+import * as noThrowStatement from "~/rules/no-throw-statement";
 
-const config: Linter.Config = deepmerge(
-  currying,
-  noMutations,
-  noExceptions,
-  noObjectOrientation,
-  noStatements
-);
+import strict from "./strict";
+
+const overrides: Linter.Config = {
+  rules: {
+    [`functional/${noConditionalStatement.name}`]: [
+      "error",
+      {
+        allowReturningBranches: true,
+      },
+    ],
+    [`functional/${noLet.name}`]: [
+      "error",
+      {
+        allowInForLoopInit: true,
+      },
+    ],
+    [`functional/${noThrowStatement.name}`]: [
+      "error",
+      {
+        allowInAsyncFunctions: true,
+      },
+    ],
+  },
+};
+
+const config: Linter.Config = deepmerge(strict, overrides);
 
 export default config;
