@@ -9,6 +9,7 @@ import noMutations from "~/configs/no-mutations";
 import noObjectOrientation from "~/configs/no-object-orientation";
 import noStatements from "~/configs/no-statements";
 import off from "~/configs/off";
+import strict from "~/configs/strict";
 import stylistic from "~/configs/stylistic";
 import { rules } from "~/rules";
 import lite from "~/src/configs/lite";
@@ -28,6 +29,7 @@ const config: EslintPluginConfig = {
     all,
     lite,
     recommended,
+    strict,
     off,
     "external-vanilla-recommended": externalVanillaRecommended,
     "external-typescript-recommended": externalTypeScriptRecommended,
