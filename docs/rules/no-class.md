@@ -4,7 +4,7 @@ Disallow use of the `class` keyword.
 
 ## Rule Details
 
-Examples of **incorrect** code for this rule:
+### ❌ Incorrect
 
 <!-- eslint-skip -->
 
@@ -27,7 +27,7 @@ const dogA = new Dog("Jasper", 2);
 console.log(`${dogA.name} is ${dogA.ageInDogYears} in dog years.`);
 ```
 
-Examples of **correct** code for this rule:
+### ✅ Correct
 
 ```js
 /* eslint functional/no-class: "error" */

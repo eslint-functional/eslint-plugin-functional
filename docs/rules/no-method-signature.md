@@ -9,7 +9,7 @@ Because of this any `MethodSignature` will be mutable unless wrapped in the `Rea
 
 It should be noted however that the `PropertySignature` form for declaring functions does not support overloading.
 
-Examples of **incorrect** code for this rule:
+### ❌ Incorrect
 
 <!-- eslint-skip -->
 
@@ -21,7 +21,7 @@ type Foo = {
 };
 ```
 
-Examples of **correct** code for this rule:
+### ✅ Correct
 
 <!-- eslint-disable @typescript-eslint/no-redeclare -->
 
@@ -47,7 +47,7 @@ type Options = {
 }
 ```
 
-The default options:
+### Default Options
 
 ```ts
 const defaults = {
@@ -59,7 +59,7 @@ const defaults = {
 
 If set to `false`, this option allows for the use of method signatures if they are wrapped in the `Readonly` type.
 
-Examples of **incorrect** code for this rule:
+#### ❌ Incorrect
 
 <!-- eslint-skip -->
 

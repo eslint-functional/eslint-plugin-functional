@@ -6,7 +6,7 @@ This rule should be combined with ESLint's built-in `no-var` rule to enforce tha
 
 In functional programming variables should not be mutable; use `const` instead.
 
-Examples of **incorrect** code for this rule:
+### ❌ Incorrect
 
 <!-- eslint-skip -->
 
@@ -25,7 +25,7 @@ for (let i = 0; i < array.length; i++) {
 }
 ```
 
-Examples of **correct** code for this rule:
+### ✅ Correct
 
 ```js
 /* eslint functional/no-let: "error" */
@@ -58,7 +58,7 @@ type Options = {
 }
 ```
 
-The default options:
+### Default Options
 
 ```ts
 const defaults = {
@@ -67,11 +67,29 @@ const defaults = {
 }
 ```
 
+### Preset Overrides
+
+#### `recommended`
+
+```ts
+const recommendedOptions = {
+  allowInForLoopInit: true,
+}
+```
+
+#### `lite`
+
+```ts
+const liteOptions = {
+  allowInForLoopInit: true,
+}
+```
+
 ### `allowInForLoopInit`
 
 If set, `let`s inside of for a loop initializer are allowed. This does not include for...of or for...in loops as they should use `const` instead.
 
-Examples of **correct** code for this rule:
+#### ✅ Correct
 
 <!-- eslint-disable @typescript-eslint/prefer-for-of -->
 
@@ -82,7 +100,7 @@ for (let i = 0; i < array.length; i++) {
 }
 ```
 
-Examples of **incorrect** code for this rule:
+#### ❌ Incorrect
 
 <!-- eslint-skip -->
 
