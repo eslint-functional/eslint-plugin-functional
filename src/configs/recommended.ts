@@ -4,6 +4,8 @@ import type { Linter } from "eslint";
 import * as noConditionalStatement from "~/rules/no-conditional-statement";
 import * as noLet from "~/rules/no-let";
 import * as noThrowStatement from "~/rules/no-throw-statement";
+import * as noTryStatement from "~/rules/no-try-statement";
+import * as preferImmutableParameterTypes from "~/rules/prefer-immutable-parameter-types";
 
 import strict from "./strict";
 
@@ -25,6 +27,13 @@ const overrides: Linter.Config = {
       "error",
       {
         allowInAsyncFunctions: true,
+      },
+    ],
+    [`functional/${noTryStatement.name}`]: "off",
+    [`functional/${preferImmutableParameterTypes.name}`]: [
+      "error",
+      {
+        enforcement: "ReadonlyDeep",
       },
     ],
   },
