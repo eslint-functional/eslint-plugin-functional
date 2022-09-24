@@ -9,7 +9,7 @@ Loops in JavaScript are statements so they are not a good fit for a functional p
 Instead consider using `map`, `reduce` or similar.
 For more background see this [blog post](https://hackernoon.com/rethinking-javascript-death-of-the-for-loop-c431564c84a8) and discussion in [tslint-immutable #54](https://github.com/jonaskello/tslint-immutable/issues/54).
 
-Examples of **incorrect** code for this rule:
+### ❌ Incorrect
 
 <!-- eslint-skip -->
 
@@ -35,7 +35,7 @@ for (const number of numbers) {
 }
 ```
 
-Examples of **correct** code for this rule:
+### ✅ Correct
 
 ```js
 /* eslint functional/no-loop-statement: "error" */

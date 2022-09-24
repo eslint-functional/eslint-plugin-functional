@@ -1,9 +1,11 @@
 # Disallow this access (no-this-expression)
 
+## Rule Details
+
 This rule is companion rule to the [no-class](./no-class.md) rule.
 See the its docs for more info.
 
-Examples of **incorrect** code for this rule:
+### ❌ Incorrect
 
 <!-- eslint-skip -->
 
@@ -13,7 +15,7 @@ Examples of **incorrect** code for this rule:
 const foo = this.value + 17;
 ```
 
-Examples of **correct** code for this rule:
+### ✅ Correct
 
 ```js
 /* eslint functional/no-this-expression: "error" */

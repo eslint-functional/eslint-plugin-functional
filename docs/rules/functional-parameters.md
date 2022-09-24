@@ -11,7 +11,7 @@ When it comes to functional programming, known and explicit parameters must be u
 
 Note: With an unknown number of parameters, currying functions is a lot more difficult/impossible.
 
-Examples of **incorrect** code for this rule:
+### ❌ Incorrect
 
 <!-- eslint-skip -->
 
@@ -33,7 +33,7 @@ function add(...numbers) {
 }
 ```
 
-Examples of **correct** code for this rule:
+### ✅ Correct
 
 ```js
 /* eslint functional/functional-parameters: "error" */
@@ -60,7 +60,7 @@ type Options = {
 }
 ```
 
-The default options:
+### Default Options
 
 ```ts
 const defaults = {
@@ -73,12 +73,12 @@ const defaults = {
 }
 ```
 
-Note: the `lite` ruleset overrides the default options to:
+### Preset Overrides
+
+#### `lite`
 
 ```ts
-const liteDefaults = {
-  allowRestParameter: false,
-  allowArgumentsKeyword: false,
+const liteOptions = {
   enforceParameterCount: false
 }
 ```
