@@ -2,7 +2,7 @@
  * @file Tests the index file.
  */
 
-import { readdirSync } from "fs";
+import { readdirSync } from "node:fs";
 
 import test from "ava";
 
@@ -18,7 +18,7 @@ const configFiles: ReadonlyArray<string> = readdirSync("./src/configs").filter(
 
 test("should have all the rules", (t) => {
   t.true(
-    Object.prototype.hasOwnProperty.call(plugin, "rules"),
+    Object.hasOwn(plugin, "rules"),
     'The plugin\'s config object should have a "rules" property.'
   );
   t.is(ruleFiles.length, Object.keys(plugin.rules).length);
@@ -26,7 +26,7 @@ test("should have all the rules", (t) => {
 
 test("should have all the configs", (t) => {
   t.true(
-    Object.prototype.hasOwnProperty.call(plugin, "configs"),
+    Object.hasOwn(plugin, "configs"),
     'The plugin\'s config object should have a "configs" property.'
   );
   t.is(
