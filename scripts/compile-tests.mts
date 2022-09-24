@@ -1,15 +1,16 @@
-import { promises as fs } from "fs";
+import { promises as fs } from "node:fs";
 
 import * as JSONC from "jsonc-parser";
 import * as tsc from "tsc-prog";
 
-/**
- * The script.
- */
-async function run() {
-  transpileTests();
-  await Promise.all([createTestsTsConfig(), createTestsHelpersTsConfig()]);
-}
+transpileTests();
+await Promise.all(
+  /* eslint-disable unicorn/prefer-top-level-await -- See https://github.com/sindresorhus/eslint-plugin-unicorn/issues/1919 */ [
+    createTestsTsConfig(),
+    createTestsHelpersTsConfig(),
+  ]
+  /* eslint-enable unicorn/prefer-top-level-await */
+);
 
 /**
  * Transpile the tests.
@@ -61,6 +62,3 @@ async function createTestsHelpersTsConfig() {
     "build/tests/helpers/test-tsconfig.json"
   );
 }
-
-// Run the script.
-void run();
