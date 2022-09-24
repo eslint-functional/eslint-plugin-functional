@@ -6,7 +6,7 @@ import deprecated from "~/configs/deprecated";
 import lite from "~/configs/lite";
 import noExceptions from "~/configs/no-exceptions";
 import noMutations from "~/configs/no-mutations";
-import noObjectOrientation from "~/configs/no-object-orientation";
+import noOtherParadigms from "~/configs/no-other-paradigms";
 import noStatements from "~/configs/no-statements";
 import off from "~/configs/off";
 import recommended from "~/configs/recommended";
@@ -86,7 +86,7 @@ const configs = new Map([
   [strict, "Functional Strict"],
   [noExceptions, "No Exceptions"],
   [noMutations, "No Mutations"],
-  [noObjectOrientation, "No Object Orientation"],
+  [noOtherParadigms, "No Other Paradigms"],
   [noStatements, "No Statements"],
   [stylistic, "Stylistic"],
 ]);
