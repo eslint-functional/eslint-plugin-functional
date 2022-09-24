@@ -4,13 +4,13 @@ import all from "~/configs/all";
 import currying from "~/configs/currying";
 import externalTypeScriptRecommended from "~/configs/external-typescript-recommended";
 import externalVanillaRecommended from "~/configs/external-vanilla-recommended";
-import functional from "~/configs/functional";
-import functionalLite from "~/configs/functional-lite";
+import lite from "~/configs/lite";
 import noExceptions from "~/configs/no-exceptions";
 import noMutations from "~/configs/no-mutations";
 import noObjectOrientation from "~/configs/no-object-orientation";
 import noStatements from "~/configs/no-statements";
 import off from "~/configs/off";
+import recommended from "~/configs/recommended";
 import stylistic from "~/configs/stylistic";
 import { rules } from "~/rules";
 
@@ -26,16 +26,16 @@ const config: EslintPluginConfig = {
   rules,
   configs: {
     all,
-    recommended: functional,
+    lite,
+    recommended,
+    off,
     "external-vanilla-recommended": externalVanillaRecommended,
     "external-typescript-recommended": externalTypeScriptRecommended,
-    lite: functionalLite,
-    off,
-    "no-mutations": noMutations,
+    currying,
     "no-exceptions": noExceptions,
+    "no-mutations": noMutations,
     "no-object-orientation": noObjectOrientation,
     "no-statements": noStatements,
-    currying,
     stylistic,
   },
 };

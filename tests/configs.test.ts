@@ -5,13 +5,13 @@ import test from "ava";
 
 import all from "~/configs/all";
 import currying from "~/configs/currying";
-import functional from "~/configs/functional";
-import functionalLite from "~/configs/functional-lite";
+import lite from "~/configs/lite";
 import noExceptions from "~/configs/no-exceptions";
 import noMutations from "~/configs/no-mutations";
 import noObjectOrientation from "~/configs/no-object-orientation";
 import noStatements from "~/configs/no-statements";
 import off from "~/configs/off";
+import recommended from "~/configs/recommended";
 import stylistic from "~/configs/stylistic";
 import { rules } from "~/rules";
 
@@ -49,8 +49,8 @@ test('Config "Off" - should have all the rules "All" has but turned off', (t) =>
  */
 const configs = new Map([
   [currying, "Currying"],
-  [functional, "Functional"],
-  [functionalLite, "Functional Lite"],
+  [recommended, "Recommended"],
+  [lite, "Lite"],
   [noExceptions, "No Exceptions"],
   [noMutations, "No Mutations"],
   [noObjectOrientation, "No Object Orientation"],
