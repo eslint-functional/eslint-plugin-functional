@@ -1,4 +1,4 @@
-import assert from "assert";
+import assert from "node:assert";
 
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import test from "ava";
