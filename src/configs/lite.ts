@@ -1,7 +1,7 @@
 import { deepmerge } from "deepmerge-ts";
 import type { Linter } from "eslint";
 
-import functional from "./functional";
+import recommended from "./recommended";
 
 const overrides: Linter.Config = {
   rules: {
@@ -18,6 +18,6 @@ const overrides: Linter.Config = {
   },
 };
 
-const config: Linter.Config = deepmerge(functional, overrides);
+const config: Linter.Config = deepmerge(recommended, overrides);
 
 export default config;
