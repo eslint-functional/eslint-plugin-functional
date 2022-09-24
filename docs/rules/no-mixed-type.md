@@ -6,7 +6,7 @@ This rule enforces that an aliased type literal or an interface only has one typ
 
 Mixing functions and data properties in the same type is a sign of object-orientation style.
 
-Examples of **incorrect** code for this rule:
+### ❌ Incorrect
 
 <!-- eslint-skip -->
 
@@ -19,7 +19,7 @@ type Foo = {
 };
 ```
 
-Examples of **correct** code for this rule:
+### ✅ Correct
 
 ```ts
 /* eslint functional/no-mixed-type: "error" */
@@ -55,7 +55,7 @@ type Options = {
 }
 ```
 
-The default options:
+### Default Options
 
 ```ts
 const defaults = {

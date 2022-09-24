@@ -12,7 +12,7 @@ This rule enforces use of `readonly T[]` (`ReadonlyArray<T>`) over `T[]` (`Array
 
 The readonly modifier must appear on property signatures in interfaces, property declarations in classes, and index signatures.
 
-Examples of **incorrect** code for this rule:
+### ❌ Incorrect
 
 <!-- eslint-skip -->
 
@@ -27,7 +27,7 @@ const point: Point = { x: 23, y: 44 };
 point.x = 99; // This is perfectly valid.
 ```
 
-Examples of **correct** code for this rule:
+### ✅ Correct
 
 ```ts
 /* eslint functional/prefer-readonly-type: "error" */
@@ -109,7 +109,7 @@ type Options = {
 }
 ```
 
-The default options:
+### Default Options
 
 ```ts
 const defaults = {

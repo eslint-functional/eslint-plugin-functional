@@ -19,7 +19,7 @@ immutability enforcements to be made.
 
 This rule is designed to replace the aforementioned rule.
 
-Examples of **incorrect** code for this rule:
+### ❌ Incorrect
 
 <!-- eslint-disable functional/prefer-immutable-parameter-types -->
 
@@ -65,7 +65,7 @@ interface Foo4 {
 }
 ```
 
-Examples of **correct** code for this rule:
+### ✅ Correct
 
 <!-- eslint-disable functional/prefer-immutable-parameter-types -->
 
@@ -147,11 +147,29 @@ type Options = {
 }
 ```
 
-The default options:
+### Default Options
 
 ```ts
 const defaults = {
+  enforcement: "Immutable",
+}
+```
+
+### Preset Overrides
+
+#### `recommended`
+
+```ts
+const recommendedOptions = {
   enforcement: "ReadonlyDeep",
+}
+```
+
+#### `lite`
+
+```ts
+const liteOptions = {
+  enforcement: "ReadonlyShallow",
 }
 ```
 
