@@ -7,7 +7,7 @@ import externalVanillaRecommended from "~/configs/external-vanilla-recommended";
 import lite from "~/configs/lite";
 import noExceptions from "~/configs/no-exceptions";
 import noMutations from "~/configs/no-mutations";
-import noObjectOrientation from "~/configs/no-object-orientation";
+import noOtherParadigms from "~/configs/no-other-paradigms";
 import noStatements from "~/configs/no-statements";
 import off from "~/configs/off";
 import recommended from "~/configs/recommended";
@@ -36,7 +36,7 @@ const config: EslintPluginConfig = {
     currying,
     "no-exceptions": noExceptions,
     "no-mutations": noMutations,
-    "no-object-orientation": noObjectOrientation,
+    "no-other-paradigms": noOtherParadigms,
     "no-statements": noStatements,
     stylistic,
   },
