@@ -12,7 +12,7 @@ immutability
 section](https://github.com/RebeccaStevens/is-immutable-type#immutability) of
 [is-immutable-type](https://www.npmjs.com/package/is-immutable-type).
 
-Examples of **incorrect** code for this rule:
+### ❌ Incorrect
 
 <!-- eslint-disable functional/type-declaration-immutability -->
 
@@ -35,7 +35,7 @@ type MutableElement = Readonly<{
 }>;
 ```
 
-Examples of **correct** code for this rule:
+### ✅ Correct
 
 <!-- eslint-disable functional/type-declaration-immutability -->
 
@@ -80,7 +80,7 @@ type Options = {
 }
 ```
 
-The default options:
+### Default Options
 
 ```ts
 const defaults = {

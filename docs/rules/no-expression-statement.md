@@ -6,7 +6,7 @@ This rule checks that the value of an expression is assigned to a variable and t
 
 When you call a function and don’t use it’s return value, chances are high that it is being called for its side effect. e.g.
 
-Examples of **incorrect** code for this rule:
+### ❌ Incorrect
 
 <!-- eslint-skip -->
 
@@ -32,7 +32,7 @@ array.push(3);
 foo(bar);
 ```
 
-Examples of **correct** code for this rule:
+### ✅ Correct
 
 ```js
 /* eslint functional/no-expression-statement: "error" */
@@ -59,7 +59,7 @@ type Options = {
 }
 ```
 
-The default options:
+### Default Options
 
 ```ts
 const defaults = {
