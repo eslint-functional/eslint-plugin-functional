@@ -344,13 +344,13 @@ export function isVariableDeclarator(
 export function hasID(
   node: ReadonlyDeep<TSESTree.Node>
 ): node is ReadonlyDeep<Extract<TSESTree.Node, { id: unknown }>> {
-  return Object.prototype.hasOwnProperty.call(node, "id");
+  return Object.hasOwn(node, "id");
 }
 
 export function hasKey(
   node: ReadonlyDeep<TSESTree.Node>
 ): node is ReadonlyDeep<Extract<TSESTree.Node, { key: unknown }>> {
-  return Object.prototype.hasOwnProperty.call(node, "key");
+  return Object.hasOwn(node, "key");
 }
 
 export function isDefined<T>(value: T | null | undefined): value is T {
