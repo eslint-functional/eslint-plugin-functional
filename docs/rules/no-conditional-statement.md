@@ -9,7 +9,7 @@ Instead consider using the [ternary operator](https://developer.mozilla.org/en-U
 
 For more background see this [blog post](https://hackernoon.com/rethinking-javascript-the-if-statement-b158a61cd6cb) and discussion in [tslint-immutable #54](https://github.com/jonaskello/tslint-immutable/issues/54).
 
-Examples of **incorrect** code for this rule:
+### ❌ Incorrect
 
 <!-- eslint-skip -->
 
@@ -24,7 +24,7 @@ if (i === 1) {
 }
 ```
 
-Examples of **correct** code for this rule:
+### ✅ Correct
 
 ```js
 /* eslint functional/no-conditional-statement: "error" */
@@ -56,11 +56,29 @@ type Options = {
 }
 ```
 
-The default options:
+### Default Options
 
 ```ts
 const defaults = {
   allowReturningBranches: false
+}
+```
+
+### Preset Overrides
+
+#### `recommended`
+
+```ts
+const recommendedOptions = {
+  allowReturningBranches: true,
+}
+```
+
+#### `lite`
+
+```ts
+const liteOptions = {
+  allowReturningBranches: true,
 }
 ```
 

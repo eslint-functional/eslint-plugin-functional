@@ -7,7 +7,7 @@ This rule prohibits syntax that mutates existing objects and arrays via assignme
 While requiring the `readonly` modifier forces declared types to be immutable,
 it won't stop assignment into or modification of untyped objects or external types declared under different rules.
 
-Examples of **incorrect** code for this rule:
+### ❌ Incorrect
 
 <!-- eslint-skip -->
 
@@ -35,7 +35,7 @@ delete arr[1]; // <- Modifying an existing array is not allowed.
 arr.push(3); // <- Modifying an array is not allowed.
 ```
 
-Examples of **correct** code for this rule:
+### ✅ Correct
 
 ```js
 /* eslint functional/immutable-data: "error" */
@@ -70,7 +70,7 @@ type Options = {
 }
 ```
 
-The default options:
+### Default Options
 
 ```ts
 type Options = {
@@ -80,13 +80,13 @@ type Options = {
 };
 ```
 
-Note: the `lite` ruleset overrides the default options to:
+### Preset Overrides
+
+#### `lite`
 
 ```ts
-const defaults = {
-  assumeTypes: true,
+const liteOptions = {
   ignoreClass: "fieldsOnly",
-  ignoreImmediateMutation: true,
 }
 ```
 

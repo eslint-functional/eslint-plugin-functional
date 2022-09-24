@@ -7,7 +7,7 @@ This rule enforces using functions directly if they can be without wrapping them
 Generally there's no reason to wrap a function with a callback wrapper if it's directly called anyway.
 Doing so creates extra inline lambdas that slow the runtime down.
 
-Examples of **incorrect** code for this rule:
+### ❌ Incorrect
 
 <!-- eslint-skip -->
 
@@ -21,7 +21,7 @@ function f(x) {
 const foo = x => f(x);
 ```
 
-Examples of **correct** code for this rule:
+### ✅ Correct
 
 ```ts
 /* eslint functional/prefer-tacit: "error" */
@@ -48,7 +48,7 @@ type Options = {
 }
 ```
 
-The default options:
+### Default Options
 
 ```ts
 const defaults = {
