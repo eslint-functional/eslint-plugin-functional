@@ -7,7 +7,7 @@ This rule disallows the `throw` keyword.
 Exceptions are not part of functional programming.
 As an alternative a function should return an error or in the case of an async function, a rejected promise.
 
-Examples of **incorrect** code for this rule:
+### ❌ Incorrect
 
 <!-- eslint-skip -->
 
@@ -17,7 +17,7 @@ Examples of **incorrect** code for this rule:
 throw new Error("Something went wrong.");
 ```
 
-Examples of **correct** code for this rule:
+### ✅ Correct
 
 ```js
 /* eslint functional/no-throw-statement: "error" */
@@ -49,11 +49,29 @@ type Options = {
 }
 ```
 
-The default options:
+### Default Options
 
 ```ts
 const defaults = {
   allowInAsyncFunctions: false,
+}
+```
+
+### Preset Overrides
+
+#### `recommended`
+
+```ts
+const recommendedOptions = {
+  allowInAsyncFunctions: true,
+}
+```
+
+#### `lite`
+
+```ts
+const liteOptions = {
+  allowInAsyncFunctions: true,
 }
 ```
 
@@ -62,7 +80,7 @@ const defaults = {
 If true, throw statements will be allowed within async functions.\
 This essentially allows throw statements to be used as return statements for errors.
 
-Examples of **correct** code for this rule:
+#### ✅ Correct
 
 ```js
 /* eslint functional/no-throw-statement: ["error", { "allowInAsyncFunctions": true }] */

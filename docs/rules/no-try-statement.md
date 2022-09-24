@@ -6,7 +6,7 @@ This rule disallows the `try` keyword.
 
 Try statements are not part of functional programming. See [no-throw-statement](./no-throw-statement.md) for more information.
 
-Examples of **incorrect** code for this rule:
+### ❌ Incorrect
 
 <!-- eslint-skip -->
 
@@ -20,7 +20,7 @@ try {
 }
 ```
 
-Examples of **correct** code for this rule:
+### ✅ Correct
 
 ```js
 /* eslint functional/no-try-statement: "error" */
@@ -42,7 +42,7 @@ type Options = {
 }
 ```
 
-The default options:
+### Default Options
 
 ```ts
 const defaults = {
