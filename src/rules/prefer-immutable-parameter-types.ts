@@ -54,7 +54,7 @@ const schema: JSONSchema4 = [
  */
 const defaultOptions: Options = [
   {
-    enforcement: Immutability.ReadonlyDeep,
+    enforcement: Immutability.Immutable,
   },
 ];
 

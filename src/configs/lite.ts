@@ -5,7 +5,8 @@ import * as functionalParameters from "~/rules/functional-parameters";
 import * as immutableData from "~/rules/immutable-data";
 import * as noConditionalStatement from "~/rules/no-conditional-statement";
 import * as noExpressionStatement from "~/rules/no-expression-statement";
-import * as noTryStatement from "~/rules/no-try-statement";
+import * as noReturnVoid from "~/rules/no-return-void";
+import * as preferImmutableParameterTypes from "~/rules/prefer-immutable-parameter-types";
 
 import recommended from "./recommended";
 
@@ -23,7 +24,13 @@ const overrides: Linter.Config = {
     ],
     [`functional/${noConditionalStatement.name}`]: "off",
     [`functional/${noExpressionStatement.name}`]: "off",
-    [`functional/${noTryStatement.name}`]: "off",
+    [`functional/${noReturnVoid.name}`]: "error",
+    [`functional/${preferImmutableParameterTypes.name}`]: [
+      "error",
+      {
+        enforcement: "ReadonlyShallow",
+      },
+    ],
   },
 };
 
