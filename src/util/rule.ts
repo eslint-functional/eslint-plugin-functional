@@ -285,5 +285,5 @@ function isParserServices<
   contextOrServices: Context | ParserServices
 ): contextOrServices is ParserServices {
   // Only context has an id property and it will always have one.
-  return !Object.prototype.hasOwnProperty.call(contextOrServices, "id");
+  return !Object.hasOwn(contextOrServices, "id");
 }
