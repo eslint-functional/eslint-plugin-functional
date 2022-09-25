@@ -1,6 +1,9 @@
 # Using the `ignorePattern` option
 
 This option takes a RegExp string or an array of RegExp strings.
+It allows for the ability to ignore violations based on the identifier (name) of node in question.
+
+## Details
 
 Some languages are immutable by default but allows you to explicitly declare mutable variables.
 For example in [reason](https://facebook.github.io/reason/) you can declare mutable record fields like this:
