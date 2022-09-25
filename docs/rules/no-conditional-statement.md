@@ -66,18 +66,10 @@ const defaults = {
 
 ### Preset Overrides
 
-#### `recommended`
+#### `recommended` and `lite`\*\*\*\*
 
 ```ts
-const recommendedOptions = {
-  allowReturningBranches: true,
-}
-```
-
-#### `lite`
-
-```ts
-const liteOptions = {
+const recommendedAndLiteOptions = {
   allowReturningBranches: true,
 }
 ```
