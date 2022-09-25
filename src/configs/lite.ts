@@ -14,6 +14,7 @@ const overrides: Linter.Config = {
     [`functional/${functionalParameters.name}`]: [
       "error",
       {
+        allowLambda: true,
         enforceParameterCount: false,
       },
     ],

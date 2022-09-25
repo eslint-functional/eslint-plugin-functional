@@ -51,6 +51,7 @@ This rule accepts an options object of the following type:
 type Options = {
   allowRestParameter: boolean;
   allowArgumentsKeyword: boolean;
+  allowLambda: boolean,
   enforceParameterCount: "atLeastOne" | "exactlyOne" | false | {
     count: "atLeastOne" | "exactlyOne";
     ignoreIIFE: boolean;
@@ -66,6 +67,7 @@ type Options = {
 const defaults = {
   allowRestParameter: false,
   allowArgumentsKeyword: false,
+  allowLambda: false,
   enforceParameterCount: {
     count: "atLeastOne",
     ignoreIIFE: true
@@ -75,10 +77,19 @@ const defaults = {
 
 ### Preset Overrides
 
+#### `recommended`
+
+```ts
+const liteOptions = {
+  allowLambda: true,
+}
+```
+
 #### `lite`
 
 ```ts
 const liteOptions = {
+  allowLambda: true,
   enforceParameterCount: false
 }
 ```
@@ -90,6 +101,12 @@ If true, this option allows for the use of rest parameters.
 ### `allowArgumentsKeyword`
 
 If true, this option allows for the use of the `arguments` keyword.
+
+### `allowLambda`
+
+If true, this option allows for the use of lambda function. Here, a lambda
+function refers to any function being defined in place as passed directly as an
+argument to another function.
 
 ### `enforceParameterCount`
 

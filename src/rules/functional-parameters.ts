@@ -15,8 +15,13 @@ import {
 import type { ESFunction } from "~/src/util/node-types";
 import type { RuleResult } from "~/util/rule";
 import { createRuleUsingFunction } from "~/util/rule";
-import { isIIFE, isPropertyAccess, isPropertyName } from "~/util/tree";
-import { isRestElement } from "~/util/typeguard";
+import {
+  isArgument,
+  isIIFE,
+  isPropertyAccess,
+  isPropertyName,
+} from "~/util/tree";
+import { isFunctionLike, isRestElement } from "~/util/typeguard";
 
 /**
  * The name of this rule.
@@ -37,6 +42,7 @@ type Options = readonly [
     Readonly<{
       allowRestParameter: boolean;
       allowArgumentsKeyword: boolean;
+      allowLambda: boolean;
       enforceParameterCount:
         | ParameterCountOptions
         | false
@@ -61,6 +67,9 @@ const schema: JSONSchema4 = [
           type: "boolean",
         },
         allowArgumentsKeyword: {
+          type: "boolean",
+        },
+        allowLambda: {
           type: "boolean",
         },
         enforceParameterCount: {
@@ -101,6 +110,7 @@ const defaultOptions: Options = [
   {
     allowRestParameter: false,
     allowArgumentsKeyword: false,
+    allowLambda: false,
     enforceParameterCount: {
       count: "atLeastOne",
       ignoreIIFE: true,
@@ -208,8 +218,12 @@ function checkFunction(
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
+  const { allowLambda } = optionsObject;
 
-  if (shouldIgnorePattern(node, context, optionsObject)) {
+  if (
+    shouldIgnorePattern(node, context, optionsObject) ||
+    (allowLambda && isFunctionLike(node) && isArgument(node))
+  ) {
     return {
       context,
       descriptors: [],

@@ -91,6 +91,13 @@ const tests: ReadonlyArray<ValidTestCase> = [
       ],
     ],
   },
+  {
+    code: dedent`
+      function foo(param) {}
+      foo(() => 1);
+    `,
+    optionsSet: [[{ allowLambda: true }]],
+  },
 ];
 
 export default tests;

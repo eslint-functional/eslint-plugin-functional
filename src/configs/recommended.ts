@@ -2,6 +2,7 @@ import { deepmerge } from "deepmerge-ts";
 import type { Linter } from "eslint";
 import { Immutability } from "is-immutable-type";
 
+import * as functionalParameters from "~/rules/functional-parameters";
 import * as noConditionalStatement from "~/rules/no-conditional-statement";
 import * as noLet from "~/rules/no-let";
 import * as noThrowStatement from "~/rules/no-throw-statement";
@@ -13,6 +14,12 @@ import strict from "./strict";
 
 const overrides: Linter.Config = {
   rules: {
+    [`functional/${functionalParameters.name}`]: [
+      "error",
+      {
+        allowLambda: true,
+      },
+    ],
     [`functional/${noConditionalStatement.name}`]: [
       "error",
       {
