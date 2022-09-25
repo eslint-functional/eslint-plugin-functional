@@ -130,6 +130,21 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       },
     ],
   },
+  {
+    code: dedent`
+      function foo(param) {}
+      foo(function () {});
+    `,
+    optionsSet: [[]],
+    errors: [
+      {
+        messageId: "paramCountAtLeastOne",
+        type: "FunctionExpression",
+        line: 2,
+        column: 5,
+      },
+    ],
+  },
 ];
 
 export default tests;
