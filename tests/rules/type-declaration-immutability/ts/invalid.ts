@@ -2,10 +2,35 @@ import { Immutability } from "is-immutable-type";
 
 import type { InvalidTestCase } from "~/tests/helpers/util";
 
+const recommended = {
+  rules: [
+    {
+      identifiers: [/^I?Immutable.+/u],
+      immutability: Immutability.Immutable,
+      comparator: "AtLeast",
+    },
+    {
+      identifiers: [/^I?ReadonlyDeep.+/u],
+      immutability: Immutability.ReadonlyDeep,
+      comparator: "AtLeast",
+    },
+    {
+      identifiers: [/^I?Readonly.+/u],
+      immutability: Immutability.ReadonlyShallow,
+      comparator: "AtLeast",
+    },
+    {
+      identifiers: [/^I?Mutable.+/u],
+      immutability: Immutability.Mutable,
+      comparator: "AtMost",
+    },
+  ],
+};
+
 const tests: ReadonlyArray<InvalidTestCase> = [
   {
     code: "type ReadonlyFoo = { foo: number }",
-    optionsSet: [[]],
+    optionsSet: [[recommended]],
     errors: [
       {
         messageId: "AtLeast",
@@ -21,7 +46,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   },
   {
     code: "type ReadonlyFoo = { readonly foo: number; bar: { baz: string; }; }",
-    optionsSet: [[]],
+    optionsSet: [[recommended]],
     errors: [
       {
         messageId: "AtLeast",
@@ -37,7 +62,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   },
   {
     code: "type ReadonlySet = Set<string>;",
-    optionsSet: [[]],
+    optionsSet: [[recommended]],
     errors: [
       {
         messageId: "AtLeast",
@@ -53,7 +78,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   },
   {
     code: "type ReadonlyMap = Map<string, string>;",
-    optionsSet: [[]],
+    optionsSet: [[recommended]],
     errors: [
       {
         messageId: "AtLeast",
@@ -69,7 +94,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   },
   {
     code: "type ReadonlyDeepFoo = { readonly foo: number; readonly bar: { baz: string; }; }",
-    optionsSet: [[]],
+    optionsSet: [[recommended]],
     errors: [
       {
         messageId: "AtLeast",
@@ -85,7 +110,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   },
   {
     code: "type ReadonlyDeepSet = ReadonlySet<{ foo: string; }>;",
-    optionsSet: [[]],
+    optionsSet: [[recommended]],
     errors: [
       {
         messageId: "AtLeast",
@@ -101,7 +126,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   },
   {
     code: "type ReadonlyDeepMap = ReadonlyMap<string, { foo: string; }>;",
-    optionsSet: [[]],
+    optionsSet: [[recommended]],
     errors: [
       {
         messageId: "AtLeast",
@@ -117,7 +142,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   },
   {
     code: "type ImmutableFoo = { readonly foo: number; readonly bar: { baz: string; }; }",
-    optionsSet: [[]],
+    optionsSet: [[recommended]],
     errors: [
       {
         messageId: "AtLeast",
@@ -133,7 +158,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   },
   {
     code: "type ImmutableSet = ReadonlySet<{ readonly foo: string; }>;",
-    optionsSet: [[]],
+    optionsSet: [[recommended]],
     errors: [
       {
         messageId: "AtLeast",
@@ -149,7 +174,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   },
   {
     code: "type ImmutableMap = ReadonlyMap<string, { readonly foo: string; }>;",
-    optionsSet: [[]],
+    optionsSet: [[recommended]],
     errors: [
       {
         messageId: "AtLeast",
@@ -165,7 +190,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   },
   {
     code: "type MutableString = string",
-    optionsSet: [[]],
+    optionsSet: [[recommended]],
     errors: [
       {
         messageId: "AtMost",
@@ -181,7 +206,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   },
   {
     code: "type MutableFoo = { readonly foo: number }",
-    optionsSet: [[]],
+    optionsSet: [[recommended]],
     errors: [
       {
         messageId: "AtMost",
@@ -197,7 +222,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   },
   {
     code: "type MutableFoo = { readonly foo: number; readonly bar: { baz: string; }; }",
-    optionsSet: [[]],
+    optionsSet: [[recommended]],
     errors: [
       {
         messageId: "AtMost",
@@ -218,7 +243,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         {
           rules: [
             {
-              identifier: "Foo",
+              identifiers: "Foo",
               immutability: "ReadonlyDeep",
             },
           ],
@@ -245,7 +270,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         {
           rules: [
             {
-              identifier: "^I?Readonly.+",
+              identifiers: "^I?Readonly.+",
               immutability: "ReadonlyDeep",
             },
           ],
@@ -267,7 +292,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   },
   {
     code: "type MutableSet = Set<string>;",
-    optionsSet: [[]],
+    optionsSet: [[recommended]],
     settingsSet: [
       {
         immutability: {
@@ -292,7 +317,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   },
   {
     code: "type MutableSet = Set<string>;",
-    optionsSet: [[]],
+    optionsSet: [[recommended]],
     settingsSet: [
       {
         immutability: {
