@@ -83,6 +83,7 @@ const defaults = {
 const recommendedOptions = {
   enforceParameterCount: {
     ignoreLambdaExpression: true,
+    ignoreIIFE: true,
   },
 }
 ```
