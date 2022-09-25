@@ -3,86 +3,111 @@ import { Immutability } from "is-immutable-type";
 
 import type { ValidTestCase } from "~/tests/helpers/util";
 
+const recommended = {
+  rules: [
+    {
+      identifiers: [/^I?Immutable.+/u],
+      immutability: Immutability.Immutable,
+      comparator: "AtLeast",
+    },
+    {
+      identifiers: [/^I?ReadonlyDeep.+/u],
+      immutability: Immutability.ReadonlyDeep,
+      comparator: "AtLeast",
+    },
+    {
+      identifiers: [/^I?Readonly.+/u],
+      immutability: Immutability.ReadonlyShallow,
+      comparator: "AtLeast",
+    },
+    {
+      identifiers: [/^I?Mutable.+/u],
+      immutability: Immutability.Mutable,
+      comparator: "AtMost",
+    },
+  ],
+};
+
 const tests: ReadonlyArray<ValidTestCase> = [
   {
     code: "type ReadonlyString = string;",
-    optionsSet: [[]],
+    optionsSet: [[recommended]],
   },
   {
     code: "type ReadonlyFoo = { readonly foo: number };",
-    optionsSet: [[]],
+    optionsSet: [[recommended]],
   },
   {
     code: "type ReadonlyFoo = Readonly<{ foo: number }>;",
-    optionsSet: [[]],
+    optionsSet: [[recommended]],
   },
   {
     code: "type ReadonlyFoo = { readonly foo: number; readonly bar: { baz: string; }; };",
-    optionsSet: [[]],
+    optionsSet: [[recommended]],
   },
   {
     code: "type ReadonlySet = ReadonlySet<string>;",
-    optionsSet: [[]],
+    optionsSet: [[recommended]],
   },
   {
     code: "type ReadonlyMap = ReadonlyMap<string, string>;",
-    optionsSet: [[]],
+    optionsSet: [[recommended]],
   },
   {
     code: "type ReadonlyDeepString = string;",
-    optionsSet: [[]],
+    optionsSet: [[recommended]],
   },
   {
     code: "type ReadonlyDeepFoo = { readonly foo: number; readonly bar: { readonly baz: string; }; };",
-    optionsSet: [[]],
+    optionsSet: [[recommended]],
   },
   {
     code: "type ReadonlyDeepSet = ReadonlySet<string>;",
-    optionsSet: [[]],
+    optionsSet: [[recommended]],
   },
   {
     code: "type ReadonlyDeepMap = ReadonlyMap<string, string>;",
-    optionsSet: [[]],
+    optionsSet: [[recommended]],
   },
   {
     code: "type ReadonlyDeepSet = ReadonlySet<{ readonly foo: string; }>;",
-    optionsSet: [[]],
+    optionsSet: [[recommended]],
   },
   {
     code: "type ReadonlyDeepMap = ReadonlyMap<string, { readonly foo: string; }>;",
-    optionsSet: [[]],
+    optionsSet: [[recommended]],
   },
   {
     code: "type ImmutableString = string;",
-    optionsSet: [[]],
+    optionsSet: [[recommended]],
   },
   {
     code: "type ImmutableFoo = { readonly foo: number; readonly bar: { readonly baz: string; }; };",
-    optionsSet: [[]],
+    optionsSet: [[recommended]],
   },
   {
     code: "type ImmutableSet = Readonly<ReadonlySet<{ readonly foo: string; }>>;",
-    optionsSet: [[]],
+    optionsSet: [[recommended]],
   },
   {
     code: "type ImmutableMap = Readonly<ReadonlyMap<string, { readonly foo: string; }>>;",
-    optionsSet: [[]],
+    optionsSet: [[recommended]],
   },
   {
     code: "type MutableFoo = { foo: number };",
-    optionsSet: [[]],
+    optionsSet: [[recommended]],
   },
   {
     code: "type MutableFoo = { readonly foo: number; bar: { readonly baz: string; }; };",
-    optionsSet: [[]],
+    optionsSet: [[recommended]],
   },
   {
     code: "type MutableSet = Set<{ readonly foo: string; }>;",
-    optionsSet: [[]],
+    optionsSet: [[recommended]],
   },
   {
     code: "type MutableMap = Map<string, { readonly foo: string; }>;",
-    optionsSet: [[]],
+    optionsSet: [[recommended]],
   },
   {
     code: "type ReadonlyFoo = { foo: number };",
@@ -116,7 +141,7 @@ const tests: ReadonlyArray<ValidTestCase> = [
         {
           rules: [
             {
-              identifier: "Foo",
+              identifiers: "Foo",
               immutability: "ReadonlyDeep",
             },
           ],
@@ -131,7 +156,7 @@ const tests: ReadonlyArray<ValidTestCase> = [
         {
           rules: [
             {
-              identifier: "^I?Readonly.+",
+              identifiers: "^I?Readonly.+",
               immutability: "ReadonlyDeep",
             },
           ],
@@ -143,7 +168,7 @@ const tests: ReadonlyArray<ValidTestCase> = [
     code: dedent`
       type ReadonlyDeepFoo = ReadonlyDeep<{ foo: { bar: string; }; }>;
     `,
-    optionsSet: [[]],
+    optionsSet: [[recommended]],
     settingsSet: [
       {
         immutability: {

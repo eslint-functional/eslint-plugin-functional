@@ -65,9 +65,9 @@ const schema: JSONSchema4 = [
           type: "object",
           properties: {
             identifiers: {
-              type: ["string", "array"],
+              type: ["string", "object", "array"],
               items: {
-                type: "string",
+                type: ["string", "object"],
               },
             },
             immutability: {
