@@ -16,7 +16,7 @@ export const name = "prefer-property-signatures" as const;
  */
 type Options = readonly [
   Readonly<{
-    ignoreIfReadonly: boolean;
+    ignoreIfReadonlyWrapped: boolean;
   }>
 ];
 
@@ -27,9 +27,9 @@ const schema: JSONSchema4 = [
   {
     type: "object",
     properties: {
-      ignoreIfReadonly: {
+      ignoreIfReadonlyWrapped: {
         type: "boolean",
-        default: true,
+        default: false,
       },
     },
     additionalProperties: false,
@@ -41,7 +41,7 @@ const schema: JSONSchema4 = [
  */
 const defaultOptions: Options = [
   {
-    ignoreIfReadonly: true,
+    ignoreIfReadonlyWrapped: false,
   },
 ];
 
@@ -75,9 +75,9 @@ function checkTSMethodSignature(
   >,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
-  const [{ ignoreIfReadonly }] = options;
+  const [{ ignoreIfReadonlyWrapped }] = options;
 
-  if (ignoreIfReadonly && inReadonly(node)) {
+  if (ignoreIfReadonlyWrapped && inReadonly(node)) {
     return { context, descriptors: [] };
   }
 
