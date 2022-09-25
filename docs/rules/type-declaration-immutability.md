@@ -100,7 +100,7 @@ const defaults = {
 #### `recommended` and `lite`
 
 ```ts
-const recommendedOptions = {
+const recommendedAndLiteOptions = {
   rules: [
     {
       identifiers: "I?Immutable.+",

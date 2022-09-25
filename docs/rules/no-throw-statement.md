@@ -59,18 +59,10 @@ const defaults = {
 
 ### Preset Overrides
 
-#### `recommended`
+#### `recommended` and `lite`
 
 ```ts
-const recommendedOptions = {
-  allowInAsyncFunctions: true,
-}
-```
-
-#### `lite`
-
-```ts
-const liteOptions = {
+const recommendedAndLiteOptions = {
   allowInAsyncFunctions: true,
 }
 ```
