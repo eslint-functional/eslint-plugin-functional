@@ -25,7 +25,7 @@ const tests: ReadonlyArray<ValidTestCase> = [
         methodSignature(): void
       }>{}
     `,
-    optionsSet: [[]],
+    optionsSet: [[{ ignoreIfReadonlyWrapped: true }]],
   },
   {
     code: dedent`
@@ -33,7 +33,7 @@ const tests: ReadonlyArray<ValidTestCase> = [
         methodSignature(): void
       }>{}
     `,
-    optionsSet: [[]],
+    optionsSet: [[{ ignoreIfReadonlyWrapped: true }]],
   },
   {
     code: dedent`
@@ -41,7 +41,7 @@ const tests: ReadonlyArray<ValidTestCase> = [
         methodSignature(): void
       }>
     `,
-    optionsSet: [[]],
+    optionsSet: [[{ ignoreIfReadonlyWrapped: true }]],
   },
   {
     code: dedent`
@@ -49,7 +49,7 @@ const tests: ReadonlyArray<ValidTestCase> = [
         methodSignature(): void
       }>
     `,
-    optionsSet: [[]],
+    optionsSet: [[{ ignoreIfReadonlyWrapped: true }]],
   },
   {
     code: dedent`
@@ -59,7 +59,7 @@ const tests: ReadonlyArray<ValidTestCase> = [
         }>
       }>
     `,
-    optionsSet: [[]],
+    optionsSet: [[{ ignoreIfReadonlyWrapped: true }]],
   },
   {
     code: dedent`
@@ -71,7 +71,7 @@ const tests: ReadonlyArray<ValidTestCase> = [
         }
       }>{}
     `,
-    optionsSet: [[]],
+    optionsSet: [[{ ignoreIfReadonlyWrapped: true }]],
   },
 ];
 
