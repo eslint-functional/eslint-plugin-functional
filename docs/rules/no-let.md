@@ -69,18 +69,10 @@ const defaults = {
 
 ### Preset Overrides
 
-#### `recommended`
+#### `recommended` and `lite`
 
 ```ts
-const recommendedOptions = {
-  allowInForLoopInit: true,
-}
-```
-
-#### `lite`
-
-```ts
-const liteOptions = {
+const recommendedAndLiteOptions = {
   allowInForLoopInit: true,
 }
 ```
