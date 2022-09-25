@@ -183,6 +183,18 @@ export function isIIFE(node: ReadonlyDeep<TSESTree.Node>): boolean {
 }
 
 /**
+ * Is the given node being passed as an argument?
+ */
+export function isArgument(node: ReadonlyDeep<TSESTree.Node>): boolean {
+  return (
+    node.parent !== undefined &&
+    isCallExpression(node.parent) &&
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any
+    node.parent.arguments.includes(node as any)
+  );
+}
+
+/**
  * Get the key the given node is assigned to in its parent ObjectExpression.
  */
 export function getKeyOfValueInObjectExpression(
