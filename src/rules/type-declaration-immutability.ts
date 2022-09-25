@@ -37,8 +37,8 @@ export enum RuleEnforcementComparator {
 type Options = ReadonlyDeep<
   [
     IgnorePatternOption & {
-      rules?: Array<{
-        identifier: string | string[];
+      rules: Array<{
+        identifiers: (string | RegExp) | Array<string | RegExp>;
         immutability: Exclude<
           Immutability | keyof typeof Immutability,
           "Unknown"
@@ -64,7 +64,7 @@ const schema: JSONSchema4 = [
         items: {
           type: "object",
           properties: {
-            identifier: {
+            identifiers: {
               type: ["string", "array"],
               items: {
                 type: "string",
@@ -83,7 +83,7 @@ const schema: JSONSchema4 = [
               enum: Object.values(RuleEnforcementComparator),
             },
           },
-          required: ["identifier", "immutability"],
+          required: ["identifiers", "immutability"],
           additionalProperties: false,
         },
       },
@@ -100,6 +100,13 @@ const schema: JSONSchema4 = [
  */
 const defaultOptions: Options = [
   {
+    rules: [
+      {
+        identifiers: [/^(?!I?Mutable).+/u],
+        immutability: Immutability.Immutable,
+        comparator: RuleEnforcementComparator.AtLeast,
+      },
+    ],
     ignoreInterfaces: false,
   },
 ];
@@ -141,48 +148,22 @@ export type ImmutabilityRule = {
 };
 
 /**
- * Get the default immutability rules.
- */
-function getDefaultImmutabilityRules(): ImmutabilityRule[] {
-  return [
-    {
-      identifiers: [/^I?Immutable.+/u],
-      immutability: Immutability.Immutable,
-      comparator: RuleEnforcementComparator.AtLeast,
-    },
-    {
-      identifiers: [/^I?ReadonlyDeep.+/u],
-      immutability: Immutability.ReadonlyDeep,
-      comparator: RuleEnforcementComparator.AtLeast,
-    },
-    {
-      identifiers: [/^I?Readonly.+/u],
-      immutability: Immutability.ReadonlyShallow,
-      comparator: RuleEnforcementComparator.AtLeast,
-    },
-    {
-      identifiers: [/^I?Mutable.+/u],
-      immutability: Immutability.Mutable,
-      comparator: RuleEnforcementComparator.AtMost,
-    },
-  ];
-}
-
-/**
  * Get all the rules that were given and upgrade them.
  */
 function getRules(options: Options): ImmutabilityRule[] {
   const [optionsObject] = options;
   const { rules: rulesOptions } = optionsObject;
 
-  if (rulesOptions === undefined) {
-    return getDefaultImmutabilityRules();
-  }
-
   return rulesOptions.map((rule): ImmutabilityRule => {
-    const identifiers = isReadonlyArray(rule.identifier)
-      ? rule.identifier.map((id) => new RegExp(id, "u"))
-      : [new RegExp(rule.identifier, "u")];
+    const identifiers = isReadonlyArray(rule.identifiers)
+      ? rule.identifiers.map((id) =>
+          id instanceof RegExp ? id : new RegExp(id, "u")
+        )
+      : [
+          rule.identifiers instanceof RegExp
+            ? rule.identifiers
+            : new RegExp(rule.identifiers, "u"),
+        ];
 
     const immutability =
       typeof rule.immutability === "string"
