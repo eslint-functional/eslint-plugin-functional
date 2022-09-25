@@ -53,6 +53,7 @@ type Options = {
   allowArgumentsKeyword: boolean;
   enforceParameterCount: "atLeastOne" | "exactlyOne" | false | {
     count: "atLeastOne" | "exactlyOne";
+    ignoreLambdaExpression: boolean,
     ignoreIIFE: boolean;
   };
   ignorePattern?: string[] | string;
@@ -68,12 +69,23 @@ const defaults = {
   allowArgumentsKeyword: false,
   enforceParameterCount: {
     count: "atLeastOne",
+    ignoreLambdaExpression: false,
     ignoreIIFE: true
   }
 }
 ```
 
 ### Preset Overrides
+
+#### `recommended`
+
+```ts
+const recommendedOptions = {
+  enforceParameterCount: {
+    ignoreLambdaExpression: true,
+  },
+}
+```
 
 #### `lite`
 
@@ -132,6 +144,11 @@ See [Currying](https://en.wikipedia.org/wiki/Currying) and [Higher-order functio
 #### `enforceParameterCount.count`
 
 See [enforceParameterCount](#enforceparametercount).
+
+### `enforceParameterCount.ignoreLambdaExpression`
+
+If true, this option allows for the use of lambda function expressions that do not have any parameters.
+Here, a lambda function expression refers to any function being defined in place as passed directly as an argument to another function.
 
 #### `enforceParameterCount.ignoreIIFE`
 

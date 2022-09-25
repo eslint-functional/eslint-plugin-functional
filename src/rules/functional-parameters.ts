@@ -15,7 +15,12 @@ import {
 import type { ESFunction } from "~/src/util/node-types";
 import type { RuleResult } from "~/util/rule";
 import { createRuleUsingFunction } from "~/util/rule";
-import { isIIFE, isPropertyAccess, isPropertyName } from "~/util/tree";
+import {
+  isArgument,
+  isIIFE,
+  isPropertyAccess,
+  isPropertyName,
+} from "~/util/tree";
 import { isRestElement } from "~/util/typeguard";
 
 /**
@@ -42,6 +47,7 @@ type Options = readonly [
         | false
         | Readonly<{
             count: ParameterCountOptions;
+            ignoreLambdaExpression: boolean;
             ignoreIIFE: boolean;
           }>;
     }>
@@ -80,6 +86,9 @@ const schema: JSONSchema4 = [
                   type: "string",
                   enum: ["atLeastOne", "exactlyOne"],
                 },
+                ignoreLambdaExpression: {
+                  type: "boolean",
+                },
                 ignoreIIFE: {
                   type: "boolean",
                 },
@@ -103,6 +112,7 @@ const defaultOptions: Options = [
     allowArgumentsKeyword: false,
     enforceParameterCount: {
       count: "atLeastOne",
+      ignoreLambdaExpression: false,
       ignoreIIFE: true,
     },
   },
@@ -163,8 +173,8 @@ function getParamCountViolations(
     enforceParameterCount === false ||
     (node.params.length === 0 &&
       typeof enforceParameterCount === "object" &&
-      enforceParameterCount.ignoreIIFE &&
-      isIIFE(node))
+      ((enforceParameterCount.ignoreIIFE && isIIFE(node)) ||
+        (enforceParameterCount.ignoreLambdaExpression && isArgument(node))))
   ) {
     return [];
   }
