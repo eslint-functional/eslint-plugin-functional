@@ -17,7 +17,10 @@ const overrides: Linter.Config = {
     [`functional/${functionalParameters.name}`]: [
       "error",
       {
-        enforceParameterCount: { ignoreLambdaExpression: true },
+        enforceParameterCount: {
+          ignoreLambdaExpression: true,
+          ignoreIIFE: true,
+        },
       },
     ],
     [`functional/${noConditionalStatement.name}`]: [
