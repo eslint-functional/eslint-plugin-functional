@@ -71,7 +71,7 @@ This rule accepts an options object of the following type:
 ```ts
 type Options = {
   rules: Array<{
-    identifier: string | string[];
+    identifiers: string | string[];
     immutability:  "Mutable" | "ReadonlyShallow" | "ReadonlyDeep" | "Immutable";
     comparator?: "Less" | "AtMost" | "Exactly" | "AtLeast" | "More";
   }>;
@@ -86,27 +86,43 @@ type Options = {
 const defaults = {
   rules: [
     {
-      identifier: "I?Immutable.+",
+      identifiers: "^(?!I?Mutable).+",
+      immutability: "Immutable",
+      comparator: "AtLeast",
+    },
+  ],
+  ignoreInterfaces: false,
+}
+```
+
+### Preset Overrides
+
+#### `recommended` and `lite`
+
+```ts
+const recommendedOptions = {
+  rules: [
+    {
+      identifiers: "I?Immutable.+",
       immutability: "Immutable",
       comparator: "AtLeast",
     },
     {
-      identifier: "I?ReadonlyDeep.+",
+      identifiers: "I?ReadonlyDeep.+",
       immutability: "ReadonlyDeep",
       comparator: "AtLeast",
     },
     {
-      identifier: "I?Readonly.+",
+      identifiers: "I?Readonly.+",
       immutability: "ReadonlyShallow",
       comparator: "AtLeast",
     },
     {
-      identifier: "I?Mutable.+",
+      identifiers: "I?Mutable.+",
       immutability: "Mutable",
       comparator: "AtMost",
     },
   ],
-  ignoreInterfaces: false,
 }
 ```
 
@@ -117,7 +133,7 @@ An array of rules to enforce immutability by.
 These rules should be sorted by precedence as each type declaration will only
 enforce the first matching rule to it.
 
-#### `identifier`
+#### `identifiers`
 
 A regex pattern or an array of regex patterns that are used to match against the
 name of the type declarations.
