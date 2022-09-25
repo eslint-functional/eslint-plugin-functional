@@ -41,7 +41,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         methodSignature(): void
       }
     `,
-    optionsSet: [[]],
+    optionsSet: [[{ ignoreIfReadonlyWrapped: true }]],
     errors: [
       {
         messageId: "generic",
@@ -59,7 +59,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         }
       }>
     `,
-    optionsSet: [[]],
+    optionsSet: [[{ ignoreIfReadonlyWrapped: true }]],
     errors: [
       {
         messageId: "generic",
@@ -79,7 +79,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         }>
       }>{}
     `,
-    optionsSet: [[]],
+    optionsSet: [[{ ignoreIfReadonlyWrapped: true }]],
     errors: [
       {
         messageId: "generic",
@@ -99,7 +99,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         }
       }>{}
     `,
-    optionsSet: [[{ ignoreIfReadonly: false }]],
+    optionsSet: [[]],
     errors: [
       {
         messageId: "generic",
