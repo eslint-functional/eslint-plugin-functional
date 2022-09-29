@@ -8,6 +8,7 @@ import * as noLet from "~/rules/no-let";
 import * as noThrowStatement from "~/rules/no-throw-statement";
 import * as noTryStatement from "~/rules/no-try-statement";
 import * as preferImmutableParameterTypes from "~/rules/prefer-immutable-parameter-types";
+import * as typeDeclarationImmutability from "~/rules/type-declaration-immutability";
 import { RuleEnforcementComparator } from "~/rules/type-declaration-immutability";
 
 import strict from "./strict";
@@ -48,7 +49,7 @@ const overrides: Linter.Config = {
         enforcement: "ReadonlyDeep",
       },
     ],
-    [`functional/${preferImmutableParameterTypes.name}`]: [
+    [`functional/${typeDeclarationImmutability.name}`]: [
       "error",
       {
         rules: [
