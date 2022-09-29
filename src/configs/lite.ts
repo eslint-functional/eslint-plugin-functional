@@ -27,6 +27,7 @@ const overrides: Linter.Config = {
       "error",
       {
         enforcement: "ReadonlyShallow",
+        ignoreInferredTypes: true,
       },
     ],
   },

@@ -182,6 +182,21 @@ const tests: ReadonlyArray<ValidTestCase> = [
       [{ enforcement: "ReadonlyDeep" }],
     ],
   },
+  {
+    code: dedent`
+      type Callback<T> = (options: T) => void;
+      declare const acceptsCallback: <T>(callback: Callback<T>) => void;
+      interface CallbackOptions {
+        prop: string;
+      }
+      acceptsCallback<CallbackOptions>(options => {});
+    `,
+    optionsSet: [
+      [{ enforcement: "ReadonlyShallow", ignoreInferredTypes: true }],
+      [{ enforcement: "ReadonlyDeep", ignoreInferredTypes: true }],
+      [{ enforcement: "Immutable", ignoreInferredTypes: true }],
+    ],
+  },
 ];
 
 export default tests;
