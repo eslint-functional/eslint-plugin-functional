@@ -144,6 +144,7 @@ This rule accepts an options object of the following type:
 ```ts
 type Options = {
   enforcement: "ReadonlyShallow" | "ReadonlyDeep" | "Immutable";
+  ignoreInferredTypes: boolean;
 }
 ```
 
@@ -152,6 +153,7 @@ type Options = {
 ```ts
 const defaults = {
   enforcement: "Immutable",
+  ignoreInferredTypes: false,
 }
 ```
 
@@ -162,6 +164,7 @@ const defaults = {
 ```ts
 const recommendedOptions = {
   enforcement: "ReadonlyDeep",
+  ignoreInferredTypes: true,
 }
 ```
 
@@ -170,6 +173,7 @@ const recommendedOptions = {
 ```ts
 const liteOptions = {
   enforcement: "ReadonlyShallow",
+  ignoreInferredTypes: true,
 }
 ```
 
@@ -177,7 +181,7 @@ const liteOptions = {
 
 The level of immutability that should be enforced.
 
-**incorrect**:
+#### ❌ Incorrect
 
 <!-- eslint-disable functional/prefer-immutable-parameter-types -->
 
@@ -189,7 +193,7 @@ function set(arg: ReadonlySet<string>) {} // ReadonlySet is not immutable
 function map(arg: ReadonlyMap<string>) {} // ReadonlyMap is not immutable
 ```
 
-**correct**:
+#### ✅ Correct
 
 <!-- eslint-disable functional/prefer-immutable-parameter-types -->
 
@@ -211,3 +215,68 @@ function set(arg: ReadonlySet<{ foo: string; }>) {}
 function map(arg: ReadonlyMap<{ foo: string; }>) {}
 function object(arg: Readonly<{ prop: { foo: string; }; }>) {}
 ```
+
+### `ignoreInferredTypes`
+
+This option allows you to ignore parameters which don't explicitly specify a
+type. This may be desirable in cases where an external dependency specifies a
+callback with mutable parameters, and manually annotating the callback's
+parameters is undesirable.
+
+<!--tabs-->
+
+#### ❌ Incorrect
+
+<!-- eslint-disable functional/prefer-immutable-parameter-types -->
+
+```ts
+/* eslint functional/prefer-immutable-parameter-types: ["error", { "ignoreInferredTypes": true }] */
+
+import { acceptsCallback, type CallbackOptions } from 'external-dependency';
+
+acceptsCallback((options: CallbackOptions) => {});
+```
+
+<details>
+<summary>external-dependency.d.ts</summary>
+
+```ts
+export interface CallbackOptions {
+  prop: string;
+}
+type Callback = (options: CallbackOptions) => void;
+type AcceptsCallback = (callback: Callback) => void;
+
+export const acceptsCallback: AcceptsCallback;
+```
+
+</details>
+
+#### ✅ Correct
+
+<!-- eslint-disable functional/prefer-immutable-parameter-types -->
+
+```ts
+/* eslint functional/prefer-immutable-parameter-types: ["error", { "ignoreInferredTypes": true }] */
+
+import { acceptsCallback } from 'external-dependency';
+
+acceptsCallback(options => {});
+```
+
+<details>
+<summary>external-dependency.d.ts</summary>
+
+```ts
+export interface CallbackOptions {
+  prop: string;
+}
+type Callback = (options: CallbackOptions) => void;
+type AcceptsCallback = (callback: Callback) => void;
+
+export const acceptsCallback: AcceptsCallback;
+```
+
+</details>
+
+<!--/tabs-->
