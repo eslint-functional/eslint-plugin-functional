@@ -66,7 +66,7 @@ const defaults = {
 
 ### Preset Overrides
 
-#### `recommended` and `lite`\*\*\*\*
+#### `recommended` and `lite`
 
 ```ts
 const recommendedAndLiteOptions = {
