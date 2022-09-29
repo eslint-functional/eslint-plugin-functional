@@ -107,7 +107,7 @@ The [below section](#rules) gives details on which rules are enabled by each rul
 
 | Name                                                             | Description                               | <span title="Currying">:fleur_de_lis:</span> | <span title="Strict">:speak_no_evil:</span> | <span title="Recommended">:see_no_evil:</span> | <span title="Lite">:hear_no_evil:</span> | :wrench: | :blue_heart: |
 | ---------------------------------------------------------------- | ----------------------------------------- | :------------------------------------------: | :-----------------------------------------: | :--------------------------------------------: | :--------------------------------------: | :------: | :----------: |
-| [`functional-parameters`](./docs/rules/functional-parameters.md) | Functions must have functional parameters |              :heavy_check_mark:              |             :heavy_check_mark:              |               :heavy_check_mark:               |              :green_circle:              |          |              |
+| [`functional-parameters`](./docs/rules/functional-parameters.md) | Functions must have functional parameters |              :heavy_check_mark:              |             :heavy_check_mark:              |                 :green_circle:                 |              :green_circle:              |          |              |
 
 ### Stylistic Rules
 
