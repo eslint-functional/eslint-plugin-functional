@@ -4,6 +4,7 @@ import { Immutability } from "is-immutable-type";
 import * as functionalParameters from "~/rules/functional-parameters";
 import * as noConditionalStatement from "~/rules/no-conditional-statement";
 import * as noLet from "~/rules/no-let";
+import * as noThisExpression from "~/rules/no-this-expression";
 import * as noThrowStatement from "~/rules/no-throw-statement";
 import * as noTryStatement from "~/rules/no-try-statement";
 import * as preferImmutableParameterTypes from "~/rules/prefer-immutable-parameter-types";
@@ -36,6 +37,7 @@ const overrides: Linter.Config = {
         allowInForLoopInit: true,
       },
     ],
+    [`functional/${noThisExpression.name}`]: "off",
     [`functional/${noThrowStatement.name}`]: [
       "error",
       {
