@@ -1,4 +1,3 @@
-import { deepmerge } from "deepmerge-ts";
 import type { Linter } from "eslint";
 import { Immutability } from "is-immutable-type";
 
@@ -10,6 +9,7 @@ import * as noTryStatement from "~/rules/no-try-statement";
 import * as preferImmutableParameterTypes from "~/rules/prefer-immutable-parameter-types";
 import * as typeDeclarationImmutability from "~/rules/type-declaration-immutability";
 import { RuleEnforcementComparator } from "~/rules/type-declaration-immutability";
+import { mergeConfigs } from "~/util/merge-configs";
 
 import strict from "./strict";
 
@@ -79,6 +79,6 @@ const overrides: Linter.Config = {
   },
 };
 
-const config: Linter.Config = deepmerge(strict, overrides);
+const config: Linter.Config = mergeConfigs(strict, overrides);
 
 export default config;

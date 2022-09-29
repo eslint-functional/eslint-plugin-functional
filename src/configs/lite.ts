@@ -1,4 +1,3 @@
-import { deepmerge } from "deepmerge-ts";
 import type { Linter } from "eslint";
 
 import * as functionalParameters from "~/rules/functional-parameters";
@@ -6,6 +5,7 @@ import * as immutableData from "~/rules/immutable-data";
 import * as noConditionalStatement from "~/rules/no-conditional-statement";
 import * as noExpressionStatement from "~/rules/no-expression-statement";
 import * as preferImmutableParameterTypes from "~/rules/prefer-immutable-parameter-types";
+import { mergeConfigs } from "~/util/merge-configs";
 
 import recommended from "./recommended";
 
@@ -32,6 +32,6 @@ const overrides: Linter.Config = {
   },
 };
 
-const config: Linter.Config = deepmerge(recommended, overrides);
+const config: Linter.Config = mergeConfigs(recommended, overrides);
 
 export default config;
