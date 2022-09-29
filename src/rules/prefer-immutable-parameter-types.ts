@@ -23,6 +23,7 @@ type Options = ReadonlyDeep<
         Immutability | keyof typeof Immutability,
         "Unknown" | "Mutable"
       >;
+      ignoreInferredTypes: boolean;
     }
   ]
 >;
@@ -44,6 +45,9 @@ const schema: JSONSchema4 = [
             i !== Immutability[Immutability.Mutable]
         ),
       },
+      ignoreInferredTypes: {
+        type: "boolean",
+      },
     },
     additionalProperties: false,
   },
@@ -55,6 +59,7 @@ const schema: JSONSchema4 = [
 const defaultOptions: Options = [
   {
     enforcement: Immutability.Immutable,
+    ignoreInferredTypes: false,
   },
 ];
 
@@ -91,7 +96,7 @@ function checkFunction(
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
-  const { enforcement: rawEnforcement } = optionsObject;
+  const { enforcement: rawEnforcement, ignoreInferredTypes } = optionsObject;
 
   const enforcement =
     typeof rawEnforcement === "string"
@@ -108,6 +113,11 @@ function checkFunction(
       const actualParam = isTSParameterProperty(param)
         ? param.parameter
         : param;
+
+      if (ignoreInferredTypes && actualParam.typeAnnotation === undefined) {
+        return undefined;
+      }
+
       const immutability = getTypeImmutabilityOfNode(actualParam, context);
 
       return immutability >= enforcement
