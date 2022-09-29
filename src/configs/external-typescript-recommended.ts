@@ -1,7 +1,7 @@
-import { deepmerge } from "deepmerge-ts";
 import type { Linter } from "eslint";
 
 import externalVanillaRecommended from "~/configs/external-vanilla-recommended";
+import { mergeConfigs } from "~/util/merge-configs";
 
 const tsConfig: Linter.Config = {
   rules: {
@@ -10,7 +10,7 @@ const tsConfig: Linter.Config = {
   },
 };
 
-const fullConfig: Linter.Config = deepmerge(
+const fullConfig: Linter.Config = mergeConfigs(
   externalVanillaRecommended,
   tsConfig
 );
