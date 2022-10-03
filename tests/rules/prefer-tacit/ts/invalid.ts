@@ -124,26 +124,6 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       },
     ],
   },
-  // Optional parameters.
-  {
-    code: dedent`
-      function f(x: number, y?: number) {}
-      const foo = x => f(x);
-    `,
-    optionsSet: [[]],
-    output: dedent`
-      function f(x: number, y?: number) {}
-      const foo = f;
-    `,
-    errors: [
-      {
-        messageId: "generic",
-        type: "ArrowFunctionExpression",
-        line: 2,
-        column: 13,
-      },
-    ],
-  },
   // Type parameters
   {
     code: dedent`

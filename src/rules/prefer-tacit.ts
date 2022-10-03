@@ -134,28 +134,20 @@ function isCallerViolation(
   const declaration = getESTreeNode(tsDeclaration, context);
 
   return (
-    (isDefined(declaration) &&
-      (isFunctionLike(declaration) || isTSFunctionType(declaration)) &&
-      declaration.params.length === caller.arguments.length) ||
-    // Check for optional params.
-    ((tsDeclaration as FunctionLikeDeclaration).parameters !== undefined &&
-      (tsDeclaration as FunctionLikeDeclaration).parameters
-        .slice(caller.arguments.length)
-        .every(
-          (param) =>
-            param.initializer !== undefined || param.questionToken !== undefined
-        ))
+    isDefined(declaration) &&
+    (isFunctionLike(declaration) || isTSFunctionType(declaration)) &&
+    declaration.params.length === caller.arguments.length
   );
 }
 
 function fixFunctionCallToReference(
+  context: ReadonlyDeep<
+    TSESLint.RuleContext<keyof typeof errorMessages, Options>
+  >,
   fixer: TSESLint.RuleFixer,
   node: ESFunction,
-  caller: ReadonlyDeep<TSESTree.CallExpression>,
-  callee: ReadonlyDeep<TSESTree.Identifier>
+  caller: ReadonlyDeep<TSESTree.CallExpression>
 ): TSESLint.RuleFix[] | null {
-  const calleeName = callee.name;
-
   // Fix to Instantiation Expression.
   if (
     caller.typeParameters !== undefined &&
@@ -163,29 +155,36 @@ function fixFunctionCallToReference(
   ) {
     return isTS4dot7
       ? [
-          fixer.removeRange([node.range[0], callee.range[0]]),
+          fixer.removeRange([node.range[0], caller.callee.range[0]]),
           fixer.removeRange([caller.typeParameters.range[1], node.range[1]]),
         ]
       : null;
   }
 
-  return [fixer.replaceText(node as TSESTree.Node, calleeName)];
+  return [
+    fixer.replaceText(
+      node as TSESTree.Node,
+      context.getSourceCode().getText(caller.callee as TSESTree.Node)
+    ),
+  ];
 }
 
 /**
  * Creates the fixer function that returns the instruction how to fix violations of this rule to valid code
  */
 function buildFixer(
+  context: ReadonlyDeep<
+    TSESLint.RuleContext<keyof typeof errorMessages, Options>
+  >,
   node: ESFunction,
-  caller: ReadonlyDeep<TSESTree.CallExpression>,
-  callee: ReadonlyDeep<TSESTree.Identifier>
+  caller: ReadonlyDeep<TSESTree.CallExpression>
 ): TSESLint.ReportFixFunction {
   return (fixer) => {
     const functionCallToReference = fixFunctionCallToReference(
+      context,
       fixer,
       node,
-      caller,
-      callee
+      caller
     );
     if (functionCallToReference === null) {
       return null;
@@ -224,7 +223,6 @@ function getCallDescriptors(
   const [{ assumeTypes }] = options;
 
   if (
-    isIdentifier(caller.callee) &&
     node.params.length === caller.arguments.length &&
     node.params.every((param, index) => {
       const callArg = caller.arguments[index];
@@ -254,7 +252,7 @@ function getCallDescriptors(
             // Unless user specifies they want it.
             (typeof assumeTypes === "object" && !assumeTypes.allowFixer)
               ? null
-              : buildFixer(node, caller, caller.callee),
+              : buildFixer(context, node, caller),
         },
       ];
     }
