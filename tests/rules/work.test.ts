@@ -11,7 +11,7 @@ import { testUsing } from "~/tests/helpers/testers";
  * Step 1.
  * Import the rule to test.
  */
-import { name, rule } from "~/rules/type-declaration-immutability";
+import { name, rule } from "~/rules/prefer-immutable-types";
 
 /*
  * Step 2a.
@@ -32,24 +32,18 @@ const valid: ReadonlyArray<ValidTestCase> = [
  * Or provide an invalid test case.
  */
 const invalid: ReadonlyArray<InvalidTestCase> = [
-  // {
-  //   code: dedent`
-  //     // Invalid Code.
-  //   `,
-  //   optionsSet: [[]],
-  //   settingsSet: [{}]
-  //   output: dedent`
-  //     // Fixed Code - Remove if rule doesn't have a fixer.
-  //   `,
-  //   errors: [
-  //     {
-  //       messageId: "generic",
-  //       type: "ClassDeclaration",
-  //       line: 2,
-  //       column: 8
-  //     }
-  //   ]
-  // }
+  {
+    code: "function foo(): ReadonlySet<string> {}",
+    optionsSet: [[{ returnTypes: "Immutable" }]],
+    errors: [
+      {
+        messageId: "returnType",
+        type: "TSTypeAnnotation",
+        line: 1,
+        column: 15,
+      },
+    ],
+  },
 ];
 
 /*
