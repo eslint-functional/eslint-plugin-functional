@@ -1,30 +1,28 @@
-# Prefer immutable parameter types over mutable ones (prefer-immutable-parameter-types)
-
-Although other rules can be used to ensure parameter are not mutated, it is
-best to explicitly declare that the parameters are immutable.
-
-It is also worth noting that as immutable types are not assignable to mutable
-ones, users will not be able to pass something like a readonly array to a
-functional that wants a mutable array; even if the function does not actually
-mutate said array.
+# Prefer immutable types over mutable ones (prefer-immutable-types)
 
 ## Rule Details
 
-This rule differs from the
+This rule is deigned to be a replacement for
 [@typescript-eslint/prefer-readonly-parameter-types](https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/prefer-readonly-parameter-types.md)
-rule by the fact that it uses the
+but also add extra functionality, allowing not just parameters to checked.
+
+This rule uses the
 [is-immutable-type](https://www.npmjs.com/package/is-immutable-type) library to
 calculated immutability. This library allows for more powerful and customizable
 immutability enforcements to be made.
 
-This rule is designed to replace the aforementioned rule.
+With parameters specifically, it is also worth noting that as immutable types
+are not assignable to mutable ones, and thus users will not be able to pass
+something like a readonly array to a functional that wants a mutable array; even
+if the function does not actually mutate said array.
+Libraries should therefore always enforce this rule for parameters.
 
 ### ❌ Incorrect
 
-<!-- eslint-disable functional/prefer-immutable-parameter-types -->
+<!-- eslint-disable functional/prefer-immutable-types -->
 
 ```ts
-/* eslint functional/prefer-immutable-parameter-types: "error" */
+/* eslint functional/prefer-immutable-types: "error" */
 
 function array1(arg: string[]) {} // array is not readonly
 function array2(arg: ReadonlyArray<string[]>) {} // array element is not readonly
@@ -67,10 +65,10 @@ interface Foo4 {
 
 ### ✅ Correct
 
-<!-- eslint-disable functional/prefer-immutable-parameter-types -->
+<!-- eslint-disable functional/prefer-immutable-types -->
 
 ```ts
-/* eslint functional/prefer-immutable-parameter-types: "error" */
+/* eslint functional/prefer-immutable-types: "error" */
 
 function array1(arg: ReadonlyArray<string>) {}
 function array2(arg: ReadonlyArray<ReadonlyArray<string>>) {}
@@ -143,8 +141,22 @@ This rule accepts an options object of the following type:
 
 ```ts
 type Options = {
-  enforcement: "ReadonlyShallow" | "ReadonlyDeep" | "Immutable";
+  enforcement: "None" | "ReadonlyShallow" | "ReadonlyDeep" | "Immutable";
   ignoreInferredTypes: boolean;
+
+  parameters?: {
+    // The same properties as above or just an enforcement value.
+  };
+  returnTypes?: {
+    // The same properties as above or just an enforcement value.
+  };
+  variables?: {
+    // The same properties as above or just an enforcement value.
+  };
+
+  allowLocalMutation: boolean;
+  ignoreClass: boolean | "fieldsOnly";
+  ignorePattern?: string[] | string;
 }
 ```
 
@@ -153,6 +165,8 @@ type Options = {
 ```ts
 const defaults = {
   enforcement: "Immutable",
+  allowLocalMutation: false,
+  ignoreClass: false,
   ignoreInferredTypes: false,
 }
 ```
@@ -163,18 +177,20 @@ const defaults = {
 
 ```ts
 const recommendedOptions = {
-  enforcement: "ReadonlyDeep",
+  enforcement: "None",
   ignoreInferredTypes: true,
-}
+  parameters: "ReadonlyDeep",
+},
 ```
 
 #### `lite`
 
 ```ts
 const liteOptions = {
-  enforcement: "ReadonlyShallow",
+  enforcement: "None",
   ignoreInferredTypes: true,
-}
+  parameters: "ReadonlyShallow",
+},
 ```
 
 ### `enforcement`
@@ -183,10 +199,10 @@ The level of immutability that should be enforced.
 
 #### ❌ Incorrect
 
-<!-- eslint-disable functional/prefer-immutable-parameter-types -->
+<!-- eslint-disable functional/prefer-immutable-types -->
 
 ```ts
-/* eslint functional/prefer-immutable-parameter-types: ["error", { "enforcement": "Immutable" }] */
+/* eslint functional/prefer-immutable-types: ["error", { "enforcement": "Immutable" }] */
 
 function array(arg: ReadonlyArray<string>) {} // ReadonlyArray is not immutable
 function set(arg: ReadonlySet<string>) {} // ReadonlySet is not immutable
@@ -195,20 +211,20 @@ function map(arg: ReadonlyMap<string>) {} // ReadonlyMap is not immutable
 
 #### ✅ Correct
 
-<!-- eslint-disable functional/prefer-immutable-parameter-types -->
+<!-- eslint-disable functional/prefer-immutable-types -->
 
 ```ts
-/* eslint functional/prefer-immutable-parameter-types: ["error", { "enforcement": "Immutable" }] */
+/* eslint functional/prefer-immutable-types: ["error", { "enforcement": "Immutable" }] */
 
 function set(arg: Readonly<ReadonlySet<string>>) {}
 function map(arg: Readonly<ReadonlyMap<string>>) {}
 function object(arg: Readonly<{ prop: string }>) {}
 ```
 
-<!-- eslint-disable functional/prefer-immutable-parameter-types -->
+<!-- eslint-disable functional/prefer-immutable-types -->
 
 ```ts
-/* eslint functional/prefer-immutable-parameter-types: ["error", { "enforcement": "ReadonlyShallow" }] */
+/* eslint functional/prefer-immutable-types: ["error", { "enforcement": "ReadonlyShallow" }] */
 
 function array(arg: ReadonlyArray<{ foo: string; }>) {}
 function set(arg: ReadonlySet<{ foo: string; }>) {}
@@ -227,10 +243,10 @@ parameters is undesirable.
 
 #### ❌ Incorrect
 
-<!-- eslint-disable functional/prefer-immutable-parameter-types -->
+<!-- eslint-disable functional/prefer-immutable-types -->
 
 ```ts
-/* eslint functional/prefer-immutable-parameter-types: ["error", { "ignoreInferredTypes": true }] */
+/* eslint functional/prefer-immutable-types: ["error", { "ignoreInferredTypes": true }] */
 
 import { acceptsCallback, type CallbackOptions } from 'external-dependency';
 
@@ -254,10 +270,10 @@ export const acceptsCallback: AcceptsCallback;
 
 #### ✅ Correct
 
-<!-- eslint-disable functional/prefer-immutable-parameter-types -->
+<!-- eslint-disable functional/prefer-immutable-types -->
 
 ```ts
-/* eslint functional/prefer-immutable-parameter-types: ["error", { "ignoreInferredTypes": true }] */
+/* eslint functional/prefer-immutable-types: ["error", { "ignoreInferredTypes": true }] */
 
 import { acceptsCallback } from 'external-dependency';
 
@@ -280,3 +296,19 @@ export const acceptsCallback: AcceptsCallback;
 </details>
 
 <!--/tabs-->
+
+### `parameters.*`, `returnTypes.*`, `variables.*`
+
+Override the options specifically for the given type of types.
+
+### `ignoreClass`
+
+A boolean to specify if checking classes should be ignored. `false` by default.
+
+### `allowLocalMutation`
+
+See the [allowLocalMutation](./options/allow-local-mutation.md) docs.
+
+### `ignorePattern`
+
+See the [ignorePattern](./options/ignore-pattern.md) docs.

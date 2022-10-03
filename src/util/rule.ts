@@ -9,8 +9,10 @@ import type { ImmutabilityOverrides } from "is-immutable-type";
 import { getTypeImmutability, Immutability } from "is-immutable-type";
 import type { ReadonlyDeep } from "type-fest";
 import type { Node as TSNode, Type } from "typescript";
+import { SignatureKind } from "typescript";
 
 import { getImmutabilityOverrides } from "~/settings";
+import { isNode } from "~/util/typeguard";
 
 // eslint-disable-next-line @typescript-eslint/naming-convention, no-underscore-dangle -- This is a special var.
 const __VERSION__ = "0.0.0-development";
@@ -174,6 +176,7 @@ export function getTypeOfNode<
   const checker = parserServices.program.getTypeChecker();
   const { esTreeNodeToTSNodeMap } = parserServices;
 
+  // checker.getReturnTypeOfSignature
   const nodeType = checker.getTypeAtLocation(
     esTreeNodeToTSNodeMap.get(node as TSESTree.Node)
   );
@@ -182,25 +185,79 @@ export function getTypeOfNode<
 }
 
 /**
- * Get the type immutability of the the given node.
+ * Get the return type of the the given function node.
  */
-export function getTypeImmutabilityOfNode<
+export function getReturnTypesOfFunction<
   Context extends ReadonlyDeep<TSESLint.RuleContext<string, BaseOptions>>
->(node: ReadonlyDeep<TSESTree.Node>, context: Context): Immutability;
+>(node: ReadonlyDeep<TSESTree.Node>, context: Context) {
+  const parserServices = getParserServices(context);
+  if (parserServices === null) {
+    return null;
+  }
+
+  const checker = parserServices.program.getTypeChecker();
+  const type = getTypeOfNode(node, parserServices);
+  if (type === null) {
+    return null;
+  }
+
+  const signatures = checker.getSignaturesOfType(type, SignatureKind.Call);
+  return signatures.map((signature) =>
+    checker.getReturnTypeOfSignature(signature)
+  );
+}
 
 /**
  * Get the type immutability of the the given node.
  */
-export function getTypeImmutabilityOfNode(
-  node: ReadonlyDeep<TSESTree.Node>,
-  parserServices: ParserServices,
-  overrides?: ImmutabilityOverrides
-): Immutability;
+export const getTypeImmutabilityOfNode: {
+  /**
+   * Get the type immutability of the the given node.
+   */
+  <Context extends ReadonlyDeep<TSESLint.RuleContext<string, BaseOptions>>>(
+    node: ReadonlyDeep<TSESTree.Node>,
+    context: Context
+  ): Immutability;
 
-export function getTypeImmutabilityOfNode<
+  /**
+   * Get the type immutability of the the given node.
+   */
+  (
+    node: ReadonlyDeep<TSESTree.Node>,
+    parserServices: ParserServices,
+    overrides?: ImmutabilityOverrides
+  ): Immutability;
+} = getImmutability;
+
+/**
+ * Get the type immutability of the the given type.
+ */
+export const getTypeImmutabilityOfType: {
+  /**
+   * Get the type immutability of the the given type.
+   */
+  <Context extends ReadonlyDeep<TSESLint.RuleContext<string, BaseOptions>>>(
+    type: Type,
+    context: Context
+  ): Immutability;
+
+  /**
+   * Get the type immutability of the the given type.
+   */
+  (
+    type: Type,
+    parserServices: ParserServices,
+    overrides?: ImmutabilityOverrides
+  ): Immutability;
+} = getImmutability;
+
+/**
+ * Get the type immutability of the the given node or type.
+ */
+function getImmutability<
   Context extends ReadonlyDeep<TSESLint.RuleContext<string, BaseOptions>>
 >(
-  node: ReadonlyDeep<TSESTree.Node>,
+  nodeOrType: ReadonlyDeep<TSESTree.Node> | Type,
   contextOrServices: Context | ParserServices,
   explicitOverrides?: ImmutabilityOverrides
 ): Immutability {
@@ -220,7 +277,10 @@ export function getTypeImmutabilityOfNode<
 
   const checker = parserServices.program.getTypeChecker();
 
-  const type = getTypeOfNode(node, parserServices);
+  const type = isNode(nodeOrType)
+    ? getTypeOfNode(nodeOrType, parserServices)
+    : nodeOrType;
+
   return getTypeImmutability(
     checker,
     type,
