@@ -45,6 +45,13 @@ export function isReadonlyArray(
  * Node type guards.
  */
 
+export function isNode(
+  node: ReadonlyDeep<TSESTree.Node> | Type
+): node is ReadonlyDeep<TSESTree.Node> {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+  return (node as any).type !== undefined;
+}
+
 export function isArrayExpression(
   node: ReadonlyDeep<TSESTree.Node>
 ): node is ReadonlyDeep<TSESTree.ArrayExpression> {

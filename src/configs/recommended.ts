@@ -7,7 +7,7 @@ import * as noLet from "~/rules/no-let";
 import * as noThisExpression from "~/rules/no-this-expression";
 import * as noThrowStatement from "~/rules/no-throw-statement";
 import * as noTryStatement from "~/rules/no-try-statement";
-import * as preferImmutableParameterTypes from "~/rules/prefer-immutable-parameter-types";
+import * as preferImmutableTypes from "~/rules/prefer-immutable-types";
 import * as typeDeclarationImmutability from "~/rules/type-declaration-immutability";
 import { RuleEnforcementComparator } from "~/rules/type-declaration-immutability";
 import { mergeConfigs } from "~/util/merge-configs";
@@ -45,11 +45,12 @@ const overrides: Linter.Config = {
       },
     ],
     [`functional/${noTryStatement.name}`]: "off",
-    [`functional/${preferImmutableParameterTypes.name}`]: [
+    [`functional/${preferImmutableTypes.name}`]: [
       "error",
       {
-        enforcement: "ReadonlyDeep",
+        enforcement: "None",
         ignoreInferredTypes: true,
+        parameters: "ReadonlyDeep",
       },
     ],
     [`functional/${typeDeclarationImmutability.name}`]: [
