@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+## [4.4.1](https://github.com/eslint-functional/eslint-plugin-functional/compare/v4.4.0...v4.4.1) (2022-10-03)
+
+
+### Bug Fixes
+
+* **prefer-tacit:** handling of member expressions and be more strict with optional parameters ([a277c2a](https://github.com/eslint-functional/eslint-plugin-functional/commit/a277c2a92987407b24b5f232c1c146fba1b7700a)), closes [#486](https://github.com/eslint-functional/eslint-plugin-functional/issues/486)
+
 # [4.4.0](https://github.com/eslint-functional/eslint-plugin-functional/compare/v4.3.2...v4.4.0) (2022-09-20)
 
 
