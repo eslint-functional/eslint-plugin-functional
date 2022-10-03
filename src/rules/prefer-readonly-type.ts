@@ -114,7 +114,7 @@ const errorMessages = {
 const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
   deprecated: true,
   replacedBy: [
-    "functional/prefer-immutable-parameter-types",
+    "functional/prefer-immutable-types",
     "functional/type-declaration-immutability",
   ],
   type: "suggestion",
