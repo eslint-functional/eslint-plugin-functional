@@ -4,7 +4,7 @@ import * as functionalParameters from "~/rules/functional-parameters";
 import * as immutableData from "~/rules/immutable-data";
 import * as noConditionalStatement from "~/rules/no-conditional-statement";
 import * as noExpressionStatement from "~/rules/no-expression-statement";
-import * as preferImmutableParameterTypes from "~/rules/prefer-immutable-parameter-types";
+import * as preferImmutableTypes from "~/rules/prefer-immutable-types";
 import { mergeConfigs } from "~/util/merge-configs";
 
 import recommended from "./recommended";
@@ -23,11 +23,12 @@ const overrides: Linter.Config = {
     ],
     [`functional/${noConditionalStatement.name}`]: "off",
     [`functional/${noExpressionStatement.name}`]: "off",
-    [`functional/${preferImmutableParameterTypes.name}`]: [
+    [`functional/${preferImmutableTypes.name}`]: [
       "error",
       {
-        enforcement: "ReadonlyShallow",
+        enforcement: "None",
         ignoreInferredTypes: true,
+        parameters: "ReadonlyShallow",
       },
     ],
   },

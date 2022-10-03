@@ -13,7 +13,7 @@ import * as noReturnVoid from "~/rules/no-return-void";
 import * as noThisExpression from "~/rules/no-this-expression";
 import * as noThrowStatement from "~/rules/no-throw-statement";
 import * as noTryStatement from "~/rules/no-try-statement";
-import * as preferImmutableParameterTypes from "~/rules/prefer-immutable-parameter-types";
+import * as preferImmutableTypes from "~/rules/prefer-immutable-types";
 import * as preferPropertySignatures from "~/rules/prefer-property-signatures";
 import * as preferTacit from "~/rules/prefer-tacit";
 import * as typeDeclarationImmutability from "~/rules/type-declaration-immutability";
@@ -33,7 +33,7 @@ const config: Linter.Config = {
     [`functional/${noThisExpression.name}`]: "error",
     [`functional/${noThrowStatement.name}`]: "error",
     [`functional/${noTryStatement.name}`]: "error",
-    [`functional/${preferImmutableParameterTypes.name}`]: "error",
+    [`functional/${preferImmutableTypes.name}`]: "error",
     [`functional/${preferPropertySignatures.name}`]: "error",
     [`functional/${preferTacit.name}`]: [
       "warn",

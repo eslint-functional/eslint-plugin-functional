@@ -6,49 +6,49 @@ const tests: ReadonlyArray<ValidTestCase> = [
   {
     code: "function foo(arg: boolean) {}",
     optionsSet: [
-      [{ enforcement: "ReadonlyShallow" }],
-      [{ enforcement: "ReadonlyDeep" }],
-      [{ enforcement: "Immutable" }],
+      [{ parameters: "ReadonlyShallow" }],
+      [{ parameters: "ReadonlyDeep" }],
+      [{ parameters: "Immutable" }],
     ],
   },
   {
     code: "function foo(arg: true) {}",
     optionsSet: [
-      [{ enforcement: "ReadonlyShallow" }],
-      [{ enforcement: "ReadonlyDeep" }],
-      [{ enforcement: "Immutable" }],
+      [{ parameters: "ReadonlyShallow" }],
+      [{ parameters: "ReadonlyDeep" }],
+      [{ parameters: "Immutable" }],
     ],
   },
   {
     code: "function foo(arg: string) {}",
     optionsSet: [
-      [{ enforcement: "ReadonlyShallow" }],
-      [{ enforcement: "ReadonlyDeep" }],
-      [{ enforcement: "Immutable" }],
+      [{ parameters: "ReadonlyShallow" }],
+      [{ parameters: "ReadonlyDeep" }],
+      [{ parameters: "Immutable" }],
     ],
   },
   {
     code: "function foo(arg: 'bar') {}",
     optionsSet: [
-      [{ enforcement: "ReadonlyShallow" }],
-      [{ enforcement: "ReadonlyDeep" }],
-      [{ enforcement: "Immutable" }],
+      [{ parameters: "ReadonlyShallow" }],
+      [{ parameters: "ReadonlyDeep" }],
+      [{ parameters: "Immutable" }],
     ],
   },
   {
     code: "function foo(arg: 'undefined') {}",
     optionsSet: [
-      [{ enforcement: "ReadonlyShallow" }],
-      [{ enforcement: "ReadonlyDeep" }],
-      [{ enforcement: "Immutable" }],
+      [{ parameters: "ReadonlyShallow" }],
+      [{ parameters: "ReadonlyDeep" }],
+      [{ parameters: "Immutable" }],
     ],
   },
   {
     code: "function foo(arg: readonly string[]) {}",
     optionsSet: [
-      [{ enforcement: "ReadonlyShallow" }],
-      [{ enforcement: "ReadonlyDeep" }],
-      [{ enforcement: "Immutable" }],
+      [{ parameters: "ReadonlyShallow" }],
+      [{ parameters: "ReadonlyDeep" }],
+      [{ parameters: "Immutable" }],
     ],
     settingsSet: [
       {
@@ -66,98 +66,98 @@ const tests: ReadonlyArray<ValidTestCase> = [
   {
     code: "function foo(arg: ReadonlyArray<string>) {}",
     optionsSet: [
-      [{ enforcement: "ReadonlyShallow" }],
-      [{ enforcement: "ReadonlyDeep" }],
+      [{ parameters: "ReadonlyShallow" }],
+      [{ parameters: "ReadonlyDeep" }],
     ],
   },
   {
     code: "function foo(arg: readonly [string, number]) {}",
     optionsSet: [
-      [{ enforcement: "ReadonlyShallow" }],
-      [{ enforcement: "ReadonlyDeep" }],
+      [{ parameters: "ReadonlyShallow" }],
+      [{ parameters: "ReadonlyDeep" }],
     ],
   },
   {
     code: "function foo(arg: Readonly<[string, number]>) {}",
     optionsSet: [
-      [{ enforcement: "ReadonlyShallow" }],
-      [{ enforcement: "ReadonlyDeep" }],
+      [{ parameters: "ReadonlyShallow" }],
+      [{ parameters: "ReadonlyDeep" }],
     ],
   },
   {
     code: "function foo(arg: { readonly foo: string }) {}",
     optionsSet: [
-      [{ enforcement: "ReadonlyShallow" }],
-      [{ enforcement: "ReadonlyDeep" }],
-      [{ enforcement: "Immutable" }],
+      [{ parameters: "ReadonlyShallow" }],
+      [{ parameters: "ReadonlyDeep" }],
+      [{ parameters: "Immutable" }],
     ],
   },
   {
     code: "function foo(arg: { readonly foo: { readonly bar: number } }) {}",
     optionsSet: [
-      [{ enforcement: "ReadonlyShallow" }],
-      [{ enforcement: "ReadonlyDeep" }],
-      [{ enforcement: "Immutable" }],
+      [{ parameters: "ReadonlyShallow" }],
+      [{ parameters: "ReadonlyDeep" }],
+      [{ parameters: "Immutable" }],
     ],
   },
   {
     code: "function foo(arg: { foo(): void }) {}",
     optionsSet: [
-      [{ enforcement: "ReadonlyShallow" }],
-      [{ enforcement: "ReadonlyDeep" }],
+      [{ parameters: "ReadonlyShallow" }],
+      [{ parameters: "ReadonlyDeep" }],
     ],
   },
   {
     code: "function foo(arg: { foo: () => void }) {}",
     optionsSet: [
-      [{ enforcement: "ReadonlyShallow" }],
-      [{ enforcement: "ReadonlyDeep" }],
+      [{ parameters: "ReadonlyShallow" }],
+      [{ parameters: "ReadonlyDeep" }],
     ],
   },
   {
     code: "function foo(arg: ReadonlySet<string>) {}",
     optionsSet: [
-      [{ enforcement: "ReadonlyShallow" }],
-      [{ enforcement: "ReadonlyDeep" }],
+      [{ parameters: "ReadonlyShallow" }],
+      [{ parameters: "ReadonlyDeep" }],
     ],
   },
   {
     code: "function foo(arg: ReadonlyMap<string, string>) {}",
     optionsSet: [
-      [{ enforcement: "ReadonlyShallow" }],
-      [{ enforcement: "ReadonlyDeep" }],
+      [{ parameters: "ReadonlyShallow" }],
+      [{ parameters: "ReadonlyDeep" }],
     ],
   },
   {
     code: "function foo(arg: Readonly<ReadonlySet<string>>) {}",
     optionsSet: [
-      [{ enforcement: "ReadonlyShallow" }],
-      [{ enforcement: "ReadonlyDeep" }],
-      [{ enforcement: "Immutable" }],
+      [{ parameters: "ReadonlyShallow" }],
+      [{ parameters: "ReadonlyDeep" }],
+      [{ parameters: "Immutable" }],
     ],
   },
   {
     code: "function foo(arg: Readonly<ReadonlyMap<string, string>>) {}",
     optionsSet: [
-      [{ enforcement: "ReadonlyShallow" }],
-      [{ enforcement: "ReadonlyDeep" }],
-      [{ enforcement: "Immutable" }],
+      [{ parameters: "ReadonlyShallow" }],
+      [{ parameters: "ReadonlyDeep" }],
+      [{ parameters: "Immutable" }],
     ],
   },
   {
     code: dedent`
       class Foo {
         constructor(
-          private arg1: readonly string[],
-          public arg2: readonly string[],
-          protected arg3: readonly string[],
+          private readonly arg1: readonly string[],
+          public readonly arg2: readonly string[],
+          protected readonly arg3: readonly string[],
           readonly arg4: readonly string[],
         ) {}
       }
     `,
     optionsSet: [
-      [{ enforcement: "ReadonlyShallow" }],
-      [{ enforcement: "ReadonlyDeep" }],
+      [{ parameters: "ReadonlyShallow" }],
+      [{ parameters: "ReadonlyDeep" }],
     ],
   },
   {
@@ -167,8 +167,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
       }
     `,
     optionsSet: [
-      [{ enforcement: "ReadonlyShallow" }],
-      [{ enforcement: "ReadonlyDeep" }],
+      [{ parameters: "ReadonlyShallow" }],
+      [{ parameters: "ReadonlyDeep" }],
     ],
   },
   {
@@ -178,8 +178,8 @@ const tests: ReadonlyArray<ValidTestCase> = [
       }
     `,
     optionsSet: [
-      [{ enforcement: "ReadonlyShallow" }],
-      [{ enforcement: "ReadonlyDeep" }],
+      [{ parameters: "ReadonlyShallow" }],
+      [{ parameters: "ReadonlyDeep" }],
     ],
   },
   {
@@ -192,9 +192,27 @@ const tests: ReadonlyArray<ValidTestCase> = [
       acceptsCallback<CallbackOptions>(options => {});
     `,
     optionsSet: [
-      [{ enforcement: "ReadonlyShallow", ignoreInferredTypes: true }],
-      [{ enforcement: "ReadonlyDeep", ignoreInferredTypes: true }],
-      [{ enforcement: "Immutable", ignoreInferredTypes: true }],
+      [
+        {
+          parameters: {
+            enforcement: "ReadonlyShallow",
+            ignoreInferredTypes: true,
+          },
+        },
+      ],
+      [
+        {
+          parameters: {
+            enforcement: "ReadonlyDeep",
+            ignoreInferredTypes: true,
+          },
+        },
+      ],
+      [
+        {
+          parameters: { enforcement: "Immutable", ignoreInferredTypes: true },
+        },
+      ],
     ],
   },
 ];
