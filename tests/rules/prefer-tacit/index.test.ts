@@ -7,8 +7,8 @@ import { testUsing } from "~/tests/helpers/testers";
 import es3Tests from "./es3";
 import es6Tests from "./es6";
 import tsTests from "./ts";
-import ts4Dot7Tests from "./ts4.7";
-import tsNot4Dot7Tests from "./tsNot4.7";
+import tsAtLeast4Dot7Tests from "./ts-at-least-4.7";
+import tsLessThan4Dot7Tests from "./ts-less-than-4.7";
 
 const isTS4dot7 =
   ts !== undefined &&
@@ -17,9 +17,9 @@ const isTS4dot7 =
   });
 
 if (isTS4dot7) {
-  testUsing.typescript(name, rule, ts4Dot7Tests);
+  testUsing.typescript(name, rule, tsAtLeast4Dot7Tests);
 } else {
-  testUsing.typescript(name, rule, tsNot4Dot7Tests);
+  testUsing.typescript(name, rule, tsLessThan4Dot7Tests);
 }
 
 testUsing.typescript(name, rule, tsTests);
