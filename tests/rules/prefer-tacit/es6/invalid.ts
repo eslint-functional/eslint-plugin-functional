@@ -34,26 +34,6 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       },
     ],
   },
-  // Default parameters.
-  {
-    code: dedent`
-      function f(x, y = 10) {}
-      const foo = x => f(x);
-    `,
-    optionsSet: [[{ assumeTypes: { allowFixer: true } }]],
-    output: dedent`
-      function f(x, y = 10) {}
-      const foo = f;
-    `,
-    errors: [
-      {
-        messageId: "generic",
-        type: "ArrowFunctionExpression",
-        line: 2,
-        column: 13,
-      },
-    ],
-  },
 ];
 
 export default tests;

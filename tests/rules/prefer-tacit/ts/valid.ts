@@ -36,6 +36,21 @@ const tests: ReadonlyArray<ValidTestCase> = [
     `,
     optionsSet: [[]],
   },
+  // Optional parameters.
+  {
+    code: dedent`
+      function f(x: number, y?: number) {}
+      const foo = x => f(x);
+    `,
+    optionsSet: [[]],
+  },
+  {
+    code: dedent`
+      const a = ['1', '2'];
+      a.map((x) => Number.parseInt(x));
+    `,
+    optionsSet: [[]],
+  },
 ];
 
 export default tests;
