@@ -1,4 +1,4 @@
-import { name, rule } from "~/rules/prefer-immutable-parameter-types";
+import { name, rule } from "~/rules/prefer-immutable-types";
 import { testUsing } from "~/tests/helpers/testers";
 
 import tsTests from "./ts";
