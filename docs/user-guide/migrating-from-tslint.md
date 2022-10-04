@@ -62,7 +62,7 @@ Below is a table mapping the `eslint-plugin-functional` rules to their `tslint-i
 | [`functional/no-mixed-type`](../rules/no-mixed-type.md)                         | `no-mixed-interface`                                    |
 | [`functional/no-expression-statements`](../rules/no-expression-statements.md)   | `no-expression-statements`                              |
 | [`functional/no-conditional-statements`](../rules/no-conditional-statements.md) | `no-if-statement`                                       |
-| [`functional/no-loop-statement`](../rules/no-loop-statement.md)                 | `no-loop-statement`                                     |
+| [`functional/no-loop-statements`](../rules/no-loop-statements.md)               | `no-loop-statements`                                    |
 | [`functional/no-return-void`](../rules/no-return-void.md)                       | -                                                       |
 | [`functional/no-throw-statement`](../rules/no-throw-statement.md)               | `no-throw`                                              |
 | [`functional/no-try-statement`](../rules/no-try-statement.md)                   | `no-try`                                                |
