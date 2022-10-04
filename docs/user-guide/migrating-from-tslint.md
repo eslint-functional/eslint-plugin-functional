@@ -59,7 +59,7 @@ Below is a table mapping the `eslint-plugin-functional` rules to their `tslint-i
 | [`functional/no-method-signature`](../rules/no-method-signature.md)             | `no-method-signature`                                   |
 | [`functional/no-this-expression`](../rules/no-this-expression.md)               | `no-this`                                               |
 | [`functional/no-classes`](../rules/no-classes.md)                               | `no-classes`                                            |
-| [`functional/no-mixed-type`](../rules/no-mixed-type.md)                         | `no-mixed-interface`                                    |
+| [`functional/no-mixed-types`](../rules/no-mixed-types.md)                       | `no-mixed-interface`                                    |
 | [`functional/no-expression-statements`](../rules/no-expression-statements.md)   | `no-expression-statements`                              |
 | [`functional/no-conditional-statements`](../rules/no-conditional-statements.md) | `no-if-statement`                                       |
 | [`functional/no-loop-statements`](../rules/no-loop-statements.md)               | `no-loop-statements`                                    |
