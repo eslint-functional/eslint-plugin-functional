@@ -45,7 +45,7 @@
       "files": ["./src/**/*"],
       "extends": ["plugin:eslint-plugin/recommended"],
       "rules": {
-        "functional/no-expression-statement": "error"
+        "functional/no-expression-statements": "error"
       }
     },
     {

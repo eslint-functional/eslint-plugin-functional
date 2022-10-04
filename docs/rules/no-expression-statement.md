@@ -1,4 +1,4 @@
-# Using expressions to cause side-effects not allowed (no-expression-statement)
+# Using expressions to cause side-effects not allowed (no-expression-statements)
 
 This rule checks that the value of an expression is assigned to a variable and thus helps promote side-effect free (pure) functions.
 
@@ -11,7 +11,7 @@ When you call a function and don’t use it’s return value, chances are high t
 <!-- eslint-skip -->
 
 ```js
-/* eslint functional/no-expression-statement: "error" */
+/* eslint functional/no-expression-statements: "error" */
 
 console.log("Hello world!");
 ```
@@ -19,7 +19,7 @@ console.log("Hello world!");
 <!-- eslint-skip -->
 
 ```js
-/* eslint functional/no-expression-statement: "error" */
+/* eslint functional/no-expression-statements: "error" */
 
 array.push(3);
 ```
@@ -27,7 +27,7 @@ array.push(3);
 <!-- eslint-skip -->
 
 ```js
-/* eslint functional/no-expression-statement: "error" */
+/* eslint functional/no-expression-statements: "error" */
 
 foo(bar);
 ```
@@ -35,7 +35,7 @@ foo(bar);
 ### ✅ Correct
 
 ```js
-/* eslint functional/no-expression-statement: "error" */
+/* eslint functional/no-expression-statements: "error" */
 
 const baz = foo(bar);
 ```
@@ -43,7 +43,7 @@ const baz = foo(bar);
 <!-- eslint-skip -->
 
 ```js
-/* eslint functional/no-expression-statement: ["error", { "ignoreVoid": true }] */
+/* eslint functional/no-expression-statements: ["error", { "ignoreVoid": true }] */
 
 console.log("hello world");
 ```
