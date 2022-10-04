@@ -1,6 +1,5 @@
 import type { ESLintUtils, TSESLint } from "@typescript-eslint/utils";
 import type { JSONSchema4 } from "json-schema";
-import type { ReadonlyDeep } from "type-fest";
 
 import type { ESLoop } from "~/src/util/node-types";
 import type { RuleResult } from "~/util/rule";
@@ -50,10 +49,8 @@ const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
  * Check if the given loop violates this rule.
  */
 function checkLoop(
-  node: ReadonlyDeep<ESLoop>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >
+  node: ESLoop,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>
 ): RuleResult<keyof typeof errorMessages, Options> {
   // All loops violate this rule.
   return { context, descriptors: [{ node, messageId: "generic" }] };

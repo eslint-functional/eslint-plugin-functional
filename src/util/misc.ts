@@ -1,6 +1,5 @@
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { AST_NODE_TYPES } from "@typescript-eslint/utils";
-import type { ReadonlyDeep } from "type-fest";
 
 import type { BaseOptions } from "~/util/rule";
 import { getKeyOfValueInObjectExpression } from "~/util/tree";
@@ -34,7 +33,7 @@ export function isExpected<T>(expected: T): (actual: T) => boolean {
  * Does the given ExpressionStatement specify directive prologues.
  */
 export function isDirectivePrologue(
-  node: ReadonlyDeep<TSESTree.ExpressionStatement>
+  node: TSESTree.ExpressionStatement
 ): boolean {
   return (
     node.expression.type === AST_NODE_TYPES.Literal &&
@@ -47,8 +46,8 @@ export function isDirectivePrologue(
  * Get the identifier text of the given node.
  */
 function getNodeIdentifierText(
-  node: ReadonlyDeep<TSESTree.Node> | null | undefined,
-  context: ReadonlyDeep<TSESLint.RuleContext<string, BaseOptions>>
+  node: TSESTree.Node | null | undefined,
+  context: TSESLint.RuleContext<string, BaseOptions>
 ): string | undefined {
   if (!isDefined(node)) {
     return undefined;
@@ -98,8 +97,8 @@ function getNodeIdentifierText(
  * Get all the identifier texts of the given node.
  */
 export function getNodeIdentifierTexts(
-  node: ReadonlyDeep<TSESTree.Node>,
-  context: ReadonlyDeep<TSESLint.RuleContext<string, BaseOptions>>
+  node: TSESTree.Node,
+  context: TSESLint.RuleContext<string, BaseOptions>
 ): ReadonlyArray<string> {
   return (
     isVariableDeclaration(node)

@@ -2,7 +2,6 @@ import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { deepmerge } from "deepmerge-ts";
 import type { JSONSchema4 } from "json-schema";
 import * as semver from "semver";
-import type { ReadonlyDeep } from "type-fest";
 import type { Type } from "typescript";
 
 import type { IgnorePatternOption } from "~/common/ignore-options";
@@ -115,11 +114,9 @@ const isTS4dot7 =
  * From the callee's type, does it follow that the caller violates this rule.
  */
 function isCallerViolation(
-  caller: ReadonlyDeep<TSESTree.CallExpression>,
+  caller: TSESTree.CallExpression,
   calleeType: Type,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>
 ): boolean {
   if (calleeType.symbol === undefined) {
     return false;
@@ -140,12 +137,10 @@ function isCallerViolation(
 }
 
 function fixFunctionCallToReference(
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   fixer: TSESLint.RuleFixer,
   node: ESFunction,
-  caller: ReadonlyDeep<TSESTree.CallExpression>
+  caller: TSESTree.CallExpression
 ): TSESLint.RuleFix[] | null {
   // Fix to Instantiation Expression.
   if (
@@ -172,11 +167,9 @@ function fixFunctionCallToReference(
  * Creates the fixer function that returns the instruction how to fix violations of this rule to valid code
  */
 function buildFixer(
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   node: ESFunction,
-  caller: ReadonlyDeep<TSESTree.CallExpression>
+  caller: TSESTree.CallExpression
 ): TSESLint.ReportFixFunction {
   return (fixer) => {
     const functionCallToReference = fixFunctionCallToReference(
@@ -213,12 +206,10 @@ function buildFixer(
  */
 function getCallDescriptors(
   node: ESFunction,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options,
-  caller: ReadonlyDeep<TSESTree.CallExpression>
-): Array<ReadonlyDeep<TSESLint.ReportDescriptor<keyof typeof errorMessages>>> {
+  caller: TSESTree.CallExpression
+): Array<TSESLint.ReportDescriptor<keyof typeof errorMessages>> {
   const [{ assumeTypes }] = options;
 
   if (
@@ -265,11 +256,9 @@ function getCallDescriptors(
  */
 function getDirectCallDescriptors(
   node: ESFunction,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
-): Array<ReadonlyDeep<TSESLint.ReportDescriptor<keyof typeof errorMessages>>> {
+): Array<TSESLint.ReportDescriptor<keyof typeof errorMessages>> {
   if (isCallExpression(node.body)) {
     return getCallDescriptors(node, context, options, node.body);
   }
@@ -281,11 +270,9 @@ function getDirectCallDescriptors(
  */
 function getNestedCallDescriptors(
   node: ESFunction,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
-): Array<ReadonlyDeep<TSESLint.ReportDescriptor<keyof typeof errorMessages>>> {
+): Array<TSESLint.ReportDescriptor<keyof typeof errorMessages>> {
   if (
     isBlockStatement(node.body) &&
     node.body.body.length === 1 &&
@@ -308,9 +295,7 @@ function getNestedCallDescriptors(
  */
 function checkFunction(
   node: ESFunction,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   return {

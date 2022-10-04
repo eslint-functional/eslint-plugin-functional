@@ -74,7 +74,7 @@
     "@commitlint/config-conventional": "^17.0.0",
     "@google/semantic-release-replace-plugin": "^1.1.0",
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
-    "@rebeccastevens/eslint-config": "1.4.0",
+    "@rebeccastevens/eslint-config": "1.4.4",
     "@rollup/plugin-commonjs": "^24.0.0",
     "@rollup/plugin-json": "^6.0.0",
     "@rollup/plugin-node-resolve": "^15.0.0",
@@ -136,7 +136,6 @@
     "tsconfig-paths": "^4.0.0",
     "tslib": "^2.3.1",
     "tsutils": "^3.21.0",
-    "type-fest": "^3.0.0",
     "typescript": "^4.5.5",
     "word-wrap": "^1.2.3"
   },

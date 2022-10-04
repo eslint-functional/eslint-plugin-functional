@@ -1367,9 +1367,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rebeccastevens/eslint-config@npm:1.4.0":
-  version: 1.4.0
-  resolution: "@rebeccastevens/eslint-config@npm:1.4.0"
+"@rebeccastevens/eslint-config@npm:1.4.4":
+  version: 1.4.4
+  resolution: "@rebeccastevens/eslint-config@npm:1.4.4"
   dependencies:
     deepmerge-ts: ^4.0.0
   peerDependencies:
@@ -1378,7 +1378,7 @@ __metadata:
     eslint: ">=8.0.0"
     eslint-import-resolver-typescript: "*"
     eslint-plugin-eslint-comments: "*"
-    eslint-plugin-functional: "*"
+    eslint-plugin-functional: ">=5.0.0"
     eslint-plugin-import: "*"
     eslint-plugin-jsdoc: "*"
     eslint-plugin-markdown: "*"
@@ -1388,7 +1388,7 @@ __metadata:
     eslint-plugin-sonarjs: "*"
     eslint-plugin-tsdoc: "*"
     eslint-plugin-unicorn: "*"
-  checksum: 08b7cc59e8913f47c305ff503bdde2a03506bdeece890681be92e8d3d1fdc0ce6eb0f9c5dd69fa57432dd3aa9e84eb4dd8ab917d00b17d7b1d02bdb457e6556b
+  checksum: 14f980463dda41db41308702486c1770ab2d9b041b4358a96309b4a9a2bcc25e6b33d29f5478a6638415b8f94433417c62c640e75220f3568a9ce03e5249b5b2
   languageName: node
   linkType: hard
 
@@ -3981,7 +3981,7 @@ __metadata:
     "@commitlint/config-conventional": ^17.0.0
     "@google/semantic-release-replace-plugin": ^1.1.0
     "@istanbuljs/nyc-config-typescript": ^1.0.2
-    "@rebeccastevens/eslint-config": 1.4.0
+    "@rebeccastevens/eslint-config": 1.4.4
     "@rollup/plugin-commonjs": ^24.0.0
     "@rollup/plugin-json": ^6.0.0
     "@rollup/plugin-node-resolve": ^15.0.0
@@ -4048,7 +4048,6 @@ __metadata:
     tsconfig-paths: ^4.0.0
     tslib: ^2.3.1
     tsutils: ^3.21.0
-    type-fest: ^3.0.0
     typescript: ^4.5.5
     word-wrap: ^1.2.3
   peerDependencies:
@@ -9641,13 +9640,6 @@ __metadata:
   version: 1.4.0
   resolution: "type-fest@npm:1.4.0"
   checksum: b011c3388665b097ae6a109a437a04d6f61d81b7357f74cbcb02246f2f5bd72b888ae33631b99871388122ba0a87f4ff1c94078e7119ff22c70e52c0ff828201
-  languageName: node
-  linkType: hard
-
-"type-fest@npm:^3.0.0":
-  version: 3.5.1
-  resolution: "type-fest@npm:3.5.1"
-  checksum: b79991ef1310bd114210c8f697b510cefd2276c6ed4fd5026430b6e73a4253916c6551f773327a1e4c47ac2b31205294c8e68030e4999f262e0d47d541f7b7cb
   languageName: node
   linkType: hard
 

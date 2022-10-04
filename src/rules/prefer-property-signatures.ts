@@ -1,6 +1,5 @@
 import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
 import type { JSONSchema4 } from "json-schema";
-import type { ReadonlyDeep } from "type-fest";
 
 import type { RuleResult } from "~/util/rule";
 import { createRule } from "~/util/rule";
@@ -69,10 +68,8 @@ const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
  * Check if the given TSMethodSignature violates this rule.
  */
 function checkTSMethodSignature(
-  node: ReadonlyDeep<TSESTree.TSMethodSignature>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  node: TSESTree.TSMethodSignature,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [{ ignoreIfReadonlyWrapped }] = options;
