@@ -54,12 +54,14 @@ type Option = ReadonlyDeep<
 type Options = ReadonlyDeep<
   [
     Option & {
-      parameters?: Option | RawEnforcement;
-      returnTypes?: Option | RawEnforcement;
+      parameters?: Partial<Option> | RawEnforcement;
+      returnTypes?: Partial<Option> | RawEnforcement;
       variables?:
-        | (Option & {
-            ignoreInFunctions?: boolean;
-          })
+        | Partial<
+            Option & {
+              ignoreInFunctions?: boolean;
+            }
+          >
         | RawEnforcement;
     }
   ]
@@ -215,7 +217,7 @@ function getParameterTypeViolations(
   const { parameters: rawOption } = optionsObject;
   const {
     enforcement: rawEnforcement,
-    ignoreInferredTypes,
+    ignoreInferredTypes: rawIgnoreInferredTypes,
     ignoreClasses,
     ignorePattern,
   } = typeof rawOption === "object"
@@ -237,6 +239,9 @@ function getParameterTypeViolations(
   ) {
     return [];
   }
+
+  const ignoreInferredTypes =
+    rawIgnoreInferredTypes ?? optionsObject.ignoreInferredTypes;
 
   return node.params
     .map((param): Descriptor | undefined => {
@@ -285,7 +290,7 @@ function getReturnTypeViolations(
   const { returnTypes: rawOption } = optionsObject;
   const {
     enforcement: rawEnforcement,
-    ignoreInferredTypes,
+    ignoreInferredTypes: rawIgnoreInferredTypes,
     ignoreClasses,
     ignorePattern,
   } = typeof rawOption === "object"
@@ -300,6 +305,9 @@ function getReturnTypeViolations(
   const enforcement = parseEnforcement(
     rawEnforcement ?? optionsObject.enforcement
   );
+
+  const ignoreInferredTypes =
+    rawIgnoreInferredTypes ?? optionsObject.ignoreInferredTypes;
 
   if (
     enforcement === false ||
@@ -393,7 +401,7 @@ function checkVarible(
   const { variables: rawOption } = optionsObject;
   const {
     enforcement: rawEnforcement,
-    ignoreInferredTypes,
+    ignoreInferredTypes: rawIgnoreInferredTypes,
     ignoreClasses,
     ignorePattern,
     ignoreInFunctions: rawIgnoreInFunctions,
@@ -438,6 +446,8 @@ function checkVarible(
     };
   }
 
+  const ignoreInferredTypes =
+    rawIgnoreInferredTypes ?? optionsObject.ignoreInferredTypes;
   const nodeWithTypeAnnotation = isProperty ? node : node.id;
 
   if (
