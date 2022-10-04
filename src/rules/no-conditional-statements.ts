@@ -21,7 +21,7 @@ import {
 /**
  * The name of this rule.
  */
-export const name = "no-conditional-statement" as const;
+export const name = "no-conditional-statements" as const;
 
 /**
  * The options this rule can take.
