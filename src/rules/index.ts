@@ -2,7 +2,7 @@ import * as functionalParameters from "./functional-parameters";
 import * as immutableData from "./immutable-data";
 import * as noClasses from "./no-classes";
 import * as noConditionalStatements from "./no-conditional-statements";
-import * as noExpressionStatement from "./no-expression-statement";
+import * as noExpressionStatements from "./no-expression-statements";
 import * as noLet from "./no-let";
 import * as noLoop from "./no-loop-statement";
 import * as noMixedType from "./no-mixed-type";
@@ -25,7 +25,7 @@ export const rules = {
   [immutableData.name]: immutableData.rule,
   [noClasses.name]: noClasses.rule,
   [noConditionalStatements.name]: noConditionalStatements.rule,
-  [noExpressionStatement.name]: noExpressionStatement.rule,
+  [noExpressionStatements.name]: noExpressionStatements.rule,
   [noLet.name]: noLet.rule,
   [noLoop.name]: noLoop.rule,
   [noMixedType.name]: noMixedType.rule,
