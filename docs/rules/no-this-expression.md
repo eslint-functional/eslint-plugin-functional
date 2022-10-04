@@ -2,7 +2,7 @@
 
 ## Rule Details
 
-This rule is companion rule to the [no-class](./no-class.md) rule.
+This rule is companion rule to the [no-classes](./no-classes.md) rule.
 See the its docs for more info.
 
 ### ❌ Incorrect
