@@ -1,6 +1,5 @@
 import type { ESLintUtils, TSESLint } from "@typescript-eslint/utils";
 import type { JSONSchema4 } from "json-schema";
-import type { ReadonlyDeep } from "type-fest";
 
 import type { ESFunctionType } from "~/src/util/node-types";
 import type { RuleResult } from "~/util/rule";
@@ -87,10 +86,8 @@ const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
  * Check if the given function node violates this rule.
  */
 function checkFunction(
-  node: ReadonlyDeep<ESFunctionType>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  node: ESFunctionType,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [{ ignoreInferredTypes, allowNull, allowUndefined }] = options;

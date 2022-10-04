@@ -3,7 +3,6 @@ import type {
   TSESLint,
 } from "@typescript-eslint/utils";
 import type { Rule, RuleTester as ESLintRuleTester } from "eslint";
-import type { ReadonlyDeep } from "type-fest";
 
 import ts from "~/conditional-imports/typescript";
 
@@ -24,13 +23,13 @@ type OptionsSets = {
 };
 
 export type ValidTestCase = Omit<
-  ReadonlyDeep<ESLintRuleTester.ValidTestCase>,
+  ESLintRuleTester.ValidTestCase,
   "options" | "settings"
 > &
   OptionsSets;
 
 export type InvalidTestCase = Omit<
-  ReadonlyDeep<ESLintRuleTester.InvalidTestCase>,
+  ESLintRuleTester.InvalidTestCase,
   "options" | "settings"
 > &
   OptionsSets;
@@ -75,7 +74,7 @@ export function processValidTestCase(
 export function createDummyRule(
   create: (
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    context: ReadonlyDeep<TSESLint.RuleContext<"generic", any>>
+    context: TSESLint.RuleContext<"generic", any>
   ) => TSESLint.RuleListener
 ): Rule.RuleModule {
   const meta: TSESLint.RuleMetaData<"generic"> = {
@@ -108,12 +107,12 @@ export type RuleTesterTests = {
  */
 export function addFilename(
   filename: string,
-  tests: ReadonlyDeep<RuleTesterTests>
+  tests: RuleTesterTests
 ): RuleTesterTests {
   const { valid, invalid } = tests;
   return {
     invalid: invalid?.map((test) => ({
-      ...(test as ESLintRuleTester.InvalidTestCase),
+      ...test,
       filename,
     })),
     valid: valid?.map((test) =>

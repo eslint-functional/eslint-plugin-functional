@@ -1,5 +1,4 @@
 import { types as conventionalCommitTypes } from "conventional-commit-types";
-import type { ReadonlyDeep } from "type-fest";
 
 // Override the descriptions of some of the types.
 const types = {
@@ -72,6 +71,6 @@ const options = {
   maxLineWidth: 100,
 };
 
-export type Options = ReadonlyDeep<typeof options>;
+export type Options = typeof options;
 
 export default options;

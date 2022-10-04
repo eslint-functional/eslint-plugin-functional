@@ -2,7 +2,6 @@ import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { deepmerge } from "deepmerge-ts";
 import { Immutability } from "is-immutable-type";
 import type { JSONSchema4 } from "json-schema";
-import type { ReadonlyDeep } from "type-fest";
 
 import type {
   IgnoreClassesOption,
@@ -40,32 +39,28 @@ type RawEnforcement =
   | "None"
   | false;
 
-type Option = ReadonlyDeep<
-  IgnoreClassesOption &
-    IgnorePatternOption & {
-      enforcement: RawEnforcement;
-      ignoreInferredTypes: boolean;
-    }
->;
+type Option = IgnoreClassesOption &
+  IgnorePatternOption & {
+    enforcement: RawEnforcement;
+    ignoreInferredTypes: boolean;
+  };
 
 /**
  * The options this rule can take.
  */
-type Options = ReadonlyDeep<
-  [
-    Option & {
-      parameters?: Partial<Option> | RawEnforcement;
-      returnTypes?: Partial<Option> | RawEnforcement;
-      variables?:
-        | Partial<
-            Option & {
-              ignoreInFunctions?: boolean;
-            }
-          >
-        | RawEnforcement;
-    }
-  ]
->;
+type Options = [
+  Option & {
+    parameters?: Partial<Option> | RawEnforcement;
+    returnTypes?: Partial<Option> | RawEnforcement;
+    variables?:
+      | Partial<
+          Option & {
+            ignoreInFunctions?: boolean;
+          }
+        >
+      | RawEnforcement;
+  }
+];
 
 /**
  * The enum options for the level of enforcement.
@@ -207,10 +202,8 @@ function parseEnforcement(rawEnforcement: RawEnforcement) {
  * Get the parameter type violations.
  */
 function getParameterTypeViolations(
-  node: ReadonlyDeep<ESFunctionType>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  node: ESFunctionType,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): Descriptor[] {
   const [optionsObject] = options;
@@ -280,10 +273,8 @@ function getParameterTypeViolations(
  * Get the return type violations.
  */
 function getReturnTypeViolations(
-  node: ReadonlyDeep<ESFunctionType>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  node: ESFunctionType,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): Descriptor[] {
   const [optionsObject] = options;
@@ -369,10 +360,8 @@ function getReturnTypeViolations(
  * Check if the given function node violates this rule.
  */
 function checkFunction(
-  node: ReadonlyDeep<ESFunctionType>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  node: ESFunctionType,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const descriptors = [
@@ -390,10 +379,8 @@ function checkFunction(
  * Check if the given function node violates this rule.
  */
 function checkVarible(
-  node: ReadonlyDeep<TSESTree.VariableDeclarator | TSESTree.PropertyDefinition>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  node: TSESTree.VariableDeclarator | TSESTree.PropertyDefinition,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
