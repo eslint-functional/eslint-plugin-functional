@@ -34,33 +34,39 @@ declare module "@typescript-eslint/utils" {
  * The settings that have been loaded - so we don't have to reload them.
  */
 const cachedSettings: WeakMap<
-  ReadonlyDeep<SharedConfigurationSettings>,
+  ReadonlyDeep<NonNullable<SharedConfigurationSettings["immutability"]>>,
   ImmutabilityOverrides | undefined
 > = new WeakMap();
 
 /**
  * Get the immutability overrides defined in the settings.
  */
-export function getImmutabilityOverrides(
-  settings: ReadonlyDeep<SharedConfigurationSettings>
-): ImmutabilityOverrides | undefined {
-  if (!cachedSettings.has(settings)) {
-    const overrides = loadImmutabilityOverrides(settings);
+export function getImmutabilityOverrides({
+  immutability,
+}: ReadonlyDeep<SharedConfigurationSettings>):
+  | ImmutabilityOverrides
+  | undefined {
+  if (immutability === undefined) {
+    return undefined;
+  }
+  if (!cachedSettings.has(immutability)) {
+    const overrides = loadImmutabilityOverrides(immutability);
 
     // eslint-disable-next-line functional/no-expression-statements
-    cachedSettings.set(settings, overrides);
+    cachedSettings.set(immutability, overrides);
     return overrides;
   }
-  return cachedSettings.get(settings);
+  return cachedSettings.get(immutability);
 }
 
 /**
  * Get all the overrides and upgrade them.
  */
 function loadImmutabilityOverrides(
-  settings: ReadonlyDeep<SharedConfigurationSettings>
+  immutabilitySettings: ReadonlyDeep<
+    SharedConfigurationSettings["immutability"]
+  >
 ): ImmutabilityOverrides | undefined {
-  const { immutability: immutabilitySettings } = settings;
   const overridesSetting = immutabilitySettings?.overrides;
 
   if (overridesSetting === undefined) {
