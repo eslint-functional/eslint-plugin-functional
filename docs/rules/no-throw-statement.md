@@ -1,4 +1,4 @@
-# Disallow throwing exceptions (no-throw-statement)
+# Disallow throwing exceptions (no-throw-statements)
 
 This rule disallows the `throw` keyword.
 
@@ -12,7 +12,7 @@ As an alternative a function should return an error or in the case of an async f
 <!-- eslint-skip -->
 
 ```js
-/* eslint functional/no-throw-statement: "error" */
+/* eslint functional/no-throw-statements: "error" */
 
 throw new Error("Something went wrong.");
 ```
@@ -20,7 +20,7 @@ throw new Error("Something went wrong.");
 ### ✅ Correct
 
 ```js
-/* eslint functional/no-throw-statement: "error" */
+/* eslint functional/no-throw-statements: "error" */
 
 function divide(x, y) {
   return y === 0 ? new Error("Cannot divide by zero.") : x / y;
@@ -28,7 +28,7 @@ function divide(x, y) {
 ```
 
 ```js
-/* eslint functional/no-throw-statement: "error" */
+/* eslint functional/no-throw-statements: "error" */
 
 async function divide(x, y) {
   const [xv, yv] = await Promise.all([x, y]);
@@ -75,7 +75,7 @@ This essentially allows throw statements to be used as return statements for err
 #### ✅ Correct
 
 ```js
-/* eslint functional/no-throw-statement: ["error", { "allowInAsyncFunctions": true }] */
+/* eslint functional/no-throw-statements: ["error", { "allowInAsyncFunctions": true }] */
 
 async function divide(x, y) {
   const [xv, yv] = await Promise.all([x, y]);

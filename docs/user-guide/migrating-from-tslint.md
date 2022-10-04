@@ -64,7 +64,7 @@ Below is a table mapping the `eslint-plugin-functional` rules to their `tslint-i
 | [`functional/no-conditional-statements`](../rules/no-conditional-statements.md) | `no-if-statement`                                       |
 | [`functional/no-loop-statements`](../rules/no-loop-statements.md)               | `no-loop-statements`                                    |
 | [`functional/no-return-void`](../rules/no-return-void.md)                       | -                                                       |
-| [`functional/no-throw-statement`](../rules/no-throw-statement.md)               | `no-throw`                                              |
+| [`functional/no-throw-statements`](../rules/no-throw-statements.md)             | `no-throw`                                              |
 | [`functional/no-try-statement`](../rules/no-try-statement.md)                   | `no-try`                                                |
 | [`functional/no-promise-reject`](../rules/no-promise-reject.md)                 | `no-reject`                                             |
 | [`functional/functional-parameters`](../rules/functional-parameters.md)         | -                                                       |

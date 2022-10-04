@@ -1,4 +1,4 @@
-import { name, rule } from "~/rules/no-throw-statement";
+import { name, rule } from "~/rules/no-throw-statements";
 import { testUsing } from "~/tests/helpers/testers";
 
 import es3Tests from "./es3";
