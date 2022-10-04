@@ -58,7 +58,7 @@ Below is a table mapping the `eslint-plugin-functional` rules to their `tslint-i
 | [`functional/immutable-data`](../rules/immutable-data.md)                     | `no-object-mutation`, `no-array-mutation` & `no-delete` |
 | [`functional/no-method-signature`](../rules/no-method-signature.md)           | `no-method-signature`                                   |
 | [`functional/no-this-expression`](../rules/no-this-expression.md)             | `no-this`                                               |
-| [`functional/no-class`](../rules/no-class.md)                                 | `no-class`                                              |
+| [`functional/no-classes`](../rules/no-classes.md)                             | `no-classes`                                            |
 | [`functional/no-mixed-type`](../rules/no-mixed-type.md)                       | `no-mixed-interface`                                    |
 | [`functional/no-expression-statement`](../rules/no-expression-statement.md)   | `no-expression-statement`                               |
 | [`functional/no-conditional-statement`](../rules/no-conditional-statement.md) | `no-if-statement`                                       |

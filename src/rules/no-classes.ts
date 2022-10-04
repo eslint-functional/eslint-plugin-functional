@@ -9,7 +9,7 @@ import { createRule } from "~/util/rule";
 /**
  * The name of this rule.
  */
-export const name = "no-class" as const;
+export const name = "no-classes" as const;
 
 /**
  * The options this rule can take.
