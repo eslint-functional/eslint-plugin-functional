@@ -1,4 +1,4 @@
-# Disallow conditional statements (no-conditional-statement)
+# Disallow conditional statements (no-conditional-statements)
 
 This rule disallows conditional statements such as `if` and `switch`.
 
@@ -14,7 +14,7 @@ For more background see this [blog post](https://hackernoon.com/rethinking-javas
 <!-- eslint-skip -->
 
 ```js
-/* eslint functional/no-conditional-statement: "error" */
+/* eslint functional/no-conditional-statements: "error" */
 
 let x;
 if (i === 1) {
@@ -27,13 +27,13 @@ if (i === 1) {
 ### ✅ Correct
 
 ```js
-/* eslint functional/no-conditional-statement: "error" */
+/* eslint functional/no-conditional-statements: "error" */
 
 const x = i === 1 ? 2 : 3;
 ```
 
 ```js
-/* eslint functional/no-conditional-statement: "error" */
+/* eslint functional/no-conditional-statements: "error" */
 
 function foo(x, y) {
   return (
