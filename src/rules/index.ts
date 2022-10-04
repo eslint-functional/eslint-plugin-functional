@@ -10,7 +10,7 @@ import * as noPromiseReject from "./no-promise-reject";
 import * as noReturnVoid from "./no-return-void";
 import * as noThisExpressions from "./no-this-expressions";
 import * as noThrowStatements from "./no-throw-statements";
-import * as noTryStatement from "./no-try-statement";
+import * as noTryStatements from "./no-try-statements";
 import * as preferImmutableTypes from "./prefer-immutable-types";
 import * as preferPropertySignatures from "./prefer-property-signatures";
 import * as preferReadonlyTypes from "./prefer-readonly-type";
@@ -33,7 +33,7 @@ export const rules = {
   [noReturnVoid.name]: noReturnVoid.rule,
   [noThisExpressions.name]: noThisExpressions.rule,
   [noThrowStatements.name]: noThrowStatements.rule,
-  [noTryStatement.name]: noTryStatement.rule,
+  [noTryStatements.name]: noTryStatements.rule,
   [preferImmutableTypes.name]: preferImmutableTypes.rule,
   [preferPropertySignatures.name]: preferPropertySignatures.rule,
   [preferReadonlyTypes.name]: preferReadonlyTypes.rule,
