@@ -88,12 +88,12 @@ The [below section](#rules) gives details on which rules are enabled by each rul
 
 ### No Statements Rules
 
-| Name                                                                   | Description                                                    | <span title="No Statements">:fleur_de_lis:</span> | <span title="Strict">:speak_no_evil:</span> | <span title="Recommended">:see_no_evil:</span> | <span title="Lite">:hear_no_evil:</span> | :wrench: |   :blue_heart:    |
-| ---------------------------------------------------------------------- | -------------------------------------------------------------- | :-----------------------------------------------: | :-----------------------------------------: | :--------------------------------------------: | :--------------------------------------: | :------: | :---------------: |
-| [`no-conditional-statement`](./docs/rules/no-conditional-statement.md) | Disallow conditional statements (`if` and `switch` statements) |                :heavy_check_mark:                 |             :heavy_check_mark:              |                 :green_circle:                 |                                          |          | :thought_balloon: |
-| [`no-expression-statement`](./docs/rules/no-expression-statement.md)   | Disallow expressions to cause side-effects                     |                :heavy_check_mark:                 |             :heavy_check_mark:              |                                                |                                          |          | :thought_balloon: |
-| [`no-loop-statement`](./docs/rules/no-loop-statement.md)               | Disallow imperative loops                                      |                :heavy_check_mark:                 |             :heavy_check_mark:              |               :heavy_check_mark:               |            :heavy_check_mark:            |          |                   |
-| [`no-return-void`](./docs/rules/no-return-void.md)                     | Disallow functions that return nothing                         |                :heavy_check_mark:                 |             :heavy_check_mark:              |               :heavy_check_mark:               |            :heavy_check_mark:            |          | :thought_balloon: |
+| Name                                                                     | Description                                                    | <span title="No Statements">:fleur_de_lis:</span> | <span title="Strict">:speak_no_evil:</span> | <span title="Recommended">:see_no_evil:</span> | <span title="Lite">:hear_no_evil:</span> | :wrench: |   :blue_heart:    |
+| ------------------------------------------------------------------------ | -------------------------------------------------------------- | :-----------------------------------------------: | :-----------------------------------------: | :--------------------------------------------: | :--------------------------------------: | :------: | :---------------: |
+| [`no-conditional-statements`](./docs/rules/no-conditional-statements.md) | Disallow conditional statements (`if` and `switch` statements) |                :heavy_check_mark:                 |             :heavy_check_mark:              |                 :green_circle:                 |                                          |          | :thought_balloon: |
+| [`no-expression-statement`](./docs/rules/no-expression-statement.md)     | Disallow expressions to cause side-effects                     |                :heavy_check_mark:                 |             :heavy_check_mark:              |                                                |                                          |          | :thought_balloon: |
+| [`no-loop-statement`](./docs/rules/no-loop-statement.md)                 | Disallow imperative loops                                      |                :heavy_check_mark:                 |             :heavy_check_mark:              |               :heavy_check_mark:               |            :heavy_check_mark:            |          |                   |
+| [`no-return-void`](./docs/rules/no-return-void.md)                       | Disallow functions that return nothing                         |                :heavy_check_mark:                 |             :heavy_check_mark:              |               :heavy_check_mark:               |            :heavy_check_mark:            |          | :thought_balloon: |
 
 ### No Exceptions Rules
 
@@ -158,7 +158,7 @@ These rules are what are included in the _external recommended_ rulesets.
   This rule is helpful when working with classes.
 
 - [@typescript-eslint/switch-exhaustiveness-check](https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/switch-exhaustiveness-check.md)\
-  Although our [no-conditional-statement](./docs/rules/no-conditional-statement.md) rule also performs this check, this rule has a fixer that will implement the unimplemented cases which can be useful.
+  Although our [no-conditional-statements](./docs/rules/no-conditional-statements.md) rule also performs this check, this rule has a fixer that will implement the unimplemented cases which can be useful.
 
 ## Prior work
 

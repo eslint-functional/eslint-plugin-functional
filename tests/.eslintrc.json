@@ -8,7 +8,7 @@
     "eslint-comments/disable-enable-pair": "off",
     "eslint-comments/no-unlimited-disable": "off",
     "functional/functional-parameters": "off",
-    "functional/no-conditional-statement": "off",
+    "functional/no-conditional-statements": "off",
     "functional/no-expression-statement": "off",
     "functional/no-loop-statement": "off",
     "functional/no-return-void": "off",
