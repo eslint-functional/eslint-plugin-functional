@@ -60,7 +60,7 @@ Below is a table mapping the `eslint-plugin-functional` rules to their `tslint-i
 | [`functional/no-this-expression`](../rules/no-this-expression.md)               | `no-this`                                               |
 | [`functional/no-classes`](../rules/no-classes.md)                               | `no-classes`                                            |
 | [`functional/no-mixed-type`](../rules/no-mixed-type.md)                         | `no-mixed-interface`                                    |
-| [`functional/no-expression-statement`](../rules/no-expression-statement.md)     | `no-expression-statement`                               |
+| [`functional/no-expression-statements`](../rules/no-expression-statements.md)   | `no-expression-statements`                              |
 | [`functional/no-conditional-statements`](../rules/no-conditional-statements.md) | `no-if-statement`                                       |
 | [`functional/no-loop-statement`](../rules/no-loop-statement.md)                 | `no-loop-statement`                                     |
 | [`functional/no-return-void`](../rules/no-return-void.md)                       | -                                                       |

@@ -9,7 +9,7 @@
     "eslint-comments/no-unlimited-disable": "off",
     "functional/functional-parameters": "off",
     "functional/no-conditional-statements": "off",
-    "functional/no-expression-statement": "off",
+    "functional/no-expression-statements": "off",
     "functional/no-loop-statement": "off",
     "functional/no-return-void": "off",
     "import/no-named-as-default-member": "off",
