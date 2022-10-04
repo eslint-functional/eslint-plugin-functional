@@ -1,4 +1,4 @@
-# Disallow try-catch[-finally] and try-finally patterns (no-try-statement)
+# Disallow try-catch[-finally] and try-finally patterns (no-try-statements)
 
 This rule disallows the `try` keyword.
 
@@ -11,7 +11,7 @@ Try statements are not part of functional programming. See [no-throw-statements]
 <!-- eslint-skip -->
 
 ```js
-/* eslint functional/no-try-statement: "error" */
+/* eslint functional/no-try-statements: "error" */
 
 try {
   doSomethingThatMightGoWrong(); // <-- Might throw an exception.
@@ -23,7 +23,7 @@ try {
 ### ✅ Correct
 
 ```js
-/* eslint functional/no-try-statement: "error" */
+/* eslint functional/no-try-statements: "error" */
 
 doSomethingThatMightGoWrong() // <-- Returns a Promise
   .catch((error) => {

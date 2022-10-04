@@ -2,7 +2,7 @@
   "rules": {
     "@typescript-eslint/no-var-requires": "off",
     "functional/functional-parameters": "off",
-    "functional/no-try-statement": "off",
+    "functional/no-try-statements": "off",
     "import/no-extraneous-dependencies": [
       "error",
       {
