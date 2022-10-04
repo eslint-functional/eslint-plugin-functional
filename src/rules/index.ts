@@ -4,7 +4,7 @@ import * as noClasses from "./no-classes";
 import * as noConditionalStatements from "./no-conditional-statements";
 import * as noExpressionStatements from "./no-expression-statements";
 import * as noLet from "./no-let";
-import * as noLoop from "./no-loop-statement";
+import * as noLoopStatements from "./no-loop-statements";
 import * as noMixedType from "./no-mixed-type";
 import * as noPromiseReject from "./no-promise-reject";
 import * as noReturnVoid from "./no-return-void";
@@ -27,7 +27,7 @@ export const rules = {
   [noConditionalStatements.name]: noConditionalStatements.rule,
   [noExpressionStatements.name]: noExpressionStatements.rule,
   [noLet.name]: noLet.rule,
-  [noLoop.name]: noLoop.rule,
+  [noLoopStatements.name]: noLoopStatements.rule,
   [noMixedType.name]: noMixedType.rule,
   [noPromiseReject.name]: noPromiseReject.rule,
   [noReturnVoid.name]: noReturnVoid.rule,

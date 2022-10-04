@@ -74,7 +74,7 @@ function checkNode<
   return (node: Node) => {
     const result = check(node, context, options);
 
-    // eslint-disable-next-line functional/no-loop-statement -- can't really be avoided.
+    // eslint-disable-next-line functional/no-loop-statements -- can't really be avoided.
     for (const descriptor of result.descriptors) {
       result.context.report(
         descriptor as TSESLint.ReportDescriptor<MessageIds>
