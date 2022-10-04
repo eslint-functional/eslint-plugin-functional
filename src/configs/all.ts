@@ -11,7 +11,7 @@ import * as noMixedTypes from "~/rules/no-mixed-types";
 import * as noPromiseReject from "~/rules/no-promise-reject";
 import * as noReturnVoid from "~/rules/no-return-void";
 import * as noThisExpressions from "~/rules/no-this-expressions";
-import * as noThrowStatement from "~/rules/no-throw-statement";
+import * as noThrowStatements from "~/rules/no-throw-statements";
 import * as noTryStatement from "~/rules/no-try-statement";
 import * as preferImmutableTypes from "~/rules/prefer-immutable-types";
 import * as preferPropertySignatures from "~/rules/prefer-property-signatures";
@@ -31,7 +31,7 @@ const config: Linter.Config = {
     [`functional/${noPromiseReject.name}`]: "error",
     [`functional/${noReturnVoid.name}`]: "error",
     [`functional/${noThisExpressions.name}`]: "error",
-    [`functional/${noThrowStatement.name}`]: "error",
+    [`functional/${noThrowStatements.name}`]: "error",
     [`functional/${noTryStatement.name}`]: "error",
     [`functional/${preferImmutableTypes.name}`]: "error",
     [`functional/${preferPropertySignatures.name}`]: "error",

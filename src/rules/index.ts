@@ -9,7 +9,7 @@ import * as noMixedTypes from "./no-mixed-types";
 import * as noPromiseReject from "./no-promise-reject";
 import * as noReturnVoid from "./no-return-void";
 import * as noThisExpressions from "./no-this-expressions";
-import * as noThrowStatement from "./no-throw-statement";
+import * as noThrowStatements from "./no-throw-statements";
 import * as noTryStatement from "./no-try-statement";
 import * as preferImmutableTypes from "./prefer-immutable-types";
 import * as preferPropertySignatures from "./prefer-property-signatures";
@@ -32,7 +32,7 @@ export const rules = {
   [noPromiseReject.name]: noPromiseReject.rule,
   [noReturnVoid.name]: noReturnVoid.rule,
   [noThisExpressions.name]: noThisExpressions.rule,
-  [noThrowStatement.name]: noThrowStatement.rule,
+  [noThrowStatements.name]: noThrowStatements.rule,
   [noTryStatement.name]: noTryStatement.rule,
   [preferImmutableTypes.name]: preferImmutableTypes.rule,
   [preferPropertySignatures.name]: preferPropertySignatures.rule,
