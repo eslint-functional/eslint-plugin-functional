@@ -7,7 +7,7 @@ import * as noConditionalStatements from "~/rules/no-conditional-statements";
 import * as noExpressionStatements from "~/rules/no-expression-statements";
 import * as noLet from "~/rules/no-let";
 import * as noLoopStatements from "~/rules/no-loop-statements";
-import * as noMixedType from "~/rules/no-mixed-type";
+import * as noMixedTypes from "~/rules/no-mixed-types";
 import * as noPromiseReject from "~/rules/no-promise-reject";
 import * as noReturnVoid from "~/rules/no-return-void";
 import * as noThisExpression from "~/rules/no-this-expression";
@@ -27,7 +27,7 @@ const config: Linter.Config = {
     [`functional/${noExpressionStatements.name}`]: "error",
     [`functional/${noLet.name}`]: "error",
     [`functional/${noLoopStatements.name}`]: "error",
-    [`functional/${noMixedType.name}`]: "error",
+    [`functional/${noMixedTypes.name}`]: "error",
     [`functional/${noPromiseReject.name}`]: "error",
     [`functional/${noReturnVoid.name}`]: "error",
     [`functional/${noThisExpression.name}`]: "error",
