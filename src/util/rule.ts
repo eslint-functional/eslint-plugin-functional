@@ -52,7 +52,7 @@ type RuleFunctionsMap<
 
 // This function can't be functional as it needs to interact with 3rd-party
 // libraries that aren't functional.
-/* eslint-disable functional/no-return-void, functional/no-expression-statement */
+/* eslint-disable functional/no-return-void, functional/no-expression-statements */
 /**
  * Create a function that processes common options and then runs the given
  * check.
@@ -82,7 +82,7 @@ function checkNode<
     }
   };
 }
-/* eslint-enable functional/no-return-void, functional/no-expression-statement */
+/* eslint-enable functional/no-return-void, functional/no-expression-statements */
 
 /**
  * Create a rule.

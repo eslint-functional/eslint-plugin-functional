@@ -16,7 +16,7 @@ import { isVoidType } from "~/util/typeguard";
 /**
  * The name of this rule.
  */
-export const name = "no-expression-statement" as const;
+export const name = "no-expression-statements" as const;
 
 /**
  * The options this rule can take.

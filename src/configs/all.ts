@@ -4,7 +4,7 @@ import * as functionalParameters from "~/rules/functional-parameters";
 import * as immutableData from "~/rules/immutable-data";
 import * as noClasses from "~/rules/no-classes";
 import * as noConditionalStatements from "~/rules/no-conditional-statements";
-import * as noExpressionStatement from "~/rules/no-expression-statement";
+import * as noExpressionStatements from "~/rules/no-expression-statements";
 import * as noLet from "~/rules/no-let";
 import * as noLoop from "~/rules/no-loop-statement";
 import * as noMixedType from "~/rules/no-mixed-type";
@@ -24,7 +24,7 @@ const config: Linter.Config = {
     [`functional/${immutableData.name}`]: "error",
     [`functional/${noClasses.name}`]: "error",
     [`functional/${noConditionalStatements.name}`]: "error",
-    [`functional/${noExpressionStatement.name}`]: "error",
+    [`functional/${noExpressionStatements.name}`]: "error",
     [`functional/${noLet.name}`]: "error",
     [`functional/${noLoop.name}`]: "error",
     [`functional/${noMixedType.name}`]: "error",
