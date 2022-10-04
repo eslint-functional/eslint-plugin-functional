@@ -1,4 +1,4 @@
-# Disallow imperative loops (no-loop-statement)
+# Disallow imperative loops (no-loop-statements)
 
 This rule disallows for loop statements, including `for`, `for...of`, `for...in`, `while`, and `do...while`.
 
@@ -14,7 +14,7 @@ For more background see this [blog post](https://hackernoon.com/rethinking-javas
 <!-- eslint-skip -->
 
 ```js
-/* eslint functional/no-loop-statement: "error" */
+/* eslint functional/no-loop-statements: "error" */
 
 const numbers = [1, 2, 3];
 const double = [];
@@ -26,7 +26,7 @@ for (let i = 0; i < numbers.length; i++) {
 <!-- eslint-skip -->
 
 ```js
-/* eslint functional/no-loop-statement: "error" */
+/* eslint functional/no-loop-statements: "error" */
 
 const numbers = [1, 2, 3];
 let sum = 0;
@@ -38,13 +38,13 @@ for (const number of numbers) {
 ### ✅ Correct
 
 ```js
-/* eslint functional/no-loop-statement: "error" */
+/* eslint functional/no-loop-statements: "error" */
 const numbers = [1, 2, 3];
 const double = numbers.map((n) => n * 2);
 ```
 
 ```js
-/* eslint functional/no-loop-statement: "error" */
+/* eslint functional/no-loop-statements: "error" */
 
 const numbers = [1, 2, 3];
 const sum = numbers.reduce((carry, number) => carry + number, 0);

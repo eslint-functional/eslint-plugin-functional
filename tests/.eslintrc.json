@@ -10,7 +10,7 @@
     "functional/functional-parameters": "off",
     "functional/no-conditional-statements": "off",
     "functional/no-expression-statements": "off",
-    "functional/no-loop-statement": "off",
+    "functional/no-loop-statements": "off",
     "functional/no-return-void": "off",
     "import/no-named-as-default-member": "off",
     "sonarjs/no-duplicate-string": "off",
