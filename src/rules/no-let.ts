@@ -3,14 +3,10 @@ import { deepmerge } from "deepmerge-ts";
 import type { JSONSchema4 } from "json-schema";
 import type { ReadonlyDeep } from "type-fest";
 
-import type {
-  AllowLocalMutationOption,
-  IgnorePatternOption,
-} from "~/common/ignore-options";
+import type { IgnorePatternOption } from "~/common/ignore-options";
 import {
   shouldIgnorePattern,
-  shouldIgnoreLocalMutation,
-  allowLocalMutationOptionSchema,
+  shouldIgnoreInFunction,
   ignorePatternOptionSchema,
 } from "~/common/ignore-options";
 import type { RuleResult } from "~/util/rule";
@@ -26,10 +22,10 @@ export const name = "no-let" as const;
  * The options this rule can take.
  */
 type Options = readonly [
-  AllowLocalMutationOption &
-    IgnorePatternOption &
+  IgnorePatternOption &
     Readonly<{
       allowInForLoopInit: boolean;
+      allowInFunctions: boolean;
     }>
 ];
 
@@ -39,15 +35,14 @@ type Options = readonly [
 const schema: JSONSchema4 = [
   {
     type: "object",
-    properties: deepmerge(
-      allowLocalMutationOptionSchema,
-      ignorePatternOptionSchema,
-      {
-        allowInForLoopInit: {
-          type: "boolean",
-        },
-      }
-    ),
+    properties: deepmerge(ignorePatternOptionSchema, {
+      allowInForLoopInit: {
+        type: "boolean",
+      },
+      allowInFunctions: {
+        type: "boolean",
+      },
+    }),
     additionalProperties: false,
   },
 ];
@@ -58,7 +53,7 @@ const schema: JSONSchema4 = [
 const defaultOptions: Options = [
   {
     allowInForLoopInit: false,
-    allowLocalMutation: false,
+    allowInFunctions: false,
   },
 ];
 
@@ -94,12 +89,12 @@ function checkVariableDeclaration(
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
-  const { allowInForLoopInit } = optionsObject;
+  const { allowInForLoopInit, ignorePattern, allowInFunctions } = optionsObject;
 
   if (
     node.kind !== "let" ||
-    shouldIgnoreLocalMutation(node, context, optionsObject) ||
-    shouldIgnorePattern(node, context, optionsObject) ||
+    shouldIgnoreInFunction(node, context, allowInFunctions) ||
+    shouldIgnorePattern(node, context, ignorePattern) ||
     (allowInForLoopInit && inForLoopInitializer(node))
   ) {
     return {

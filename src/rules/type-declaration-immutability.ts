@@ -279,9 +279,9 @@ function checkTypeDeclaration(
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
-  const { ignoreInterfaces } = optionsObject;
+  const { ignoreInterfaces, ignorePattern } = optionsObject;
   if (
-    shouldIgnorePattern(node, context, optionsObject) ||
+    shouldIgnorePattern(node, context, ignorePattern) ||
     (ignoreInterfaces && isTSInterfaceDeclaration(node))
   ) {
     return {

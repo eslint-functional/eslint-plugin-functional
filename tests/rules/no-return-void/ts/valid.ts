@@ -27,9 +27,9 @@ const tests: ReadonlyArray<ValidTestCase> = [
       }
     `,
     optionsSet: [
-      [{ ignoreImplicit: true }],
-      [{ ignoreImplicit: true, allowNull: false }],
-      [{ ignoreImplicit: true, allowUndefined: false }],
+      [{ ignoreInferredTypes: true }],
+      [{ ignoreInferredTypes: true, allowNull: false }],
+      [{ ignoreInferredTypes: true, allowUndefined: false }],
     ],
   },
   // Allow null.

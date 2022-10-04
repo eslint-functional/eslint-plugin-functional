@@ -4,7 +4,7 @@ import type { JSONSchema4 } from "json-schema";
 import type { ReadonlyDeep } from "type-fest";
 
 import type { RuleResult } from "~/util/rule";
-import { createRule } from "~/util/rule";
+import { createRuleUsingFunction } from "~/util/rule";
 import { isTSPropertySignature, isTSTypeLiteral } from "~/util/typeguard";
 
 /**
@@ -124,14 +124,11 @@ function checkTSInterfaceDeclaration(
   >,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
-  const [{ checkInterfaces }] = options;
-
   return {
     context,
-    descriptors:
-      checkInterfaces && hasTypeElementViolations(node.body.body)
-        ? [{ node, messageId: "generic" }]
-        : [],
+    descriptors: hasTypeElementViolations(node.body.body)
+      ? [{ node, messageId: "generic" }]
+      : [],
   };
 }
 
@@ -145,12 +142,9 @@ function checkTSTypeAliasDeclaration(
   >,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
-  const [{ checkTypeLiterals }] = options;
-
   return {
     context,
     descriptors:
-      checkTypeLiterals &&
       isTSTypeLiteral(node.typeAnnotation) &&
       hasTypeElementViolations(node.typeAnnotation.members)
         ? [{ node, messageId: "generic" }]
@@ -159,12 +153,25 @@ function checkTSTypeAliasDeclaration(
 }
 
 // Create the rule.
-export const rule = createRule<keyof typeof errorMessages, Options>(
-  name,
-  meta,
-  defaultOptions,
-  {
-    TSInterfaceDeclaration: checkTSInterfaceDeclaration,
-    TSTypeAliasDeclaration: checkTSTypeAliasDeclaration,
-  }
-);
+export const rule = createRuleUsingFunction<
+  keyof typeof errorMessages,
+  Options
+>(name, meta, defaultOptions, (context, options) => {
+  const [{ checkInterfaces, checkTypeLiterals }] = options;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return Object.fromEntries<any>(
+    (
+      [
+        [
+          "TSInterfaceDeclaration",
+          checkInterfaces ? checkTSInterfaceDeclaration : undefined,
+        ],
+        [
+          "TSTypeAliasDeclaration",
+          checkTypeLiterals ? checkTSTypeAliasDeclaration : undefined,
+        ],
+      ] as const
+    ).filter(([sel, fn]) => fn !== undefined)
+  );
+});

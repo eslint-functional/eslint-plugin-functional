@@ -23,7 +23,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
   //     // Valid Code.
   //   `,
   //   optionsSet: [[]],
-  //   settingsSet: [{}]
+  //   settingsSet: [{}],
   // }
 ];
 
@@ -32,18 +32,21 @@ const valid: ReadonlyArray<ValidTestCase> = [
  * Or provide an invalid test case.
  */
 const invalid: ReadonlyArray<InvalidTestCase> = [
-  {
-    code: "function foo(): ReadonlySet<string> {}",
-    optionsSet: [[{ returnTypes: "Immutable" }]],
-    errors: [
-      {
-        messageId: "returnType",
-        type: "TSTypeAnnotation",
-        line: 1,
-        column: 15,
-      },
-    ],
-  },
+  // {
+  //   code: dedent`
+  //     // Invalid Code.
+  //  `,
+  //   optionsSet: [[]],
+  //   settingsSet: [{}],
+  //   errors: [
+  //     {
+  //       messageId: "returnType",
+  //       type: "TSTypeAnnotation",
+  //       line: 1,
+  //       column: 1,
+  //     },
+  //   ],
+  // },
 ];
 
 /*
