@@ -56,7 +56,7 @@
     "test": "nyc ava",
     "test-compiled": "USE_COMPILED_TESTS=1 nyc ava",
     "test-work": "ONLY_TEST_WORK_FILE=1 ava",
-    "verify": "yarn build && yarn lint && yarn build-tests && yarn test-compiled && rimraf build"
+    "verify": "yarn lint && yarn build-tests && yarn test-compiled && rimraf build"
   },
   "resolutions": {
     "npm/chalk": "^4.1.2"
