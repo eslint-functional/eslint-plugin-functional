@@ -32,6 +32,7 @@
   "ignorePatterns": ["/build/", "/coverage/", "/lib/", "/**/*.cjs", "/**/*.js"],
   "rules": {
     "@typescript-eslint/no-unnecessary-condition": "off",
+    "functional/prefer-immutable-types": "off",
     "import/no-relative-parent-imports": "error"
   },
   "overrides": [

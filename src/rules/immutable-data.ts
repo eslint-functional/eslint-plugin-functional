@@ -1,7 +1,6 @@
 import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { deepmerge } from "deepmerge-ts";
 import type { JSONSchema4 } from "json-schema";
-import type { ReadonlyDeep } from "type-fest";
 
 import type {
   IgnoreAccessorPatternOption,
@@ -183,10 +182,8 @@ const objectConstructorMutatorFunctions = new Set([
  * Check if the given assignment expression violates this rule.
  */
 function checkAssignmentExpression(
-  node: ReadonlyDeep<TSESTree.AssignmentExpression>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  node: TSESTree.AssignmentExpression,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
@@ -215,10 +212,8 @@ function checkAssignmentExpression(
  * Check if the given node violates this rule.
  */
 function checkUnaryExpression(
-  node: ReadonlyDeep<TSESTree.UnaryExpression>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  node: TSESTree.UnaryExpression,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
@@ -246,10 +241,8 @@ function checkUnaryExpression(
  * Check if the given node violates this rule.
  */
 function checkUpdateExpression(
-  node: ReadonlyDeep<TSESTree.UpdateExpression>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  node: TSESTree.UpdateExpression,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
@@ -285,10 +278,8 @@ function checkUpdateExpression(
  * a mutator method call.
  */
 function isInChainCallAndFollowsNew(
-  node: ReadonlyDeep<TSESTree.MemberExpression>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  node: TSESTree.MemberExpression,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   assumeArrayTypes: boolean
 ): boolean {
   return (
@@ -325,10 +316,8 @@ function isInChainCallAndFollowsNew(
  * Check if the given node violates this rule.
  */
 function checkCallExpression(
-  node: ReadonlyDeep<TSESTree.CallExpression>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  node: TSESTree.CallExpression,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;

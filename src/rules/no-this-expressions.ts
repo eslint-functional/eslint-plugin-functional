@@ -1,6 +1,5 @@
 import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
 import type { JSONSchema4 } from "json-schema";
-import type { ReadonlyDeep } from "type-fest";
 
 import type { RuleResult } from "~/util/rule";
 import { createRule } from "~/util/rule";
@@ -49,10 +48,8 @@ const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
  * Check if the given ThisExpression violates this rule.
  */
 function checkThisExpression(
-  node: ReadonlyDeep<TSESTree.ThisExpression>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >
+  node: TSESTree.ThisExpression,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>
 ): RuleResult<keyof typeof errorMessages, Options> {
   // All throw statements violate this rule.
   return { context, descriptors: [{ node, messageId: "generic" }] };
