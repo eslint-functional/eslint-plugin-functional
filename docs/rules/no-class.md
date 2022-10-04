@@ -1,4 +1,4 @@
-# Disallow classes (no-class)
+# Disallow classes (no-classes)
 
 Disallow use of the `class` keyword.
 
@@ -9,7 +9,7 @@ Disallow use of the `class` keyword.
 <!-- eslint-skip -->
 
 ```js
-/* eslint functional/no-class: "error" */
+/* eslint functional/no-classes: "error" */
 
 class Dog {
   constructor(name, age) {
@@ -30,7 +30,7 @@ console.log(`${dogA.name} is ${dogA.ageInDogYears} in dog years.`);
 ### ✅ Correct
 
 ```js
-/* eslint functional/no-class: "error" */
+/* eslint functional/no-classes: "error" */
 
 function getAgeInDogYears(age) {
   return 7 * age;
