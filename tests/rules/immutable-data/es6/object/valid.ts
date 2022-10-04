@@ -41,7 +41,7 @@ const tests: ReadonlyArray<ValidTestCase> = [
         }
       }
     `,
-    optionsSet: [[{ ignoreClass: true }], [{ ignoreClass: "fieldsOnly" }]],
+    optionsSet: [[{ ignoreClasses: true }], [{ ignoreClasses: "fieldsOnly" }]],
   },
 ];
 

@@ -143,20 +143,30 @@ This rule accepts an options object of the following type:
 type Options = {
   enforcement: "None" | "ReadonlyShallow" | "ReadonlyDeep" | "Immutable";
   ignoreInferredTypes: boolean;
+  ignoreClasses: boolean | "fieldsOnly";
+  ignorePattern?: string[] | string;
 
   parameters?: {
-    // The same properties as above or just an enforcement value.
-  };
-  returnTypes?: {
-    // The same properties as above or just an enforcement value.
-  };
-  variables?: {
-    // The same properties as above or just an enforcement value.
+    enforcement: "None" | "ReadonlyShallow" | "ReadonlyDeep" | "Immutable";
+    ignoreInferredTypes: boolean;
+    ignoreClasses: boolean | "fieldsOnly";
+    ignorePattern?: string[] | string;
   };
 
-  allowLocalMutation: boolean;
-  ignoreClass: boolean | "fieldsOnly";
-  ignorePattern?: string[] | string;
+  returnTypes?: {
+    enforcement: "None" | "ReadonlyShallow" | "ReadonlyDeep" | "Immutable";
+    ignoreInferredTypes: boolean;
+    ignoreClasses: boolean | "fieldsOnly";
+    ignorePattern?: string[] | string;
+  };
+
+  variables?: {
+    enforcement: "None" | "ReadonlyShallow" | "ReadonlyDeep" | "Immutable";
+    allowInFunctions: boolean;
+    ignoreInferredTypes: boolean;
+    ignoreClasses: boolean | "fieldsOnly";
+    ignorePattern?: string[] | string;
+  };
 }
 ```
 
@@ -166,7 +176,7 @@ type Options = {
 const defaults = {
   enforcement: "Immutable",
   allowLocalMutation: false,
-  ignoreClass: false,
+  ignoreClasses: false,
   ignoreInferredTypes: false,
 }
 ```
@@ -179,7 +189,9 @@ const defaults = {
 const recommendedOptions = {
   enforcement: "None",
   ignoreInferredTypes: true,
-  parameters: "ReadonlyDeep",
+  parameters: {
+    enforcement: "ReadonlyDeep",
+  },
 },
 ```
 
@@ -189,7 +201,9 @@ const recommendedOptions = {
 const liteOptions = {
   enforcement: "None",
   ignoreInferredTypes: true,
-  parameters: "ReadonlyShallow",
+  parameters: {
+    enforcement: "ReadonlyShallow",
+  },
 },
 ```
 
@@ -238,6 +252,10 @@ This option allows you to ignore parameters which don't explicitly specify a
 type. This may be desirable in cases where an external dependency specifies a
 callback with mutable parameters, and manually annotating the callback's
 parameters is undesirable.
+
+### `ignoreClasses`
+
+A boolean to specify if checking classes should be ignored. `false` by default.
 
 <!--tabs-->
 
@@ -301,13 +319,12 @@ export const acceptsCallback: AcceptsCallback;
 
 Override the options specifically for the given type of types.
 
-### `ignoreClass`
 
-A boolean to specify if checking classes should be ignored. `false` by default.
+#### `variables.ignoreInFunctions`
 
-### `allowLocalMutation`
+If true, the rule will not flag any variables that are inside of function bodies.
 
-See the [allowLocalMutation](./options/allow-local-mutation.md) docs.
+See the [allowLocalMutation](./options/allow-local-mutation.md) docs for more information.
 
 ### `ignorePattern`
 

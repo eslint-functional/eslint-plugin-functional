@@ -180,7 +180,7 @@ const tests: ReadonlyArray<ValidTestCase> = [
         private static qux: number;
       }
     `,
-    optionsSet: [[{ ignoreClass: true }]],
+    optionsSet: [[{ ignoreClasses: true }]],
   },
   // Allow Local.
   {
@@ -189,13 +189,12 @@ const tests: ReadonlyArray<ValidTestCase> = [
         let foo: {
           a: { foo: number },
           b: string[],
-          c: () => string[],
-          d: { [key: string]: string[] },
+          c: { [key: string]: string[] },
           [key: string]: any,
         }
       };
     `,
-    optionsSet: [[{ allowLocalMutation: true }]],
+    optionsSet: [[{ variables: { ignoreInFunctions: true } }]],
   },
   // Ignore Prefix.
   {

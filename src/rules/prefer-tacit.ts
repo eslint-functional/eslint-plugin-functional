@@ -3,7 +3,7 @@ import { deepmerge } from "deepmerge-ts";
 import type { JSONSchema4 } from "json-schema";
 import * as semver from "semver";
 import type { ReadonlyDeep } from "type-fest";
-import type { FunctionLikeDeclaration, Type } from "typescript";
+import type { Type } from "typescript";
 
 import type { IgnorePatternOption } from "~/common/ignore-options";
 import { ignorePatternOptionSchema } from "~/common/ignore-options";

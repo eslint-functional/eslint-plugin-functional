@@ -50,7 +50,9 @@ const overrides: Linter.Config = {
       {
         enforcement: "None",
         ignoreInferredTypes: true,
-        parameters: "ReadonlyDeep",
+        parameters: {
+          enforcement: "ReadonlyDeep",
+        },
       },
     ],
     [`functional/${typeDeclarationImmutability.name}`]: [
