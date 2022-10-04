@@ -1,7 +1,6 @@
 import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { deepmerge } from "deepmerge-ts";
 import type { JSONSchema4 } from "json-schema";
-import type { ReadonlyDeep } from "type-fest";
 
 import type { IgnorePatternOption } from "~/common/ignore-options";
 import {
@@ -76,10 +75,8 @@ const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
  * Check if the given ExpressionStatement violates this rule.
  */
 function checkExpressionStatement(
-  node: ReadonlyDeep<TSESTree.ExpressionStatement>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  node: TSESTree.ExpressionStatement,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;

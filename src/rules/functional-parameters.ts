@@ -1,7 +1,6 @@
 import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { deepmerge } from "deepmerge-ts";
 import type { JSONSchema4 } from "json-schema";
-import type { ReadonlyDeep } from "type-fest";
 
 import type {
   IgnorePatternOption,
@@ -148,7 +147,7 @@ const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
  */
 function getRestParamViolations(
   [{ allowRestParameter }]: Options,
-  node: ReadonlyDeep<ESFunction>
+  node: ESFunction
 ): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
   return !allowRestParameter &&
     node.params.length > 0 &&
@@ -167,7 +166,7 @@ function getRestParamViolations(
  */
 function getParamCountViolations(
   [{ enforceParameterCount }]: Options,
-  node: ReadonlyDeep<ESFunction>
+  node: ESFunction
 ): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
   if (
     enforceParameterCount === false ||
@@ -211,10 +210,8 @@ function getParamCountViolations(
  * Check if the given function node has a reset parameter this rule.
  */
 function checkFunction(
-  node: ReadonlyDeep<ESFunction>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  node: ESFunction,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
@@ -240,10 +237,8 @@ function checkFunction(
  * Check if the given identifier is for the "arguments" keyword.
  */
 function checkIdentifier(
-  node: ReadonlyDeep<TSESTree.Identifier>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  node: TSESTree.Identifier,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;

@@ -2,7 +2,6 @@ import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { deepmerge } from "deepmerge-ts";
 import { Immutability } from "is-immutable-type";
 import type { JSONSchema4 } from "json-schema";
-import type { ReadonlyDeep } from "type-fest";
 
 import type { IgnorePatternOption } from "~/common/ignore-options";
 import {
@@ -34,23 +33,21 @@ export enum RuleEnforcementComparator {
 /**
  * The options this rule can take.
  */
-type Options = ReadonlyDeep<
-  [
-    IgnorePatternOption & {
-      rules: Array<{
-        identifiers: (string | RegExp) | Array<string | RegExp>;
-        immutability: Exclude<
-          Immutability | keyof typeof Immutability,
-          "Unknown"
-        >;
-        comparator?:
-          | RuleEnforcementComparator
-          | keyof typeof RuleEnforcementComparator;
-      }>;
-      ignoreInterfaces: boolean;
-    }
-  ]
->;
+type Options = [
+  IgnorePatternOption & {
+    rules: Array<{
+      identifiers: (string | RegExp) | Array<string | RegExp>;
+      immutability: Exclude<
+        Immutability | keyof typeof Immutability,
+        "Unknown"
+      >;
+      comparator?:
+        | RuleEnforcementComparator
+        | keyof typeof RuleEnforcementComparator;
+    }>;
+    ignoreInterfaces: boolean;
+  }
+];
 
 /**
  * The schema for the rule options.
@@ -189,10 +186,8 @@ function getRules(options: Options): ImmutabilityRule[] {
  * Find the first rule to apply to the given node.
  */
 export function getRuleToApply(
-  node: ReadonlyDeep<TSESTree.Node>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  node: TSESTree.Node,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): ImmutabilityRule | undefined {
   const rules = getRules(options);
@@ -215,7 +210,7 @@ export function getRuleToApply(
  * Compare the actual immutability to the expected immutability.
  */
 export function compareImmutability(
-  rule: ReadonlyDeep<ImmutabilityRule>,
+  rule: ImmutabilityRule,
   actual: Immutability
 ) {
   switch (rule.comparator) {
@@ -236,10 +231,8 @@ export function compareImmutability(
  * Get the results.
  */
 function getResults(
-  node: ReadonlyDeep<ESTypeDeclaration>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  node: ESTypeDeclaration,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   rule: ImmutabilityRule,
   immutability: Immutability
 ): RuleResult<keyof typeof errorMessages, Options> {
@@ -272,10 +265,8 @@ function getResults(
  * Check if the given Interface or Type Alias violates this rule.
  */
 function checkTypeDeclaration(
-  node: ReadonlyDeep<ESTypeDeclaration>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  node: ESTypeDeclaration,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;

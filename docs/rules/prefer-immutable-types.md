@@ -319,7 +319,6 @@ export const acceptsCallback: AcceptsCallback;
 
 Override the options specifically for the given type of types.
 
-
 #### `variables.ignoreInFunctions`
 
 If true, the rule will not flag any variables that are inside of function bodies.
