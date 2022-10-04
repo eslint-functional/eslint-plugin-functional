@@ -19,7 +19,7 @@ const overrides: Linter.Config = {
     ],
     [`functional/${immutableData.name}`]: [
       "error",
-      { ignoreClass: "fieldsOnly" },
+      { ignoreClasses: "fieldsOnly" },
     ],
     [`functional/${noConditionalStatements.name}`]: "off",
     [`functional/${noExpressionStatements.name}`]: "off",
@@ -28,7 +28,9 @@ const overrides: Linter.Config = {
       {
         enforcement: "None",
         ignoreInferredTypes: true,
-        parameters: "ReadonlyShallow",
+        parameters: {
+          enforcement: "ReadonlyShallow",
+        },
       },
     ],
   },

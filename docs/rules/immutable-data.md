@@ -63,7 +63,7 @@ type Options = {
         forArrays: boolean;
         forObjects: boolean;
       }
-  ignoreClass: boolean | "fieldsOnly";
+  ignoreClasses: boolean | "fieldsOnly";
   ignoreImmediateMutation: boolean;
   ignorePattern?: string[] | string;
   ignoreAccessorPattern?: string[] | string;
@@ -75,7 +75,7 @@ type Options = {
 ```ts
 type Options = {
   assumeTypes: true;
-  ignoreClass: false;
+  ignoreClasses: false;
   ignoreImmediateMutation: true;
 };
 ```
@@ -86,7 +86,7 @@ type Options = {
 
 ```ts
 const liteOptions = {
-  ignoreClass: "fieldsOnly",
+  ignoreClasses: "fieldsOnly",
 }
 ```
 
@@ -121,7 +121,7 @@ const original = ["foo", "bar", "baz"];
 const sorted = [...original].sort((a, b) => a.localeCompare(b)); // This is OK with ignoreImmediateMutation.
 ```
 
-### `ignoreClass`
+### `ignoreClasses`
 
 Ignore mutations inside classes.
 

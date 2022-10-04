@@ -1,23 +1,12 @@
 import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
-import { deepmerge } from "deepmerge-ts";
 import type { JSONSchema4 } from "json-schema";
 import type { ReadonlyDeep } from "type-fest";
 
-import type {
-  AllowLocalMutationOption,
-  IgnoreClassOption,
-  IgnoreInterfaceOption,
-  IgnorePatternOption,
-} from "~/common/ignore-options";
 import {
-  shouldIgnoreLocalMutation,
-  shouldIgnoreClass,
-  shouldIgnoreInterface,
+  shouldIgnoreInFunction,
+  shouldIgnoreClasses,
+  shouldIgnoreInterfaces,
   shouldIgnorePattern,
-  allowLocalMutationOptionSchema,
-  ignoreClassOptionSchema,
-  ignoreInterfaceOptionSchema,
-  ignorePatternOptionSchema,
 } from "~/common/ignore-options";
 import type { ESArrayTupleType } from "~/src/util/node-types";
 import type { RuleResult } from "~/util/rule";
@@ -45,15 +34,15 @@ export const name = "prefer-readonly-type" as const;
  * The options this rule can take.
  */
 type Options = readonly [
-  AllowLocalMutationOption &
-    IgnoreClassOption &
-    IgnoreInterfaceOption &
-    IgnorePatternOption &
-    Readonly<{
-      allowMutableReturnType: boolean;
-      checkImplicit: boolean;
-      ignoreCollections: boolean;
-    }>
+  Readonly<{
+    allowLocalMutation: boolean;
+    allowMutableReturnType: boolean;
+    checkImplicit: boolean;
+    ignoreCollections: boolean;
+    ignoreClass: boolean | "fieldsOnly";
+    ignoreInterface: boolean;
+    ignorePattern?: ReadonlyArray<string> | string;
+  }>
 ];
 
 /**
@@ -62,23 +51,40 @@ type Options = readonly [
 const schema: JSONSchema4 = [
   {
     type: "object",
-    properties: deepmerge(
-      allowLocalMutationOptionSchema,
-      ignorePatternOptionSchema,
-      ignoreClassOptionSchema,
-      ignoreInterfaceOptionSchema,
-      {
-        allowMutableReturnType: {
-          type: "boolean",
+    properties: {
+      allowLocalMutation: {
+        type: "boolean",
+      },
+      ignorePattern: {
+        type: ["string", "array"],
+        items: {
+          type: "string",
         },
-        checkImplicit: {
-          type: "boolean",
-        },
-        ignoreCollections: {
-          type: "boolean",
-        },
-      }
-    ),
+      },
+      ignoreClass: {
+        oneOf: [
+          {
+            type: "boolean",
+          },
+          {
+            type: "string",
+            enum: ["fieldsOnly"],
+          },
+        ],
+      },
+      ignoreInterface: {
+        type: "boolean",
+      },
+      allowMutableReturnType: {
+        type: "boolean",
+      },
+      checkImplicit: {
+        type: "boolean",
+      },
+      ignoreCollections: {
+        type: "boolean",
+      },
+    },
     additionalProperties: false,
   },
 ];
@@ -151,13 +157,20 @@ function checkArrayOrTupleType(
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
-  const { allowMutableReturnType, ignoreCollections } = optionsObject;
+  const {
+    allowLocalMutation,
+    allowMutableReturnType,
+    ignoreClass,
+    ignoreCollections,
+    ignoreInterface,
+    ignorePattern,
+  } = optionsObject;
 
   if (
-    shouldIgnoreClass(node, context, optionsObject) ||
-    shouldIgnoreInterface(node, context, optionsObject) ||
-    shouldIgnoreLocalMutation(node, context, optionsObject) ||
-    shouldIgnorePattern(node, context, optionsObject) ||
+    shouldIgnoreClasses(node, context, ignoreClass) ||
+    shouldIgnoreInterfaces(node, context, ignoreInterface) ||
+    shouldIgnoreInFunction(node, context, allowLocalMutation) ||
+    shouldIgnorePattern(node, context, ignorePattern) ||
     ignoreCollections
   ) {
     return {
@@ -208,12 +221,14 @@ function checkMappedType(
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
+  const { allowLocalMutation, ignoreClass, ignoreInterface, ignorePattern } =
+    optionsObject;
 
   if (
-    shouldIgnoreClass(node, context, optionsObject) ||
-    shouldIgnoreInterface(node, context, optionsObject) ||
-    shouldIgnoreLocalMutation(node, context, optionsObject) ||
-    shouldIgnorePattern(node, context, optionsObject)
+    shouldIgnoreClasses(node, context, ignoreClass) ||
+    shouldIgnoreInterfaces(node, context, ignoreInterface) ||
+    shouldIgnoreInFunction(node, context, allowLocalMutation) ||
+    shouldIgnorePattern(node, context, ignorePattern)
   ) {
     return {
       context,
@@ -251,13 +266,20 @@ function checkTypeReference(
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
-  const { allowMutableReturnType, ignoreCollections } = optionsObject;
+  const {
+    allowLocalMutation,
+    ignoreClass,
+    ignoreInterface,
+    ignorePattern,
+    allowMutableReturnType,
+    ignoreCollections,
+  } = optionsObject;
 
   if (
-    shouldIgnoreClass(node, context, optionsObject) ||
-    shouldIgnoreInterface(node, context, optionsObject) ||
-    shouldIgnoreLocalMutation(node, context, optionsObject) ||
-    shouldIgnorePattern(node, context, optionsObject)
+    shouldIgnoreClasses(node, context, ignoreClass) ||
+    shouldIgnoreInterfaces(node, context, ignoreInterface) ||
+    shouldIgnoreInFunction(node, context, allowLocalMutation) ||
+    shouldIgnorePattern(node, context, ignorePattern)
   ) {
     return {
       context,
@@ -314,13 +336,19 @@ function checkProperty(
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
-  const { allowMutableReturnType } = optionsObject;
+  const {
+    allowLocalMutation,
+    ignoreClass,
+    ignoreInterface,
+    ignorePattern,
+    allowMutableReturnType,
+  } = optionsObject;
 
   if (
-    shouldIgnoreClass(node, context, optionsObject) ||
-    shouldIgnoreInterface(node, context, optionsObject) ||
-    shouldIgnoreLocalMutation(node, context, optionsObject) ||
-    shouldIgnorePattern(node, context, optionsObject)
+    shouldIgnoreClasses(node, context, ignoreClass) ||
+    shouldIgnoreInterfaces(node, context, ignoreInterface) ||
+    shouldIgnoreInFunction(node, context, allowLocalMutation) ||
+    shouldIgnorePattern(node, context, ignorePattern)
   ) {
     return {
       context,
@@ -373,14 +401,21 @@ function checkImplicitType(
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
-  const { checkImplicit, ignoreCollections } = optionsObject;
+  const {
+    allowLocalMutation,
+    ignoreClass,
+    ignoreInterface,
+    ignorePattern,
+    checkImplicit,
+    ignoreCollections,
+  } = optionsObject;
 
   if (
     !checkImplicit ||
-    shouldIgnoreClass(node, context, optionsObject) ||
-    shouldIgnoreInterface(node, context, optionsObject) ||
-    shouldIgnoreLocalMutation(node, context, optionsObject) ||
-    shouldIgnorePattern(node, context, optionsObject)
+    shouldIgnoreClasses(node, context, ignoreClass) ||
+    shouldIgnoreInterfaces(node, context, ignoreInterface) ||
+    shouldIgnoreInFunction(node, context, allowLocalMutation) ||
+    shouldIgnorePattern(node, context, ignorePattern)
   ) {
     return {
       context,
