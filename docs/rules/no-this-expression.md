@@ -1,4 +1,4 @@
-# Disallow this access (no-this-expression)
+# Disallow this access (no-this-expressions)
 
 ## Rule Details
 
@@ -10,7 +10,7 @@ See the its docs for more info.
 <!-- eslint-skip -->
 
 ```js
-/* eslint functional/no-this-expression: "error" */
+/* eslint functional/no-this-expressions: "error" */
 
 const foo = this.value + 17;
 ```
@@ -18,7 +18,7 @@ const foo = this.value + 17;
 ### ✅ Correct
 
 ```js
-/* eslint functional/no-this-expression: "error" */
+/* eslint functional/no-this-expressions: "error" */
 
 const foo = object.value + 17;
 ```
