@@ -1,4 +1,4 @@
-import { name, rule } from "~/rules/no-this-expression";
+import { name, rule } from "~/rules/no-this-expressions";
 import { testUsing } from "~/tests/helpers/testers";
 
 import es3Tests from "./es3";
