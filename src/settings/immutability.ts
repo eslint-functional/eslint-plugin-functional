@@ -5,7 +5,6 @@ import {
   getDefaultOverrides as getDefaultImmutabilityOverrides,
 } from "is-immutable-type";
 import type { JSONSchema4 } from "json-schema";
-import type { ReadonlyDeep } from "type-fest";
 
 import { isReadonlyArray } from "~/util/typeguard";
 
@@ -19,14 +18,14 @@ declare module "@typescript-eslint/utils" {
 
   // eslint-disable-next-line @typescript-eslint/consistent-type-definitions, @typescript-eslint/no-shadow
   interface SharedConfigurationSettings {
-    immutability?: ReadonlyDeep<{
+    immutability?: {
       overrides?:
         | OverridesSetting[]
         | {
             keepDefault?: boolean;
             values?: OverridesSetting[];
           };
-    }>;
+    };
   }
 }
 
@@ -34,7 +33,7 @@ declare module "@typescript-eslint/utils" {
  * The settings that have been loaded - so we don't have to reload them.
  */
 const cachedSettings: WeakMap<
-  ReadonlyDeep<NonNullable<SharedConfigurationSettings["immutability"]>>,
+  NonNullable<SharedConfigurationSettings["immutability"]>,
   ImmutabilityOverrides | undefined
 > = new WeakMap();
 
@@ -43,9 +42,7 @@ const cachedSettings: WeakMap<
  */
 export function getImmutabilityOverrides({
   immutability,
-}: ReadonlyDeep<SharedConfigurationSettings>):
-  | ImmutabilityOverrides
-  | undefined {
+}: SharedConfigurationSettings): ImmutabilityOverrides | undefined {
   if (immutability === undefined) {
     return undefined;
   }
@@ -63,9 +60,7 @@ export function getImmutabilityOverrides({
  * Get all the overrides and upgrade them.
  */
 function loadImmutabilityOverrides(
-  immutabilitySettings: ReadonlyDeep<
-    SharedConfigurationSettings["immutability"]
-  >
+  immutabilitySettings: SharedConfigurationSettings["immutability"]
 ): ImmutabilityOverrides | undefined {
   const overridesSetting = immutabilitySettings?.overrides;
 

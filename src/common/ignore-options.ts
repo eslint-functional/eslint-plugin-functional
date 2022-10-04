@@ -1,7 +1,6 @@
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import escapeRegExp from "escape-string-regexp";
 import type { JSONSchema4 } from "json-schema";
-import type { ReadonlyDeep } from "type-fest";
 
 import { getNodeIdentifierTexts } from "~/util/misc";
 import type { BaseOptions } from "~/util/rule";
@@ -200,8 +199,8 @@ function shouldIgnoreViaAccessorPattern(
  * - AllowInFunctionOption.
  */
 export function shouldIgnoreInFunction(
-  node: ReadonlyDeep<TSESTree.Node>,
-  context: ReadonlyDeep<TSESLint.RuleContext<string, BaseOptions>>,
+  node: TSESTree.Node,
+  context: TSESLint.RuleContext<string, BaseOptions>,
   allowInFunction: boolean | undefined
 ): boolean {
   return allowInFunction === true && inFunctionBody(node);
@@ -213,8 +212,8 @@ export function shouldIgnoreInFunction(
  * - IgnoreClassesOption.
  */
 export function shouldIgnoreClasses(
-  node: ReadonlyDeep<TSESTree.Node>,
-  context: ReadonlyDeep<TSESLint.RuleContext<string, BaseOptions>>,
+  node: TSESTree.Node,
+  context: TSESLint.RuleContext<string, BaseOptions>,
   ignoreClasses: Partial<IgnoreClassesOption>["ignoreClasses"]
 ): boolean {
   return (
@@ -234,8 +233,8 @@ export function shouldIgnoreClasses(
  * - IgnoreInterfacesOption.
  */
 export function shouldIgnoreInterfaces(
-  node: ReadonlyDeep<TSESTree.Node>,
-  context: ReadonlyDeep<TSESLint.RuleContext<string, BaseOptions>>,
+  node: TSESTree.Node,
+  context: TSESLint.RuleContext<string, BaseOptions>,
   ignoreInterfaces: Partial<IgnoreInterfacesOption>["ignoreInterfaces"]
 ): boolean {
   return ignoreInterfaces === true && inInterface(node);
@@ -248,8 +247,8 @@ export function shouldIgnoreInterfaces(
  * - IgnorePatternOption.
  */
 export function shouldIgnorePattern(
-  node: ReadonlyDeep<TSESTree.Node>,
-  context: ReadonlyDeep<TSESLint.RuleContext<string, BaseOptions>>,
+  node: TSESTree.Node,
+  context: TSESLint.RuleContext<string, BaseOptions>,
   ignorePattern: Partial<IgnorePatternOption>["ignorePattern"],
   ignoreAccessorPattern?: Partial<IgnoreAccessorPatternOption>["ignoreAccessorPattern"]
 ): boolean {

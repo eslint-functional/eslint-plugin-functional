@@ -1,7 +1,6 @@
 import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { deepmerge } from "deepmerge-ts";
 import type { JSONSchema4 } from "json-schema";
-import type { ReadonlyDeep } from "type-fest";
 
 import type { IgnorePatternOption } from "~/common/ignore-options";
 import {
@@ -82,10 +81,8 @@ const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
  * Check if the given VariableDeclaration violates this rule.
  */
 function checkVariableDeclaration(
-  node: ReadonlyDeep<TSESTree.VariableDeclaration>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  node: TSESTree.VariableDeclaration,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;

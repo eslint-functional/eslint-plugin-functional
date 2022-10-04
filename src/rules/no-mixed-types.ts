@@ -1,7 +1,6 @@
 import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import type { JSONSchema4 } from "json-schema";
-import type { ReadonlyDeep } from "type-fest";
 
 import type { RuleResult } from "~/util/rule";
 import { createRuleUsingFunction } from "~/util/rule";
@@ -75,7 +74,7 @@ const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
  * Does the given type elements violate the rule.
  */
 function hasTypeElementViolations(
-  typeElements: ReadonlyArray<ReadonlyDeep<TSESTree.TypeElement>>
+  typeElements: ReadonlyArray<TSESTree.TypeElement>
 ): boolean {
   type CarryType = {
     readonly prevMemberType: AST_NODE_TYPES | undefined;
@@ -118,10 +117,8 @@ function hasTypeElementViolations(
  * Check if the given TSInterfaceDeclaration violates this rule.
  */
 function checkTSInterfaceDeclaration(
-  node: ReadonlyDeep<TSESTree.TSInterfaceDeclaration>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  node: TSESTree.TSInterfaceDeclaration,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   return {
@@ -136,10 +133,8 @@ function checkTSInterfaceDeclaration(
  * Check if the given TSTypeAliasDeclaration violates this rule.
  */
 function checkTSTypeAliasDeclaration(
-  node: ReadonlyDeep<TSESTree.TSTypeAliasDeclaration>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  node: TSESTree.TSTypeAliasDeclaration,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   return {

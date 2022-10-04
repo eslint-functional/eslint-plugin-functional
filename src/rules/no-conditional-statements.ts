@@ -1,6 +1,5 @@
 import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
 import type { JSONSchema4 } from "json-schema";
-import type { ReadonlyDeep } from "type-fest";
 import type { Type } from "typescript";
 
 import tsutils from "~/conditional-imports/tsutils";
@@ -96,7 +95,7 @@ const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
  * @returns A violation rule result.
  */
 function incompleteBranchViolation(
-  node: ReadonlyDeep<TSESTree.Node>
+  node: TSESTree.Node
 ): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
   return [{ node, messageId: "incompleteBranch" }];
 }
@@ -105,11 +104,9 @@ function incompleteBranchViolation(
  * Get a function that tests if the given statement is never returning.
  */
 function getIsNeverExpressions(
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>
 ) {
-  return (statement: ReadonlyDeep<TSESTree.Statement>) => {
+  return (statement: TSESTree.Statement) => {
     if (isExpressionStatement(statement)) {
       const expressionStatementType = getTypeOfNode(
         statement.expression,
@@ -126,7 +123,7 @@ function getIsNeverExpressions(
 /**
  * Is the given statement, when inside an if statement, a returning branch?
  */
-function isIfReturningBranch(statement: ReadonlyDeep<TSESTree.Statement>) {
+function isIfReturningBranch(statement: TSESTree.Statement) {
   return (
     // Another instance of this rule will check nested if statements.
     isIfStatement(statement) ||
@@ -142,10 +139,8 @@ function isIfReturningBranch(statement: ReadonlyDeep<TSESTree.Statement>) {
  * are allowed.
  */
 function getIfBranchViolations(
-  node: ReadonlyDeep<TSESTree.IfStatement>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >
+  node: TSESTree.IfStatement,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>
 ): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
   const branches = [node.consequent, node.alternate];
   const violations = branches.filter<NonNullable<typeof branches[0]>>(
@@ -189,7 +184,7 @@ function getIfBranchViolations(
 /**
  * Is the given statement, when inside a switch statement, a returning branch?
  */
-function isSwitchReturningBranch(statement: ReadonlyDeep<TSESTree.Statement>) {
+function isSwitchReturningBranch(statement: TSESTree.Statement) {
   return (
     // Another instance of this rule will check nested switch statements.
     isSwitchStatement(statement) ||
@@ -203,10 +198,8 @@ function isSwitchReturningBranch(statement: ReadonlyDeep<TSESTree.Statement>) {
  * statements are allowed.
  */
 function getSwitchViolations(
-  node: ReadonlyDeep<TSESTree.SwitchStatement>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >
+  node: TSESTree.SwitchStatement,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>
 ): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
   const isNeverExpressions = getIsNeverExpressions(context);
 
@@ -239,9 +232,7 @@ function getSwitchViolations(
 /**
  * Does the given if statement violate this rule if it must be exhaustive.
  */
-function isExhaustiveIfViolation(
-  node: ReadonlyDeep<TSESTree.IfStatement>
-): boolean {
+function isExhaustiveIfViolation(node: TSESTree.IfStatement): boolean {
   return node.alternate === null;
 }
 
@@ -249,10 +240,8 @@ function isExhaustiveIfViolation(
  * Does the given typed switch statement violate this rule if it must be exhaustive.
  */
 function isExhaustiveTypeSwitchViolation(
-  node: ReadonlyDeep<TSESTree.SwitchStatement>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >
+  node: TSESTree.SwitchStatement,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>
 ): boolean {
   if (tsutils === undefined) {
     return true;
@@ -276,10 +265,8 @@ function isExhaustiveTypeSwitchViolation(
  * Does the given switch statement violate this rule if it must be exhaustive.
  */
 function isExhaustiveSwitchViolation(
-  node: ReadonlyDeep<TSESTree.SwitchStatement>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >
+  node: TSESTree.SwitchStatement,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>
 ): boolean {
   return (
     // No cases defined.
@@ -293,10 +280,8 @@ function isExhaustiveSwitchViolation(
  * Check if the given IfStatement violates this rule.
  */
 function checkIfStatement(
-  node: ReadonlyDeep<TSESTree.IfStatement>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  node: TSESTree.IfStatement,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [{ allowReturningBranches }] = options;
@@ -318,10 +303,8 @@ function checkIfStatement(
  * Check if the given SwitchStatement violates this rule.
  */
 function checkSwitchStatement(
-  node: ReadonlyDeep<TSESTree.SwitchStatement>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  node: TSESTree.SwitchStatement,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [{ allowReturningBranches }] = options;

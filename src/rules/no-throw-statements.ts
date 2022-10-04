@@ -1,6 +1,5 @@
 import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
 import type { JSONSchema4 } from "json-schema";
-import type { ReadonlyDeep } from "type-fest";
 
 import { inFunctionBody } from "~/src/util/tree";
 import type { RuleResult } from "~/util/rule";
@@ -68,10 +67,8 @@ const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
  * Check if the given ThrowStatement violates this rule.
  */
 function checkThrowStatement(
-  node: ReadonlyDeep<TSESTree.ThrowStatement>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  node: TSESTree.ThrowStatement,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [{ allowInAsyncFunctions }] = options;

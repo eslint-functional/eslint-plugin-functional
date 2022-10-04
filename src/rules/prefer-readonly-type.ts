@@ -1,6 +1,5 @@
 import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
 import type { JSONSchema4 } from "json-schema";
-import type { ReadonlyDeep } from "type-fest";
 
 import {
   shouldIgnoreInFunction,
@@ -150,10 +149,8 @@ const mutableTypeRegex = new RegExp(
  * Check if the given ArrayType or TupleType violates this rule.
  */
 function checkArrayOrTupleType(
-  node: ReadonlyDeep<ESArrayTupleType>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  node: ESArrayTupleType,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
@@ -214,10 +211,8 @@ function checkArrayOrTupleType(
  * Check if the given TSMappedType violates this rule.
  */
 function checkMappedType(
-  node: ReadonlyDeep<TSESTree.TSMappedType>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  node: TSESTree.TSMappedType,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
@@ -259,10 +254,8 @@ function checkMappedType(
  * Check if the given TypeReference violates this rule.
  */
 function checkTypeReference(
-  node: ReadonlyDeep<TSESTree.TSTypeReference>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  node: TSESTree.TSTypeReference,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
@@ -326,13 +319,11 @@ function checkTypeReference(
  */
 function checkProperty(
   node:
-    | ReadonlyDeep<TSESTree.PropertyDefinition>
-    | ReadonlyDeep<TSESTree.TSIndexSignature>
-    | ReadonlyDeep<TSESTree.TSParameterProperty>
-    | ReadonlyDeep<TSESTree.TSPropertySignature>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+    | TSESTree.PropertyDefinition
+    | TSESTree.TSIndexSignature
+    | TSESTree.TSParameterProperty
+    | TSESTree.TSPropertySignature,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
@@ -391,13 +382,11 @@ function checkProperty(
  */
 function checkImplicitType(
   node:
-    | ReadonlyDeep<TSESTree.ArrowFunctionExpression>
-    | ReadonlyDeep<TSESTree.FunctionDeclaration>
-    | ReadonlyDeep<TSESTree.FunctionExpression>
-    | ReadonlyDeep<TSESTree.VariableDeclaration>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+    | TSESTree.ArrowFunctionExpression
+    | TSESTree.FunctionDeclaration
+    | TSESTree.FunctionExpression
+    | TSESTree.VariableDeclaration,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;

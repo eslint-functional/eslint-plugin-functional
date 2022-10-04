@@ -4,7 +4,6 @@
 
 import type { TSESTree } from "@typescript-eslint/utils";
 import { AST_NODE_TYPES } from "@typescript-eslint/utils";
-import type { ReadonlyDeep } from "type-fest";
 import type { Type, UnionType } from "typescript";
 
 import ts from "~/conditional-imports/typescript";
@@ -45,52 +44,50 @@ export function isReadonlyArray(
  * Node type guards.
  */
 
-export function isNode(
-  node: ReadonlyDeep<TSESTree.Node> | Type
-): node is ReadonlyDeep<TSESTree.Node> {
+export function isNode(node: TSESTree.Node | Type): node is TSESTree.Node {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   return (node as any).type !== undefined;
 }
 
 export function isArrayExpression(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.ArrayExpression> {
+  node: TSESTree.Node
+): node is TSESTree.ArrayExpression {
   return node.type === AST_NODE_TYPES.ArrayExpression;
 }
 
 export function isAssignmentExpression(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.AssignmentExpression> {
+  node: TSESTree.Node
+): node is TSESTree.AssignmentExpression {
   return node.type === AST_NODE_TYPES.AssignmentExpression;
 }
 
 export function isAssignmentPattern(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.AssignmentPattern> {
+  node: TSESTree.Node
+): node is TSESTree.AssignmentPattern {
   return node.type === AST_NODE_TYPES.AssignmentPattern;
 }
 
 export function isBlockStatement(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.BlockStatement> {
+  node: TSESTree.Node
+): node is TSESTree.BlockStatement {
   return node.type === AST_NODE_TYPES.BlockStatement;
 }
 
 export function isBreakStatement(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.BreakStatement> {
+  node: TSESTree.Node
+): node is TSESTree.BreakStatement {
   return node.type === AST_NODE_TYPES.BreakStatement;
 }
 
 export function isCallExpression(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.CallExpression> {
+  node: TSESTree.Node
+): node is TSESTree.CallExpression {
   return node.type === AST_NODE_TYPES.CallExpression;
 }
 
 export function isPropertyDefinition(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.PropertyDefinition> {
+  node: TSESTree.Node
+): node is TSESTree.PropertyDefinition {
   return node.type === AST_NODE_TYPES.PropertyDefinition;
 }
 
@@ -100,8 +97,8 @@ export function isPropertyDefinition(
  * It doesn't matter what type of class.
  */
 export function isClassLike(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.ClassDeclaration | TSESTree.ClassExpression> {
+  node: TSESTree.Node
+): node is TSESTree.ClassDeclaration | TSESTree.ClassExpression {
   return (
     node.type === AST_NODE_TYPES.ClassDeclaration ||
     node.type === AST_NODE_TYPES.ClassExpression
@@ -109,26 +106,26 @@ export function isClassLike(
 }
 
 export function isContinueStatement(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.ContinueStatement> {
+  node: TSESTree.Node
+): node is TSESTree.ContinueStatement {
   return node.type === AST_NODE_TYPES.ContinueStatement;
 }
 
 export function isExpressionStatement(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.ExpressionStatement> {
+  node: TSESTree.Node
+): node is TSESTree.ExpressionStatement {
   return node.type === AST_NODE_TYPES.ExpressionStatement;
 }
 
 export function isForStatement(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.ForStatement> {
+  node: TSESTree.Node
+): node is TSESTree.ForStatement {
   return node.type === AST_NODE_TYPES.ForStatement;
 }
 
 export function isFunctionDeclaration(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.FunctionDeclaration> {
+  node: TSESTree.Node
+): node is TSESTree.FunctionDeclaration {
   return node.type === AST_NODE_TYPES.FunctionDeclaration;
 }
 
@@ -138,10 +135,8 @@ export function isFunctionDeclaration(
  * It doesn't matter what type of function expression.
  */
 export function isFunctionExpressionLike(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<
-  TSESTree.ArrowFunctionExpression | TSESTree.FunctionExpression
-> {
+  node: TSESTree.Node
+): node is TSESTree.ArrowFunctionExpression | TSESTree.FunctionExpression {
   return (
     node.type === AST_NODE_TYPES.FunctionExpression ||
     node.type === AST_NODE_TYPES.ArrowFunctionExpression
@@ -154,209 +149,205 @@ export function isFunctionExpressionLike(
  * It doesn't matter what type of function.
  */
 export function isFunctionLike(
-  node: ReadonlyDeep<TSESTree.Node>
+  node: TSESTree.Node
 ): node is
-  | ReadonlyDeep<TSESTree.ArrowFunctionExpression>
-  | ReadonlyDeep<TSESTree.FunctionDeclaration>
-  | ReadonlyDeep<TSESTree.FunctionExpression> {
+  | TSESTree.ArrowFunctionExpression
+  | TSESTree.FunctionDeclaration
+  | TSESTree.FunctionExpression {
   return isFunctionDeclaration(node) || isFunctionExpressionLike(node);
 }
 
-export function isIdentifier(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.Identifier> {
+export function isIdentifier(node: TSESTree.Node): node is TSESTree.Identifier {
   return node.type === AST_NODE_TYPES.Identifier;
 }
 
 export function isIfStatement(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.IfStatement> {
+  node: TSESTree.Node
+): node is TSESTree.IfStatement {
   return node.type === AST_NODE_TYPES.IfStatement;
 }
 
 export function isMemberExpression(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.MemberExpression> {
+  node: TSESTree.Node
+): node is TSESTree.MemberExpression {
   return node.type === AST_NODE_TYPES.MemberExpression;
 }
 
 export function isMethodDefinition(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.MethodDefinition> {
+  node: TSESTree.Node
+): node is TSESTree.MethodDefinition {
   return node.type === AST_NODE_TYPES.MethodDefinition;
 }
 
 export function isNewExpression(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.NewExpression> {
+  node: TSESTree.Node
+): node is TSESTree.NewExpression {
   return node.type === AST_NODE_TYPES.NewExpression;
 }
 
 export function isObjectExpression(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.ObjectExpression> {
+  node: TSESTree.Node
+): node is TSESTree.ObjectExpression {
   return node.type === AST_NODE_TYPES.ObjectExpression;
 }
 
-export function isProperty(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.Property> {
+export function isProperty(node: TSESTree.Node): node is TSESTree.Property {
   return node.type === AST_NODE_TYPES.Property;
 }
 
 export function isRestElement(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.RestElement> {
+  node: TSESTree.Node
+): node is TSESTree.RestElement {
   return node.type === AST_NODE_TYPES.RestElement;
 }
 
 export function isReturnStatement(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.ReturnStatement> {
+  node: TSESTree.Node
+): node is TSESTree.ReturnStatement {
   return node.type === AST_NODE_TYPES.ReturnStatement;
 }
 
 export function isSwitchStatement(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.SwitchStatement> {
+  node: TSESTree.Node
+): node is TSESTree.SwitchStatement {
   return node.type === AST_NODE_TYPES.SwitchStatement;
 }
 
 export function isThisExpression(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.ThisExpression> {
+  node: TSESTree.Node
+): node is TSESTree.ThisExpression {
   return node.type === AST_NODE_TYPES.ThisExpression;
 }
 
 export function isThrowStatement(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.ThrowStatement> {
+  node: TSESTree.Node
+): node is TSESTree.ThrowStatement {
   return node.type === AST_NODE_TYPES.ThrowStatement;
 }
 
 export function isTSArrayType(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.TSArrayType> {
+  node: TSESTree.Node
+): node is TSESTree.TSArrayType {
   return node.type === AST_NODE_TYPES.TSArrayType;
 }
 
 export function isTSFunctionType(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.TSFunctionType> {
+  node: TSESTree.Node
+): node is TSESTree.TSFunctionType {
   return node.type === AST_NODE_TYPES.TSFunctionType;
 }
 
 export function isTSIndexSignature(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.TSIndexSignature> {
+  node: TSESTree.Node
+): node is TSESTree.TSIndexSignature {
   return node.type === AST_NODE_TYPES.TSIndexSignature;
 }
 
 export function isTSInterfaceBody(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.TSInterfaceBody> {
+  node: TSESTree.Node
+): node is TSESTree.TSInterfaceBody {
   return node.type === AST_NODE_TYPES.TSInterfaceBody;
 }
 
 export function isTSInterfaceDeclaration(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.TSInterfaceDeclaration> {
+  node: TSESTree.Node
+): node is TSESTree.TSInterfaceDeclaration {
   return node.type === AST_NODE_TYPES.TSInterfaceDeclaration;
 }
 
 export function isTSInterfaceHeritage(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.TSInterfaceHeritage> {
+  node: TSESTree.Node
+): node is TSESTree.TSInterfaceHeritage {
   return node.type === AST_NODE_TYPES.TSInterfaceHeritage;
 }
 
 export function isTSNullKeyword(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.TSNullKeyword> {
+  node: TSESTree.Node
+): node is TSESTree.TSNullKeyword {
   return node.type === AST_NODE_TYPES.TSNullKeyword;
 }
 
 export function isTSParameterProperty(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.TSParameterProperty> {
+  node: TSESTree.Node
+): node is TSESTree.TSParameterProperty {
   return node.type === AST_NODE_TYPES.TSParameterProperty;
 }
 
 export function isTSPropertySignature(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.TSPropertySignature> {
+  node: TSESTree.Node
+): node is TSESTree.TSPropertySignature {
   return node.type === AST_NODE_TYPES.TSPropertySignature;
 }
 
 export function isTSTupleType(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.TSTupleType> {
+  node: TSESTree.Node
+): node is TSESTree.TSTupleType {
   return node.type === AST_NODE_TYPES.TSTupleType;
 }
 
 export function isTSTypeAnnotation(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.TSTypeAnnotation> {
+  node: TSESTree.Node
+): node is TSESTree.TSTypeAnnotation {
   return node.type === AST_NODE_TYPES.TSTypeAnnotation;
 }
 
 export function isTSTypeLiteral(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.TSTypeLiteral> {
+  node: TSESTree.Node
+): node is TSESTree.TSTypeLiteral {
   return node.type === AST_NODE_TYPES.TSTypeLiteral;
 }
 
 export function isTSTypeOperator(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.TSTypeOperator> {
+  node: TSESTree.Node
+): node is TSESTree.TSTypeOperator {
   return node.type === AST_NODE_TYPES.TSTypeOperator;
 }
 
 export function isTSTypeReference(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.TSTypeReference> {
+  node: TSESTree.Node
+): node is TSESTree.TSTypeReference {
   return node.type === AST_NODE_TYPES.TSTypeReference;
 }
 
 export function isTSUndefinedKeyword(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.TSUndefinedKeyword> {
+  node: TSESTree.Node
+): node is TSESTree.TSUndefinedKeyword {
   return node.type === AST_NODE_TYPES.TSUndefinedKeyword;
 }
 
 export function isTSVoidKeyword(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.TSVoidKeyword> {
+  node: TSESTree.Node
+): node is TSESTree.TSVoidKeyword {
   return node.type === AST_NODE_TYPES.TSVoidKeyword;
 }
 
 export function isUnaryExpression(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.UnaryExpression> {
+  node: TSESTree.Node
+): node is TSESTree.UnaryExpression {
   return node.type === AST_NODE_TYPES.UnaryExpression;
 }
 
 export function isVariableDeclaration(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.VariableDeclaration> {
+  node: TSESTree.Node
+): node is TSESTree.VariableDeclaration {
   return node.type === AST_NODE_TYPES.VariableDeclaration;
 }
 
 export function isVariableDeclarator(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<TSESTree.VariableDeclarator> {
+  node: TSESTree.Node
+): node is TSESTree.VariableDeclarator {
   return node.type === AST_NODE_TYPES.VariableDeclarator;
 }
 
 export function hasID(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<Extract<TSESTree.Node, { id: unknown }>> {
+  node: TSESTree.Node
+): node is Extract<TSESTree.Node, { id: unknown }> {
   return Object.hasOwn(node, "id");
 }
 
 export function hasKey(
-  node: ReadonlyDeep<TSESTree.Node>
-): node is ReadonlyDeep<Extract<TSESTree.Node, { key: unknown }>> {
+  node: TSESTree.Node
+): node is Extract<TSESTree.Node, { key: unknown }> {
   return Object.hasOwn(node, "key");
 }
 
@@ -381,17 +372,17 @@ export function isArrayType(
 export function isArrayType(
   type: Type | null,
   assumeType: boolean,
-  node: ReadonlyDeep<TSESTree.Node | null>
+  node: TSESTree.Node | null
 ): type is ArrayType;
 export function isArrayType(
   type: null,
   assumeType: true,
-  node: ReadonlyDeep<TSESTree.Node>
+  node: TSESTree.Node
 ): boolean;
 export function isArrayType(
   type: Type | null,
   assumeType = false,
-  node: ReadonlyDeep<TSESTree.Node> | null = null
+  node: TSESTree.Node | null = null
 ): boolean {
   return assumeType === true && type === null
     ? node !== null
@@ -412,17 +403,17 @@ export function isArrayConstructorType(
 export function isArrayConstructorType(
   type: Type | null,
   assumeType: boolean,
-  node: ReadonlyDeep<TSESTree.Node | null>
+  node: TSESTree.Node | null
 ): type is ArrayConstructorType;
 export function isArrayConstructorType(
   type: null,
   assumeType: true,
-  node: ReadonlyDeep<TSESTree.Node>
+  node: TSESTree.Node
 ): boolean;
 export function isArrayConstructorType(
   type: Type | null,
   assumeType = false,
-  node: ReadonlyDeep<TSESTree.Node> | null = null
+  node: TSESTree.Node | null = null
 ): boolean {
   return assumeType === true && type === null
     ? node !== null && isIdentifier(node) && node.name === "Array"
@@ -444,17 +435,17 @@ export function isObjectConstructorType(
 export function isObjectConstructorType(
   type: Type | null,
   assumeType: boolean,
-  node: ReadonlyDeep<TSESTree.Node | null>
+  node: TSESTree.Node | null
 ): type is ObjectConstructorType;
 export function isObjectConstructorType(
   type: null,
   assumeType: true,
-  node: ReadonlyDeep<TSESTree.Node>
+  node: TSESTree.Node
 ): boolean;
 export function isObjectConstructorType(
   type: Type | null,
   assumeType = false,
-  node: ReadonlyDeep<TSESTree.Node> | null = null
+  node: TSESTree.Node | null = null
 ): boolean {
   return assumeType === true && type === null
     ? node !== null && isIdentifier(node) && node.name === "Object"
