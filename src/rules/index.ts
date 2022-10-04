@@ -8,7 +8,7 @@ import * as noLoopStatements from "./no-loop-statements";
 import * as noMixedTypes from "./no-mixed-types";
 import * as noPromiseReject from "./no-promise-reject";
 import * as noReturnVoid from "./no-return-void";
-import * as noThisExpression from "./no-this-expression";
+import * as noThisExpressions from "./no-this-expressions";
 import * as noThrowStatement from "./no-throw-statement";
 import * as noTryStatement from "./no-try-statement";
 import * as preferImmutableTypes from "./prefer-immutable-types";
@@ -31,7 +31,7 @@ export const rules = {
   [noMixedTypes.name]: noMixedTypes.rule,
   [noPromiseReject.name]: noPromiseReject.rule,
   [noReturnVoid.name]: noReturnVoid.rule,
-  [noThisExpression.name]: noThisExpression.rule,
+  [noThisExpressions.name]: noThisExpressions.rule,
   [noThrowStatement.name]: noThrowStatement.rule,
   [noTryStatement.name]: noTryStatement.rule,
   [preferImmutableTypes.name]: preferImmutableTypes.rule,

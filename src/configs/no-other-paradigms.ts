@@ -2,13 +2,13 @@ import type { Linter } from "eslint";
 
 import * as noClasses from "~/rules/no-classes";
 import * as noMixedTypes from "~/rules/no-mixed-types";
-import * as noThisExpression from "~/rules/no-this-expression";
+import * as noThisExpressions from "~/rules/no-this-expressions";
 
 const config: Linter.Config = {
   rules: {
     [`functional/${noClasses.name}`]: "error",
     [`functional/${noMixedTypes.name}`]: "error",
-    [`functional/${noThisExpression.name}`]: "error",
+    [`functional/${noThisExpressions.name}`]: "error",
   },
 };
 
