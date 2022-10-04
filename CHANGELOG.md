@@ -50,7 +50,7 @@ All notable changes to this project will be documented in this file. Dates are d
 
 ### Features
 
-* **no-throw-statement:** add an option to allow throw statements within async functions ([#330](https://github.com/eslint-functional/eslint-plugin-functional/issues/330)) ([7cee76b](https://github.com/eslint-functional/eslint-plugin-functional/commit/7cee76b0baeeea20dc32546c133b35f2dc12e01d))
+* **no-throw-statements:** add an option to allow throw statements within async functions ([#330](https://github.com/eslint-functional/eslint-plugin-functional/issues/330)) ([7cee76b](https://github.com/eslint-functional/eslint-plugin-functional/commit/7cee76b0baeeea20dc32546c133b35f2dc12e01d))
 
 ## [4.1.1](https://github.com/eslint-functional/eslint-plugin-functional/compare/v4.1.0...v4.1.1) (2022-01-08)
 
