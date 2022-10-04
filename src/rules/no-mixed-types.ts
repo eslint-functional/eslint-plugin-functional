@@ -10,7 +10,7 @@ import { isTSPropertySignature, isTSTypeLiteral } from "~/util/typeguard";
 /**
  * The name of this rule.
  */
-export const name = "no-mixed-type" as const;
+export const name = "no-mixed-types" as const;
 
 /**
  * The options this rule can take.
