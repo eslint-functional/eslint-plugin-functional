@@ -1,4 +1,4 @@
-# Restrict types so that only members of the same kind of are allowed in them (no-mixed-type)
+# Restrict types so that only members of the same kind of are allowed in them (no-mixed-types)
 
 This rule enforces that an aliased type literal or an interface only has one type of members, eg. only data properties or only functions.
 
@@ -11,7 +11,7 @@ Mixing functions and data properties in the same type is a sign of object-orient
 <!-- eslint-skip -->
 
 ```ts
-/* eslint functional/no-mixed-type: "error" */
+/* eslint functional/no-mixed-types: "error" */
 
 type Foo = {
   prop1: string;
@@ -22,7 +22,7 @@ type Foo = {
 ### ✅ Correct
 
 ```ts
-/* eslint functional/no-mixed-type: "error" */
+/* eslint functional/no-mixed-types: "error" */
 
 type Foo = {
   prop1: string;
@@ -31,7 +31,7 @@ type Foo = {
 ```
 
 ```ts
-/* eslint functional/no-mixed-type: "error" */
+/* eslint functional/no-mixed-types: "error" */
 
 type Foo = {
   prop1: () => string;
