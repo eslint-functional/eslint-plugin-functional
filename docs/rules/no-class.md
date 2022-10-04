@@ -46,7 +46,7 @@ console.log(`${dogA.name} is ${getAgeInDogYears(dogA.age)} in dog years.`);
 
 ### React Examples
 
-Thanks to libraries like [recompose](https://github.com/acdlite/recompose) and Redux's [React Container components](http://redux.js.org/docs/basics/UsageWithReact.html), there's not much reason to build Components using `React.createClass` or ES6 classes anymore. The `no-this-expression` rule makes this explicit.
+Thanks to libraries like [recompose](https://github.com/acdlite/recompose) and Redux's [React Container components](http://redux.js.org/docs/basics/UsageWithReact.html), there's not much reason to build Components using `React.createClass` or ES6 classes anymore. The `no-this-expressions` rule makes this explicit.
 
 ```js
 const Message = React.createClass({
