@@ -1,4 +1,4 @@
-import { name, rule } from "~/rules/no-conditional-statement";
+import { name, rule } from "~/rules/no-conditional-statements";
 import { testUsing } from "~/tests/helpers/testers";
 
 import es3Tests from "./es3";

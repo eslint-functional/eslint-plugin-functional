@@ -2,7 +2,7 @@ import type { Linter } from "eslint";
 import { Immutability } from "is-immutable-type";
 
 import * as functionalParameters from "~/rules/functional-parameters";
-import * as noConditionalStatement from "~/rules/no-conditional-statement";
+import * as noConditionalStatements from "~/rules/no-conditional-statements";
 import * as noLet from "~/rules/no-let";
 import * as noThisExpression from "~/rules/no-this-expression";
 import * as noThrowStatement from "~/rules/no-throw-statement";
@@ -25,7 +25,7 @@ const overrides: Linter.Config = {
         },
       },
     ],
-    [`functional/${noConditionalStatement.name}`]: [
+    [`functional/${noConditionalStatements.name}`]: [
       "error",
       {
         allowReturningBranches: true,

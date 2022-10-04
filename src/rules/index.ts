@@ -1,7 +1,7 @@
 import * as functionalParameters from "./functional-parameters";
 import * as immutableData from "./immutable-data";
 import * as noClasses from "./no-classes";
-import * as noConditionalStatement from "./no-conditional-statement";
+import * as noConditionalStatements from "./no-conditional-statements";
 import * as noExpressionStatement from "./no-expression-statement";
 import * as noLet from "./no-let";
 import * as noLoop from "./no-loop-statement";
@@ -24,7 +24,7 @@ export const rules = {
   [functionalParameters.name]: functionalParameters.rule,
   [immutableData.name]: immutableData.rule,
   [noClasses.name]: noClasses.rule,
-  [noConditionalStatement.name]: noConditionalStatement.rule,
+  [noConditionalStatements.name]: noConditionalStatements.rule,
   [noExpressionStatement.name]: noExpressionStatement.rule,
   [noLet.name]: noLet.rule,
   [noLoop.name]: noLoop.rule,
