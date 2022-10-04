@@ -1,11 +1,11 @@
 import type { Linter } from "eslint";
 
-import * as noThrowStatement from "~/rules/no-throw-statement";
+import * as noThrowStatements from "~/rules/no-throw-statements";
 import * as noTryStatement from "~/rules/no-try-statement";
 
 const config: Linter.Config = {
   rules: {
-    [`functional/${noThrowStatement.name}`]: "error",
+    [`functional/${noThrowStatements.name}`]: "error",
     [`functional/${noTryStatement.name}`]: "error",
   },
 };
