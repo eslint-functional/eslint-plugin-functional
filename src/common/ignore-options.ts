@@ -15,27 +15,11 @@ import {
 } from "~/util/typeguard";
 
 /**
- * The option to allow local mutations.
- */
-export type AllowLocalMutationOption = {
-  readonly allowLocalMutation: boolean;
-};
-
-/**
- * The schema for the option to allow local mutations.
- */
-export const allowLocalMutationOptionSchema: JSONSchema4["properties"] = {
-  allowLocalMutation: {
-    type: "boolean",
-  },
-};
-
-/**
  * The option to ignore patterns.
  */
-export type IgnorePatternOption = {
-  readonly ignorePattern?: ReadonlyArray<string> | string;
-};
+export type IgnorePatternOption = Readonly<{
+  ignorePattern?: ReadonlyArray<string> | string;
+}>;
 
 /**
  * The schema for the option to ignore patterns.
@@ -52,9 +36,9 @@ export const ignorePatternOptionSchema: JSONSchema4["properties"] = {
 /**
  * The option to ignore accessor patterns.
  */
-export type IgnoreAccessorPatternOption = {
-  readonly ignoreAccessorPattern?: ReadonlyArray<string> | string;
-};
+export type IgnoreAccessorPatternOption = Readonly<{
+  ignoreAccessorPattern?: ReadonlyArray<string> | string;
+}>;
 
 /**
  * The schema for the option to ignore accessor patterns.
@@ -71,15 +55,15 @@ export const ignoreAccessorPatternOptionSchema: JSONSchema4["properties"] = {
 /**
  * The option to ignore classes.
  */
-export type IgnoreClassOption = {
-  readonly ignoreClass: boolean | "fieldsOnly";
-};
+export type IgnoreClassesOption = Readonly<{
+  ignoreClasses: boolean | "fieldsOnly";
+}>;
 
 /**
  * The schema for the option to ignore classes.
  */
-export const ignoreClassOptionSchema: JSONSchema4["properties"] = {
-  ignoreClass: {
+export const ignoreClassesOptionSchema: JSONSchema4["properties"] = {
+  ignoreClasses: {
     oneOf: [
       {
         type: "boolean",
@@ -95,15 +79,15 @@ export const ignoreClassOptionSchema: JSONSchema4["properties"] = {
 /**
  * The option to ignore interfaces.
  */
-export type IgnoreInterfaceOption = {
-  readonly ignoreInterface: boolean;
-};
+export type IgnoreInterfacesOption = Readonly<{
+  ignoreInterfaces: boolean;
+}>;
 
 /**
  * The schema for the option to ignore interfaces.
  */
-export const ignoreInterfaceOptionSchema: JSONSchema4["properties"] = {
-  ignoreInterface: {
+export const ignoreInterfacesOptionSchema: JSONSchema4["properties"] = {
+  ignoreInterfaces: {
     type: "boolean",
   },
 };
@@ -111,9 +95,9 @@ export const ignoreInterfaceOptionSchema: JSONSchema4["properties"] = {
 /**
  * The option to ignore prefix selector.
  */
-export type IgnorePrefixSelectorOption = {
-  readonly ignorePrefixSelector?: ReadonlyArray<string> | string;
-};
+export type IgnorePrefixSelectorOption = Readonly<{
+  ignorePrefixSelector?: ReadonlyArray<string> | string;
+}>;
 
 /**
  * The schema for the option to ignore prefix selector.
@@ -213,29 +197,29 @@ function shouldIgnoreViaAccessorPattern(
 /**
  * Should the given node be allowed base off the following rule options?
  *
- * - AllowLocalMutationOption.
+ * - AllowInFunctionOption.
  */
-export function shouldIgnoreLocalMutation(
+export function shouldIgnoreInFunction(
   node: ReadonlyDeep<TSESTree.Node>,
   context: ReadonlyDeep<TSESLint.RuleContext<string, BaseOptions>>,
-  { allowLocalMutation }: Partial<AllowLocalMutationOption>
+  allowInFunction: boolean | undefined
 ): boolean {
-  return allowLocalMutation === true && inFunctionBody(node);
+  return allowInFunction === true && inFunctionBody(node);
 }
 
 /**
  * Should the given node be allowed base off the following rule options?
  *
- * - IgnoreClassOption.
+ * - IgnoreClassesOption.
  */
-export function shouldIgnoreClass(
+export function shouldIgnoreClasses(
   node: ReadonlyDeep<TSESTree.Node>,
   context: ReadonlyDeep<TSESLint.RuleContext<string, BaseOptions>>,
-  { ignoreClass }: Partial<IgnoreClassOption>
+  ignoreClasses: Partial<IgnoreClassesOption>["ignoreClasses"]
 ): boolean {
   return (
-    (ignoreClass === true && inClass(node)) ||
-    (ignoreClass === "fieldsOnly" &&
+    (ignoreClasses === true && inClass(node)) ||
+    (ignoreClasses === "fieldsOnly" &&
       (isPropertyDefinition(node) ||
         (isAssignmentExpression(node) &&
           inClass(node) &&
@@ -247,14 +231,14 @@ export function shouldIgnoreClass(
 /**
  * Should the given node be allowed base off the following rule options?
  *
- * - IgnoreInterfaceOption.
+ * - IgnoreInterfacesOption.
  */
-export function shouldIgnoreInterface(
+export function shouldIgnoreInterfaces(
   node: ReadonlyDeep<TSESTree.Node>,
   context: ReadonlyDeep<TSESLint.RuleContext<string, BaseOptions>>,
-  { ignoreInterface }: Partial<IgnoreInterfaceOption>
+  ignoreInterfaces: Partial<IgnoreInterfacesOption>["ignoreInterfaces"]
 ): boolean {
-  return ignoreInterface === true && inInterface(node);
+  return ignoreInterfaces === true && inInterface(node);
 }
 
 /**
@@ -266,10 +250,8 @@ export function shouldIgnoreInterface(
 export function shouldIgnorePattern(
   node: ReadonlyDeep<TSESTree.Node>,
   context: ReadonlyDeep<TSESLint.RuleContext<string, BaseOptions>>,
-  {
-    ignorePattern,
-    ignoreAccessorPattern,
-  }: Partial<IgnoreAccessorPatternOption & IgnorePatternOption>
+  ignorePattern: Partial<IgnorePatternOption>["ignorePattern"],
+  ignoreAccessorPattern?: Partial<IgnoreAccessorPatternOption>["ignoreAccessorPattern"]
 ): boolean {
   const texts = getNodeIdentifierTexts(node, context);
 

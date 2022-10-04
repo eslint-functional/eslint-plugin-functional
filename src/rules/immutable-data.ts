@@ -6,13 +6,13 @@ import type { ReadonlyDeep } from "type-fest";
 import type {
   IgnoreAccessorPatternOption,
   IgnorePatternOption,
-  IgnoreClassOption,
+  IgnoreClassesOption,
 } from "~/common/ignore-options";
 import {
   shouldIgnorePattern,
-  shouldIgnoreClass,
+  shouldIgnoreClasses,
   ignoreAccessorPatternOptionSchema,
-  ignoreClassOptionSchema,
+  ignoreClassesOptionSchema,
   ignorePatternOptionSchema,
 } from "~/common/ignore-options";
 import { isExpected } from "~/util/misc";
@@ -40,7 +40,7 @@ export const name = "immutable-data" as const;
  */
 type Options = readonly [
   IgnoreAccessorPatternOption &
-    IgnoreClassOption &
+    IgnoreClassesOption &
     IgnorePatternOption &
     Readonly<{
       ignoreImmediateMutation: boolean;
@@ -62,7 +62,7 @@ const schema: JSONSchema4 = [
     properties: deepmerge(
       ignorePatternOptionSchema,
       ignoreAccessorPatternOptionSchema,
-      ignoreClassOptionSchema,
+      ignoreClassesOptionSchema,
       {
         ignoreImmediateMutation: {
           type: "boolean",
@@ -97,7 +97,7 @@ const schema: JSONSchema4 = [
  */
 const defaultOptions: Options = [
   {
-    ignoreClass: false,
+    ignoreClasses: false,
     ignoreImmediateMutation: true,
     assumeTypes: {
       forArrays: true,
@@ -190,11 +190,12 @@ function checkAssignmentExpression(
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
+  const { ignorePattern, ignoreAccessorPattern, ignoreClasses } = optionsObject;
 
   if (
     !isMemberExpression(node.left) ||
-    shouldIgnoreClass(node, context, optionsObject) ||
-    shouldIgnorePattern(node, context, optionsObject)
+    shouldIgnoreClasses(node, context, ignoreClasses) ||
+    shouldIgnorePattern(node, context, ignorePattern, ignoreAccessorPattern)
   ) {
     return {
       context,
@@ -221,11 +222,12 @@ function checkUnaryExpression(
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
+  const { ignorePattern, ignoreAccessorPattern, ignoreClasses } = optionsObject;
 
   if (
     !isMemberExpression(node.argument) ||
-    shouldIgnoreClass(node, context, optionsObject) ||
-    shouldIgnorePattern(node, context, optionsObject)
+    shouldIgnoreClasses(node, context, ignoreClasses) ||
+    shouldIgnorePattern(node, context, ignorePattern, ignoreAccessorPattern)
   ) {
     return {
       context,
@@ -251,11 +253,17 @@ function checkUpdateExpression(
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
+  const { ignorePattern, ignoreAccessorPattern, ignoreClasses } = optionsObject;
 
   if (
     !isMemberExpression(node.argument) ||
-    shouldIgnoreClass(node.argument, context, optionsObject) ||
-    shouldIgnorePattern(node.argument, context, optionsObject)
+    shouldIgnoreClasses(node.argument, context, ignoreClasses) ||
+    shouldIgnorePattern(
+      node.argument,
+      context,
+      ignorePattern,
+      ignoreAccessorPattern
+    )
   ) {
     return {
       context,
@@ -324,13 +332,19 @@ function checkCallExpression(
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
+  const { ignorePattern, ignoreAccessorPattern, ignoreClasses } = optionsObject;
 
   // Not potential object mutation?
   if (
     !isMemberExpression(node.callee) ||
     !isIdentifier(node.callee.property) ||
-    shouldIgnoreClass(node.callee.object, context, optionsObject) ||
-    shouldIgnorePattern(node.callee.object, context, optionsObject)
+    shouldIgnoreClasses(node.callee.object, context, ignoreClasses) ||
+    shouldIgnorePattern(
+      node.callee.object,
+      context,
+      ignorePattern,
+      ignoreAccessorPattern
+    )
   ) {
     return {
       context,
@@ -375,8 +389,13 @@ function checkCallExpression(
     node.arguments.length >= 2 &&
     (isIdentifier(node.arguments[0]) ||
       isMemberExpression(node.arguments[0])) &&
-    !shouldIgnoreClass(node.arguments[0], context, optionsObject) &&
-    !shouldIgnorePattern(node.arguments[0], context, optionsObject) &&
+    !shouldIgnoreClasses(node.arguments[0], context, ignoreClasses) &&
+    !shouldIgnorePattern(
+      node.arguments[0],
+      context,
+      ignorePattern,
+      ignoreAccessorPattern
+    ) &&
     isObjectConstructorType(
       getTypeOfNode(node.callee.object, context),
       assumeTypesForObjects,
