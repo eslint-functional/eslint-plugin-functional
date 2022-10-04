@@ -3,7 +3,7 @@ import type { Linter } from "eslint";
 import * as functionalParameters from "~/rules/functional-parameters";
 import * as immutableData from "~/rules/immutable-data";
 import * as noClasses from "~/rules/no-classes";
-import * as noConditionalStatement from "~/rules/no-conditional-statement";
+import * as noConditionalStatements from "~/rules/no-conditional-statements";
 import * as noExpressionStatement from "~/rules/no-expression-statement";
 import * as noLet from "~/rules/no-let";
 import * as noLoop from "~/rules/no-loop-statement";
@@ -23,7 +23,7 @@ const config: Linter.Config = {
     [`functional/${functionalParameters.name}`]: "error",
     [`functional/${immutableData.name}`]: "error",
     [`functional/${noClasses.name}`]: "error",
-    [`functional/${noConditionalStatement.name}`]: "error",
+    [`functional/${noConditionalStatements.name}`]: "error",
     [`functional/${noExpressionStatement.name}`]: "error",
     [`functional/${noLet.name}`]: "error",
     [`functional/${noLoop.name}`]: "error",
