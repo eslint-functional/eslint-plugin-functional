@@ -191,7 +191,7 @@ function doCommit(
     const scopeValue = answers.scope ?? answers.scopeRules ?? "";
     const scope = scopeValue.length > 0 ? `(${scopeValue})` : "";
     // Hard limit is applied by the validate.
-    const head = `${answers.type + breakingMarker + scope}: ${answers.subject}`;
+    const head = `${answers.type + scope + breakingMarker}: ${answers.subject}`;
 
     const bodyValue = (answers.body ?? "").trim();
     const bodyValueWithBreaking =
