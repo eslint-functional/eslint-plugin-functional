@@ -287,7 +287,7 @@ function filterSubject(options: Options) {
         m_subject.charAt(0).toLowerCase() +
         m_subject.slice(1, m_subject.length);
     }
-    // eslint-disable-next-line functional/no-loop-statement
+    // eslint-disable-next-line functional/no-loop-statements
     while (m_subject.endsWith(".")) {
       m_subject = m_subject.slice(0, -1);
     }
