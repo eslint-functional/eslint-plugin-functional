@@ -27,7 +27,7 @@ type Options = readonly [
   Readonly<{
     allowNull: boolean;
     allowUndefined: boolean;
-    ignoreImplicit: boolean;
+    ignoreInferredTypes: boolean;
   }>
 ];
 
@@ -44,7 +44,7 @@ const schema: JSONSchema4 = [
       allowUndefined: {
         type: "boolean",
       },
-      ignoreImplicit: {
+      ignoreInferredTypes: {
         type: "boolean",
       },
     },
@@ -59,7 +59,7 @@ const defaultOptions: Options = [
   {
     allowNull: true,
     allowUndefined: true,
-    ignoreImplicit: false,
+    ignoreInferredTypes: false,
   },
 ];
 
@@ -93,10 +93,10 @@ function checkFunction(
   >,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
-  const [{ ignoreImplicit, allowNull, allowUndefined }] = options;
+  const [{ ignoreInferredTypes, allowNull, allowUndefined }] = options;
 
   if (node.returnType === undefined) {
-    if (!ignoreImplicit && isFunctionLike(node)) {
+    if (!ignoreInferredTypes && isFunctionLike(node)) {
       const functionType = getTypeOfNode(node, context);
       const returnType = functionType
         ?.getCallSignatures()?.[0]

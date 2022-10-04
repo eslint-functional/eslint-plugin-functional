@@ -41,7 +41,7 @@ This rule accepts an options object of the following type:
 type Options = {
   allowNull: boolean;
   allowUndefined: boolean;
-  ignoreImplicit: boolean;
+  ignoreInferredTypes: boolean;
 }
 ```
 
@@ -51,18 +51,18 @@ type Options = {
 const defaults = {
   allowNull: true,
   allowUndefined: true,
-  ignoreImplicit: false,
+  ignoreInferredTypes: false,
 }
 ```
 
-### allowNull
+### `allowNull`
 
 If true allow returning null.
 
-### allowUndefined
+### `allowUndefined`
 
 If true allow returning undefined.
 
-### ignoreImplicit
+### `ignoreInferredTypes`
 
 If true ignore functions that don't explicitly specify a return type.

@@ -5,16 +5,14 @@ import type { JSONSchema4 } from "json-schema";
 import type { ReadonlyDeep } from "type-fest";
 
 import type {
-  AllowLocalMutationOption,
-  IgnoreClassOption,
+  IgnoreClassesOption,
   IgnorePatternOption,
 } from "~/common/ignore-options";
 import {
-  allowLocalMutationOptionSchema,
-  ignoreClassOptionSchema,
+  ignoreClassesOptionSchema,
   ignorePatternOptionSchema,
-  shouldIgnoreClass,
-  shouldIgnoreLocalMutation,
+  shouldIgnoreClasses,
+  shouldIgnoreInFunction,
   shouldIgnorePattern,
 } from "~/common/ignore-options";
 import type { ESFunctionType } from "~/util/node-types";
@@ -43,8 +41,7 @@ type RawEnforcement =
   | false;
 
 type Option = ReadonlyDeep<
-  AllowLocalMutationOption &
-    IgnoreClassOption &
+  IgnoreClassesOption &
     IgnorePatternOption & {
       enforcement: RawEnforcement;
       ignoreInferredTypes: boolean;
@@ -59,7 +56,11 @@ type Options = ReadonlyDeep<
     Option & {
       parameters?: Option | RawEnforcement;
       returnTypes?: Option | RawEnforcement;
-      variables?: Option | RawEnforcement;
+      variables?:
+        | (Option & {
+            ignoreInFunctions?: boolean;
+          })
+        | RawEnforcement;
     }
   ]
 >;
@@ -83,8 +84,7 @@ const enforcementEnumOptions = [
  * The non-shorthand schema for each option.
  */
 const optionExpandedSchema: JSONSchema4 = deepmerge(
-  allowLocalMutationOptionSchema,
-  ignoreClassOptionSchema,
+  ignoreClassesOptionSchema,
   ignorePatternOptionSchema,
   {
     enforcement: {
@@ -123,7 +123,23 @@ const schema: JSONSchema4 = [
     properties: deepmerge(optionExpandedSchema, {
       parameters: optionSchema,
       returnTypes: optionSchema,
-      variables: optionSchema,
+      variables: {
+        oneOf: [
+          {
+            type: "object",
+            properties: deepmerge(optionExpandedSchema, {
+              ignoreInFunctions: {
+                type: "boolean",
+              },
+            }),
+            additionalProperties: false,
+          },
+          {
+            type: ["string", "number", "boolean"],
+            enum: enforcementEnumOptions,
+          },
+        ],
+      },
     }),
     additionalProperties: false,
   },
@@ -135,9 +151,8 @@ const schema: JSONSchema4 = [
 const defaultOptions: Options = [
   {
     enforcement: Immutability.Immutable,
-    allowLocalMutation: false,
     ignoreInferredTypes: false,
-    ignoreClass: false,
+    ignoreClasses: false,
   },
 ];
 
@@ -198,18 +213,28 @@ function getParameterTypeViolations(
 ): Descriptor[] {
   const [optionsObject] = options;
   const { parameters: rawOption } = optionsObject;
-  const { enforcement: rawEnforcement, ignoreInferredTypes } =
-    typeof rawOption === "object"
-      ? rawOption
-      : {
-          enforcement: rawOption,
-          ignoreInferredTypes: defaultOptions[0].ignoreInferredTypes,
-        };
+  const {
+    enforcement: rawEnforcement,
+    ignoreInferredTypes,
+    ignoreClasses,
+    ignorePattern,
+  } = typeof rawOption === "object"
+    ? rawOption
+    : {
+        enforcement: rawOption,
+        ignoreInferredTypes: optionsObject.ignoreInferredTypes,
+        ignoreClasses: optionsObject.ignoreClasses,
+        ignorePattern: optionsObject.ignorePattern,
+      };
 
   const enforcement = parseEnforcement(
-    rawEnforcement ?? defaultOptions[0].enforcement
+    rawEnforcement ?? optionsObject.enforcement
   );
-  if (enforcement === false) {
+  if (
+    enforcement === false ||
+    shouldIgnoreClasses(node, context, ignoreClasses) ||
+    shouldIgnorePattern(node, context, ignorePattern)
+  ) {
     return [];
   }
 
@@ -258,22 +283,30 @@ function getReturnTypeViolations(
 ): Descriptor[] {
   const [optionsObject] = options;
   const { returnTypes: rawOption } = optionsObject;
-  const { enforcement: rawEnforcement, ignoreInferredTypes } =
-    typeof rawOption === "object"
-      ? rawOption
-      : {
-          enforcement: rawOption,
-          ignoreInferredTypes: defaultOptions[0].ignoreInferredTypes,
-        };
+  const {
+    enforcement: rawEnforcement,
+    ignoreInferredTypes,
+    ignoreClasses,
+    ignorePattern,
+  } = typeof rawOption === "object"
+    ? rawOption
+    : {
+        enforcement: rawOption,
+        ignoreInferredTypes: optionsObject.ignoreInferredTypes,
+        ignoreClasses: optionsObject.ignoreClasses,
+        ignorePattern: optionsObject.ignorePattern,
+      };
 
   const enforcement = parseEnforcement(
-    rawEnforcement ?? defaultOptions[0].enforcement
+    rawEnforcement ?? optionsObject.enforcement
   );
-  if (enforcement === false) {
-    return [];
-  }
 
-  if (ignoreInferredTypes && node.returnType?.typeAnnotation === undefined) {
+  if (
+    enforcement === false ||
+    (ignoreInferredTypes && node.returnType?.typeAnnotation === undefined) ||
+    shouldIgnoreClasses(node, context, ignoreClasses) ||
+    shouldIgnorePattern(node, context, ignorePattern)
+  ) {
     return [];
   }
 
@@ -334,19 +367,6 @@ function checkFunction(
   >,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
-  const [optionsObject] = options;
-
-  if (
-    shouldIgnoreClass(node, context, optionsObject) ||
-    shouldIgnoreLocalMutation(node, context, optionsObject) ||
-    shouldIgnorePattern(node, context, optionsObject)
-  ) {
-    return {
-      context,
-      descriptors: [],
-    };
-  }
-
   const descriptors = [
     ...getParameterTypeViolations(node, context, options),
     ...getReturnTypeViolations(node, context, options),
@@ -370,10 +390,33 @@ function checkVarible(
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
 
+  const { variables: rawOption } = optionsObject;
+  const {
+    enforcement: rawEnforcement,
+    ignoreInferredTypes,
+    ignoreClasses,
+    ignorePattern,
+    ignoreInFunctions: rawIgnoreInFunctions,
+  } = typeof rawOption === "object"
+    ? rawOption
+    : {
+        enforcement: rawOption,
+        ignoreInferredTypes: optionsObject.ignoreInferredTypes,
+        ignoreClasses: optionsObject.ignoreClasses,
+        ignorePattern: optionsObject.ignorePattern,
+        ignoreInFunctions: false,
+      };
+
+  const enforcement = parseEnforcement(
+    rawEnforcement ?? optionsObject.enforcement
+  );
+  const ignoreInFunctions = rawIgnoreInFunctions ?? false;
+
   if (
-    shouldIgnoreClass(node, context, optionsObject) ||
-    shouldIgnoreLocalMutation(node, context, optionsObject) ||
-    shouldIgnorePattern(node, context, optionsObject)
+    enforcement === false ||
+    shouldIgnoreClasses(node, context, ignoreClasses) ||
+    shouldIgnoreInFunction(node, context, ignoreInFunctions) ||
+    shouldIgnorePattern(node, context, ignorePattern)
   ) {
     return {
       context,
@@ -392,25 +435,6 @@ function checkVarible(
           messageId: "propertyModifier",
         },
       ],
-    };
-  }
-
-  const { variables: rawOption } = optionsObject;
-  const { enforcement: rawEnforcement, ignoreInferredTypes } =
-    typeof rawOption === "object"
-      ? rawOption
-      : {
-          enforcement: rawOption,
-          ignoreInferredTypes: defaultOptions[0].ignoreInferredTypes,
-        };
-
-  const enforcement = parseEnforcement(
-    rawEnforcement ?? defaultOptions[0].enforcement
-  );
-  if (enforcement === false) {
-    return {
-      context,
-      descriptors: [],
     };
   }
 

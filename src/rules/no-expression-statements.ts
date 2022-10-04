@@ -83,8 +83,9 @@ function checkExpressionStatement(
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
+  const { ignorePattern } = optionsObject;
 
-  if (shouldIgnorePattern(node, context, optionsObject)) {
+  if (shouldIgnorePattern(node, context, ignorePattern)) {
     return {
       context,
       descriptors: [],

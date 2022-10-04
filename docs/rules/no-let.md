@@ -53,7 +53,7 @@ This rule accepts an options object of the following type:
 
 ```ts
 type Options = {
-  allowLocalMutation: boolean;
+  allowInFunctions: boolean;
   ignorePattern?: string[] | string;
 }
 ```
@@ -63,7 +63,7 @@ type Options = {
 ```ts
 const defaults = {
   allowInForLoopInit: false,
-  allowLocalMutation: false
+  allowInFunctions: false
 }
 ```
 
@@ -112,9 +112,11 @@ for (let [index, element] of array.entries()) {
 }
 ```
 
-### `allowLocalMutation`
+### `allowInFunctions`
 
-See the [allowLocalMutation](./options/allow-local-mutation.md) docs.
+If true, the rule will not flag any statements that are inside of function bodies.
+
+See the [allowLocalMutation](./options/allow-local-mutation.md) docs for more information.
 
 ### `ignorePattern`
 

@@ -10,7 +10,7 @@ const tests: ReadonlyArray<ValidTestCase> = [
         let y = 0;
       }
     `,
-    optionsSet: [[{ allowLocalMutation: true }]],
+    optionsSet: [[{ allowInFunctions: true }]],
   },
   {
     code: dedent`
@@ -19,7 +19,7 @@ const tests: ReadonlyArray<ValidTestCase> = [
         let y = 0;
       }
     `,
-    optionsSet: [[{ allowLocalMutation: true }]],
+    optionsSet: [[{ allowInFunctions: true }]],
   },
   {
     code: dedent`
@@ -30,7 +30,7 @@ const tests: ReadonlyArray<ValidTestCase> = [
         }
       }
     `,
-    optionsSet: [[{ allowLocalMutation: true }]],
+    optionsSet: [[{ allowInFunctions: true }]],
   },
   {
     code: dedent`

@@ -61,7 +61,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         }
       }
     `,
-    optionsSet: [[{ ignoreClass: "fieldsOnly" }]],
+    optionsSet: [[{ ignoreClasses: "fieldsOnly" }]],
     errors: [
       {
         messageId: "generic",
