@@ -8,7 +8,7 @@ import { createRule } from "~/util/rule";
 /**
  * The name of this rule.
  */
-export const name = "no-try-statement" as const;
+export const name = "no-try-statements" as const;
 
 /**
  * The options this rule can take.

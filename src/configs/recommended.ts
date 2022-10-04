@@ -6,7 +6,7 @@ import * as noConditionalStatements from "~/rules/no-conditional-statements";
 import * as noLet from "~/rules/no-let";
 import * as noThisExpressions from "~/rules/no-this-expressions";
 import * as noThrowStatements from "~/rules/no-throw-statements";
-import * as noTryStatement from "~/rules/no-try-statement";
+import * as noTryStatements from "~/rules/no-try-statements";
 import * as preferImmutableTypes from "~/rules/prefer-immutable-types";
 import * as typeDeclarationImmutability from "~/rules/type-declaration-immutability";
 import { RuleEnforcementComparator } from "~/rules/type-declaration-immutability";
@@ -44,7 +44,7 @@ const overrides: Linter.Config = {
         allowInAsyncFunctions: true,
       },
     ],
-    [`functional/${noTryStatement.name}`]: "off",
+    [`functional/${noTryStatements.name}`]: "off",
     [`functional/${preferImmutableTypes.name}`]: [
       "error",
       {
