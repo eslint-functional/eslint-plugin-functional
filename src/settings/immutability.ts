@@ -47,7 +47,7 @@ export function getImmutabilityOverrides(
   if (!cachedSettings.has(settings)) {
     const overrides = loadImmutabilityOverrides(settings);
 
-    // eslint-disable-next-line functional/no-expression-statement
+    // eslint-disable-next-line functional/no-expression-statements
     cachedSettings.set(settings, overrides);
     return overrides;
   }

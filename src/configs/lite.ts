@@ -3,7 +3,7 @@ import type { Linter } from "eslint";
 import * as functionalParameters from "~/rules/functional-parameters";
 import * as immutableData from "~/rules/immutable-data";
 import * as noConditionalStatements from "~/rules/no-conditional-statements";
-import * as noExpressionStatement from "~/rules/no-expression-statement";
+import * as noExpressionStatements from "~/rules/no-expression-statements";
 import * as preferImmutableTypes from "~/rules/prefer-immutable-types";
 import { mergeConfigs } from "~/util/merge-configs";
 
@@ -22,7 +22,7 @@ const overrides: Linter.Config = {
       { ignoreClass: "fieldsOnly" },
     ],
     [`functional/${noConditionalStatements.name}`]: "off",
-    [`functional/${noExpressionStatement.name}`]: "off",
+    [`functional/${noExpressionStatements.name}`]: "off",
     [`functional/${preferImmutableTypes.name}`]: [
       "error",
       {
