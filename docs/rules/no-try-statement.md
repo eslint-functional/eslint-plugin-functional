@@ -4,7 +4,7 @@ This rule disallows the `try` keyword.
 
 ## Rule Details
 
-Try statements are not part of functional programming. See [no-throw-statement](./no-throw-statement.md) for more information.
+Try statements are not part of functional programming. See [no-throw-statements](./no-throw-statements.md) for more information.
 
 ### ❌ Incorrect
 
