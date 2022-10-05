@@ -4,9 +4,10 @@ import type { JSONSchema4 } from "json-schema";
 
 import { getNodeIdentifierTexts } from "~/util/misc";
 import type { BaseOptions } from "~/util/rule";
-import { inClass, inFunctionBody, inInterface } from "~/util/tree";
+import { inClass, inFunctionBody } from "~/util/tree";
 import {
   isAssignmentExpression,
+  isClassLike,
   isPropertyDefinition,
   isMemberExpression,
   isThisExpression,
@@ -200,7 +201,7 @@ export function shouldIgnoreClasses(
   ignoreClasses: Partial<IgnoreClassesOption>["ignoreClasses"]
 ): boolean {
   return (
-    (ignoreClasses === true && inClass(node)) ||
+    (ignoreClasses === true && (isClassLike(node) || inClass(node))) ||
     (ignoreClasses === "fieldsOnly" &&
       (isPropertyDefinition(node) ||
         (isAssignmentExpression(node) &&
