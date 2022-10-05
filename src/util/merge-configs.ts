@@ -27,7 +27,7 @@ export const mergeConfigs = deepmergeCustom<
       meta.keyPath.length >= 2 &&
       meta.keyPath[0] === "rules"
     ) {
-      return utils.actions.skip;
+      return utils.defaultMergeFunctions.mergeOthers(values);
     }
 
     return utils.actions.defaultMerge;
