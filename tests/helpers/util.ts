@@ -13,13 +13,13 @@ type OptionsSets = {
    * The set of options this test case should pass for.
    */
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-  readonly optionsSet: ReadonlyArray<any>;
+  optionsSet: any[];
 
   /**
    * The set of settings this test case should pass for.
    */
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-  readonly settingsSet?: ReadonlyArray<SharedConfigurationSettings>;
+  settingsSet?: SharedConfigurationSettings[];
 };
 
 export type ValidTestCase = Omit<
@@ -38,7 +38,7 @@ export type InvalidTestCase = Omit<
  * Convert our test cases into ones eslint test runner is expecting.
  */
 export function processInvalidTestCase(
-  testCases: ReadonlyArray<InvalidTestCase>
+  testCases: InvalidTestCase[]
 ): ESLintRuleTester.InvalidTestCase[] {
   return testCases.flatMap((testCase) =>
     testCase.optionsSet.flatMap((options) => {
@@ -60,7 +60,7 @@ export function processInvalidTestCase(
  * Convert our test cases into ones eslint test runner is expecting.
  */
 export function processValidTestCase(
-  testCases: ReadonlyArray<ValidTestCase>
+  testCases: ValidTestCase[]
 ): ESLintRuleTester.ValidTestCase[] {
   // Ideally these two functions should be merged into 1 but I haven't been able
   // to get the typing information right - so for now they are two functions.

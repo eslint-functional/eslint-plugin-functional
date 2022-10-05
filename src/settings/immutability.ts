@@ -6,8 +6,6 @@ import {
 } from "is-immutable-type";
 import type { JSONSchema4 } from "json-schema";
 
-import { isReadonlyArray } from "~/util/typeguard";
-
 declare module "@typescript-eslint/utils" {
   type OverridesSetting = {
     name?: string;
@@ -68,7 +66,7 @@ function loadImmutabilityOverrides(
     return undefined;
   }
 
-  const raw = isReadonlyArray(overridesSetting)
+  const raw = Array.isArray(overridesSetting)
     ? overridesSetting
     : overridesSetting.values ?? [];
 
@@ -88,7 +86,7 @@ function loadImmutabilityOverrides(
   );
 
   const keepDefault =
-    isReadonlyArray(overridesSetting) || overridesSetting.keepDefault !== false;
+    Array.isArray(overridesSetting) || overridesSetting.keepDefault !== false;
 
   return keepDefault
     ? [...getDefaultImmutabilityOverrides(), ...upgraded]

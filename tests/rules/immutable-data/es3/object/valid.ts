@@ -2,7 +2,7 @@ import dedent from "dedent";
 
 import type { ValidTestCase } from "~/tests/helpers/util";
 
-const tests: ReadonlyArray<ValidTestCase> = [
+const tests: ValidTestCase[] = [
   // Allowed non-object mutation patterns.
   {
     code: dedent`

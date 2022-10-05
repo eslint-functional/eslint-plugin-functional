@@ -13,7 +13,7 @@ export const name = "no-classes" as const;
 /**
  * The options this rule can take.
  */
-type Options = readonly [{}];
+type Options = [{}];
 
 /**
  * The schema for the rule options.

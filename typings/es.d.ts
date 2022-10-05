@@ -19,6 +19,10 @@ declare global {
     at<U extends number>(index: U): this[U];
     at<R>(this: readonly [...any[], R], index: -1): R;
   }
+
+  interface ArrayConstructor {
+    isArray(arg: unknown): arg is unknown[] | unknown[];
+  }
 }
 
 export {};

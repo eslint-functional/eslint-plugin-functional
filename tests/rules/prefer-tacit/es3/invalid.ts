@@ -1,6 +1,6 @@
 import type { InvalidTestCase } from "~/tests/helpers/util";
 
-const tests: ReadonlyArray<InvalidTestCase> = [
+const tests: InvalidTestCase[] = [
   // {
   //   // No typedef but assuming types.
   //   // No fixer.

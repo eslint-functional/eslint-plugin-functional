@@ -2,7 +2,7 @@ import dedent from "dedent";
 
 import type { ValidTestCase } from "~/tests/helpers/util";
 
-const tests: ReadonlyArray<ValidTestCase> = [
+const tests: ValidTestCase[] = [
   // Allow initialization of class members in constructor
   {
     code: dedent`
