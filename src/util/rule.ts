@@ -19,7 +19,7 @@ const __VERSION__ = "0.0.0-development";
 /**
  * All options must extends this type.
  */
-export type BaseOptions = ReadonlyArray<unknown>;
+export type BaseOptions = unknown[];
 
 /**
  * The result all rules return.
@@ -29,7 +29,7 @@ export type RuleResult<
   Options extends BaseOptions
 > = Readonly<{
   context: TSESLint.RuleContext<MessageIds, Options>;
-  descriptors: ReadonlyArray<TSESLint.ReportDescriptor<MessageIds>>;
+  descriptors: Array<TSESLint.ReportDescriptor<MessageIds>>;
 }>;
 
 /**

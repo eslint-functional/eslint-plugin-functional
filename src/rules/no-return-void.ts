@@ -22,12 +22,12 @@ export const name = "no-return-void" as const;
 /**
  * The options this rule can take.
  */
-type Options = readonly [
-  Readonly<{
+type Options = [
+  {
     allowNull: boolean;
     allowUndefined: boolean;
     ignoreInferredTypes: boolean;
-  }>
+  }
 ];
 
 /**

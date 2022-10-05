@@ -3,7 +3,7 @@ import { deepmergeCustom } from "deepmerge-ts";
 export const mergeConfigs = deepmergeCustom<
   {},
   {
-    keyPath: ReadonlyArray<PropertyKey>;
+    keyPath: PropertyKey[];
   }
 >({
   metaDataUpdater: (previousMeta, metaMeta) => {

@@ -35,8 +35,8 @@ function createDummyAssignmentExpressionRule() {
   });
 }
 
-const tests: ReadonlyArray<
-  TSESLint.ValidTestCase<readonly [boolean, IgnoreAccessorPatternOption]>
+const tests: Array<
+  TSESLint.ValidTestCase<[boolean, IgnoreAccessorPatternOption]>
 > = [
   // Exact match.
   {
@@ -168,13 +168,13 @@ new RuleTester(testWrapper(test), configs.es10).run(
   "AssignmentExpression",
   createDummyAssignmentExpressionRule(),
   addFilename(filename, {
-    valid: [...(tests as unknown as ReadonlyArray<RuleTester.ValidTestCase>)],
+    valid: [...(tests as RuleTester.ValidTestCase[])],
     invalid: [],
   })
 );
 
-const assignmentExpressionTests: ReadonlyArray<
-  TSESLint.ValidTestCase<readonly [boolean, IgnorePatternOption]>
+const assignmentExpressionTests: Array<
+  TSESLint.ValidTestCase<[boolean, IgnorePatternOption]>
 > = [
   // Prefix match.
   {
@@ -215,15 +215,13 @@ new RuleTester(testWrapper(test), configs.es10).run(
   "AssignmentExpression",
   createDummyAssignmentExpressionRule(),
   addFilename(filename, {
-    valid: [
-      ...(assignmentExpressionTests as unknown as ReadonlyArray<RuleTester.ValidTestCase>),
-    ],
+    valid: [...(assignmentExpressionTests as RuleTester.ValidTestCase[])],
     invalid: [],
   })
 );
 
-const expressionStatementTests: ReadonlyArray<
-  TSESLint.ValidTestCase<readonly [boolean, IgnorePatternOption]>
+const expressionStatementTests: Array<
+  TSESLint.ValidTestCase<[boolean, IgnorePatternOption]>
 > = [
   {
     code: dedent`
@@ -258,9 +256,7 @@ new RuleTester(testWrapper(test), configs.es10).run(
     };
   }),
   addFilename(filename, {
-    valid: [
-      ...(expressionStatementTests as unknown as ReadonlyArray<RuleTester.ValidTestCase>),
-    ],
+    valid: [...(expressionStatementTests as RuleTester.ValidTestCase[])],
     invalid: [],
   })
 );

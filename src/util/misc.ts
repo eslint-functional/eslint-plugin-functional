@@ -99,7 +99,7 @@ function getNodeIdentifierText(
 export function getNodeIdentifierTexts(
   node: TSESTree.Node,
   context: TSESLint.RuleContext<string, BaseOptions>
-): ReadonlyArray<string> {
+): string[] {
   return (
     isVariableDeclaration(node)
       ? node.declarations.flatMap((declarator) =>

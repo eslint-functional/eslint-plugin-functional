@@ -13,32 +13,22 @@ import ts from "~/conditional-imports/typescript";
  */
 
 export type ArrayType = Type & {
-  readonly symbol: {
-    readonly name: "Array";
+  symbol: {
+    name: "Array";
   };
 };
 
 export type ArrayConstructorType = Type & {
-  readonly symbol: {
-    readonly name: "ArrayConstructor";
+  symbol: {
+    name: "ArrayConstructor";
   };
 };
 
 export type ObjectConstructorType = Type & {
-  readonly symbol: {
-    readonly name: "ObjectConstructor";
+  symbol: {
+    name: "ObjectConstructor";
   };
 };
-
-/*
- * Basic type guards.
- */
-
-export function isReadonlyArray(
-  value: unknown
-): value is ReadonlyArray<unknown> {
-  return Array.isArray(value);
-}
 
 /*
  * Node type guards.

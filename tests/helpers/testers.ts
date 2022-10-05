@@ -16,8 +16,8 @@ type TestFunction = (
   ruleName: string,
   rule: Rule.RuleModule,
   tests: {
-    valid: ReadonlyArray<ValidTestCase>;
-    invalid: ReadonlyArray<InvalidTestCase>;
+    valid: ValidTestCase[];
+    invalid: InvalidTestCase[];
   }
 ) => void;
 
@@ -28,10 +28,8 @@ const testNames = new Map<string, number>();
  * is given to each rule.
  */
 export function testWrapper(
-  // eslint-disable-next-line functional/prefer-readonly-type
   avaTest: (title: string, callback: Implementation<unknown[]>) => void
 ) {
-  // eslint-disable-next-line functional/prefer-readonly-type
   return (title: string, callback: Implementation<unknown[]>) => {
     const count = (testNames.get(title) ?? 0) + 1;
     testNames.set(title, count);
