@@ -28,7 +28,7 @@ const recommended = {
   ],
 };
 
-const tests: ReadonlyArray<ValidTestCase> = [
+const tests: ValidTestCase[] = [
   {
     code: "type ReadonlyString = string;",
     optionsSet: [[recommended]],

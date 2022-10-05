@@ -20,12 +20,11 @@ export const name = "no-let" as const;
 /**
  * The options this rule can take.
  */
-type Options = readonly [
-  IgnorePatternOption &
-    Readonly<{
-      allowInForLoopInit: boolean;
-      allowInFunctions: boolean;
-    }>
+type Options = [
+  IgnorePatternOption & {
+    allowInForLoopInit: boolean;
+    allowInFunctions: boolean;
+  }
 ];
 
 /**

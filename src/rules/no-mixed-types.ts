@@ -14,11 +14,11 @@ export const name = "no-mixed-types" as const;
 /**
  * The options this rule can take.
  */
-type Options = readonly [
-  Readonly<{
+type Options = [
+  {
     checkInterfaces: boolean;
     checkTypeLiterals: boolean;
-  }>
+  }
 ];
 
 /**
@@ -74,7 +74,7 @@ const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
  * Does the given type elements violate the rule.
  */
 function hasTypeElementViolations(
-  typeElements: ReadonlyArray<TSESTree.TypeElement>
+  typeElements: TSESTree.TypeElement[]
 ): boolean {
   type CarryType = {
     readonly prevMemberType: AST_NODE_TYPES | undefined;

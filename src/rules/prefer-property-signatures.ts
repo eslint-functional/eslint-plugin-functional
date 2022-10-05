@@ -13,10 +13,10 @@ export const name = "prefer-property-signatures" as const;
 /**
  * The options this rule can take.
  */
-type Options = readonly [
-  Readonly<{
+type Options = [
+  {
     ignoreIfReadonlyWrapped: boolean;
-  }>
+  }
 ];
 
 /**

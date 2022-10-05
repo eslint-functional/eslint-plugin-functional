@@ -17,7 +17,7 @@ import { name, rule } from "~/rules/prefer-immutable-types";
  * Step 2a.
  * Provide a valid test case.
  */
-const valid: ReadonlyArray<ValidTestCase> = [
+const valid: Array<ValidTestCase> = [
   // {
   //   code: dedent`
   //     // Valid Code.
@@ -31,7 +31,7 @@ const valid: ReadonlyArray<ValidTestCase> = [
  * Step 2b.
  * Or provide an invalid test case.
  */
-const invalid: ReadonlyArray<InvalidTestCase> = [
+const invalid: Array<InvalidTestCase> = [
   // {
   //   code: dedent`
   //     // Invalid Code.

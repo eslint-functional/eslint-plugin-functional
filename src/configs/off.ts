@@ -6,7 +6,7 @@ import deprecated from "./deprecated";
 /**
  * Turn the given rules off.
  */
-function turnRulesOff(rules: ReadonlyArray<string>): Linter.Config["rules"] {
+function turnRulesOff(rules: string[]): Linter.Config["rules"] {
   return rules === undefined
     ? undefined
     : Object.fromEntries(rules.map((name) => [name, "off"]));

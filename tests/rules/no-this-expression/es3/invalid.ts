@@ -1,6 +1,6 @@
 import type { InvalidTestCase } from "~/tests/helpers/util";
 
-const tests: ReadonlyArray<InvalidTestCase> = [
+const tests: InvalidTestCase[] = [
   {
     code: `this.x = 0;`,
     optionsSet: [[]],

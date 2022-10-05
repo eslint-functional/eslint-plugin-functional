@@ -32,16 +32,16 @@ export const name = "prefer-readonly-type" as const;
 /**
  * The options this rule can take.
  */
-type Options = readonly [
-  Readonly<{
+type Options = [
+  {
     allowLocalMutation: boolean;
     allowMutableReturnType: boolean;
     checkImplicit: boolean;
     ignoreCollections: boolean;
     ignoreClass: boolean | "fieldsOnly";
     ignoreInterface: boolean;
-    ignorePattern?: ReadonlyArray<string> | string;
-  }>
+    ignorePattern?: string[] | string;
+  }
 ];
 
 /**
@@ -132,10 +132,7 @@ const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
   schema,
 };
 
-const mutableToImmutableTypes: ReadonlyMap<string, string> = new Map<
-  string,
-  string
->([
+const mutableToImmutableTypes = new Map<string, string>([
   ["Array", "ReadonlyArray"],
   ["Map", "ReadonlyMap"],
   ["Set", "ReadonlySet"],
@@ -413,12 +410,12 @@ function checkImplicitType(
   }
 
   type Declarator = {
-    readonly id: TSESTree.Node;
-    readonly init: TSESTree.Node | null;
-    readonly node: TSESTree.Node;
+    id: TSESTree.Node;
+    init: TSESTree.Node | null;
+    node: TSESTree.Node;
   };
 
-  const declarators: ReadonlyArray<Declarator> = isFunctionLike(node)
+  const declarators: Declarator[] = isFunctionLike(node)
     ? node.params
         .map((param) =>
           isAssignmentPattern(param)

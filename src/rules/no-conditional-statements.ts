@@ -25,10 +25,10 @@ export const name = "no-conditional-statements" as const;
 /**
  * The options this rule can take.
  */
-type Options = readonly [
-  Readonly<{
+type Options = [
+  {
     allowReturningBranches: boolean | "ifExhaustive";
-  }>
+  }
 ];
 
 /**

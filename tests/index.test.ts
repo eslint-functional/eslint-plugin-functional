@@ -8,11 +8,11 @@ import test from "ava";
 
 import plugin from "~/index";
 
-const ruleFiles: ReadonlyArray<string> = readdirSync("./src/rules").filter(
+const ruleFiles: string[] = readdirSync("./src/rules").filter(
   (file) => file !== "index.ts" && file.endsWith(".ts")
 );
 
-const configFiles: ReadonlyArray<string> = readdirSync("./src/configs").filter(
+const configFiles: string[] = readdirSync("./src/configs").filter(
   (file) => file !== "index.ts" && file.endsWith(".ts")
 );
 

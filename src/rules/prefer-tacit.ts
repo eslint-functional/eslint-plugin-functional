@@ -28,15 +28,14 @@ export const name = "prefer-tacit" as const;
 /**
  * The options this rule can take.
  */
-type Options = readonly [
-  IgnorePatternOption &
-    Readonly<{
-      assumeTypes:
-        | false
-        | Readonly<{
-            allowFixer: boolean;
-          }>;
-    }>
+type Options = [
+  IgnorePatternOption & {
+    assumeTypes:
+      | false
+      | {
+          allowFixer: boolean;
+        };
+  }
 ];
 
 /**

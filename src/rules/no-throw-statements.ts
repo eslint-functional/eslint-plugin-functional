@@ -13,10 +13,10 @@ export const name = "no-throw-statements" as const;
 /**
  * The options this rule can take.
  */
-type Options = readonly [
-  Readonly<{
+type Options = [
+  {
     allowInAsyncFunctions: boolean;
-  }>
+  }
 ];
 
 /**

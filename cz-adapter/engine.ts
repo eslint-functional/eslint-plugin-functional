@@ -224,7 +224,7 @@ function doCommit(
 /**
  * Filter out falsy values from the given array.
  */
-function arrayFilterFalsy<T>(array: ReadonlyArray<T>) {
+function arrayFilterFalsy<T>(array: T[]) {
   return array.filter(Boolean);
 }
 
