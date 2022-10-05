@@ -4,13 +4,12 @@ import type { JSONSchema4 } from "json-schema";
 import {
   shouldIgnoreInFunction,
   shouldIgnoreClasses,
-  shouldIgnoreInterfaces,
   shouldIgnorePattern,
 } from "~/common/ignore-options";
 import type { ESArrayTupleType } from "~/src/util/node-types";
 import type { RuleResult } from "~/util/rule";
 import { createRule, getTypeOfNode } from "~/util/rule";
-import { isInReturnType } from "~/util/tree";
+import { inInterface, isInReturnType } from "~/util/tree";
 import {
   isArrayType,
   isAssignmentPattern,
@@ -162,7 +161,7 @@ function checkArrayOrTupleType(
 
   if (
     shouldIgnoreClasses(node, context, ignoreClass) ||
-    shouldIgnoreInterfaces(node, context, ignoreInterface) ||
+    (ignoreInterface === true && inInterface(node)) ||
     shouldIgnoreInFunction(node, context, allowLocalMutation) ||
     shouldIgnorePattern(node, context, ignorePattern) ||
     ignoreCollections
@@ -218,7 +217,7 @@ function checkMappedType(
 
   if (
     shouldIgnoreClasses(node, context, ignoreClass) ||
-    shouldIgnoreInterfaces(node, context, ignoreInterface) ||
+    (ignoreInterface === true && inInterface(node)) ||
     shouldIgnoreInFunction(node, context, allowLocalMutation) ||
     shouldIgnorePattern(node, context, ignorePattern)
   ) {
@@ -267,7 +266,7 @@ function checkTypeReference(
 
   if (
     shouldIgnoreClasses(node, context, ignoreClass) ||
-    shouldIgnoreInterfaces(node, context, ignoreInterface) ||
+    (ignoreInterface === true && inInterface(node)) ||
     shouldIgnoreInFunction(node, context, allowLocalMutation) ||
     shouldIgnorePattern(node, context, ignorePattern)
   ) {
@@ -334,7 +333,7 @@ function checkProperty(
 
   if (
     shouldIgnoreClasses(node, context, ignoreClass) ||
-    shouldIgnoreInterfaces(node, context, ignoreInterface) ||
+    (ignoreInterface === true && inInterface(node)) ||
     shouldIgnoreInFunction(node, context, allowLocalMutation) ||
     shouldIgnorePattern(node, context, ignorePattern)
   ) {
@@ -399,7 +398,7 @@ function checkImplicitType(
   if (
     !checkImplicit ||
     shouldIgnoreClasses(node, context, ignoreClass) ||
-    shouldIgnoreInterfaces(node, context, ignoreInterface) ||
+    (ignoreInterface === true && inInterface(node)) ||
     shouldIgnoreInFunction(node, context, allowLocalMutation) ||
     shouldIgnorePattern(node, context, ignorePattern)
   ) {
