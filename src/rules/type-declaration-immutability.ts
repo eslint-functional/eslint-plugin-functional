@@ -12,7 +12,7 @@ import { getNodeIdentifierTexts } from "~/util/misc";
 import type { ESTypeDeclaration } from "~/util/node-types";
 import type { RuleResult } from "~/util/rule";
 import { getTypeImmutabilityOfNode, createRule } from "~/util/rule";
-import { isReadonlyArray, isTSInterfaceDeclaration } from "~/util/typeguard";
+import { isTSInterfaceDeclaration } from "~/util/typeguard";
 
 /**
  * The name of this rule.
@@ -139,7 +139,7 @@ const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
  * A rule given by the user after being upgraded.
  */
 export type ImmutabilityRule = {
-  identifiers: ReadonlyArray<RegExp>;
+  identifiers: RegExp[];
   immutability: Immutability;
   comparator: RuleEnforcementComparator;
 };
@@ -152,7 +152,7 @@ function getRules(options: Options): ImmutabilityRule[] {
   const { rules: rulesOptions } = optionsObject;
 
   return rulesOptions.map((rule): ImmutabilityRule => {
-    const identifiers = isReadonlyArray(rule.identifiers)
+    const identifiers = Array.isArray(rule.identifiers)
       ? rule.identifiers.map((id) =>
           id instanceof RegExp ? id : new RegExp(id, "u")
         )

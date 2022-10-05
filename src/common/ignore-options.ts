@@ -9,7 +9,6 @@ import {
   isAssignmentExpression,
   isPropertyDefinition,
   isMemberExpression,
-  isReadonlyArray,
   isThisExpression,
 } from "~/util/typeguard";
 
@@ -17,7 +16,7 @@ import {
  * The option to ignore patterns.
  */
 export type IgnorePatternOption = Readonly<{
-  ignorePattern?: ReadonlyArray<string> | string;
+  ignorePattern?: string[] | string;
 }>;
 
 /**
@@ -36,7 +35,7 @@ export const ignorePatternOptionSchema: JSONSchema4["properties"] = {
  * The option to ignore accessor patterns.
  */
 export type IgnoreAccessorPatternOption = Readonly<{
-  ignoreAccessorPattern?: ReadonlyArray<string> | string;
+  ignoreAccessorPattern?: string[] | string;
 }>;
 
 /**
@@ -95,7 +94,7 @@ export const ignoreInterfacesOptionSchema: JSONSchema4["properties"] = {
  * The option to ignore prefix selector.
  */
 export type IgnorePrefixSelectorOption = Readonly<{
-  ignorePrefixSelector?: ReadonlyArray<string> | string;
+  ignorePrefixSelector?: string[] | string;
 }>;
 
 /**
@@ -117,9 +116,9 @@ export const ignorePrefixSelectorOptionSchema: JSONSchema4["properties"] = {
  */
 function shouldIgnoreViaPattern(
   text: string,
-  ignorePattern: ReadonlyArray<string> | string
+  ignorePattern: string[] | string
 ): boolean {
-  const patterns: ReadonlyArray<string> = isReadonlyArray(ignorePattern)
+  const patterns: string[] = Array.isArray(ignorePattern)
     ? ignorePattern
     : [ignorePattern];
 
@@ -135,8 +134,8 @@ function shouldIgnoreViaPattern(
  * Does the given text match the given pattern.
  */
 function accessorPatternMatch(
-  [pattern, ...remainingPatternParts]: ReadonlyArray<string>,
-  textParts: ReadonlyArray<string>,
+  [pattern, ...remainingPatternParts]: string[],
+  textParts: string[],
   allowExtra = false
 ): boolean {
   return pattern === undefined
@@ -181,9 +180,9 @@ function accessorPatternMatch(
  */
 function shouldIgnoreViaAccessorPattern(
   text: string,
-  ignorePattern: ReadonlyArray<string> | string
+  ignorePattern: string[] | string
 ): boolean {
-  const patterns: ReadonlyArray<string> = isReadonlyArray(ignorePattern)
+  const patterns: string[] = Array.isArray(ignorePattern)
     ? ignorePattern
     : [ignorePattern];
 

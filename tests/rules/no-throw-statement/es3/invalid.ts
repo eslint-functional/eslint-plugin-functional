@@ -2,7 +2,7 @@ import dedent from "dedent";
 
 import type { InvalidTestCase } from "~/tests/helpers/util";
 
-const tests: ReadonlyArray<InvalidTestCase> = [
+const tests: InvalidTestCase[] = [
   {
     code: `throw 'error';`,
     optionsSet: [[]],

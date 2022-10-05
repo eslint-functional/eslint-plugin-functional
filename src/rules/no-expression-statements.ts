@@ -20,11 +20,10 @@ export const name = "no-expression-statements" as const;
 /**
  * The options this rule can take.
  */
-type Options = readonly [
-  IgnorePatternOption &
-    Readonly<{
-      ignoreVoid: boolean;
-    }>
+type Options = [
+  IgnorePatternOption & {
+    ignoreVoid: boolean;
+  }
 ];
 
 /**

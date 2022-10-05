@@ -27,7 +27,7 @@ const recommended = {
   ],
 };
 
-const tests: ReadonlyArray<InvalidTestCase> = [
+const tests: InvalidTestCase[] = [
   {
     code: "type ReadonlyFoo = { foo: number }",
     optionsSet: [[recommended]],

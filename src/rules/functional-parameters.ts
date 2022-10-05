@@ -35,21 +35,20 @@ type ParameterCountOptions = "atLeastOne" | "exactlyOne";
 /**
  * The options this rule can take.
  */
-type Options = readonly [
+type Options = [
   IgnorePatternOption &
-    IgnorePrefixSelectorOption &
-    Readonly<{
+    IgnorePrefixSelectorOption & {
       allowRestParameter: boolean;
       allowArgumentsKeyword: boolean;
       enforceParameterCount:
         | ParameterCountOptions
         | false
-        | Readonly<{
+        | {
             count: ParameterCountOptions;
             ignoreLambdaExpression: boolean;
             ignoreIIFE: boolean;
-          }>;
-    }>
+          };
+    }
 ];
 
 /**
@@ -284,7 +283,7 @@ export const rule = createRuleUsingFunction<
     "FunctionExpression",
   ];
 
-  const ignoreSelectors: ReadonlyArray<string> | undefined =
+  const ignoreSelectors: string[] | undefined =
     ignorePrefixSelector === undefined
       ? undefined
       : Array.isArray(ignorePrefixSelector)

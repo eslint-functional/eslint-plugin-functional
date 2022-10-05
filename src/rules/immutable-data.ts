@@ -37,19 +37,18 @@ export const name = "immutable-data" as const;
 /**
  * The options this rule can take.
  */
-type Options = readonly [
+type Options = [
   IgnoreAccessorPatternOption &
     IgnoreClassesOption &
-    IgnorePatternOption &
-    Readonly<{
+    IgnorePatternOption & {
       ignoreImmediateMutation: boolean;
       assumeTypes:
         | boolean
-        | Readonly<{
+        | {
             forArrays: boolean;
             forObjects: boolean;
-          }>;
-    }>
+          };
+    }
 ];
 
 /**

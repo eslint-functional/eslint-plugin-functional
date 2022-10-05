@@ -12,11 +12,11 @@ export const name = "no-try-statements" as const;
 /**
  * The options this rule can take.
  */
-type Options = readonly [
-  Readonly<{
+type Options = [
+  {
     allowCatch: boolean;
     allowFinally: boolean;
-  }>
+  }
 ];
 
 /**
