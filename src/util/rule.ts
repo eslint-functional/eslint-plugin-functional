@@ -8,8 +8,8 @@ import type { Rule } from "eslint";
 import type { ImmutabilityOverrides } from "is-immutable-type";
 import { getTypeImmutability, Immutability } from "is-immutable-type";
 import type { Node as TSNode, Type } from "typescript";
-import { SignatureKind } from "typescript";
 
+import ts from "~/conditional-imports/typescript";
 import { getImmutabilityOverrides } from "~/settings";
 import { isNode } from "~/util/typeguard";
 
@@ -179,6 +179,10 @@ export function getTypeOfNode<
 export function getReturnTypesOfFunction<
   Context extends TSESLint.RuleContext<string, BaseOptions>
 >(node: TSESTree.Node, context: Context) {
+  if (ts === undefined) {
+    return null;
+  }
+
   const parserServices = getParserServices(context);
   if (parserServices === null) {
     return null;
@@ -190,7 +194,7 @@ export function getReturnTypesOfFunction<
     return null;
   }
 
-  const signatures = checker.getSignaturesOfType(type, SignatureKind.Call);
+  const signatures = checker.getSignaturesOfType(type, ts.SignatureKind.Call);
   return signatures.map((signature) =>
     checker.getReturnTypeOfSignature(signature)
   );
