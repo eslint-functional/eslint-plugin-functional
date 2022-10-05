@@ -158,13 +158,13 @@ const defaultOptions: Options = [
  */
 const errorMessages = {
   parameter:
-    'Parameter should have an immutability at least "{{ expected }}" (actual: "{{ actual }}").',
+    'Parameter should have an immutability of at least "{{ expected }}" (actual: "{{ actual }}").',
   returnType:
-    'Return type should have an immutability at least "{{ expected }}" (actual: "{{ actual }}").',
+    'Return type should have an immutability of at least "{{ expected }}" (actual: "{{ actual }}").',
   variable:
-    'Variable should have an immutability at least "{{ expected }}" (actual: "{{ actual }}").',
+    'Variable should have an immutability of at least "{{ expected }}" (actual: "{{ actual }}").',
   propertyImmutability:
-    'Property should have an immutability at least "{{ expected }}" (actual: "{{ actual }}").',
+    'Property should have an immutability of at least "{{ expected }}" (actual: "{{ actual }}").',
   propertyModifier: "Property should have a readonly modifier.",
 } as const;
 
