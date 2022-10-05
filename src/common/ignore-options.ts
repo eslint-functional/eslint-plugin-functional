@@ -75,22 +75,6 @@ export const ignoreClassesOptionSchema: JSONSchema4["properties"] = {
 };
 
 /**
- * The option to ignore interfaces.
- */
-export type IgnoreInterfacesOption = Readonly<{
-  ignoreInterfaces: boolean;
-}>;
-
-/**
- * The schema for the option to ignore interfaces.
- */
-export const ignoreInterfacesOptionSchema: JSONSchema4["properties"] = {
-  ignoreInterfaces: {
-    type: "boolean",
-  },
-};
-
-/**
  * The option to ignore prefix selector.
  */
 export type IgnorePrefixSelectorOption = Readonly<{
@@ -224,19 +208,6 @@ export function shouldIgnoreClasses(
           isMemberExpression(node.left) &&
           isThisExpression(node.left.object))))
   );
-}
-
-/**
- * Should the given node be allowed base off the following rule options?
- *
- * - IgnoreInterfacesOption.
- */
-export function shouldIgnoreInterfaces(
-  node: TSESTree.Node,
-  context: TSESLint.RuleContext<string, BaseOptions>,
-  ignoreInterfaces: Partial<IgnoreInterfacesOption>["ignoreInterfaces"]
-): boolean {
-  return ignoreInterfaces === true && inInterface(node);
 }
 
 /**
