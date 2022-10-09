@@ -162,7 +162,7 @@ type Options = {
 
   variables?: {
     enforcement: "None" | "ReadonlyShallow" | "ReadonlyDeep" | "Immutable";
-    allowInFunctions: boolean;
+    ignoreInFunctions: boolean;
     ignoreInferredTypes: boolean;
     ignoreClasses: boolean | "fieldsOnly";
     ignorePattern?: string[] | string;
@@ -175,7 +175,6 @@ type Options = {
 ```ts
 const defaults = {
   enforcement: "Immutable",
-  allowLocalMutation: false,
   ignoreClasses: false,
   ignoreInferredTypes: false,
 }
