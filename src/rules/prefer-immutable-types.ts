@@ -253,7 +253,11 @@ function getParameterTypeViolations(
         return undefined;
       }
 
-      const immutability = getTypeImmutabilityOfNode(actualParam, context);
+      const immutability = getTypeImmutabilityOfNode(
+        actualParam,
+        context,
+        enforcement
+      );
 
       return immutability >= enforcement
         ? undefined
@@ -312,7 +316,8 @@ function getReturnTypeViolations(
   if (node.returnType?.typeAnnotation !== undefined) {
     const immutability = getTypeImmutabilityOfNode(
       node.returnType.typeAnnotation,
-      context
+      context,
+      enforcement
     );
 
     return immutability >= enforcement
@@ -335,7 +340,7 @@ function getReturnTypeViolations(
   }
 
   const immutabilities = returnTypes.map((returnType) =>
-    getTypeImmutabilityOfType(returnType, context)
+    getTypeImmutabilityOfType(returnType, context, enforcement)
   );
 
   const immutability = Math.min(...immutabilities);
@@ -449,7 +454,8 @@ function checkVarible(
 
   const immutability = getTypeImmutabilityOfNode(
     nodeWithTypeAnnotation,
-    context
+    context,
+    enforcement
   );
 
   return {
