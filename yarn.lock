@@ -3997,7 +3997,7 @@ __metadata:
     eslint-plugin-unicorn: ^43.0.0
     espree: ^9.3.0
     husky: ^8.0.0
-    is-immutable-type: ^1.0.2
+    is-immutable-type: ^1.1.0
     json-schema: ^0.4.0
     jsonc-parser: ^3.0.0
     lint-staged: ^13.0.0
@@ -5616,15 +5616,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-immutable-type@npm:^1.0.2":
-  version: 1.0.2
-  resolution: "is-immutable-type@npm:1.0.2"
+"is-immutable-type@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "is-immutable-type@npm:1.1.0"
   peerDependencies:
     "@typescript-eslint/type-utils": ">=5.30.5"
     "@typescript-eslint/utils": ">=5.30.5"
     tsutils: ">=3.21.0"
     typescript: ">=4.7.4"
-  checksum: a994a451b7b6decb521da67ca2e2a0841d3d95516565d6b3e6f252eba38faafcece9cbedf37f1a4598d1e2b28159566c50e32a28cec0e92482da8516fe79d395
+  checksum: a7f98e2de024b3d57d49b3153c5c86b6014c984ea9a035f70171b6aab5d7fbda4c4f2a735924e22ae6cc458253fd210bbc15b690e3ae2dc8c7f6c969336a7d71
   languageName: node
   linkType: hard
 

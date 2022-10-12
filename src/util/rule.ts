@@ -209,7 +209,8 @@ export const getTypeImmutabilityOfNode: {
    */
   <Context extends TSESLint.RuleContext<string, BaseOptions>>(
     node: TSESTree.Node,
-    context: Context
+    context: Context,
+    maxImmutability?: Immutability
   ): Immutability;
 
   /**
@@ -218,6 +219,7 @@ export const getTypeImmutabilityOfNode: {
   (
     node: TSESTree.Node,
     parserServices: ParserServices,
+    maxImmutability?: Immutability,
     overrides?: ImmutabilityOverrides
   ): Immutability;
 } = getImmutability;
@@ -231,7 +233,8 @@ export const getTypeImmutabilityOfType: {
    */
   <Context extends TSESLint.RuleContext<string, BaseOptions>>(
     type: Type,
-    context: Context
+    context: Context,
+    maxImmutability?: Immutability
   ): Immutability;
 
   /**
@@ -240,6 +243,7 @@ export const getTypeImmutabilityOfType: {
   (
     type: Type,
     parserServices: ParserServices,
+    maxImmutability?: Immutability,
     overrides?: ImmutabilityOverrides
   ): Immutability;
 } = getImmutability;
@@ -252,6 +256,7 @@ function getImmutability<
 >(
   nodeOrType: TSESTree.Node | Type,
   contextOrServices: Context | ParserServices,
+  maxImmutability?: Immutability,
   explicitOverrides?: ImmutabilityOverrides
 ): Immutability {
   const givenParserServices = isParserServices(contextOrServices);
@@ -279,7 +284,8 @@ function getImmutability<
     type,
     overrides,
     // Don't use the global cache in testing environments as it may cause errors when switching between different config options.
-    process.env.NODE_ENV !== "test"
+    process.env.NODE_ENV !== "test",
+    maxImmutability
   );
 }
 
