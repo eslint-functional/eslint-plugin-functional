@@ -215,6 +215,14 @@ const tests: ReadonlyArray<ValidTestCase> = [
       ],
     ],
   },
+  {
+    code: "function foo(arg: { foo: string | number }): arg is { foo: number } {}",
+    optionsSet: [
+      [{ parameters: "ReadonlyShallow" }],
+      [{ parameters: "ReadonlyDeep" }],
+      [{ parameters: "Immutable" }],
+    ],
+  },
 ];
 
 export default tests;

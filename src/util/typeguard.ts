@@ -293,6 +293,12 @@ export function isTSTypeOperator(
   return node.type === AST_NODE_TYPES.TSTypeOperator;
 }
 
+export function isTSTypePredicate(
+  node: TSESTree.Node
+): node is TSESTree.TSTypePredicate {
+  return node.type === AST_NODE_TYPES.TSTypePredicate;
+}
+
 export function isTSTypeReference(
   node: TSESTree.Node
 ): node is TSESTree.TSTypeReference {
