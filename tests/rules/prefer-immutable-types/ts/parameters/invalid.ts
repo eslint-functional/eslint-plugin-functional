@@ -162,6 +162,22 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       },
     ],
   },
+  {
+    code: "function foo(arg0: { foo: string | number }, arg1: { foo: string | number }): arg0 is { foo: number } {}",
+    optionsSet: [
+      [{ parameters: "ReadonlyShallow" }],
+      [{ parameters: "ReadonlyDeep" }],
+      [{ parameters: "Immutable" }],
+    ],
+    errors: [
+      {
+        messageId: "parameter",
+        type: "Identifier",
+        line: 1,
+        column: 46,
+      },
+    ],
+  },
 ];
 
 export default tests;

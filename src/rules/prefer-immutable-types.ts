@@ -25,8 +25,10 @@ import {
 import {
   hasID,
   isDefined,
+  isIdentifier,
   isPropertyDefinition,
   isTSParameterProperty,
+  isTSTypePredicate,
 } from "~/util/typeguard";
 
 /**
@@ -249,7 +251,17 @@ function getParameterTypeViolations(
         ? param.parameter
         : param;
 
-      if (ignoreInferredTypes && actualParam.typeAnnotation === undefined) {
+      if (
+        // inferred types
+        (ignoreInferredTypes && actualParam.typeAnnotation === undefined) ||
+        // type guard
+        (node.returnType !== undefined &&
+          isTSTypePredicate(node.returnType.typeAnnotation) &&
+          isIdentifier(node.returnType.typeAnnotation.parameterName) &&
+          isIdentifier(actualParam) &&
+          actualParam.name ===
+            node.returnType.typeAnnotation.parameterName.name)
+      ) {
         return undefined;
       }
 
