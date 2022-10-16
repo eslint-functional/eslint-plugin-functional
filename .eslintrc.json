@@ -33,7 +33,10 @@
   "rules": {
     "@typescript-eslint/no-unnecessary-condition": "off",
     "functional/prefer-immutable-types": "off",
-    "import/no-relative-parent-imports": "error"
+    "import/no-relative-parent-imports": "error",
+
+    // Rule is bugged. Enable once fixed.
+    "@typescript-eslint/no-misused-promises": "off"
   },
   "overrides": [
     // Top level files.
@@ -139,6 +142,7 @@
         "sonarjs/no-unused-collection": "off",
         "unicorn/prefer-optional-catch-binding": "off",
         "unicorn/prefer-top-level-await": "off",
+        "unicorn/switch-case-braces": "off",
 
         "dot-notation": "error",
         "no-implied-eval": "error",
