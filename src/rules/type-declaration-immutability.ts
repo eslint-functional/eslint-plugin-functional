@@ -214,16 +214,21 @@ export function compareImmutability(
   actual: Immutability
 ) {
   switch (rule.comparator) {
-    case RuleEnforcementComparator.Less:
+    case RuleEnforcementComparator.Less: {
       return actual < rule.immutability;
-    case RuleEnforcementComparator.AtMost:
+    }
+    case RuleEnforcementComparator.AtMost: {
       return actual <= rule.immutability;
-    case RuleEnforcementComparator.Exactly:
+    }
+    case RuleEnforcementComparator.Exactly: {
       return actual === rule.immutability;
-    case RuleEnforcementComparator.AtLeast:
+    }
+    case RuleEnforcementComparator.AtLeast: {
       return actual >= rule.immutability;
-    case RuleEnforcementComparator.More:
+    }
+    case RuleEnforcementComparator.More: {
       return actual > rule.immutability;
+    }
   }
 }
 
