@@ -7,11 +7,12 @@ import { ESLintUtils } from "@typescript-eslint/utils";
 import type { Rule } from "eslint";
 import type { ImmutabilityOverrides } from "is-immutable-type";
 import { getTypeImmutability, Immutability } from "is-immutable-type";
-import type { Node as TSNode, Type } from "typescript";
+import { isIdentifier } from "tsutils";
+import type { Node as TSNode, Type, TypeNode } from "typescript";
 
 import ts from "~/conditional-imports/typescript";
 import { getImmutabilityOverrides } from "~/settings";
-import { isNode } from "~/util/typeguard";
+import type { ESFunction } from "~/util/node-types";
 
 // eslint-disable-next-line @typescript-eslint/naming-convention, no-underscore-dangle -- This is a special var.
 const __VERSION__ = "0.0.0-development";
@@ -201,60 +202,54 @@ export function getReturnTypesOfFunction<
 }
 
 /**
- * Get the type immutability of the the given node.
+ * Does the given function have overloads?
  */
-export const getTypeImmutabilityOfNode: {
-  /**
-   * Get the type immutability of the the given node.
-   */
-  <Context extends TSESLint.RuleContext<string, BaseOptions>>(
-    node: TSESTree.Node,
-    context: Context,
-    maxImmutability?: Immutability
-  ): Immutability;
+export function isImplementationOfOverload<
+  Context extends TSESLint.RuleContext<string, BaseOptions>
+>(func: ESFunction, context: Context) {
+  if (ts === undefined) {
+    return false;
+  }
 
-  /**
-   * Get the type immutability of the the given node.
-   */
-  (
-    node: TSESTree.Node,
-    parserServices: ParserServices,
-    maxImmutability?: Immutability,
-    overrides?: ImmutabilityOverrides
-  ): Immutability;
-} = getImmutability;
+  const parserServices = getParserServices(context);
+  if (parserServices === null) {
+    return false;
+  }
+
+  const checker = parserServices.program.getTypeChecker();
+  const signature = parserServices.esTreeNodeToTSNodeMap.get(func);
+
+  return checker.isImplementationOfOverload(signature) === true;
+}
 
 /**
- * Get the type immutability of the the given type.
+ * Get the type immutability of the the given node.
  */
-export const getTypeImmutabilityOfType: {
-  /**
-   * Get the type immutability of the the given type.
-   */
-  <Context extends TSESLint.RuleContext<string, BaseOptions>>(
-    type: Type,
-    context: Context,
-    maxImmutability?: Immutability
-  ): Immutability;
+export function getTypeImmutabilityOfNode<
+  Context extends TSESLint.RuleContext<string, BaseOptions>
+>(
+  node: TSESTree.Node,
+  context: Context,
+  maxImmutability?: Immutability
+): Immutability;
 
-  /**
-   * Get the type immutability of the the given type.
-   */
-  (
-    type: Type,
-    parserServices: ParserServices,
-    maxImmutability?: Immutability,
-    overrides?: ImmutabilityOverrides
-  ): Immutability;
-} = getImmutability;
+/**
+ * Get the type immutability of the the given node.
+ */
+export function getTypeImmutabilityOfNode(
+  node: TSESTree.Node,
+  parserServices: ParserServices,
+  maxImmutability?: Immutability,
+  overrides?: ImmutabilityOverrides
+): Immutability;
 
 /**
  * Get the type immutability of the the given node or type.
  */
-function getImmutability<
+export function getTypeImmutabilityOfNode<
   Context extends TSESLint.RuleContext<string, BaseOptions>
 >(
-  nodeOrType: TSESTree.Node | Type,
+  node: TSESTree.Node,
   contextOrServices: Context | ParserServices,
   maxImmutability?: Immutability,
   explicitOverrides?: ImmutabilityOverrides
@@ -275,13 +270,73 @@ function getImmutability<
 
   const checker = parserServices.program.getTypeChecker();
 
-  const type = isNode(nodeOrType)
-    ? getTypeOfNode(nodeOrType, parserServices)
-    : nodeOrType;
+  const tsNode = parserServices.esTreeNodeToTSNodeMap.get(node);
+  const typedNode = isIdentifier(tsNode) ? tsNode.parent : tsNode;
+  const typeLike =
+    ((typedNode as any).type as TypeNode | undefined) ??
+    getTypeOfNode(
+      parserServices.tsNodeToESTreeNodeMap.get(typedNode),
+      parserServices
+    );
 
   return getTypeImmutability(
     checker,
-    type,
+    typeLike,
+    overrides,
+    // Don't use the global cache in testing environments as it may cause errors when switching between different config options.
+    process.env.NODE_ENV !== "test",
+    maxImmutability
+  );
+}
+
+/**
+ * Get the type immutability of the the given type.
+ */
+export function getTypeImmutabilityOfType<
+  Context extends TSESLint.RuleContext<string, BaseOptions>
+>(
+  typeOrTypeNode: Type | TypeNode,
+  context: Context,
+  maxImmutability?: Immutability
+): Immutability;
+
+/**
+ * Get the type immutability of the the given type.
+ */
+export function getTypeImmutabilityOfType(
+  typeOrTypeNode: Type | TypeNode,
+  parserServices: ParserServices,
+  maxImmutability?: Immutability,
+  overrides?: ImmutabilityOverrides
+): Immutability;
+
+export function getTypeImmutabilityOfType<
+  Context extends TSESLint.RuleContext<string, BaseOptions>
+>(
+  typeOrTypeNode: Type | TypeNode,
+  contextOrServices: Context | ParserServices,
+  maxImmutability?: Immutability,
+  explicitOverrides?: ImmutabilityOverrides
+): Immutability {
+  const givenParserServices = isParserServices(contextOrServices);
+
+  const parserServices = givenParserServices
+    ? contextOrServices
+    : getParserServices(contextOrServices);
+
+  const overrides = givenParserServices
+    ? explicitOverrides
+    : getImmutabilityOverrides(contextOrServices.settings);
+
+  if (parserServices === null) {
+    return Immutability.Unknown;
+  }
+
+  const checker = parserServices.program.getTypeChecker();
+
+  return getTypeImmutability(
+    checker,
+    typeOrTypeNode,
     overrides,
     // Don't use the global cache in testing environments as it may cause errors when switching between different config options.
     process.env.NODE_ENV !== "test",
