@@ -68,12 +68,6 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         line: 3,
         column: 27,
       },
-      {
-        messageId: "returnType",
-        type: "Identifier",
-        line: 4,
-        column: 10,
-      },
     ],
   },
   {
