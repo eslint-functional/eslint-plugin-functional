@@ -17,14 +17,16 @@ import {
 import type { ESFunctionType } from "~/util/node-types";
 import type { RuleResult } from "~/util/rule";
 import {
+  createRule,
   getReturnTypesOfFunction,
   getTypeImmutabilityOfNode,
   getTypeImmutabilityOfType,
-  createRule,
+  isImplementationOfOverload,
 } from "~/util/rule";
 import {
   hasID,
   isDefined,
+  isFunctionLike,
   isIdentifier,
   isPropertyDefinition,
   isTSParameterProperty,
@@ -325,7 +327,10 @@ function getReturnTypeViolations(
     return [];
   }
 
-  if (node.returnType?.typeAnnotation !== undefined) {
+  if (
+    node.returnType?.typeAnnotation !== undefined &&
+    !isTSTypePredicate(node.returnType.typeAnnotation)
+  ) {
     const immutability = getTypeImmutabilityOfNode(
       node.returnType.typeAnnotation,
       context,
@@ -346,16 +351,24 @@ function getReturnTypeViolations(
         ];
   }
 
-  const returnTypes = getReturnTypesOfFunction(node, context);
-  if (returnTypes === null) {
+  if (!isFunctionLike(node)) {
     return [];
   }
 
-  const immutabilities = returnTypes.map((returnType) =>
-    getTypeImmutabilityOfType(returnType, context, enforcement)
-  );
+  const returnTypes = getReturnTypesOfFunction(node, context);
+  if (
+    returnTypes === null ||
+    returnTypes.length !== 1 ||
+    isImplementationOfOverload(node, context)
+  ) {
+    return [];
+  }
 
-  const immutability = Math.min(...immutabilities);
+  const immutability = getTypeImmutabilityOfType(
+    returnTypes[0],
+    context,
+    enforcement
+  );
 
   if (immutability >= enforcement) {
     return [];

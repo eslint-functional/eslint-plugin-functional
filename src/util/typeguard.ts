@@ -34,11 +34,6 @@ export type ObjectConstructorType = Type & {
  * Node type guards.
  */
 
-export function isNode(node: TSESTree.Node | Type): node is TSESTree.Node {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-  return (node as any).type !== undefined;
-}
-
 export function isArrayExpression(
   node: TSESTree.Node
 ): node is TSESTree.ArrayExpression {
