@@ -4018,8 +4018,8 @@ __metadata:
   linkType: hard
 
 "eslint-plugin-jsdoc@npm:^39.0.0":
-  version: 39.3.12
-  resolution: "eslint-plugin-jsdoc@npm:39.3.12"
+  version: 39.3.13
+  resolution: "eslint-plugin-jsdoc@npm:39.3.13"
   dependencies:
     "@es-joy/jsdoccomment": ~0.32.0
     comment-parser: 1.3.1
@@ -4030,7 +4030,7 @@ __metadata:
     spdx-expression-parse: ^3.0.1
   peerDependencies:
     eslint: ^7.0.0 || ^8.0.0
-  checksum: 7085218b9dd707a0337c388b4251f59f0f7d84e4b15c913d720a7268ad5dc64b00b6e74a3f482b1e60d4b480367c5c73fa6b3c3f51433b9a67b8b1f8bed2b2b0
+  checksum: cd31f6dfd2bf59b148c873909bd1b4617fcd2a6dadce11d9d3f1fc8cc7d3feb6946fbba864f0ea705106605c446c88975ba469158e8850fc965a18bd43ff29b3
   languageName: node
   linkType: hard
 
