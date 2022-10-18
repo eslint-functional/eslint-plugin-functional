@@ -130,7 +130,7 @@
     "nyc": "^15.1.0",
     "prettier": "^2.5.1",
     "rimraf": "^3.0.2",
-    "rollup": "^2.67.0",
+    "rollup": "^3.0.0",
     "rollup-plugin-auto-external": "^2.0.0",
     "semantic-release": "^19.0.5",
     "ts-node": "^10.4.0",
