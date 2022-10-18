@@ -3955,7 +3955,7 @@ __metadata:
     nyc: ^15.1.0
     prettier: ^2.5.1
     rimraf: ^3.0.2
-    rollup: ^2.67.0
+    rollup: ^3.0.0
     rollup-plugin-auto-external: ^2.0.0
     semantic-release: ^19.0.5
     semver: ^7.3.7
@@ -8479,9 +8479,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup@npm:>=2.0.0, rollup@npm:^2.67.0":
-  version: 2.79.1
-  resolution: "rollup@npm:2.79.1"
+"rollup@npm:>=2.0.0, rollup@npm:^3.0.0":
+  version: 3.2.3
+  resolution: "rollup@npm:3.2.3"
   dependencies:
     fsevents: ~2.3.2
   dependenciesMeta:
@@ -8489,7 +8489,7 @@ __metadata:
       optional: true
   bin:
     rollup: dist/bin/rollup
-  checksum: 6a2bf167b3587d4df709b37d149ad0300692cc5deb510f89ac7bdc77c8738c9546ae3de9322b0968e1ed2b0e984571f5f55aae28fa7de4cfcb1bc5402a4e2be6
+  checksum: e4b4f3b70fad4b8f7dabc579fb8bbe14399d5aed0cc1fcee39f15ae81804d6acd0e1063b653e6cf5ef50e8e954801689e2c822e99ed31ca18f1b1fbbea8075e5
   languageName: node
   linkType: hard
 
