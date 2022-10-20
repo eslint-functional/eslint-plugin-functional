@@ -1631,7 +1631,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/eslint@npm:^8.4.6":
+"@types/eslint@npm:^8.4.7":
   version: 8.4.10
   resolution: "@types/eslint@npm:8.4.10"
   dependencies:
@@ -1717,7 +1717,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^18.11.0":
+"@types/node@npm:^18.11.2":
   version: 18.11.9
   resolution: "@types/node@npm:18.11.9"
   checksum: cc0aae109e9b7adefc32eecb838d6fad931663bb06484b5e9cbbbf74865c721b03d16fd8d74ad90e31dbe093d956a7c2c306ba5429ba0c00f3f7505103d7a496
@@ -1883,7 +1883,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/utils@npm:5.43.0, @typescript-eslint/utils@npm:^5.40.0":
+"@typescript-eslint/utils@npm:5.43.0, @typescript-eslint/utils@npm:^5.40.1":
   version: 5.43.0
   resolution: "@typescript-eslint/utils@npm:5.43.0"
   dependencies:
@@ -3863,7 +3863,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-import-resolver-typescript@npm:^3.5.1":
+"eslint-import-resolver-typescript@npm:^3.5.2":
   version: 3.5.2
   resolution: "eslint-import-resolver-typescript@npm:3.5.2"
   dependencies:
@@ -3966,14 +3966,14 @@ __metadata:
     "@semantic-release/npm": ^9.0.1
     "@semantic-release/release-notes-generator": ^10.0.3
     "@types/dedent": ^0.7.0
-    "@types/eslint": ^8.4.6
+    "@types/eslint": ^8.4.7
     "@types/estree": ^1.0.0
-    "@types/node": ^18.11.0
+    "@types/node": ^18.11.2
     "@types/rollup-plugin-auto-external": ^2.0.2
     "@types/semver": ^7.3.12
     "@typescript-eslint/eslint-plugin": ^5.40.0
     "@typescript-eslint/parser": ^5.40.0
-    "@typescript-eslint/utils": ^5.40.0
+    "@typescript-eslint/utils": ^5.40.1
     ava: ^5.0.0
     babel-eslint: ^10.1.0
     chalk: ^4.1.2
@@ -3988,23 +3988,23 @@ __metadata:
     eslint: ^8.25.0
     eslint-ava-rule-tester: ^4.0.0
     eslint-config-prettier: ^8.5.0
-    eslint-import-resolver-typescript: ^3.5.1
+    eslint-import-resolver-typescript: ^3.5.2
     eslint-plugin-ava: ^13.2.0
     eslint-plugin-eslint-comments: ^3.2.0
     eslint-plugin-eslint-plugin: ^5.0.6
     eslint-plugin-import: ^2.26.0
-    eslint-plugin-jsdoc: ^39.3.6
+    eslint-plugin-jsdoc: ^39.3.14
     eslint-plugin-markdown: ^3.0.0
     eslint-plugin-node: ^11.1.0
     eslint-plugin-optimize-regex: ^1.2.1
     eslint-plugin-prettier: ^4.2.1
-    eslint-plugin-promise: ^6.1.0
+    eslint-plugin-promise: ^6.1.1
     eslint-plugin-sonarjs: ^0.16.0
     eslint-plugin-tsdoc: ^0.2.17
     eslint-plugin-unicorn: ^44.0.2
     espree: ^9.4.0
     husky: ^8.0.1
-    is-immutable-type: ^1.2.0
+    is-immutable-type: ^1.2.1
     json-schema: ^0.4.0
     jsonc-parser: ^3.2.0
     lint-staged: ^13.0.3
@@ -4012,7 +4012,7 @@ __metadata:
     nyc: ^15.1.0
     prettier: ^2.7.1
     rimraf: ^3.0.2
-    rollup: ^3.2.1
+    rollup: ^3.2.3
     rollup-plugin-auto-external: ^2.0.0
     semantic-release: ^19.0.5
     semver: ^7.3.8
@@ -4058,7 +4058,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-jsdoc@npm:^39.3.6":
+"eslint-plugin-jsdoc@npm:^39.3.14":
   version: 39.6.2
   resolution: "eslint-plugin-jsdoc@npm:39.6.2"
   dependencies:
@@ -4126,7 +4126,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-promise@npm:^6.1.0":
+"eslint-plugin-promise@npm:^6.1.1":
   version: 6.1.1
   resolution: "eslint-plugin-promise@npm:6.1.1"
   peerDependencies:
@@ -5623,15 +5623,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-immutable-type@npm:^1.2.0":
-  version: 1.2.0
-  resolution: "is-immutable-type@npm:1.2.0"
+"is-immutable-type@npm:^1.2.1":
+  version: 1.2.3
+  resolution: "is-immutable-type@npm:1.2.3"
   peerDependencies:
     "@typescript-eslint/type-utils": ">=5.30.5"
     "@typescript-eslint/utils": ">=5.30.5"
-    tsutils: ">=3.21.0"
     typescript: ">=4.7.4"
-  checksum: b31d6fa3d72ce09afcaba129ee083dc0136cd31aa689890277dcdde6f757fb3ff63e5804d81db6ef4c62ae9ff988018d7ac2ce591f14d899cd82a37de56d1145
+  checksum: 3dca8d8c1982a6d7cc84e3adc022f40b1ebbe84d31ea4076d6256e19a849e2e97e4bc264528e0bab3bf4b10e926151bbb5f7bb3ac3d39709017d5b0ededbb826
   languageName: node
   linkType: hard
 
@@ -8569,7 +8568,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup@npm:>=2.0.0, rollup@npm:^3.2.1":
+"rollup@npm:>=2.0.0, rollup@npm:^3.2.3":
   version: 3.3.0
   resolution: "rollup@npm:3.3.0"
   dependencies:
