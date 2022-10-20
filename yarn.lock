@@ -4184,7 +4184,7 @@ __metadata:
     eslint-plugin-unicorn: ^44.0.2
     espree: ^9.4.0
     husky: ^8.0.1
-    is-immutable-type: ^1.2.1
+    is-immutable-type: ^1.2.2
     json-schema: ^0.4.0
     jsonc-parser: ^3.2.0
     lint-staged: ^13.0.3
@@ -5977,7 +5977,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-immutable-type@npm:^1.2.1":
+"is-immutable-type@npm:^1.2.2":
   version: 1.2.3
   resolution: "is-immutable-type@npm:1.2.3"
   peerDependencies:
