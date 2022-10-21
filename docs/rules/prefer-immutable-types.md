@@ -247,10 +247,13 @@ function object(arg: Readonly<{ prop: { foo: string; }; }>) {}
 
 ### `ignoreInferredTypes`
 
-This option allows you to ignore parameters which don't explicitly specify a
-type. This may be desirable in cases where an external dependency specifies a
-callback with mutable parameters, and manually annotating the callback's
-parameters is undesirable.
+This option allows you to ignore values which don't explicitly specify a type.
+
+One case where this may be desirable is when an external dependency
+specifies a callback with mutable parameters, and manually annotating the
+callback's parameters is undesirable.
+
+`false` by default.
 
 ### `ignoreClasses`
 
