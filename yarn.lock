@@ -1376,16 +1376,16 @@ __metadata:
   linkType: hard
 
 "@rollup/plugin-json@npm:^5.0.0":
-  version: 5.0.0
-  resolution: "@rollup/plugin-json@npm:5.0.0"
+  version: 5.0.1
+  resolution: "@rollup/plugin-json@npm:5.0.1"
   dependencies:
-    "@rollup/pluginutils": ^4.2.1
+    "@rollup/pluginutils": ^5.0.1
   peerDependencies:
     rollup: ^1.20.0||^2.0.0||^3.0.0
   peerDependenciesMeta:
     rollup:
       optional: true
-  checksum: e00c8d12f756971a12a489b1593a7020223ffc272378453b83a311e959b3d6b9d78f38d9e5c1c5f3e973a2a98076512bfb5103b4770dbc6b8cf7b565f5267e7f
+  checksum: 1b2f45f49cd3f3dcf2bd1b5987f330cc23bb1abfe049d8ca3d441eacbb8f9a052692b3f062023e175359de7db6dd55ef804393beab15d90aeb3fbf540494a036
   languageName: node
   linkType: hard
 
