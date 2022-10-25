@@ -1689,10 +1689,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:18.0.0":
-  version: 18.0.0
-  resolution: "@types/node@npm:18.0.0"
-  checksum: aab2b325727a2599f6d25ebe0dedf58c40fb66a51ce4ca9c0226ceb70fcda2d3afccdca29db5942eb48b158ee8585a274a1e3750c718bbd5399d7f41d62dfdcc
+"@types/node@npm:*, @types/node@npm:18.11.5":
+  version: 18.11.5
+  resolution: "@types/node@npm:18.11.5"
+  checksum: ac54e9287dd4549ea3dc8aabc0cf7bfa04c52f02925d7fd68414789617ec770f034c8ae2e111e8bd00d446a46fcac42587b5a316a1303e2f6ea094854248c9ff
   languageName: node
   linkType: hard
 
@@ -3934,7 +3934,7 @@ __metadata:
     "@types/dedent": ^0.7.0
     "@types/eslint": ^8.4.1
     "@types/estree": ^1.0.0
-    "@types/node": 18.0.0
+    "@types/node": 18.11.5
     "@types/rollup-plugin-auto-external": ^2.0.2
     "@types/semver": ^7.3.12
     "@typescript-eslint/eslint-plugin": ^5.10.2
