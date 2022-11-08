@@ -208,7 +208,12 @@ const liteOptions = {
 
 ### `enforcement`
 
-The level of immutability that should be enforced.
+The level of immutability that should be enforced. One of the following:
+
+- `None` - Don't enforce any immutability.
+- `ReadonlyShallow` - Enforce that the data is shallowly immutable.
+- `ReadonlyDeep` - Enforce that the data is deeply immutable (methods may not be).
+- `Immutable` - Enforce that everything is deeply immutable, nothing can be modified.
 
 #### ❌ Incorrect
 
