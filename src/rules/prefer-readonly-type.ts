@@ -1,13 +1,17 @@
 import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
 import type { JSONSchema4 } from "json-schema";
 
+import type {
+  IgnorePatternOption,
+  IgnoreAccessorPatternOption,
+} from "~/common/ignore-options";
 import {
   shouldIgnoreInFunction,
   shouldIgnoreClasses,
   shouldIgnorePattern,
 } from "~/common/ignore-options";
 import type { ESArrayTupleType } from "~/src/util/node-types";
-import type { RuleResult } from "~/util/rule";
+import type { BaseOptions, RuleResult } from "~/util/rule";
 import { createRule, getTypeOfNode } from "~/util/rule";
 import { inInterface, isInReturnType } from "~/util/tree";
 import {
@@ -20,7 +24,10 @@ import {
   isTSParameterProperty,
   isTSPropertySignature,
   isTSTupleType,
+  isTSTypeAnnotation,
+  isTSTypeLiteral,
   isTSTypeOperator,
+  isTSTypeReference,
 } from "~/util/typeguard";
 
 /**
@@ -141,6 +148,37 @@ const mutableTypeRegex = new RegExp(
   "u"
 );
 
+function shouldIgnorePattern2(
+  node: TSESTree.Node,
+  context: TSESLint.RuleContext<string, BaseOptions>,
+  ignorePattern: Partial<IgnorePatternOption>["ignorePattern"],
+  ignoreAccessorPattern?: Partial<IgnoreAccessorPatternOption>["ignoreAccessorPattern"]
+): boolean {
+  const isTypeNode =
+    isTSArrayType(node) ||
+    isTSIndexSignature(node) ||
+    isTSTupleType(node) ||
+    isTSTypeAnnotation(node) ||
+    isTSTypeLiteral(node) ||
+    isTSTypeReference(node);
+
+  if (isTypeNode) {
+    return shouldIgnorePattern2(
+      node.parent!,
+      context,
+      ignorePattern,
+      ignoreAccessorPattern
+    );
+  }
+
+  return shouldIgnorePattern(
+    node,
+    context,
+    ignorePattern,
+    ignoreAccessorPattern
+  );
+}
+
 /**
  * Check if the given ArrayType or TupleType violates this rule.
  */
@@ -163,7 +201,7 @@ function checkArrayOrTupleType(
     shouldIgnoreClasses(node, context, ignoreClass) ||
     (ignoreInterface === true && inInterface(node)) ||
     shouldIgnoreInFunction(node, context, allowLocalMutation) ||
-    shouldIgnorePattern(node, context, ignorePattern) ||
+    shouldIgnorePattern2(node, context, ignorePattern) ||
     ignoreCollections
   ) {
     return {
@@ -219,7 +257,7 @@ function checkMappedType(
     shouldIgnoreClasses(node, context, ignoreClass) ||
     (ignoreInterface === true && inInterface(node)) ||
     shouldIgnoreInFunction(node, context, allowLocalMutation) ||
-    shouldIgnorePattern(node, context, ignorePattern)
+    shouldIgnorePattern2(node, context, ignorePattern)
   ) {
     return {
       context,
@@ -268,7 +306,7 @@ function checkTypeReference(
     shouldIgnoreClasses(node, context, ignoreClass) ||
     (ignoreInterface === true && inInterface(node)) ||
     shouldIgnoreInFunction(node, context, allowLocalMutation) ||
-    shouldIgnorePattern(node, context, ignorePattern)
+    shouldIgnorePattern2(node, context, ignorePattern)
   ) {
     return {
       context,
@@ -335,7 +373,7 @@ function checkProperty(
     shouldIgnoreClasses(node, context, ignoreClass) ||
     (ignoreInterface === true && inInterface(node)) ||
     shouldIgnoreInFunction(node, context, allowLocalMutation) ||
-    shouldIgnorePattern(node, context, ignorePattern)
+    shouldIgnorePattern2(node, context, ignorePattern)
   ) {
     return {
       context,
@@ -400,7 +438,7 @@ function checkImplicitType(
     shouldIgnoreClasses(node, context, ignoreClass) ||
     (ignoreInterface === true && inInterface(node)) ||
     shouldIgnoreInFunction(node, context, allowLocalMutation) ||
-    shouldIgnorePattern(node, context, ignorePattern)
+    shouldIgnorePattern2(node, context, ignorePattern)
   ) {
     return {
       context,

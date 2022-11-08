@@ -3,13 +3,9 @@ import { deepmerge } from "deepmerge-ts";
 import { Immutability } from "is-immutable-type";
 import type { JSONSchema4 } from "json-schema";
 
-import type {
-  IgnoreClassesOption,
-  IgnorePatternOption,
-} from "~/common/ignore-options";
+import type { IgnoreClassesOption } from "~/common/ignore-options";
 import {
   ignoreClassesOptionSchema,
-  ignorePatternOptionSchema,
   shouldIgnoreClasses,
   shouldIgnoreInFunction,
   shouldIgnorePattern,
@@ -43,11 +39,12 @@ type RawEnforcement =
   | "None"
   | false;
 
-type Option = IgnoreClassesOption &
-  IgnorePatternOption & {
-    enforcement: RawEnforcement;
-    ignoreInferredTypes: boolean;
-  };
+type Option = IgnoreClassesOption & {
+  enforcement: RawEnforcement;
+  ignoreInferredTypes: boolean;
+  ignoreNamePattern?: string[] | string;
+  ignoreTypePattern?: string[] | string;
+};
 
 /**
  * The options this rule can take.
@@ -84,19 +81,27 @@ const enforcementEnumOptions = [
 /**
  * The non-shorthand schema for each option.
  */
-const optionExpandedSchema: JSONSchema4 = deepmerge(
-  ignoreClassesOptionSchema,
-  ignorePatternOptionSchema,
-  {
-    enforcement: {
-      type: ["string", "number", "boolean"],
-      enum: enforcementEnumOptions,
+const optionExpandedSchema: JSONSchema4 = deepmerge(ignoreClassesOptionSchema, {
+  enforcement: {
+    type: ["string", "number", "boolean"],
+    enum: enforcementEnumOptions,
+  },
+  ignoreInferredTypes: {
+    type: "boolean",
+  },
+  ignoreNamePattern: {
+    type: ["string", "array"],
+    items: {
+      type: "string",
     },
-    ignoreInferredTypes: {
-      type: "boolean",
+  },
+  ignoreTypePattern: {
+    type: ["string", "array"],
+    items: {
+      type: "string",
     },
-  }
-);
+  },
+});
 
 /**
  * The schema for each option.
@@ -216,14 +221,16 @@ function getParameterTypeViolations(
     enforcement: rawEnforcement,
     ignoreInferredTypes: rawIgnoreInferredTypes,
     ignoreClasses,
-    ignorePattern,
+    ignoreNamePattern,
+    ignoreTypePattern,
   } = typeof rawOption === "object"
     ? rawOption
     : {
         enforcement: rawOption,
         ignoreInferredTypes: optionsObject.ignoreInferredTypes,
         ignoreClasses: optionsObject.ignoreClasses,
-        ignorePattern: optionsObject.ignorePattern,
+        ignoreNamePattern: optionsObject.ignoreNamePattern,
+        ignoreTypePattern: optionsObject.ignoreTypePattern,
       };
 
   const enforcement = parseEnforcement(
@@ -231,8 +238,7 @@ function getParameterTypeViolations(
   );
   if (
     enforcement === false ||
-    shouldIgnoreClasses(node, context, ignoreClasses) ||
-    shouldIgnorePattern(node, context, ignorePattern)
+    shouldIgnoreClasses(node, context, ignoreClasses)
   ) {
     return [];
   }
@@ -242,6 +248,10 @@ function getParameterTypeViolations(
 
   return node.params
     .map((param): Descriptor | undefined => {
+      if (shouldIgnorePattern(param, context, ignoreNamePattern)) {
+        return undefined;
+      }
+
       if (isTSParameterProperty(param) && param.readonly !== true) {
         return {
           node: param,
@@ -256,6 +266,13 @@ function getParameterTypeViolations(
       if (
         // inferred types
         (ignoreInferredTypes && actualParam.typeAnnotation === undefined) ||
+        // ignored
+        (actualParam.typeAnnotation !== undefined &&
+          shouldIgnorePattern(
+            actualParam.typeAnnotation,
+            context,
+            ignoreTypePattern
+          )) ||
         // type guard
         (node.returnType !== undefined &&
           isTSTypePredicate(node.returnType.typeAnnotation) &&
@@ -301,14 +318,16 @@ function getReturnTypeViolations(
     enforcement: rawEnforcement,
     ignoreInferredTypes: rawIgnoreInferredTypes,
     ignoreClasses,
-    ignorePattern,
+    ignoreNamePattern,
+    ignoreTypePattern,
   } = typeof rawOption === "object"
     ? rawOption
     : {
         enforcement: rawOption,
         ignoreInferredTypes: optionsObject.ignoreInferredTypes,
         ignoreClasses: optionsObject.ignoreClasses,
-        ignorePattern: optionsObject.ignorePattern,
+        ignoreNamePattern: optionsObject.ignoreNamePattern,
+        ignoreTypePattern: optionsObject.ignoreTypePattern,
       };
 
   const enforcement = parseEnforcement(
@@ -322,7 +341,7 @@ function getReturnTypeViolations(
     enforcement === false ||
     (ignoreInferredTypes && node.returnType?.typeAnnotation === undefined) ||
     shouldIgnoreClasses(node, context, ignoreClasses) ||
-    shouldIgnorePattern(node, context, ignorePattern)
+    shouldIgnorePattern(node, context, ignoreNamePattern)
   ) {
     return [];
   }
@@ -331,6 +350,10 @@ function getReturnTypeViolations(
     node.returnType?.typeAnnotation !== undefined &&
     !isTSTypePredicate(node.returnType.typeAnnotation)
   ) {
+    if (shouldIgnorePattern(node.returnType, context, ignoreTypePattern)) {
+      return [];
+    }
+
     const immutability = getTypeImmutabilityOfNode(
       node.returnType.typeAnnotation,
       context,
@@ -420,7 +443,8 @@ function checkVarible(
     enforcement: rawEnforcement,
     ignoreInferredTypes: rawIgnoreInferredTypes,
     ignoreClasses,
-    ignorePattern,
+    ignoreNamePattern,
+    ignoreTypePattern,
     ignoreInFunctions: rawIgnoreInFunctions,
   } = typeof rawOption === "object"
     ? rawOption
@@ -428,7 +452,8 @@ function checkVarible(
         enforcement: rawOption,
         ignoreInferredTypes: optionsObject.ignoreInferredTypes,
         ignoreClasses: optionsObject.ignoreClasses,
-        ignorePattern: optionsObject.ignorePattern,
+        ignoreNamePattern: optionsObject.ignoreNamePattern,
+        ignoreTypePattern: optionsObject.ignoreTypePattern,
         ignoreInFunctions: false,
       };
 
@@ -441,7 +466,7 @@ function checkVarible(
     enforcement === false ||
     shouldIgnoreClasses(node, context, ignoreClasses) ||
     shouldIgnoreInFunction(node, context, ignoreInFunctions) ||
-    shouldIgnorePattern(node, context, ignorePattern)
+    shouldIgnorePattern(node, context, ignoreNamePattern)
   ) {
     return {
       context,
@@ -470,6 +495,20 @@ function checkVarible(
   if (
     ignoreInferredTypes &&
     nodeWithTypeAnnotation.typeAnnotation === undefined
+  ) {
+    return {
+      context,
+      descriptors: [],
+    };
+  }
+
+  if (
+    nodeWithTypeAnnotation.typeAnnotation !== undefined &&
+    shouldIgnorePattern(
+      nodeWithTypeAnnotation.typeAnnotation,
+      context,
+      ignoreTypePattern
+    )
   ) {
     return {
       context,

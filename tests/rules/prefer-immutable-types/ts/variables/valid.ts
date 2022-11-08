@@ -196,12 +196,12 @@ const tests: ReadonlyArray<ValidTestCase> = [
     `,
     optionsSet: [[{ variables: { ignoreInFunctions: true } }]],
   },
-  // Ignore Prefix.
+  // Ignore Name Prefix.
   {
     code: dedent`
       let mutableFoo: string[] = [];
     `,
-    optionsSet: [[{ ignorePattern: "^mutable" }]],
+    optionsSet: [[{ ignoreNamePattern: "^mutable" }]],
   },
   {
     code: dedent`
@@ -210,14 +210,14 @@ const tests: ReadonlyArray<ValidTestCase> = [
         private mutableB: number;
       }
     `,
-    optionsSet: [[{ ignorePattern: "^mutable" }]],
+    optionsSet: [[{ ignoreNamePattern: "^mutable" }]],
   },
-  // Ignore Suffix.
+  // Ignore Name Suffix.
   {
     code: dedent`
       let fooMutable: string[] = [];
     `,
-    optionsSet: [[{ ignorePattern: "Mutable$" }]],
+    optionsSet: [[{ ignoreNamePattern: "Mutable$" }]],
   },
   {
     code: dedent`
@@ -226,7 +226,23 @@ const tests: ReadonlyArray<ValidTestCase> = [
         private BMutable: number;
       }
     `,
-    optionsSet: [[{ ignorePattern: "Mutable$" }]],
+    optionsSet: [[{ ignoreNamePattern: "Mutable$" }]],
+  },
+  // Ignore Type.
+  {
+    code: dedent`
+      let fooMutable: Readonly<string[]> = [];
+    `,
+    optionsSet: [[{ ignoreTypePattern: "^Readonly<.+>$" }]],
+  },
+  // Ignore Type (multiline).
+  {
+    code: dedent`
+      let fooMutable: Readonly<
+        string[]
+      > = [];
+    `,
+    optionsSet: [[{ ignoreTypePattern: "^Readonly<.+>$" }]],
   },
 ];
 

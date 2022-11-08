@@ -12,12 +12,7 @@ import {
   isIdentifier,
   isMemberExpression,
   isThisExpression,
-  isTSArrayType,
-  isTSIndexSignature,
-  isTSTupleType,
   isTSTypeAnnotation,
-  isTSTypeLiteral,
-  isTSTypeReference,
   isUnaryExpression,
   isVariableDeclaration,
 } from "~/util/typeguard";
@@ -72,13 +67,11 @@ function getNodeIdentifierText(
     ? getNodeIdentifierText(node.argument, context)
     : isExpressionStatement(node)
     ? context.getSourceCode().getText(node as TSESTree.Node)
-    : isTSArrayType(node) ||
-      isTSIndexSignature(node) ||
-      isTSTupleType(node) ||
-      isTSTypeAnnotation(node) ||
-      isTSTypeLiteral(node) ||
-      isTSTypeReference(node)
-    ? getNodeIdentifierText(node.parent, context)
+    : isTSTypeAnnotation(node)
+    ? context
+        .getSourceCode()
+        .getText(node.typeAnnotation as TSESTree.Node)
+        .replace(/\s+/gu, "")
     : null;
 
   if (identifierText !== null) {
