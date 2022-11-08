@@ -192,6 +192,27 @@ const tests: ReadonlyArray<ValidTestCase> = [
       ],
     ],
   },
+  // Ignore Name Prefix.
+  {
+    code: dedent`
+      function mutableFoo(): string[] {}
+    `,
+    optionsSet: [[{ ignoreNamePattern: "^mutable" }]],
+  },
+  // Ignore Name Suffix.
+  {
+    code: dedent`
+      function fooMutable(): string[] {}
+    `,
+    optionsSet: [[{ ignoreNamePattern: "Mutable$" }]],
+  },
+  // Ignore Type.
+  {
+    code: dedent`
+      function foo(): Readonly<string[]> {}
+    `,
+    optionsSet: [[{ ignoreTypePattern: "^Readonly<.+>$" }]],
+  },
 ];
 
 export default tests;

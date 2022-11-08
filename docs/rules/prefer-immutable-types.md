@@ -332,6 +332,12 @@ If true, the rule will not flag any variables that are inside of function bodies
 
 See the [allowLocalMutation](./options/allow-local-mutation.md) docs for more information.
 
-### `ignorePattern`
+### `ignoreNamePattern`
 
-See the [ignorePattern](./options/ignore-pattern.md) docs.
+This option takes a `RegExp` string or an array of `RegExp` strings.
+It allows for the ability to ignore violations based on the identifier (name) of node in question.
+
+### `ignoreTypePattern`
+
+This option takes a `RegExp` string or an array of `RegExp` strings.
+It allows for the ability to ignore violations based on the type (as written, with whitespace removed) of the node in question.
