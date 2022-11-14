@@ -132,15 +132,15 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       }
     `,
     optionsSet: [[]],
-    // output: dedent`
-    //   class Klass {
-    //     constructor (
-    //       public readonly publicProp: string,
-    //       protected readonly protectedProp: string,
-    //       private readonly privateProp: string,
-    //   ) { }
-    //   }
-    // `,
+    output: dedent`
+      class Klass {
+        constructor (
+          public readonly publicProp: string,
+          protected readonly protectedProp: string,
+          private readonly privateProp: string,
+      ) { }
+      }
+    `,
     errors: [
       {
         messageId: "propertyModifier",
