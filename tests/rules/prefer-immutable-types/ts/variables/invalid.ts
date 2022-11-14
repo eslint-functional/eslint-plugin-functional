@@ -102,14 +102,14 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       }
     `,
     optionsSet: [[]],
-    // output: dedent`
-    //   class Klass {
-    //     readonly foo: number;
-    //     private readonly bar: number;
-    //     static readonly baz: number;
-    //     private static readonly qux: number;
-    //   }
-    // `,
+    output: dedent`
+      class Klass {
+        readonly foo: number;
+        private readonly bar: number;
+        static readonly baz: number;
+        private static readonly qux: number;
+      }
+    `,
     errors: [
       {
         messageId: "propertyModifier",

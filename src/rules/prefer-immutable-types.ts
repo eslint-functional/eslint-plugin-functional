@@ -187,6 +187,7 @@ const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
       "Require function parameters to be typed as certain immutability",
     recommended: "error",
   },
+  fixable: "code",
   messages: errorMessages,
   schema,
 };
@@ -252,16 +253,16 @@ function getParameterTypeViolations(
         return undefined;
       }
 
-      if (isTSParameterProperty(param) && param.readonly !== true) {
+      const parameterProperty = isTSParameterProperty(param);
+      if (parameterProperty && param.readonly !== true) {
         return {
           node: param,
           messageId: "propertyModifier",
+          fix: (fixer) => fixer.insertTextBefore(param.parameter, "readonly "),
         };
       }
 
-      const actualParam = isTSParameterProperty(param)
-        ? param.parameter
-        : param;
+      const actualParam = parameterProperty ? param.parameter : param;
 
       if (
         // inferred types
@@ -483,6 +484,7 @@ function checkVarible(
         {
           node,
           messageId: "propertyModifier",
+          fix: (fixer) => fixer.insertTextBefore(node.key, "readonly "),
         },
       ],
     };
