@@ -144,20 +144,23 @@ type Options = {
   enforcement: "None" | "ReadonlyShallow" | "ReadonlyDeep" | "Immutable";
   ignoreInferredTypes: boolean;
   ignoreClasses: boolean | "fieldsOnly";
-  ignorePattern?: string[] | string;
+  ignoreNamePattern?: string[] | string;
+  ignoreTypePattern?: string[] | string;
 
   parameters?: {
     enforcement: "None" | "ReadonlyShallow" | "ReadonlyDeep" | "Immutable";
     ignoreInferredTypes: boolean;
     ignoreClasses: boolean | "fieldsOnly";
-    ignorePattern?: string[] | string;
+    ignoreNamePattern?: string[] | string;
+    ignoreTypePattern?: string[] | string;
   };
 
   returnTypes?: {
     enforcement: "None" | "ReadonlyShallow" | "ReadonlyDeep" | "Immutable";
     ignoreInferredTypes: boolean;
     ignoreClasses: boolean | "fieldsOnly";
-    ignorePattern?: string[] | string;
+    ignoreNamePattern?: string[] | string;
+    ignoreTypePattern?: string[] | string;
   };
 
   variables?: {
@@ -165,7 +168,8 @@ type Options = {
     ignoreInFunctions: boolean;
     ignoreInferredTypes: boolean;
     ignoreClasses: boolean | "fieldsOnly";
-    ignorePattern?: string[] | string;
+    ignoreNamePattern?: string[] | string;
+    ignoreTypePattern?: string[] | string;
   };
 
   fixer?: {
