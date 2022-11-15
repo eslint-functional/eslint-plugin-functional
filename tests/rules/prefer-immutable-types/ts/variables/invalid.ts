@@ -48,11 +48,26 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       const foo: Readonly<{ foo: string }> = {} as any,
             bar: { foo: number } = {} as any;
     `,
-    optionsSet: [
-      [{ variables: "ReadonlyShallow" }],
-      [{ variables: "ReadonlyDeep" }],
-      [{ variables: "Immutable" }],
+    optionsSet: [[{ variables: "ReadonlyShallow" }]],
+    output: dedent`
+      const foo: Readonly<{ foo: string }> = {} as any,
+            bar: Readonly<{ foo: number }> = {} as any;
+    `,
+    errors: [
+      {
+        messageId: "variable",
+        type: "Identifier",
+        line: 2,
+        column: 7,
+      },
     ],
+  },
+  {
+    code: dedent`
+      const foo: Readonly<{ foo: string }> = {} as any,
+            bar: { foo: number } = {} as any;
+    `,
+    optionsSet: [[{ variables: "ReadonlyDeep" }], [{ variables: "Immutable" }]],
     errors: [
       {
         messageId: "variable",

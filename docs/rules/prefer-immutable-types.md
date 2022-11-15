@@ -167,6 +167,21 @@ type Options = {
     ignoreClasses: boolean | "fieldsOnly";
     ignorePattern?: string[] | string;
   };
+
+  fixer?: {
+    ReadonlyShallow?:
+      | { pattern: string; replace: string; }
+      | Array<{ pattern: string; replace: string; }>
+      | false;
+    ReadonlyDeep?:
+      | { pattern: string; replace: string; }
+      | Array<{ pattern: string; replace: string; }>
+      | false;
+    Immutable?:
+      | { pattern: string; replace: string; }
+      | Array<{ pattern: string; replace: string; }>
+      | false;
+  };
 }
 ```
 
@@ -177,6 +192,14 @@ const defaults = {
   enforcement: "Immutable",
   ignoreClasses: false,
   ignoreInferredTypes: false,
+  fixer: {
+    ReadonlyShallow: {
+      pattern: "^(.+)$",
+      replace: "Readonly<$1>",
+    },
+    ReadonlyDeep: false,
+    Immutable: false,
+  },
 }
 ```
 
@@ -331,6 +354,29 @@ Override the options specifically for the given type of types.
 If true, the rule will not flag any variables that are inside of function bodies.
 
 See the [allowLocalMutation](./options/allow-local-mutation.md) docs for more information.
+
+### `fixer`
+
+Configure the fixer to work with your setup.
+
+#### `fixer.*`
+
+By default we only configure the fixer to correct shallow readonly violations as TypeScript itself provides a utility type for this.
+If you have access to other utility types (such as [type-fest's `ReadonlyDeep`](https://github.com/sindresorhus/type-fest#:~:text=set%20to%20optional.-,ReadonlyDeep,-%2D%20Create%20a%20deeply)), you can configure the fixer to use them with this option.
+
+Example using `ReadonlyDeep` instead of `Readonly`:
+
+```jsonc
+{
+  // ...
+  "fixer": {
+    "ReadonlyDeep": {
+      "pattern": "^(?:Readonly<(.+)>|(.+))$",
+      "replace": "ReadonlyDeep<$1$2>",
+    }
+  }
+}
+```
 
 ### `ignoreNamePattern`
 
