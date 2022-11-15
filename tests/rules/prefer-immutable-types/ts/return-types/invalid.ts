@@ -50,8 +50,36 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       function foo(arg: unknown): { foo: number };
       function foo(arg: unknown) {}
     `,
+    optionsSet: [[{ returnTypes: "ReadonlyShallow" }]],
+    output: dedent`
+      function foo(arg: number): Readonly<{ foo: string }>;
+      function foo(arg: string): Readonly<{ foo: number }>;
+      function foo(arg: unknown): Readonly<{ foo: number }>;
+      function foo(arg: unknown) {}
+    `,
+    errors: [
+      {
+        messageId: "returnType",
+        type: "TSTypeAnnotation",
+        line: 1,
+        column: 26,
+      },
+      {
+        messageId: "returnType",
+        type: "TSTypeAnnotation",
+        line: 3,
+        column: 27,
+      },
+    ],
+  },
+  {
+    code: dedent`
+      function foo(arg: number): { foo: string };
+      function foo(arg: string): Readonly<{ foo: number }>;
+      function foo(arg: unknown): { foo: number };
+      function foo(arg: unknown) {}
+    `,
     optionsSet: [
-      [{ returnTypes: "ReadonlyShallow" }],
       [{ returnTypes: "ReadonlyDeep" }],
       [{ returnTypes: "Immutable" }],
     ],

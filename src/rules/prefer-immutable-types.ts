@@ -46,6 +46,16 @@ type Option = IgnoreClassesOption & {
   ignoreTypePattern?: string[] | string;
 };
 
+type FixerConfigRaw = {
+  pattern: string;
+  replace: string;
+};
+
+type FixerConfig = {
+  pattern: RegExp;
+  replace: string;
+};
+
 /**
  * The options this rule can take.
  */
@@ -60,6 +70,11 @@ type Options = [
           }
         >
       | RawEnforcement;
+    fixer: {
+      ReadonlyShallow: FixerConfigRaw | FixerConfigRaw[] | false;
+      ReadonlyDeep: FixerConfigRaw | FixerConfigRaw[] | false;
+      Immutable: FixerConfigRaw | FixerConfigRaw[] | false;
+    };
   }
 ];
 
@@ -121,6 +136,33 @@ const optionSchema: JSONSchema4 = {
 };
 
 /**
+ * The schema for each fixer config.
+ */
+const fixerSchema: JSONSchema4 = {
+  oneOf: [
+    {
+      type: "object",
+      properties: {
+        pattern: { type: "string" },
+        replace: { type: "string" },
+      },
+      additionalProperties: false,
+    },
+    {
+      type: "array",
+      items: {
+        type: "object",
+        properties: {
+          pattern: { type: "string" },
+          replace: { type: "string" },
+        },
+        additionalProperties: false,
+      },
+    },
+  ],
+};
+
+/**
  * The schema for the rule options.
  */
 const schema: JSONSchema4 = [
@@ -146,6 +188,15 @@ const schema: JSONSchema4 = [
           },
         ],
       },
+      fixer: {
+        type: "object",
+        properties: {
+          ReadonlyShallow: fixerSchema,
+          ReadonlyDeep: fixerSchema,
+          Immutable: fixerSchema,
+        },
+        additionalProperties: false,
+      },
     }),
     additionalProperties: false,
   },
@@ -159,8 +210,33 @@ const defaultOptions: Options = [
     enforcement: Immutability.Immutable,
     ignoreInferredTypes: false,
     ignoreClasses: false,
+    fixer: {
+      ReadonlyShallow: {
+        pattern: "^(.+)$",
+        replace: "Readonly<$1>",
+      },
+      ReadonlyDeep: false,
+      Immutable: false,
+    },
   },
 ];
+
+/**
+ * Get a fixer that uses the user config.
+ */
+function getConfiuredFixer<T extends TSESTree.Node>(
+  node: T,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
+  configs: FixerConfig[]
+): NonNullable<Descriptor["fix"]> | null {
+  const text = context.getSourceCode().getText(node);
+  const config = configs.find((c) => c.pattern.test(text));
+  if (config === undefined) {
+    return null;
+  }
+  return (fixer) =>
+    fixer.replaceText(node, text.replace(config.pattern, config.replace));
+}
 
 /**
  * The possible error messages.
@@ -209,6 +285,25 @@ function parseEnforcement(rawEnforcement: RawEnforcement) {
 }
 
 /**
+ * Get the fixer config for the the given enforcement level from the raw config given.
+ */
+function parseFixerConfigs(
+  allRawConfigs: Options[0]["fixer"],
+  enforcement: Immutability
+): FixerConfig[] {
+  const key = Immutability[enforcement] as keyof typeof allRawConfigs;
+  const rawConfigs = allRawConfigs[key] ?? defaultOptions[0].fixer[key];
+  if (rawConfigs === undefined || rawConfigs === false) {
+    return [];
+  }
+  const raws = Array.isArray(rawConfigs) ? rawConfigs : [rawConfigs];
+  return raws.map((r, index) => ({
+    ...r,
+    pattern: new RegExp(r.pattern, "u"),
+  }));
+}
+
+/**
  * Get the parameter type violations.
  */
 function getParameterTypeViolations(
@@ -217,7 +312,7 @@ function getParameterTypeViolations(
   options: Options
 ): Descriptor[] {
   const [optionsObject] = options;
-  const { parameters: rawOption } = optionsObject;
+  const { parameters: rawOption, fixer: rawFixerConfig } = optionsObject;
   const {
     enforcement: rawEnforcement,
     ignoreInferredTypes: rawIgnoreInferredTypes,
@@ -243,6 +338,8 @@ function getParameterTypeViolations(
   ) {
     return [];
   }
+
+  const fixerConfigs = parseFixerConfigs(rawFixerConfig, enforcement);
 
   const ignoreInferredTypes =
     rawIgnoreInferredTypes ?? optionsObject.ignoreInferredTypes;
@@ -291,16 +388,28 @@ function getParameterTypeViolations(
         enforcement
       );
 
-      return immutability >= enforcement
-        ? undefined
-        : {
-            node: actualParam,
-            messageId: "parameter",
-            data: {
-              actual: Immutability[immutability],
-              expected: Immutability[enforcement],
-            },
-          };
+      if (immutability >= enforcement) {
+        return undefined;
+      }
+
+      const fix =
+        actualParam.typeAnnotation === undefined
+          ? null
+          : getConfiuredFixer(
+              actualParam.typeAnnotation.typeAnnotation,
+              context,
+              fixerConfigs
+            );
+
+      return {
+        node: actualParam,
+        messageId: "parameter",
+        data: {
+          actual: Immutability[immutability],
+          expected: Immutability[enforcement],
+        },
+        fix,
+      };
     })
     .filter(isDefined);
 }
@@ -314,7 +423,7 @@ function getReturnTypeViolations(
   options: Options
 ): Descriptor[] {
   const [optionsObject] = options;
-  const { returnTypes: rawOption } = optionsObject;
+  const { returnTypes: rawOption, fixer: rawFixerConfig } = optionsObject;
   const {
     enforcement: rawEnforcement,
     ignoreInferredTypes: rawIgnoreInferredTypes,
@@ -347,6 +456,8 @@ function getReturnTypeViolations(
     return [];
   }
 
+  const fixerConfigs = parseFixerConfigs(rawFixerConfig, enforcement);
+
   if (
     node.returnType?.typeAnnotation !== undefined &&
     !isTSTypePredicate(node.returnType.typeAnnotation)
@@ -361,18 +472,30 @@ function getReturnTypeViolations(
       enforcement
     );
 
-    return immutability >= enforcement
-      ? []
-      : [
-          {
-            node: node.returnType,
-            messageId: "returnType",
-            data: {
-              actual: Immutability[immutability],
-              expected: Immutability[enforcement],
-            },
-          },
-        ];
+    if (immutability >= enforcement) {
+      return [];
+    }
+
+    const fix =
+      node.returnType?.typeAnnotation === undefined
+        ? null
+        : getConfiuredFixer(
+            node.returnType.typeAnnotation,
+            context,
+            fixerConfigs
+          );
+
+    return [
+      {
+        node: node.returnType,
+        messageId: "returnType",
+        data: {
+          actual: Immutability[immutability],
+          expected: Immutability[enforcement],
+        },
+        fix,
+      },
+    ];
   }
 
   if (!isFunctionLike(node)) {
@@ -398,6 +521,15 @@ function getReturnTypeViolations(
     return [];
   }
 
+  const fix =
+    node.returnType?.typeAnnotation === undefined
+      ? null
+      : getConfiuredFixer(
+          node.returnType.typeAnnotation,
+          context,
+          fixerConfigs
+        );
+
   return [
     {
       node: hasID(node) && node.id !== null ? node.id : node,
@@ -406,6 +538,7 @@ function getReturnTypeViolations(
         actual: Immutability[immutability],
         expected: Immutability[enforcement],
       },
+      fix,
     },
   ];
 }
@@ -439,7 +572,7 @@ function checkVarible(
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
 
-  const { variables: rawOption } = optionsObject;
+  const { variables: rawOption, fixer: rawFixerConfig } = optionsObject;
   const {
     enforcement: rawEnforcement,
     ignoreInferredTypes: rawIgnoreInferredTypes,
@@ -524,21 +657,36 @@ function checkVarible(
     enforcement
   );
 
+  if (immutability >= enforcement) {
+    return {
+      context,
+      descriptors: [],
+    };
+  }
+
+  const fixerConfigs = parseFixerConfigs(rawFixerConfig, enforcement);
+  const fix =
+    nodeWithTypeAnnotation.typeAnnotation === undefined
+      ? null
+      : getConfiuredFixer(
+          nodeWithTypeAnnotation.typeAnnotation.typeAnnotation,
+          context,
+          fixerConfigs
+        );
+
   return {
     context,
-    descriptors:
-      immutability >= enforcement
-        ? []
-        : [
-            {
-              node: nodeWithTypeAnnotation,
-              messageId: isProperty ? "propertyImmutability" : "variable",
-              data: {
-                actual: Immutability[immutability],
-                expected: Immutability[enforcement],
-              },
-            },
-          ],
+    descriptors: [
+      {
+        node: nodeWithTypeAnnotation,
+        messageId: isProperty ? "propertyImmutability" : "variable",
+        data: {
+          actual: Immutability[immutability],
+          expected: Immutability[enforcement],
+        },
+        fix,
+      },
+    ],
   };
 }
 

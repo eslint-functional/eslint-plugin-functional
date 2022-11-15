@@ -29,8 +29,27 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   },
   {
     code: "function foo(arg1: { foo: string }, arg2: { foo: number }) {}",
+    optionsSet: [[{ parameters: "ReadonlyShallow" }]],
+    output:
+      "function foo(arg1: Readonly<{ foo: string }>, arg2: Readonly<{ foo: number }>) {}",
+    errors: [
+      {
+        messageId: "parameter",
+        type: "Identifier",
+        line: 1,
+        column: 14,
+      },
+      {
+        messageId: "parameter",
+        type: "Identifier",
+        line: 1,
+        column: 37,
+      },
+    ],
+  },
+  {
+    code: "function foo(arg1: { foo: string }, arg2: { foo: number }) {}",
     optionsSet: [
-      [{ parameters: "ReadonlyShallow" }],
       [{ parameters: "ReadonlyDeep" }],
       [{ parameters: "Immutable" }],
     ],
@@ -164,8 +183,21 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   },
   {
     code: "function foo(arg0: { foo: string | number }, arg1: { foo: string | number }): arg0 is { foo: number } {}",
+    optionsSet: [[{ parameters: "ReadonlyShallow" }]],
+    output:
+      "function foo(arg0: { foo: string | number }, arg1: Readonly<{ foo: string | number }>): arg0 is { foo: number } {}",
+    errors: [
+      {
+        messageId: "parameter",
+        type: "Identifier",
+        line: 1,
+        column: 46,
+      },
+    ],
+  },
+  {
+    code: "function foo(arg0: { foo: string | number }, arg1: { foo: string | number }): arg0 is { foo: number } {}",
     optionsSet: [
-      [{ parameters: "ReadonlyShallow" }],
       [{ parameters: "ReadonlyDeep" }],
       [{ parameters: "Immutable" }],
     ],
@@ -175,6 +207,106 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         type: "Identifier",
         line: 1,
         column: 46,
+      },
+    ],
+  },
+  {
+    code: "function foo(arg1: { foo: string }) {}",
+    optionsSet: [
+      [
+        {
+          parameters: "ReadonlyShallow",
+          fixer: {
+            ReadonlyDeep: {
+              pattern: "^(.+)$",
+              replace: "ReadonlyDeep<$1>",
+            },
+          },
+        },
+      ],
+    ],
+    output: "function foo(arg1: Readonly<{ foo: string }>) {}",
+    errors: [
+      {
+        messageId: "parameter",
+        type: "Identifier",
+        line: 1,
+        column: 14,
+      },
+    ],
+  },
+  {
+    code: "function foo(arg1: { foo: string }) {}",
+    optionsSet: [
+      [
+        {
+          parameters: "ReadonlyDeep",
+          fixer: {
+            ReadonlyDeep: {
+              pattern: "^(.+)$",
+              replace: "ReadonlyDeep<$1>",
+            },
+          },
+        },
+      ],
+    ],
+    output: "function foo(arg1: ReadonlyDeep<{ foo: string }>) {}",
+    errors: [
+      {
+        messageId: "parameter",
+        type: "Identifier",
+        line: 1,
+        column: 14,
+      },
+    ],
+  },
+  {
+    code: "function foo(arg1: { foo: { bar: string } }) {}",
+    optionsSet: [
+      [
+        {
+          parameters: "ReadonlyDeep",
+          fixer: {
+            ReadonlyDeep: {
+              pattern: "^(?:Readonly<(.+)>|(.+))$",
+              replace: "ReadonlyDeep<$1$2>",
+            },
+          },
+        },
+      ],
+    ],
+    output: "function foo(arg1: ReadonlyDeep<{ foo: { bar: string } }>) {}",
+    errors: [
+      {
+        messageId: "parameter",
+        type: "Identifier",
+        line: 1,
+        column: 14,
+      },
+    ],
+  },
+  {
+    code: "function foo(arg1: Readonly<{ foo: { bar: string } }>) {}",
+    optionsSet: [
+      [
+        {
+          parameters: "ReadonlyDeep",
+          fixer: {
+            ReadonlyDeep: {
+              pattern: "^(?:Readonly<(.+)>|(.+))$",
+              replace: "ReadonlyDeep<$1$2>",
+            },
+          },
+        },
+      ],
+    ],
+    output: "function foo(arg1: ReadonlyDeep<{ foo: { bar: string } }>) {}",
+    errors: [
+      {
+        messageId: "parameter",
+        type: "Identifier",
+        line: 1,
+        column: 14,
       },
     ],
   },
