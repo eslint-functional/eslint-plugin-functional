@@ -70,11 +70,13 @@ type Options = [
           }
         >
       | RawEnforcement;
-    fixer: {
-      ReadonlyShallow: FixerConfigRaw | FixerConfigRaw[] | false;
-      ReadonlyDeep: FixerConfigRaw | FixerConfigRaw[] | false;
-      Immutable: FixerConfigRaw | FixerConfigRaw[] | false;
-    };
+    fixer:
+      | {
+          ReadonlyShallow: FixerConfigRaw | FixerConfigRaw[] | false;
+          ReadonlyDeep: FixerConfigRaw | FixerConfigRaw[] | false;
+          Immutable: FixerConfigRaw | FixerConfigRaw[] | false;
+        }
+      | false;
   }
 ];
 
@@ -141,6 +143,10 @@ const optionSchema: JSONSchema4 = {
 const fixerSchema: JSONSchema4 = {
   oneOf: [
     {
+      type: "boolean",
+      enum: [false],
+    },
+    {
       type: "object",
       properties: {
         pattern: { type: "string" },
@@ -189,13 +195,21 @@ const schema: JSONSchema4 = [
         ],
       },
       fixer: {
-        type: "object",
-        properties: {
-          ReadonlyShallow: fixerSchema,
-          ReadonlyDeep: fixerSchema,
-          Immutable: fixerSchema,
-        },
-        additionalProperties: false,
+        oneOf: [
+          {
+            type: "boolean",
+            enum: [false],
+          },
+          {
+            type: "object",
+            properties: {
+              ReadonlyShallow: fixerSchema,
+              ReadonlyDeep: fixerSchema,
+              Immutable: fixerSchema,
+            },
+            additionalProperties: false,
+          },
+        ],
       },
     }),
     additionalProperties: false,
@@ -211,10 +225,16 @@ const defaultOptions: Options = [
     ignoreInferredTypes: false,
     ignoreClasses: false,
     fixer: {
-      ReadonlyShallow: {
-        pattern: "^(.+)$",
-        replace: "Readonly<$1>",
-      },
+      ReadonlyShallow: [
+        {
+          pattern: "^(Array|Map|Set)<(.+)>$",
+          replace: "Readonly$1<$2>",
+        },
+        {
+          pattern: "^(.+)$",
+          replace: "Readonly<$1>",
+        },
+      ],
       ReadonlyDeep: false,
       Immutable: false,
     },
@@ -229,7 +249,7 @@ function getConfiuredFixer<T extends TSESTree.Node>(
   context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   configs: FixerConfig[]
 ): NonNullable<Descriptor["fix"]> | null {
-  const text = context.getSourceCode().getText(node);
+  const text = context.getSourceCode().getText(node).replace(/\s+/gmu, " ");
   const config = configs.find((c) => c.pattern.test(text));
   if (config === undefined) {
     return null;
@@ -290,14 +310,19 @@ function parseEnforcement(rawEnforcement: RawEnforcement) {
 function parseFixerConfigs(
   allRawConfigs: Options[0]["fixer"],
   enforcement: Immutability
-): FixerConfig[] {
+): FixerConfig[] | false {
+  if (allRawConfigs === false) {
+    return false;
+  }
   const key = Immutability[enforcement] as keyof typeof allRawConfigs;
-  const rawConfigs = allRawConfigs[key] ?? defaultOptions[0].fixer[key];
+  const rawConfigs =
+    allRawConfigs[key] ??
+    (defaultOptions[0].fixer === false ? false : defaultOptions[0].fixer[key]);
   if (rawConfigs === undefined || rawConfigs === false) {
     return [];
   }
   const raws = Array.isArray(rawConfigs) ? rawConfigs : [rawConfigs];
-  return raws.map((r, index) => ({
+  return raws.map((r) => ({
     ...r,
     pattern: new RegExp(r.pattern, "u"),
   }));
@@ -355,7 +380,10 @@ function getParameterTypeViolations(
         return {
           node: param,
           messageId: "propertyModifier",
-          fix: (fixer) => fixer.insertTextBefore(param.parameter, "readonly "),
+          fix:
+            rawFixerConfig === false
+              ? null
+              : (fixer) => fixer.insertTextBefore(param.parameter, "readonly "),
         };
       }
 
@@ -393,7 +421,7 @@ function getParameterTypeViolations(
       }
 
       const fix =
-        actualParam.typeAnnotation === undefined
+        fixerConfigs === false || actualParam.typeAnnotation === undefined
           ? null
           : getConfiuredFixer(
               actualParam.typeAnnotation.typeAnnotation,
@@ -477,7 +505,7 @@ function getReturnTypeViolations(
     }
 
     const fix =
-      node.returnType?.typeAnnotation === undefined
+      fixerConfigs === false || node.returnType?.typeAnnotation === undefined
         ? null
         : getConfiuredFixer(
             node.returnType.typeAnnotation,
@@ -522,7 +550,7 @@ function getReturnTypeViolations(
   }
 
   const fix =
-    node.returnType?.typeAnnotation === undefined
+    fixerConfigs === false || node.returnType?.typeAnnotation === undefined
       ? null
       : getConfiuredFixer(
           node.returnType.typeAnnotation,
@@ -617,7 +645,10 @@ function checkVarible(
         {
           node,
           messageId: "propertyModifier",
-          fix: (fixer) => fixer.insertTextBefore(node.key, "readonly "),
+          fix:
+            rawFixerConfig === false
+              ? null
+              : (fixer) => fixer.insertTextBefore(node.key, "readonly "),
         },
       ],
     };
@@ -666,6 +697,7 @@ function checkVarible(
 
   const fixerConfigs = parseFixerConfigs(rawFixerConfig, enforcement);
   const fix =
+    fixerConfigs === false ||
     nodeWithTypeAnnotation.typeAnnotation === undefined
       ? null
       : getConfiuredFixer(

@@ -172,20 +172,22 @@ type Options = {
     ignoreTypePattern?: string[] | string;
   };
 
-  fixer?: {
-    ReadonlyShallow?:
-      | { pattern: string; replace: string; }
-      | Array<{ pattern: string; replace: string; }>
-      | false;
-    ReadonlyDeep?:
-      | { pattern: string; replace: string; }
-      | Array<{ pattern: string; replace: string; }>
-      | false;
-    Immutable?:
-      | { pattern: string; replace: string; }
-      | Array<{ pattern: string; replace: string; }>
-      | false;
-  };
+  fixer?:
+    | {
+      ReadonlyShallow?:
+        | { pattern: string; replace: string; }
+        | Array<{ pattern: string; replace: string; }>
+        | false;
+      ReadonlyDeep?:
+        | { pattern: string; replace: string; }
+        | Array<{ pattern: string; replace: string; }>
+        | false;
+      Immutable?:
+        | { pattern: string; replace: string; }
+        | Array<{ pattern: string; replace: string; }>
+        | false;
+      }
+    | false;
 }
 ```
 
@@ -197,10 +199,16 @@ const defaults = {
   ignoreClasses: false,
   ignoreInferredTypes: false,
   fixer: {
-    ReadonlyShallow: {
-      pattern: "^(.+)$",
-      replace: "Readonly<$1>",
-    },
+    ReadonlyShallow: [
+      {
+        pattern: "^(Array|Map|Set)<(.+)>$",
+        replace: "Readonly$1<$2>",
+      },
+      {
+        pattern: "^(.+)$",
+        replace: "Readonly<$1>",
+      },
+    ],
     ReadonlyDeep: false,
     Immutable: false,
   },
@@ -362,6 +370,7 @@ See the [allowLocalMutation](./options/allow-local-mutation.md) docs for more in
 ### `fixer`
 
 Configure the fixer to work with your setup.
+If set to `false`, the fixer will be disabled.
 
 #### `fixer.*`
 
@@ -374,10 +383,12 @@ Example using `ReadonlyDeep` instead of `Readonly`:
 {
   // ...
   "fixer": {
-    "ReadonlyDeep": {
-      "pattern": "^(?:Readonly<(.+)>|(.+))$",
-      "replace": "ReadonlyDeep<$1$2>",
-    }
+    "ReadonlyDeep": [
+      {
+        "pattern": "^Readonly<(.+)>|(.+)$",
+        "replace": "ReadonlyDeep<$1$2>",
+      },
+    ],
   }
 }
 ```
