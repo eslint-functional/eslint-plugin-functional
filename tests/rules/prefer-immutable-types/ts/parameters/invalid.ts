@@ -268,7 +268,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
           parameters: "ReadonlyDeep",
           fixer: {
             ReadonlyDeep: {
-              pattern: "^(?:Readonly<(.+)>|(.+))$",
+              pattern: "^Readonly<(.+)>|(.+)$",
               replace: "ReadonlyDeep<$1$2>",
             },
           },
@@ -286,26 +286,224 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     ],
   },
   {
-    code: "function foo(arg1: Readonly<{ foo: { bar: string } }>) {}",
-    optionsSet: [
-      [
-        {
-          parameters: "ReadonlyDeep",
-          fixer: {
-            ReadonlyDeep: {
-              pattern: "^(?:Readonly<(.+)>|(.+))$",
-              replace: "ReadonlyDeep<$1$2>",
-            },
-          },
-        },
-      ],
-    ],
-    output: "function foo(arg1: ReadonlyDeep<{ foo: { bar: string } }>) {}",
+    code: dedent`
+      function foo(arg: Array<string>) {}
+      function foo(arg: string[]) {}
+      function foo(arg: Set<string>) {}
+      function foo(arg: Map<string, string>) {}
+      function foo(arg: ReadonlyArray<string>) {}
+      function foo(arg: readonly string[]) {}
+      function foo(arg: ReadonlySet<string>) {}
+      function foo(arg: ReadonlyMap<string, string>) {}
+    `,
+    optionsSet: [[{ parameters: "ReadonlyShallow" }]],
+    output: dedent`
+      function foo(arg: ReadonlyArray<string>) {}
+      function foo(arg: Readonly<string[]>) {}
+      function foo(arg: ReadonlySet<string>) {}
+      function foo(arg: ReadonlyMap<string, string>) {}
+      function foo(arg: ReadonlyArray<string>) {}
+      function foo(arg: readonly string[]) {}
+      function foo(arg: ReadonlySet<string>) {}
+      function foo(arg: ReadonlyMap<string, string>) {}
+    `,
     errors: [
       {
         messageId: "parameter",
         type: "Identifier",
         line: 1,
+        column: 14,
+      },
+      {
+        messageId: "parameter",
+        type: "Identifier",
+        line: 2,
+        column: 14,
+      },
+      {
+        messageId: "parameter",
+        type: "Identifier",
+        line: 3,
+        column: 14,
+      },
+      {
+        messageId: "parameter",
+        type: "Identifier",
+        line: 4,
+        column: 14,
+      },
+    ],
+  },
+  {
+    code: dedent`
+      function foo(arg: Array<{foo: string}>) {}
+      function foo(arg: Set<{foo: string}>) {}
+      function foo(arg: Map<{foo: string}, {foo: string}>) {}
+      function foo(arg: ReadonlyArray<{foo: string}>) {}
+      function foo(arg: ReadonlySet<{foo: string}>) {}
+      function foo(arg: ReadonlyMap<{foo: string}, {foo: string}>) {}
+      function foo(arg: {foo: string}[]) {}
+      function foo(arg: readonly {foo: string}[]) {}
+    `,
+    optionsSet: [
+      [
+        {
+          parameters: "ReadonlyDeep",
+          fixer: {
+            ReadonlyDeep: [
+              {
+                pattern: "^Readonly<(.+)>|(.+)$",
+                replace: "ReadonlyDeep<$1$2>",
+              },
+            ],
+          },
+        },
+      ],
+    ],
+    output: dedent`
+      function foo(arg: ReadonlyDeep<Array<{foo: string}>>) {}
+      function foo(arg: ReadonlyDeep<Set<{foo: string}>>) {}
+      function foo(arg: ReadonlyDeep<Map<{foo: string}, {foo: string}>>) {}
+      function foo(arg: ReadonlyDeep<ReadonlyArray<{foo: string}>>) {}
+      function foo(arg: ReadonlyDeep<ReadonlySet<{foo: string}>>) {}
+      function foo(arg: ReadonlyDeep<ReadonlyMap<{foo: string}, {foo: string}>>) {}
+      function foo(arg: ReadonlyDeep<{foo: string}[]>) {}
+      function foo(arg: ReadonlyDeep<readonly {foo: string}[]>) {}
+    `,
+    errors: [
+      {
+        messageId: "parameter",
+        type: "Identifier",
+        line: 1,
+        column: 14,
+      },
+      {
+        messageId: "parameter",
+        type: "Identifier",
+        line: 2,
+        column: 14,
+      },
+      {
+        messageId: "parameter",
+        type: "Identifier",
+        line: 3,
+        column: 14,
+      },
+      {
+        messageId: "parameter",
+        type: "Identifier",
+        line: 4,
+        column: 14,
+      },
+      {
+        messageId: "parameter",
+        type: "Identifier",
+        line: 5,
+        column: 14,
+      },
+      {
+        messageId: "parameter",
+        type: "Identifier",
+        line: 6,
+        column: 14,
+      },
+      {
+        messageId: "parameter",
+        type: "Identifier",
+        line: 7,
+        column: 14,
+      },
+      {
+        messageId: "parameter",
+        type: "Identifier",
+        line: 8,
+        column: 14,
+      },
+    ],
+  },
+  {
+    code: dedent`
+      function foo(arg: Array<string>) {}
+      function foo(arg: string[]) {}
+      function foo(arg: Set<string>) {}
+      function foo(arg: Map<string, string>) {}
+      function foo(arg: ReadonlyArray<string>) {}
+      function foo(arg: readonly string[]) {}
+      function foo(arg: ReadonlySet<string>) {}
+      function foo(arg: ReadonlyMap<string, string>) {}
+    `,
+    optionsSet: [
+      [
+        {
+          parameters: "Immutable",
+          fixer: {
+            Immutable: [
+              {
+                pattern: "^(?:Readonly)?(Set|Map)<(.+)>$",
+                replace: "Readonly<Readonly$1<$2>>",
+              },
+            ],
+          },
+        },
+      ],
+    ],
+    output: dedent`
+      function foo(arg: Array<string>) {}
+      function foo(arg: string[]) {}
+      function foo(arg: Readonly<ReadonlySet<string>>) {}
+      function foo(arg: Readonly<ReadonlyMap<string, string>>) {}
+      function foo(arg: ReadonlyArray<string>) {}
+      function foo(arg: readonly string[]) {}
+      function foo(arg: Readonly<ReadonlySet<string>>) {}
+      function foo(arg: Readonly<ReadonlyMap<string, string>>) {}
+    `,
+    errors: [
+      {
+        messageId: "parameter",
+        type: "Identifier",
+        line: 1,
+        column: 14,
+      },
+      {
+        messageId: "parameter",
+        type: "Identifier",
+        line: 2,
+        column: 14,
+      },
+      {
+        messageId: "parameter",
+        type: "Identifier",
+        line: 3,
+        column: 14,
+      },
+      {
+        messageId: "parameter",
+        type: "Identifier",
+        line: 4,
+        column: 14,
+      },
+      {
+        messageId: "parameter",
+        type: "Identifier",
+        line: 5,
+        column: 14,
+      },
+      {
+        messageId: "parameter",
+        type: "Identifier",
+        line: 6,
+        column: 14,
+      },
+      {
+        messageId: "parameter",
+        type: "Identifier",
+        line: 7,
+        column: 14,
+      },
+      {
+        messageId: "parameter",
+        type: "Identifier",
+        line: 8,
         column: 14,
       },
     ],
