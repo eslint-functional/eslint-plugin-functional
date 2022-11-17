@@ -103,7 +103,7 @@ function shouldIgnoreViaPattern(
   text: string,
   ignorePattern: string[] | string
 ): boolean {
-  const patterns: string[] = Array.isArray(ignorePattern)
+  const patterns = Array.isArray(ignorePattern)
     ? ignorePattern
     : [ignorePattern];
 
@@ -150,7 +150,7 @@ function accessorPatternMatch(
       new RegExp(
         `^${escapeRegExp(pattern).replaceAll("\\*", ".*")}$`,
         "u"
-      ).test(textParts[0]) &&
+      ).test(textParts[0]!) &&
       accessorPatternMatch(
         remainingPatternParts,
         textParts.slice(1),
@@ -167,7 +167,7 @@ function shouldIgnoreViaAccessorPattern(
   text: string,
   ignorePattern: string[] | string
 ): boolean {
-  const patterns: string[] = Array.isArray(ignorePattern)
+  const patterns = Array.isArray(ignorePattern)
     ? ignorePattern
     : [ignorePattern];
 

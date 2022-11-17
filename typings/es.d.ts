@@ -7,7 +7,7 @@ declare global {
   }
 
   interface ArrayConstructor {
-    isArray(arg: unknown): arg is unknown[] | ReadonlyArray<unknown>;
+    isArray<T = unknown>(arg: unknown): arg is T[] | ReadonlyArray<T>;
   }
 
   interface ReadonlyArray<T> {
@@ -18,10 +18,6 @@ declare global {
   interface Array<T> {
     at<U extends number>(index: U): this[U];
     at<R>(this: readonly [...any[], R], index: -1): R;
-  }
-
-  interface ArrayConstructor {
-    isArray(arg: unknown): arg is unknown[] | unknown[];
   }
 }
 

@@ -375,8 +375,8 @@ function checkCallExpression(
   if (
     objectConstructorMutatorFunctions.has(node.callee.property.name) &&
     node.arguments.length >= 2 &&
-    (isIdentifier(node.arguments[0]) ||
-      isMemberExpression(node.arguments[0])) &&
+    (isIdentifier(node.arguments[0]!) ||
+      isMemberExpression(node.arguments[0]!)) &&
     !shouldIgnoreClasses(node.arguments[0], context, ignoreClasses) &&
     !shouldIgnorePattern(
       node.arguments[0],

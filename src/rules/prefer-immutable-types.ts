@@ -71,11 +71,10 @@ type Options = [
         >
       | RawEnforcement;
     fixer:
-      | {
-          ReadonlyShallow: FixerConfigRaw | FixerConfigRaw[] | false;
-          ReadonlyDeep: FixerConfigRaw | FixerConfigRaw[] | false;
-          Immutable: FixerConfigRaw | FixerConfigRaw[] | false;
-        }
+      | Record<
+          "ReadonlyShallow" | "ReadonlyDeep" | "Immutable",
+          FixerConfigRaw | FixerConfigRaw[] | false | undefined
+        >
       | false;
   }
 ];
@@ -319,7 +318,7 @@ function parseFixerConfigs(
     allRawConfigs[key] ??
     (defaultOptions[0].fixer === false ? false : defaultOptions[0].fixer[key]);
   if (rawConfigs === undefined || rawConfigs === false) {
-    return [];
+    return false;
   }
   const raws = Array.isArray(rawConfigs) ? rawConfigs : [rawConfigs];
   return raws.map((r) => ({
@@ -505,7 +504,7 @@ function getReturnTypeViolations(
     }
 
     const fix =
-      fixerConfigs === false || node.returnType?.typeAnnotation === undefined
+      fixerConfigs === false
         ? null
         : getConfiuredFixer(
             node.returnType.typeAnnotation,
@@ -540,7 +539,7 @@ function getReturnTypeViolations(
   }
 
   const immutability = getTypeImmutabilityOfType(
-    returnTypes[0],
+    returnTypes[0]!,
     context,
     enforcement
   );

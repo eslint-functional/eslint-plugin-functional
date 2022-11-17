@@ -16,10 +16,10 @@ import { rules } from "~/rules";
 
 const allRules = Object.values(rules);
 const allNonDeprecatedRules = allRules.filter(
-  (rule) => rule.meta.deprecated !== true
+  (rule) => rule.meta === undefined || rule.meta.deprecated !== true
 );
 const allDeprecatedRules = allRules.filter(
-  (rule) => rule.meta.deprecated === true
+  (rule) => rule.meta?.deprecated === true
 );
 
 test('Config "All" - should have all the non-deprecated rules', (t) => {
@@ -61,12 +61,12 @@ test('Config "Deprecated" - should only have deprecated rules', (t) => {
 });
 
 test('Config "Off" - should have all the rules but turned off', (t) => {
-  const configRules = Object.keys(off.rules ?? {});
-
   t.is(off.overrides, undefined, "should not have any overrides");
+
+  const configRules = Object.entries(off.rules ?? {});
   t.is(configRules.length, allRules.length, "should have every rule");
 
-  for (const [name, value] of Object.entries(off.rules)) {
+  for (const [name, value] of configRules) {
     const severity = Array.isArray(value) ? value[0] : value;
     t.is(
       severity,

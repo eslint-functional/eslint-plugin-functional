@@ -191,9 +191,6 @@ export function getReturnTypesOfFunction<
 
   const checker = parserServices.program.getTypeChecker();
   const type = getTypeOfNode(node, parserServices);
-  if (type === null) {
-    return null;
-  }
 
   const signatures = checker.getSignaturesOfType(type, ts.SignatureKind.Call);
   return signatures.map((signature) =>
@@ -284,7 +281,7 @@ export function getTypeImmutabilityOfNode<
     typeLike,
     overrides,
     // Don't use the global cache in testing environments as it may cause errors when switching between different config options.
-    process.env.NODE_ENV !== "test",
+    process.env["NODE_ENV"] !== "test",
     maxImmutability
   );
 }
@@ -339,7 +336,7 @@ export function getTypeImmutabilityOfType<
     typeOrTypeNode,
     overrides,
     // Don't use the global cache in testing environments as it may cause errors when switching between different config options.
-    process.env.NODE_ENV !== "test",
+    process.env["NODE_ENV"] !== "test",
     maxImmutability
   );
 }
@@ -379,11 +376,7 @@ function getParserServices<
 >(context: Context) {
   const { parserServices } = context;
 
-  if (
-    parserServices === undefined ||
-    !parserServices.hasFullTypeInformation ||
-    parserServices.program === undefined
-  ) {
+  if (parserServices === undefined || !parserServices.hasFullTypeInformation) {
     return null;
   }
 

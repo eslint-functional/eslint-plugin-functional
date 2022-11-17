@@ -378,7 +378,8 @@ export function isArrayType(
   return assumeType === true && type === null
     ? node !== null
     : type !== null &&
-        ((type.symbol !== undefined && type.symbol.name === "Array") ||
+        (((type.symbol as unknown) !== undefined &&
+          type.symbol.name === "Array") ||
           (isUnionType(type) &&
             type.types.some((t) => isArrayType(t, false, null))));
 }
@@ -409,7 +410,7 @@ export function isArrayConstructorType(
   return assumeType === true && type === null
     ? node !== null && isIdentifier(node) && node.name === "Array"
     : type !== null &&
-        ((type.symbol !== undefined &&
+        (((type.symbol as unknown) !== undefined &&
           type.symbol.name === "ArrayConstructor") ||
           (isUnionType(type) &&
             type.types.some((t) => isArrayConstructorType(t, false, null))));
@@ -441,7 +442,7 @@ export function isObjectConstructorType(
   return assumeType === true && type === null
     ? node !== null && isIdentifier(node) && node.name === "Object"
     : type !== null &&
-        ((type.symbol !== undefined &&
+        (((type.symbol as unknown) !== undefined &&
           type.symbol.name === "ObjectConstructor") ||
           (isUnionType(type) &&
             type.types.some((t) => isObjectConstructorType(t, false, null))));

@@ -150,10 +150,10 @@ function getRestParamViolations(
 ): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
   return !allowRestParameter &&
     node.params.length > 0 &&
-    isRestElement(node.params.at(-1))
+    isRestElement(node.params.at(-1)!)
     ? [
         {
-          node: node.params.at(-1),
+          node: node.params.at(-1)!,
           messageId: "restParam",
         },
       ]
@@ -283,7 +283,7 @@ export const rule = createRuleUsingFunction<
     "FunctionExpression",
   ];
 
-  const ignoreSelectors: string[] | undefined =
+  const ignoreSelectors =
     ignorePrefixSelector === undefined
       ? undefined
       : Array.isArray(ignorePrefixSelector)

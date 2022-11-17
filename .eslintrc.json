@@ -31,12 +31,8 @@
   },
   "ignorePatterns": ["/build/", "/coverage/", "/lib/", "/**/*.cjs", "/**/*.js"],
   "rules": {
-    "@typescript-eslint/no-unnecessary-condition": "off",
     "functional/prefer-immutable-types": "off",
-    "import/no-relative-parent-imports": "error",
-
-    // Rule is bugged. Enable once fixed.
-    "@typescript-eslint/no-misused-promises": "off"
+    "import/no-relative-parent-imports": "error"
   },
   "overrides": [
     // Top level files.
