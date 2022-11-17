@@ -106,6 +106,8 @@ jobs:
             const filename = "./tsconfig.base.json";
             const tsConfig = require(filename);
             delete tsConfig.compilerOptions.exactOptionalPropertyTypes;
+            delete tsConfig.compilerOptions.noPropertyAccessFromIndexSignature;
+            delete tsConfig.compilerOptions.noUncheckedIndexedAccess;
             const tsConfigString = JSON.stringify(tsConfig, undefined, 2);
             fs.writeFileSync(filename, tsConfigString, { encoding: "utf8" });
             console.log("TS Config updated successfully.");
