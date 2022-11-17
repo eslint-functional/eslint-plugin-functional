@@ -385,7 +385,7 @@ Example using `ReadonlyDeep` instead of `Readonly`:
   "fixer": {
     "ReadonlyDeep": [
       {
-        "pattern": "^Readonly<(.+)>|(.+)$",
+        "pattern": "^(?:Readonly<(.+)>|(.+))$",
         "replace": "ReadonlyDeep<$1$2>",
       },
     ],
