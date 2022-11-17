@@ -7,6 +7,7 @@
     "declaration": false,
     // Turn off strict checks to make debugging nicer.
     "strict": false,
+    "strictNullChecks": true,
     "exactOptionalPropertyTypes": false
   }
 }

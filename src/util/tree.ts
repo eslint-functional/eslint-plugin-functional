@@ -203,7 +203,7 @@ export function getKeyOfValueInObjectExpression(
     return null;
   }
 
-  const objectExpressionProp = objectExpressionProps[0];
+  const objectExpressionProp = objectExpressionProps[0]!;
   if (
     !isProperty(objectExpressionProp) ||
     !isIdentifier(objectExpressionProp.key)

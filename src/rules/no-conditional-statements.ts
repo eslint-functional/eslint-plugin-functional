@@ -212,7 +212,7 @@ function getSwitchViolations(
     }
 
     if (branch.consequent.every(isBlockStatement)) {
-      const lastBlock = branch.consequent.at(-1);
+      const lastBlock = branch.consequent.at(-1)!;
 
       if (lastBlock.body.some(isSwitchReturningBranch)) {
         return false;

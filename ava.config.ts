@@ -11,9 +11,9 @@ function getBoolean(value: unknown) {
     : Boolean(asNumber);
 }
 
-const testAllFiles = getBoolean(process.env.TEST_ALL_FILES);
-const useCompiledTests = getBoolean(process.env.USE_COMPILED_TESTS);
-const onlyTestWorkFile = getBoolean(process.env.ONLY_TEST_WORK_FILE);
+const testAllFiles = getBoolean(process.env["TEST_ALL_FILES"]);
+const useCompiledTests = getBoolean(process.env["USE_COMPILED_TESTS"]);
+const onlyTestWorkFile = getBoolean(process.env["ONLY_TEST_WORK_FILE"]);
 
 const avaCommonConfig = {
   files: testAllFiles

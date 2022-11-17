@@ -117,7 +117,7 @@ function isCallerViolation(
   calleeType: Type,
   context: TSESLint.RuleContext<keyof typeof errorMessages, Options>
 ): boolean {
-  if (calleeType.symbol === undefined) {
+  if ((calleeType.symbol as unknown) === undefined) {
     return false;
   }
   const tsDeclaration =
@@ -214,7 +214,7 @@ function getCallDescriptors(
   if (
     node.params.length === caller.arguments.length &&
     node.params.every((param, index) => {
-      const callArg = caller.arguments[index];
+      const callArg = caller.arguments[index]!;
       return (
         isIdentifier(callArg) &&
         isIdentifier(param) &&
@@ -224,7 +224,7 @@ function getCallDescriptors(
   ) {
     const calleeType = getTypeOfNode(caller.callee, context);
     const assumingTypes =
-      (calleeType === null || calleeType.symbol === undefined) &&
+      (calleeType === null || (calleeType.symbol as unknown) === undefined) &&
       assumeTypes !== false;
 
     if (
@@ -275,7 +275,7 @@ function getNestedCallDescriptors(
   if (
     isBlockStatement(node.body) &&
     node.body.body.length === 1 &&
-    isReturnStatement(node.body.body[0]) &&
+    isReturnStatement(node.body.body[0]!) &&
     node.body.body[0].argument !== null &&
     isCallExpression(node.body.body[0].argument)
   ) {
