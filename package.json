@@ -120,7 +120,7 @@
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-sonarjs": "^0.16.0",
     "eslint-plugin-tsdoc": "^0.2.14",
-    "eslint-plugin-unicorn": "^43.0.0",
+    "eslint-plugin-unicorn": "^44.0.0",
     "espree": "^9.3.0",
     "husky": "^8.0.0",
     "json-schema": "^0.4.0",
