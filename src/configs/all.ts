@@ -16,6 +16,7 @@ import * as noTryStatements from "~/rules/no-try-statements";
 import * as preferImmutableTypes from "~/rules/prefer-immutable-types";
 import * as preferPropertySignatures from "~/rules/prefer-property-signatures";
 import * as preferTacit from "~/rules/prefer-tacit";
+import * as readonlyType from "~/rules/readonly-type";
 import * as typeDeclarationImmutability from "~/rules/type-declaration-immutability";
 
 const config: Linter.Config = {
@@ -39,6 +40,7 @@ const config: Linter.Config = {
       "warn",
       { assumeTypes: { allowFixer: false } },
     ],
+    [`functional/${readonlyType.name}`]: "error",
     [`functional/${typeDeclarationImmutability.name}`]: "error",
   },
 };

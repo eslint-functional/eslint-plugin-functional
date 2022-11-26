@@ -170,6 +170,17 @@ const tests: ReadonlyArray<ValidTestCase> = [
       ],
     ],
   },
+  {
+    code: dedent`
+      const foo: Readonly<Foo<{bar: string}>> = {} as any;
+
+      interface Foo<P = {}> {
+        (param: P): string;
+        baz: string;
+      }
+    `,
+    optionsSet: [[{ variables: "ReadonlyShallow" }]],
+  },
   // Ignore Classes.
   {
     code: dedent`

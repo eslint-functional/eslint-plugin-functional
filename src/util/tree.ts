@@ -81,6 +81,15 @@ export function inForLoopInitializer(node: TSESTree.Node): boolean {
  * Test if the given node is shallowly inside a `Readonly<{...}>`.
  */
 export function inReadonly(node: TSESTree.Node): boolean {
+  return getReadonly(node) !== null;
+}
+
+/**
+ * Test if the given node is shallowly inside a `Readonly<{...}>`.
+ */
+export function getReadonly(
+  node: TSESTree.Node
+): TSESTree.TSTypeReference | TSESTree.TSInterfaceHeritage | null {
   // For nested cases, we shouldn't look for any parent, but the immediate parent.
   if (
     isDefined(node.parent) &&
@@ -88,17 +97,19 @@ export function inReadonly(node: TSESTree.Node): boolean {
     isDefined(node.parent.parent) &&
     isTSTypeAnnotation(node.parent.parent)
   ) {
-    return false;
+    return null;
   }
 
-  const expressionOrTypeName =
-    getAncestorOfType(isTSTypeReference, node)?.typeName ??
-    getAncestorOfType(isTSInterfaceHeritage, node)?.expression;
-  return (
-    expressionOrTypeName !== undefined &&
+  const typeRef = getAncestorOfType(isTSTypeReference, node);
+  const intHerit = getAncestorOfType(isTSInterfaceHeritage, node);
+
+  const expressionOrTypeName = typeRef?.typeName ?? intHerit?.expression;
+
+  return expressionOrTypeName !== undefined &&
     isIdentifier(expressionOrTypeName) &&
     expressionOrTypeName.name === "Readonly"
-  );
+    ? typeRef ?? intHerit
+    : null;
 }
 
 /**
