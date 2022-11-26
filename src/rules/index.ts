@@ -15,6 +15,7 @@ import * as preferImmutableTypes from "./prefer-immutable-types";
 import * as preferPropertySignatures from "./prefer-property-signatures";
 import * as preferReadonlyTypes from "./prefer-readonly-type";
 import * as preferTacit from "./prefer-tacit";
+import * as readonlyType from "./readonly-type";
 import * as typeDeclarationImmutability from "./type-declaration-immutability";
 
 /**
@@ -38,5 +39,6 @@ export const rules = {
   [preferPropertySignatures.name]: preferPropertySignatures.rule,
   [preferReadonlyTypes.name]: preferReadonlyTypes.rule,
   [preferTacit.name]: preferTacit.rule,
+  [readonlyType.name]: readonlyType.rule,
   [typeDeclarationImmutability.name]: typeDeclarationImmutability.rule,
 };
