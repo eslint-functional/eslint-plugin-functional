@@ -1421,9 +1421,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/plugin-typescript@npm:^9.0.0":
-  version: 9.0.2
-  resolution: "@rollup/plugin-typescript@npm:9.0.2"
+"@rollup/plugin-typescript@npm:^10.0.0":
+  version: 10.0.0
+  resolution: "@rollup/plugin-typescript@npm:10.0.0"
   dependencies:
     "@rollup/pluginutils": ^5.0.1
     resolve: ^1.22.1
@@ -1436,7 +1436,7 @@ __metadata:
       optional: true
     tslib:
       optional: true
-  checksum: 0b3a15e7402a8cf46a491003a0bfe6bf50294939133cf898c1dee0b9f1f8f4742242e81abd15effd8de2e9f3fe5fd81d01a03020341e1d3d0b7f4c6be21d989f
+  checksum: 232506215eb8e61bca195fc47e355e37d994795946d2b627466470f78c9d2be534464d0151e64aeef14b696356ca774419175625a8ac7d1239ed39ed098ff677
   languageName: node
   linkType: hard
 
@@ -3962,7 +3962,7 @@ __metadata:
     "@rollup/plugin-commonjs": ^23.0.0
     "@rollup/plugin-json": ^5.0.0
     "@rollup/plugin-node-resolve": ^15.0.0
-    "@rollup/plugin-typescript": ^9.0.0
+    "@rollup/plugin-typescript": ^10.0.0
     "@semantic-release/changelog": ^6.0.1
     "@semantic-release/commit-analyzer": ^9.0.2
     "@semantic-release/git": ^10.0.1
