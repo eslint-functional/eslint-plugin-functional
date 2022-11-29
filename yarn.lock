@@ -1513,8 +1513,8 @@ __metadata:
   linkType: hard
 
 "@semantic-release/github@npm:^8.0.0, @semantic-release/github@npm:^8.0.6":
-  version: 8.0.6
-  resolution: "@semantic-release/github@npm:8.0.6"
+  version: 8.0.7
+  resolution: "@semantic-release/github@npm:8.0.7"
   dependencies:
     "@octokit/rest": ^19.0.0
     "@semantic-release/error": ^3.0.0
@@ -1522,7 +1522,7 @@ __metadata:
     bottleneck: ^2.18.1
     debug: ^4.0.0
     dir-glob: ^3.0.0
-    fs-extra: ^10.0.0
+    fs-extra: ^11.0.0
     globby: ^11.0.0
     http-proxy-agent: ^5.0.0
     https-proxy-agent: ^5.0.0
@@ -1534,7 +1534,7 @@ __metadata:
     url-join: ^4.0.0
   peerDependencies:
     semantic-release: ">=18.0.0-beta.1"
-  checksum: 744112e4678fcef6666438898a57c6baa6c70043990ef1aa343a8a156ee11a64f4c71cc898a4c54307108de2e3e98dbcd35425cda02d2a5afa28d848fe65c3f8
+  checksum: 7644048e0ee192702606de63518dbfd404d135132c5272f046250996fcd12b3b7cb24a7526cd440142bccbe042f7421e80f91c1b0c02e553555c9577959ef333
   languageName: node
   linkType: hard
 
@@ -4708,6 +4708,17 @@ __metadata:
     jsonfile: ^6.0.1
     universalify: ^2.0.0
   checksum: dc94ab37096f813cc3ca12f0f1b5ad6744dfed9ed21e953d72530d103cea193c2f81584a39e9dee1bea36de5ee66805678c0dddc048e8af1427ac19c00fffc50
+  languageName: node
+  linkType: hard
+
+"fs-extra@npm:^11.0.0":
+  version: 11.0.0
+  resolution: "fs-extra@npm:11.0.0"
+  dependencies:
+    graceful-fs: ^4.2.0
+    jsonfile: ^6.0.1
+    universalify: ^2.0.0
+  checksum: fd29fc5b4f26f91f8adfd3c6e5e87eb73df92630c132765d63a62a3cf41ee706a45533dda75e6be9e2e4d1fc3667e0dcdfcc20e44f957d71cdcf138a4369ce4a
   languageName: node
   linkType: hard
 
