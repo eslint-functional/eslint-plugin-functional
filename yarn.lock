@@ -1377,9 +1377,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/plugin-commonjs@npm:^23.0.0":
-  version: 23.0.7
-  resolution: "@rollup/plugin-commonjs@npm:23.0.7"
+"@rollup/plugin-commonjs@npm:^24.0.0":
+  version: 24.0.0
+  resolution: "@rollup/plugin-commonjs@npm:24.0.0"
   dependencies:
     "@rollup/pluginutils": ^5.0.1
     commondir: ^1.0.1
@@ -1392,7 +1392,7 @@ __metadata:
   peerDependenciesMeta:
     rollup:
       optional: true
-  checksum: 01d90947bd4aa664c568cec172399825921f29afc035a6d8aec153868ab151ce7901ad56a101c76655e31b21567ddc70313c4bca476685b872218f041757a8c9
+  checksum: e2a1bf295bbb45ab56747f7ce636d4b94046bfecc758a64c7276823b80271e0ba1196642c232aa61d1b1a98abeaddad45486c7227ec19a97d19d16f7661d49a6
   languageName: node
   linkType: hard
 
@@ -3967,7 +3967,7 @@ __metadata:
     "@google/semantic-release-replace-plugin": ^1.1.0
     "@istanbuljs/nyc-config-typescript": ^1.0.2
     "@rebeccastevens/eslint-config": 1.3.23
-    "@rollup/plugin-commonjs": ^23.0.0
+    "@rollup/plugin-commonjs": ^24.0.0
     "@rollup/plugin-json": ^6.0.0
     "@rollup/plugin-node-resolve": ^15.0.0
     "@rollup/plugin-typescript": ^10.0.0
