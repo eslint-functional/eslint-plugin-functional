@@ -3946,14 +3946,14 @@ __metadata:
   linkType: hard
 
 "eslint-plugin-eslint-plugin@npm:^5.0.0":
-  version: 5.0.6
-  resolution: "eslint-plugin-eslint-plugin@npm:5.0.6"
+  version: 5.0.7
+  resolution: "eslint-plugin-eslint-plugin@npm:5.0.7"
   dependencies:
     eslint-utils: ^3.0.0
-    estraverse: ^5.2.0
+    estraverse: ^5.3.0
   peerDependencies:
     eslint: ">=7.0.0"
-  checksum: 8761571af3e81f7451ff787ac2cf6077d8d093cd3a3fca503d8423ac1d47c7c431ccb1640c1991dd4ed62832e004d9fc8999ac480a59cfd2649bbcf3baf5cee7
+  checksum: 6e377dbe804b10a1eb79ef466268f0ac21262c43c4632628075edff4b43dd9a0bc64f054d8aa3f3ae2b18d078981c391a55f84f3a4ed61bf3f0df6f35c3193cb
   languageName: node
   linkType: hard
 
@@ -4353,10 +4353,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"estraverse@npm:^5.1.0, estraverse@npm:^5.2.0":
-  version: 5.2.0
-  resolution: "estraverse@npm:5.2.0"
-  checksum: ec11b70d946bf5d7f76f91db38ef6f08109ac1b36cda293a26e678e58df4719f57f67b9ec87042afdd1f0267cee91865be3aa48d2161765a93defab5431be7b8
+"estraverse@npm:^5.1.0, estraverse@npm:^5.2.0, estraverse@npm:^5.3.0":
+  version: 5.3.0
+  resolution: "estraverse@npm:5.3.0"
+  checksum: 072780882dc8416ad144f8fe199628d2b3e7bbc9989d9ed43795d2c90309a2047e6bc5979d7e2322a341163d22cfad9e21f4110597fe487519697389497e4e2b
   languageName: node
   linkType: hard
 
