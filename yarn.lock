@@ -857,13 +857,13 @@ __metadata:
   linkType: hard
 
 "@google/semantic-release-replace-plugin@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "@google/semantic-release-replace-plugin@npm:1.1.0"
+  version: 1.2.0
+  resolution: "@google/semantic-release-replace-plugin@npm:1.2.0"
   dependencies:
     jest-diff: ^26.5.2
     lodash: ^4.17.20
     replace-in-file: ^6.1.0
-  checksum: 4af4d6952afae47779c34cf1b1f679ddf8fa78298bd0c8fbfb69a1e7e6a765949b7dccac7c32dc08685b473c8ea7036e06001e7eb4f91e3b25a35001f7ddb0f8
+  checksum: 664cc426afa66cae1d12f5aaa49e7c0a58ac3e08987b358428b59219545c05a6385acae94cb04a8629378d499bd6d6984cc475c5e31c84bc8d8ee42743c43869
   languageName: node
   linkType: hard
 
