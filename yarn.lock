@@ -2937,7 +2937,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:^9.4.1, commander@npm:~9.4.0":
+"commander@npm:^9.4.1, commander@npm:~9.4.1":
   version: 9.4.1
   resolution: "commander@npm:9.4.1"
   checksum: bfb18e325a5bdf772763c2213d5c7d9e77144d944124e988bcd8e5e65fb6d45d5d4e86b09155d0f2556c9a59c31e428720e57968bcd050b2306e910a0bf3cf13
@@ -4027,7 +4027,7 @@ __metadata:
     json-schema: ^0.4.0
     jsonc-parser: ^3.0.0
     lint-staged: ^13.0.0
-    markdownlint-cli: ^0.32.0
+    markdownlint-cli: ^0.33.0
     nyc: ^15.1.0
     prettier: ^2.5.1
     rimraf: ^3.0.2
@@ -5331,10 +5331,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ignore@npm:^5.0.5, ignore@npm:^5.1.1, ignore@npm:^5.2.0, ignore@npm:~5.2.0":
-  version: 5.2.0
-  resolution: "ignore@npm:5.2.0"
-  checksum: 6b1f926792d614f64c6c83da3a1f9c83f6196c2839aa41e1e32dd7b8d174cef2e329d75caabb62cb61ce9dc432f75e67d07d122a037312db7caa73166a1bdb77
+"ignore@npm:^5.0.5, ignore@npm:^5.1.1, ignore@npm:^5.2.0, ignore@npm:~5.2.4":
+  version: 5.2.4
+  resolution: "ignore@npm:5.2.4"
+  checksum: 3d4c309c6006e2621659311783eaea7ebcd41fe4ca1d78c91c473157ad6666a57a2df790fe0d07a12300d9aac2888204d7be8d59f9aaf665b1c7fcdb432517ef
   languageName: node
   linkType: hard
 
@@ -6145,17 +6145,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsonc-parser@npm:^3.0.0":
+"jsonc-parser@npm:^3.0.0, jsonc-parser@npm:~3.2.0":
   version: 3.2.0
   resolution: "jsonc-parser@npm:3.2.0"
   checksum: 946dd9a5f326b745aa326d48a7257e3f4a4b62c5e98ec8e49fa2bdd8d96cef7e6febf1399f5c7016114fd1f68a1c62c6138826d5d90bc650448e3cf0951c53c7
-  languageName: node
-  linkType: hard
-
-"jsonc-parser@npm:~3.1.0":
-  version: 3.1.0
-  resolution: "jsonc-parser@npm:3.1.0"
-  checksum: 81b00c565c60cb1b400523a918d42ad9c7bb3d9cf34c708bf78d37c8c496ecd670c3ff8828f2f60aa6e6627ef4287982794ddf92261ea71e320973c54b29fb22
   languageName: node
   linkType: hard
 
@@ -6724,39 +6717,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"markdownlint-cli@npm:^0.32.0":
-  version: 0.32.2
-  resolution: "markdownlint-cli@npm:0.32.2"
+"markdownlint-cli@npm:^0.33.0":
+  version: 0.33.0
+  resolution: "markdownlint-cli@npm:0.33.0"
   dependencies:
-    commander: ~9.4.0
+    commander: ~9.4.1
     get-stdin: ~9.0.0
     glob: ~8.0.3
-    ignore: ~5.2.0
+    ignore: ~5.2.4
     js-yaml: ^4.1.0
-    jsonc-parser: ~3.1.0
-    markdownlint: ~0.26.2
-    markdownlint-rule-helpers: ~0.17.2
-    minimatch: ~5.1.0
+    jsonc-parser: ~3.2.0
+    markdownlint: ~0.27.0
+    minimatch: ~5.1.2
     run-con: ~1.2.11
   bin:
     markdownlint: markdownlint.js
-  checksum: 131cb66b0d6da54f0feee4a73edda6337bf81ee5fbf3afcc6417faf4d0ec6f0231b2b471614e43588f6ea19f080b1a2bc5f4312e9dbf87656934fba0edb51231
+  checksum: ba971705969ec0e4e1b172e6ca2852898609404d3f78f63a7fa1d4142d44185755114c2d0bf5786bcaea0468f6502b09909b488b8f71f441cbcf417e97588120
   languageName: node
   linkType: hard
 
-"markdownlint-rule-helpers@npm:~0.17.2":
-  version: 0.17.2
-  resolution: "markdownlint-rule-helpers@npm:0.17.2"
-  checksum: e34c0266ffc0e1102fdd839dd70228b719c3120e8b61d0e21d4e21388a87203b7ec69d5dceb00d7bdc02fe215d2b51b14a7a72d89caa3acc7498edb38877cb40
-  languageName: node
-  linkType: hard
-
-"markdownlint@npm:~0.26.2":
-  version: 0.26.2
-  resolution: "markdownlint@npm:0.26.2"
+"markdownlint@npm:~0.27.0":
+  version: 0.27.0
+  resolution: "markdownlint@npm:0.27.0"
   dependencies:
     markdown-it: 13.0.1
-  checksum: 9e20401410b5701bdaf2306a7856c8fd89c4c004b4b00568fb0f67f51a08952621e5cd260c50f947563794c971e45aac3c80f711781d921a19708c4c7ccc278c
+  checksum: aecc5849e611f66f4c666c9fe47f798fc7cb044ee0bf7884d666152961f1bf585f0e16cafe575386d40d5d19b82e6071aeecee14f1a7006495fe46fcf93c7aa7
   languageName: node
   linkType: hard
 
@@ -6946,12 +6931,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimatch@npm:^5.0.1, minimatch@npm:~5.1.0":
-  version: 5.1.0
-  resolution: "minimatch@npm:5.1.0"
+"minimatch@npm:^5.0.1, minimatch@npm:~5.1.2":
+  version: 5.1.2
+  resolution: "minimatch@npm:5.1.2"
   dependencies:
     brace-expansion: ^2.0.1
-  checksum: 15ce53d31a06361e8b7a629501b5c75491bc2b59712d53e802b1987121d91b433d73fcc5be92974fde66b2b51d8fb28d75a9ae900d249feb792bb1ba2a4f0a90
+  checksum: 32ffda25b9fb8270a1c1beafdb7489dc0e411af553495136509a945691f63c9b6b000eeeaaf8bffe3efa609c1d6d3bc0f5a106f6c3443b5c05da649100ded964
   languageName: node
   linkType: hard
 
