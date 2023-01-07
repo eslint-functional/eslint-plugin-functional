@@ -132,7 +132,7 @@
     "rimraf": "^3.0.2",
     "rollup": "^3.0.0",
     "rollup-plugin-auto-external": "^2.0.0",
-    "semantic-release": "^19.0.5",
+    "semantic-release": "^20.0.0",
     "ts-node": "^10.4.0",
     "tsc-prog": "^2.2.1",
     "tsconfig-paths": "^4.0.0",
