@@ -4030,7 +4030,7 @@ __metadata:
     markdownlint-cli: ^0.33.0
     nyc: ^15.1.0
     prettier: ^2.5.1
-    rimraf: ^3.0.2
+    rimraf: ^4.0.0
     rollup: ^3.0.0
     rollup-plugin-auto-external: ^2.0.0
     semantic-release: ^19.0.5
@@ -8604,7 +8604,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rimraf@npm:*, rimraf@npm:^3.0.0, rimraf@npm:^3.0.2":
+"rimraf@npm:*, rimraf@npm:^4.0.0":
+  version: 4.0.4
+  resolution: "rimraf@npm:4.0.4"
+  bin:
+    rimraf: dist/cjs/src/bin.js
+  checksum: a3296ea15c79fe3da0bae06a484dd8b8ec1e6d3044b02f05ce27575ef23c856e37eef6e71a668ce0e263da594a05ace1e88be6f42200f1fbbf433b57121bae32
+  languageName: node
+  linkType: hard
+
+"rimraf@npm:^3.0.0, rimraf@npm:^3.0.2":
   version: 3.0.2
   resolution: "rimraf@npm:3.0.2"
   dependencies:
