@@ -3911,9 +3911,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-ava@npm:^13.2.0":
-  version: 13.2.0
-  resolution: "eslint-plugin-ava@npm:13.2.0"
+"eslint-plugin-ava@npm:^14.0.0":
+  version: 14.0.0
+  resolution: "eslint-plugin-ava@npm:14.0.0"
   dependencies:
     enhance-visitors: ^1.0.0
     eslint-utils: ^3.0.0
@@ -3924,8 +3924,8 @@ __metadata:
     pkg-dir: ^5.0.0
     resolve-from: ^5.0.0
   peerDependencies:
-    eslint: ">=7.22.0"
-  checksum: e7e3077d5695c9293aa1b32cd76a2190110f0c73e90d175f2fe80c052e9dd8a621e7537c75142047889d503d83df9662ed9e60ce761166e5d493917060b47959
+    eslint: ">=8.26.0"
+  checksum: ab5d0a8ed5004775c70d00810a2ced0145926cd15aadb40bc147b28fb679e914d8ef16db8df414f80de2c13849531a537dc503ff1f0e15229c08929dfae1a3c6
   languageName: node
   linkType: hard
 
@@ -4009,7 +4009,7 @@ __metadata:
     eslint-ava-rule-tester: ^4.0.0
     eslint-config-prettier: ^8.3.0
     eslint-import-resolver-typescript: ^3.0.0
-    eslint-plugin-ava: ^13.2.0
+    eslint-plugin-ava: ^14.0.0
     eslint-plugin-eslint-comments: ^3.2.0
     eslint-plugin-eslint-plugin: ^5.0.0
     eslint-plugin-import: ^2.25.4
