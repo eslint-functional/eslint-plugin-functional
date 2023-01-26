@@ -27,6 +27,18 @@ jobs:
       - name: Build & Verify
         run: yarn verify
 
+      - name: Install semantic release
+      - run: >
+          npm install --no-save
+            @google/semantic-release-replace-plugin
+            @semantic-release/changelog
+            @semantic-release/commit-analyzer
+            @semantic-release/git
+            @semantic-release/github
+            @semantic-release/npm
+            @semantic-release/release-notes-generator
+            semantic-release
+
       - name: Release
         run: npx semantic-release
         env:
