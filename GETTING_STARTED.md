@@ -10,6 +10,9 @@ npm install -D eslint eslint-plugin-functional
 
 # Install with yarn
 yarn add -D eslint eslint-plugin-functional
+
+# Install with pnpm
+pnpm add -D eslint eslint-plugin-functional
 ```
 
 ### TypeScript
@@ -20,6 +23,9 @@ npm install -D eslint @typescript-eslint/parser eslint-plugin-functional
 
 # Install with yarn
 yarn add -D eslint @typescript-eslint/parser eslint-plugin-functional
+
+# Install with pnpm
+pnpm add -D eslint @typescript-eslint/parser eslint-plugin-functional
 ```
 
 ## Usage
