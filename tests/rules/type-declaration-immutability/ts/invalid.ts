@@ -18,11 +18,31 @@ const recommended = {
       identifiers: [/^I?Readonly.+/u],
       immutability: Immutability.ReadonlyShallow,
       comparator: "AtLeast",
+      fixer: [
+        {
+          pattern: "^(Array|Map|Set)<(.+)>$",
+          replace: "Readonly$1<$2>",
+        },
+        {
+          pattern: "^(.+)$",
+          replace: "Readonly<$1>",
+        },
+      ],
     },
     {
       identifiers: [/^I?Mutable.+/u],
       immutability: Immutability.Mutable,
       comparator: "AtMost",
+      fixer: [
+        {
+          pattern: "^Readonly(Array|Map|Set)<(.+)>$",
+          replace: "$1<$2>",
+        },
+        {
+          pattern: "^Readonly<(.+)>$",
+          replace: "$1",
+        },
+      ],
     },
   ],
 };
@@ -31,6 +51,7 @@ const tests: InvalidTestCase[] = [
   {
     code: "type ReadonlyFoo = { foo: number }",
     optionsSet: [[recommended]],
+    output: "type ReadonlyFoo = Readonly<{ foo: number }>",
     errors: [
       {
         messageId: "AtLeast",
@@ -47,6 +68,8 @@ const tests: InvalidTestCase[] = [
   {
     code: "type ReadonlyFoo = { readonly foo: number; bar: { baz: string; }; }",
     optionsSet: [[recommended]],
+    output:
+      "type ReadonlyFoo = Readonly<{ readonly foo: number; bar: { baz: string; }; }>",
     errors: [
       {
         messageId: "AtLeast",
@@ -61,8 +84,9 @@ const tests: InvalidTestCase[] = [
     ],
   },
   {
-    code: "type ReadonlySet = Set<string>;",
+    code: "type ReadonlyMySet = Set<string>;",
     optionsSet: [[recommended]],
+    output: "type ReadonlyMySet = ReadonlySet<string>;",
     errors: [
       {
         messageId: "AtLeast",
@@ -77,7 +101,8 @@ const tests: InvalidTestCase[] = [
     ],
   },
   {
-    code: "type ReadonlyMap = Map<string, string>;",
+    code: "type ReadonlyMyMap = Map<string, string>;",
+    output: "type ReadonlyMyMap = ReadonlyMap<string, string>;",
     optionsSet: [[recommended]],
     errors: [
       {
@@ -207,6 +232,23 @@ const tests: InvalidTestCase[] = [
   {
     code: "type MutableFoo = { readonly foo: number }",
     optionsSet: [[recommended]],
+    errors: [
+      {
+        messageId: "AtMost",
+        data: {
+          expected: Immutability[Immutability.Mutable],
+          actual: Immutability[Immutability.Immutable],
+        },
+        type: "Identifier",
+        line: 1,
+        column: 6,
+      },
+    ],
+  },
+  {
+    code: "type MutableFoo = Readonly<{ foo: number }>",
+    optionsSet: [[recommended]],
+    output: "type MutableFoo = { foo: number }",
     errors: [
       {
         messageId: "AtMost",

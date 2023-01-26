@@ -74,6 +74,10 @@ type Options = {
     identifiers: string | string[];
     immutability:  "Mutable" | "ReadonlyShallow" | "ReadonlyDeep" | "Immutable";
     comparator?: "Less" | "AtMost" | "Exactly" | "AtLeast" | "More";
+    fixer?:
+      | { pattern: string; replace: string; }
+      | Array<{ pattern: string; replace: string; }>
+      | false;
   }>;
   ignoreInterfaces: boolean;
   ignorePattern: string[] | string;
@@ -89,6 +93,7 @@ const defaults = {
       identifiers: "^(?!I?Mutable).+",
       immutability: "Immutable",
       comparator: "AtLeast",
+      fixer: false,
     },
   ],
   ignoreInterfaces: false,
@@ -116,11 +121,31 @@ const recommendedAndLiteOptions = {
       identifiers: "I?Readonly.+",
       immutability: "ReadonlyShallow",
       comparator: "AtLeast",
+      fixer: [
+        {
+          pattern: "^(Array|Map|Set)<(.+)>$",
+          replace: "Readonly$1<$2>",
+        },
+        {
+          pattern: "^(.+)$",
+          replace: "Readonly<$1>",
+        },
+      ],
     },
     {
       identifiers: "I?Mutable.+",
       immutability: "Mutable",
       comparator: "AtMost",
+      fixer: [
+        {
+          pattern: "^Readonly(Array|Map|Set)<(.+)>$",
+          replace: "$1<$2>",
+        },
+        {
+          pattern: "^Readonly<(.+)>$",
+          replace: "$1",
+        },
+      ],
     },
   ],
 }
@@ -147,6 +172,11 @@ calculated immutability using the `comparator`.
 
 The comparator to use to compare the calculated immutability to the desired
 immutability. This can be thought of as `<`, `<=`, `==`, `>=` or `>`.
+
+#### `fixer`
+
+Configure the fixer for this rule to work with your setup.
+If not set, or set to `false`, the fixer will be disabled.
 
 ### `ignoreInterfaces`
 
