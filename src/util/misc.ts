@@ -71,7 +71,7 @@ function getNodeIdentifierText(
     ? context
         .getSourceCode()
         .getText(node.typeAnnotation as TSESTree.Node)
-        .replace(/\s+/gu, "")
+        .replaceAll(/\s+/gmu, "")
     : null;
 
   if (identifierText !== null) {

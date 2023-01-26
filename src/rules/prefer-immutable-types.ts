@@ -248,7 +248,7 @@ function getConfiuredFixer<T extends TSESTree.Node>(
   context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   configs: FixerConfig[]
 ): NonNullable<Descriptor["fix"]> | null {
-  const text = context.getSourceCode().getText(node).replace(/\s+/gmu, " ");
+  const text = context.getSourceCode().getText(node).replaceAll(/\s+/gmu, " ");
   const config = configs.find((c) => c.pattern.test(text));
   if (config === undefined) {
     return null;
