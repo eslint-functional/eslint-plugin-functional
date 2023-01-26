@@ -241,23 +241,6 @@ const defaultOptions: Options = [
 ];
 
 /**
- * Get a fixer that uses the user config.
- */
-function getConfiuredFixer<T extends TSESTree.Node>(
-  node: T,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  configs: FixerConfig[]
-): NonNullable<Descriptor["fix"]> | null {
-  const text = context.getSourceCode().getText(node).replaceAll(/\s+/gmu, " ");
-  const config = configs.find((c) => c.pattern.test(text));
-  if (config === undefined) {
-    return null;
-  }
-  return (fixer) =>
-    fixer.replaceText(node, text.replace(config.pattern, config.replace));
-}
-
-/**
  * The possible error messages.
  */
 const errorMessages = {
@@ -291,6 +274,23 @@ type Descriptor = RuleResult<
   keyof typeof errorMessages,
   Options
 >["descriptors"][number];
+
+/**
+ * Get a fixer that uses the user config.
+ */
+function getConfiuredFixer<T extends TSESTree.Node>(
+  node: T,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
+  configs: FixerConfig[]
+): NonNullable<Descriptor["fix"]> | null {
+  const text = context.getSourceCode().getText(node).replaceAll(/\s+/gmu, " ");
+  const config = configs.find((c) => c.pattern.test(text));
+  if (config === undefined) {
+    return null;
+  }
+  return (fixer) =>
+    fixer.replaceText(node, text.replace(config.pattern, config.replace));
+}
 
 /**
  * Get the level of enforcement from the raw value given.
