@@ -73,11 +73,31 @@ const overrides: Linter.Config = {
             identifiers: [/^I?Readonly.+/u],
             immutability: Immutability.ReadonlyShallow,
             comparator: RuleEnforcementComparator.AtLeast,
+            fixer: [
+              {
+                pattern: "^(Array|Map|Set)<(.+)>$",
+                replace: "Readonly$1<$2>",
+              },
+              {
+                pattern: "^(.+)$",
+                replace: "Readonly<$1>",
+              },
+            ],
           },
           {
             identifiers: [/^I?Mutable.+/u],
             immutability: Immutability.Mutable,
             comparator: RuleEnforcementComparator.AtMost,
+            fixer: [
+              {
+                pattern: "^Readonly(Array|Map|Set)<(.+)>$",
+                replace: "$1<$2>",
+              },
+              {
+                pattern: "^Readonly<(.+)>$",
+                replace: "$1",
+              },
+            ],
           },
         ],
       },

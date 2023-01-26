@@ -30,6 +30,16 @@ export enum RuleEnforcementComparator {
   More = 2,
 }
 
+type FixerConfigRaw = {
+  pattern: string;
+  replace: string;
+};
+
+type FixerConfig = {
+  pattern: RegExp;
+  replace: string;
+};
+
 /**
  * The options this rule can take.
  */
@@ -44,10 +54,42 @@ type Options = [
       comparator?:
         | RuleEnforcementComparator
         | keyof typeof RuleEnforcementComparator;
+      fixer?: FixerConfigRaw | FixerConfigRaw[] | false;
     }>;
     ignoreInterfaces: boolean;
   }
 ];
+
+/**
+ * The schema for each fixer config.
+ */
+const fixerSchema: JSONSchema4 = {
+  oneOf: [
+    {
+      type: "boolean",
+      enum: [false],
+    },
+    {
+      type: "object",
+      properties: {
+        pattern: { type: "string" },
+        replace: { type: "string" },
+      },
+      additionalProperties: false,
+    },
+    {
+      type: "array",
+      items: {
+        type: "object",
+        properties: {
+          pattern: { type: "string" },
+          replace: { type: "string" },
+        },
+        additionalProperties: false,
+      },
+    },
+  ],
+};
 
 /**
  * The schema for the rule options.
@@ -79,6 +121,7 @@ const schema: JSONSchema4 = [
               type: ["string", "number"],
               enum: Object.values(RuleEnforcementComparator),
             },
+            fixer: fixerSchema,
           },
           required: ["identifiers", "immutability"],
           additionalProperties: false,
@@ -132,6 +175,7 @@ const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
     recommended: "error",
   },
   messages: errorMessages,
+  fixable: "code",
   schema,
 };
 
@@ -142,7 +186,13 @@ export type ImmutabilityRule = {
   identifiers: RegExp[];
   immutability: Immutability;
   comparator: RuleEnforcementComparator;
+  fixers: FixerConfig[] | false;
 };
+
+type Descriptor = RuleResult<
+  keyof typeof errorMessages,
+  Options
+>["descriptors"][number];
 
 /**
  * Get all the rules that were given and upgrade them.
@@ -174,10 +224,19 @@ function getRules(options: Options): ImmutabilityRule[] {
         ? RuleEnforcementComparator[rule.comparator]
         : rule.comparator;
 
+    const fixers =
+      rule.fixer === undefined || rule.fixer === false
+        ? false
+        : (Array.isArray(rule.fixer) ? rule.fixer : [rule.fixer]).map((r) => ({
+            ...r,
+            pattern: new RegExp(r.pattern, "u"),
+          }));
+
     return {
       identifiers,
       immutability,
       comparator,
+      fixers,
     };
   });
 }
@@ -204,6 +263,23 @@ export function getRuleToApply(
   return rules.find((rule) =>
     rule.identifiers.some((pattern) => texts.some((text) => pattern.test(text)))
   );
+}
+
+/**
+ * Get a fixer that uses the user config.
+ */
+function getConfiuredFixer<T extends TSESTree.Node>(
+  node: T,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
+  configs: FixerConfig[]
+): NonNullable<Descriptor["fix"]> | null {
+  const text = context.getSourceCode().getText(node).replaceAll(/\s+/gmu, " ");
+  const config = configs.find((c) => c.pattern.test(text));
+  if (config === undefined) {
+    return null;
+  }
+  return (fixer) =>
+    fixer.replaceText(node, text.replace(config.pattern, config.replace));
 }
 
 /**
@@ -249,6 +325,11 @@ function getResults(
     };
   }
 
+  const fix =
+    rule.fixers === false || isTSInterfaceDeclaration(node)
+      ? null
+      : getConfiuredFixer(node.typeAnnotation, context, rule.fixers);
+
   return {
     context,
     descriptors: [
@@ -261,6 +342,7 @@ function getResults(
           actual: Immutability[immutability],
           expected: Immutability[rule.immutability],
         },
+        fix,
       },
     ],
   };
