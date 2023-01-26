@@ -2,9 +2,9 @@ import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
 import type { JSONSchema4 } from "json-schema";
 import type { Type } from "typescript";
 
-import tsutils from "~/conditional-imports/tsutils";
 import type { RuleResult } from "~/util/rule";
 import { createRule, getTypeOfNode } from "~/util/rule";
+import { unionTypeParts } from "~/util/tsutils";
 import {
   isBlockStatement,
   isBreakStatement,
@@ -243,16 +243,12 @@ function isExhaustiveTypeSwitchViolation(
   node: TSESTree.SwitchStatement,
   context: TSESLint.RuleContext<keyof typeof errorMessages, Options>
 ): boolean {
-  if (tsutils === undefined) {
-    return true;
-  }
-
   const discriminantType = getTypeOfNode(node.discriminant, context);
   if (discriminantType === null || !discriminantType.isUnion()) {
     return true;
   }
 
-  const unionTypes = tsutils.unionTypeParts(discriminantType);
+  const unionTypes = unionTypeParts(discriminantType);
   const caseTypes = node.cases.reduce<ReadonlySet<Type>>(
     (types, c) => new Set([...types, getTypeOfNode(c.test!, context)!]),
     new Set()
