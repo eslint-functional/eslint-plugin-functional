@@ -7,12 +7,12 @@ import { ESLintUtils } from "@typescript-eslint/utils";
 import type { Rule } from "eslint";
 import type { ImmutabilityOverrides } from "is-immutable-type";
 import { getTypeImmutability, Immutability } from "is-immutable-type";
-import { isIdentifier } from "tsutils";
 import type { Node as TSNode, Type, TypeNode } from "typescript";
 
 import ts from "~/conditional-imports/typescript";
 import { getImmutabilityOverrides } from "~/settings";
 import type { ESFunction } from "~/util/node-types";
+import { isIdentifier } from "~/util/tsutils";
 
 // eslint-disable-next-line @typescript-eslint/naming-convention, no-underscore-dangle -- This is a special var.
 const __VERSION__ = "0.0.0-development";

@@ -29,7 +29,14 @@
     ],
     "sourceType": "module"
   },
-  "ignorePatterns": ["/build/", "/coverage/", "/lib/", "/**/*.cjs", "/**/*.js"],
+  "ignorePatterns": [
+    "/build/",
+    "/coverage/",
+    "/lib/",
+    "/**/*.cjs",
+    "/**/*.js",
+    "/src/util/tsutils.ts"
+  ],
   "rules": {
     "functional/prefer-immutable-types": "off",
     "import/no-relative-parent-imports": "error"

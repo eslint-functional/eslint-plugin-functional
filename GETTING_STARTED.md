@@ -16,10 +16,10 @@ yarn add -D eslint eslint-plugin-functional
 
 ```sh
 # Install with npm
-npm install -D eslint @typescript-eslint/parser tsutils eslint-plugin-functional
+npm install -D eslint @typescript-eslint/parser eslint-plugin-functional
 
 # Install with yarn
-yarn add -D eslint @typescript-eslint/parser tsutils eslint-plugin-functional
+yarn add -D eslint @typescript-eslint/parser eslint-plugin-functional
 ```
 
 ## Usage
