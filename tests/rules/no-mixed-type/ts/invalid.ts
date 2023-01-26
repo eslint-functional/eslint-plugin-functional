@@ -23,6 +23,23 @@ const tests: InvalidTestCase[] = [
   },
   {
     code: dedent`
+      type Foo = Readonly<{
+        bar: string;
+        zoo(): number;
+      }>;
+    `,
+    optionsSet: [[], [{ checkInterfaces: false }]],
+    errors: [
+      {
+        messageId: "generic",
+        type: "TSTypeAliasDeclaration",
+        line: 1,
+        column: 1,
+      },
+    ],
+  },
+  {
+    code: dedent`
       interface Foo {
         bar: string;
         zoo(): number;
@@ -45,6 +62,23 @@ const tests: InvalidTestCase[] = [
         bar: string;
         zoo: () => number;
       };
+    `,
+    optionsSet: [[], [{ checkInterfaces: false }]],
+    errors: [
+      {
+        messageId: "generic",
+        type: "TSTypeAliasDeclaration",
+        line: 1,
+        column: 1,
+      },
+    ],
+  },
+  {
+    code: dedent`
+      type Foo = Readonly<{
+        bar: string;
+        zoo: () => number;
+      }>;
     `,
     optionsSet: [[], [{ checkInterfaces: false }]],
     errors: [

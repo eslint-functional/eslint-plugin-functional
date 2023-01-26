@@ -4,7 +4,12 @@ import type { JSONSchema4 } from "json-schema";
 
 import type { RuleResult } from "~/util/rule";
 import { createRuleUsingFunction } from "~/util/rule";
-import { isTSPropertySignature, isTSTypeLiteral } from "~/util/typeguard";
+import {
+  isIdentifier,
+  isTSPropertySignature,
+  isTSTypeLiteral,
+  isTSTypeReference,
+} from "~/util/typeguard";
 
 /**
  * The name of this rule.
@@ -140,8 +145,18 @@ function checkTSTypeAliasDeclaration(
   return {
     context,
     descriptors:
-      isTSTypeLiteral(node.typeAnnotation) &&
-      hasTypeElementViolations(node.typeAnnotation.members)
+      // TypeLiteral.
+      (isTSTypeLiteral(node.typeAnnotation) &&
+        hasTypeElementViolations(node.typeAnnotation.members)) ||
+      // TypeLiteral inside `Readonly<>`.
+      (isTSTypeReference(node.typeAnnotation) &&
+        isIdentifier(node.typeAnnotation.typeName) &&
+        node.typeAnnotation.typeParameters !== undefined &&
+        node.typeAnnotation.typeParameters.params.length === 1 &&
+        isTSTypeLiteral(node.typeAnnotation.typeParameters.params[0]!) &&
+        hasTypeElementViolations(
+          node.typeAnnotation.typeParameters.params[0].members
+        ))
         ? [{ node, messageId: "generic" }]
         : [],
   };
