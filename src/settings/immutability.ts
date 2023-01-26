@@ -75,13 +75,13 @@ function loadImmutabilityOverrides(
       ({
         name,
         pattern: pattern === undefined ? pattern : new RegExp(pattern, "u"),
-        to: typeof to !== "string" ? to : Immutability[to],
+        to: typeof to === "string" ? Immutability[to] : to,
         from:
           from === undefined
             ? undefined
-            : typeof from !== "string"
-            ? from
-            : Immutability[from],
+            : typeof from === "string"
+            ? Immutability[from]
+            : from,
       } as ImmutabilityOverrides[number])
   );
 

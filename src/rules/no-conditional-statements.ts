@@ -143,7 +143,7 @@ function getIfBranchViolations(
   context: TSESLint.RuleContext<keyof typeof errorMessages, Options>
 ): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
   const branches = [node.consequent, node.alternate];
-  const violations = branches.filter<NonNullable<typeof branches[0]>>(
+  const violations = branches.filter<NonNullable<(typeof branches)[0]>>(
     (branch): branch is NonNullable<typeof branch> => {
       if (branch === null || isIfReturningBranch(branch)) {
         return false;

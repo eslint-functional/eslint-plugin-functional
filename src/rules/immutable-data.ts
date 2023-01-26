@@ -203,7 +203,7 @@ function checkAssignmentExpression(
     context,
     descriptors:
       // Allow if in a constructor - allow for field initialization.
-      !inConstructor(node) ? [{ node, messageId: "generic" }] : [],
+      inConstructor(node) ? [] : [{ node, messageId: "generic" }],
   };
 }
 
@@ -287,10 +287,9 @@ function isInChainCallAndFollowsNew(
     // Check for: new Array()
     (isNewExpression(node.object) &&
       isArrayConstructorType(
-        // `isNewExpression` type guard doesn't seem to be working? so use `as`.
-        getTypeOfNode((node.object as TSESTree.NewExpression).callee, context),
+        getTypeOfNode(node.object.callee, context),
         assumeArrayTypes,
-        (node.object as TSESTree.NewExpression).callee
+        node.object.callee
       )) ||
     (isCallExpression(node.object) &&
       isMemberExpression(node.object.callee) &&
