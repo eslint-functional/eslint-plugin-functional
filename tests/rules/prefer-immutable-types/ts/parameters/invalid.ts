@@ -299,7 +299,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     optionsSet: [[{ parameters: "ReadonlyShallow" }]],
     output: dedent`
       function foo(arg: ReadonlyArray<string>) {}
-      function foo(arg: Readonly<string[]>) {}
+      function foo(arg: readonly string[]) {}
       function foo(arg: ReadonlySet<string>) {}
       function foo(arg: ReadonlyMap<string, string>) {}
       function foo(arg: ReadonlyArray<string>) {}
