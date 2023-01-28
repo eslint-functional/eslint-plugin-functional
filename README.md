@@ -20,6 +20,10 @@ An [ESLint](http://eslint.org) plugin to disable mutation and promote functional
 
 [Any donations would be much appreciated](./DONATIONS.md). 😄
 
+## Getting Started
+
+[See our getting started guide](./GETTING_STARTED.md).
+
 ## Rulesets
 
 The following rulesets are made available by this plugin:
@@ -164,6 +168,10 @@ These rules are what are included in the _external recommended_ rulesets.
 
 - [@typescript-eslint/switch-exhaustiveness-check](https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/switch-exhaustiveness-check.md)\
   Although our [no-conditional-statements](./docs/rules/no-conditional-statements.md) rule also performs this check, this rule has a fixer that will implement the unimplemented cases which can be useful.
+
+## Contributing
+
+[See our contributing guide](./CONTRIBUTING.md).
 
 ## Prior work
 
