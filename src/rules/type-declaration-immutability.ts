@@ -229,7 +229,7 @@ function getRules(options: Options): ImmutabilityRule[] {
         ? false
         : (Array.isArray(rule.fixer) ? rule.fixer : [rule.fixer]).map((r) => ({
             ...r,
-            pattern: new RegExp(r.pattern, "u"),
+            pattern: new RegExp(r.pattern, "us"),
           }));
 
     return {
@@ -273,7 +273,7 @@ function getConfiuredFixer<T extends TSESTree.Node>(
   context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   configs: FixerConfig[]
 ): NonNullable<Descriptor["fix"]> | null {
-  const text = context.getSourceCode().getText(node).replaceAll(/\s+/gmu, " ");
+  const text = context.getSourceCode().getText(node);
   const config = configs.find((c) => c.pattern.test(text));
   if (config === undefined) {
     return null;

@@ -1,3 +1,4 @@
+import dedent from "dedent";
 import { Immutability } from "is-immutable-type";
 
 import type { InvalidTestCase } from "~/tests/helpers/util";
@@ -49,9 +50,13 @@ const recommended = {
 
 const tests: InvalidTestCase[] = [
   {
-    code: "type ReadonlyFoo = { foo: number }",
+    code: dedent`
+      type ReadonlyFoo = { foo: number }
+    `,
     optionsSet: [[recommended]],
-    output: "type ReadonlyFoo = Readonly<{ foo: number }>",
+    output: dedent`
+      type ReadonlyFoo = Readonly<{ foo: number }>
+    `,
     errors: [
       {
         messageId: "AtLeast",
@@ -66,10 +71,23 @@ const tests: InvalidTestCase[] = [
     ],
   },
   {
-    code: "type ReadonlyFoo = { readonly foo: number; bar: { baz: string; }; }",
+    code: dedent`
+      type ReadonlyFoo = {
+        readonly foo: number;
+        bar: {
+          baz: string;
+        };
+      }
+    `,
     optionsSet: [[recommended]],
-    output:
-      "type ReadonlyFoo = Readonly<{ readonly foo: number; bar: { baz: string; }; }>",
+    output: dedent`
+      type ReadonlyFoo = Readonly<{
+        readonly foo: number;
+        bar: {
+          baz: string;
+        };
+      }>
+    `,
     errors: [
       {
         messageId: "AtLeast",
@@ -84,9 +102,13 @@ const tests: InvalidTestCase[] = [
     ],
   },
   {
-    code: "type ReadonlyMySet = Set<string>;",
+    code: dedent`
+      type ReadonlyMySet = Set<string>;
+    `,
     optionsSet: [[recommended]],
-    output: "type ReadonlyMySet = ReadonlySet<string>;",
+    output: dedent`
+      type ReadonlyMySet = ReadonlySet<string>;
+    `,
     errors: [
       {
         messageId: "AtLeast",
@@ -101,8 +123,12 @@ const tests: InvalidTestCase[] = [
     ],
   },
   {
-    code: "type ReadonlyMyMap = Map<string, string>;",
-    output: "type ReadonlyMyMap = ReadonlyMap<string, string>;",
+    code: dedent`
+      type ReadonlyMyMap = Map<string, string>;
+    `,
+    output: dedent`
+      type ReadonlyMyMap = ReadonlyMap<string, string>;
+    `,
     optionsSet: [[recommended]],
     errors: [
       {
@@ -118,7 +144,12 @@ const tests: InvalidTestCase[] = [
     ],
   },
   {
-    code: "type ReadonlyDeepFoo = { readonly foo: number; readonly bar: { baz: string; }; }",
+    code: dedent`
+      type ReadonlyDeepFoo = {
+        readonly foo: number;
+        readonly bar: { baz: string; };
+      }
+    `,
     optionsSet: [[recommended]],
     errors: [
       {
@@ -134,7 +165,9 @@ const tests: InvalidTestCase[] = [
     ],
   },
   {
-    code: "type ReadonlyDeepSet = ReadonlySet<{ foo: string; }>;",
+    code: dedent`
+      type ReadonlyDeepSet = ReadonlySet<{ foo: string; }>;
+    `,
     optionsSet: [[recommended]],
     errors: [
       {
@@ -150,7 +183,9 @@ const tests: InvalidTestCase[] = [
     ],
   },
   {
-    code: "type ReadonlyDeepMap = ReadonlyMap<string, { foo: string; }>;",
+    code: dedent`
+      type ReadonlyDeepMap = ReadonlyMap<string, { foo: string; }>;
+    `,
     optionsSet: [[recommended]],
     errors: [
       {
@@ -166,7 +201,12 @@ const tests: InvalidTestCase[] = [
     ],
   },
   {
-    code: "type ImmutableFoo = { readonly foo: number; readonly bar: { baz: string; }; }",
+    code: dedent`
+      type ImmutableFoo = {
+        readonly foo: number;
+        readonly bar: { baz: string; };
+      }
+    `,
     optionsSet: [[recommended]],
     errors: [
       {
@@ -182,7 +222,9 @@ const tests: InvalidTestCase[] = [
     ],
   },
   {
-    code: "type ImmutableSet = ReadonlySet<{ readonly foo: string; }>;",
+    code: dedent`
+      type ImmutableSet = ReadonlySet<{ readonly foo: string; }>;
+    `,
     optionsSet: [[recommended]],
     errors: [
       {
@@ -198,7 +240,9 @@ const tests: InvalidTestCase[] = [
     ],
   },
   {
-    code: "type ImmutableMap = ReadonlyMap<string, { readonly foo: string; }>;",
+    code: dedent`
+      type ImmutableMap = ReadonlyMap<string, { readonly foo: string; }>;
+    `,
     optionsSet: [[recommended]],
     errors: [
       {
@@ -214,7 +258,9 @@ const tests: InvalidTestCase[] = [
     ],
   },
   {
-    code: "type MutableString = string",
+    code: dedent`
+      type MutableString = string
+    `,
     optionsSet: [[recommended]],
     errors: [
       {
@@ -230,7 +276,9 @@ const tests: InvalidTestCase[] = [
     ],
   },
   {
-    code: "type MutableFoo = { readonly foo: number }",
+    code: dedent`
+      type MutableFoo = { readonly foo: number }
+    `,
     optionsSet: [[recommended]],
     errors: [
       {
@@ -246,9 +294,13 @@ const tests: InvalidTestCase[] = [
     ],
   },
   {
-    code: "type MutableFoo = Readonly<{ foo: number }>",
+    code: dedent`
+      type MutableFoo = Readonly<{ foo: number }>
+    `,
     optionsSet: [[recommended]],
-    output: "type MutableFoo = { foo: number }",
+    output: dedent`
+      type MutableFoo = { foo: number }
+    `,
     errors: [
       {
         messageId: "AtMost",
@@ -263,7 +315,12 @@ const tests: InvalidTestCase[] = [
     ],
   },
   {
-    code: "type MutableFoo = { readonly foo: number; readonly bar: { baz: string; }; }",
+    code: dedent`
+      type MutableFoo = {
+        readonly foo: number;
+        readonly bar: { baz: string; };
+      }
+    `,
     optionsSet: [[recommended]],
     errors: [
       {
@@ -279,7 +336,9 @@ const tests: InvalidTestCase[] = [
     ],
   },
   {
-    code: "type Foo = { foo: number }",
+    code: dedent`
+      type Foo = { foo: number }
+    `,
     optionsSet: [
       [
         {
@@ -306,7 +365,12 @@ const tests: InvalidTestCase[] = [
     ],
   },
   {
-    code: "type ReadonlyFoo = { readonly foo: number; readonly bar: { baz: string; }; };",
+    code: dedent`
+      type ReadonlyFoo = {
+        readonly foo: number;
+        readonly bar: { baz: string; };
+      };
+    `,
     optionsSet: [
       [
         {
@@ -333,7 +397,9 @@ const tests: InvalidTestCase[] = [
     ],
   },
   {
-    code: "type MutableSet = Set<string>;",
+    code: dedent`
+      type MutableSet = Set<string>;
+    `,
     optionsSet: [[recommended]],
     settingsSet: [
       {
@@ -358,7 +424,9 @@ const tests: InvalidTestCase[] = [
     ],
   },
   {
-    code: "type MutableSet = Set<string>;",
+    code: dedent`
+      type MutableSet = Set<string>;
+    `,
     optionsSet: [[recommended]],
     settingsSet: [
       {
