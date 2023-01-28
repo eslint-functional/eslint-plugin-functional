@@ -6,18 +6,18 @@ import type {
   IgnoreAccessorPatternOption,
   IgnorePatternOption,
   IgnoreClassesOption,
-} from "~/common/ignore-options";
+} from "~/options";
 import {
   shouldIgnorePattern,
   shouldIgnoreClasses,
   ignoreAccessorPatternOptionSchema,
   ignoreClassesOptionSchema,
   ignorePatternOptionSchema,
-} from "~/common/ignore-options";
-import { isExpected } from "~/util/misc";
-import { createRule, getTypeOfNode } from "~/util/rule";
-import type { RuleResult } from "~/util/rule";
-import { inConstructor } from "~/util/tree";
+} from "~/options";
+import { isExpected } from "~/utils/misc";
+import { createRule, getTypeOfNode } from "~/utils/rule";
+import type { RuleResult } from "~/utils/rule";
+import { inConstructor } from "~/utils/tree";
 import {
   isArrayConstructorType,
   isArrayExpression,
@@ -27,7 +27,7 @@ import {
   isMemberExpression,
   isNewExpression,
   isObjectConstructorType,
-} from "~/util/typeguard";
+} from "~/utils/type-guards";
 
 /**
  * The name of this rule.

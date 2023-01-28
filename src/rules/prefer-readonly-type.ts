@@ -4,16 +4,16 @@ import type { JSONSchema4 } from "json-schema";
 import type {
   IgnorePatternOption,
   IgnoreAccessorPatternOption,
-} from "~/common/ignore-options";
+} from "~/options";
 import {
   shouldIgnoreInFunction,
   shouldIgnoreClasses,
   shouldIgnorePattern,
-} from "~/common/ignore-options";
-import type { ESArrayTupleType } from "~/src/util/node-types";
-import type { BaseOptions, RuleResult } from "~/util/rule";
-import { createRule, getTypeOfNode } from "~/util/rule";
-import { inInterface, isInReturnType } from "~/util/tree";
+} from "~/options";
+import type { ESArrayTupleType } from "~/utils/node-types";
+import type { BaseOptions, RuleResult } from "~/utils/rule";
+import { createRule, getTypeOfNode } from "~/utils/rule";
+import { inInterface, isInReturnType } from "~/utils/tree";
 import {
   isArrayType,
   isAssignmentPattern,
@@ -28,7 +28,7 @@ import {
   isTSTypeLiteral,
   isTSTypeOperator,
   isTSTypeReference,
-} from "~/util/typeguard";
+} from "~/utils/type-guards";
 
 /**
  * The name of this rule.

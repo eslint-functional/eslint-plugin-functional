@@ -17,7 +17,7 @@ import {
   isTSTypeAnnotation,
   isTSTypeLiteral,
   isTSTypeReference,
-} from "./typeguard";
+} from "./type-guards";
 
 /**
  * Return the first ancestor that meets the given check criteria.

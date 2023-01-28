@@ -1,9 +1,9 @@
 import type { ESLintUtils, TSESLint } from "@typescript-eslint/utils";
 import type { JSONSchema4 } from "json-schema";
 
-import type { ESFunctionType } from "~/src/util/node-types";
-import type { RuleResult } from "~/util/rule";
-import { createRule, getTypeOfNode } from "~/util/rule";
+import type { ESFunctionType } from "~/utils/node-types";
+import type { RuleResult } from "~/utils/rule";
+import { createRule, getTypeOfNode } from "~/utils/rule";
 import {
   isFunctionLike,
   isNullType,
@@ -12,7 +12,7 @@ import {
   isTSVoidKeyword,
   isUndefinedType,
   isVoidType,
-} from "~/util/typeguard";
+} from "~/utils/type-guards";
 
 /**
  * The name of this rule.

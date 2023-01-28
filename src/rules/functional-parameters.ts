@@ -5,22 +5,22 @@ import type { JSONSchema4 } from "json-schema";
 import type {
   IgnorePatternOption,
   IgnorePrefixSelectorOption,
-} from "~/common/ignore-options";
+} from "~/options";
 import {
   shouldIgnorePattern,
   ignorePatternOptionSchema,
   ignorePrefixSelectorOptionSchema,
-} from "~/common/ignore-options";
-import type { ESFunction } from "~/src/util/node-types";
-import type { RuleResult } from "~/util/rule";
-import { createRuleUsingFunction } from "~/util/rule";
+} from "~/options";
+import type { ESFunction } from "~/utils/node-types";
+import type { RuleResult } from "~/utils/rule";
+import { createRuleUsingFunction } from "~/utils/rule";
 import {
   isArgument,
   isIIFE,
   isPropertyAccess,
   isPropertyName,
-} from "~/util/tree";
-import { isRestElement } from "~/util/typeguard";
+} from "~/utils/tree";
+import { isRestElement } from "~/utils/type-guards";
 
 /**
  * The name of this rule.

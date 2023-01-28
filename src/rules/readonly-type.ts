@@ -1,7 +1,9 @@
 import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
 import type { JSONSchema4 } from "json-schema";
 
-import { getReadonly } from "~/src/util/tree";
+import { createRule } from "~/utils/rule";
+import type { RuleResult } from "~/utils/rule";
+import { getReadonly } from "~/utils/tree";
 import {
   isDefined,
   isTSIndexSignature,
@@ -9,9 +11,7 @@ import {
   isTSPropertySignature,
   isPropertyDefinition,
   isTSTypeReference,
-} from "~/src/util/typeguard";
-import type { RuleResult } from "~/util/rule";
-import { createRule } from "~/util/rule";
+} from "~/utils/type-guards";
 
 /**
  * The name of this rule.

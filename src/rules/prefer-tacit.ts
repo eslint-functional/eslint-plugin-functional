@@ -4,12 +4,12 @@ import type { JSONSchema4 } from "json-schema";
 import * as semver from "semver";
 import type { Type } from "typescript";
 
-import type { IgnorePatternOption } from "~/common/ignore-options";
-import { ignorePatternOptionSchema } from "~/common/ignore-options";
 import ts from "~/conditional-imports/typescript";
-import type { ESFunction } from "~/src/util/node-types";
-import type { RuleResult } from "~/util/rule";
-import { createRule, getESTreeNode, getTypeOfNode } from "~/util/rule";
+import type { IgnorePatternOption } from "~/options";
+import { ignorePatternOptionSchema } from "~/options";
+import type { ESFunction } from "~/utils/node-types";
+import type { RuleResult } from "~/utils/rule";
+import { createRule, getESTreeNode, getTypeOfNode } from "~/utils/rule";
 import {
   isBlockStatement,
   isCallExpression,
@@ -18,7 +18,7 @@ import {
   isIdentifier,
   isReturnStatement,
   isTSFunctionType,
-} from "~/util/typeguard";
+} from "~/utils/type-guards";
 
 /**
  * The name of this rule.

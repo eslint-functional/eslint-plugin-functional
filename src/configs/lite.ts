@@ -5,7 +5,7 @@ import * as immutableData from "~/rules/immutable-data";
 import * as noConditionalStatements from "~/rules/no-conditional-statements";
 import * as noExpressionStatements from "~/rules/no-expression-statements";
 import * as preferImmutableTypes from "~/rules/prefer-immutable-types";
-import { mergeConfigs } from "~/util/merge-configs";
+import { mergeConfigs } from "~/utils/merge-configs";
 
 import recommended from "./recommended";
 

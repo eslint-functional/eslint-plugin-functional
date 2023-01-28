@@ -3,16 +3,13 @@ import { deepmerge } from "deepmerge-ts";
 import { Immutability } from "is-immutable-type";
 import type { JSONSchema4 } from "json-schema";
 
-import type { IgnorePatternOption } from "~/common/ignore-options";
-import {
-  shouldIgnorePattern,
-  ignorePatternOptionSchema,
-} from "~/common/ignore-options";
-import { getNodeIdentifierTexts } from "~/util/misc";
-import type { ESTypeDeclaration } from "~/util/node-types";
-import type { RuleResult } from "~/util/rule";
-import { getTypeImmutabilityOfNode, createRule } from "~/util/rule";
-import { isTSInterfaceDeclaration } from "~/util/typeguard";
+import type { IgnorePatternOption } from "~/options";
+import { shouldIgnorePattern, ignorePatternOptionSchema } from "~/options";
+import { getNodeIdentifierTexts } from "~/utils/misc";
+import type { ESTypeDeclaration } from "~/utils/node-types";
+import type { RuleResult } from "~/utils/rule";
+import { getTypeImmutabilityOfNode, createRule } from "~/utils/rule";
+import { isTSInterfaceDeclaration } from "~/utils/type-guards";
 
 /**
  * The name of this rule.

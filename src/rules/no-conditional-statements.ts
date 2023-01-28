@@ -2,9 +2,9 @@ import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
 import type { JSONSchema4 } from "json-schema";
 import type { Type } from "typescript";
 
-import type { RuleResult } from "~/util/rule";
-import { createRule, getTypeOfNode } from "~/util/rule";
-import { unionTypeParts } from "~/util/tsutils";
+import type { RuleResult } from "~/utils/rule";
+import { createRule, getTypeOfNode } from "~/utils/rule";
+import { unionTypeParts } from "~/utils/tsutils";
 import {
   isBlockStatement,
   isBreakStatement,
@@ -15,7 +15,7 @@ import {
   isReturnStatement,
   isSwitchStatement,
   isThrowStatement,
-} from "~/util/typeguard";
+} from "~/utils/type-guards";
 
 /**
  * The name of this rule.

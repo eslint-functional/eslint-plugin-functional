@@ -1,5 +1,5 @@
 /**
- * @file Functions that typeguard the given node/type.
+ * @file Functions that type guard the given node/type.
  */
 
 import type { TSESTree } from "@typescript-eslint/utils";

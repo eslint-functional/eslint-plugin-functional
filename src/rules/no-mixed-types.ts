@@ -2,14 +2,14 @@ import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import type { JSONSchema4 } from "json-schema";
 
-import type { RuleResult } from "~/util/rule";
-import { createRuleUsingFunction } from "~/util/rule";
+import type { RuleResult } from "~/utils/rule";
+import { createRuleUsingFunction } from "~/utils/rule";
 import {
   isIdentifier,
   isTSPropertySignature,
   isTSTypeLiteral,
   isTSTypeReference,
-} from "~/util/typeguard";
+} from "~/utils/type-guards";
 
 /**
  * The name of this rule.

@@ -1,6 +1,6 @@
 import test from "ava";
 
-import { mergeConfigs } from "~/util/merge-configs";
+import { mergeConfigs } from "~/utils/merge-configs";
 
 test("should replace rule config", (t) => {
   const a = {

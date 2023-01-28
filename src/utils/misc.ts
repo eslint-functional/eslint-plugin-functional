@@ -1,8 +1,8 @@
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 
-import type { BaseOptions } from "~/util/rule";
-import { getKeyOfValueInObjectExpression } from "~/util/tree";
+import type { BaseOptions } from "~/utils/rule";
+import { getKeyOfValueInObjectExpression } from "~/utils/tree";
 import {
   hasID,
   hasKey,
@@ -15,7 +15,7 @@ import {
   isTSTypeAnnotation,
   isUnaryExpression,
   isVariableDeclaration,
-} from "~/util/typeguard";
+} from "~/utils/type-guards";
 
 /**
  * Higher order function to check if the two given values are the same.

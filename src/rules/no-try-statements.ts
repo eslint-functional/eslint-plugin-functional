@@ -1,8 +1,8 @@
 import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
 import type { JSONSchema4 } from "json-schema";
 
-import type { RuleResult } from "~/util/rule";
-import { createRule } from "~/util/rule";
+import type { RuleResult } from "~/utils/rule";
+import { createRule } from "~/utils/rule";
 
 /**
  * The name of this rule.

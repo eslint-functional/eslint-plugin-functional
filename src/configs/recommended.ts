@@ -10,7 +10,7 @@ import * as noTryStatements from "~/rules/no-try-statements";
 import * as preferImmutableTypes from "~/rules/prefer-immutable-types";
 import * as typeDeclarationImmutability from "~/rules/type-declaration-immutability";
 import { RuleEnforcementComparator } from "~/rules/type-declaration-immutability";
-import { mergeConfigs } from "~/util/merge-configs";
+import { mergeConfigs } from "~/utils/merge-configs";
 
 import strict from "./strict";
 

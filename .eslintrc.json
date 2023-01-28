@@ -35,7 +35,7 @@
     "/lib/",
     "/**/*.cjs",
     "/**/*.js",
-    "/src/util/tsutils.ts"
+    "/src/utils/tsutils.ts"
   ],
   "rules": {
     "functional/prefer-immutable-types": "off",
@@ -63,7 +63,7 @@
       }
     },
     {
-      "files": ["./src/util/typeguard.ts", "./src/util/node-types.ts"],
+      "files": ["./src/utils/type-guards.ts", "./src/utils/node-types.ts"],
       "rules": {
         "jsdoc/require-jsdoc": "off"
       }

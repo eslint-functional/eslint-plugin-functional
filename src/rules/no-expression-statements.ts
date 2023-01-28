@@ -2,15 +2,12 @@ import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { deepmerge } from "deepmerge-ts";
 import type { JSONSchema4 } from "json-schema";
 
-import type { IgnorePatternOption } from "~/common/ignore-options";
-import {
-  shouldIgnorePattern,
-  ignorePatternOptionSchema,
-} from "~/common/ignore-options";
-import { isDirectivePrologue } from "~/util/misc";
-import type { RuleResult } from "~/util/rule";
-import { createRule, getTypeOfNode } from "~/util/rule";
-import { isVoidType } from "~/util/typeguard";
+import type { IgnorePatternOption } from "~/options";
+import { shouldIgnorePattern, ignorePatternOptionSchema } from "~/options";
+import { isDirectivePrologue } from "~/utils/misc";
+import type { RuleResult } from "~/utils/rule";
+import { createRule, getTypeOfNode } from "~/utils/rule";
+import { isVoidType } from "~/utils/type-guards";
 
 /**
  * The name of this rule.

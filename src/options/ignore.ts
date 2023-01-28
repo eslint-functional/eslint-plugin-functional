@@ -2,16 +2,16 @@ import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import escapeRegExp from "escape-string-regexp";
 import type { JSONSchema4 } from "json-schema";
 
-import { getNodeIdentifierTexts } from "~/util/misc";
-import type { BaseOptions } from "~/util/rule";
-import { inClass, inFunctionBody } from "~/util/tree";
+import { getNodeIdentifierTexts } from "~/utils/misc";
+import type { BaseOptions } from "~/utils/rule";
+import { inClass, inFunctionBody } from "~/utils/tree";
 import {
   isAssignmentExpression,
   isClassLike,
   isPropertyDefinition,
   isMemberExpression,
   isThisExpression,
-} from "~/util/typeguard";
+} from "~/utils/type-guards";
 
 /**
  * The option to ignore patterns.

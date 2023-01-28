@@ -40,9 +40,7 @@
     "IIFE",
     "IIFEs",
     "ruleset",
-    "rulesets",
-    "typeguard",
-    "typeguards"
+    "rulesets"
   ],
   "overrides": [
     {

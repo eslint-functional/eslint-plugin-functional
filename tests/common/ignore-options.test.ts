@@ -8,8 +8,8 @@ import RuleTester from "eslint-ava-rule-tester";
 import type {
   IgnoreAccessorPatternOption,
   IgnorePatternOption,
-} from "~/common/ignore-options";
-import { shouldIgnorePattern } from "~/common/ignore-options";
+} from "~/options";
+import { shouldIgnorePattern } from "~/options";
 import { filename, configs } from "~/tests/helpers/configs";
 import { testWrapper } from "~/tests/helpers/testers";
 import { addFilename, createDummyRule } from "~/tests/helpers/util";

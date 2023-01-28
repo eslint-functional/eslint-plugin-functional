@@ -2,15 +2,15 @@ import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { deepmerge } from "deepmerge-ts";
 import type { JSONSchema4 } from "json-schema";
 
-import type { IgnorePatternOption } from "~/common/ignore-options";
+import type { IgnorePatternOption } from "~/options";
 import {
   shouldIgnorePattern,
   shouldIgnoreInFunction,
   ignorePatternOptionSchema,
-} from "~/common/ignore-options";
-import type { RuleResult } from "~/util/rule";
-import { createRule } from "~/util/rule";
-import { inForLoopInitializer } from "~/util/tree";
+} from "~/options";
+import type { RuleResult } from "~/utils/rule";
+import { createRule } from "~/utils/rule";
+import { inForLoopInitializer } from "~/utils/tree";
 
 /**
  * The name of this rule.

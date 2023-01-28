@@ -3,22 +3,22 @@ import { deepmerge } from "deepmerge-ts";
 import { Immutability } from "is-immutable-type";
 import type { JSONSchema4 } from "json-schema";
 
-import type { IgnoreClassesOption } from "~/common/ignore-options";
+import type { IgnoreClassesOption } from "~/options";
 import {
   ignoreClassesOptionSchema,
   shouldIgnoreClasses,
   shouldIgnoreInFunction,
   shouldIgnorePattern,
-} from "~/common/ignore-options";
-import type { ESFunctionType } from "~/util/node-types";
-import type { RuleResult } from "~/util/rule";
+} from "~/options";
+import type { ESFunctionType } from "~/utils/node-types";
+import type { RuleResult } from "~/utils/rule";
 import {
   createRule,
   getReturnTypesOfFunction,
   getTypeImmutabilityOfNode,
   getTypeImmutabilityOfType,
   isImplementationOfOverload,
-} from "~/util/rule";
+} from "~/utils/rule";
 import {
   hasID,
   isDefined,
@@ -27,7 +27,7 @@ import {
   isPropertyDefinition,
   isTSParameterProperty,
   isTSTypePredicate,
-} from "~/util/typeguard";
+} from "~/utils/type-guards";
 
 /**
  * The name of this rule.
