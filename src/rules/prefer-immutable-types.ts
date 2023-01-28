@@ -11,7 +11,7 @@ import {
   shouldIgnorePattern,
 } from "~/options";
 import type { ESFunctionType } from "~/utils/node-types";
-import type { RuleResult } from "~/utils/rule";
+import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
 import {
   createRule,
   getReturnTypesOfFunction,
@@ -263,9 +263,10 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
+const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
+    category: "No Mutations",
     description:
       "Require function parameters to be typed as certain immutability",
     recommended: "error",

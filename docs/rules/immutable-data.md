@@ -1,4 +1,8 @@
-# Disallow mutating objects and arrays (immutable-data)
+# Enforce treating data as immutable (`functional/immutable-data`)
+
+💼 This rule is enabled in the following configs: `lite`, `no-mutations`, ✅ `recommended`, 🔒 `strict`.
+
+<!-- end auto-generated rule header -->
 
 This rule prohibits syntax that mutates existing objects and arrays via assignment to or deletion of their properties/elements.
 
@@ -45,10 +49,8 @@ const arr = [0, 1, 2];
 
 const x = {
   ...obj,
-  bar: [
-    ...arr, 3, 4
-  ]
-}
+  bar: [...arr, 3, 4],
+};
 ```
 
 ## Options
@@ -62,12 +64,12 @@ type Options = {
     | {
         forArrays: boolean;
         forObjects: boolean;
-      }
+      };
   ignoreClasses: boolean | "fieldsOnly";
   ignoreImmediateMutation: boolean;
   ignorePattern?: string[] | string;
   ignoreAccessorPattern?: string[] | string;
-}
+};
 ```
 
 ### Default Options
@@ -87,7 +89,7 @@ type Options = {
 ```ts
 const liteOptions = {
   ignoreClasses: "fieldsOnly",
-}
+};
 ```
 
 ### `assumeTypes`

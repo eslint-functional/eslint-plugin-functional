@@ -1,4 +1,6 @@
-# Disallow rejecting Promises (no-promise-reject)
+# Disallow try-catch[-finally] and try-finally patterns (`functional/no-promise-reject`)
+
+<!-- end auto-generated rule header -->
 
 This rule disallows use of `Promise.reject()`.
 
@@ -34,12 +36,6 @@ async function divide(x, y) {
 async function divide(x, y) {
   const [xv, yv] = await Promise.all([x, y]);
 
-  return yv === 0
-    ? new Error("Cannot divide by zero.")
-    : xv / yv;
+  return yv === 0 ? new Error("Cannot divide by zero.") : xv / yv;
 }
 ```
-
-## Options
-
-The rule does not accept any options.

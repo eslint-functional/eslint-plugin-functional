@@ -5,7 +5,7 @@ import type { JSONSchema4 } from "json-schema";
 import type { IgnorePatternOption } from "~/options";
 import { shouldIgnorePattern, ignorePatternOptionSchema } from "~/options";
 import { isDirectivePrologue } from "~/utils/misc";
-import type { RuleResult } from "~/utils/rule";
+import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
 import { createRule, getTypeOfNode } from "~/utils/rule";
 import { isVoidType } from "~/utils/type-guards";
 
@@ -57,9 +57,10 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
+const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
+    category: "No Statements",
     description: "Disallow expression statements.",
     recommended: "error",
   },

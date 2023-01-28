@@ -1,4 +1,8 @@
-# Disallow returning nothing (no-return-void)
+# Disallow functions that don't return anything (`functional/no-return-void`)
+
+💼 This rule is enabled in the following configs: `lite`, `no-statements`, ✅ `recommended`, 🔒 `strict`.
+
+<!-- end auto-generated rule header -->
 
 Disallow functions that are declared as returning nothing.
 
@@ -18,9 +22,7 @@ We recommend using the rule [@typescript-eslint/explicit-function-return-type](h
 ```ts
 /* eslint functional/no-return-void: "error" */
 
-function updateText(): void {
-
-}
+function updateText(): void {}
 ```
 
 ### ✅ Correct
@@ -28,9 +30,7 @@ function updateText(): void {
 ```ts
 /* eslint functional/no-return-void: "error" */
 
-function updateText(value: string): string {
-
-}
+function updateText(value: string): string {}
 ```
 
 ## Options
@@ -42,7 +42,7 @@ type Options = {
   allowNull: boolean;
   allowUndefined: boolean;
   ignoreInferredTypes: boolean;
-}
+};
 ```
 
 ### Default Options
@@ -52,7 +52,7 @@ const defaults = {
   allowNull: true,
   allowUndefined: true,
   ignoreInferredTypes: false,
-}
+};
 ```
 
 ### `allowNull`

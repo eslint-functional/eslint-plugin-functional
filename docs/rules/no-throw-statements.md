@@ -1,4 +1,8 @@
-# Disallow throwing exceptions (no-throw-statements)
+# Disallow throwing exceptions (`functional/no-throw-statements`)
+
+💼 This rule is enabled in the following configs: `lite`, `no-exceptions`, ✅ `recommended`, 🔒 `strict`.
+
+<!-- end auto-generated rule header -->
 
 This rule disallows the `throw` keyword.
 
@@ -46,7 +50,7 @@ This rule accepts an options object of the following type:
 ```ts
 type Options = {
   allowInAsyncFunctions: boolean;
-}
+};
 ```
 
 ### Default Options
@@ -54,7 +58,7 @@ type Options = {
 ```ts
 const defaults = {
   allowInAsyncFunctions: false,
-}
+};
 ```
 
 ### Preset Overrides
@@ -64,7 +68,7 @@ const defaults = {
 ```ts
 const recommendedAndLiteOptions = {
   allowInAsyncFunctions: true,
-}
+};
 ```
 
 ### `allowInAsyncFunctions`

@@ -1,4 +1,10 @@
-# Enforce a level of immutability for type declaration (type-declaration-immutability)
+# Enforce the immutability of types based on patterns (`functional/type-declaration-immutability`)
+
+💼 This rule is enabled in the following configs: `lite`, `no-mutations`, ✅ `recommended`, 🔒 `strict`.
+
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
 
 Require type alias declarations and interfaces that imply some level of
 immutability to comply to it.
@@ -72,16 +78,16 @@ This rule accepts an options object of the following type:
 type Options = {
   rules: Array<{
     identifiers: string | string[];
-    immutability:  "Mutable" | "ReadonlyShallow" | "ReadonlyDeep" | "Immutable";
+    immutability: "Mutable" | "ReadonlyShallow" | "ReadonlyDeep" | "Immutable";
     comparator?: "Less" | "AtMost" | "Exactly" | "AtLeast" | "More";
     fixer?:
-      | { pattern: string; replace: string; }
-      | Array<{ pattern: string; replace: string; }>
+      | { pattern: string; replace: string }
+      | Array<{ pattern: string; replace: string }>
       | false;
   }>;
   ignoreInterfaces: boolean;
   ignorePattern: string[] | string;
-}
+};
 ```
 
 ### Default Options
@@ -97,7 +103,7 @@ const defaults = {
     },
   ],
   ignoreInterfaces: false,
-}
+};
 ```
 
 ### Preset Overrides
@@ -148,7 +154,7 @@ const recommendedAndLiteOptions = {
       ],
     },
   ],
-}
+};
 ```
 
 ### `rules`

@@ -1,4 +1,8 @@
-# Disallow conditional statements (no-conditional-statements)
+# Disallow conditional statements (`functional/no-conditional-statements`)
+
+💼🚫 This rule is enabled in the following configs: `no-statements`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the `lite` config.
+
+<!-- end auto-generated rule header -->
 
 This rule disallows conditional statements such as `if` and `switch`.
 
@@ -36,13 +40,11 @@ const x = i === 1 ? 2 : 3;
 /* eslint functional/no-conditional-statements: "error" */
 
 function foo(x, y) {
-  return (
-    x === y   // if
+  return x === y // if
     ? 0
-    : x > y   // else if
+    : x > y // else if
     ? 1
-    : -1      // else
-  );
+    : -1; // else
 }
 ```
 
@@ -53,15 +55,15 @@ This rule accepts an options object of the following type:
 ```ts
 type Options = {
   allowReturningBranches: boolean | "ifExhaustive";
-}
+};
 ```
 
 ### Default Options
 
 ```ts
 const defaults = {
-  allowReturningBranches: false
-}
+  allowReturningBranches: false,
+};
 ```
 
 ### Preset Overrides
@@ -71,7 +73,7 @@ const defaults = {
 ```ts
 const recommendedAndLiteOptions = {
   allowReturningBranches: true,
-}
+};
 ```
 
 ### `allowReturningBranches`
@@ -99,7 +101,7 @@ This allows conditional statements to be used like [do expressions](https://gith
 
 ```js
 const x = (() => {
-  switch(y) {
+  switch (y) {
     case "a":
       return 1;
     case "b":

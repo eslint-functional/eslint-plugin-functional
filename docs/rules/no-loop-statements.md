@@ -1,4 +1,8 @@
-# Disallow imperative loops (no-loop-statements)
+# Disallow imperative loops (`functional/no-loop-statements`)
+
+💼 This rule is enabled in the following configs: `lite`, `no-statements`, ✅ `recommended`, 🔒 `strict`.
+
+<!-- end auto-generated rule header -->
 
 This rule disallows for loop statements, including `for`, `for...of`, `for...in`, `while`, and `do...while`.
 
@@ -49,7 +53,3 @@ const double = numbers.map((n) => n * 2);
 const numbers = [1, 2, 3];
 const sum = numbers.reduce((carry, number) => carry + number, 0);
 ```
-
-## Options
-
-The rule does not accept any options.

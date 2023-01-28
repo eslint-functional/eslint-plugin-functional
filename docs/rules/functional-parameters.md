@@ -1,4 +1,8 @@
-# Enforce functional parameters (functional-parameters)
+# Enforce functional parameters (`functional/functional-parameters`)
+
+💼 This rule is enabled in the following configs: `currying`, `lite`, ✅ `recommended`, 🔒 `strict`.
+
+<!-- end auto-generated rule header -->
 
 Disallow use of rest parameters, the `arguments` keyword and enforces that functions take a least 1 parameter.
 
@@ -51,14 +55,18 @@ This rule accepts an options object of the following type:
 type Options = {
   allowRestParameter: boolean;
   allowArgumentsKeyword: boolean;
-  enforceParameterCount: "atLeastOne" | "exactlyOne" | false | {
-    count: "atLeastOne" | "exactlyOne";
-    ignoreLambdaExpression: boolean,
-    ignoreIIFE: boolean;
-  };
+  enforceParameterCount:
+    | "atLeastOne"
+    | "exactlyOne"
+    | false
+    | {
+        count: "atLeastOne" | "exactlyOne";
+        ignoreLambdaExpression: boolean;
+        ignoreIIFE: boolean;
+      };
   ignorePattern?: string[] | string;
   ignorePrefixSelector?: string[] | string;
-}
+};
 ```
 
 ### Default Options
@@ -70,9 +78,9 @@ const defaults = {
   enforceParameterCount: {
     count: "atLeastOne",
     ignoreLambdaExpression: false,
-    ignoreIIFE: true
-  }
-}
+    ignoreIIFE: true,
+  },
+};
 ```
 
 ### Preset Overrides
@@ -85,15 +93,15 @@ const recommendedOptions = {
     ignoreLambdaExpression: true,
     ignoreIIFE: true,
   },
-}
+};
 ```
 
 #### `lite`
 
 ```ts
 const liteOptions = {
-  enforceParameterCount: false
-}
+  enforceParameterCount: false,
+};
 ```
 
 ### `allowRestParameter`
@@ -174,10 +182,7 @@ With the following config:
 The following inline callback won't be flagged:
 
 ```js
-const sum = [1, 2, 3].reduce(
-  (carry, current) => current,
-  0
-);
+const sum = [1, 2, 3].reduce((carry, current) => current, 0);
 ```
 
 ### `ignorePattern`

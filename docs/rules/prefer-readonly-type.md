@@ -1,6 +1,10 @@
-# Prefer readonly types over mutable types (prefer-readonly-type)
+# Prefer readonly array over mutable arrays (`functional/prefer-readonly-type`)
 
-## :warning: This rule is deprecated
+❌ This rule is deprecated. It was replaced by [`functional/prefer-immutable-types`](prefer-immutable-types.md),[`functional/type-declaration-immutability`](type-declaration-immutability.md).
+
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
 
 This rule has been replaced by
 [prefer-immutable-parameter-types](./prefer-immutable-parameter-types.md) and
@@ -106,7 +110,7 @@ type Options = {
   ignoreInterface: boolean;
   ignoreCollections: boolean;
   ignorePattern?: string[] | string;
-}
+};
 ```
 
 ### Default Options
@@ -119,7 +123,7 @@ const defaults = {
   ignoreClass: false,
   ignoreInterface: false,
   ignoreCollections: false,
-}
+};
 ```
 
 ### `checkImplicit`

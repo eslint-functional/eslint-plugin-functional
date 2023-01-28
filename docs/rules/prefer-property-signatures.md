@@ -1,4 +1,8 @@
-# Prefer property signatures over method signatures (prefer-property-signatures)
+# Prefer property signatures over method signatures (`functional/prefer-property-signatures`)
+
+💼 This rule is enabled in the 🎨 `stylistic` config.
+
+<!-- end auto-generated rule header -->
 
 ## Rule Details
 
@@ -44,15 +48,15 @@ This rule accepts an options object of the following type:
 ```ts
 type Options = {
   ignoreIfReadonlyWrapped: boolean;
-}
+};
 ```
 
 ### Default Options
 
 ```ts
 const defaults = {
-  ignoreIfReadonlyWrapped: false
-}
+  ignoreIfReadonlyWrapped: false,
+};
 ```
 
 ### `ignoreIfReadonlyWrapped`
