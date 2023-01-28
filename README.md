@@ -16,6 +16,10 @@ An [ESLint](http://eslint.org) plugin to disable mutation and promote functional
 
 </div>
 
+## Donate
+
+[Any donations would be much appreciated](./DONATIONS.md). 😄
+
 ## Rulesets
 
 The following rulesets are made available by this plugin:

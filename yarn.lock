@@ -562,7 +562,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cspell/dict-cryptocurrencies@npm:^3.0.1":
+"@cspell/dict-cryptocurrencies@npm:3.0.1, @cspell/dict-cryptocurrencies@npm:^3.0.1":
   version: 3.0.1
   resolution: "@cspell/dict-cryptocurrencies@npm:3.0.1"
   checksum: 5d646f569e8dc5998de8a508ff3de39db5f5a5db0a846ee4fc750ea3880080d922d5c28fdce38f93910eaacde2723e2fe4c305d50b3f9d53b817ce33a3bed66a
@@ -3314,6 +3314,7 @@ __metadata:
     "@ava/typescript": 3.0.1
     "@commitlint/cli": 17.4.2
     "@commitlint/config-conventional": 17.4.2
+    "@cspell/dict-cryptocurrencies": 3.0.1
     "@istanbuljs/nyc-config-typescript": 1.0.2
     "@rebeccastevens/eslint-config": 1.4.6
     "@rollup/plugin-commonjs": 24.0.1

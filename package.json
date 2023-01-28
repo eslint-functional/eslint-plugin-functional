@@ -27,6 +27,12 @@
       "email": "rebecca.stevens@outlook.co.nz"
     }
   ],
+  "funding": [
+    {
+      "type": "ko-fi",
+      "url": "https://ko-fi.com/rebeccastevens"
+    }
+  ],
   "exports": {
     "default": "./lib/index.js",
     "import": "./lib/index.mjs",
@@ -72,6 +78,7 @@
     "@ava/typescript": "3.0.1",
     "@commitlint/cli": "17.4.2",
     "@commitlint/config-conventional": "17.4.2",
+    "@cspell/dict-cryptocurrencies": "3.0.1",
     "@istanbuljs/nyc-config-typescript": "1.0.2",
     "@rebeccastevens/eslint-config": "1.4.6",
     "@rollup/plugin-commonjs": "24.0.1",

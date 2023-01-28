@@ -1,5 +1,5 @@
 {
-  "version": "0.1",
+  "version": "0.2",
   "language": "en",
   "ignorePaths": [
     "**/coverage/**",
@@ -21,6 +21,7 @@
     "misc",
     "filetypes"
   ],
+  "import": ["./node_modules/@cspell/dict-cryptocurrencies/cspell-ext.json"],
   "ignoreRegExpList": [
     "/```[\\w\\W]*?```/",
     "/~~~[\\w\\W]*?~~~/",
@@ -28,9 +29,12 @@
     "/`[^`]*`/",
     "/\\.\\/docs\\/rules\\/[^.]*.md/",
     "/TS[^\\s]+/",
-    "\\(#.+?\\)"
+    "\\(#.+?\\)",
+    "// @ts-.*",
+    "/[A-Za-z0-9]{32,}/"
   ],
   "words": [
+    "litecoin",
     "fleur",
     "globstar",
     "IIFE",

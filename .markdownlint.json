@@ -58,6 +58,7 @@
     "allowed_elements": [
       "br",
       "div",
+      "img",
       "sub",
       "sup",
       "span",
@@ -87,7 +88,7 @@
   "MD043": false,
   // MD044/proper-names - Proper names should have the correct capitalization
   // "MD044": {
-  //   "names": ["JavaScript", "TypeScript", "TSLint", "ESLint"],
+  //   "names": ["JavaScript", "TypeScript"],
   //   "code_blocks": false
   // },
   // MD045/no-alt-text - Images should have alternate text (alt text)
