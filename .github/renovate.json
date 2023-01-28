@@ -28,7 +28,7 @@
     {
       "matchManagers": ["npm"],
       "matchDepTypes": ["devDependencies"],
-      "rangeStrategy": "update-lockfile",
+      "rangeStrategy": "pin",
       "semanticCommitType": "chore",
       "semanticCommitScope": "dev-deps"
     },
