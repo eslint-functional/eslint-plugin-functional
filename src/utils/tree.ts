@@ -1,6 +1,7 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
 import {
+  isBlockStatement,
   isCallExpression,
   isClassLike,
   isDefined,
@@ -11,6 +12,7 @@ import {
   isMemberExpression,
   isMethodDefinition,
   isObjectExpression,
+  isProgram,
   isProperty,
   isTSInterfaceBody,
   isTSInterfaceHeritage,
@@ -143,6 +145,16 @@ export function isInReturnType(node: TSESTree.Node): boolean {
         n.parent.returnType === n,
       node
     ) !== null
+  );
+}
+
+/**
+ * Test if the given node is nested inside another statement.
+ */
+export function isNested(node: TSESTree.Node): boolean {
+  return (
+    node.parent !== undefined &&
+    !(isProgram(node.parent) || isBlockStatement(node.parent))
   );
 }
 

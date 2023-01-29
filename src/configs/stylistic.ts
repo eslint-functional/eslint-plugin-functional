@@ -7,10 +7,7 @@ import * as readonlyType from "~/rules/readonly-type";
 const config: Linter.Config = {
   rules: {
     [`functional/${preferPropertySignatures.name}`]: "error",
-    [`functional/${preferTacit.name}`]: [
-      "warn",
-      { assumeTypes: { allowFixer: false } },
-    ],
+    [`functional/${preferTacit.name}`]: ["warn", { assumeTypes: true }],
     [`functional/${readonlyType.name}`]: "error",
   },
 };

@@ -10,6 +10,7 @@ import { ignorePatternOptionSchema } from "~/options";
 import type { ESFunction } from "~/utils/node-types";
 import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
 import { createRule, getESTreeNode, getTypeOfNode } from "~/utils/rule";
+import { isNested } from "~/utils/tree";
 import {
   isBlockStatement,
   isCallExpression,
@@ -30,11 +31,7 @@ export const name = "prefer-tacit" as const;
  */
 type Options = [
   IgnorePatternOption & {
-    assumeTypes:
-      | false
-      | {
-          allowFixer: boolean;
-        };
+    assumeTypes: boolean;
   }
 ];
 
@@ -45,25 +42,8 @@ const schema: JSONSchema4 = [
   {
     type: "object",
     properties: deepmerge(ignorePatternOptionSchema, {
-      ignoreImmediateMutation: {
-        type: "boolean",
-      },
       assumeTypes: {
-        oneOf: [
-          {
-            type: "boolean",
-            enum: [false],
-          },
-          {
-            type: "object",
-            properties: {
-              allowFixer: {
-                type: "boolean",
-              },
-            },
-            additionalProperties: false,
-          },
-        ],
+        type: "boolean",
       },
     }),
     additionalProperties: false,
@@ -97,7 +77,7 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
     recommended: false,
   },
   messages: errorMessages,
-  fixable: "code",
+  hasSuggestions: true,
   schema,
 };
 
@@ -164,41 +144,46 @@ function fixFunctionCallToReference(
 }
 
 /**
- * Creates the fixer function that returns the instruction how to fix violations of this rule to valid code
+ * Creates the suggestions.
  */
-function buildFixer(
+function buildSuggestions(
   context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   node: ESFunction,
   caller: TSESTree.CallExpression
-): TSESLint.ReportFixFunction {
-  return (fixer) => {
-    const functionCallToReference = fixFunctionCallToReference(
-      context,
-      fixer,
-      node,
-      caller
-    );
-    if (functionCallToReference === null) {
-      return null;
-    }
+): TSESLint.ReportSuggestionArray<keyof typeof errorMessages> {
+  return [
+    {
+      messageId: "generic",
+      fix: (fixer) => {
+        const functionCallToReference = fixFunctionCallToReference(
+          context,
+          fixer,
+          node,
+          caller
+        );
+        if (functionCallToReference === null) {
+          return null;
+        }
 
-    if (node.type === "FunctionDeclaration") {
-      if (node.id === null) {
-        return null;
-      }
+        if (node.type === "FunctionDeclaration" && !isNested(node)) {
+          if (node.id === null) {
+            return null;
+          }
 
-      return [
-        fixer.insertTextBefore(
-          node as TSESTree.Node,
-          `const ${node.id.name} = `
-        ),
-        fixer.insertTextAfter(node as TSESTree.Node, `;`),
-        ...functionCallToReference,
-      ];
-    }
+          return [
+            fixer.insertTextBefore(
+              node as TSESTree.Node,
+              `const ${node.id.name} = `
+            ),
+            fixer.insertTextAfter(node as TSESTree.Node, `;`),
+            ...functionCallToReference,
+          ];
+        }
 
-    return functionCallToReference;
-  };
+        return functionCallToReference;
+      },
+    },
+  ];
 }
 
 /**
@@ -226,7 +211,7 @@ function getCallDescriptors(
     const calleeType = getTypeOfNode(caller.callee, context);
     const assumingTypes =
       (calleeType === null || (calleeType.symbol as unknown) === undefined) &&
-      assumeTypes !== false;
+      assumeTypes;
 
     if (
       assumingTypes ||
@@ -236,13 +221,7 @@ function getCallDescriptors(
         {
           node,
           messageId: "generic",
-          fix:
-            // No fixer when assuming types as this is dangerous.
-            (typeof assumeTypes !== "object" && assumingTypes) ||
-            // Unless user specifies they want it.
-            (typeof assumeTypes === "object" && !assumeTypes.allowFixer)
-              ? null
-              : buildFixer(context, node, caller),
+          suggest: buildSuggestions(context, node, caller),
         },
       ];
     }

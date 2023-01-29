@@ -19,6 +19,21 @@ const tests: InvalidTestCase[] = [
       },
     ],
   },
+  {
+    code: dedent`
+      function f<T>(x: T): T {}
+      export default function (x) { return f<number>(x); }
+    `,
+    optionsSet: [[]],
+    errors: [
+      {
+        messageId: "generic",
+        type: "FunctionDeclaration",
+        line: 2,
+        column: 16,
+      },
+    ],
+  },
 ];
 
 export default tests;

@@ -2,7 +2,7 @@
 
 ⚠️ This rule _warns_ in the 🎨 `stylistic` config.
 
-🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
 
 <!-- end auto-generated rule header -->
 
@@ -45,11 +45,7 @@ This rule accepts an options object of the following type:
 
 ```ts
 type Options = {
-  assumeTypes:
-    | false
-    | {
-        allowFixer: boolean;
-      };
+  assumeTypes: boolean;
   ignorePattern?: string[] | string;
 };
 ```
@@ -78,17 +74,6 @@ const bar = foo(1, 2, 3); // But if `f` accepts more than one parameter then it 
 
 Note: Enabling this option is the only way to get this rule to report violations in an environment without TypeScript's typing engine available (e.g. In Vanilla JS).
 
-### `assumeTypes.allowFixer`
-
-When set types will be assumed.
-
-This option states whether the auto fixer should be enabled for violations that are found when assuming types (violations found without assuming types will ignore this option).
-Because when assuming types, false positives may be found, it's recommended to set this option to `false`.
-
 ### `ignorePattern`
 
 See the [ignorePattern](./options/ignore-pattern.md) docs.
-
-### `ignoreImmediateMutation`
-
-TODO

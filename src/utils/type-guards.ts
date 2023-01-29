@@ -176,6 +176,10 @@ export function isObjectExpression(
   return node.type === AST_NODE_TYPES.ObjectExpression;
 }
 
+export function isProgram(node: TSESTree.Node): node is TSESTree.Program {
+  return node.type === AST_NODE_TYPES.Program;
+}
+
 export function isProperty(node: TSESTree.Node): node is TSESTree.Property {
   return node.type === AST_NODE_TYPES.Property;
 }
