@@ -1,6 +1,79 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+# [5.0.0](https://github.com/eslint-functional/eslint-plugin-functional/compare/v4.4.1...v5.0.0) (2023-01-29)
+
+
+### Bug Fixes
+
+* drop dependency on tsutils ([7a63d89](https://github.com/eslint-functional/eslint-plugin-functional/commit/7a63d8971b16e83fa6420776955105cc5325a428))
+* fix meta data and improve doc generation ([1f50625](https://github.com/eslint-functional/eslint-plugin-functional/commit/1f506259dd5052447d8c23f583dbd2ca255114d3))
+* **no-mixed-types:** add support for TypeLiteral inside `Readonly<>` ([1da622d](https://github.com/eslint-functional/eslint-plugin-functional/commit/1da622d43dc6c0c48213931ddd447895971d8d8a)), closes [#500](https://github.com/eslint-functional/eslint-plugin-functional/issues/500)
+* **prefer-immutable-types:** fix `string[]` to `readonly string[]` ([a6a27ff](https://github.com/eslint-functional/eslint-plugin-functional/commit/a6a27ffa41a40d417d1cdaca7100686fd94bad2e))
+* **prefer-immutable-types:** improve the fixer ([4bba113](https://github.com/eslint-functional/eslint-plugin-functional/commit/4bba113be8ad20259147cab81e0ab3bccc79c6cd))
+* **prefer-tacit:** use suggestions instead of a fixer and improve how that suggestion works ([8473743](https://github.com/eslint-functional/eslint-plugin-functional/commit/8473743446b10bccc7bf175f629fb05fab979e40))
+* **type-declaration-immutability:** don't strip whitespace formatting from node text ([8dcaa4d](https://github.com/eslint-functional/eslint-plugin-functional/commit/8dcaa4d92ea6cd0424730b68da7164b49f5b82d4))
+
+
+### Build System
+
+* bump minimum supported version of node to 16.10 ([23b45d2](https://github.com/eslint-functional/eslint-plugin-functional/commit/23b45d25b252b1b0337c57ef671ae231a17f38d9))
+* bump minimum supported version of TypeScript to 4.0.2 ([405102b](https://github.com/eslint-functional/eslint-plugin-functional/commit/405102be6379e7f30c8f3f0e28a43359e65a27e9))
+
+
+### Features
+
+* add new strict ruleset and reduce strictness of the recommended ruleset ([26424e0](https://github.com/eslint-functional/eslint-plugin-functional/commit/26424e03b1cdeba844893d219e7f950934386b72))
+* **functional-parameters:** add option to ignore lambda function expressions ([044e54b](https://github.com/eslint-functional/eslint-plugin-functional/commit/044e54ba646a3f6001a16c3e7b19299efaf49eab))
+* **no-classes:** rename rule from `no-class` ([76a8e2d](https://github.com/eslint-functional/eslint-plugin-functional/commit/76a8e2d28e32cfcd5a6477f8552b5fb43442a79d))
+* **no-conditional-statements:** rename rule from `no-conditional-statement` ([82b21fa](https://github.com/eslint-functional/eslint-plugin-functional/commit/82b21fa954ec8ead473bbb9bc10273d3cc927e40))
+* **no-expression-statements:** rename rule from `no-expression-statement` ([d0f9e98](https://github.com/eslint-functional/eslint-plugin-functional/commit/d0f9e98f451b881a1df69e92ce78abf18f2c76f6))
+* **no-loop-statements:** rename rule from `no-loop-statement` ([683209d](https://github.com/eslint-functional/eslint-plugin-functional/commit/683209dd326b6405ecdcbe552aa271788c1a78af))
+* **no-method-signature:** rename to `prefer-property-signatures` & move it to `stylistic` ruleset ([da2259f](https://github.com/eslint-functional/eslint-plugin-functional/commit/da2259f2f592b27af9d157e82160c857621750ca))
+* **no-mixed-types:** rename rule from `no-mixed-type` ([392f9e8](https://github.com/eslint-functional/eslint-plugin-functional/commit/392f9e8cf10ec2d09222e65f4136cb3480fcadfd))
+* **no-this-expression:** remove `no-this-expression` from recommended and lite rulesets ([bbd798b](https://github.com/eslint-functional/eslint-plugin-functional/commit/bbd798b484c17fdb32d45476c88e141402e1377e))
+* **no-this-expressions:** rename rule from `no-this-expression` ([10c3bb6](https://github.com/eslint-functional/eslint-plugin-functional/commit/10c3bb6addc9e741296db43f1d464bf6483142c7))
+* **no-throw-statements:** rename rule from `no-throw-statement` ([4be92c8](https://github.com/eslint-functional/eslint-plugin-functional/commit/4be92c8c2a485d870704379219f46e7fdb572ca8))
+* **no-try-statements:** rename rule from `no-try-statement` ([e88828a](https://github.com/eslint-functional/eslint-plugin-functional/commit/e88828a9755018d7ab1c79a7b33d6cce1912f1c4))
+* **prefer-immutable-types:** add fixer for class properties ([5e047c2](https://github.com/eslint-functional/eslint-plugin-functional/commit/5e047c2825d03d57ee1472846ff260831f685173))
+* **prefer-immutable-types:** add support for a fixer ([195ee1a](https://github.com/eslint-functional/eslint-plugin-functional/commit/195ee1afcb3459a2ba8ae9e0a3ca9629da8c8c47))
+* **prefer-immutable-types:** create rule ([2552d55](https://github.com/eslint-functional/eslint-plugin-functional/commit/2552d554f87c22031471a75d013d5cb3b84e2e40))
+* **prefer-immutable-types:** improve ignore options ([8a35e52](https://github.com/eslint-functional/eslint-plugin-functional/commit/8a35e52684cee50d7269cb9442b835f548c3c665))
+* **prefer-property-signatures:** rename `ignoreIfReadonly` to `ignoreIfReadonlyWrapped` ([86f354b](https://github.com/eslint-functional/eslint-plugin-functional/commit/86f354badf6dee2359211e1e67b0caf8c1da5430))
+* **prefer-readonly-type:** deprecated this rule ([82816a0](https://github.com/eslint-functional/eslint-plugin-functional/commit/82816a03f8af397c0e2de619e55515a504ff2df8))
+* **readonly-type:** create rule ([64af937](https://github.com/eslint-functional/eslint-plugin-functional/commit/64af93713e7e5b46f902e5032f13b4e3bf5a8943))
+* remove `@typescript-eslint/prefer-readonly-parameter-types` from `external-recommended` ([72aa204](https://github.com/eslint-functional/eslint-plugin-functional/commit/72aa2049413d22559b3f90c479baa66ab3312003))
+* rename many of the options ([b47e983](https://github.com/eslint-functional/eslint-plugin-functional/commit/b47e983b822842d1f46824a1e8c98893d45e8cb8))
+* rename ruleset `no-object-orientation` to `no-other-paradigms` ([7ec10c6](https://github.com/eslint-functional/eslint-plugin-functional/commit/7ec10c65d1c740697ecc7ca1cf5a9b7f48ed69e2))
+* split `external-recommended` rulesets into vanilla and typescript variants ([1e7f77a](https://github.com/eslint-functional/eslint-plugin-functional/commit/1e7f77acb699033d17a9b20cbd9d11e5b85fb5b8))
+* **type-declaration-immutability:** add fixer support ([2189397](https://github.com/eslint-functional/eslint-plugin-functional/commit/21893975f899d7df7f23b98aeadab1f56e5a6d29))
+* **type-declaration-immutability:** create rule ([941e774](https://github.com/eslint-functional/eslint-plugin-functional/commit/941e774f11ed7473167e1d37020f17e6755e6a7b))
+* update ruleset configurations ([c195d8e](https://github.com/eslint-functional/eslint-plugin-functional/commit/c195d8e94886b2250b6ccdaa8849445301814565))
+
+
+### BREAKING CHANGES
+
+* rename many of the options
+* **no-try-statements:** rename rule from `no-try-statement`
+* **no-throw-statements:** rename rule from `no-throw-statement`
+* **no-this-expressions:** rename rule from `no-this-expression`
+* **no-mixed-types:** rename rule from `no-mixed-type`
+* **no-loop-statements:** rename rule from `no-loop-statement`
+* **no-expression-statements:** rename rule from `no-expression-statement`
+* **no-conditional-statements:** rename rule from `no-conditional-statement`
+* **no-classes:** rename rule from `no-class`
+* **no-this-expression:** remove `no-this-expression` from recommended and lite rulesets
+* **prefer-property-signatures:** rename `ignoreIfReadonly` to `ignoreIfReadonlyWrapped` and set it to `false`
+by default
+* rename ruleset `no-object-orientation` to `no-other-paradigms`
+* add new strict ruleset and reduce strictness of the recommended ruleset
+* update ruleset configurations
+* split `external-recommended` rulesets into vanilla and typescript variants
+* remove `@typescript-eslint/prefer-readonly-parameter-types` from `external-recommended`
+* **no-method-signature:** rename to `prefer-property-signatures` & move it to `stylistic` ruleset
+* bump minimum supported version of TypeScript to 4.0.2
+* bump minimum supported version of node to 16.10
+
 ## [4.4.1](https://github.com/eslint-functional/eslint-plugin-functional/compare/v4.4.0...v4.4.1) (2022-10-03)
 
 
