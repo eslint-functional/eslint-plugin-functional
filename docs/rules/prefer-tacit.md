@@ -1,4 +1,10 @@
-# Tacit / Point-Free (prefer-tacit)
+# Replaces `x => f(x)` with just `f` (`functional/prefer-tacit`)
+
+⚠️ This rule _warns_ in the 🎨 `stylistic` config.
+
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
 
 This rule enforces using functions directly if they can be without wrapping them.
 
@@ -18,7 +24,7 @@ function f(x) {
   // ...
 }
 
-const foo = x => f(x);
+const foo = (x) => f(x);
 ```
 
 ### ✅ Correct
@@ -43,9 +49,9 @@ type Options = {
     | false
     | {
         allowFixer: boolean;
-      }
+      };
   ignorePattern?: string[] | string;
-}
+};
 ```
 
 ### Default Options
@@ -66,7 +72,7 @@ However this may result in some false positives being picked up.
 <!-- eslint-disable functional/prefer-tacit -->
 
 ```js
-const foo = x => f(x);    // If `f` only accepts one parameter then this is violation of the rule.
+const foo = (x) => f(x); // If `f` only accepts one parameter then this is violation of the rule.
 const bar = foo(1, 2, 3); // But if `f` accepts more than one parameter then it isn't.
 ```
 
@@ -82,3 +88,7 @@ Because when assuming types, false positives may be found, it's recommended to s
 ### `ignorePattern`
 
 See the [ignorePattern](./options/ignore-pattern.md) docs.
+
+### `ignoreImmediateMutation`
+
+TODO

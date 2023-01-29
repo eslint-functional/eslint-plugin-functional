@@ -1,4 +1,8 @@
-# Disallow classes (no-classes)
+# Disallow classes (`functional/no-classes`)
+
+💼 This rule is enabled in the following configs: ☑️ `lite`, `no-other-paradigms`, ✅ `recommended`, 🔒 `strict`.
+
+<!-- end auto-generated rule header -->
 
 Disallow use of the `class` keyword.
 
@@ -76,7 +80,3 @@ const OptimizedMessage = pure(Message);
 // Even more optimized: only updates if specific prop keys have changed
 const HyperOptimizedMessage = onlyUpdateForKeys(["message"], Message);
 ```
-
-## Options
-
-The rule does not accept any options.

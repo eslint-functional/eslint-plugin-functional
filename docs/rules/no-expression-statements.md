@@ -1,4 +1,8 @@
-# Using expressions to cause side-effects not allowed (no-expression-statements)
+# Disallow expression statements (`functional/no-expression-statements`)
+
+💼🚫 This rule is enabled in the following configs: `no-statements`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the ☑️ `lite` config.
+
+<!-- end auto-generated rule header -->
 
 This rule checks that the value of an expression is assigned to a variable and thus helps promote side-effect free (pure) functions.
 
@@ -55,16 +59,16 @@ This rule accepts an options object of the following type:
 ```ts
 type Options = {
   ignorePattern?: string[] | string;
-  ignoreVoid?: boolean
-}
+  ignoreVoid?: boolean;
+};
 ```
 
 ### Default Options
 
 ```ts
 const defaults = {
-  ignoreVoid: false
-}
+  ignoreVoid: false,
+};
 ```
 
 ### `ignoreVoid`

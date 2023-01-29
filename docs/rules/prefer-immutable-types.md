@@ -1,4 +1,10 @@
-# Prefer immutable types over mutable ones (prefer-immutable-types)
+# Require function parameters to be typed as certain immutability (`functional/prefer-immutable-types`)
+
+💼 This rule is enabled in the following configs: ☑️ `lite`, `no-mutations`, ✅ `recommended`, 🔒 `strict`.
+
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
 
 ## Rule Details
 
@@ -174,21 +180,21 @@ type Options = {
 
   fixer?:
     | {
-      ReadonlyShallow?:
-        | { pattern: string; replace: string; }
-        | Array<{ pattern: string; replace: string; }>
-        | false;
-      ReadonlyDeep?:
-        | { pattern: string; replace: string; }
-        | Array<{ pattern: string; replace: string; }>
-        | false;
-      Immutable?:
-        | { pattern: string; replace: string; }
-        | Array<{ pattern: string; replace: string; }>
-        | false;
+        ReadonlyShallow?:
+          | { pattern: string; replace: string }
+          | Array<{ pattern: string; replace: string }>
+          | false;
+        ReadonlyDeep?:
+          | { pattern: string; replace: string }
+          | Array<{ pattern: string; replace: string }>
+          | false;
+        Immutable?:
+          | { pattern: string; replace: string }
+          | Array<{ pattern: string; replace: string }>
+          | false;
       }
     | false;
-}
+};
 ```
 
 ### Default Options
@@ -216,7 +222,7 @@ const defaults = {
     ReadonlyDeep: false,
     Immutable: false,
   },
-}
+};
 ```
 
 ### Preset Overrides
@@ -230,7 +236,7 @@ const recommendedOptions = {
   parameters: {
     enforcement: "ReadonlyDeep",
   },
-},
+};
 ```
 
 #### `lite`
@@ -242,7 +248,7 @@ const liteOptions = {
   parameters: {
     enforcement: "ReadonlyShallow",
   },
-},
+};
 ```
 
 ### `enforcement`
@@ -283,10 +289,10 @@ function object(arg: Readonly<{ prop: string }>) {}
 ```ts
 /* eslint functional/prefer-immutable-types: ["error", { "enforcement": "ReadonlyShallow" }] */
 
-function array(arg: ReadonlyArray<{ foo: string; }>) {}
-function set(arg: ReadonlySet<{ foo: string; }>) {}
-function map(arg: ReadonlyMap<{ foo: string; }>) {}
-function object(arg: Readonly<{ prop: { foo: string; }; }>) {}
+function array(arg: ReadonlyArray<{ foo: string }>) {}
+function set(arg: ReadonlySet<{ foo: string }>) {}
+function map(arg: ReadonlyMap<{ foo: string }>) {}
+function object(arg: Readonly<{ prop: { foo: string } }>) {}
 ```
 
 ### `ignoreInferredTypes`
@@ -312,7 +318,7 @@ A boolean to specify if checking classes should be ignored. `false` by default.
 ```ts
 /* eslint functional/prefer-immutable-types: ["error", { "ignoreInferredTypes": true }] */
 
-import { acceptsCallback, type CallbackOptions } from 'external-dependency';
+import { acceptsCallback, type CallbackOptions } from "external-dependency";
 
 acceptsCallback((options: CallbackOptions) => {});
 ```
@@ -339,9 +345,9 @@ export const acceptsCallback: AcceptsCallback;
 ```ts
 /* eslint functional/prefer-immutable-types: ["error", { "ignoreInferredTypes": true }] */
 
-import { acceptsCallback } from 'external-dependency';
+import { acceptsCallback } from "external-dependency";
 
-acceptsCallback(options => {});
+acceptsCallback((options) => {});
 ```
 
 <details>
@@ -390,9 +396,9 @@ Example using `ReadonlyDeep` instead of `Readonly`:
     "ReadonlyDeep": [
       {
         "pattern": "^(?:Readonly<(.+)>|(.+))$",
-        "replace": "ReadonlyDeep<$1$2>",
-      },
-    ],
+        "replace": "ReadonlyDeep<$1$2>"
+      }
+    ]
   }
 }
 ```

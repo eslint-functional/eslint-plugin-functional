@@ -1,4 +1,4 @@
-import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
+import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { deepmerge } from "deepmerge-ts";
 import { Immutability } from "is-immutable-type";
 import type { JSONSchema4 } from "json-schema";
@@ -7,7 +7,7 @@ import type { IgnorePatternOption } from "~/options";
 import { shouldIgnorePattern, ignorePatternOptionSchema } from "~/options";
 import { getNodeIdentifierTexts } from "~/utils/misc";
 import type { ESTypeDeclaration } from "~/utils/node-types";
-import type { RuleResult } from "~/utils/rule";
+import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
 import { getTypeImmutabilityOfNode, createRule } from "~/utils/rule";
 import { isTSInterfaceDeclaration } from "~/utils/type-guards";
 
@@ -165,9 +165,10 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
+const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
+    category: "No Mutations",
     description: "Enforce the immutability of types based on patterns.",
     recommended: "error",
   },

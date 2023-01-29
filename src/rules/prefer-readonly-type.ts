@@ -1,4 +1,4 @@
-import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
+import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import type { JSONSchema4 } from "json-schema";
 
 import type {
@@ -11,7 +11,11 @@ import {
   shouldIgnorePattern,
 } from "~/options";
 import type { ESArrayTupleType } from "~/utils/node-types";
-import type { BaseOptions, RuleResult } from "~/utils/rule";
+import type {
+  BaseOptions,
+  RuleResult,
+  NamedCreateRuleMetaWithCategory,
+} from "~/utils/rule";
 import { createRule, getTypeOfNode } from "~/utils/rule";
 import { inInterface, isInReturnType } from "~/utils/tree";
 import {
@@ -122,7 +126,7 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
+const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
   deprecated: true,
   replacedBy: [
     "functional/prefer-immutable-types",
@@ -130,7 +134,8 @@ const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
   ],
   type: "suggestion",
   docs: {
-    description: "Prefer readonly array over mutable arrays.",
+    category: "No Mutations",
+    description: "Prefer readonly types over mutable types.",
     recommended: "error",
   },
   messages: errorMessages,

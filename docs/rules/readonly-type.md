@@ -1,4 +1,10 @@
-# Readonly Type (readonly-type)
+# Require consistently using either `readonly` keywords or `Readonly<T>` (`functional/readonly-type`)
+
+💼 This rule is enabled in the 🎨 `stylistic` config.
+
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
 
 This rule enforces consistently using either `readonly` keywords or `Readonly<T>`.
 
@@ -21,7 +27,6 @@ type Foo = Readonly<{
   bar: string;
   baz: number;
 }>;
-
 ```
 
 <!-- eslint-skip -->
@@ -33,7 +38,6 @@ type Foo = {
   readonly bar: string;
   readonly baz: number;
 };
-
 ```
 
 ### ✅ Correct
@@ -48,7 +52,7 @@ type Foo = {
 
 type Foo2 = {
   readonly bar: string;
-  baz: number
+  baz: number;
 };
 ```
 
@@ -63,7 +67,7 @@ type Foo = Readonly<{
 // No issue as it's not fully readonly.
 type Foo2 = {
   readonly bar: string;
-  baz: number
+  baz: number;
 };
 ```
 

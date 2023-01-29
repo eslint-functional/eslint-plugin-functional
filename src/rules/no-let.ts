@@ -1,4 +1,4 @@
-import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
+import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { deepmerge } from "deepmerge-ts";
 import type { JSONSchema4 } from "json-schema";
 
@@ -8,7 +8,7 @@ import {
   shouldIgnoreInFunction,
   ignorePatternOptionSchema,
 } from "~/options";
-import type { RuleResult } from "~/utils/rule";
+import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
 import { createRule } from "~/utils/rule";
 import { inForLoopInitializer } from "~/utils/tree";
 
@@ -65,14 +65,14 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
+const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
+    category: "No Mutations",
     description: "Disallow mutable variables.",
     recommended: "error",
   },
   messages: errorMessages,
-  fixable: "code",
   schema,
 };
 

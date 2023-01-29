@@ -1,4 +1,8 @@
-# Restrict types so that only members of the same kind of are allowed in them (no-mixed-types)
+# Restrict types so that only members of the same kind of are allowed in them (`functional/no-mixed-types`)
+
+💼 This rule is enabled in the following configs: ☑️ `lite`, `no-other-paradigms`, ✅ `recommended`, 🔒 `strict`.
+
+<!-- end auto-generated rule header -->
 
 This rule enforces that an aliased type literal or an interface only has one type of members, eg. only data properties or only functions.
 
@@ -52,7 +56,7 @@ This rule accepts an options object of the following type:
 type Options = {
   checkInterfaces: boolean;
   checkTypeLiterals: boolean;
-}
+};
 ```
 
 ### Default Options
@@ -60,8 +64,8 @@ type Options = {
 ```ts
 const defaults = {
   checkInterfaces: true,
-  checkTypeLiterals: true
-}
+  checkTypeLiterals: true,
+};
 ```
 
 ### checkInterfaces

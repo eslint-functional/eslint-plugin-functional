@@ -1,4 +1,8 @@
-# Disallow mutable variables (no-let)
+# Disallow mutable variables (`functional/no-let`)
+
+💼 This rule is enabled in the following configs: ☑️ `lite`, `no-mutations`, ✅ `recommended`, 🔒 `strict`.
+
+<!-- end auto-generated rule header -->
 
 This rule should be combined with ESLint's built-in `no-var` rule to enforce that all variables are declared as `const`.
 
@@ -21,8 +25,7 @@ let x = 5;
 ```js
 /* eslint functional/no-let: "error" */
 
-for (let i = 0; i < array.length; i++) {
-}
+for (let i = 0; i < array.length; i++) {}
 ```
 
 ### ✅ Correct
@@ -55,7 +58,7 @@ This rule accepts an options object of the following type:
 type Options = {
   allowInFunctions: boolean;
   ignorePattern?: string[] | string;
-}
+};
 ```
 
 ### Default Options
@@ -63,8 +66,8 @@ type Options = {
 ```ts
 const defaults = {
   allowInForLoopInit: false,
-  allowInFunctions: false
-}
+  allowInFunctions: false,
+};
 ```
 
 ### Preset Overrides
@@ -74,7 +77,7 @@ const defaults = {
 ```ts
 const recommendedAndLiteOptions = {
   allowInForLoopInit: true,
-}
+};
 ```
 
 ### `allowInForLoopInit`
@@ -88,8 +91,7 @@ If set, `let`s inside of for a loop initializer are allowed. This does not inclu
 ```js
 /* eslint functional/no-let: ["error", { "allowInForLoopInit": true } ] */
 
-for (let i = 0; i < array.length; i++) {
-}
+for (let i = 0; i < array.length; i++) {}
 ```
 
 #### ❌ Incorrect

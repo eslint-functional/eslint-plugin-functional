@@ -77,72 +77,75 @@ The [below section](#rules) gives details on which rules are enabled by each rul
 
 ## Rules
 
-### No Mutations Rules
+<!-- begin auto-generated rules list -->
 
-| Name                                                                             | Description                                    | <span title="No Mutations">:fleur_de_lis:</span> | <span title="Strict">:speak_no_evil:</span> | <span title="Recommended">:see_no_evil:</span> | <span title="Lite">:hear_no_evil:</span> | :wrench: |   :blue_heart:    |
-| -------------------------------------------------------------------------------- | ---------------------------------------------- | :----------------------------------------------: | :-----------------------------------------: | :--------------------------------------------: | :--------------------------------------: | :------: | :---------------: |
-| [`immutable-data`](./docs/rules/immutable-data.md)                               | Disallow mutating objects and arrays           |                :heavy_check_mark:                |             :heavy_check_mark:              |               :heavy_check_mark:               |              :green_circle:              |          |   :blue_heart:    |
-| [`no-let`](./docs/rules/no-let.md)                                               | Disallow mutable variables                     |                :heavy_check_mark:                |             :heavy_check_mark:              |                 :green_circle:                 |              :green_circle:              |          |                   |
-| [`prefer-immutable-types`](./docs/rules/prefer-immutable-types.md)               | Require types of data to be immutable          |                :heavy_check_mark:                |             :heavy_check_mark:              |                 :green_circle:                 |              :green_circle:              | :wrench: | :thought_balloon: |
-| [`type-declaration-immutability`](./docs/rules/type-declaration-immutability.md) | Enforce type alias immutability using patterns |                :heavy_check_mark:                |             :heavy_check_mark:              |               :heavy_check_mark:               |            :heavy_check_mark:            | :wrench: | :thought_balloon: |
+💼 Configurations enabled in.\
+⚠️ Configurations set to warn in.\
+🚫 Configurations disabled in.\
+☑️ Set in the `lite` configuration.\
+✅ Set in the `recommended` configuration.\
+🔒 Set in the `strict` configuration.\
+🎨 Set in the `stylistic` configuration.\
+🔧 Automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).\
+❌ Deprecated.
 
-### No Other Paradigms Rules
+### Currying
 
-| Name                                                         | Description                                                        | <span title="No Other Paradigms">:fleur_de_lis:</span> | <span title="Strict">:speak_no_evil:</span> | <span title="Recommended">:see_no_evil:</span> | <span title="Lite">:hear_no_evil:</span> | :wrench: |   :blue_heart:    |
-| ------------------------------------------------------------ | ------------------------------------------------------------------ | :----------------------------------------------------: | :-----------------------------------------: | :--------------------------------------------: | :--------------------------------------: | :------: | :---------------: |
-| [`no-classes`](./docs/rules/no-classes.md)                   | Disallow classes                                                   |                   :heavy_check_mark:                   |             :heavy_check_mark:              |               :heavy_check_mark:               |            :heavy_check_mark:            |          |                   |
-| [`no-mixed-types`](./docs/rules/no-mixed-types.md)           | Disallow types that contain both callable and non-callable members |                   :heavy_check_mark:                   |             :heavy_check_mark:              |               :heavy_check_mark:               |            :heavy_check_mark:            |          | :thought_balloon: |
-| [`no-this-expressions`](./docs/rules/no-this-expressions.md) | Disallow `this` access                                             |                   :heavy_check_mark:                   |             :heavy_check_mark:              |                                                |                                          |          |                   |
+| Name                                                         | Description                    | 💼                           | ⚠️  | 🚫  | 🔧  | ❌  |
+| :----------------------------------------------------------- | :----------------------------- | :--------------------------- | :-- | :-- | :-- | :-- |
+| [functional-parameters](docs/rules/functional-parameters.md) | Enforce functional parameters. | ![badge-currying][] ☑️ ✅ 🔒 |     |     |     |     |
 
-### No Statements Rules
+### No Exceptions
 
-| Name                                                                     | Description                                                    | <span title="No Statements">:fleur_de_lis:</span> | <span title="Strict">:speak_no_evil:</span> | <span title="Recommended">:see_no_evil:</span> | <span title="Lite">:hear_no_evil:</span> | :wrench: |   :blue_heart:    |
-| ------------------------------------------------------------------------ | -------------------------------------------------------------- | :-----------------------------------------------: | :-----------------------------------------: | :--------------------------------------------: | :--------------------------------------: | :------: | :---------------: |
-| [`no-conditional-statements`](./docs/rules/no-conditional-statements.md) | Disallow conditional statements (`if` and `switch` statements) |                :heavy_check_mark:                 |             :heavy_check_mark:              |                 :green_circle:                 |                                          |          | :thought_balloon: |
-| [`no-expression-statements`](./docs/rules/no-expression-statements.md)   | Disallow expressions to cause side-effects                     |                :heavy_check_mark:                 |             :heavy_check_mark:              |                                                |                                          |          | :thought_balloon: |
-| [`no-loop-statements`](./docs/rules/no-loop-statements.md)               | Disallow imperative loops                                      |                :heavy_check_mark:                 |             :heavy_check_mark:              |               :heavy_check_mark:               |            :heavy_check_mark:            |          |                   |
-| [`no-return-void`](./docs/rules/no-return-void.md)                       | Disallow functions that return nothing                         |                :heavy_check_mark:                 |             :heavy_check_mark:              |               :heavy_check_mark:               |            :heavy_check_mark:            |          | :thought_balloon: |
+| Name                                                     | Description                                            | 💼                                | ⚠️  | 🚫    | 🔧  | ❌  |
+| :------------------------------------------------------- | :----------------------------------------------------- | :-------------------------------- | :-- | :---- | :-- | :-- |
+| [no-promise-reject](docs/rules/no-promise-reject.md)     | Disallow try-catch[-finally] and try-finally patterns. |                                   |     |       |     |     |
+| [no-throw-statements](docs/rules/no-throw-statements.md) | Disallow throwing exceptions.                          | ☑️ ![badge-no-exceptions][] ✅ 🔒 |     |       |     |     |
+| [no-try-statements](docs/rules/no-try-statements.md)     | Disallow try-catch[-finally] and try-finally patterns. | ![badge-no-exceptions][] 🔒       |     | ☑️ ✅ |     |     |
 
-### No Exceptions Rules
+### No Mutations
 
-| Name                                                         | Description                                           | <span title="No Exceptions">:fleur_de_lis:</span> | <span title="Strict">:speak_no_evil:</span> | <span title="Recommended">:see_no_evil:</span> | <span title="Lite">:hear_no_evil:</span> | :wrench: | :blue_heart: |
-| ------------------------------------------------------------ | ----------------------------------------------------- | :-----------------------------------------------: | :-----------------------------------------: | :--------------------------------------------: | :--------------------------------------: | :------: | :----------: |
-| [`no-promise-reject`](./docs/rules/no-promise-reject.md)     | Disallow rejecting Promises                           |                                                   |                                             |                                                |                                          |          |              |
-| [`no-throw-statements`](./docs/rules/no-throw-statements.md) | Disallow throwing exceptions                          |                :heavy_check_mark:                 |             :heavy_check_mark:              |                 :green_circle:                 |              :green_circle:              |          |              |
-| [`no-try-statements`](./docs/rules/no-try-statements.md)     | Disallow try-catch[-finally] and try-finally patterns |                :heavy_check_mark:                 |             :heavy_check_mark:              |                                                |                                          |          |              |
+| Name                                                                         | Description                                                     | 💼                               | ⚠️  | 🚫  | 🔧  | ❌  |
+| :--------------------------------------------------------------------------- | :-------------------------------------------------------------- | :------------------------------- | :-- | :-- | :-- | :-- |
+| [immutable-data](docs/rules/immutable-data.md)                               | Enforce treating data as immutable.                             | ☑️ ![badge-no-mutations][] ✅ 🔒 |     |     |     |     |
+| [no-let](docs/rules/no-let.md)                                               | Disallow mutable variables.                                     | ☑️ ![badge-no-mutations][] ✅ 🔒 |     |     |     |     |
+| [prefer-immutable-types](docs/rules/prefer-immutable-types.md)               | Require function parameters to be typed as certain immutability | ☑️ ![badge-no-mutations][] ✅ 🔒 |     |     | 🔧  |     |
+| [prefer-readonly-type](docs/rules/prefer-readonly-type.md)                   | Prefer readonly types over mutable types.                       |                                  |     |     | 🔧  | ❌  |
+| [type-declaration-immutability](docs/rules/type-declaration-immutability.md) | Enforce the immutability of types based on patterns.            | ☑️ ![badge-no-mutations][] ✅ 🔒 |     |     | 🔧  |     |
 
-### Currying Rules
+### No Other Paradigms
 
-| Name                                                             | Description                               | <span title="Currying">:fleur_de_lis:</span> | <span title="Strict">:speak_no_evil:</span> | <span title="Recommended">:see_no_evil:</span> | <span title="Lite">:hear_no_evil:</span> | :wrench: | :blue_heart: |
-| ---------------------------------------------------------------- | ----------------------------------------- | :------------------------------------------: | :-----------------------------------------: | :--------------------------------------------: | :--------------------------------------: | :------: | :----------: |
-| [`functional-parameters`](./docs/rules/functional-parameters.md) | Functions must have functional parameters |              :heavy_check_mark:              |             :heavy_check_mark:              |                 :green_circle:                 |              :green_circle:              |          |              |
+| Name                                                     | Description                                                                  | 💼                                     | ⚠️  | 🚫    | 🔧  | ❌  |
+| :------------------------------------------------------- | :--------------------------------------------------------------------------- | :------------------------------------- | :-- | :---- | :-- | :-- |
+| [no-classes](docs/rules/no-classes.md)                   | Disallow classes.                                                            | ☑️ ![badge-no-other-paradigms][] ✅ 🔒 |     |       |     |     |
+| [no-mixed-types](docs/rules/no-mixed-types.md)           | Restrict types so that only members of the same kind of are allowed in them. | ☑️ ![badge-no-other-paradigms][] ✅ 🔒 |     |       |     |     |
+| [no-this-expressions](docs/rules/no-this-expressions.md) | Disallow this access.                                                        | ![badge-no-other-paradigms][] 🔒       |     | ☑️ ✅ |     |     |
 
-### Stylistic Rules
+### No Statements
 
-| Name                                                                       | Description                                                             | <span title="Stylistic">:fleur_de_lis:</span> | <span title="Strict">:speak_no_evil:</span> | <span title="Recommended">:see_no_evil:</span> | <span title="Lite">:hear_no_evil:</span> | :wrench: |   :blue_heart:    |
-| -------------------------------------------------------------------------- | ----------------------------------------------------------------------- | :-------------------------------------------: | :-----------------------------------------: | :--------------------------------------------: | :--------------------------------------: | :------: | :---------------: |
-| [`prefer-property-signatures`](./docs/rules/prefer-property-signatures.md) | Enforce property signatures over method signatures                      |              :heavy_check_mark:               |                                             |                                                |                                          |          | :thought_balloon: |
-| [`prefer-tacit`](./docs/rules/prefer-tacit.md)                             | Tacit/Point-Free style.                                                 |              :heavy_check_mark:               |                                             |                                                |                                          | :wrench: |   :blue_heart:    |
-| [`readonly-type`](./docs/rules/readonly-type.md)                           | Require consistently using either `readonly` keywords or `Readonly<T>`. |              :heavy_check_mark:               |                                             |                                                |                                          | :wrench: | :thought_balloon: |
+| Name                                                                 | Description                                    | 💼                                | ⚠️  | 🚫  | 🔧  | ❌  |
+| :------------------------------------------------------------------- | :--------------------------------------------- | :-------------------------------- | :-- | :-- | :-- | :-- |
+| [no-conditional-statements](docs/rules/no-conditional-statements.md) | Disallow conditional statements.               | ![badge-no-statements][] ✅ 🔒    |     | ☑️  |     |     |
+| [no-expression-statements](docs/rules/no-expression-statements.md)   | Disallow expression statements.                | ![badge-no-statements][] ✅ 🔒    |     | ☑️  |     |     |
+| [no-loop-statements](docs/rules/no-loop-statements.md)               | Disallow imperative loops.                     | ☑️ ![badge-no-statements][] ✅ 🔒 |     |     |     |     |
+| [no-return-void](docs/rules/no-return-void.md)                       | Disallow functions that don't return anything. | ☑️ ![badge-no-statements][] ✅ 🔒 |     |     |     |     |
 
-### Key
+### Stylistic
 
-|       Symbol       | Meaning                                                                                                                          |
-| :----------------: | -------------------------------------------------------------------------------------------------------------------------------- |
-|   :fleur_de_lis:   | Ruleset: Current                                                                                                                 |
-|  :speak_no_evil:   | Ruleset: Strict                                                                                                                  |
-|   :see_no_evil:    | Ruleset: Recommended                                                                                                             |
-|   :hear_no_evil:   | Ruleset: Lite                                                                                                                    |
-| :heavy_check_mark: | Enabled as Error                                                                                                                 |
-|   :green_circle:   | Enabled as Error with Overrides                                                                                                  |
-|      :wrench:      | Fixable                                                                                                                          |
-| :thought_balloon:  | Only Available for TypeScript                                                                                                    |
-|    :blue_heart:    | <span title="Type Information will be used if available making the rule work in more cases.">Works better with TypeScript</span> |
+| Name                                                                   | Description                                                            | 💼  | ⚠️  | 🚫  | 🔧  | ❌  |
+| :--------------------------------------------------------------------- | :--------------------------------------------------------------------- | :-- | :-- | :-- | :-- | :-- |
+| [prefer-property-signatures](docs/rules/prefer-property-signatures.md) | Prefer property signatures over method signatures.                     | 🎨  |     |     |     |     |
+| [prefer-tacit](docs/rules/prefer-tacit.md)                             | Replaces `x => f(x)` with just `f`.                                    |     | 🎨  |     | 🔧  |     |
+| [readonly-type](docs/rules/readonly-type.md)                           | Require consistently using either `readonly` keywords or `Readonly<T>` | 🎨  |     |     | 🔧  |     |
 
-<!--
-|    :warning:    | Enabled as Warning                |
-| :yellow_circle: | Enabled as Warning with Overrides |
--->
+<!-- end auto-generated rules list -->
+
+[badge-currying]: https://img.shields.io/badge/-currying-red.svg
+[badge-lite]: https://img.shields.io/badge/-lite-green.svg
+[badge-no-exceptions]: https://img.shields.io/badge/-no--exceptions-blue.svg
+[badge-no-mutations]: https://img.shields.io/badge/-no--mutations-orange.svg
+[badge-no-other-paradigms]: https://img.shields.io/badge/-no--other--paradigms-yellow.svg
+[badge-no-statements]: https://img.shields.io/badge/-no--statements-purple.svg
 
 ## External Recommended Rules
 

@@ -18,6 +18,17 @@ import { isIdentifier } from "~/utils/tsutils";
 const __VERSION__ = "0.0.0-development";
 
 /**
+ * Any custom rule meta properties.
+ */
+export type NamedCreateRuleMetaWithCategory<T extends string> =
+  ESLintUtils.NamedCreateRuleMeta<T> & {
+    docs: {
+      /** Used for splitting the README rules list into sub-lists. */
+      category: string;
+    };
+  };
+
+/**
  * All options must extends this type.
  */
 export type BaseOptions = unknown[];
@@ -88,7 +99,7 @@ export function createRule<
   Options extends BaseOptions
 >(
   name: string,
-  meta: ESLintUtils.NamedCreateRuleMeta<MessageIds>,
+  meta: NamedCreateRuleMetaWithCategory<MessageIds>,
   defaultOptions: Options,
   ruleFunctionsMap: RuleFunctionsMap<any, MessageIds, Options>
 ): Rule.RuleModule {
@@ -108,7 +119,7 @@ export function createRuleUsingFunction<
   Options extends BaseOptions
 >(
   name: string,
-  meta: ESLintUtils.NamedCreateRuleMeta<MessageIds>,
+  meta: NamedCreateRuleMetaWithCategory<MessageIds>,
   defaultOptions: Options,
   createFunction: (
     context: TSESLint.RuleContext<MessageIds, Options>,

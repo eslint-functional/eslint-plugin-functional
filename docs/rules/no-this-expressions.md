@@ -1,4 +1,8 @@
-# Disallow this access (no-this-expressions)
+# Disallow this access (`functional/no-this-expressions`)
+
+💼🚫 This rule is enabled in the following configs: `no-other-paradigms`, 🔒 `strict`. This rule is _disabled_ in the following configs: ☑️ `lite`, ✅ `recommended`.
+
+<!-- end auto-generated rule header -->
 
 ## Rule Details
 
@@ -22,7 +26,3 @@ const foo = this.value + 17;
 
 const foo = object.value + 17;
 ```
-
-## Options
-
-The rule does not accept any options.

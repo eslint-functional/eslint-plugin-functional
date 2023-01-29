@@ -1,4 +1,8 @@
-# Disallow try-catch[-finally] and try-finally patterns (no-try-statements)
+# Disallow try-catch[-finally] and try-finally patterns (`functional/no-try-statements`)
+
+💼🚫 This rule is enabled in the following configs: `no-exceptions`, 🔒 `strict`. This rule is _disabled_ in the following configs: ☑️ `lite`, ✅ `recommended`.
+
+<!-- end auto-generated rule header -->
 
 This rule disallows the `try` keyword.
 
@@ -39,7 +43,7 @@ This rule accepts an options object of the following type:
 type Options = {
   allowCatch: boolean;
   allowFinally: boolean;
-}
+};
 ```
 
 ### Default Options
@@ -47,8 +51,8 @@ type Options = {
 ```ts
 const defaults = {
   allowCatch: false,
-  allowFinally: false
-}
+  allowFinally: false,
+};
 ```
 
 ### `allowCatch`
