@@ -41,9 +41,6 @@ jobs:
       - name: Run Linting Checks
         run: yarn lint
 
-      - name: Check spelling
-        run: yarn check-spelling
-
   test:
     name: "Test - Node: ${{ matrix.node_version }} - TS: ${{ matrix.ts_version }} - OS: ${{ matrix.os }}"
     needs: pre_job

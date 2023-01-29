@@ -19,19 +19,19 @@
     "type": "git",
     "url": "git+https://github.com/eslint-functional/eslint-plugin-functional"
   },
-  "license": "MIT",
-  "author": "Jonas Kello",
-  "contributors": [
-    {
-      "name": "Rebecca Stevens",
-      "email": "rebecca.stevens@outlook.co.nz"
-    }
-  ],
   "funding": [
     {
       "type": "ko-fi",
       "url": "https://ko-fi.com/rebeccastevens"
     }
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Rebecca Stevens",
+    "email": "rebecca.stevens@outlook.co.nz"
+  },
+  "contributors": [
+    "Jonas Kello"
   ],
   "exports": {
     "default": "./lib/index.js",
@@ -47,24 +47,22 @@
     "README.md"
   ],
   "scripts": {
-    "build": "rimraf lib && yarn compile && yarn update-eslint-docs",
+    "build": "rimraf lib && yarn compile && yarn build:docs",
     "build-tests": "rimraf build && yarn compile-tests",
-    "check-format": "prettier --list-different \"./**/*.{md,ts}\"",
-    "check-spelling": "cspell --config=.cspell.json \"**/*.{md,ts}\"",
+    "build:docs": "eslint-doc-generator",
     "compile": "rollup -c",
     "compile-tests": "ts-node -P scripts/tsconfig.json scripts/compile-tests.mts",
     "cz": "git-cz",
-    "format": "prettier --write \"./**/*.{md,ts}\"",
-    "lint": "yarn build && yarn lint-js && yarn lint-md && yarn lint-eslint-docs",
-    "lint-eslint-docs": "yarn update-eslint-docs --check",
-    "lint-js": "eslint .",
-    "lint-md": "markdownlint \"**/*.md\" --config=.markdownlint.json --ignore-path=.markdownlintignore",
+    "lint": "yarn build && yarn lint:js && yarn lint:md && yarn lint:eslint-docs && yarn lint:spelling",
+    "lint:eslint-docs": "eslint-doc-generator --check",
+    "lint:js": "eslint .",
+    "lint:md": "markdownlint \"**/*.md\" --config=.markdownlint.json --ignore-path=.markdownlintignore",
+    "lint:spelling": "cspell --config=.cspell.json \"**/*.{md,ts}\"",
     "prepare": "yarn husky install",
     "test": "nyc ava",
     "test-compiled": "USE_COMPILED_TESTS=1 nyc ava",
     "test-work": "ONLY_TEST_WORK_FILE=1 ava",
-    "verify": "yarn lint && yarn build-tests && yarn test-compiled && rimraf build",
-    "update-eslint-docs": "eslint-doc-generator"
+    "verify": "yarn lint && yarn build-tests && yarn test-compiled && rimraf build"
   },
   "resolutions": {
     "npm/chalk": "^4.1.2"
@@ -129,6 +127,7 @@
     "markdownlint-cli": "0.33.0",
     "nyc": "15.1.0",
     "prettier": "2.8.3",
+    "prettier-plugin-packagejson": "2.4.0",
     "rimraf": "4.1.2",
     "rollup": "3.11.0",
     "rollup-plugin-auto-external": "2.0.0",

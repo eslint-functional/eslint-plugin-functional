@@ -105,7 +105,7 @@ The [below section](#rules) gives details on which rules are enabled by each rul
 
 ### No Mutations
 
-| Name                                                                         | Description                                                     | 💼                               | ⚠️  | 🚫  | 🔧  | ❌  |
+| Name                                                                         | Description                                                     | 💼                               | ⚠️  | 🚫  | 🔧  | ❌  |
 | :--------------------------------------------------------------------------- | :-------------------------------------------------------------- | :------------------------------- | :-- | :-- | :-- | :-- |
 | [immutable-data](docs/rules/immutable-data.md)                               | Enforce treating data as immutable.                             | ☑️ ![badge-no-mutations][] ✅ 🔒 |     |     |     |     |
 | [no-let](docs/rules/no-let.md)                                               | Disallow mutable variables.                                     | ☑️ ![badge-no-mutations][] ✅ 🔒 |     |     |     |     |
@@ -115,7 +115,7 @@ The [below section](#rules) gives details on which rules are enabled by each rul
 
 ### No Other Paradigms
 
-| Name                                                     | Description                                                                  | 💼                                     | ⚠️  | 🚫    | 🔧  | ❌  |
+| Name                                                     | Description                                                                  | 💼                                     | ⚠️  | 🚫    | 🔧  | ❌  |
 | :------------------------------------------------------- | :--------------------------------------------------------------------------- | :------------------------------------- | :-- | :---- | :-- | :-- |
 | [no-classes](docs/rules/no-classes.md)                   | Disallow classes.                                                            | ☑️ ![badge-no-other-paradigms][] ✅ 🔒 |     |       |     |     |
 | [no-mixed-types](docs/rules/no-mixed-types.md)           | Restrict types so that only members of the same kind of are allowed in them. | ☑️ ![badge-no-other-paradigms][] ✅ 🔒 |     |       |     |     |
@@ -132,7 +132,7 @@ The [below section](#rules) gives details on which rules are enabled by each rul
 
 ### Stylistic
 
-| Name                                                                   | Description                                                            | 💼  | ⚠️  | 🚫  | 🔧  | ❌  |
+| Name                                                                   | Description                                                            | 💼  | ⚠️  | 🚫  | 🔧  | ❌  |
 | :--------------------------------------------------------------------- | :--------------------------------------------------------------------- | :-- | :-- | :-- | :-- | :-- |
 | [prefer-property-signatures](docs/rules/prefer-property-signatures.md) | Prefer property signatures over method signatures.                     | 🎨  |     |     |     |     |
 | [prefer-tacit](docs/rules/prefer-tacit.md)                             | Replaces `x => f(x)` with just `f`.                                    |     | 🎨  |     | 🔧  |     |
