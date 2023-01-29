@@ -42,7 +42,7 @@ Add `functional` to the plugins section of your `.eslintrc` configuration file. 
 ```
 
 There are several rulesets provided by this plugin.
-[See below](#rulesets) for what they are and what rules are including in each.
+[See below](#rulesets) for what they are and what rules are included in each.
 Enable rulesets via the "extends" property of your `.eslintrc` configuration file.
 
 ```jsonc

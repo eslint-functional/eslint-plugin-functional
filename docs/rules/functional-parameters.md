@@ -4,7 +4,7 @@
 
 <!-- end auto-generated rule header -->
 
-Disallow use of rest parameters, the `arguments` keyword and enforces that functions take a least 1 parameter.
+Disallow use of rest parameters, the `arguments` keyword and enforces that functions take at least 1 parameter.
 
 ## Rule Details
 
@@ -130,7 +130,7 @@ There's not much point of having a function that doesn't take any parameters in 
 
 Require all functions to have exactly one parameter.
 
-Any function that take takes multiple parameter can be rewritten as a higher-order function that only takes one.
+Any function that takes multiple parameter can be rewritten as a higher-order function that only takes one.
 
 Example:
 

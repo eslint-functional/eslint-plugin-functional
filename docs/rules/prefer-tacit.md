@@ -60,7 +60,7 @@ const defaults = {
 
 ### `assumeTypes`
 
-The rule take advantage of TypeScript's typing engine to check if callback wrapper is in fact safe to remove.
+The rule takes advantage of TypeScript's typing engine to check if callback wrapper is in fact safe to remove.
 
 This option will make the rule assume that the function only accepts the arguments given to it in the wrapper.
 However this may result in some false positives being picked up.

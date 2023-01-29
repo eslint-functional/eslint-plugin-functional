@@ -94,7 +94,7 @@ const liteOptions = {
 
 ### `assumeTypes`
 
-The rule take advantage of TypeScript's typing engine to check if mutation is taking place.
+The rule takes advantage of TypeScript's typing engine to check if mutation is taking place.
 If you are not using TypeScript, type checking cannot be performed; hence this option exists.
 
 This option will make the rule assume the type of the nodes it is checking are of type Array/Object.

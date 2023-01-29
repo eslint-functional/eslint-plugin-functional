@@ -11,7 +11,7 @@ There are two ways function members can be declared in interfaces and type alias
 The `MethodSignature` and the `PropertySignature` forms seem equivalent, but only the `PropertySignature` form can have a `readonly` modifier.
 Because of this any `MethodSignature` will be mutable unless wrapped in the `Readonly` type.
 
-It should be noted however that the `PropertySignature` do not support overloading.
+It should be noted however that the `PropertySignature` form does not support overloading.
 
 ### ❌ Incorrect
 

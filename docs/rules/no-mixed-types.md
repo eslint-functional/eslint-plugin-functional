@@ -1,4 +1,4 @@
-# Restrict types so that only members of the same kind of are allowed in them (`functional/no-mixed-types`)
+# Restrict types so that only members of the same kind are allowed in them (`functional/no-mixed-types`)
 
 💼 This rule is enabled in the following configs: ☑️ `lite`, `no-other-paradigms`, ✅ `recommended`, 🔒 `strict`.
 

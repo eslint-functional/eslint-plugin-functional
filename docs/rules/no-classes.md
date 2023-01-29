@@ -66,7 +66,7 @@ Instead of creating classes, you should use React 0.14's [Stateless Functional C
 const Message = ({ message }) => <div>{message}</div>;
 ```
 
-What about lifecycle methods like `shouldComponentUpdate`? We can use the [recompose](https://github.com/acdlite/recompose) library to apply these optimizations to your Stateless Functional Components. The [recompose](https://github.com/acdlite/recompose) library relies on the fact that your Redux state is immutable to efficiently implement shouldComponentUpdate for you.
+What about lifecycle methods like `shouldComponentUpdate`? We can use the [recompose](https://github.com/acdlite/recompose) library to apply these optimizations to your Stateless Functional Components. The [recompose](https://github.com/acdlite/recompose) library relies on the fact that your Redux state is immutable to efficiently implement `shouldComponentUpdate` for you.
 
 ```js
 import { pure, onlyUpdateForKeys } from "recompose";

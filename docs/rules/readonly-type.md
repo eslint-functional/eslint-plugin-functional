@@ -83,8 +83,8 @@ const defaults = "generic";
 
 ### `generic`
 
-Enforce using `Readonly<T>` instead of marking all props as readonly.
+Enforce using `Readonly<T>` instead of marking each property as readonly with the `readonly` keyword.
 
 ### `keyword`
 
-Enforce using `readonly` keyword for all props instead of wrapping with `Readonly`.
+Enforce using `readonly` keyword for each property instead of wrapping with `Readonly`.

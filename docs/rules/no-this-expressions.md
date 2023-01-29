@@ -6,7 +6,7 @@
 
 ## Rule Details
 
-This rule is companion rule to the [no-classes](./no-classes.md) rule.
+This rule is a companion rule to the [no-classes](./no-classes.md) rule.
 See the its docs for more info.
 
 ### ❌ Incorrect

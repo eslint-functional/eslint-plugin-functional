@@ -116,11 +116,11 @@ The [below section](#rules) gives details on which rules are enabled by each rul
 
 ### No Other Paradigms
 
-| Name                                                     | Description                                                                  | 💼                                     | ⚠️  | 🚫    | 🔧  | 💡  | ❌  |
-| :------------------------------------------------------- | :--------------------------------------------------------------------------- | :------------------------------------- | :-- | :---- | :-- | :-- | :-- |
-| [no-classes](docs/rules/no-classes.md)                   | Disallow classes.                                                            | ☑️ ![badge-no-other-paradigms][] ✅ 🔒 |     |       |     |     |     |
-| [no-mixed-types](docs/rules/no-mixed-types.md)           | Restrict types so that only members of the same kind of are allowed in them. | ☑️ ![badge-no-other-paradigms][] ✅ 🔒 |     |       |     |     |     |
-| [no-this-expressions](docs/rules/no-this-expressions.md) | Disallow this access.                                                        | ![badge-no-other-paradigms][] 🔒       |     | ☑️ ✅ |     |     |     |
+| Name                                                     | Description                                                               | 💼                                     | ⚠️  | 🚫    | 🔧  | 💡  | ❌  |
+| :------------------------------------------------------- | :------------------------------------------------------------------------ | :------------------------------------- | :-- | :---- | :-- | :-- | :-- |
+| [no-classes](docs/rules/no-classes.md)                   | Disallow classes.                                                         | ☑️ ![badge-no-other-paradigms][] ✅ 🔒 |     |       |     |     |     |
+| [no-mixed-types](docs/rules/no-mixed-types.md)           | Restrict types so that only members of the same kind are allowed in them. | ☑️ ![badge-no-other-paradigms][] ✅ 🔒 |     |       |     |     |     |
+| [no-this-expressions](docs/rules/no-this-expressions.md) | Disallow this access.                                                     | ![badge-no-other-paradigms][] 🔒       |     | ☑️ ✅ |     |     |     |
 
 ### No Statements
 
