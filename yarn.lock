@@ -1087,18 +1087,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rebeccastevens/eslint-config@npm:1.4.6":
-  version: 1.4.6
-  resolution: "@rebeccastevens/eslint-config@npm:1.4.6"
+"@rebeccastevens/eslint-config@npm:1.5.0":
+  version: 1.5.0
+  resolution: "@rebeccastevens/eslint-config@npm:1.5.0"
   dependencies:
-    deepmerge-ts: ^4.0.0
+    deepmerge-ts: ^4.2.2
   peerDependencies:
     "@typescript-eslint/eslint-plugin": "*"
     "@typescript-eslint/parser": "*"
     eslint: ">=8.24.0"
     eslint-import-resolver-typescript: "*"
     eslint-plugin-eslint-comments: "*"
-    eslint-plugin-functional: ">=5.0.0-beta.14"
+    eslint-plugin-functional: ">=5.0.0"
     eslint-plugin-import: "*"
     eslint-plugin-jsdoc: "*"
     eslint-plugin-markdown: "*"
@@ -1107,7 +1107,7 @@ __metadata:
     eslint-plugin-promise: "*"
     eslint-plugin-sonarjs: "*"
     eslint-plugin-unicorn: "*"
-  checksum: 69de698a24b093204201308b7f7011d85e2defca3e9ddb8b4f1e3bf6d9c187e675816a8acce01b9d0c3e337fd2506ddeb7c2f7ffabf6b5974ec30c9c7a9b2499
+  checksum: 4ee3add33f453e58854a67509337153fab54e1d2d84aeed095990c33b944188ab5b2faf99197fc0132aea948da2bc9640b7a1a2d2072e55a445c01f85580be71
   languageName: node
   linkType: hard
 
@@ -2882,7 +2882,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"deepmerge-ts@npm:^4.0.0, deepmerge-ts@npm:^4.2.2":
+"deepmerge-ts@npm:^4.2.2":
   version: 4.2.2
   resolution: "deepmerge-ts@npm:4.2.2"
   checksum: 137c3650519d9b1a220db7e23a3f56304cd02e7f97b2b8392e2767251055a29318425bacdb2ab2ff175a4645f7179643acf0e038d5dafbfdbc11bdf322f79697
@@ -3403,7 +3403,7 @@ __metadata:
     "@commitlint/config-conventional": 17.4.2
     "@cspell/dict-cryptocurrencies": 3.0.1
     "@istanbuljs/nyc-config-typescript": 1.0.2
-    "@rebeccastevens/eslint-config": 1.4.6
+    "@rebeccastevens/eslint-config": 1.5.0
     "@rollup/plugin-commonjs": 24.0.1
     "@rollup/plugin-json": 6.0.0
     "@rollup/plugin-node-resolve": 15.0.1
@@ -4107,7 +4107,7 @@ __metadata:
 
 "fsevents@patch:fsevents@~2.3.2#~builtin<compat/fsevents>":
   version: 2.3.2
-  resolution: "fsevents@patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=18f3a7"
+  resolution: "fsevents@patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=df0bf1"
   dependencies:
     node-gyp: latest
   conditions: os=darwin
@@ -7117,7 +7117,7 @@ __metadata:
 
 "resolve@patch:resolve@^1.10.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.10.1#~builtin<compat/resolve>, resolve@patch:resolve@^1.12.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.22.1#~builtin<compat/resolve>":
   version: 1.22.1
-  resolution: "resolve@patch:resolve@npm%3A1.22.1#~builtin<compat/resolve>::version=1.22.1&hash=07638b"
+  resolution: "resolve@patch:resolve@npm%3A1.22.1#~builtin<compat/resolve>::version=1.22.1&hash=c3c19d"
   dependencies:
     is-core-module: ^2.9.0
     path-parse: ^1.0.7
@@ -8091,11 +8091,11 @@ __metadata:
 
 "typescript@patch:typescript@4.9.4#~builtin<compat/typescript>, typescript@patch:typescript@^4.6.4#~builtin<compat/typescript>":
   version: 4.9.4
-  resolution: "typescript@patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=a1c5e5"
+  resolution: "typescript@patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=ad5954"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 37f6e2c3c5e2aa5934b85b0fddbf32eeac8b1bacf3a5b51d01946936d03f5377fe86255d4e5a4ae628fd0cd553386355ad362c57f13b4635064400f3e8e05b9d
+  checksum: 1caaea6cb7f813e64345190fddc4e6c924d0b698ab81189b503763c4a18f7f5501c69362979d36e19c042d89d936443e768a78b0675690b35eb663d19e0eae71
   languageName: node
   linkType: hard
 
