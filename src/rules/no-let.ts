@@ -1,21 +1,16 @@
-import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
+import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { deepmerge } from "deepmerge-ts";
 import type { JSONSchema4 } from "json-schema";
-import type { ReadonlyDeep } from "type-fest";
 
-import type {
-  AllowLocalMutationOption,
-  IgnorePatternOption,
-} from "~/common/ignore-options";
+import type { IgnorePatternOption } from "~/options";
 import {
   shouldIgnorePattern,
-  shouldIgnoreLocalMutation,
-  allowLocalMutationOptionSchema,
+  shouldIgnoreInFunction,
   ignorePatternOptionSchema,
-} from "~/common/ignore-options";
-import type { RuleResult } from "~/util/rule";
-import { createRule } from "~/util/rule";
-import { inForLoopInitializer } from "~/util/tree";
+} from "~/options";
+import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
+import { createRule } from "~/utils/rule";
+import { isInForLoopInitializer } from "~/utils/tree";
 
 /**
  * The name of this rule.
@@ -25,12 +20,11 @@ export const name = "no-let" as const;
 /**
  * The options this rule can take.
  */
-type Options = readonly [
-  AllowLocalMutationOption &
-    IgnorePatternOption &
-    Readonly<{
-      allowInForLoopInit: boolean;
-    }>
+type Options = [
+  IgnorePatternOption & {
+    allowInForLoopInit: boolean;
+    allowInFunctions: boolean;
+  }
 ];
 
 /**
@@ -39,15 +33,14 @@ type Options = readonly [
 const schema: JSONSchema4 = [
   {
     type: "object",
-    properties: deepmerge(
-      allowLocalMutationOptionSchema,
-      ignorePatternOptionSchema,
-      {
-        allowInForLoopInit: {
-          type: "boolean",
-        },
-      }
-    ),
+    properties: deepmerge(ignorePatternOptionSchema, {
+      allowInForLoopInit: {
+        type: "boolean",
+      },
+      allowInFunctions: {
+        type: "boolean",
+      },
+    }),
     additionalProperties: false,
   },
 ];
@@ -58,7 +51,7 @@ const schema: JSONSchema4 = [
 const defaultOptions: Options = [
   {
     allowInForLoopInit: false,
-    allowLocalMutation: false,
+    allowInFunctions: false,
   },
 ];
 
@@ -72,14 +65,14 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
+const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
+    category: "No Mutations",
     description: "Disallow mutable variables.",
     recommended: "error",
   },
   messages: errorMessages,
-  fixable: "code",
   schema,
 };
 
@@ -87,20 +80,18 @@ const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
  * Check if the given VariableDeclaration violates this rule.
  */
 function checkVariableDeclaration(
-  node: ReadonlyDeep<TSESTree.VariableDeclaration>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  node: TSESTree.VariableDeclaration,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
-  const { allowInForLoopInit } = optionsObject;
+  const { allowInForLoopInit, ignorePattern, allowInFunctions } = optionsObject;
 
   if (
     node.kind !== "let" ||
-    shouldIgnoreLocalMutation(node, context, optionsObject) ||
-    shouldIgnorePattern(node, context, optionsObject) ||
-    (allowInForLoopInit && inForLoopInitializer(node))
+    shouldIgnoreInFunction(node, context, allowInFunctions) ||
+    shouldIgnorePattern(node, context, ignorePattern) ||
+    (allowInForLoopInit && isInForLoopInitializer(node))
   ) {
     return {
       context,

@@ -1,0 +1,14 @@
+{
+  "rules": {
+    "@typescript-eslint/no-var-requires": "off",
+    "functional/functional-parameters": "off",
+    "functional/no-try-statements": "off",
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "peerDependencies": true
+      }
+    ],
+    "unicorn/prefer-module": "off"
+  }
+}

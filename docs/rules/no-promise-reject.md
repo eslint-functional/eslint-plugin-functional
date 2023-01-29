@@ -1,4 +1,6 @@
-# Disallow rejecting Promises (no-promise-reject)
+# Disallow try-catch[-finally] and try-finally patterns (`functional/no-promise-reject`)
+
+<!-- end auto-generated rule header -->
 
 This rule disallows use of `Promise.reject()`.
 
@@ -10,7 +12,7 @@ You can view a `Promise` as a result object with built-in error (something like 
 You can also view a rejected promise as something similar to an exception and as such something that does not fit with functional programming.
 If your view is the latter you can use the `no-promise-reject` rule to disallow rejected promises.
 
-Examples of **incorrect** code for this rule:
+### ❌ Incorrect
 
 <!-- eslint-skip -->
 
@@ -26,7 +28,7 @@ async function divide(x, y) {
 }
 ```
 
-Examples of **correct** code for this rule:
+### ✅ Correct
 
 ```js
 /* eslint functional/no-promise-reject: "error" */
@@ -34,12 +36,6 @@ Examples of **correct** code for this rule:
 async function divide(x, y) {
   const [xv, yv] = await Promise.all([x, y]);
 
-  return yv === 0
-    ? new Error("Cannot divide by zero.")
-    : xv / yv;
+  return yv === 0 ? new Error("Cannot divide by zero.") : xv / yv;
 }
 ```
-
-## Options
-
-The rule does not accept any options.

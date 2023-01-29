@@ -1,28 +1,23 @@
-import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
-import { deepmerge } from "deepmerge-ts";
+import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import type { JSONSchema4 } from "json-schema";
-import type { ReadonlyDeep } from "type-fest";
 
 import type {
-  AllowLocalMutationOption,
-  IgnoreClassOption,
-  IgnoreInterfaceOption,
   IgnorePatternOption,
-} from "~/common/ignore-options";
+  IgnoreAccessorPatternOption,
+} from "~/options";
 import {
-  shouldIgnoreLocalMutation,
-  shouldIgnoreClass,
-  shouldIgnoreInterface,
+  shouldIgnoreInFunction,
+  shouldIgnoreClasses,
   shouldIgnorePattern,
-  allowLocalMutationOptionSchema,
-  ignoreClassOptionSchema,
-  ignoreInterfaceOptionSchema,
-  ignorePatternOptionSchema,
-} from "~/common/ignore-options";
-import type { ESArrayTupleType } from "~/src/util/node-types";
-import type { RuleResult } from "~/util/rule";
-import { createRule, getTypeOfNode } from "~/util/rule";
-import { isInReturnType } from "~/util/tree";
+} from "~/options";
+import type { ESArrayTupleType } from "~/utils/node-types";
+import type {
+  BaseOptions,
+  RuleResult,
+  NamedCreateRuleMetaWithCategory,
+} from "~/utils/rule";
+import { createRule, getTypeOfNode } from "~/utils/rule";
+import { isInInterface, isInReturnType } from "~/utils/tree";
 import {
   isArrayType,
   isAssignmentPattern,
@@ -33,8 +28,11 @@ import {
   isTSParameterProperty,
   isTSPropertySignature,
   isTSTupleType,
+  isTSTypeAnnotation,
+  isTSTypeLiteral,
   isTSTypeOperator,
-} from "~/util/typeguard";
+  isTSTypeReference,
+} from "~/utils/type-guards";
 
 /**
  * The name of this rule.
@@ -44,16 +42,16 @@ export const name = "prefer-readonly-type" as const;
 /**
  * The options this rule can take.
  */
-type Options = readonly [
-  AllowLocalMutationOption &
-    IgnoreClassOption &
-    IgnoreInterfaceOption &
-    IgnorePatternOption &
-    Readonly<{
-      allowMutableReturnType: boolean;
-      checkImplicit: boolean;
-      ignoreCollections: boolean;
-    }>
+type Options = [
+  {
+    allowLocalMutation: boolean;
+    allowMutableReturnType: boolean;
+    checkImplicit: boolean;
+    ignoreCollections: boolean;
+    ignoreClass: boolean | "fieldsOnly";
+    ignoreInterface: boolean;
+    ignorePattern?: string[] | string;
+  }
 ];
 
 /**
@@ -62,23 +60,40 @@ type Options = readonly [
 const schema: JSONSchema4 = [
   {
     type: "object",
-    properties: deepmerge(
-      allowLocalMutationOptionSchema,
-      ignorePatternOptionSchema,
-      ignoreClassOptionSchema,
-      ignoreInterfaceOptionSchema,
-      {
-        allowMutableReturnType: {
-          type: "boolean",
+    properties: {
+      allowLocalMutation: {
+        type: "boolean",
+      },
+      ignorePattern: {
+        type: ["string", "array"],
+        items: {
+          type: "string",
         },
-        checkImplicit: {
-          type: "boolean",
-        },
-        ignoreCollections: {
-          type: "boolean",
-        },
-      }
-    ),
+      },
+      ignoreClass: {
+        oneOf: [
+          {
+            type: "boolean",
+          },
+          {
+            type: "string",
+            enum: ["fieldsOnly"],
+          },
+        ],
+      },
+      ignoreInterface: {
+        type: "boolean",
+      },
+      allowMutableReturnType: {
+        type: "boolean",
+      },
+      checkImplicit: {
+        type: "boolean",
+      },
+      ignoreCollections: {
+        type: "boolean",
+      },
+    },
     additionalProperties: false,
   },
 ];
@@ -111,10 +126,16 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
+const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
+  deprecated: true,
+  replacedBy: [
+    "functional/prefer-immutable-types",
+    "functional/type-declaration-immutability",
+  ],
   type: "suggestion",
   docs: {
-    description: "Prefer readonly array over mutable arrays.",
+    category: "No Mutations",
+    description: "Prefer readonly types over mutable types.",
     recommended: "error",
   },
   messages: errorMessages,
@@ -122,10 +143,7 @@ const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
   schema,
 };
 
-const mutableToImmutableTypes: ReadonlyMap<string, string> = new Map<
-  string,
-  string
->([
+const mutableToImmutableTypes = new Map<string, string>([
   ["Array", "ReadonlyArray"],
   ["Map", "ReadonlyMap"],
   ["Set", "ReadonlySet"],
@@ -135,24 +153,60 @@ const mutableTypeRegex = new RegExp(
   "u"
 );
 
+function shouldIgnorePattern2(
+  node: TSESTree.Node,
+  context: TSESLint.RuleContext<string, BaseOptions>,
+  ignorePattern: Partial<IgnorePatternOption>["ignorePattern"],
+  ignoreAccessorPattern?: Partial<IgnoreAccessorPatternOption>["ignoreAccessorPattern"]
+): boolean {
+  const isTypeNode =
+    isTSArrayType(node) ||
+    isTSIndexSignature(node) ||
+    isTSTupleType(node) ||
+    isTSTypeAnnotation(node) ||
+    isTSTypeLiteral(node) ||
+    isTSTypeReference(node);
+
+  if (isTypeNode) {
+    return shouldIgnorePattern2(
+      node.parent!,
+      context,
+      ignorePattern,
+      ignoreAccessorPattern
+    );
+  }
+
+  return shouldIgnorePattern(
+    node,
+    context,
+    ignorePattern,
+    ignoreAccessorPattern
+  );
+}
+
 /**
  * Check if the given ArrayType or TupleType violates this rule.
  */
 function checkArrayOrTupleType(
-  node: ReadonlyDeep<ESArrayTupleType>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  node: ESArrayTupleType,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
-  const { allowMutableReturnType, ignoreCollections } = optionsObject;
+  const {
+    allowLocalMutation,
+    allowMutableReturnType,
+    ignoreClass,
+    ignoreCollections,
+    ignoreInterface,
+    ignorePattern,
+  } = optionsObject;
 
   if (
-    shouldIgnoreClass(node, context, optionsObject) ||
-    shouldIgnoreInterface(node, context, optionsObject) ||
-    shouldIgnoreLocalMutation(node, context, optionsObject) ||
-    shouldIgnorePattern(node, context, optionsObject) ||
+    shouldIgnoreClasses(node, context, ignoreClass) ||
+    (ignoreInterface === true && isInInterface(node)) ||
+    shouldIgnoreInFunction(node, context, allowLocalMutation) ||
+    shouldIgnorePattern2(node, context, ignorePattern) ||
     ignoreCollections
   ) {
     return {
@@ -196,19 +250,19 @@ function checkArrayOrTupleType(
  * Check if the given TSMappedType violates this rule.
  */
 function checkMappedType(
-  node: ReadonlyDeep<TSESTree.TSMappedType>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  node: TSESTree.TSMappedType,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
+  const { allowLocalMutation, ignoreClass, ignoreInterface, ignorePattern } =
+    optionsObject;
 
   if (
-    shouldIgnoreClass(node, context, optionsObject) ||
-    shouldIgnoreInterface(node, context, optionsObject) ||
-    shouldIgnoreLocalMutation(node, context, optionsObject) ||
-    shouldIgnorePattern(node, context, optionsObject)
+    shouldIgnoreClasses(node, context, ignoreClass) ||
+    (ignoreInterface === true && isInInterface(node)) ||
+    shouldIgnoreInFunction(node, context, allowLocalMutation) ||
+    shouldIgnorePattern2(node, context, ignorePattern)
   ) {
     return {
       context,
@@ -239,20 +293,25 @@ function checkMappedType(
  * Check if the given TypeReference violates this rule.
  */
 function checkTypeReference(
-  node: ReadonlyDeep<TSESTree.TSTypeReference>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  node: TSESTree.TSTypeReference,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
-  const { allowMutableReturnType, ignoreCollections } = optionsObject;
+  const {
+    allowLocalMutation,
+    ignoreClass,
+    ignoreInterface,
+    ignorePattern,
+    allowMutableReturnType,
+    ignoreCollections,
+  } = optionsObject;
 
   if (
-    shouldIgnoreClass(node, context, optionsObject) ||
-    shouldIgnoreInterface(node, context, optionsObject) ||
-    shouldIgnoreLocalMutation(node, context, optionsObject) ||
-    shouldIgnorePattern(node, context, optionsObject)
+    shouldIgnoreClasses(node, context, ignoreClass) ||
+    (ignoreInterface === true && isInInterface(node)) ||
+    shouldIgnoreInFunction(node, context, allowLocalMutation) ||
+    shouldIgnorePattern2(node, context, ignorePattern)
   ) {
     return {
       context,
@@ -299,23 +358,27 @@ function checkTypeReference(
  */
 function checkProperty(
   node:
-    | ReadonlyDeep<TSESTree.PropertyDefinition>
-    | ReadonlyDeep<TSESTree.TSIndexSignature>
-    | ReadonlyDeep<TSESTree.TSParameterProperty>
-    | ReadonlyDeep<TSESTree.TSPropertySignature>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+    | TSESTree.PropertyDefinition
+    | TSESTree.TSIndexSignature
+    | TSESTree.TSParameterProperty
+    | TSESTree.TSPropertySignature,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
-  const { allowMutableReturnType } = optionsObject;
+  const {
+    allowLocalMutation,
+    ignoreClass,
+    ignoreInterface,
+    ignorePattern,
+    allowMutableReturnType,
+  } = optionsObject;
 
   if (
-    shouldIgnoreClass(node, context, optionsObject) ||
-    shouldIgnoreInterface(node, context, optionsObject) ||
-    shouldIgnoreLocalMutation(node, context, optionsObject) ||
-    shouldIgnorePattern(node, context, optionsObject)
+    shouldIgnoreClasses(node, context, ignoreClass) ||
+    (ignoreInterface === true && isInInterface(node)) ||
+    shouldIgnoreInFunction(node, context, allowLocalMutation) ||
+    shouldIgnorePattern2(node, context, ignorePattern)
   ) {
     return {
       context,
@@ -358,24 +421,29 @@ function checkProperty(
  */
 function checkImplicitType(
   node:
-    | ReadonlyDeep<TSESTree.ArrowFunctionExpression>
-    | ReadonlyDeep<TSESTree.FunctionDeclaration>
-    | ReadonlyDeep<TSESTree.FunctionExpression>
-    | ReadonlyDeep<TSESTree.VariableDeclaration>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+    | TSESTree.ArrowFunctionExpression
+    | TSESTree.FunctionDeclaration
+    | TSESTree.FunctionExpression
+    | TSESTree.VariableDeclaration,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
-  const { checkImplicit, ignoreCollections } = optionsObject;
+  const {
+    allowLocalMutation,
+    ignoreClass,
+    ignoreInterface,
+    ignorePattern,
+    checkImplicit,
+    ignoreCollections,
+  } = optionsObject;
 
   if (
     !checkImplicit ||
-    shouldIgnoreClass(node, context, optionsObject) ||
-    shouldIgnoreInterface(node, context, optionsObject) ||
-    shouldIgnoreLocalMutation(node, context, optionsObject) ||
-    shouldIgnorePattern(node, context, optionsObject)
+    shouldIgnoreClasses(node, context, ignoreClass) ||
+    (ignoreInterface === true && isInInterface(node)) ||
+    shouldIgnoreInFunction(node, context, allowLocalMutation) ||
+    shouldIgnorePattern2(node, context, ignorePattern)
   ) {
     return {
       context,
@@ -384,12 +452,12 @@ function checkImplicitType(
   }
 
   type Declarator = {
-    readonly id: TSESTree.Node;
-    readonly init: TSESTree.Node | null;
-    readonly node: TSESTree.Node;
+    id: TSESTree.Node;
+    init: TSESTree.Node | null;
+    node: TSESTree.Node;
   };
 
-  const declarators: ReadonlyArray<Declarator> = isFunctionLike(node)
+  const declarators: Declarator[] = isFunctionLike(node)
     ? node.params
         .map((param) =>
           isAssignmentPattern(param)

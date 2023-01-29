@@ -191,7 +191,7 @@ function doCommit(
     const scopeValue = answers.scope ?? answers.scopeRules ?? "";
     const scope = scopeValue.length > 0 ? `(${scopeValue})` : "";
     // Hard limit is applied by the validate.
-    const head = `${answers.type + breakingMarker + scope}: ${answers.subject}`;
+    const head = `${answers.type + scope + breakingMarker}: ${answers.subject}`;
 
     const bodyValue = (answers.body ?? "").trim();
     const bodyValueWithBreaking =
@@ -224,7 +224,7 @@ function doCommit(
 /**
  * Filter out falsy values from the given array.
  */
-function arrayFilterFalsy<T>(array: ReadonlyArray<T>) {
+function arrayFilterFalsy<T>(array: T[]) {
   return array.filter(Boolean);
 }
 
@@ -287,7 +287,7 @@ function filterSubject(options: Options) {
         m_subject.charAt(0).toLowerCase() +
         m_subject.slice(1, m_subject.length);
     }
-    // eslint-disable-next-line functional/no-loop-statement
+    // eslint-disable-next-line functional/no-loop-statements
     while (m_subject.endsWith(".")) {
       m_subject = m_subject.slice(0, -1);
     }

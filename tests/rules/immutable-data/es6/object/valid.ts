@@ -2,7 +2,7 @@ import dedent from "dedent";
 
 import type { ValidTestCase } from "~/tests/helpers/util";
 
-const tests: ReadonlyArray<ValidTestCase> = [
+const tests: ValidTestCase[] = [
   // Allow initialization of class members in constructor
   {
     code: dedent`
@@ -41,7 +41,7 @@ const tests: ReadonlyArray<ValidTestCase> = [
         }
       }
     `,
-    optionsSet: [[{ ignoreClass: true }], [{ ignoreClass: "fieldsOnly" }]],
+    optionsSet: [[{ ignoreClasses: true }], [{ ignoreClasses: "fieldsOnly" }]],
   },
 ];
 

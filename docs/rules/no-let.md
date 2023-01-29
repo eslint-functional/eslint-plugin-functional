@@ -1,4 +1,8 @@
-# Disallow mutable variables (no-let)
+# Disallow mutable variables (`functional/no-let`)
+
+💼 This rule is enabled in the following configs: ☑️ `lite`, `no-mutations`, ✅ `recommended`, 🔒 `strict`.
+
+<!-- end auto-generated rule header -->
 
 This rule should be combined with ESLint's built-in `no-var` rule to enforce that all variables are declared as `const`.
 
@@ -6,7 +10,7 @@ This rule should be combined with ESLint's built-in `no-var` rule to enforce tha
 
 In functional programming variables should not be mutable; use `const` instead.
 
-Examples of **incorrect** code for this rule:
+### ❌ Incorrect
 
 <!-- eslint-skip -->
 
@@ -21,11 +25,10 @@ let x = 5;
 ```js
 /* eslint functional/no-let: "error" */
 
-for (let i = 0; i < array.length; i++) {
-}
+for (let i = 0; i < array.length; i++) {}
 ```
 
-Examples of **correct** code for this rule:
+### ✅ Correct
 
 ```js
 /* eslint functional/no-let: "error" */
@@ -53,36 +56,45 @@ This rule accepts an options object of the following type:
 
 ```ts
 type Options = {
-  allowLocalMutation: boolean;
+  allowInFunctions: boolean;
   ignorePattern?: string[] | string;
-}
+};
 ```
 
-The default options:
+### Default Options
 
 ```ts
 const defaults = {
   allowInForLoopInit: false,
-  allowLocalMutation: false
-}
+  allowInFunctions: false,
+};
+```
+
+### Preset Overrides
+
+#### `recommended` and `lite`
+
+```ts
+const recommendedAndLiteOptions = {
+  allowInForLoopInit: true,
+};
 ```
 
 ### `allowInForLoopInit`
 
 If set, `let`s inside of for a loop initializer are allowed. This does not include for...of or for...in loops as they should use `const` instead.
 
-Examples of **correct** code for this rule:
+#### ✅ Correct
 
 <!-- eslint-disable @typescript-eslint/prefer-for-of -->
 
 ```js
 /* eslint functional/no-let: ["error", { "allowInForLoopInit": true } ] */
 
-for (let i = 0; i < array.length; i++) {
-}
+for (let i = 0; i < array.length; i++) {}
 ```
 
-Examples of **incorrect** code for this rule:
+#### ❌ Incorrect
 
 <!-- eslint-skip -->
 
@@ -102,9 +114,11 @@ for (let [index, element] of array.entries()) {
 }
 ```
 
-### `allowLocalMutation`
+### `allowInFunctions`
 
-See the [allowLocalMutation](./options/allow-local-mutation.md) docs.
+If true, the rule will not flag any statements that are inside of function bodies.
+
+See the [allowLocalMutation](./options/allow-local-mutation.md) docs for more information.
 
 ### `ignorePattern`
 

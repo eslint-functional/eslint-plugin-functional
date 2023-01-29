@@ -1,24 +1,23 @@
-import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
+import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { deepmerge } from "deepmerge-ts";
 import type { JSONSchema4 } from "json-schema";
-import type { ReadonlyDeep } from "type-fest";
 
 import type {
   IgnoreAccessorPatternOption,
   IgnorePatternOption,
-  IgnoreClassOption,
-} from "~/common/ignore-options";
+  IgnoreClassesOption,
+} from "~/options";
 import {
   shouldIgnorePattern,
-  shouldIgnoreClass,
+  shouldIgnoreClasses,
   ignoreAccessorPatternOptionSchema,
-  ignoreClassOptionSchema,
+  ignoreClassesOptionSchema,
   ignorePatternOptionSchema,
-} from "~/common/ignore-options";
-import { isExpected } from "~/util/misc";
-import { createRule, getTypeOfNode } from "~/util/rule";
-import type { RuleResult } from "~/util/rule";
-import { inConstructor } from "~/util/tree";
+} from "~/options";
+import { isExpected } from "~/utils/misc";
+import { createRule, getTypeOfNode } from "~/utils/rule";
+import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
+import { isInConstructor } from "~/utils/tree";
 import {
   isArrayConstructorType,
   isArrayExpression,
@@ -28,7 +27,7 @@ import {
   isMemberExpression,
   isNewExpression,
   isObjectConstructorType,
-} from "~/util/typeguard";
+} from "~/utils/type-guards";
 
 /**
  * The name of this rule.
@@ -38,19 +37,18 @@ export const name = "immutable-data" as const;
 /**
  * The options this rule can take.
  */
-type Options = readonly [
+type Options = [
   IgnoreAccessorPatternOption &
-    IgnoreClassOption &
-    IgnorePatternOption &
-    Readonly<{
+    IgnoreClassesOption &
+    IgnorePatternOption & {
       ignoreImmediateMutation: boolean;
       assumeTypes:
         | boolean
-        | Readonly<{
+        | {
             forArrays: boolean;
             forObjects: boolean;
-          }>;
-    }>
+          };
+    }
 ];
 
 /**
@@ -62,7 +60,7 @@ const schema: JSONSchema4 = [
     properties: deepmerge(
       ignorePatternOptionSchema,
       ignoreAccessorPatternOptionSchema,
-      ignoreClassOptionSchema,
+      ignoreClassesOptionSchema,
       {
         ignoreImmediateMutation: {
           type: "boolean",
@@ -97,7 +95,7 @@ const schema: JSONSchema4 = [
  */
 const defaultOptions: Options = [
   {
-    ignoreClass: false,
+    ignoreClasses: false,
     ignoreImmediateMutation: true,
     assumeTypes: {
       forArrays: true,
@@ -118,9 +116,10 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
+const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
+    category: "No Mutations",
     description: "Enforce treating data as immutable.",
     recommended: "error",
   },
@@ -183,18 +182,17 @@ const objectConstructorMutatorFunctions = new Set([
  * Check if the given assignment expression violates this rule.
  */
 function checkAssignmentExpression(
-  node: ReadonlyDeep<TSESTree.AssignmentExpression>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  node: TSESTree.AssignmentExpression,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
+  const { ignorePattern, ignoreAccessorPattern, ignoreClasses } = optionsObject;
 
   if (
     !isMemberExpression(node.left) ||
-    shouldIgnoreClass(node, context, optionsObject) ||
-    shouldIgnorePattern(node, context, optionsObject)
+    shouldIgnoreClasses(node, context, ignoreClasses) ||
+    shouldIgnorePattern(node, context, ignorePattern, ignoreAccessorPattern)
   ) {
     return {
       context,
@@ -206,7 +204,7 @@ function checkAssignmentExpression(
     context,
     descriptors:
       // Allow if in a constructor - allow for field initialization.
-      !inConstructor(node) ? [{ node, messageId: "generic" }] : [],
+      isInConstructor(node) ? [] : [{ node, messageId: "generic" }],
   };
 }
 
@@ -214,18 +212,17 @@ function checkAssignmentExpression(
  * Check if the given node violates this rule.
  */
 function checkUnaryExpression(
-  node: ReadonlyDeep<TSESTree.UnaryExpression>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  node: TSESTree.UnaryExpression,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
+  const { ignorePattern, ignoreAccessorPattern, ignoreClasses } = optionsObject;
 
   if (
     !isMemberExpression(node.argument) ||
-    shouldIgnoreClass(node, context, optionsObject) ||
-    shouldIgnorePattern(node, context, optionsObject)
+    shouldIgnoreClasses(node, context, ignoreClasses) ||
+    shouldIgnorePattern(node, context, ignorePattern, ignoreAccessorPattern)
   ) {
     return {
       context,
@@ -244,18 +241,22 @@ function checkUnaryExpression(
  * Check if the given node violates this rule.
  */
 function checkUpdateExpression(
-  node: ReadonlyDeep<TSESTree.UpdateExpression>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  node: TSESTree.UpdateExpression,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
+  const { ignorePattern, ignoreAccessorPattern, ignoreClasses } = optionsObject;
 
   if (
     !isMemberExpression(node.argument) ||
-    shouldIgnoreClass(node.argument, context, optionsObject) ||
-    shouldIgnorePattern(node.argument, context, optionsObject)
+    shouldIgnoreClasses(node.argument, context, ignoreClasses) ||
+    shouldIgnorePattern(
+      node.argument,
+      context,
+      ignorePattern,
+      ignoreAccessorPattern
+    )
   ) {
     return {
       context,
@@ -277,10 +278,8 @@ function checkUpdateExpression(
  * a mutator method call.
  */
 function isInChainCallAndFollowsNew(
-  node: ReadonlyDeep<TSESTree.MemberExpression>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  node: TSESTree.MemberExpression,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   assumeArrayTypes: boolean
 ): boolean {
   return (
@@ -289,10 +288,9 @@ function isInChainCallAndFollowsNew(
     // Check for: new Array()
     (isNewExpression(node.object) &&
       isArrayConstructorType(
-        // `isNewExpression` type guard doesn't seem to be working? so use `as`.
-        getTypeOfNode((node.object as TSESTree.NewExpression).callee, context),
+        getTypeOfNode(node.object.callee, context),
         assumeArrayTypes,
-        (node.object as TSESTree.NewExpression).callee
+        node.object.callee
       )) ||
     (isCallExpression(node.object) &&
       isMemberExpression(node.object.callee) &&
@@ -317,20 +315,24 @@ function isInChainCallAndFollowsNew(
  * Check if the given node violates this rule.
  */
 function checkCallExpression(
-  node: ReadonlyDeep<TSESTree.CallExpression>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  node: TSESTree.CallExpression,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
+  const { ignorePattern, ignoreAccessorPattern, ignoreClasses } = optionsObject;
 
   // Not potential object mutation?
   if (
     !isMemberExpression(node.callee) ||
     !isIdentifier(node.callee.property) ||
-    shouldIgnoreClass(node.callee.object, context, optionsObject) ||
-    shouldIgnorePattern(node.callee.object, context, optionsObject)
+    shouldIgnoreClasses(node.callee.object, context, ignoreClasses) ||
+    shouldIgnorePattern(
+      node.callee.object,
+      context,
+      ignorePattern,
+      ignoreAccessorPattern
+    )
   ) {
     return {
       context,
@@ -373,10 +375,15 @@ function checkCallExpression(
   if (
     objectConstructorMutatorFunctions.has(node.callee.property.name) &&
     node.arguments.length >= 2 &&
-    (isIdentifier(node.arguments[0]) ||
-      isMemberExpression(node.arguments[0])) &&
-    !shouldIgnoreClass(node.arguments[0], context, optionsObject) &&
-    !shouldIgnorePattern(node.arguments[0], context, optionsObject) &&
+    (isIdentifier(node.arguments[0]!) ||
+      isMemberExpression(node.arguments[0]!)) &&
+    !shouldIgnoreClasses(node.arguments[0], context, ignoreClasses) &&
+    !shouldIgnorePattern(
+      node.arguments[0],
+      context,
+      ignorePattern,
+      ignoreAccessorPattern
+    ) &&
     isObjectConstructorType(
       getTypeOfNode(node.callee.object, context),
       assumeTypesForObjects,

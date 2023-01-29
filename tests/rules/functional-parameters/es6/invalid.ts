@@ -2,7 +2,7 @@ import dedent from "dedent";
 
 import type { InvalidTestCase } from "~/tests/helpers/util";
 
-const tests: ReadonlyArray<InvalidTestCase> = [
+const tests: InvalidTestCase[] = [
   {
     code: dedent`
       (() => {
@@ -53,6 +53,21 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         type: "RestElement",
         line: 5,
         column: 7,
+      },
+    ],
+  },
+  {
+    code: dedent`
+      function foo(param) {}
+      foo(() => 1);
+    `,
+    optionsSet: [[]],
+    errors: [
+      {
+        messageId: "paramCountAtLeastOne",
+        type: "ArrowFunctionExpression",
+        line: 2,
+        column: 5,
       },
     ],
   },

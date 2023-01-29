@@ -1,47 +1,18 @@
-import assert from "assert";
+import assert from "node:assert";
 
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import type { TSESLint } from "@typescript-eslint/utils";
 import test from "ava";
 import dedent from "dedent";
 import RuleTester from "eslint-ava-rule-tester";
-import type { ReadonlyDeep } from "type-fest";
 
 import type {
-  AllowLocalMutationOption,
   IgnoreAccessorPatternOption,
-  IgnoreClassOption,
-  IgnoreInterfaceOption,
   IgnorePatternOption,
-} from "~/common/ignore-options";
-import {
-  shouldIgnoreClass,
-  shouldIgnoreInterface,
-  shouldIgnoreLocalMutation,
-  shouldIgnorePattern,
-} from "~/common/ignore-options";
+} from "~/options";
+import { shouldIgnorePattern } from "~/options";
 import { filename, configs } from "~/tests/helpers/configs";
 import { testWrapper } from "~/tests/helpers/testers";
 import { addFilename, createDummyRule } from "~/tests/helpers/util";
-import type { BaseOptions } from "~/util/rule";
-
-function shouldIgnore(
-  node: ReadonlyDeep<TSESTree.Node>,
-  context: ReadonlyDeep<TSESLint.RuleContext<string, BaseOptions>>,
-  options: Partial<
-    AllowLocalMutationOption &
-      IgnoreAccessorPatternOption &
-      IgnoreClassOption &
-      IgnoreInterfaceOption &
-      IgnorePatternOption
-  >
-): boolean {
-  return [
-    shouldIgnorePattern,
-    shouldIgnoreClass,
-    shouldIgnoreInterface,
-    shouldIgnoreLocalMutation,
-  ].some((testShouldIgnore) => testShouldIgnore(node, context, options));
-}
 
 /**
  * Create a dummy rule that operates on AssignmentExpression nodes.
@@ -51,14 +22,21 @@ function createDummyAssignmentExpressionRule() {
     const [allowed, options] = context.options;
     return {
       AssignmentExpression: (node) => {
-        assert(shouldIgnore(node, context, options) === allowed);
+        assert(
+          shouldIgnorePattern(
+            node,
+            context,
+            options.ignorePattern,
+            options.ignoreAccessorPattern
+          ) === allowed
+        );
       },
     };
   });
 }
 
-const tests: ReadonlyArray<
-  TSESLint.ValidTestCase<readonly [boolean, IgnoreAccessorPatternOption]>
+const tests: Array<
+  TSESLint.ValidTestCase<[boolean, IgnoreAccessorPatternOption]>
 > = [
   // Exact match.
   {
@@ -190,13 +168,13 @@ new RuleTester(testWrapper(test), configs.es10).run(
   "AssignmentExpression",
   createDummyAssignmentExpressionRule(),
   addFilename(filename, {
-    valid: [...(tests as unknown as ReadonlyArray<RuleTester.ValidTestCase>)],
+    valid: [...(tests as RuleTester.ValidTestCase[])],
     invalid: [],
   })
 );
 
-const assignmentExpressionTests: ReadonlyArray<
-  TSESLint.ValidTestCase<readonly [boolean, IgnorePatternOption]>
+const assignmentExpressionTests: Array<
+  TSESLint.ValidTestCase<[boolean, IgnorePatternOption]>
 > = [
   // Prefix match.
   {
@@ -237,15 +215,13 @@ new RuleTester(testWrapper(test), configs.es10).run(
   "AssignmentExpression",
   createDummyAssignmentExpressionRule(),
   addFilename(filename, {
-    valid: [
-      ...(assignmentExpressionTests as unknown as ReadonlyArray<RuleTester.ValidTestCase>),
-    ],
+    valid: [...(assignmentExpressionTests as RuleTester.ValidTestCase[])],
     invalid: [],
   })
 );
 
-const expressionStatementTests: ReadonlyArray<
-  TSESLint.ValidTestCase<readonly [boolean, IgnorePatternOption]>
+const expressionStatementTests: Array<
+  TSESLint.ValidTestCase<[boolean, IgnorePatternOption]>
 > = [
   {
     code: dedent`
@@ -273,14 +249,14 @@ new RuleTester(testWrapper(test), configs.es10).run(
     const [allowed, options] = context.options;
     return {
       ExpressionStatement: (node) => {
-        assert(shouldIgnore(node, context, options) === allowed);
+        assert(
+          shouldIgnorePattern(node, context, options.ignorePattern) === allowed
+        );
       },
     };
   }),
   addFilename(filename, {
-    valid: [
-      ...(expressionStatementTests as unknown as ReadonlyArray<RuleTester.ValidTestCase>),
-    ],
+    valid: [...(expressionStatementTests as RuleTester.ValidTestCase[])],
     invalid: [],
   })
 );

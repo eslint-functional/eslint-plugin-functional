@@ -2,7 +2,7 @@ import dedent from "dedent";
 
 import type { InvalidTestCase } from "~/tests/helpers/util";
 
-const tests: ReadonlyArray<InvalidTestCase> = [
+const tests: InvalidTestCase[] = [
   // Mixing properties and methods (MethodSignature) should produce failures.
   {
     code: dedent`
@@ -10,6 +10,23 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         bar: string;
         zoo(): number;
       };
+    `,
+    optionsSet: [[], [{ checkInterfaces: false }]],
+    errors: [
+      {
+        messageId: "generic",
+        type: "TSTypeAliasDeclaration",
+        line: 1,
+        column: 1,
+      },
+    ],
+  },
+  {
+    code: dedent`
+      type Foo = Readonly<{
+        bar: string;
+        zoo(): number;
+      }>;
     `,
     optionsSet: [[], [{ checkInterfaces: false }]],
     errors: [
@@ -45,6 +62,23 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         bar: string;
         zoo: () => number;
       };
+    `,
+    optionsSet: [[], [{ checkInterfaces: false }]],
+    errors: [
+      {
+        messageId: "generic",
+        type: "TSTypeAliasDeclaration",
+        line: 1,
+        column: 1,
+      },
+    ],
+  },
+  {
+    code: dedent`
+      type Foo = Readonly<{
+        bar: string;
+        zoo: () => number;
+      }>;
     `,
     optionsSet: [[], [{ checkInterfaces: false }]],
     errors: [

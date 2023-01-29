@@ -1,4 +1,8 @@
-# Disallow mutating objects and arrays (immutable-data)
+# Enforce treating data as immutable (`functional/immutable-data`)
+
+💼 This rule is enabled in the following configs: ☑️ `lite`, `no-mutations`, ✅ `recommended`, 🔒 `strict`.
+
+<!-- end auto-generated rule header -->
 
 This rule prohibits syntax that mutates existing objects and arrays via assignment to or deletion of their properties/elements.
 
@@ -7,7 +11,7 @@ This rule prohibits syntax that mutates existing objects and arrays via assignme
 While requiring the `readonly` modifier forces declared types to be immutable,
 it won't stop assignment into or modification of untyped objects or external types declared under different rules.
 
-Examples of **incorrect** code for this rule:
+### ❌ Incorrect
 
 <!-- eslint-skip -->
 
@@ -35,7 +39,7 @@ delete arr[1]; // <- Modifying an existing array is not allowed.
 arr.push(3); // <- Modifying an array is not allowed.
 ```
 
-Examples of **correct** code for this rule:
+### ✅ Correct
 
 ```js
 /* eslint functional/immutable-data: "error" */
@@ -45,10 +49,8 @@ const arr = [0, 1, 2];
 
 const x = {
   ...obj,
-  bar: [
-    ...arr, 3, 4
-  ]
-}
+  bar: [...arr, 3, 4],
+};
 ```
 
 ## Options
@@ -62,37 +64,37 @@ type Options = {
     | {
         forArrays: boolean;
         forObjects: boolean;
-      }
-  ignoreClass: boolean | "fieldsOnly";
+      };
+  ignoreClasses: boolean | "fieldsOnly";
   ignoreImmediateMutation: boolean;
   ignorePattern?: string[] | string;
   ignoreAccessorPattern?: string[] | string;
-}
+};
 ```
 
-The default options:
+### Default Options
 
 ```ts
 type Options = {
   assumeTypes: true;
-  ignoreClass: false;
+  ignoreClasses: false;
   ignoreImmediateMutation: true;
 };
 ```
 
-Note: the `lite` ruleset overrides the default options to:
+### Preset Overrides
+
+#### `lite`
 
 ```ts
-const defaults = {
-  assumeTypes: true,
-  ignoreClass: "fieldsOnly",
-  ignoreImmediateMutation: true,
-}
+const liteOptions = {
+  ignoreClasses: "fieldsOnly",
+};
 ```
 
 ### `assumeTypes`
 
-The rule take advantage of TypeScript's typing engine to check if mutation is taking place.
+The rule takes advantage of TypeScript's typing engine to check if mutation is taking place.
 If you are not using TypeScript, type checking cannot be performed; hence this option exists.
 
 This option will make the rule assume the type of the nodes it is checking are of type Array/Object.
@@ -121,7 +123,7 @@ const original = ["foo", "bar", "baz"];
 const sorted = [...original].sort((a, b) => a.localeCompare(b)); // This is OK with ignoreImmediateMutation.
 ```
 
-### `ignoreClass`
+### `ignoreClasses`
 
 Ignore mutations inside classes.
 

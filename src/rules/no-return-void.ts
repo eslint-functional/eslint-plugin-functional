@@ -1,10 +1,9 @@
-import type { ESLintUtils, TSESLint } from "@typescript-eslint/utils";
+import type { TSESLint } from "@typescript-eslint/utils";
 import type { JSONSchema4 } from "json-schema";
-import type { ReadonlyDeep } from "type-fest";
 
-import type { ESFunctionType } from "~/src/util/node-types";
-import type { RuleResult } from "~/util/rule";
-import { createRule, getTypeOfNode } from "~/util/rule";
+import type { ESFunctionType } from "~/utils/node-types";
+import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
+import { createRule, getTypeOfNode } from "~/utils/rule";
 import {
   isFunctionLike,
   isNullType,
@@ -13,7 +12,7 @@ import {
   isTSVoidKeyword,
   isUndefinedType,
   isVoidType,
-} from "~/util/typeguard";
+} from "~/utils/type-guards";
 
 /**
  * The name of this rule.
@@ -23,12 +22,12 @@ export const name = "no-return-void" as const;
 /**
  * The options this rule can take.
  */
-type Options = readonly [
-  Readonly<{
+type Options = [
+  {
     allowNull: boolean;
     allowUndefined: boolean;
-    ignoreImplicit: boolean;
-  }>
+    ignoreInferredTypes: boolean;
+  }
 ];
 
 /**
@@ -44,7 +43,7 @@ const schema: JSONSchema4 = [
       allowUndefined: {
         type: "boolean",
       },
-      ignoreImplicit: {
+      ignoreInferredTypes: {
         type: "boolean",
       },
     },
@@ -59,7 +58,7 @@ const defaultOptions: Options = [
   {
     allowNull: true,
     allowUndefined: true,
-    ignoreImplicit: false,
+    ignoreInferredTypes: false,
   },
 ];
 
@@ -73,9 +72,10 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
+const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
+    category: "No Statements",
     description: "Disallow functions that don't return anything.",
     recommended: "error",
   },
@@ -87,16 +87,14 @@ const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
  * Check if the given function node violates this rule.
  */
 function checkFunction(
-  node: ReadonlyDeep<ESFunctionType>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  node: ESFunctionType,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
-  const [{ ignoreImplicit, allowNull, allowUndefined }] = options;
+  const [{ ignoreInferredTypes, allowNull, allowUndefined }] = options;
 
   if (node.returnType === undefined) {
-    if (!ignoreImplicit && isFunctionLike(node)) {
+    if (!ignoreInferredTypes && isFunctionLike(node)) {
       const functionType = getTypeOfNode(node, context);
       const returnType = functionType
         ?.getCallSignatures()?.[0]

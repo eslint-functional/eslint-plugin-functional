@@ -29,29 +29,17 @@
     ],
     "sourceType": "module"
   },
-  "ignorePatterns": ["/build/", "/coverage/", "/lib/", "/**/*.cjs", "/**/*.js"],
+  "ignorePatterns": [
+    "/build/",
+    "/coverage/",
+    "/lib/",
+    "/**/*.cjs",
+    "/**/*.js",
+    "/src/utils/tsutils.ts"
+  ],
   "rules": {
-    "@typescript-eslint/explicit-module-boundary-types": "off",
-    "@typescript-eslint/no-unnecessary-condition": "off",
-    "@typescript-eslint/no-unsafe-argument": "off",
-    "@typescript-eslint/no-unsafe-assignment": "off",
-    "@typescript-eslint/no-unsafe-call": "off",
-    "@typescript-eslint/no-unsafe-member-access": "off",
-    "@typescript-eslint/no-unsafe-return": "off",
-    "@typescript-eslint/prefer-readonly-parameter-types": "warn",
-    "import/no-relative-parent-imports": "error",
-    "functional/prefer-readonly-type": "off",
-    "node/no-unsupported-features/es-builtins": "off",
-    "node/no-unsupported-features/es-syntax": "off",
-    "promise/prefer-await-to-callbacks": "off",
-    // only available for node >= 16.8
-    "unicorn/prefer-at": "off",
-    // enable once supported in all our supported node versions.
-    "unicorn/prefer-node-protocol": "off",
-    // only available for node >= 15.4
-    "unicorn/prefer-string-replace-all": "off",
-    // only available for node >= 14.8
-    "unicorn/prefer-top-level-await": "off"
+    "functional/prefer-immutable-types": "off",
+    "import/no-relative-parent-imports": "error"
   },
   "overrides": [
     // Top level files.
@@ -64,7 +52,7 @@
       "files": ["./src/**/*"],
       "extends": ["plugin:eslint-plugin/recommended"],
       "rules": {
-        "functional/no-expression-statement": "error"
+        "functional/no-expression-statements": "error"
       }
     },
     {
@@ -75,9 +63,28 @@
       }
     },
     {
-      "files": ["./src/util/typeguard.ts", "./tests/**/*", "./cz-adapter/**/*"],
+      "files": ["./src/utils/type-guards.ts", "./src/utils/node-types.ts"],
       "rules": {
         "jsdoc/require-jsdoc": "off"
+      }
+    },
+    {
+      "files": ["./tests/**/*", "./cz-adapter/**/*"],
+      "rules": {
+        "@typescript-eslint/no-unsafe-argument": "off",
+        "@typescript-eslint/no-unsafe-assignment": "off",
+        "@typescript-eslint/no-unsafe-call": "off",
+        "@typescript-eslint/no-unsafe-member-access": "off",
+        "@typescript-eslint/no-unsafe-return": "off",
+        "jsdoc/require-jsdoc": "off"
+      }
+    },
+    {
+      "files": ["./typings/**/*"],
+      "extends": ["plugin:functional/off"],
+      "rules": {
+        "@typescript-eslint/no-unused-vars": "off",
+        "@typescript-eslint/no-explicit-any": "off"
       }
     },
     // FIXME: This override is defined in the upsteam; it shouldn't need to be redefined here. Why?
@@ -86,6 +93,7 @@
       "parserOptions": {
         "project": null
       },
+      "extends": ["plugin:markdown/recommended", "plugin:functional/off"],
       "rules": {
         "@typescript-eslint/await-thenable": "off",
         "@typescript-eslint/consistent-type-definitions": "off",
@@ -94,12 +102,15 @@
         "@typescript-eslint/naming-convention": "off",
         "@typescript-eslint/no-confusing-void-expression": "off",
         "@typescript-eslint/no-empty-function": "off",
+        "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-floating-promises": "off",
         "@typescript-eslint/no-for-in-array": "off",
         "@typescript-eslint/no-implied-eval": "off",
         "@typescript-eslint/no-misused-promises": "off",
         "@typescript-eslint/no-throw-literal": "off",
+        "@typescript-eslint/no-unnecessary-condition": "off",
         "@typescript-eslint/no-unnecessary-type-assertion": "off",
+        "@typescript-eslint/no-unsafe-argument": "off",
         "@typescript-eslint/no-unsafe-assignment": "off",
         "@typescript-eslint/no-unsafe-call": "off",
         "@typescript-eslint/no-unsafe-member-access": "off",
@@ -120,17 +131,6 @@
         "@typescript-eslint/strict-boolean-expressions": "off",
         "@typescript-eslint/switch-exhaustiveness-check": "off",
         "@typescript-eslint/unbound-method": "off",
-        "functional/functional-parameters": "off",
-        "functional/immutable-data": "off",
-        "functional/no-class": "off",
-        "functional/no-expression-statement": "off",
-        "functional/no-let": "off",
-        "functional/no-loop-statement": "off",
-        "functional/no-return-void": "off",
-        "functional/no-this-expression": "off",
-        "functional/no-throw-statement": "off",
-        "functional/no-try-statement": "off",
-        "functional/prefer-readonly-type": "off",
         "import/no-unresolved": "off",
         "init-declarations": "off",
         "jsdoc/require-jsdoc": "off",
@@ -146,6 +146,7 @@
         "sonarjs/no-unused-collection": "off",
         "unicorn/prefer-optional-catch-binding": "off",
         "unicorn/prefer-top-level-await": "off",
+        "unicorn/switch-case-braces": "off",
 
         "dot-notation": "error",
         "no-implied-eval": "error",

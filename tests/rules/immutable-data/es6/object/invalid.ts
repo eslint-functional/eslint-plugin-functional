@@ -2,7 +2,7 @@ import dedent from "dedent";
 
 import type { InvalidTestCase } from "~/tests/helpers/util";
 
-const tests: ReadonlyArray<InvalidTestCase> = [
+const tests: InvalidTestCase[] = [
   {
     code: dedent`
       const x = {a: 1};
@@ -61,7 +61,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         }
       }
     `,
-    optionsSet: [[{ ignoreClass: "fieldsOnly" }]],
+    optionsSet: [[{ ignoreClasses: "fieldsOnly" }]],
     errors: [
       {
         messageId: "generic",

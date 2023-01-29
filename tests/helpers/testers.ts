@@ -3,7 +3,6 @@ import test from "ava";
 import type { Implementation } from "ava";
 import type { Rule } from "eslint";
 import RuleTester from "eslint-ava-rule-tester";
-import type { ReadonlyDeep } from "type-fest";
 
 import { configs } from "./configs";
 import {
@@ -15,11 +14,11 @@ import type { ValidTestCase, InvalidTestCase } from "./util";
 
 type TestFunction = (
   ruleName: string,
-  rule: ReadonlyDeep<Rule.RuleModule>,
-  tests: Readonly<{
-    valid: ReadonlyArray<ValidTestCase>;
-    invalid: ReadonlyArray<InvalidTestCase>;
-  }>
+  rule: Rule.RuleModule,
+  tests: {
+    valid: ValidTestCase[];
+    invalid: InvalidTestCase[];
+  }
 ) => void;
 
 const testNames = new Map<string, number>();
@@ -29,10 +28,8 @@ const testNames = new Map<string, number>();
  * is given to each rule.
  */
 export function testWrapper(
-  // eslint-disable-next-line functional/prefer-readonly-type
   avaTest: (title: string, callback: Implementation<unknown[]>) => void
 ) {
-  // eslint-disable-next-line functional/prefer-readonly-type
   return (title: string, callback: Implementation<unknown[]>) => {
     const count = (testNames.get(title) ?? 0) + 1;
     testNames.set(title, count);

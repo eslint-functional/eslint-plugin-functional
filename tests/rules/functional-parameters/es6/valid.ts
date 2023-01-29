@@ -2,7 +2,7 @@ import dedent from "dedent";
 
 import type { ValidTestCase } from "~/tests/helpers/util";
 
-const tests: ReadonlyArray<ValidTestCase> = [
+const tests: ValidTestCase[] = [
   {
     code: dedent`
       (() => {
@@ -90,6 +90,13 @@ const tests: ReadonlyArray<ValidTestCase> = [
         },
       ],
     ],
+  },
+  {
+    code: dedent`
+      function foo(param) {}
+      foo(() => 1);
+    `,
+    optionsSet: [[{ enforceParameterCount: { ignoreLambdaExpression: true } }]],
   },
 ];
 

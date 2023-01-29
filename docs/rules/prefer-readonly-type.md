@@ -1,6 +1,14 @@
-# Prefer readonly types over mutable types (prefer-readonly-type)
+# Prefer readonly types over mutable types (`functional/prefer-readonly-type`)
 
-This rule enforces use of the readonly modifier and readonly types.
+❌ This rule is deprecated. It was replaced by [`functional/prefer-immutable-types`](prefer-immutable-types.md),[`functional/type-declaration-immutability`](type-declaration-immutability.md).
+
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
+
+This rule has been replaced by
+[prefer-immutable-parameter-types](./prefer-immutable-parameter-types.md) and
+[type-declaration-immutability](./type-declaration-immutability.md).
 
 ## Rule Details
 
@@ -8,7 +16,7 @@ This rule enforces use of `readonly T[]` (`ReadonlyArray<T>`) over `T[]` (`Array
 
 The readonly modifier must appear on property signatures in interfaces, property declarations in classes, and index signatures.
 
-Examples of **incorrect** code for this rule:
+### ❌ Incorrect
 
 <!-- eslint-skip -->
 
@@ -23,7 +31,7 @@ const point: Point = { x: 23, y: 44 };
 point.x = 99; // This is perfectly valid.
 ```
 
-Examples of **correct** code for this rule:
+### ✅ Correct
 
 ```ts
 /* eslint functional/prefer-readonly-type: "error" */
@@ -102,10 +110,10 @@ type Options = {
   ignoreInterface: boolean;
   ignoreCollections: boolean;
   ignorePattern?: string[] | string;
-}
+};
 ```
 
-The default options:
+### Default Options
 
 ```ts
 const defaults = {
@@ -115,7 +123,7 @@ const defaults = {
   ignoreClass: false,
   ignoreInterface: false,
   ignoreCollections: false,
-}
+};
 ```
 
 ### `checkImplicit`

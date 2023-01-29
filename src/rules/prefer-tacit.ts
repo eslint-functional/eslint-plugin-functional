@@ -1,16 +1,16 @@
-import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
+import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { deepmerge } from "deepmerge-ts";
 import type { JSONSchema4 } from "json-schema";
 import * as semver from "semver";
-import type { ReadonlyDeep } from "type-fest";
-import type { FunctionLikeDeclaration, Type } from "typescript";
+import type { Type } from "typescript";
 
-import type { IgnorePatternOption } from "~/common/ignore-options";
-import { ignorePatternOptionSchema } from "~/common/ignore-options";
 import ts from "~/conditional-imports/typescript";
-import type { ESFunction } from "~/src/util/node-types";
-import type { RuleResult } from "~/util/rule";
-import { createRule, getESTreeNode, getTypeOfNode } from "~/util/rule";
+import type { IgnorePatternOption } from "~/options";
+import { ignorePatternOptionSchema } from "~/options";
+import type { ESFunction } from "~/utils/node-types";
+import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
+import { createRule, getESTreeNode, getTypeOfNode } from "~/utils/rule";
+import { isNested } from "~/utils/tree";
 import {
   isBlockStatement,
   isCallExpression,
@@ -19,7 +19,7 @@ import {
   isIdentifier,
   isReturnStatement,
   isTSFunctionType,
-} from "~/util/typeguard";
+} from "~/utils/type-guards";
 
 /**
  * The name of this rule.
@@ -29,15 +29,10 @@ export const name = "prefer-tacit" as const;
 /**
  * The options this rule can take.
  */
-type Options = readonly [
-  IgnorePatternOption &
-    Readonly<{
-      assumeTypes:
-        | false
-        | Readonly<{
-            allowFixer: boolean;
-          }>;
-    }>
+type Options = [
+  IgnorePatternOption & {
+    assumeTypes: boolean;
+  }
 ];
 
 /**
@@ -47,25 +42,8 @@ const schema: JSONSchema4 = [
   {
     type: "object",
     properties: deepmerge(ignorePatternOptionSchema, {
-      ignoreImmediateMutation: {
-        type: "boolean",
-      },
       assumeTypes: {
-        oneOf: [
-          {
-            type: "boolean",
-            enum: [false],
-          },
-          {
-            type: "object",
-            properties: {
-              allowFixer: {
-                type: "boolean",
-              },
-            },
-            additionalProperties: false,
-          },
-        ],
+        type: "boolean",
       },
     }),
     additionalProperties: false,
@@ -91,14 +69,15 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
+const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
+    category: "Stylistic",
     description: "Replaces `x => f(x)` with just `f`.",
     recommended: false,
   },
   messages: errorMessages,
-  fixable: "code",
+  hasSuggestions: true,
   schema,
 };
 
@@ -115,14 +94,11 @@ const isTS4dot7 =
  * From the callee's type, does it follow that the caller violates this rule.
  */
 function isCallerViolation(
-  caller: ReadonlyDeep<TSESTree.CallExpression>,
-  // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types -- ignore TS Type
+  caller: TSESTree.CallExpression,
   calleeType: Type,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>
 ): boolean {
-  if (calleeType.symbol === undefined) {
+  if ((calleeType.symbol as unknown) === undefined) {
     return false;
   }
   const tsDeclaration =
@@ -141,12 +117,10 @@ function isCallerViolation(
 }
 
 function fixFunctionCallToReference(
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   fixer: TSESLint.RuleFixer,
   node: ESFunction,
-  caller: ReadonlyDeep<TSESTree.CallExpression>
+  caller: TSESTree.CallExpression
 ): TSESLint.RuleFix[] | null {
   // Fix to Instantiation Expression.
   if (
@@ -170,43 +144,46 @@ function fixFunctionCallToReference(
 }
 
 /**
- * Creates the fixer function that returns the instruction how to fix violations of this rule to valid code
+ * Creates the suggestions.
  */
-function buildFixer(
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+function buildSuggestions(
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   node: ESFunction,
-  caller: ReadonlyDeep<TSESTree.CallExpression>
-): TSESLint.ReportFixFunction {
-  return (fixer) => {
-    const functionCallToReference = fixFunctionCallToReference(
-      context,
-      fixer,
-      node,
-      caller
-    );
-    if (functionCallToReference === null) {
-      return null;
-    }
+  caller: TSESTree.CallExpression
+): TSESLint.ReportSuggestionArray<keyof typeof errorMessages> {
+  return [
+    {
+      messageId: "generic",
+      fix: (fixer) => {
+        const functionCallToReference = fixFunctionCallToReference(
+          context,
+          fixer,
+          node,
+          caller
+        );
+        if (functionCallToReference === null) {
+          return null;
+        }
 
-    if (node.type === "FunctionDeclaration") {
-      if (node.id === null) {
-        return null;
-      }
+        if (node.type === "FunctionDeclaration" && !isNested(node)) {
+          if (node.id === null) {
+            return null;
+          }
 
-      return [
-        fixer.insertTextBefore(
-          node as TSESTree.Node,
-          `const ${node.id.name} = `
-        ),
-        fixer.insertTextAfter(node as TSESTree.Node, `;`),
-        ...functionCallToReference,
-      ];
-    }
+          return [
+            fixer.insertTextBefore(
+              node as TSESTree.Node,
+              `const ${node.id.name} = `
+            ),
+            fixer.insertTextAfter(node as TSESTree.Node, `;`),
+            ...functionCallToReference,
+          ];
+        }
 
-    return functionCallToReference;
-  };
+        return functionCallToReference;
+      },
+    },
+  ];
 }
 
 /**
@@ -214,18 +191,16 @@ function buildFixer(
  */
 function getCallDescriptors(
   node: ESFunction,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options,
-  caller: ReadonlyDeep<TSESTree.CallExpression>
-): Array<ReadonlyDeep<TSESLint.ReportDescriptor<keyof typeof errorMessages>>> {
+  caller: TSESTree.CallExpression
+): Array<TSESLint.ReportDescriptor<keyof typeof errorMessages>> {
   const [{ assumeTypes }] = options;
 
   if (
     node.params.length === caller.arguments.length &&
     node.params.every((param, index) => {
-      const callArg = caller.arguments[index];
+      const callArg = caller.arguments[index]!;
       return (
         isIdentifier(callArg) &&
         isIdentifier(param) &&
@@ -235,8 +210,8 @@ function getCallDescriptors(
   ) {
     const calleeType = getTypeOfNode(caller.callee, context);
     const assumingTypes =
-      (calleeType === null || calleeType.symbol === undefined) &&
-      assumeTypes !== false;
+      (calleeType === null || (calleeType.symbol as unknown) === undefined) &&
+      assumeTypes;
 
     if (
       assumingTypes ||
@@ -246,13 +221,7 @@ function getCallDescriptors(
         {
           node,
           messageId: "generic",
-          fix:
-            // No fixer when assuming types as this is dangerous.
-            (typeof assumeTypes !== "object" && assumingTypes) ||
-            // Unless user specifies they want it.
-            (typeof assumeTypes === "object" && !assumeTypes.allowFixer)
-              ? null
-              : buildFixer(context, node, caller),
+          suggest: buildSuggestions(context, node, caller),
         },
       ];
     }
@@ -266,11 +235,9 @@ function getCallDescriptors(
  */
 function getDirectCallDescriptors(
   node: ESFunction,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
-): Array<ReadonlyDeep<TSESLint.ReportDescriptor<keyof typeof errorMessages>>> {
+): Array<TSESLint.ReportDescriptor<keyof typeof errorMessages>> {
   if (isCallExpression(node.body)) {
     return getCallDescriptors(node, context, options, node.body);
   }
@@ -282,15 +249,13 @@ function getDirectCallDescriptors(
  */
 function getNestedCallDescriptors(
   node: ESFunction,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
-): Array<ReadonlyDeep<TSESLint.ReportDescriptor<keyof typeof errorMessages>>> {
+): Array<TSESLint.ReportDescriptor<keyof typeof errorMessages>> {
   if (
     isBlockStatement(node.body) &&
     node.body.body.length === 1 &&
-    isReturnStatement(node.body.body[0]) &&
+    isReturnStatement(node.body.body[0]!) &&
     node.body.body[0].argument !== null &&
     isCallExpression(node.body.body[0].argument)
   ) {
@@ -309,9 +274,7 @@ function getNestedCallDescriptors(
  */
 function checkFunction(
   node: ESFunction,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   return {

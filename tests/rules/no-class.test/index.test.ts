@@ -1,4 +1,4 @@
-import { name, rule } from "~/rules/no-class";
+import { name, rule } from "~/rules/no-classes";
 import { testUsing } from "~/tests/helpers/testers";
 
 import es6Tests from "./es6";

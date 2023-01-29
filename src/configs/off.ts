@@ -1,11 +1,12 @@
 import type { Linter } from "eslint";
 
 import all from "./all";
+import deprecated from "./deprecated";
 
 /**
  * Turn the given rules off.
  */
-function turnRulesOff(rules: ReadonlyArray<string>): Linter.Config["rules"] {
+function turnRulesOff(rules: string[] | undefined): Linter.Config["rules"] {
   return rules === undefined
     ? undefined
     : Object.fromEntries(rules.map((name) => [name, "off"]));
@@ -13,8 +14,7 @@ function turnRulesOff(rules: ReadonlyArray<string>): Linter.Config["rules"] {
 
 const allRulesNames = new Set([
   ...Object.keys(all.rules ?? {}),
-  ...(all.overrides?.flatMap((override) => Object.keys(override.rules ?? {})) ??
-    []),
+  ...Object.keys(deprecated.rules ?? {}),
 ]);
 
 const config: Linter.Config = {

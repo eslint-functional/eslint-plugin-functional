@@ -2,7 +2,7 @@ import dedent from "dedent";
 
 import type { ValidTestCase } from "~/tests/helpers/util";
 
-const tests: ReadonlyArray<ValidTestCase> = [
+const tests: ValidTestCase[] = [
   {
     code: dedent`
       function foo() {
@@ -10,7 +10,7 @@ const tests: ReadonlyArray<ValidTestCase> = [
         let y = 0;
       }
     `,
-    optionsSet: [[{ allowLocalMutation: true }]],
+    optionsSet: [[{ allowInFunctions: true }]],
   },
   {
     code: dedent`
@@ -19,7 +19,7 @@ const tests: ReadonlyArray<ValidTestCase> = [
         let y = 0;
       }
     `,
-    optionsSet: [[{ allowLocalMutation: true }]],
+    optionsSet: [[{ allowInFunctions: true }]],
   },
   {
     code: dedent`
@@ -30,7 +30,7 @@ const tests: ReadonlyArray<ValidTestCase> = [
         }
       }
     `,
-    optionsSet: [[{ allowLocalMutation: true }]],
+    optionsSet: [[{ allowInFunctions: true }]],
   },
   {
     code: dedent`

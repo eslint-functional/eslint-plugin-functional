@@ -11,18 +11,19 @@ import { testUsing } from "~/tests/helpers/testers";
  * Step 1.
  * Import the rule to test.
  */
-import { name, rule } from "~/rules/prefer-readonly-type";
+import { name, rule } from "~/rules/prefer-immutable-types";
 
 /*
  * Step 2a.
  * Provide a valid test case.
  */
-const valid: ReadonlyArray<ValidTestCase> = [
+const valid: Array<ValidTestCase> = [
   // {
   //   code: dedent`
   //     // Valid Code.
   //   `,
   //   optionsSet: [[]],
+  //   settingsSet: [{}],
   // }
 ];
 
@@ -30,24 +31,22 @@ const valid: ReadonlyArray<ValidTestCase> = [
  * Step 2b.
  * Or provide an invalid test case.
  */
-const invalid: ReadonlyArray<InvalidTestCase> = [
+const invalid: Array<InvalidTestCase> = [
   // {
   //   code: dedent`
   //     // Invalid Code.
-  //   `,
+  //  `,
   //   optionsSet: [[]],
-  //   output: dedent`
-  //     // Fixed Code - Remove if rule doesn't have a fixer.
-  //   `,
+  //   settingsSet: [{}],
   //   errors: [
   //     {
-  //       messageId: "generic",
-  //       type: "ClassDeclaration",
-  //       line: 2,
-  //       column: 8
-  //     }
-  //   ]
-  // }
+  //       messageId: "returnType",
+  //       type: "TSTypeAnnotation",
+  //       line: 1,
+  //       column: 1,
+  //     },
+  //   ],
+  // },
 ];
 
 /*

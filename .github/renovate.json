@@ -1,6 +1,10 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:base", "helpers:disableTypesNodeMajor"],
+  "extends": [
+    "config:base",
+    "helpers:disableTypesNodeMajor",
+    "schedule:monthly"
+  ],
   "postUpdateOptions": ["yarnDedupeHighest"],
   "labels": ["Type: Maintenance", ":blue_heart:"],
   "automerge": true,
@@ -24,7 +28,7 @@
     {
       "matchManagers": ["npm"],
       "matchDepTypes": ["devDependencies"],
-      "rangeStrategy": "update-lockfile",
+      "rangeStrategy": "pin",
       "semanticCommitType": "chore",
       "semanticCommitScope": "dev-deps"
     },

@@ -2,7 +2,7 @@ import dedent from "dedent";
 
 import type { InvalidTestCase } from "~/tests/helpers/util";
 
-const tests: ReadonlyArray<InvalidTestCase> = [
+const tests: InvalidTestCase[] = [
   // FunctionDeclaration.
   {
     code: dedent`
@@ -10,16 +10,20 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       const foo = x => f(x);
     `,
     optionsSet: [[]],
-    output: dedent`
-      function f(x) {}
-      const foo = f;
-    `,
     errors: [
       {
         messageId: "generic",
         type: "ArrowFunctionExpression",
         line: 2,
         column: 13,
+        suggestions: [
+          {
+            output: dedent`
+              function f(x) {}
+              const foo = f;
+            `,
+          },
+        ],
       },
     ],
   },
@@ -29,36 +33,43 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       function foo(x) { return f(x); }
     `,
     optionsSet: [[]],
-    output: dedent`
-      function f(x) {}
-      const foo = f;
-    `,
     errors: [
       {
         messageId: "generic",
         type: "FunctionDeclaration",
         line: 2,
         column: 1,
+        suggestions: [
+          {
+            output: dedent`
+              function f(x) {}
+              const foo = f;
+            `,
+          },
+        ],
       },
     ],
   },
-  // FunctionDeclaration without name
   {
     code: dedent`
       function f(x) {}
       export default function (x) { return f(x); }
     `,
     optionsSet: [[]],
-    output: dedent`
-      function f(x) {}
-      export default function (x) { return f(x); }
-    `,
     errors: [
       {
         messageId: "generic",
         type: "FunctionDeclaration",
         line: 2,
         column: 16,
+        suggestions: [
+          {
+            output: dedent`
+              function f(x) {}
+              export default f
+            `,
+          },
+        ],
       },
     ],
   },
@@ -69,16 +80,20 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       const foo = x => f(x);
     `,
     optionsSet: [[]],
-    output: dedent`
-      const f = function(x) {}
-      const foo = f;
-    `,
     errors: [
       {
         messageId: "generic",
         type: "ArrowFunctionExpression",
         line: 2,
         column: 13,
+        suggestions: [
+          {
+            output: dedent`
+              const f = function(x) {}
+              const foo = f;
+            `,
+          },
+        ],
       },
     ],
   },
@@ -89,16 +104,20 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       const foo = x => f(x);
     `,
     optionsSet: [[]],
-    output: dedent`
-      const f = x => {}
-      const foo = f;
-    `,
     errors: [
       {
         messageId: "generic",
         type: "ArrowFunctionExpression",
         line: 2,
         column: 13,
+        suggestions: [
+          {
+            output: dedent`
+              const f = x => {}
+              const foo = f;
+            `,
+          },
+        ],
       },
     ],
   },
@@ -110,37 +129,21 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       const foo = x => f(x);
     `,
     optionsSet: [[]],
-    output: dedent`
-      type F = (x) => {};
-      const f = undefined as unknown as F;
-      const foo = f;
-    `,
     errors: [
       {
         messageId: "generic",
         type: "ArrowFunctionExpression",
         line: 3,
         column: 13,
-      },
-    ],
-  },
-  // Type parameters
-  {
-    code: dedent`
-      function f<T>(x: T): T {}
-      export default function (x) { return f<number>(x); }
-    `,
-    optionsSet: [[]],
-    output: dedent`
-      function f<T>(x: T): T {}
-      export default function (x) { return f<number>(x); }
-    `,
-    errors: [
-      {
-        messageId: "generic",
-        type: "FunctionDeclaration",
-        line: 2,
-        column: 16,
+        suggestions: [
+          {
+            output: dedent`
+              type F = (x) => {};
+              const f = undefined as unknown as F;
+              const foo = f;
+            `,
+          },
+        ],
       },
     ],
   },

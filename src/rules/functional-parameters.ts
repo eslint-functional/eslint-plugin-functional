@@ -1,22 +1,26 @@
-import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
+import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { deepmerge } from "deepmerge-ts";
 import type { JSONSchema4 } from "json-schema";
-import type { ReadonlyDeep } from "type-fest";
 
 import type {
   IgnorePatternOption,
   IgnorePrefixSelectorOption,
-} from "~/common/ignore-options";
+} from "~/options";
 import {
   shouldIgnorePattern,
   ignorePatternOptionSchema,
   ignorePrefixSelectorOptionSchema,
-} from "~/common/ignore-options";
-import type { ESFunction } from "~/src/util/node-types";
-import type { RuleResult } from "~/util/rule";
-import { createRuleUsingFunction } from "~/util/rule";
-import { isIIFE, isPropertyAccess, isPropertyName } from "~/util/tree";
-import { isRestElement } from "~/util/typeguard";
+} from "~/options";
+import type { ESFunction } from "~/utils/node-types";
+import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
+import { createRuleUsingFunction } from "~/utils/rule";
+import {
+  isArgument,
+  isIIFE,
+  isPropertyAccess,
+  isPropertyName,
+} from "~/utils/tree";
+import { isRestElement } from "~/utils/type-guards";
 
 /**
  * The name of this rule.
@@ -31,20 +35,20 @@ type ParameterCountOptions = "atLeastOne" | "exactlyOne";
 /**
  * The options this rule can take.
  */
-type Options = readonly [
+type Options = [
   IgnorePatternOption &
-    IgnorePrefixSelectorOption &
-    Readonly<{
+    IgnorePrefixSelectorOption & {
       allowRestParameter: boolean;
       allowArgumentsKeyword: boolean;
       enforceParameterCount:
         | ParameterCountOptions
         | false
-        | Readonly<{
+        | {
             count: ParameterCountOptions;
+            ignoreLambdaExpression: boolean;
             ignoreIIFE: boolean;
-          }>;
-    }>
+          };
+    }
 ];
 
 /**
@@ -80,6 +84,9 @@ const schema: JSONSchema4 = [
                   type: "string",
                   enum: ["atLeastOne", "exactlyOne"],
                 },
+                ignoreLambdaExpression: {
+                  type: "boolean",
+                },
                 ignoreIIFE: {
                   type: "boolean",
                 },
@@ -103,6 +110,7 @@ const defaultOptions: Options = [
     allowArgumentsKeyword: false,
     enforceParameterCount: {
       count: "atLeastOne",
+      ignoreLambdaExpression: false,
       ignoreIIFE: true,
     },
   },
@@ -123,9 +131,10 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
+const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
+    category: "Currying",
     description: "Enforce functional parameters.",
     recommended: "error",
   },
@@ -138,14 +147,14 @@ const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
  */
 function getRestParamViolations(
   [{ allowRestParameter }]: Options,
-  node: ReadonlyDeep<ESFunction>
+  node: ESFunction
 ): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
   return !allowRestParameter &&
     node.params.length > 0 &&
-    isRestElement(node.params[node.params.length - 1])
+    isRestElement(node.params.at(-1)!)
     ? [
         {
-          node: node.params[node.params.length - 1],
+          node: node.params.at(-1)!,
           messageId: "restParam",
         },
       ]
@@ -157,14 +166,14 @@ function getRestParamViolations(
  */
 function getParamCountViolations(
   [{ enforceParameterCount }]: Options,
-  node: ReadonlyDeep<ESFunction>
+  node: ESFunction
 ): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
   if (
     enforceParameterCount === false ||
     (node.params.length === 0 &&
       typeof enforceParameterCount === "object" &&
-      enforceParameterCount.ignoreIIFE &&
-      isIIFE(node))
+      ((enforceParameterCount.ignoreIIFE && isIIFE(node)) ||
+        (enforceParameterCount.ignoreLambdaExpression && isArgument(node))))
   ) {
     return [];
   }
@@ -201,15 +210,14 @@ function getParamCountViolations(
  * Check if the given function node has a reset parameter this rule.
  */
 function checkFunction(
-  node: ReadonlyDeep<ESFunction>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  node: ESFunction,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
+  const { ignorePattern } = optionsObject;
 
-  if (shouldIgnorePattern(node, context, optionsObject)) {
+  if (shouldIgnorePattern(node, context, ignorePattern)) {
     return {
       context,
       descriptors: [],
@@ -229,15 +237,14 @@ function checkFunction(
  * Check if the given identifier is for the "arguments" keyword.
  */
 function checkIdentifier(
-  node: ReadonlyDeep<TSESTree.Identifier>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >,
+  node: TSESTree.Identifier,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
+  const { ignorePattern } = optionsObject;
 
-  if (shouldIgnorePattern(node, context, optionsObject)) {
+  if (shouldIgnorePattern(node, context, ignorePattern)) {
     return {
       context,
       descriptors: [],
@@ -277,7 +284,7 @@ export const rule = createRuleUsingFunction<
     "FunctionExpression",
   ];
 
-  const ignoreSelectors: ReadonlyArray<string> | undefined =
+  const ignoreSelectors =
     ignorePrefixSelector === undefined
       ? undefined
       : Array.isArray(ignorePrefixSelector)

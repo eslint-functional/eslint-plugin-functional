@@ -13,6 +13,8 @@
     "newLine": "LF",
     "noEmitOnError": true,
     "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUncheckedIndexedAccess": true,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "pretty": true,
@@ -20,17 +22,17 @@
     "sourceMap": false,
     "strict": true,
     "alwaysStrict": true,
-    "target": "ES2018",
+    "target": "ES2020",
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./*"],
       "~/index": ["./src"],
-      "~/common/*": ["src/common/*"],
       "~/configs/*": ["src/configs/*"],
+      "~/options": ["src/options"],
       "~/rules": ["src/rules"],
       "~/rules/*": ["src/rules/*"],
-      "~/util/*": ["src/util/*"],
-      "~/conditional-imports/*": ["src/util/conditional-imports/*"],
+      "~/settings": ["src/settings"],
+      "~/utils/*": ["src/utils/*"],
+      "~/conditional-imports/*": ["src/utils/conditional-imports/*"],
       "~/tests/*": ["tests/*"]
     }
   }

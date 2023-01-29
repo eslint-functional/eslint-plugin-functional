@@ -1,45 +1,57 @@
-import type { TSESLint } from "@typescript-eslint/utils";
+import type {
+  SharedConfigurationSettings,
+  TSESLint,
+} from "@typescript-eslint/utils";
 import type { Rule, RuleTester as ESLintRuleTester } from "eslint";
-import type { ReadonlyDeep } from "type-fest";
 
 import ts from "~/conditional-imports/typescript";
 
 import { filename as dummyFilename } from "./configs";
 
-type OptionsSet = {
+type OptionsSets = {
   /**
    * The set of options this test case should pass for.
    */
   /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-  readonly optionsSet: ReadonlyArray<any>;
+  optionsSet: any[];
+
+  /**
+   * The set of settings this test case should pass for.
+   */
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+  settingsSet?: SharedConfigurationSettings[];
 };
 
 export type ValidTestCase = Omit<
-  ReadonlyDeep<ESLintRuleTester.ValidTestCase>,
-  "options"
+  ESLintRuleTester.ValidTestCase,
+  "options" | "settings"
 > &
-  OptionsSet;
+  OptionsSets;
 
 export type InvalidTestCase = Omit<
-  ReadonlyDeep<ESLintRuleTester.InvalidTestCase>,
-  "options"
+  ESLintRuleTester.InvalidTestCase,
+  "options" | "settings"
 > &
-  OptionsSet;
+  OptionsSets;
 
 /**
  * Convert our test cases into ones eslint test runner is expecting.
  */
 export function processInvalidTestCase(
-  testCases: ReadonlyArray<InvalidTestCase>
+  testCases: InvalidTestCase[]
 ): ESLintRuleTester.InvalidTestCase[] {
   return testCases.flatMap((testCase) =>
-    testCase.optionsSet.map((options) => {
-      const { optionsSet, ...eslintTestCase } = testCase;
-      return {
-        filename: dummyFilename,
-        ...eslintTestCase,
-        options,
-      } as ESLintRuleTester.InvalidTestCase;
+    testCase.optionsSet.flatMap((options) => {
+      const { optionsSet, settingsSet, ...eslintTestCase } = testCase;
+
+      return (settingsSet ?? [undefined]).map((settings) => {
+        return {
+          filename: dummyFilename,
+          ...eslintTestCase,
+          options,
+          settings,
+        } as ESLintRuleTester.InvalidTestCase;
+      });
     })
   );
 }
@@ -48,7 +60,7 @@ export function processInvalidTestCase(
  * Convert our test cases into ones eslint test runner is expecting.
  */
 export function processValidTestCase(
-  testCases: ReadonlyArray<ValidTestCase>
+  testCases: ValidTestCase[]
 ): ESLintRuleTester.ValidTestCase[] {
   // Ideally these two functions should be merged into 1 but I haven't been able
   // to get the typing information right - so for now they are two functions.
@@ -62,7 +74,7 @@ export function processValidTestCase(
 export function createDummyRule(
   create: (
     /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-    context: ReadonlyDeep<TSESLint.RuleContext<"generic", any>>
+    context: TSESLint.RuleContext<"generic", any>
   ) => TSESLint.RuleListener
 ): Rule.RuleModule {
   const meta: TSESLint.RuleMetaData<"generic"> = {
@@ -95,12 +107,12 @@ export type RuleTesterTests = {
  */
 export function addFilename(
   filename: string,
-  tests: ReadonlyDeep<RuleTesterTests>
+  tests: RuleTesterTests
 ): RuleTesterTests {
   const { valid, invalid } = tests;
   return {
     invalid: invalid?.map((test) => ({
-      ...(test as ESLintRuleTester.InvalidTestCase),
+      ...test,
       filename,
     })),
     valid: valid?.map((test) =>

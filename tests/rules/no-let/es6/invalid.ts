@@ -2,12 +2,12 @@ import dedent from "dedent";
 
 import type { InvalidTestCase } from "~/tests/helpers/util";
 
-const tests: ReadonlyArray<InvalidTestCase> = [
+const tests: InvalidTestCase[] = [
   {
     code: `let x;`,
     optionsSet: [
       [],
-      [{ allowLocalMutation: true }],
+      [{ allowInFunctions: true }],
       [{ ignorePattern: "^mutable" }],
     ],
     errors: [
@@ -23,7 +23,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     code: `let x = 0;`,
     optionsSet: [
       [],
-      [{ allowLocalMutation: true }],
+      [{ allowInFunctions: true }],
       [{ ignorePattern: "^mutable" }],
     ],
     errors: [
@@ -39,7 +39,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     code: `for (let x = 0; x < 1; x++);`,
     optionsSet: [
       [],
-      [{ allowLocalMutation: true }],
+      [{ allowInFunctions: true }],
       [{ ignorePattern: "^mutable" }],
     ],
     errors: [
@@ -55,7 +55,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     code: `for (let x = 0, y = 0; x < 1; x++);`,
     optionsSet: [
       [],
-      [{ allowLocalMutation: true }],
+      [{ allowInFunctions: true }],
       [{ ignorePattern: "^mutable" }],
     ],
     errors: [
@@ -71,7 +71,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     code: `for (let x in {});`,
     optionsSet: [
       [],
-      [{ allowLocalMutation: true }],
+      [{ allowInFunctions: true }],
       [{ ignorePattern: "^mutable" }],
     ],
     errors: [
@@ -87,7 +87,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     code: `for (let x of []);`,
     optionsSet: [
       [],
-      [{ allowLocalMutation: true }],
+      [{ allowInFunctions: true }],
       [{ ignorePattern: "^mutable" }],
     ],
     errors: [

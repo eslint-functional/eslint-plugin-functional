@@ -1,10 +1,9 @@
-import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
+import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import type { JSONSchema4 } from "json-schema";
-import type { ReadonlyDeep } from "type-fest";
 
-import type { RuleResult } from "~/util/rule";
-import { createRule } from "~/util/rule";
-import { isIdentifier, isMemberExpression } from "~/util/typeguard";
+import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
+import { createRule } from "~/utils/rule";
+import { isIdentifier, isMemberExpression } from "~/utils/type-guards";
 
 /**
  * The name of this rule.
@@ -14,7 +13,7 @@ export const name = "no-promise-reject" as const;
 /**
  * The options this rule can take.
  */
-type Options = readonly [{}];
+type Options = [{}];
 
 /**
  * The schema for the rule options.
@@ -36,9 +35,10 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
+const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
+    category: "No Exceptions",
     description: "Disallow try-catch[-finally] and try-finally patterns.",
     recommended: false,
   },
@@ -50,10 +50,8 @@ const meta: ESLintUtils.NamedCreateRuleMeta<keyof typeof errorMessages> = {
  * Check if the given CallExpression violates this rule.
  */
 function checkCallExpression(
-  node: ReadonlyDeep<TSESTree.CallExpression>,
-  context: ReadonlyDeep<
-    TSESLint.RuleContext<keyof typeof errorMessages, Options>
-  >
+  node: TSESTree.CallExpression,
+  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>
 ): RuleResult<keyof typeof errorMessages, Options> {
   return {
     context,

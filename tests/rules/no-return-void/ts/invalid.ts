@@ -2,7 +2,7 @@ import dedent from "dedent";
 
 import type { InvalidTestCase } from "~/tests/helpers/util";
 
-const tests: ReadonlyArray<InvalidTestCase> = [
+const tests: InvalidTestCase[] = [
   // Disallow void.
   {
     code: dedent`
@@ -63,7 +63,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
         return baz => { console.log(bar, baz); }
       }
     `,
-    optionsSet: [[{ ignoreImplicit: true }]],
+    optionsSet: [[{ ignoreInferredTypes: true }]],
     errors: [
       {
         messageId: "generic",
@@ -81,9 +81,9 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       }
     `,
     optionsSet: [
-      [{ ignoreImplicit: false }],
-      [{ ignoreImplicit: false, allowNull: false }],
-      [{ ignoreImplicit: false, allowUndefined: false }],
+      [{ ignoreInferredTypes: false }],
+      [{ ignoreInferredTypes: false, allowNull: false }],
+      [{ ignoreInferredTypes: false, allowUndefined: false }],
     ],
     errors: [
       {

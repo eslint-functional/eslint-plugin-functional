@@ -1,6 +1,10 @@
-# Enforce functional parameters (functional-parameters)
+# Enforce functional parameters (`functional/functional-parameters`)
 
-Disallow use of rest parameters, the `arguments` keyword and enforces that functions take a least 1 parameter.
+💼 This rule is enabled in the following configs: `currying`, ☑️ `lite`, ✅ `recommended`, 🔒 `strict`.
+
+<!-- end auto-generated rule header -->
+
+Disallow use of rest parameters, the `arguments` keyword and enforces that functions take at least 1 parameter.
 
 ## Rule Details
 
@@ -11,7 +15,7 @@ When it comes to functional programming, known and explicit parameters must be u
 
 Note: With an unknown number of parameters, currying functions is a lot more difficult/impossible.
 
-Examples of **incorrect** code for this rule:
+### ❌ Incorrect
 
 <!-- eslint-skip -->
 
@@ -33,7 +37,7 @@ function add(...numbers) {
 }
 ```
 
-Examples of **correct** code for this rule:
+### ✅ Correct
 
 ```js
 /* eslint functional/functional-parameters: "error" */
@@ -51,16 +55,21 @@ This rule accepts an options object of the following type:
 type Options = {
   allowRestParameter: boolean;
   allowArgumentsKeyword: boolean;
-  enforceParameterCount: "atLeastOne" | "exactlyOne" | false | {
-    count: "atLeastOne" | "exactlyOne";
-    ignoreIIFE: boolean;
-  };
+  enforceParameterCount:
+    | "atLeastOne"
+    | "exactlyOne"
+    | false
+    | {
+        count: "atLeastOne" | "exactlyOne";
+        ignoreLambdaExpression: boolean;
+        ignoreIIFE: boolean;
+      };
   ignorePattern?: string[] | string;
   ignorePrefixSelector?: string[] | string;
-}
+};
 ```
 
-The default options:
+### Default Options
 
 ```ts
 const defaults = {
@@ -68,19 +77,31 @@ const defaults = {
   allowArgumentsKeyword: false,
   enforceParameterCount: {
     count: "atLeastOne",
-    ignoreIIFE: true
-  }
-}
+    ignoreLambdaExpression: false,
+    ignoreIIFE: true,
+  },
+};
 ```
 
-Note: the `lite` ruleset overrides the default options to:
+### Preset Overrides
+
+#### `recommended`
 
 ```ts
-const liteDefaults = {
-  allowRestParameter: false,
-  allowArgumentsKeyword: false,
-  enforceParameterCount: false
-}
+const recommendedOptions = {
+  enforceParameterCount: {
+    ignoreLambdaExpression: true,
+    ignoreIIFE: true,
+  },
+};
+```
+
+#### `lite`
+
+```ts
+const liteOptions = {
+  enforceParameterCount: false,
+};
 ```
 
 ### `allowRestParameter`
@@ -109,7 +130,7 @@ There's not much point of having a function that doesn't take any parameters in 
 
 Require all functions to have exactly one parameter.
 
-Any function that take takes multiple parameter can be rewritten as a higher-order function that only takes one.
+Any function that takes multiple parameter can be rewritten as a higher-order function that only takes one.
 
 Example:
 
@@ -132,6 +153,11 @@ See [Currying](https://en.wikipedia.org/wiki/Currying) and [Higher-order functio
 #### `enforceParameterCount.count`
 
 See [enforceParameterCount](#enforceparametercount).
+
+### `enforceParameterCount.ignoreLambdaExpression`
+
+If true, this option allows for the use of lambda function expressions that do not have any parameters.
+Here, a lambda function expression refers to any function being defined in place as passed directly as an argument to another function.
 
 #### `enforceParameterCount.ignoreIIFE`
 
@@ -156,10 +182,7 @@ With the following config:
 The following inline callback won't be flagged:
 
 ```js
-const sum = [1, 2, 3].reduce(
-  (carry, current) => current,
-  0
-);
+const sum = [1, 2, 3].reduce((carry, current) => current, 0);
 ```
 
 ### `ignorePattern`

@@ -51,20 +51,20 @@ In order for the parser to have access to type information, it needs access to y
 
 Below is a table mapping the `eslint-plugin-functional` rules to their `tslint-immutable` equivalents.
 
-| `eslint-plugin-functional` Rule                                               | Equivalent `tslint-immutable` Rules                     |
-| ----------------------------------------------------------------------------- | ------------------------------------------------------- |
-| [`functional/prefer-readonly-type`](../rules/prefer-readonly-type.md)         | `readonly-keyword` & `readonly-array`                   |
-| [`functional/no-let`](../rules/no-let.md)                                     | `no-let`                                                |
-| [`functional/immutable-data`](../rules/immutable-data.md)                     | `no-object-mutation`, `no-array-mutation` & `no-delete` |
-| [`functional/no-method-signature`](../rules/no-method-signature.md)           | `no-method-signature`                                   |
-| [`functional/no-this-expression`](../rules/no-this-expression.md)             | `no-this`                                               |
-| [`functional/no-class`](../rules/no-class.md)                                 | `no-class`                                              |
-| [`functional/no-mixed-type`](../rules/no-mixed-type.md)                       | `no-mixed-interface`                                    |
-| [`functional/no-expression-statement`](../rules/no-expression-statement.md)   | `no-expression-statement`                               |
-| [`functional/no-conditional-statement`](../rules/no-conditional-statement.md) | `no-if-statement`                                       |
-| [`functional/no-loop-statement`](../rules/no-loop-statement.md)               | `no-loop-statement`                                     |
-| [`functional/no-return-void`](../rules/no-return-void.md)                     | -                                                       |
-| [`functional/no-throw-statement`](../rules/no-throw-statement.md)             | `no-throw`                                              |
-| [`functional/no-try-statement`](../rules/no-try-statement.md)                 | `no-try`                                                |
-| [`functional/no-promise-reject`](../rules/no-promise-reject.md)               | `no-reject`                                             |
-| [`functional/functional-parameters`](../rules/functional-parameters.md)       | -                                                       |
+| `eslint-plugin-functional` Rule                                                 | Equivalent `tslint-immutable` Rules                     |
+| ------------------------------------------------------------------------------- | ------------------------------------------------------- |
+| [`functional/prefer-readonly-type`](../rules/prefer-readonly-type.md)           | `readonly-keyword` & `readonly-array`                   |
+| [`functional/no-let`](../rules/no-let.md)                                       | `no-let`                                                |
+| [`functional/immutable-data`](../rules/immutable-data.md)                       | `no-object-mutation`, `no-array-mutation` & `no-delete` |
+| [`functional/no-method-signature`](../rules/no-method-signature.md)             | `no-method-signature`                                   |
+| [`functional/no-this-expressions`](../rules/no-this-expressions.md)             | `no-this`                                               |
+| [`functional/no-classes`](../rules/no-classes.md)                               | `no-classes`                                            |
+| [`functional/no-mixed-types`](../rules/no-mixed-types.md)                       | `no-mixed-interface`                                    |
+| [`functional/no-expression-statements`](../rules/no-expression-statements.md)   | `no-expression-statements`                              |
+| [`functional/no-conditional-statements`](../rules/no-conditional-statements.md) | `no-if-statement`                                       |
+| [`functional/no-loop-statements`](../rules/no-loop-statements.md)               | `no-loop-statements`                                    |
+| [`functional/no-return-void`](../rules/no-return-void.md)                       | -                                                       |
+| [`functional/no-throw-statements`](../rules/no-throw-statements.md)             | `no-throw`                                              |
+| [`functional/no-try-statements`](../rules/no-try-statements.md)                 | `no-try`                                                |
+| [`functional/no-promise-reject`](../rules/no-promise-reject.md)                 | `no-reject`                                             |
+| [`functional/functional-parameters`](../rules/functional-parameters.md)         | -                                                       |
