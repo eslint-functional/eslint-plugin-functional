@@ -4,7 +4,7 @@ import type { JSONSchema4 } from "json-schema";
 
 import { getNodeIdentifierTexts } from "~/utils/misc";
 import type { BaseOptions } from "~/utils/rule";
-import { inClass, inFunctionBody } from "~/utils/tree";
+import { isInClass, isInFunctionBody } from "~/utils/tree";
 import {
   isAssignmentExpression,
   isClassLike,
@@ -187,7 +187,7 @@ export function shouldIgnoreInFunction(
   context: TSESLint.RuleContext<string, BaseOptions>,
   allowInFunction: boolean | undefined
 ): boolean {
-  return allowInFunction === true && inFunctionBody(node);
+  return allowInFunction === true && isInFunctionBody(node);
 }
 
 /**
@@ -201,11 +201,11 @@ export function shouldIgnoreClasses(
   ignoreClasses: Partial<IgnoreClassesOption>["ignoreClasses"]
 ): boolean {
   return (
-    (ignoreClasses === true && (isClassLike(node) || inClass(node))) ||
+    (ignoreClasses === true && (isClassLike(node) || isInClass(node))) ||
     (ignoreClasses === "fieldsOnly" &&
       (isPropertyDefinition(node) ||
         (isAssignmentExpression(node) &&
-          inClass(node) &&
+          isInClass(node) &&
           isMemberExpression(node.left) &&
           isThisExpression(node.left.object))))
   );

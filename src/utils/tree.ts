@@ -42,7 +42,10 @@ function getAncestorOfType<T extends TSESTree.Node>(
  * @param node - The node to test.
  * @param async - Whether the function must be async or sync. Use `undefined` for either.
  */
-export function inFunctionBody(node: TSESTree.Node, async?: boolean): boolean {
+export function isInFunctionBody(
+  node: TSESTree.Node,
+  async?: boolean
+): boolean {
   const functionNode = getAncestorOfType(
     (
       n,
@@ -63,14 +66,14 @@ export function inFunctionBody(node: TSESTree.Node, async?: boolean): boolean {
 /**
  * Test if the given node is in a class.
  */
-export function inClass(node: TSESTree.Node): boolean {
+export function isInClass(node: TSESTree.Node): boolean {
   return getAncestorOfType(isClassLike, node) !== null;
 }
 
 /**
  * Test if the given node is in a for loop initializer.
  */
-export function inForLoopInitializer(node: TSESTree.Node): boolean {
+export function isInForLoopInitializer(node: TSESTree.Node): boolean {
   return (
     getAncestorOfType(
       (n, c): n is TSESTree.ForStatement => isForStatement(n) && n.init === c,
@@ -82,7 +85,7 @@ export function inForLoopInitializer(node: TSESTree.Node): boolean {
 /**
  * Test if the given node is shallowly inside a `Readonly<{...}>`.
  */
-export function inReadonly(node: TSESTree.Node): boolean {
+export function isInReadonly(node: TSESTree.Node): boolean {
   return getReadonly(node) !== null;
 }
 
@@ -117,14 +120,14 @@ export function getReadonly(
 /**
  * Test if the given node is in a TS Property Signature.
  */
-export function inInterface(node: TSESTree.Node): boolean {
+export function isInInterface(node: TSESTree.Node): boolean {
   return getAncestorOfType(isTSInterfaceBody, node) !== null;
 }
 
 /**
  * Test if the given node is in a Constructor.
  */
-export function inConstructor(node: TSESTree.Node): boolean {
+export function isInConstructor(node: TSESTree.Node): boolean {
   const methodDefinition = getAncestorOfType(isMethodDefinition, node);
   return (
     methodDefinition !== null &&

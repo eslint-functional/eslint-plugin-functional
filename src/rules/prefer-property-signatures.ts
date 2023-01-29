@@ -3,7 +3,7 @@ import type { JSONSchema4 } from "json-schema";
 
 import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
 import { createRule } from "~/utils/rule";
-import { inReadonly } from "~/utils/tree";
+import { isInReadonly } from "~/utils/tree";
 
 /**
  * The name of this rule.
@@ -75,7 +75,7 @@ function checkTSMethodSignature(
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [{ ignoreIfReadonlyWrapped }] = options;
 
-  if (ignoreIfReadonlyWrapped && inReadonly(node)) {
+  if (ignoreIfReadonlyWrapped && isInReadonly(node)) {
     return { context, descriptors: [] };
   }
 

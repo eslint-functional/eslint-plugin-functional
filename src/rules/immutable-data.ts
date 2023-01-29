@@ -17,7 +17,7 @@ import {
 import { isExpected } from "~/utils/misc";
 import { createRule, getTypeOfNode } from "~/utils/rule";
 import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
-import { inConstructor } from "~/utils/tree";
+import { isInConstructor } from "~/utils/tree";
 import {
   isArrayConstructorType,
   isArrayExpression,
@@ -204,7 +204,7 @@ function checkAssignmentExpression(
     context,
     descriptors:
       // Allow if in a constructor - allow for field initialization.
-      inConstructor(node) ? [] : [{ node, messageId: "generic" }],
+      isInConstructor(node) ? [] : [{ node, messageId: "generic" }],
   };
 }
 

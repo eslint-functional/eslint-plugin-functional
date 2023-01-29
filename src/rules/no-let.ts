@@ -10,7 +10,7 @@ import {
 } from "~/options";
 import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
 import { createRule } from "~/utils/rule";
-import { inForLoopInitializer } from "~/utils/tree";
+import { isInForLoopInitializer } from "~/utils/tree";
 
 /**
  * The name of this rule.
@@ -91,7 +91,7 @@ function checkVariableDeclaration(
     node.kind !== "let" ||
     shouldIgnoreInFunction(node, context, allowInFunctions) ||
     shouldIgnorePattern(node, context, ignorePattern) ||
-    (allowInForLoopInit && inForLoopInitializer(node))
+    (allowInForLoopInit && isInForLoopInitializer(node))
   ) {
     return {
       context,

@@ -3,7 +3,7 @@ import type { JSONSchema4 } from "json-schema";
 
 import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
 import { createRule } from "~/utils/rule";
-import { inFunctionBody } from "~/utils/tree";
+import { isInFunctionBody } from "~/utils/tree";
 
 /**
  * The name of this rule.
@@ -74,7 +74,7 @@ function checkThrowStatement(
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [{ allowInAsyncFunctions }] = options;
 
-  if (!allowInAsyncFunctions || !inFunctionBody(node, true)) {
+  if (!allowInAsyncFunctions || !isInFunctionBody(node, true)) {
     return { context, descriptors: [{ node, messageId: "generic" }] };
   }
 

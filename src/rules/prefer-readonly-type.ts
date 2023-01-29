@@ -17,7 +17,7 @@ import type {
   NamedCreateRuleMetaWithCategory,
 } from "~/utils/rule";
 import { createRule, getTypeOfNode } from "~/utils/rule";
-import { inInterface, isInReturnType } from "~/utils/tree";
+import { isInInterface, isInReturnType } from "~/utils/tree";
 import {
   isArrayType,
   isAssignmentPattern,
@@ -204,7 +204,7 @@ function checkArrayOrTupleType(
 
   if (
     shouldIgnoreClasses(node, context, ignoreClass) ||
-    (ignoreInterface === true && inInterface(node)) ||
+    (ignoreInterface === true && isInInterface(node)) ||
     shouldIgnoreInFunction(node, context, allowLocalMutation) ||
     shouldIgnorePattern2(node, context, ignorePattern) ||
     ignoreCollections
@@ -260,7 +260,7 @@ function checkMappedType(
 
   if (
     shouldIgnoreClasses(node, context, ignoreClass) ||
-    (ignoreInterface === true && inInterface(node)) ||
+    (ignoreInterface === true && isInInterface(node)) ||
     shouldIgnoreInFunction(node, context, allowLocalMutation) ||
     shouldIgnorePattern2(node, context, ignorePattern)
   ) {
@@ -309,7 +309,7 @@ function checkTypeReference(
 
   if (
     shouldIgnoreClasses(node, context, ignoreClass) ||
-    (ignoreInterface === true && inInterface(node)) ||
+    (ignoreInterface === true && isInInterface(node)) ||
     shouldIgnoreInFunction(node, context, allowLocalMutation) ||
     shouldIgnorePattern2(node, context, ignorePattern)
   ) {
@@ -376,7 +376,7 @@ function checkProperty(
 
   if (
     shouldIgnoreClasses(node, context, ignoreClass) ||
-    (ignoreInterface === true && inInterface(node)) ||
+    (ignoreInterface === true && isInInterface(node)) ||
     shouldIgnoreInFunction(node, context, allowLocalMutation) ||
     shouldIgnorePattern2(node, context, ignorePattern)
   ) {
@@ -441,7 +441,7 @@ function checkImplicitType(
   if (
     !checkImplicit ||
     shouldIgnoreClasses(node, context, ignoreClass) ||
-    (ignoreInterface === true && inInterface(node)) ||
+    (ignoreInterface === true && isInInterface(node)) ||
     shouldIgnoreInFunction(node, context, allowLocalMutation) ||
     shouldIgnorePattern2(node, context, ignorePattern)
   ) {
