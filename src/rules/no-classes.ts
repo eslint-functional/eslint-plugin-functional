@@ -1,4 +1,4 @@
-import type { ESLintUtils, TSESLint } from "@typescript-eslint/utils";
+import type { TSESLint } from "@typescript-eslint/utils";
 import type { JSONSchema4 } from "json-schema";
 
 import type { ESClass } from "~/utils/node-types";

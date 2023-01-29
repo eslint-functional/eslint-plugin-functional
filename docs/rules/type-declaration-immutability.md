@@ -1,6 +1,6 @@
 # Enforce the immutability of types based on patterns (`functional/type-declaration-immutability`)
 
-💼 This rule is enabled in the following configs: `lite`, `no-mutations`, ✅ `recommended`, 🔒 `strict`.
+💼 This rule is enabled in the following configs: ☑️ `lite`, `no-mutations`, ✅ `recommended`, 🔒 `strict`.
 
 🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 

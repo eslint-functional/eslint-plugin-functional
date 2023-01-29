@@ -1,4 +1,4 @@
-import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
+import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import type { JSONSchema4 } from "json-schema";
 
 import type {
@@ -135,7 +135,7 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     category: "No Mutations",
-    description: "Prefer readonly array over mutable arrays.",
+    description: "Prefer readonly types over mutable types.",
     recommended: "error",
   },
   messages: errorMessages,

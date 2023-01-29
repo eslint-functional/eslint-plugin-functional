@@ -33,15 +33,7 @@
     "// @ts-.*",
     "/[A-Za-z0-9]{32,}/"
   ],
-  "words": [
-    "litecoin",
-    "fleur",
-    "globstar",
-    "IIFE",
-    "IIFEs",
-    "ruleset",
-    "rulesets"
-  ],
+  "words": ["litecoin", "globstar", "IIFE", "IIFEs", "ruleset", "rulesets"],
   "overrides": [
     {
       "filename": "**/*.{ts,js}",

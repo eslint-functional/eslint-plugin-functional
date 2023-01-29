@@ -1,4 +1,4 @@
-# Prefer readonly array over mutable arrays (`functional/prefer-readonly-type`)
+# Prefer readonly types over mutable types (`functional/prefer-readonly-type`)
 
 ❌ This rule is deprecated. It was replaced by [`functional/prefer-immutable-types`](prefer-immutable-types.md),[`functional/type-declaration-immutability`](type-declaration-immutability.md).
 

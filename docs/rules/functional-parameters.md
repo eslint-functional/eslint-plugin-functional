@@ -1,6 +1,6 @@
 # Enforce functional parameters (`functional/functional-parameters`)
 
-💼 This rule is enabled in the following configs: `currying`, `lite`, ✅ `recommended`, 🔒 `strict`.
+💼 This rule is enabled in the following configs: `currying`, ☑️ `lite`, ✅ `recommended`, 🔒 `strict`.
 
 <!-- end auto-generated rule header -->
 

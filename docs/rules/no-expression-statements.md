@@ -1,6 +1,6 @@
 # Disallow expression statements (`functional/no-expression-statements`)
 
-💼🚫 This rule is enabled in the following configs: `no-statements`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the `lite` config.
+💼🚫 This rule is enabled in the following configs: `no-statements`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the ☑️ `lite` config.
 
 <!-- end auto-generated rule header -->
 

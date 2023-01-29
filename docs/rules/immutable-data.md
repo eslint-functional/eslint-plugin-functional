@@ -1,6 +1,6 @@
 # Enforce treating data as immutable (`functional/immutable-data`)
 
-💼 This rule is enabled in the following configs: `lite`, `no-mutations`, ✅ `recommended`, 🔒 `strict`.
+💼 This rule is enabled in the following configs: ☑️ `lite`, `no-mutations`, ✅ `recommended`, 🔒 `strict`.
 
 <!-- end auto-generated rule header -->
 

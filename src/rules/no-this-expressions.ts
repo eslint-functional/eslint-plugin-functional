@@ -1,4 +1,4 @@
-import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
+import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import type { JSONSchema4 } from "json-schema";
 
 import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
@@ -39,7 +39,7 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
   docs: {
     category: "No Other Paradigms",
     description: "Disallow this access.",
-    recommended: "error",
+    recommended: "strict",
   },
   messages: errorMessages,
   schema,

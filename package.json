@@ -47,7 +47,7 @@
     "README.md"
   ],
   "scripts": {
-    "build": "rimraf lib && yarn compile",
+    "build": "rimraf lib && yarn compile && yarn update-eslint-docs",
     "build-tests": "rimraf build && yarn compile-tests",
     "check-format": "prettier --list-different \"./**/*.{md,ts}\"",
     "check-spelling": "cspell --config=.cspell.json \"**/*.{md,ts}\"",
@@ -56,7 +56,7 @@
     "cz": "git-cz",
     "format": "prettier --write \"./**/*.{md,ts}\"",
     "lint": "yarn build && yarn lint-js && yarn lint-md && yarn lint-eslint-docs",
-    "lint-eslint-docs": "yarn update:eslint-docs --check",
+    "lint-eslint-docs": "yarn update-eslint-docs --check",
     "lint-js": "eslint .",
     "lint-md": "markdownlint \"**/*.md\" --config=.markdownlint.json --ignore-path=.markdownlintignore",
     "prepare": "yarn husky install",
@@ -107,7 +107,7 @@
     "eslint": "8.32.0",
     "eslint-ava-rule-tester": "4.0.0",
     "eslint-config-prettier": "8.6.0",
-    "eslint-doc-generator": "^1.4.2",
+    "eslint-doc-generator": "1.4.2",
     "eslint-import-resolver-typescript": "3.5.3",
     "eslint-plugin-ava": "14.0.0",
     "eslint-plugin-eslint-comments": "3.2.0",

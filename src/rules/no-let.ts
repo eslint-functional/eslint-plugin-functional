@@ -1,4 +1,4 @@
-import type { ESLintUtils, TSESLint, TSESTree } from "@typescript-eslint/utils";
+import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { deepmerge } from "deepmerge-ts";
 import type { JSONSchema4 } from "json-schema";
 
@@ -73,7 +73,6 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
     recommended: "error",
   },
   messages: errorMessages,
-  fixable: "code",
   schema,
 };
 
