@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+## [5.0.1](https://github.com/eslint-functional/eslint-plugin-functional/compare/v5.0.0...v5.0.1) (2023-02-02)
+
+
+### Bug Fixes
+
+* improve calculation of immutability involving intersections ([75cd708](https://github.com/eslint-functional/eslint-plugin-functional/commit/75cd7081deab7bc42e7f8d095ca4b5b739defe96)), closes [#525](https://github.com/eslint-functional/eslint-plugin-functional/issues/525)
+
 # [5.0.0](https://github.com/eslint-functional/eslint-plugin-functional/compare/v4.4.1...v5.0.0) (2023-01-29)
 
 
