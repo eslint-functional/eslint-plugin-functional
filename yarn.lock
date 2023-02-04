@@ -2405,7 +2405,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:^9.4.0, commander@npm:^9.4.1":
+"commander@npm:^9.4.1":
   version: 9.5.0
   resolution: "commander@npm:9.5.0"
   checksum: c7a3e27aa59e913b54a1bafd366b88650bc41d6651f0cbe258d4ff09d43d6a7394232a4dadd0bf518b3e696fdf595db1028a0d82c785b88bd61f8a440cecfade
@@ -3276,14 +3276,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-doc-generator@npm:1.4.2":
-  version: 1.4.2
-  resolution: "eslint-doc-generator@npm:1.4.2"
+"eslint-doc-generator@npm:1.4.3":
+  version: 1.4.3
+  resolution: "eslint-doc-generator@npm:1.4.3"
   dependencies:
     "@typescript-eslint/utils": ^5.38.1
     ajv: ^8.11.2
     boolean: ^3.2.0
-    commander: ^9.4.0
+    commander: ^10.0.0
     cosmiconfig: ^8.0.0
     deepmerge: ^4.2.2
     dot-prop: ^7.2.0
@@ -3296,7 +3296,7 @@ __metadata:
     eslint: ">= 7"
   bin:
     eslint-doc-generator: dist/bin/eslint-doc-generator.js
-  checksum: eed51d06fc2782d975b489efbdd2794a78af20857d0930ad5cc5e4554b9d99345a30705922abbaa0d35b65fee14534642104e074c25dcbb0beda1ebda3ed72c4
+  checksum: d39ab3b716f2bfe69ec3d152a56d0d5eee2d3750dd0636a230fc5f7a941134f1ddca932eae40507ea07d52aa236a12e826b1e1abf6443c96fc4fb3b12df3d7e5
   languageName: node
   linkType: hard
 
@@ -3432,7 +3432,7 @@ __metadata:
     eslint: 8.32.0
     eslint-ava-rule-tester: 4.0.0
     eslint-config-prettier: 8.6.0
-    eslint-doc-generator: 1.4.2
+    eslint-doc-generator: 1.4.3
     eslint-import-resolver-typescript: 3.5.3
     eslint-plugin-ava: 14.0.0
     eslint-plugin-eslint-comments: 3.2.0
