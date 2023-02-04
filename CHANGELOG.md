@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+## [5.0.2](https://github.com/eslint-functional/eslint-plugin-functional/compare/v5.0.1...v5.0.2) (2023-02-04)
+
+
+### Bug Fixes
+
+* **prefer-immutable-types:** handling of destructuring assignment ([e390f54](https://github.com/eslint-functional/eslint-plugin-functional/commit/e390f5430a432e6d3c4812ebaca5ddd909ab9167))
+
 ## [5.0.1](https://github.com/eslint-functional/eslint-plugin-functional/compare/v5.0.0...v5.0.1) (2023-02-02)
 
 
