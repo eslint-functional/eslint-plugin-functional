@@ -77,6 +77,36 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       },
     ],
   },
+  // Destructuring array.
+  {
+    code: dedent`
+      const [a, ...rest] = [1, 2];
+    `,
+    optionsSet: [[{ variables: "Immutable" }]],
+    errors: [
+      {
+        messageId: "variable",
+        type: "RestElement",
+        line: 1,
+        column: 11,
+      },
+    ],
+  },
+  // Destructuring object.
+  {
+    code: dedent`
+      const { a, ...rest } = { a: 1, b: 2 };
+    `,
+    optionsSet: [[{ variables: "Immutable" }]],
+    errors: [
+      {
+        messageId: "variable",
+        type: "RestElement",
+        line: 1,
+        column: 12,
+      },
+    ],
+  },
   // Local.
   {
     code: dedent`

@@ -170,6 +170,20 @@ const tests: ReadonlyArray<ValidTestCase> = [
       ],
     ],
   },
+  // Destructuring array.
+  {
+    code: dedent`
+      const [a, b] = [1, 2];
+    `,
+    optionsSet: [[{ variables: "Immutable" }]],
+  },
+  // Destructuring object.
+  {
+    code: dedent`
+      const { a, b } = { a: 1, b: 2 };
+    `,
+    optionsSet: [[{ variables: "Immutable" }]],
+  },
   {
     code: dedent`
       const foo: Readonly<Foo<{bar: string}>> = {} as any;

@@ -21,9 +21,13 @@ import {
 } from "~/utils/rule";
 import {
   hasID,
+  isArrayPattern,
   isDefined,
   isFunctionLike,
   isIdentifier,
+  isMemberExpression,
+  isObjectPattern,
+  isProperty,
   isPropertyDefinition,
   isTSParameterProperty,
   isTSTypePredicate,
@@ -641,9 +645,9 @@ function checkVarible(
     };
   }
 
-  const isProperty = isPropertyDefinition(node);
+  const propertyDefinition = isPropertyDefinition(node);
 
-  if (isProperty && node.readonly !== true) {
+  if (propertyDefinition && node.readonly !== true) {
     return {
       context,
       descriptors: [
@@ -661,7 +665,7 @@ function checkVarible(
 
   const ignoreInferredTypes =
     rawIgnoreInferredTypes ?? optionsObject.ignoreInferredTypes;
-  const nodeWithTypeAnnotation = isProperty ? node : node.id;
+  const nodeWithTypeAnnotation = propertyDefinition ? node : node.id;
 
   if (
     ignoreInferredTypes &&
@@ -687,43 +691,56 @@ function checkVarible(
     };
   }
 
-  const immutability = getTypeImmutabilityOfNode(
-    nodeWithTypeAnnotation,
-    context,
-    enforcement
-  );
+  const elements = isArrayPattern(nodeWithTypeAnnotation)
+    ? nodeWithTypeAnnotation.elements
+    : isObjectPattern(nodeWithTypeAnnotation)
+    ? nodeWithTypeAnnotation.properties
+    : [nodeWithTypeAnnotation];
 
-  if (immutability >= enforcement) {
-    return {
+  const elementResults = elements.map((element) => {
+    if (!isDefined(element)) {
+      return null;
+    }
+
+    const immutability = getTypeImmutabilityOfNode(
+      element,
       context,
-      descriptors: [],
-    };
-  }
+      enforcement
+    );
 
-  const fixerConfigs = parseFixerConfigs(rawFixerConfig, enforcement);
-  const fix =
-    fixerConfigs === false ||
-    nodeWithTypeAnnotation.typeAnnotation === undefined
-      ? null
-      : getConfiuredFixer(
-          nodeWithTypeAnnotation.typeAnnotation.typeAnnotation,
-          context,
-          fixerConfigs
-        );
+    if (immutability >= enforcement) {
+      return null;
+    }
+
+    const fixerConfigs = parseFixerConfigs(rawFixerConfig, enforcement);
+    const fix =
+      fixerConfigs === false ||
+      isMemberExpression(element) ||
+      isProperty(element) ||
+      element.typeAnnotation === undefined
+        ? null
+        : getConfiuredFixer(
+            element.typeAnnotation.typeAnnotation,
+            context,
+            fixerConfigs
+          );
+
+    return { element, immutability, fix };
+  });
 
   return {
     context,
-    descriptors: [
-      {
-        node: nodeWithTypeAnnotation,
-        messageId: isProperty ? "propertyImmutability" : "variable",
+    descriptors: elementResults
+      .filter(isDefined)
+      .map(({ element, immutability, fix }) => ({
+        node: element,
+        messageId: propertyDefinition ? "propertyImmutability" : "variable",
         data: {
           actual: Immutability[immutability],
           expected: Immutability[enforcement],
         },
         fix,
-      },
-    ],
+      })),
   };
 }
 

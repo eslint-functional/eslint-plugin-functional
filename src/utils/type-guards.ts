@@ -40,6 +40,12 @@ export function isArrayExpression(
   return node.type === AST_NODE_TYPES.ArrayExpression;
 }
 
+export function isArrayPattern(
+  node: TSESTree.Node
+): node is TSESTree.ArrayPattern {
+  return node.type === AST_NODE_TYPES.ArrayPattern;
+}
+
 export function isAssignmentExpression(
   node: TSESTree.Node
 ): node is TSESTree.AssignmentExpression {
@@ -174,6 +180,12 @@ export function isObjectExpression(
   node: TSESTree.Node
 ): node is TSESTree.ObjectExpression {
   return node.type === AST_NODE_TYPES.ObjectExpression;
+}
+
+export function isObjectPattern(
+  node: TSESTree.Node
+): node is TSESTree.ObjectPattern {
+  return node.type === AST_NODE_TYPES.ObjectPattern;
 }
 
 export function isProgram(node: TSESTree.Node): node is TSESTree.Program {
