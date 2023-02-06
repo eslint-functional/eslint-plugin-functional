@@ -68,7 +68,8 @@
     "npm/chalk": "^4.1.2"
   },
   "dependencies": {
-    "@typescript-eslint/utils": "^5.49.0",
+    "@typescript-eslint/type-utils": "^5.50.0",
+    "@typescript-eslint/utils": "^5.50.0",
     "deepmerge-ts": "^4.2.2",
     "escape-string-regexp": "^4.0.0",
     "is-immutable-type": "^1.2.4",

@@ -19,13 +19,13 @@ pnpm add -D eslint eslint-plugin-functional
 
 ```sh
 # Install with npm
-npm install -D eslint @typescript-eslint/parser @typescript-eslint/type-utils @typescript-eslint/utils eslint-plugin-functional
+npm install -D eslint @typescript-eslint/parser eslint-plugin-functional
 
 # Install with yarn
-yarn add -D eslint @typescript-eslint/parser @typescript-eslint/type-utils @typescript-eslint/utils eslint-plugin-functional
+yarn add -D eslint @typescript-eslint/parser eslint-plugin-functional
 
 # Install with pnpm
-pnpm add -D eslint @typescript-eslint/parser @typescript-eslint/type-utils @typescript-eslint/utils eslint-plugin-functional
+pnpm add -D eslint @typescript-eslint/parser eslint-plugin-functional
 ```
 
 ## Usage
