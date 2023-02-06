@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+## [5.0.4](https://github.com/eslint-functional/eslint-plugin-functional/compare/v5.0.3...v5.0.4) (2023-02-06)
+
+
+### Bug Fixes
+
+* **prefer-immutable-types:** inheriting of config options ([b528bc7](https://github.com/eslint-functional/eslint-plugin-functional/commit/b528bc7ab30f8461ec335558a65cc546e47ac27f))
+
 ## [5.0.3](https://github.com/eslint-functional/eslint-plugin-functional/compare/v5.0.2...v5.0.3) (2023-02-06)
 
 
