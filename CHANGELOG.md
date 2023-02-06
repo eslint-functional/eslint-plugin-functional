@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+## [5.0.3](https://github.com/eslint-functional/eslint-plugin-functional/compare/v5.0.2...v5.0.3) (2023-02-06)
+
+
+### Bug Fixes
+
+* add missing dependency "@typescript-eslint/type-utils" ([7bd4d03](https://github.com/eslint-functional/eslint-plugin-functional/commit/7bd4d03d90b92f4e94b392876b90c4adddb9380f))
+
 ## [5.0.2](https://github.com/eslint-functional/eslint-plugin-functional/compare/v5.0.1...v5.0.2) (2023-02-04)
 
 
