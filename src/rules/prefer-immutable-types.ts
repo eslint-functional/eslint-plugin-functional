@@ -349,19 +349,21 @@ function getParameterTypeViolations(
   const { parameters: rawOption, fixer: rawFixerConfig } = optionsObject;
   const {
     enforcement: rawEnforcement,
-    ignoreInferredTypes: rawIgnoreInferredTypes,
+    ignoreInferredTypes,
     ignoreClasses,
     ignoreNamePattern,
     ignoreTypePattern,
-  } = typeof rawOption === "object"
-    ? rawOption
-    : {
-        enforcement: rawOption,
-        ignoreInferredTypes: optionsObject.ignoreInferredTypes,
-        ignoreClasses: optionsObject.ignoreClasses,
-        ignoreNamePattern: optionsObject.ignoreNamePattern,
-        ignoreTypePattern: optionsObject.ignoreTypePattern,
-      };
+  } = {
+    ignoreInferredTypes: optionsObject.ignoreInferredTypes,
+    ignoreClasses: optionsObject.ignoreClasses,
+    ignoreNamePattern: optionsObject.ignoreNamePattern,
+    ignoreTypePattern: optionsObject.ignoreTypePattern,
+    ...(typeof rawOption === "object"
+      ? rawOption
+      : {
+          enforcement: rawOption,
+        }),
+  };
 
   const enforcement = parseEnforcement(
     rawEnforcement ?? optionsObject.enforcement
@@ -374,9 +376,6 @@ function getParameterTypeViolations(
   }
 
   const fixerConfigs = parseFixerConfigs(rawFixerConfig, enforcement);
-
-  const ignoreInferredTypes =
-    rawIgnoreInferredTypes ?? optionsObject.ignoreInferredTypes;
 
   return node.params
     .map((param): Descriptor | undefined => {
@@ -463,26 +462,21 @@ function getReturnTypeViolations(
   const { returnTypes: rawOption, fixer: rawFixerConfig } = optionsObject;
   const {
     enforcement: rawEnforcement,
-    ignoreInferredTypes: rawIgnoreInferredTypes,
+    ignoreInferredTypes,
     ignoreClasses,
     ignoreNamePattern,
     ignoreTypePattern,
-  } = typeof rawOption === "object"
-    ? rawOption
-    : {
-        enforcement: rawOption,
-        ignoreInferredTypes: optionsObject.ignoreInferredTypes,
-        ignoreClasses: optionsObject.ignoreClasses,
-        ignoreNamePattern: optionsObject.ignoreNamePattern,
-        ignoreTypePattern: optionsObject.ignoreTypePattern,
-      };
+  } = {
+    ignoreInferredTypes: optionsObject.ignoreInferredTypes,
+    ignoreClasses: optionsObject.ignoreClasses,
+    ignoreNamePattern: optionsObject.ignoreNamePattern,
+    ignoreTypePattern: optionsObject.ignoreTypePattern,
+    ...(typeof rawOption === "object" ? rawOption : { enforcement: rawOption }),
+  };
 
   const enforcement = parseEnforcement(
     rawEnforcement ?? optionsObject.enforcement
   );
-
-  const ignoreInferredTypes =
-    rawIgnoreInferredTypes ?? optionsObject.ignoreInferredTypes;
 
   if (
     enforcement === false ||
@@ -612,26 +606,23 @@ function checkVarible(
   const { variables: rawOption, fixer: rawFixerConfig } = optionsObject;
   const {
     enforcement: rawEnforcement,
-    ignoreInferredTypes: rawIgnoreInferredTypes,
+    ignoreInferredTypes,
     ignoreClasses,
     ignoreNamePattern,
     ignoreTypePattern,
-    ignoreInFunctions: rawIgnoreInFunctions,
-  } = typeof rawOption === "object"
-    ? rawOption
-    : {
-        enforcement: rawOption,
-        ignoreInferredTypes: optionsObject.ignoreInferredTypes,
-        ignoreClasses: optionsObject.ignoreClasses,
-        ignoreNamePattern: optionsObject.ignoreNamePattern,
-        ignoreTypePattern: optionsObject.ignoreTypePattern,
-        ignoreInFunctions: false,
-      };
+    ignoreInFunctions,
+  } = {
+    ignoreInferredTypes: optionsObject.ignoreInferredTypes,
+    ignoreClasses: optionsObject.ignoreClasses,
+    ignoreNamePattern: optionsObject.ignoreNamePattern,
+    ignoreTypePattern: optionsObject.ignoreTypePattern,
+    ignoreInFunctions: false,
+    ...(typeof rawOption === "object" ? rawOption : { enforcement: rawOption }),
+  };
 
   const enforcement = parseEnforcement(
     rawEnforcement ?? optionsObject.enforcement
   );
-  const ignoreInFunctions = rawIgnoreInFunctions ?? false;
 
   if (
     enforcement === false ||
@@ -663,8 +654,6 @@ function checkVarible(
     };
   }
 
-  const ignoreInferredTypes =
-    rawIgnoreInferredTypes ?? optionsObject.ignoreInferredTypes;
   const nodeWithTypeAnnotation = propertyDefinition ? node : node.id;
 
   if (

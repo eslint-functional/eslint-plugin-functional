@@ -230,6 +230,22 @@ const tests: ReadonlyArray<ValidTestCase> = [
     `,
     optionsSet: [[{ ignoreNamePattern: "^mutable" }]],
   },
+  // Inherit Ignore Name Prefix.
+  {
+    code: dedent`
+      function foo(mutableArg: string[]) {}
+    `,
+    optionsSet: [
+      [
+        {
+          ignoreNamePattern: "^mutable",
+          parameters: {
+            enforcement: "Immutable",
+          },
+        },
+      ],
+    ],
+  },
   // Ignore Name Suffix.
   {
     code: dedent`
