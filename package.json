@@ -73,7 +73,8 @@
     "deepmerge-ts": "^4.3.0",
     "escape-string-regexp": "^4.0.0",
     "is-immutable-type": "^1.2.5",
-    "semver": "^7.3.8"
+    "semver": "^7.3.8",
+    "ts-api-utils": "0.0.42"
   },
   "devDependencies": {
     "@ava/typescript": "3.0.1",

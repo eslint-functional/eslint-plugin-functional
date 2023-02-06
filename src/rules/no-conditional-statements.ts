@@ -1,10 +1,10 @@
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import type { JSONSchema4 } from "json-schema";
+import { unionTypeParts } from "ts-api-utils";
 import type { Type } from "typescript";
 
 import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
 import { createRule, getTypeOfNode } from "~/utils/rule";
-import { unionTypeParts } from "~/utils/tsutils";
 import {
   isBlockStatement,
   isBreakStatement,

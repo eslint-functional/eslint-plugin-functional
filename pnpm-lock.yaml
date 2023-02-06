@@ -73,6 +73,7 @@ specifiers:
   rollup-plugin-auto-external: 2.0.0
   semantic-release: 20.1.1
   semver: ^7.3.8
+  ts-api-utils: 0.0.42
   ts-node: 10.9.1
   tsc-prog: 2.2.1
   tsconfig-paths: 4.1.2
@@ -87,6 +88,7 @@ dependencies:
   escape-string-regexp: 4.0.0
   is-immutable-type: 1.2.5_k72txggm3rdyzxly2k77clb62q
   semver: 7.3.8
+  ts-api-utils: 0.0.42_typescript@4.9.5
 
 devDependencies:
   '@ava/typescript': 3.0.1
@@ -7412,6 +7414,15 @@ packages:
     resolution: {integrity: sha512-c1PTsA3tYrIsLGkJkzHF+w9F2EyxfXGo4UyJc4pFL++FMjnq0HJS69T3M7d//gKrFKwy429bouPescbjecU+Zw==}
     engines: {node: '>=8'}
     dev: true
+
+  /ts-api-utils/0.0.42_typescript@4.9.5:
+    resolution: {integrity: sha512-8VsNoVhpJws//7H1qCyjUBYu9pQloso+/Djr8OeePu8lq/qgd7TFWTEvfXp+k8P4dkF97GyT73eve36z6Oc7dg==}
+    engines: {node: '>=16.13.0'}
+    peerDependencies:
+      typescript: '>=4.2.0'
+    dependencies:
+      typescript: 4.9.5
+    dev: false
 
   /ts-morph-helpers/0.6.3:
     resolution: {integrity: sha512-/q4gUR9LEwpm+EFTbDy9QBsf0KwnQ3m9sidduFlERVHvsoh1aDxoTsz+oFFVbOTUyc/kd/5IDQUoUWZ5S3dSyQ==}

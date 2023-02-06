@@ -12,7 +12,6 @@ import type { Node as TSNode, Type, TypeNode } from "typescript";
 import ts from "~/conditional-imports/typescript";
 import { getImmutabilityOverrides } from "~/settings";
 import type { ESFunction } from "~/utils/node-types";
-import { isIdentifier } from "~/utils/tsutils";
 
 // eslint-disable-next-line @typescript-eslint/naming-convention, no-underscore-dangle -- This is a special var.
 const __VERSION__ = "0.0.0-development";
@@ -279,7 +278,8 @@ export function getTypeImmutabilityOfNode<
   const checker = parserServices.program.getTypeChecker();
 
   const tsNode = parserServices.esTreeNodeToTSNodeMap.get(node);
-  const typedNode = isIdentifier(tsNode) ? tsNode.parent : tsNode;
+  const typedNode =
+    tsNode.kind === ts?.SyntaxKind.Identifier ? tsNode.parent : tsNode;
   const typeLike =
     ((typedNode as any).type as TypeNode | undefined) ??
     getTypeOfNode(
