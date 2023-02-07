@@ -1,19 +1,21 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base",
+    ":ignoreModulesAndTests",
+    "group:monorepos",
+    "group:recommended",
+    ":automergeAll",
+    ":automergePr",
+    ":semanticCommits",
+    ":prHourlyLimitNone",
+    ":prConcurrentLimitNone",
     "helpers:disableTypesNodeMajor",
-    "schedule:monthly"
+    "workarounds:typesNodeVersioning",
+    "schedule:weekly"
   ],
   "postUpdateOptions": ["yarnDedupeHighest"],
   "labels": ["Type: Maintenance", ":blue_heart:"],
-  "automerge": true,
-  "automergeType": "branch",
   "automergeStrategy": "rebase",
-  "platformAutomerge": true,
-  "semanticCommits": "enabled",
-  "prHourlyLimit": 0,
-  "prConcurrentLimit": 0,
   "packageRules": [
     {
       "matchManagers": ["npm"],
