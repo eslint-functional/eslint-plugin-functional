@@ -89,7 +89,7 @@
     "@types/dedent": "0.7.0",
     "@types/eslint": "8.4.10",
     "@types/estree": "1.0.0",
-    "@types/node": "16.10.0",
+    "@types/node": "16.18.12",
     "@types/rollup-plugin-auto-external": "2.0.2",
     "@types/semver": "7.3.13",
     "@typescript-eslint/eslint-plugin": "5.50.0",
