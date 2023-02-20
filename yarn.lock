@@ -1263,13 +1263,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/eslint@npm:8.21.0":
-  version: 8.21.0
-  resolution: "@types/eslint@npm:8.21.0"
+"@types/eslint@npm:8.21.1":
+  version: 8.21.1
+  resolution: "@types/eslint@npm:8.21.1"
   dependencies:
     "@types/estree": "*"
     "@types/json-schema": "*"
-  checksum: 48823b13e1ffbc6fe22c96d99f691a17507ef5a498c4aed95e3a9076ec6d44ff48ce8a632928b6f82bea92701ac8967bba0d78a5c9de4dfa3f2e12d26dae7da4
+  checksum: 584068441e4000c7b41c8928274fdcc737bc62f564928c30eb64ec41bbdbac31612f9fedaf490bceab31ec8305e99615166428188ea345d58878394683086fae
   languageName: node
   linkType: hard
 
@@ -3418,7 +3418,7 @@ __metadata:
     "@rollup/plugin-node-resolve": 15.0.1
     "@rollup/plugin-typescript": 11.0.0
     "@types/dedent": 0.7.0
-    "@types/eslint": 8.21.0
+    "@types/eslint": 8.21.1
     "@types/estree": 1.0.0
     "@types/node": 16.18.12
     "@types/rollup-plugin-auto-external": 2.0.2
