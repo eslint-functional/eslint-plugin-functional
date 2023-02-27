@@ -103,7 +103,7 @@
     "cross-env": "7.0.3",
     "cspell": "6.27.0",
     "dedent": "0.7.0",
-    "eslint": "8.34.0",
+    "eslint": "8.35.0",
     "eslint-ava-rule-tester": "4.0.0",
     "eslint-config-prettier": "8.6.0",
     "eslint-doc-generator": "1.4.3",
