@@ -154,7 +154,7 @@ See [Currying](https://en.wikipedia.org/wiki/Currying) and [Higher-order functio
 
 See [enforceParameterCount](#enforceparametercount).
 
-### `enforceParameterCount.ignoreLambdaExpression`
+#### `enforceParameterCount.ignoreLambdaExpression`
 
 If true, this option allows for the use of lambda function expressions that do not have any parameters.
 Here, a lambda function expression refers to any function being defined in place as passed directly as an argument to another function.
