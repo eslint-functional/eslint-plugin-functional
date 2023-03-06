@@ -119,7 +119,7 @@
     "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-promise": "6.1.1",
     "eslint-plugin-sonarjs": "0.18.0",
-    "eslint-plugin-unicorn": "45.0.2",
+    "eslint-plugin-unicorn": "46.0.0",
     "espree": "9.4.1",
     "husky": "8.0.3",
     "json-schema": "0.4.0",
