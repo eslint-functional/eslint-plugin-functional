@@ -5,7 +5,7 @@ import type { Linter } from "eslint";
 export const filename = path.join(__dirname, "file.ts");
 
 const typescriptParser = "@typescript-eslint/parser";
-const babelParser = typescriptParser; // Switch to "babel-eslint" once https://github.com/babel/babel/issues/13712 is fixed;
+const babelParser = "@babel/eslint-parser";
 const espreeParser = "espree";
 
 export const configs = {
@@ -21,6 +21,11 @@ export const configs = {
     parser: require.resolve(babelParser),
     parserOptions: {
       ecmaVersion: 11,
+      requireConfigFile: false,
+      babelOptions: {
+        babelrc: false,
+        configFile: false,
+      },
     },
   } as Linter.Config,
 
@@ -28,6 +33,11 @@ export const configs = {
     parser: require.resolve(babelParser),
     parserOptions: {
       ecmaVersion: 10,
+      requireConfigFile: false,
+      babelOptions: {
+        babelrc: false,
+        configFile: false,
+      },
     },
   } as Linter.Config,
 
@@ -35,6 +45,11 @@ export const configs = {
     parser: require.resolve(babelParser),
     parserOptions: {
       ecmaVersion: 9,
+      requireConfigFile: false,
+      babelOptions: {
+        babelrc: false,
+        configFile: false,
+      },
     },
   } as Linter.Config,
 
@@ -42,6 +57,11 @@ export const configs = {
     parser: require.resolve(babelParser),
     parserOptions: {
       ecmaVersion: 8,
+      requireConfigFile: false,
+      babelOptions: {
+        babelrc: false,
+        configFile: false,
+      },
     },
   } as Linter.Config,
 
@@ -49,6 +69,11 @@ export const configs = {
     parser: require.resolve(babelParser),
     parserOptions: {
       ecmaVersion: 7,
+      requireConfigFile: false,
+      babelOptions: {
+        babelrc: false,
+        configFile: false,
+      },
     },
   } as Linter.Config,
 
@@ -56,6 +81,11 @@ export const configs = {
     parser: require.resolve(babelParser),
     parserOptions: {
       ecmaVersion: 6,
+      requireConfigFile: false,
+      babelOptions: {
+        babelrc: false,
+        configFile: false,
+      },
     },
   } as Linter.Config,
 

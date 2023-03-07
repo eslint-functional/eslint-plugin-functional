@@ -8,7 +8,6 @@ const tests: ValidTestCase[] = [
     code: dedent`
       class Klass {
         bar = 1;
-        baz: string;
         constructor() {
           this.baz = "hello";
         }
@@ -35,7 +34,6 @@ const tests: ValidTestCase[] = [
   {
     code: dedent`
       class Klass {
-        baz: string;
         mutate() {
           this.baz = "hello";
         }
