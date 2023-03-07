@@ -7,7 +7,7 @@ import { shouldIgnorePattern, ignorePatternOptionSchema } from "~/options";
 import { isDirectivePrologue } from "~/utils/misc";
 import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
 import { createRule, getTypeOfNode } from "~/utils/rule";
-import { isVoidType } from "~/utils/type-guards";
+import { isVoidType, isYieldExpression } from "~/utils/type-guards";
 
 /**
  * The name of this rule.
@@ -86,8 +86,8 @@ function checkExpressionStatement(
     };
   }
 
-  // Allow specifying directive prologues.
-  if (isDirectivePrologue(node)) {
+  // Allow specifying directive prologues and using yield expressions.
+  if (isDirectivePrologue(node) || isYieldExpression(node.expression)) {
     return {
       context,
       descriptors: [],
