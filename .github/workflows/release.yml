@@ -1,4 +1,4 @@
-name: Publish
+name: Release
 
 on:
   push:
@@ -6,44 +6,51 @@ on:
       - main
       - next
 
+permissions:
+  contents: write
+
+concurrency:
+  group: Release
+  cancel-in-progress: false
+
 jobs:
-  publish:
+  lint_js:
+    uses: ./.github/workflows/lint-js.yml
+  lint_knip:
+    uses: ./.github/workflows/lint-knip.yml
+  lint_markdown:
+    uses: ./.github/workflows/lint-markdown.yml
+  lint_spelling:
+    uses: ./.github/workflows/lint-spelling.yml
+  lint_prettier:
+    uses: ./.github/workflows/lint-prettier.yml
+  test:
+    uses: ./.github/workflows/test-js.yml
+  type_check:
+    uses: ./.github/workflows/type-check.yml
+
+  release:
+    needs:
+      - lint_js
+      - lint_knip
+      - lint_markdown
+      - lint_spelling
+      - lint_prettier
+      - test
+      - type_check
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
           persist-credentials: false
-
-      - name: Setup NodeJs
-        uses: actions/setup-node@v3
-        with:
-          node-version: "lts/*"
-
-      - name: Install dependencies
-        run: yarn install --immutable --ignore-scripts
+      - uses: ./.github/actions/prepare
 
       - name: Build
-        run: yarn build
-
-      - name: Verify
-        run: yarn verify
-
-      - name: Install semantic release
-        run: |
-          npm install --no-save \
-            @google/semantic-release-replace-plugin \
-            @semantic-release/changelog \
-            @semantic-release/commit-analyzer \
-            @semantic-release/git \
-            @semantic-release/github \
-            @semantic-release/npm \
-            @semantic-release/release-notes-generator \
-            semantic-release
+        run: pnpm run build
 
       - name: Release
-        run: npx semantic-release
+        run: pnpm semantic-release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

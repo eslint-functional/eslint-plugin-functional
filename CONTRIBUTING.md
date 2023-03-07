@@ -6,7 +6,7 @@ For new features file an issue. For bugs, file an issue and optionally file a PR
 
 ## How to develop
 
-To execute the tests run `yarn test`.
+To execute the tests run `pnpm test`.
 
 To learn about ESLint plugin development see the [relevant section](https://eslint.org/docs/developer-guide/working-with-plugins) of the ESLint docs. You can also checkout the [typescript-eslint](https://github.com/typescript-eslint/typescript-eslint) repo which has some more information specific to TypeScript.
 

@@ -242,7 +242,7 @@ function getRules(options: Options): ImmutabilityRule[] {
 /**
  * Find the first rule to apply to the given node.
  */
-export function getRuleToApply(
+function getRuleToApply(
   node: TSESTree.Node,
   context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
   options: Options
@@ -283,10 +283,7 @@ function getConfiuredFixer<T extends TSESTree.Node>(
 /**
  * Compare the actual immutability to the expected immutability.
  */
-export function compareImmutability(
-  rule: ImmutabilityRule,
-  actual: Immutability
-) {
+function compareImmutability(rule: ImmutabilityRule, actual: Immutability) {
   switch (rule.comparator) {
     case RuleEnforcementComparator.Less: {
       return actual < rule.immutability;

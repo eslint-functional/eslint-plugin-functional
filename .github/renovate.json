@@ -13,9 +13,9 @@
     "workarounds:typesNodeVersioning",
     "schedule:weekly"
   ],
-  "postUpdateOptions": ["yarnDedupeHighest"],
   "labels": ["Type: Maintenance", ":blue_heart:"],
   "automergeStrategy": "rebase",
+  "postUpdateOptions": ["pnpmDedupe"],
   "packageRules": [
     {
       "matchManagers": ["npm"],

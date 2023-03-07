@@ -1,18 +1,9 @@
 {
   "root": true,
-  "parser": "@typescript-eslint/parser",
-  "plugins": [
-    "@typescript-eslint",
-    "eslint-plugin",
-    "functional",
-    "import",
-    "jsdoc",
-    "prettier"
-  ],
   "env": {
-    "es6": true,
     "node": true
   },
+  "plugins": ["prettier"],
   "extends": [
     "@rebeccastevens/eslint-config/modern",
     "@rebeccastevens/eslint-config/typescript",
@@ -29,14 +20,7 @@
     ],
     "sourceType": "module"
   },
-  "ignorePatterns": [
-    "/build/",
-    "/coverage/",
-    "/lib/",
-    "/**/*.cjs",
-    "/**/*.js",
-    "/src/utils/tsutils.ts"
-  ],
+  "ignorePatterns": ["/build/", "/coverage/", "/lib/", "/**/*.cjs", "/**/*.js"],
   "rules": {
     "functional/prefer-immutable-types": "off",
     "import/no-relative-parent-imports": "error"

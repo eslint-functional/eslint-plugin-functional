@@ -130,7 +130,7 @@ function accessorPatternMatch(
     ? textParts.length === 0
       ? accessorPatternMatch(remainingPatternParts, [], allowExtra)
       : Array.from({ length: textParts.length })
-          .map((_element, index) => index)
+          .map((element, index) => index)
           .some((offset) =>
             accessorPatternMatch(
               remainingPatternParts,

@@ -9,13 +9,9 @@
       "request": "launch",
       "name": "AVA Test Current Test File",
       "program": "${workspaceFolder}/node_modules/.bin/ava",
-      "args": [
-        "${relativeFile}"
-      ],
+      "args": ["${relativeFile}"],
       "outputCapture": "std",
-      "skipFiles": [
-        "<node_internals>/**/*.js"
-      ],
+      "skipFiles": ["<node_internals>/**/*.js"],
       "env": {
         "TEST_ALL_FILES": "1"
       },

@@ -10,6 +10,6 @@ jobs:
     name: "Update Labels"
     runs-on: ubuntu-latest
     steps:
-      - uses: RebeccaStevens/issue-closed-labeler-action@latest
+      - uses: RebeccaStevens/issue-closed-labeler-action@v1
         with:
-          rules: '[{"condition":"Type: Bug","add":"Resolution: Fixed"},{"condition":["some",["Type: Feature","Type: Enhancement"]],"add":"Resolution: Added"}]'
+          rules: '[{"condition":"Type: Bug","add":"Resolution: Fixed","remove":["Status: Triage","Status: Investigation Needed","Status: On Hold","Status: In Progress","Status: Stale","Status: Awaiting Response","Status: Awaiting Feedback","Status: Blocked"]},{"condition":["some",["Type: Feature","Type: Enhancement"]],"add":"Resolution: Added","remove":["Status: Triage","Status: Investigation Needed","Status: On Hold","Status: In Progress","Status: Stale","Status: Awaiting Response","Status: Awaiting Feedback","Status: Blocked"]}]'

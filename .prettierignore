@@ -1,3 +1,11 @@
 /CHANGELOG.md
 /lib/
 /build/
+/coverage/
+
+.nyc_output/
+
+node_modules/
+pnpm-lock.yaml
+
+*.log

@@ -38,7 +38,7 @@
   // MD024/no-duplicate-heading/no-duplicate-header - Multiple headings with the same content
   "MD024": { "siblings_only": true },
   // MD025/single-title/single-h1 - Multiple top level headings in the same document
-  "MD025": true,
+  "MD025": false,
   // MD026/no-trailing-punctuation - Trailing punctuation in heading
   "MD026": true,
   // MD027/no-multiple-space-blockquote - Multiple spaces after blockquote symbol
