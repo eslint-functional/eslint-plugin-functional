@@ -23,7 +23,6 @@ const tests: InvalidTestCase[] = [
     code: dedent`
       class Klass {
         bar = 1;
-        baz: string;
 
         constructor() {
           this.baz = "hello";
@@ -40,13 +39,13 @@ const tests: InvalidTestCase[] = [
       {
         messageId: "generic",
         type: "AssignmentExpression",
-        line: 10,
+        line: 9,
         column: 5,
       },
       {
         messageId: "generic",
         type: "AssignmentExpression",
-        line: 11,
+        line: 10,
         column: 5,
       },
     ],
