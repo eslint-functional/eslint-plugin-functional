@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+## [5.0.5](https://github.com/eslint-functional/eslint-plugin-functional/compare/v5.0.4...v5.0.5) (2023-03-07)
+
+
+### Bug Fixes
+
+* **no-expression-statements:** allow yield expressions ([#570](https://github.com/eslint-functional/eslint-plugin-functional/issues/570)) ([81c26de](https://github.com/eslint-functional/eslint-plugin-functional/commit/81c26def6bef1828ae2199b9bb0b736b4db7b22a))
+
 ## [5.0.4](https://github.com/eslint-functional/eslint-plugin-functional/compare/v5.0.3...v5.0.4) (2023-02-06)
 
 
