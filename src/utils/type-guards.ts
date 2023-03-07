@@ -346,6 +346,12 @@ export function isVariableDeclarator(
   return node.type === AST_NODE_TYPES.VariableDeclarator;
 }
 
+export function isYieldExpression(
+  node: TSESTree.Node
+): node is TSESTree.YieldExpression {
+  return node.type === AST_NODE_TYPES.YieldExpression;
+}
+
 export function hasID(
   node: TSESTree.Node
 ): node is Extract<TSESTree.Node, { id: unknown }> {
