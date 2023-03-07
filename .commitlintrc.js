@@ -1,10 +1,8 @@
 module.exports = {
-  extends: [
-    "@commitlint/config-conventional"
-  ],
+  extends: ["@commitlint/config-conventional"],
   parserPreset: {
     parserOpts: {
-      headerPattern: /^(\w*)(?:\((.*)\))?!?: (.*)$/
-    }
-  }
+      headerPattern: /^(\w*)(?:\((.*)\))?!?: (.*)$/,
+    },
+  },
 };

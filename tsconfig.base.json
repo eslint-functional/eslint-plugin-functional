@@ -3,6 +3,7 @@
     "allowSyntheticDefaultImports": true,
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
+    "alwaysStrict": true,
     "esModuleInterop": true,
     "exactOptionalPropertyTypes": true,
     "forceConsistentCasingInFileNames": true,
@@ -21,7 +22,6 @@
     "resolveJsonModule": true,
     "sourceMap": false,
     "strict": true,
-    "alwaysStrict": true,
     "target": "ES2020",
     "baseUrl": ".",
     "paths": {

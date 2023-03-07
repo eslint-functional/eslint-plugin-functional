@@ -1,7 +1,7 @@
 /**
  * Get the intended boolean value from the given string.
  */
-function getBoolean(value: unknown) {
+function getBoolean(value) {
   if (value === undefined) {
     return false;
   }

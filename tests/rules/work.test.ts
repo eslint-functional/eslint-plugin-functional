@@ -51,7 +51,7 @@ const invalid: Array<InvalidTestCase> = [
 
 /*
  * Step 3.
- * Run test with `yarn test-work` or to debug in vscode, press F5 (with this
+ * Run test with `pnpm run test-work` or to debug in vscode, press F5 (with this
  * file open and focused).
  */
 testUsing.typescript(name, rule, { valid, invalid });

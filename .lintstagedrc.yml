@@ -1,0 +1,12 @@
+"*.{json,yml}":
+  - prettier --ignore-unknown --write
+
+"*.ts":
+  - prettier --ignore-unknown --write
+  - eslint --fix
+  - cspell
+
+"*.md":
+  - prettier --ignore-unknown --write
+  - markdownlint --config=.markdownlint.json --ignore-path=.markdownlintignore
+  - cspell

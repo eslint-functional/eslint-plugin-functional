@@ -4,7 +4,5 @@
     "rootDir": ".",
     "removeComments": true
   },
-  "exclude": [
-    "tests/**/*"
-  ]
+  "exclude": ["tests"]
 }

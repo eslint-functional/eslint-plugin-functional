@@ -94,7 +94,7 @@ function loadImmutabilityOverrides(
 }
 
 /**
- * The schema for the rule options.
+ * The schema for the immutability configuration settings.
  */
 export const sharedConfigurationSettingsSchema: JSONSchema4 = [
   {
