@@ -14,12 +14,30 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  ci:
-    uses: ./.github/workflows/ci.yml
+  lint_js:
+    uses: ./.github/workflows/lint-js.yml
+  lint_knip:
+    uses: ./.github/workflows/lint-knip.yml
+  lint_markdown:
+    uses: ./.github/workflows/lint-markdown.yml
+  lint_spelling:
+    uses: ./.github/workflows/lint-spelling.yml
+  lint_prettier:
+    uses: ./.github/workflows/lint-prettier.yml
+  test:
+    uses: ./.github/workflows/test-js.yml
+  type_check:
+    uses: ./.github/workflows/type-check.yml
 
   release:
     needs:
-      - ci
+      - lint_js
+      - lint_knip
+      - lint_markdown
+      - lint_spelling
+      - lint_prettier
+      - test
+      - type_check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
