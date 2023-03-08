@@ -8,7 +8,7 @@
 
 ## Rule Details
 
-This rule is deigned to be a replacement for
+This rule is designed to be a replacement for
 [@typescript-eslint/prefer-readonly-parameter-types](https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/prefer-readonly-parameter-types.md)
 but also add extra functionality, allowing not just parameters to be checked.
 
