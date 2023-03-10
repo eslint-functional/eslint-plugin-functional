@@ -9,7 +9,7 @@ specifiers:
   '@cspell/dict-cryptocurrencies': 3.0.1
   '@google/semantic-release-replace-plugin': 1.2.0
   '@istanbuljs/nyc-config-typescript': 1.0.2
-  '@rebeccastevens/eslint-config': 1.5.2
+  '@rebeccastevens/eslint-config': 1.5.3
   '@rollup/plugin-commonjs': 24.0.1
   '@rollup/plugin-json': 6.0.0
   '@rollup/plugin-node-resolve': 15.0.1
@@ -97,7 +97,7 @@ devDependencies:
   '@cspell/dict-cryptocurrencies': 3.0.1
   '@google/semantic-release-replace-plugin': 1.2.0
   '@istanbuljs/nyc-config-typescript': 1.0.2_nyc@15.1.0
-  '@rebeccastevens/eslint-config': 1.5.2_4rrpwiimwwwfzqd6uvtrlykpvy
+  '@rebeccastevens/eslint-config': 1.5.3_4rrpwiimwwwfzqd6uvtrlykpvy
   '@rollup/plugin-commonjs': 24.0.1_rollup@3.18.0
   '@rollup/plugin-json': 6.0.0_rollup@3.18.0
   '@rollup/plugin-node-resolve': 15.0.1_rollup@3.18.0
@@ -1387,8 +1387,8 @@ packages:
       config-chain: 1.1.13
     dev: true
 
-  /@rebeccastevens/eslint-config/1.5.2_4rrpwiimwwwfzqd6uvtrlykpvy:
-    resolution: {integrity: sha512-vA7VTL8i/kp9YFa3a7KYrLm1P9uY3W3QUQBo9smk/b8/RUcd6H/OuA5yFlySN79LL2XmPZhQxQ3ItPByUtB6Xg==}
+  /@rebeccastevens/eslint-config/1.5.3_4rrpwiimwwwfzqd6uvtrlykpvy:
+    resolution: {integrity: sha512-JskGL+T7bYHjzhzqJTnwfVVdFF1Yw0BFvqAB3JXuVEqIYIKHQu9tmDb4wo3E8pvRZ3gvWA2XEbAIPj5bnIatFw==}
     engines: {node: ^14.17.0 || >=16.0.0}
     peerDependencies:
       '@typescript-eslint/eslint-plugin': '*'
@@ -2683,7 +2683,7 @@ packages:
     dev: true
 
   /concat-map/0.0.1:
-    resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
+    resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
 
   /concordance/5.0.4:
     resolution: {integrity: sha512-OAcsnTEYu1ARJqWVGwf4zh4JDfHZEaSNlNccFmt8YjB2l/n19/PF2viLINHc57vO4FKIAFl2FWASIGZZWZ2Kxw==}
