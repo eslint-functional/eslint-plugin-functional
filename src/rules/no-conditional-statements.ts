@@ -4,7 +4,6 @@ import type { Type } from "typescript";
 
 import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
 import { createRule, getTypeOfNode } from "~/utils/rule";
-import { unionTypeParts } from "~/utils/tsutils";
 import {
   isBlockStatement,
   isBreakStatement,
@@ -249,13 +248,12 @@ function isExhaustiveTypeSwitchViolation(
     return true;
   }
 
-  const unionTypes = unionTypeParts(discriminantType);
   const caseTypes = node.cases.reduce<ReadonlySet<Type>>(
     (types, c) => new Set([...types, getTypeOfNode(c.test!, context)!]),
     new Set()
   );
 
-  return unionTypes.some((unionType) => !caseTypes.has(unionType));
+  return discriminantType.types.some((unionType) => !caseTypes.has(unionType));
 }
 
 /**
