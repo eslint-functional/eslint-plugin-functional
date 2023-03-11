@@ -6,17 +6,17 @@ import type { InvalidTestCase } from "~/tests/helpers/util";
 const recommended = {
   rules: [
     {
-      identifiers: [/^I?Immutable.+/u],
+      identifiers: ["^I?Immutable.+"],
       immutability: Immutability.Immutable,
       comparator: "AtLeast",
     },
     {
-      identifiers: [/^I?ReadonlyDeep.+/u],
+      identifiers: ["^I?ReadonlyDeep.+"],
       immutability: Immutability.ReadonlyDeep,
       comparator: "AtLeast",
     },
     {
-      identifiers: [/^I?Readonly.+/u],
+      identifiers: ["^I?Readonly.+"],
       immutability: Immutability.ReadonlyShallow,
       comparator: "AtLeast",
       fixer: [
@@ -31,7 +31,7 @@ const recommended = {
       ],
     },
     {
-      identifiers: [/^I?Mutable.+/u],
+      identifiers: ["^I?Mutable.+"],
       immutability: Immutability.Mutable,
       comparator: "AtMost",
       fixer: [

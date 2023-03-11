@@ -60,17 +60,17 @@ const overrides: Linter.Config = {
       {
         rules: [
           {
-            identifiers: [/^I?Immutable.+/u],
+            identifiers: ["^I?Immutable.+"],
             immutability: Immutability.Immutable,
             comparator: RuleEnforcementComparator.AtLeast,
           },
           {
-            identifiers: [/^I?ReadonlyDeep.+/u],
+            identifiers: ["^I?ReadonlyDeep.+"],
             immutability: Immutability.ReadonlyDeep,
             comparator: RuleEnforcementComparator.AtLeast,
           },
           {
-            identifiers: [/^I?Readonly.+/u],
+            identifiers: ["^I?Readonly.+"],
             immutability: Immutability.ReadonlyShallow,
             comparator: RuleEnforcementComparator.AtLeast,
             fixer: [
@@ -85,7 +85,7 @@ const overrides: Linter.Config = {
             ],
           },
           {
-            identifiers: [/^I?Mutable.+/u],
+            identifiers: ["^I?Mutable.+"],
             immutability: Immutability.Mutable,
             comparator: RuleEnforcementComparator.AtMost,
             fixer: [
