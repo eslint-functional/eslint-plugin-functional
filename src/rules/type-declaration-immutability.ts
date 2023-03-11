@@ -43,7 +43,7 @@ type FixerConfig = {
 type Options = [
   IgnorePatternOption & {
     rules: Array<{
-      identifiers: (string | RegExp) | Array<string | RegExp>;
+      identifiers: string | string[];
       immutability: Exclude<
         Immutability | keyof typeof Immutability,
         "Unknown"
@@ -101,9 +101,9 @@ const schema: JSONSchema4 = [
           type: "object",
           properties: {
             identifiers: {
-              type: ["string", "object", "array"],
+              type: ["string", "array"],
               items: {
-                type: ["string", "object"],
+                type: ["string"],
               },
             },
             immutability: {
@@ -139,7 +139,7 @@ const defaultOptions: Options = [
   {
     rules: [
       {
-        identifiers: [/^(?!I?Mutable).+/u],
+        identifiers: ["^(?!I?Mutable).+"],
         immutability: Immutability.Immutable,
         comparator: RuleEnforcementComparator.AtLeast,
       },
@@ -201,14 +201,8 @@ function getRules(options: Options): ImmutabilityRule[] {
 
   return rulesOptions.map((rule): ImmutabilityRule => {
     const identifiers = Array.isArray(rule.identifiers)
-      ? rule.identifiers.map((id) =>
-          id instanceof RegExp ? id : new RegExp(id, "u")
-        )
-      : [
-          rule.identifiers instanceof RegExp
-            ? rule.identifiers
-            : new RegExp(rule.identifiers, "u"),
-        ];
+      ? rule.identifiers.map((id) => new RegExp(id, "u"))
+      : [new RegExp(rule.identifiers, "u")];
 
     const immutability =
       typeof rule.immutability === "string"
