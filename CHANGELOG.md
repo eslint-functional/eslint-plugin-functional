@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+## [5.0.6](https://github.com/eslint-functional/eslint-plugin-functional/compare/v5.0.5...v5.0.6) (2023-03-11)
+
+
+### Bug Fixes
+
+* **type-declaration-immutability:** only allow strings to be given for identifiers ([#573](https://github.com/eslint-functional/eslint-plugin-functional/issues/573)) ([e9f2f90](https://github.com/eslint-functional/eslint-plugin-functional/commit/e9f2f906fb79e5e837f4baf20f1c1d82d583bf17))
+
 ## [5.0.5](https://github.com/eslint-functional/eslint-plugin-functional/compare/v5.0.4...v5.0.5) (2023-03-07)
 
 
