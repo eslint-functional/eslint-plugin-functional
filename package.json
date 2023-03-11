@@ -70,9 +70,9 @@
   "dependencies": {
     "@typescript-eslint/type-utils": "^5.50.0",
     "@typescript-eslint/utils": "^5.50.0",
-    "deepmerge-ts": "^4.2.2",
+    "deepmerge-ts": "^4.3.0",
     "escape-string-regexp": "^4.0.0",
-    "is-immutable-type": "^1.2.4",
+    "is-immutable-type": "^1.2.5",
     "semver": "^7.3.8"
   },
   "devDependencies": {

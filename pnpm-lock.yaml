@@ -38,7 +38,7 @@ specifiers:
   conventional-commit-types: 3.0.0
   cspell: 6.28.0
   dedent: 0.7.0
-  deepmerge-ts: ^4.2.2
+  deepmerge-ts: ^4.3.0
   escape-string-regexp: ^4.0.0
   eslint: 8.35.0
   eslint-ava-rule-tester: 4.0.0
@@ -59,7 +59,7 @@ specifiers:
   eslint-plugin-unicorn: 46.0.0
   espree: 9.4.1
   husky: 8.0.3
-  is-immutable-type: ^1.2.4
+  is-immutable-type: ^1.2.5
   json-schema: 0.4.0
   jsonc-parser: 3.2.0
   knip: ^1.14.1
@@ -85,7 +85,7 @@ dependencies:
   '@typescript-eslint/utils': 5.54.1_ycpbpc6yetojsgtrx3mwntkhsu
   deepmerge-ts: 4.3.0
   escape-string-regexp: 4.0.0
-  is-immutable-type: 1.2.4_k72txggm3rdyzxly2k77clb62q
+  is-immutable-type: 1.2.5_k72txggm3rdyzxly2k77clb62q
   semver: 7.3.8
 
 devDependencies:
@@ -4738,8 +4738,8 @@ packages:
     resolution: {integrity: sha512-gyPJuv83bHMpocVYoqof5VDiZveEoGoFL8m3BXNb2VW8Xs+rz9kqO8LOQ5DH6EsuvilT1ApazU0pyl+ytbPtlw==}
     dev: true
 
-  /is-immutable-type/1.2.4_k72txggm3rdyzxly2k77clb62q:
-    resolution: {integrity: sha512-H/famjtztrVEl/P9izGTFLEJjmKsDoj+WBMVo+oSSDEuNTZpJFDn37/ovEb+3a3K5UU8zdkVUwBgddeBPH41pA==}
+  /is-immutable-type/1.2.5_k72txggm3rdyzxly2k77clb62q:
+    resolution: {integrity: sha512-g4jIDuO6GniCVCQy+ypA9BD9L7SplQJtGjr4QjF1DfxnMn9S5vBj9xuMjfhBkTCKuctw2ErM/ZRJn+NBRMLQHQ==}
     peerDependencies:
       '@typescript-eslint/type-utils': '>=5.30.5'
       '@typescript-eslint/utils': '>=5.30.5'
