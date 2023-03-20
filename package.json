@@ -138,7 +138,7 @@
     "nyc": "15.1.0",
     "prettier": "2.8.4",
     "prettier-plugin-packagejson": "2.4.3",
-    "rimraf": "4.3.1",
+    "rimraf": "4.4.0",
     "rollup": "3.18.0",
     "rollup-plugin-auto-external": "2.0.0",
     "semantic-release": "20.1.3",
