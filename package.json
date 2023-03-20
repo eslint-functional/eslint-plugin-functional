@@ -99,7 +99,7 @@
     "@types/eslint": "8.21.1",
     "@types/estree": "1.0.0",
     "@types/json-schema": "7.0.11",
-    "@types/node": "16.18.14",
+    "@types/node": "16.18.16",
     "@types/rollup-plugin-auto-external": "2.0.2",
     "@types/semver": "7.3.13",
     "@typescript-eslint/eslint-plugin": "5.54.1",
