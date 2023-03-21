@@ -12,35 +12,19 @@
     "prettier"
   ],
   "parserOptions": {
-    "ecmaVersion": 10,
     "project": [
       "./tsconfig.json",
       "./tests/tsconfig.json",
       "./cz-adapter/tsconfig.json"
-    ],
-    "sourceType": "module"
+    ]
   },
-  "ignorePatterns": ["/build/", "/coverage/", "/lib/", "/**/*.cjs", "/**/*.js"],
+  "ignorePatterns": ["/build/", "/coverage/", "/lib/", "/cz-adapter/**/*.js"],
   "rules": {
-    "functional/prefer-immutable-types": "off",
-    "import/no-relative-parent-imports": "error"
+    "functional/prefer-immutable-types": "off"
   },
   "overrides": [
-    // Top level files.
     {
-      "files": ["./*"],
-      "extends": ["plugin:functional/off"]
-    },
-    // Source files.
-    {
-      "files": ["./src/**/*"],
-      "extends": ["plugin:eslint-plugin/recommended"],
-      "rules": {
-        "functional/no-expression-statements": "error"
-      }
-    },
-    {
-      "files": ["./src/configs/**/*", "./src/index.ts"],
+      "files": ["./src/configs/", "./src/index.ts"],
       "extends": ["plugin:eslint-plugin/recommended"],
       "rules": {
         "@typescript-eslint/naming-convention": "off"
@@ -53,7 +37,7 @@
       }
     },
     {
-      "files": ["./tests/**/*", "./cz-adapter/**/*"],
+      "files": ["./cz-adapter/"],
       "rules": {
         "@typescript-eslint/no-unsafe-argument": "off",
         "@typescript-eslint/no-unsafe-assignment": "off",
@@ -64,7 +48,20 @@
       }
     },
     {
-      "files": ["./typings/**/*"],
+      "files": ["**/*.test.ts"],
+      "plugins": ["ava"],
+      "extends": ["plugin:ava/recommended"],
+      "rules": {
+        "@typescript-eslint/no-unsafe-argument": "off",
+        "@typescript-eslint/no-unsafe-assignment": "off",
+        "@typescript-eslint/no-unsafe-call": "off",
+        "@typescript-eslint/no-unsafe-member-access": "off",
+        "@typescript-eslint/no-unsafe-return": "off",
+        "jsdoc/require-jsdoc": "off"
+      }
+    },
+    {
+      "files": ["./typings/"],
       "extends": ["plugin:functional/off"],
       "rules": {
         "@typescript-eslint/no-unused-vars": "off",

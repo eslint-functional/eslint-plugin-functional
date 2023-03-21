@@ -1,4 +1,4 @@
-name: Lint Knip
+name: Build Docs
 
 on:
   pull_request:
@@ -6,9 +6,10 @@ on:
   workflow_call:
 
 jobs:
-  lint_knip:
+  build_node:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/prepare
-      - run: pnpm run lint:knip
+      - run: pnpm run build:node
+      - run: pnpm run build:docs

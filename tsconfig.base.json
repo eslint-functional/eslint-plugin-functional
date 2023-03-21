@@ -10,7 +10,7 @@
     "importHelpers": false,
     "lib": ["ESNext"],
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "newLine": "LF",
     "noEmitOnError": true,
     "noImplicitReturns": true,

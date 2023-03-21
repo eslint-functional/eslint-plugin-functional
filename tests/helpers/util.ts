@@ -18,7 +18,7 @@ type OptionsSets = {
   /**
    * The set of settings this test case should pass for.
    */
-  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+
   settingsSet?: SharedConfigurationSettings[];
 };
 

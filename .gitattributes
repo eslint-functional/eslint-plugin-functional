@@ -1,0 +1,15 @@
+* text=auto eol=lf
+
+*.js linguist-detectable=false
+*.mjs linguist-detectable=false
+*.cjs linguist-detectable=false
+/.husky/** linguist-detectable=false
+
+**/tsconfig.json linguist-language=jsonc
+**/tsconfig.*.json linguist-language=jsonc
+/.lintstagedrc linguist-language=json
+/.vscode/*.json linguist-language=jsonc
+
+/CHANGELOG.md linguist-generated
+
+/docs/** linguist-documentation

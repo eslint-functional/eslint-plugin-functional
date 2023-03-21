@@ -30,7 +30,7 @@ jobs:
       - uses: ./.github/actions/prepare
 
       - name: Build
-        run: pnpm build
+        run: pnpm run build:node
 
       - name: Compile Tests
         run: pnpm run build-tests

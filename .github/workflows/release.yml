@@ -18,8 +18,10 @@ concurrency:
 jobs:
   lint_js:
     uses: ./.github/workflows/lint-js.yml
-  lint_knip:
-    uses: ./.github/workflows/lint-knip.yml
+  lint_docs:
+    uses: ./.github/workflows/lint-docs.yml
+  lint_knip_prod:
+    uses: ./.github/workflows/lint-knip-prod.yml
   lint_markdown:
     uses: ./.github/workflows/lint-markdown.yml
   lint_spelling:
@@ -34,7 +36,8 @@ jobs:
   release:
     needs:
       - lint_js
-      - lint_knip
+      - lint_docs
+      - lint_knip_prod
       - lint_markdown
       - lint_spelling
       - lint_prettier
@@ -52,7 +55,7 @@ jobs:
         run: pnpm run build
 
       - name: Release
-        run: pnpm semantic-release
+        run: pnpm run release
         env:
           GITHUB_TOKEN: ${{ github.token }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

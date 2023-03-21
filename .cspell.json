@@ -23,7 +23,7 @@
     "softwareTerms",
     "typescript"
   ],
-  "import": ["./node_modules/@cspell/dict-cryptocurrencies/cspell-ext.json"],
+  "import": ["@cspell/dict-cryptocurrencies/cspell-ext.json"],
   "ignoreRegExpList": [
     "/[^\\s@]+@([^\\s@]+\\.)+[^\\s@]{2,4}/",
     "/[A-Fa-f0-9]{6}/",

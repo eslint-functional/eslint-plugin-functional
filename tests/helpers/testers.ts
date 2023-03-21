@@ -1,5 +1,4 @@
 import test from "ava";
-// eslint-disable-next-line ava/use-test
 import type { Implementation } from "ava";
 import type { Rule } from "eslint";
 import RuleTester from "eslint-ava-rule-tester";
