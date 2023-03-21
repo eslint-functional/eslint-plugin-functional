@@ -37,14 +37,24 @@
       }
     },
     {
-      "files": ["./cz-adapter/"],
+      "files": ["./cz-adapter/**/*"],
+      "extends": ["@rebeccastevens/eslint-config/script"],
       "rules": {
         "@typescript-eslint/no-unsafe-argument": "off",
         "@typescript-eslint/no-unsafe-assignment": "off",
         "@typescript-eslint/no-unsafe-call": "off",
         "@typescript-eslint/no-unsafe-member-access": "off",
         "@typescript-eslint/no-unsafe-return": "off",
-        "jsdoc/require-jsdoc": "off"
+        "import/no-extraneous-dependencies": [
+          "error",
+          {
+            "devDependencies": true,
+            "peerDependencies": true
+          }
+        ],
+        "functional/immutable-data": "off",
+        "jsdoc/require-jsdoc": "off",
+        "unicorn/prefer-module": "off"
       }
     },
     {
@@ -61,7 +71,7 @@
       }
     },
     {
-      "files": ["./typings/"],
+      "files": ["./typings/**/*"],
       "extends": ["plugin:functional/off"],
       "rules": {
         "@typescript-eslint/no-unused-vars": "off",

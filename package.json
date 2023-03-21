@@ -62,6 +62,7 @@
     "lint:prettier-fix": "prettier \"**/*\" --ignore-unknown --write",
     "lint:spelling": "cspell \"**\" \".github/**/*\"",
     "prepare": "husky install",
+    "release": "semantic-release",
     "test": "pnpm run test:js",
     "test-compiled": "USE_COMPILED_TESTS=1 nyc ava",
     "test-work": "ONLY_TEST_WORK_FILE=1 ava",

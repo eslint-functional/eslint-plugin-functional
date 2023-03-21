@@ -2,7 +2,12 @@
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
     "module": "commonjs",
+    "moduleResolution": "node",
     "skipLibCheck": true,
     "declaration": false
+  },
+  "ts-node": {
+    "emit": true,
+    "transpileOnly": true
   }
 }

@@ -1,10 +1,8 @@
 require("ts-node").register({
-  transpileOnly: true,
-  emit: true,
-  compilerOptions: {
-    module: "CommonJS",
-  },
+  cwd: __dirname,
+  project: "./tsconfig.json",
 });
 require("tsconfig-paths").register();
 
+// @ts-ignore
 module.exports = require("./index.ts");
