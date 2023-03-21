@@ -38,7 +38,7 @@ specifiers:
   conventional-commit-types: 3.0.0
   cspell: 6.30.2
   dedent: 0.7.0
-  deepmerge-ts: ^4.3.0
+  deepmerge-ts: ^5.0.0
   escape-string-regexp: ^4.0.0
   eslint: 8.36.0
   eslint-ava-rule-tester: 4.0.0
@@ -83,7 +83,7 @@ specifiers:
 dependencies:
   '@typescript-eslint/type-utils': 5.56.0_j4766f7ecgqbon3u7zlxn5zszu
   '@typescript-eslint/utils': 5.56.0_j4766f7ecgqbon3u7zlxn5zszu
-  deepmerge-ts: 4.3.0
+  deepmerge-ts: 5.0.0
   escape-string-regexp: 4.0.0
   is-immutable-type: 1.2.5_utjlycmxlcc5zw3z43363jvtsu
   semver: 7.3.8
@@ -3057,6 +3057,12 @@ packages:
   /deepmerge-ts/4.3.0:
     resolution: {integrity: sha512-if3ZYdkD2dClhnXR5reKtG98cwyaRT1NeugQoAPTTfsOpV9kqyeiBF9Qa5RHjemb3KzD5ulqygv6ED3t5j9eJw==}
     engines: {node: '>=12.4.0'}
+    dev: true
+
+  /deepmerge-ts/5.0.0:
+    resolution: {integrity: sha512-esq9xUO8+CQCG63IlpkoOBNlpm1m4WBm0NRLFrGL/dcgzqWi1tmTLfG7QTvffqYt6T+dS+xaxrHxdexqGWkV1g==}
+    engines: {node: '>=16.0.0'}
+    dev: false
 
   /deepmerge/4.3.0:
     resolution: {integrity: sha512-z2wJZXrmeHdvYJp/Ux55wIjqo81G5Bp4c+oELTW+7ar6SogWHajt5a9gO3s3IDaGSAXjDk0vlQKN3rms8ab3og==}
