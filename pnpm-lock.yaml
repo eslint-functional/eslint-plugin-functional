@@ -1,7 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@ava/typescript': 3.0.1
+  '@ava/typescript': 4.0.0
   '@babel/core': 7.21.3
   '@babel/eslint-parser': 7.21.3
   '@commitlint/cli': 17.4.4
@@ -89,7 +89,7 @@ dependencies:
   semver: 7.3.8
 
 devDependencies:
-  '@ava/typescript': 3.0.1
+  '@ava/typescript': 4.0.0
   '@babel/core': 7.21.3
   '@babel/eslint-parser': 7.21.3_pxuto7xgangxlusvzceggvrmde
   '@commitlint/cli': 17.4.4
@@ -117,7 +117,7 @@ devDependencies:
   '@types/semver': 7.3.13
   '@typescript-eslint/eslint-plugin': 5.56.0_2hcjazgfnbtq42tcc73br2vup4
   '@typescript-eslint/parser': 5.56.0_j4766f7ecgqbon3u7zlxn5zszu
-  ava: 5.2.0_@ava+typescript@3.0.1
+  ava: 5.2.0_@ava+typescript@4.0.0
   chalk: 4.1.2
   codecov: 3.8.2
   commitizen: 4.3.0
@@ -172,12 +172,12 @@ packages:
       '@jridgewell/trace-mapping': 0.3.17
     dev: true
 
-  /@ava/typescript/3.0.1:
-    resolution: {integrity: sha512-/JXIUuKsvkaneaiA9ckk3ksFTqvu0mDNlChASrTe2BnDsvMbhQdPWyqQjJ9WRJWVhhs5TWn1/0Pp1G6Rv8Syrw==}
-    engines: {node: '>=12.22 <13 || >=14.17 <15 || >=16.4 <17 || >=17'}
+  /@ava/typescript/4.0.0:
+    resolution: {integrity: sha512-QFIPeqkEbdvn7Pob0wVeYpeZD0eXd8nDYdCl+knJVaIJrHdF2fXa58vFaig26cmYwnsEN0KRNTYJKbqW1B0lfg==}
+    engines: {node: '>=14.19 <15 || >=16.15 <17 || >=18'}
     dependencies:
       escape-string-regexp: 5.0.0
-      execa: 5.1.1
+      execa: 7.1.1
     dev: true
 
   /@babel/code-frame/7.18.6:
@@ -2142,7 +2142,7 @@ packages:
     engines: {node: '>= 4.0.0'}
     dev: true
 
-  /ava/5.2.0_@ava+typescript@3.0.1:
+  /ava/5.2.0_@ava+typescript@4.0.0:
     resolution: {integrity: sha512-W8yxFXJr/P68JP55eMpQIa6AiXhCX3VeuajM8nolyWNExcMDD6rnIWKTjw0B/+GkFHBIaN6Jd0LtcMThcoqVfg==}
     engines: {node: '>=14.19 <15 || >=16.15 <17 || >=18'}
     hasBin: true
@@ -2152,7 +2152,7 @@ packages:
       '@ava/typescript':
         optional: true
     dependencies:
-      '@ava/typescript': 3.0.1
+      '@ava/typescript': 4.0.0
       acorn: 8.8.2
       acorn-walk: 8.2.0
       ansi-styles: 6.2.1
@@ -3863,8 +3863,8 @@ packages:
       strip-final-newline: 3.0.0
     dev: true
 
-  /execa/7.0.0:
-    resolution: {integrity: sha512-tQbH0pH/8LHTnwTrsKWideqi6rFB/QNUawEwrn+WHyz7PX1Tuz2u7wfTvbaNBdP5JD5LVWxNo8/A8CHNZ3bV6g==}
+  /execa/7.1.1:
+    resolution: {integrity: sha512-wH0eMf/UXckdUYnO21+HDztteVv05rq2GXksxT4fCGeHkBhw1DROXh40wcjMcRqDOWE7iPJ4n3M7e2+YFP+76Q==}
     engines: {node: ^14.18.0 || ^16.14.0 || >=18.0.0}
     dependencies:
       cross-spawn: 7.0.3
@@ -5253,7 +5253,7 @@ packages:
       cli-truncate: 3.1.0
       commander: 10.0.0
       debug: 4.3.4
-      execa: 7.0.0
+      execa: 7.1.1
       lilconfig: 2.1.0
       listr2: 5.0.7
       micromatch: 4.0.5
@@ -6871,7 +6871,7 @@ packages:
       cosmiconfig: 8.1.0
       debug: 4.3.4
       env-ci: 8.0.0
-      execa: 7.0.0
+      execa: 7.1.1
       figures: 5.0.0
       find-versions: 5.1.0
       get-stream: 6.0.1

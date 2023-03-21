@@ -76,7 +76,7 @@
     "semver": "^7.3.8"
   },
   "devDependencies": {
-    "@ava/typescript": "3.0.1",
+    "@ava/typescript": "4.0.0",
     "@babel/core": "7.21.3",
     "@babel/eslint-parser": "7.21.3",
     "@commitlint/cli": "17.4.4",
