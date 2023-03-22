@@ -49,16 +49,20 @@ const tests: ReadonlyArray<InvalidTestCase> = [
             bar: { foo: number } = {} as any;
     `,
     optionsSet: [[{ variables: "ReadonlyShallow" }]],
-    output: dedent`
-      const foo: Readonly<{ foo: string }> = {} as any,
-            bar: Readonly<{ foo: number }> = {} as any;
-    `,
     errors: [
       {
         messageId: "variable",
         type: "Identifier",
         line: 2,
         column: 7,
+        suggestions: [
+          {
+            output: dedent`
+              const foo: Readonly<{ foo: string }> = {} as any,
+                    bar: Readonly<{ foo: number }> = {} as any;
+            `,
+          },
+        ],
       },
     ],
   },
@@ -147,38 +151,78 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       }
     `,
     optionsSet: [[]],
-    output: dedent`
-      class Klass {
-        readonly foo: number;
-        private readonly bar: number;
-        static readonly baz: number;
-        private static readonly qux: number;
-      }
-    `,
     errors: [
       {
         messageId: "propertyModifier",
         type: "PropertyDefinition",
         line: 2,
         column: 3,
+        suggestions: [
+          {
+            output: dedent`
+              class Klass {
+                readonly foo: number;
+                private bar: number;
+                static baz: number;
+                private static qux: number;
+              }
+            `,
+          },
+        ],
       },
       {
         messageId: "propertyModifier",
         type: "PropertyDefinition",
         line: 3,
         column: 3,
+        suggestions: [
+          {
+            output: dedent`
+              class Klass {
+                foo: number;
+                private readonly bar: number;
+                static baz: number;
+                private static qux: number;
+              }
+            `,
+          },
+        ],
       },
       {
         messageId: "propertyModifier",
         type: "PropertyDefinition",
         line: 4,
         column: 3,
+        suggestions: [
+          {
+            output: dedent`
+              class Klass {
+                foo: number;
+                private bar: number;
+                static readonly baz: number;
+                private static qux: number;
+              }
+            `,
+          },
+        ],
       },
       {
         messageId: "propertyModifier",
         type: "PropertyDefinition",
         line: 5,
         column: 3,
+        suggestions: [
+          {
+            output: dedent`
+              class Klass {
+                foo: number;
+                private bar: number;
+                static baz: number;
+                private static readonly qux: number;
+              }
+            `,
+          },
+        ],
       },
     ],
   },
