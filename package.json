@@ -101,7 +101,7 @@
     "@types/dedent": "0.7.0",
     "@types/eslint": "8.21.3",
     "@types/json-schema": "7.0.11",
-    "@types/node": "16.18.16",
+    "@types/node": "16.18.21",
     "@types/rollup-plugin-auto-external": "2.0.2",
     "@types/semver": "7.3.13",
     "@typescript-eslint/eslint-plugin": "5.56.0",
