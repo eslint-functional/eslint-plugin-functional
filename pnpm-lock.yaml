@@ -64,7 +64,7 @@ specifiers:
   lint-staged: 13.2.0
   markdownlint-cli: 0.33.0
   nyc: 15.1.0
-  prettier: 2.8.5
+  prettier: 2.8.7
   prettier-plugin-packagejson: 2.4.3
   rimraf: 4.4.0
   rollup: 3.20.0
@@ -133,7 +133,7 @@ devDependencies:
   eslint-plugin-markdown: 3.0.0_eslint@8.36.0
   eslint-plugin-node: 11.1.0_eslint@8.36.0
   eslint-plugin-optimize-regex: 1.2.1
-  eslint-plugin-prettier: 4.2.1_i2qmqyy4fgpgq2h7f6vnil3crq
+  eslint-plugin-prettier: 4.2.1_ywlv3zveqg2kxfq44lflihh5mm
   eslint-plugin-promise: 6.1.1_eslint@8.36.0
   eslint-plugin-sonarjs: 0.19.0_eslint@8.36.0
   eslint-plugin-unicorn: 46.0.0_eslint@8.36.0
@@ -145,8 +145,8 @@ devDependencies:
   lint-staged: 13.2.0
   markdownlint-cli: 0.33.0
   nyc: 15.1.0
-  prettier: 2.8.5
-  prettier-plugin-packagejson: 2.4.3_prettier@2.8.5
+  prettier: 2.8.7
+  prettier-plugin-packagejson: 2.4.3_prettier@2.8.7
   rimraf: 4.4.0
   rollup: 3.20.0
   rollup-plugin-auto-external: 2.0.0_rollup@3.20.0
@@ -3309,7 +3309,7 @@ packages:
       regexp-tree: 0.1.24
     dev: true
 
-  /eslint-plugin-prettier/4.2.1_i2qmqyy4fgpgq2h7f6vnil3crq:
+  /eslint-plugin-prettier/4.2.1_ywlv3zveqg2kxfq44lflihh5mm:
     resolution: {integrity: sha512-f/0rXLXUt0oFYs8ra4w49wYZBG5GKZpAYsJSm6rnYL5uVDjd+zowwMwVZHnAjf4edNrKpCDYfXDgmRE/Ak7QyQ==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
@@ -3322,7 +3322,7 @@ packages:
     dependencies:
       eslint: 8.36.0
       eslint-config-prettier: 8.8.0_eslint@8.36.0
-      prettier: 2.8.5
+      prettier: 2.8.7
       prettier-linter-helpers: 1.0.0
     dev: true
 
@@ -6016,7 +6016,7 @@ packages:
       fast-diff: 1.2.0
     dev: true
 
-  /prettier-plugin-packagejson/2.4.3_prettier@2.8.5:
+  /prettier-plugin-packagejson/2.4.3_prettier@2.8.7:
     resolution: {integrity: sha512-kPeeviJiwy0BgOSk7No8NmzzXfW4R9FYWni6ziA5zc1kGVVrKnBzMZdu2TUhI+I7h8/5Htt3vARYOk7KKJTTNQ==}
     peerDependencies:
       prettier: '>= 1.16.0'
@@ -6024,13 +6024,13 @@ packages:
       prettier:
         optional: true
     dependencies:
-      prettier: 2.8.5
+      prettier: 2.8.7
       sort-package-json: 2.4.1
       synckit: 0.8.5
     dev: true
 
-  /prettier/2.8.5:
-    resolution: {integrity: sha512-3gzuxrHbKUePRBB4ZeU08VNkUcqEHaUaouNt0m7LGP4Hti/NuB07C7PPTM/LkWqXoJYJn2McEo5+kxPNrtQkLQ==}
+  /prettier/2.8.7:
+    resolution: {integrity: sha512-yPngTo3aXUUmyuTjeTUT75txrf+aMh9FiD7q9ZE/i6r0bPb22g4FsE6Y338PQX1bmfy08i9QQCB7/rcUAVntfw==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     dev: true
