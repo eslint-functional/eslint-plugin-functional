@@ -60,7 +60,7 @@ specifiers:
   is-immutable-type: ^1.2.5
   json-schema: 0.4.0
   jsonc-parser: 3.2.0
-  knip: 2.0.0-beta.1
+  knip: 2.1.3
   lint-staged: 13.2.0
   markdownlint-cli: 0.33.0
   nyc: 15.1.0
@@ -141,7 +141,7 @@ devDependencies:
   husky: 8.0.3
   json-schema: 0.4.0
   jsonc-parser: 3.2.0
-  knip: 2.0.0-beta.1
+  knip: 2.1.3
   lint-staged: 13.2.0
   markdownlint-cli: 0.33.0
   nyc: 15.1.0
@@ -4834,8 +4834,8 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /knip/2.0.0-beta.1:
-    resolution: {integrity: sha512-4/mK8xRpObAOiYOWT+I2PmwXtmR2NTGpFDzwFfkPybRr/YmcuvY+hpYk9u8KYZ6MP/L/aIxCrbFLhv3mO4MsCQ==}
+  /knip/2.1.3:
+    resolution: {integrity: sha512-HBo1dhOWFGUl0IRIA/JLgWizU5jPJoUtYdTyMWyUndfFYQNRhlBKQ0ST6MqlPTx+ZEfgsUJXKdpKWVGeGWPMqQ==}
     engines: {node: '>=16.17.0 <17 || >=18.6.0'}
     hasBin: true
     dependencies:
