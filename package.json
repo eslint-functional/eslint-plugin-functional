@@ -82,7 +82,7 @@
     "@ava/typescript": "4.0.0",
     "@babel/core": "7.21.3",
     "@babel/eslint-parser": "7.21.3",
-    "@commitlint/cli": "17.4.4",
+    "@commitlint/cli": "17.5.0",
     "@commitlint/config-conventional": "17.4.4",
     "@cspell/dict-cryptocurrencies": "3.0.1",
     "@google/semantic-release-replace-plugin": "1.2.0",
