@@ -76,7 +76,8 @@
     "deepmerge-ts": "^5.0.0",
     "escape-string-regexp": "^4.0.0",
     "is-immutable-type": "^1.2.5",
-    "semver": "^7.3.8"
+    "semver": "^7.3.8",
+    "ts-api-utils": "^0.0.45"
   },
   "devDependencies": {
     "@ava/typescript": "4.0.0",
@@ -159,7 +160,7 @@
       "optional": true
     }
   },
-  "packageManager": "pnpm@7.30.3",
+  "packageManager": "pnpm@8.0.0",
   "engines": {
     "node": ">=16.10.0"
   }

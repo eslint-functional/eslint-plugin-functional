@@ -2,6 +2,7 @@ import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import type { JSONSchema4 } from "json-schema";
 import type { Type } from "typescript";
 
+import tsApiUtils from "~/conditional-imports/ts-api-utils";
 import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
 import { createRule, getTypeOfNode } from "~/utils/rule";
 import {
@@ -10,7 +11,6 @@ import {
   isContinueStatement,
   isExpressionStatement,
   isIfStatement,
-  isNeverType,
   isReturnStatement,
   isSwitchStatement,
   isThrowStatement,
@@ -113,7 +113,8 @@ function getIsNeverExpressions(
         context
       );
       return (
-        expressionStatementType !== null && isNeverType(expressionStatementType)
+        expressionStatementType !== null &&
+        tsApiUtils?.isIntrinsicNeverType(expressionStatementType) === true
       );
     }
     return false;
@@ -157,7 +158,7 @@ function getIfBranchViolations(
 
         if (
           expressionStatementType !== null &&
-          isNeverType(expressionStatementType)
+          tsApiUtils?.isIntrinsicNeverType(expressionStatementType) === true
         ) {
           return false;
         }

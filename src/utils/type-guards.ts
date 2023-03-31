@@ -469,19 +469,3 @@ export function isObjectConstructorType(
           (isUnionType(type) &&
             type.types.some((t) => isObjectConstructorType(t, false, null))));
 }
-
-export function isNeverType(type: Type): boolean {
-  return ts !== undefined && type.flags === ts.TypeFlags.Never;
-}
-
-export function isVoidType(type: Type): boolean {
-  return ts !== undefined && type.flags === ts.TypeFlags.Void;
-}
-
-export function isNullType(type: Type): boolean {
-  return ts !== undefined && type.flags === ts.TypeFlags.Null;
-}
-
-export function isUndefinedType(type: Type): boolean {
-  return ts !== undefined && type.flags === ts.TypeFlags.Undefined;
-}
