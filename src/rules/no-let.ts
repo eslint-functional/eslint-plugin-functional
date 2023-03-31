@@ -70,7 +70,6 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
   docs: {
     category: "No Mutations",
     description: "Disallow mutable variables.",
-    recommended: "error",
   },
   messages: errorMessages,
   schema,

@@ -121,7 +121,6 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
   docs: {
     category: "No Mutations",
     description: "Enforce treating data as immutable.",
-    recommended: "error",
   },
   messages: errorMessages,
   schema,

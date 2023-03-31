@@ -40,7 +40,6 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
   docs: {
     category: "No Statements",
     description: "Disallow imperative loops.",
-    recommended: "error",
   },
   messages: errorMessages,
   schema,

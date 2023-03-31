@@ -40,7 +40,6 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
   docs: {
     category: "No Exceptions",
     description: "Disallow try-catch[-finally] and try-finally patterns.",
-    recommended: false,
   },
   messages: errorMessages,
   schema,

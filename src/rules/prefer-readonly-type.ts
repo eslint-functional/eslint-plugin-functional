@@ -136,7 +136,6 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
   docs: {
     category: "No Mutations",
     description: "Prefer readonly types over mutable types.",
-    recommended: "error",
   },
   messages: errorMessages,
   fixable: "code",

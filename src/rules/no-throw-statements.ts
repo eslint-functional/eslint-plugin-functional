@@ -58,7 +58,6 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
   docs: {
     category: "No Exceptions",
     description: "Disallow throwing exceptions.",
-    recommended: "error",
   },
   messages: errorMessages,
   schema,
