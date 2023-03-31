@@ -170,7 +170,6 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
   docs: {
     category: "No Mutations",
     description: "Enforce the immutability of types based on patterns.",
-    recommended: "error",
   },
   messages: errorMessages,
   fixable: "code",

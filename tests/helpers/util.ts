@@ -81,7 +81,6 @@ export function createDummyRule(
     type: "suggestion",
     docs: {
       description: "Disallow mutable variables.",
-      recommended: "error",
       url: "",
     },
     messages: {

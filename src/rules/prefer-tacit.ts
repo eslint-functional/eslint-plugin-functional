@@ -74,7 +74,6 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
   docs: {
     category: "Stylistic",
     description: "Replaces `x => f(x)` with just `f`.",
-    recommended: false,
   },
   messages: errorMessages,
   hasSuggestions: true,

@@ -40,7 +40,6 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
   docs: {
     category: "No Other Paradigms",
     description: "Disallow classes.",
-    recommended: "error",
   },
   messages: errorMessages,
   schema,

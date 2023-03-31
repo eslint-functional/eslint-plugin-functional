@@ -136,7 +136,6 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
   docs: {
     category: "Currying",
     description: "Enforce functional parameters.",
-    recommended: "error",
   },
   messages: errorMessages,
   schema,

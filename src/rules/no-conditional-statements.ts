@@ -82,7 +82,6 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
   docs: {
     category: "No Statements",
     description: "Disallow conditional statements.",
-    recommended: "error",
   },
   messages: errorMessages,
   schema,
