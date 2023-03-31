@@ -2,12 +2,13 @@ import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { deepmerge } from "deepmerge-ts";
 import type { JSONSchema4 } from "json-schema";
 
+import tsApiUtils from "~/conditional-imports/ts-api-utils";
 import type { IgnorePatternOption } from "~/options";
 import { shouldIgnorePattern, ignorePatternOptionSchema } from "~/options";
 import { isDirectivePrologue } from "~/utils/misc";
 import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
 import { createRule, getTypeOfNode } from "~/utils/rule";
-import { isVoidType, isYieldExpression } from "~/utils/type-guards";
+import { isYieldExpression } from "~/utils/type-guards";
 
 /**
  * The name of this rule.
@@ -102,7 +103,7 @@ function checkExpressionStatement(
     return {
       context,
       descriptors:
-        type !== null && isVoidType(type)
+        type !== null && tsApiUtils?.isIntrinsicVoidType(type) === true
           ? []
           : [{ node, messageId: "generic" }],
     };

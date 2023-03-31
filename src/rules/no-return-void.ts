@@ -1,17 +1,15 @@
 import type { TSESLint } from "@typescript-eslint/utils";
 import type { JSONSchema4 } from "json-schema";
 
+import tsApiUtils from "~/conditional-imports/ts-api-utils";
 import type { ESFunctionType } from "~/utils/node-types";
 import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
 import { createRule, getTypeOfNode } from "~/utils/rule";
 import {
   isFunctionLike,
-  isNullType,
   isTSNullKeyword,
   isTSUndefinedKeyword,
   isTSVoidKeyword,
-  isUndefinedType,
-  isVoidType,
 } from "~/utils/type-guards";
 
 /**
@@ -102,9 +100,10 @@ function checkFunction(
 
       if (
         returnType !== undefined &&
-        (isVoidType(returnType) ||
-          (!allowNull && isNullType(returnType)) ||
-          (!allowUndefined && isUndefinedType(returnType)))
+        tsApiUtils !== undefined &&
+        (tsApiUtils.isIntrinsicVoidType(returnType) ||
+          (!allowNull && tsApiUtils.isIntrinsicNullType(returnType)) ||
+          (!allowUndefined && tsApiUtils.isIntrinsicUndefinedType(returnType)))
       ) {
         return {
           context,
