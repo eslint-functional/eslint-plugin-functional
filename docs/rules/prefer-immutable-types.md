@@ -2,7 +2,7 @@
 
 💼 This rule is enabled in the following configs: ☑️ `lite`, `no-mutations`, ✅ `recommended`, 🔒 `strict`.
 
-🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
 
 <!-- end auto-generated rule header -->
 
@@ -178,22 +178,23 @@ type Options = {
     ignoreTypePattern?: string[] | string;
   };
 
-  fixer?:
-    | {
-        ReadonlyShallow?:
-          | { pattern: string; replace: string }
-          | Array<{ pattern: string; replace: string }>
-          | false;
-        ReadonlyDeep?:
-          | { pattern: string; replace: string }
-          | Array<{ pattern: string; replace: string }>
-          | false;
-        Immutable?:
-          | { pattern: string; replace: string }
-          | Array<{ pattern: string; replace: string }>
-          | false;
-      }
-    | false;
+  fixer?: {
+    ReadonlyShallow?:
+      | { pattern: string; replace: string }
+      | Array<{ pattern: string; replace: string }>;
+    ReadonlyDeep?:
+      | { pattern: string; replace: string }
+      | Array<{ pattern: string; replace: string }>;
+    Immutable?:
+      | { pattern: string; replace: string }
+      | Array<{ pattern: string; replace: string }>;
+  };
+
+  suggestions?: {
+    ReadonlyShallow?: Array<Array<{ pattern: string; replace: string }>>;
+    ReadonlyDeep?: Array<Array<{ pattern: string; replace: string }>>;
+    Immutable?: Array<Array<{ pattern: string; replace: string }>>;
+  };
 };
 ```
 
@@ -204,23 +205,25 @@ const defaults = {
   enforcement: "Immutable",
   ignoreClasses: false,
   ignoreInferredTypes: false,
-  fixer: {
+  fixer: false,
+  suggestions: {
     ReadonlyShallow: [
-      {
-        pattern: "^([_$a-zA-Z\\xA0-\\uFFFF][_$a-zA-Z0-9\\xA0-\\uFFFF]*\\[\\])$",
-        replace: "readonly $1",
-      },
-      {
-        pattern: "^(Array|Map|Set)<(.+)>$",
-        replace: "Readonly$1<$2>",
-      },
-      {
-        pattern: "^(.+)$",
-        replace: "Readonly<$1>",
-      },
+      [
+        {
+          pattern:
+            "^([_$a-zA-Z\\xA0-\\uFFFF][_$a-zA-Z0-9\\xA0-\\uFFFF]*\\[\\])$",
+          replace: "readonly $1",
+        },
+        {
+          pattern: "^(Array|Map|Set)<(.+)>$",
+          replace: "Readonly$1<$2>",
+        },
+        {
+          pattern: "^(.+)$",
+          replace: "Readonly<$1>",
+        },
+      ],
     ],
-    ReadonlyDeep: false,
-    Immutable: false,
   },
 };
 ```
@@ -384,7 +387,18 @@ If set to `false`, the fixer will be disabled.
 
 #### `fixer.*`
 
-By default we only configure the fixer to correct shallow readonly violations as TypeScript itself provides a utility type for this.
+Configure how the fixer should fix issue of each of the different enforcement levels.
+
+### `suggestions`
+
+This is the same as `fixer` but for manual suggestions instead of automatic fixers.
+If set to `false`, the no suggestions will be enabled.
+
+### `suggestions[*].*`
+
+Configure how the suggestion should fix issue of each of the different enforcement levels.
+
+By default we only configure the suggestions to correct shallow readonly violations as TypeScript itself provides a utility type for this.
 If you have access to other utility types (such as [type-fest's `ReadonlyDeep`](https://github.com/sindresorhus/type-fest#:~:text=set%20to%20optional.-,ReadonlyDeep,-%2D%20Create%20a%20deeply)), you can configure the fixer to use them with this option.
 
 Example using `ReadonlyDeep` instead of `Readonly`:
@@ -392,12 +406,14 @@ Example using `ReadonlyDeep` instead of `Readonly`:
 ```jsonc
 {
   // ...
-  "fixer": {
+  "suggestions": {
     "ReadonlyDeep": [
-      {
-        "pattern": "^(?:Readonly<(.+)>|(.+))$",
-        "replace": "ReadonlyDeep<$1$2>"
-      }
+      [
+        {
+          "pattern": "^(?:Readonly<(.+)>|(.+))$",
+          "replace": "ReadonlyDeep<$1$2>"
+        }
+      ]
     ]
   }
 }

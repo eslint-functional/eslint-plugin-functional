@@ -30,20 +30,30 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   {
     code: "function foo(arg1: { foo: string }, arg2: { foo: number }) {}",
     optionsSet: [[{ parameters: "ReadonlyShallow" }]],
-    output:
-      "function foo(arg1: Readonly<{ foo: string }>, arg2: Readonly<{ foo: number }>) {}",
     errors: [
       {
         messageId: "parameter",
         type: "Identifier",
         line: 1,
         column: 14,
+        suggestions: [
+          {
+            output:
+              "function foo(arg1: Readonly<{ foo: string }>, arg2: { foo: number }) {}",
+          },
+        ],
       },
       {
         messageId: "parameter",
         type: "Identifier",
         line: 1,
         column: 37,
+        suggestions: [
+          {
+            output:
+              "function foo(arg1: { foo: string }, arg2: Readonly<{ foo: number }>) {}",
+          },
+        ],
       },
     ],
   },
@@ -151,47 +161,81 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       }
     `,
     optionsSet: [[]],
-    output: dedent`
-      class Klass {
-        constructor (
-          public readonly publicProp: string,
-          protected readonly protectedProp: string,
-          private readonly privateProp: string,
-      ) { }
-      }
-    `,
     errors: [
       {
         messageId: "propertyModifier",
         type: "TSParameterProperty",
         line: 3,
         column: 5,
+        suggestions: [
+          {
+            output: dedent`
+              class Klass {
+                constructor (
+                  public readonly publicProp: string,
+                  protected protectedProp: string,
+                  private privateProp: string,
+              ) { }
+              }
+            `,
+          },
+        ],
       },
       {
         messageId: "propertyModifier",
         type: "TSParameterProperty",
         line: 4,
         column: 5,
+        suggestions: [
+          {
+            output: dedent`
+              class Klass {
+                constructor (
+                  public publicProp: string,
+                  protected readonly protectedProp: string,
+                  private privateProp: string,
+              ) { }
+              }
+            `,
+          },
+        ],
       },
       {
         messageId: "propertyModifier",
         type: "TSParameterProperty",
         line: 5,
         column: 5,
+        suggestions: [
+          {
+            output: dedent`
+              class Klass {
+                constructor (
+                  public publicProp: string,
+                  protected protectedProp: string,
+                  private readonly privateProp: string,
+              ) { }
+              }
+            `,
+          },
+        ],
       },
     ],
   },
   {
     code: "function foo(arg0: { foo: string | number }, arg1: { foo: string | number }): arg0 is { foo: number } {}",
     optionsSet: [[{ parameters: "ReadonlyShallow" }]],
-    output:
-      "function foo(arg0: { foo: string | number }, arg1: Readonly<{ foo: string | number }>): arg0 is { foo: number } {}",
     errors: [
       {
         messageId: "parameter",
         type: "Identifier",
         line: 1,
         column: 46,
+        suggestions: [
+          {
+            output:
+              "function foo(arg0: { foo: string | number }, arg1: Readonly<{ foo: string | number }>): arg0 is { foo: number } {}",
+          },
+        ],
       },
     ],
   },
@@ -215,48 +259,31 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     optionsSet: [
       [
         {
-          parameters: "ReadonlyShallow",
-          fixer: {
-            ReadonlyDeep: {
-              pattern: "^(.+)$",
-              replace: "ReadonlyDeep<$1>",
-            },
-          },
-        },
-      ],
-    ],
-    output: "function foo(arg1: Readonly<{ foo: string }>) {}",
-    errors: [
-      {
-        messageId: "parameter",
-        type: "Identifier",
-        line: 1,
-        column: 14,
-      },
-    ],
-  },
-  {
-    code: "function foo(arg1: { foo: string }) {}",
-    optionsSet: [
-      [
-        {
           parameters: "ReadonlyDeep",
-          fixer: {
-            ReadonlyDeep: {
-              pattern: "^(.+)$",
-              replace: "ReadonlyDeep<$1>",
-            },
+          suggestions: {
+            ReadonlyDeep: [
+              [
+                {
+                  pattern: "^(.+)$",
+                  replace: "ReadonlyDeep<$1>",
+                },
+              ],
+            ],
           },
         },
       ],
     ],
-    output: "function foo(arg1: ReadonlyDeep<{ foo: string }>) {}",
     errors: [
       {
         messageId: "parameter",
         type: "Identifier",
         line: 1,
         column: 14,
+        suggestions: [
+          {
+            output: "function foo(arg1: ReadonlyDeep<{ foo: string }>) {}",
+          },
+        ],
       },
     ],
   },
@@ -266,22 +293,31 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       [
         {
           parameters: "ReadonlyDeep",
-          fixer: {
-            ReadonlyDeep: {
-              pattern: "^Readonly<(.+)>|(.+)$",
-              replace: "ReadonlyDeep<$1$2>",
-            },
+          suggestions: {
+            ReadonlyDeep: [
+              [
+                {
+                  pattern: "^Readonly<(.+)>|(.+)$",
+                  replace: "ReadonlyDeep<$1$2>",
+                },
+              ],
+            ],
           },
         },
       ],
     ],
-    output: "function foo(arg1: ReadonlyDeep<{ foo: { bar: string } }>) {}",
     errors: [
       {
         messageId: "parameter",
         type: "Identifier",
         line: 1,
         column: 14,
+        suggestions: [
+          {
+            output:
+              "function foo(arg1: ReadonlyDeep<{ foo: { bar: string } }>) {}",
+          },
+        ],
       },
     ],
   },
@@ -297,40 +333,86 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       function foo(arg: ReadonlyMap<string, string>) {}
     `,
     optionsSet: [[{ parameters: "ReadonlyShallow" }]],
-    output: dedent`
-      function foo(arg: ReadonlyArray<string>) {}
-      function foo(arg: readonly string[]) {}
-      function foo(arg: ReadonlySet<string>) {}
-      function foo(arg: ReadonlyMap<string, string>) {}
-      function foo(arg: ReadonlyArray<string>) {}
-      function foo(arg: readonly string[]) {}
-      function foo(arg: ReadonlySet<string>) {}
-      function foo(arg: ReadonlyMap<string, string>) {}
-    `,
     errors: [
       {
         messageId: "parameter",
         type: "Identifier",
         line: 1,
         column: 14,
+        suggestions: [
+          {
+            output: dedent`
+              function foo(arg: ReadonlyArray<string>) {}
+              function foo(arg: string[]) {}
+              function foo(arg: Set<string>) {}
+              function foo(arg: Map<string, string>) {}
+              function foo(arg: ReadonlyArray<string>) {}
+              function foo(arg: readonly string[]) {}
+              function foo(arg: ReadonlySet<string>) {}
+              function foo(arg: ReadonlyMap<string, string>) {}
+            `,
+          },
+        ],
       },
       {
         messageId: "parameter",
         type: "Identifier",
         line: 2,
         column: 14,
+        suggestions: [
+          {
+            output: dedent`
+              function foo(arg: Array<string>) {}
+              function foo(arg: readonly string[]) {}
+              function foo(arg: Set<string>) {}
+              function foo(arg: Map<string, string>) {}
+              function foo(arg: ReadonlyArray<string>) {}
+              function foo(arg: readonly string[]) {}
+              function foo(arg: ReadonlySet<string>) {}
+              function foo(arg: ReadonlyMap<string, string>) {}
+            `,
+          },
+        ],
       },
       {
         messageId: "parameter",
         type: "Identifier",
         line: 3,
         column: 14,
+        suggestions: [
+          {
+            output: dedent`
+              function foo(arg: Array<string>) {}
+              function foo(arg: string[]) {}
+              function foo(arg: ReadonlySet<string>) {}
+              function foo(arg: Map<string, string>) {}
+              function foo(arg: ReadonlyArray<string>) {}
+              function foo(arg: readonly string[]) {}
+              function foo(arg: ReadonlySet<string>) {}
+              function foo(arg: ReadonlyMap<string, string>) {}
+            `,
+          },
+        ],
       },
       {
         messageId: "parameter",
         type: "Identifier",
         line: 4,
         column: 14,
+        suggestions: [
+          {
+            output: dedent`
+              function foo(arg: Array<string>) {}
+              function foo(arg: string[]) {}
+              function foo(arg: Set<string>) {}
+              function foo(arg: ReadonlyMap<string, string>) {}
+              function foo(arg: ReadonlyArray<string>) {}
+              function foo(arg: readonly string[]) {}
+              function foo(arg: ReadonlySet<string>) {}
+              function foo(arg: ReadonlyMap<string, string>) {}
+            `,
+          },
+        ],
       },
     ],
   },
