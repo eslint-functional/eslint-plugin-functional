@@ -157,7 +157,7 @@ Examples of **correct** code for the `{ "ignoreClass": true }` option:
 ```ts
 /* eslint functional/prefer-readonly-type: ["error", { "ignoreClass": true }] */
 
-class {
+class C {
   myprop: string;
 }
 ```
