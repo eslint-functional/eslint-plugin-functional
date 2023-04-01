@@ -1,8 +1,16 @@
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import dedent from "dedent";
 
-import type { InvalidTestCase } from "~/tests/helpers/util";
+import type { rule } from "~/rules/prefer-tacit";
+import type {
+  InvalidTestCaseSet,
+  MessagesOf,
+  OptionsOf,
+} from "~/tests/helpers/util";
 
-const tests: InvalidTestCase[] = [
+const tests: Array<
+  InvalidTestCaseSet<MessagesOf<typeof rule>, OptionsOf<typeof rule>>
+> = [
   // Instantiation Expression not supported.
   {
     code: dedent`
@@ -13,7 +21,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "generic",
-        type: "FunctionDeclaration",
+        type: AST_NODE_TYPES.FunctionDeclaration,
         line: 2,
         column: 1,
       },
@@ -28,7 +36,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "generic",
-        type: "FunctionDeclaration",
+        type: AST_NODE_TYPES.FunctionDeclaration,
         line: 2,
         column: 16,
       },

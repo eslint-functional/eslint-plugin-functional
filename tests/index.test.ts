@@ -21,7 +21,7 @@ test("should have all the rules", (t) => {
     Object.hasOwn(plugin, "rules"),
     'The plugin\'s config object should have a "rules" property.'
   );
-  t.is(ruleFiles.length, Object.keys(plugin.rules).length);
+  t.is(ruleFiles.length, Object.keys(plugin.rules ?? {}).length);
 });
 
 test("should have all the configs", (t) => {
@@ -31,7 +31,7 @@ test("should have all the configs", (t) => {
   );
   t.is(
     configFiles.length - 1,
-    Object.keys(plugin.configs).length,
+    Object.keys(plugin.configs ?? {}).length,
     "should have all the configs except deprecated"
   );
 });

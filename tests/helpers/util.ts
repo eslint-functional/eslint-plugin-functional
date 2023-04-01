@@ -2,7 +2,13 @@ import type {
   SharedConfigurationSettings,
   TSESLint,
 } from "@typescript-eslint/utils";
-import type { Rule, RuleTester as ESLintRuleTester } from "eslint";
+import type {
+  RuleModule,
+  ValidTestCase,
+  InvalidTestCase,
+  RunTests,
+  RuleListener,
+} from "@typescript-eslint/utils/ts-eslint";
 
 import ts from "~/conditional-imports/typescript";
 
@@ -12,7 +18,7 @@ type OptionsSets = {
   /**
    * The set of options this test case should pass for.
    */
-  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+
   optionsSet: any[];
 
   /**
@@ -22,36 +28,40 @@ type OptionsSets = {
   settingsSet?: SharedConfigurationSettings[];
 };
 
-export type ValidTestCase = Omit<
-  ESLintRuleTester.ValidTestCase,
+export type ValidTestCaseSet<TOptions extends Readonly<unknown[]>> = Omit<
+  ValidTestCase<TOptions>,
   "options" | "settings"
 > &
   OptionsSets;
 
-export type InvalidTestCase = Omit<
-  ESLintRuleTester.InvalidTestCase,
-  "options" | "settings"
-> &
+export type InvalidTestCaseSet<
+  TMessageIds extends string,
+  TOptions extends Readonly<unknown[]>
+> = Omit<InvalidTestCase<TMessageIds, TOptions>, "options" | "settings"> &
   OptionsSets;
 
 /**
  * Convert our test cases into ones eslint test runner is expecting.
  */
-export function processInvalidTestCase(
-  testCases: InvalidTestCase[]
-): ESLintRuleTester.InvalidTestCase[] {
+export function processInvalidTestCase<
+  TMessageIds extends string,
+  TOptions extends Readonly<unknown[]>
+>(
+  testCases: Array<InvalidTestCaseSet<TMessageIds, TOptions>>
+): Array<InvalidTestCase<TMessageIds, TOptions>> {
   return testCases.flatMap((testCase) =>
     testCase.optionsSet.flatMap((options) => {
       const { optionsSet, settingsSet, ...eslintTestCase } = testCase;
 
-      return (settingsSet ?? [undefined]).map((settings) => {
-        return {
+      return (settingsSet ?? [undefined]).map(
+        (settings): InvalidTestCase<TMessageIds, TOptions> => ({
           filename: dummyFilename,
           ...eslintTestCase,
           options,
+          // @ts-expect-error -- upstream typing.
           settings,
-        } as ESLintRuleTester.InvalidTestCase;
-      });
+        })
+      );
     })
   );
 }
@@ -59,12 +69,12 @@ export function processInvalidTestCase(
 /**
  * Convert our test cases into ones eslint test runner is expecting.
  */
-export function processValidTestCase(
-  testCases: ValidTestCase[]
-): ESLintRuleTester.ValidTestCase[] {
+export function processValidTestCase<TOptions extends Readonly<unknown[]>>(
+  testCases: Array<ValidTestCaseSet<TOptions>>
+): Array<ValidTestCase<TOptions>> {
   // Ideally these two functions should be merged into 1 but I haven't been able
   // to get the typing information right - so for now they are two functions.
-  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+
   return processInvalidTestCase(testCases as any);
 }
 
@@ -73,10 +83,9 @@ export function processValidTestCase(
  */
 export function createDummyRule(
   create: (
-    /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
     context: TSESLint.RuleContext<"generic", any>
   ) => TSESLint.RuleListener
-): Rule.RuleModule {
+): RuleModule<string, [boolean, ...unknown[]]> {
   const meta: TSESLint.RuleMetaData<"generic"> = {
     type: "suggestion",
     docs: {
@@ -93,32 +102,32 @@ export function createDummyRule(
   return {
     meta,
     create,
-  } as unknown as Rule.RuleModule;
+  } as RuleModule<string, [boolean, ...unknown[]]>;
 }
-
-export type RuleTesterTests = {
-  valid?: Array<ESLintRuleTester.ValidTestCase | string>;
-  invalid?: ESLintRuleTester.InvalidTestCase[];
-};
 
 /**
  * Adds filenames to the tests (needed for typescript to work when parserOptions.project has been set).
  */
-export function addFilename(
+export function addFilename<
+  TMessageIds extends string,
+  TOptions extends Readonly<unknown[]>
+>(
   filename: string,
-  tests: RuleTesterTests
-): RuleTesterTests {
+  tests: RunTests<TMessageIds, TOptions>
+): RunTests<TMessageIds, TOptions> {
   const { valid, invalid } = tests;
   return {
-    invalid: invalid?.map((test) => ({
-      ...test,
-      filename,
-    })),
-    valid: valid?.map((test) =>
-      typeof test === "string"
-        ? { code: test, filename }
-        : { ...test, filename }
-    ),
+    invalid:
+      invalid.map((test) => ({
+        ...test,
+        filename,
+      })) ?? [],
+    valid:
+      valid.map((test) =>
+        typeof test === "string"
+          ? { code: test, filename }
+          : { ...test, filename }
+      ) ?? [],
   };
 }
 
@@ -128,3 +137,13 @@ export function addFilename(
 export function isTsInstalled(): boolean {
   return ts !== undefined;
 }
+
+export type MessagesOf<
+  T extends RuleModule<string, ReadonlyArray<unknown>, RuleListener>
+> = T extends RuleModule<infer Messages, ReadonlyArray<unknown>, RuleListener>
+  ? Messages
+  : never;
+
+export type OptionsOf<
+  T extends RuleModule<string, ReadonlyArray<unknown>, RuleListener>
+> = T extends RuleModule<string, infer Options, RuleListener> ? Options : never;

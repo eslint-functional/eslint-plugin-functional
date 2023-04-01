@@ -19,7 +19,7 @@ const allNonDeprecatedRules = allRules.filter(
   (rule) => rule.meta === undefined || rule.meta.deprecated !== true
 );
 const allDeprecatedRules = allRules.filter(
-  (rule) => rule.meta?.deprecated === true
+  (rule) => rule.meta.deprecated === true
 );
 
 test('Config "All" - should have all the non-deprecated rules', (t) => {
@@ -34,7 +34,10 @@ test('Config "All" - should have all the non-deprecated rules', (t) => {
 
   for (const name of configRules) {
     t.is(
-      Boolean(rules[name.slice("functional/".length)].meta.deprecated),
+      Boolean(
+        rules[name.slice("functional/".length) as keyof typeof rules].meta
+          .deprecated
+      ),
       false,
       `Rule "${name}" should not be deprecated.`
     );
@@ -53,7 +56,8 @@ test('Config "Deprecated" - should only have deprecated rules', (t) => {
 
   for (const name of configRules) {
     t.is(
-      rules[name.slice("functional/".length)].meta.deprecated,
+      rules[name.slice("functional/".length) as keyof typeof rules].meta
+        .deprecated,
       true,
       `Rule "${name}" should be deprecated.`
     );

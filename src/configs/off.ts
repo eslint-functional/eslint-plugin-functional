@@ -1,4 +1,4 @@
-import type { Linter } from "eslint";
+import type { Linter } from "@typescript-eslint/utils/ts-eslint";
 
 import all from "./all";
 import deprecated from "./deprecated";
@@ -6,10 +6,8 @@ import deprecated from "./deprecated";
 /**
  * Turn the given rules off.
  */
-function turnRulesOff(rules: string[] | undefined): Linter.Config["rules"] {
-  return rules === undefined
-    ? undefined
-    : Object.fromEntries(rules.map((name) => [name, "off"]));
+function turnRulesOff(rules: string[]): NonNullable<Linter.Config["rules"]> {
+  return Object.fromEntries(rules.map((name) => [name, "off"]));
 }
 
 const allRulesNames = new Set([

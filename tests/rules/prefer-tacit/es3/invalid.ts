@@ -1,8 +1,13 @@
-import dedent from "dedent";
+import type { rule } from "~/rules/prefer-tacit";
+import type {
+  InvalidTestCaseSet,
+  MessagesOf,
+  OptionsOf,
+} from "~/tests/helpers/util";
 
-import type { InvalidTestCase } from "~/tests/helpers/util";
-
-const tests: InvalidTestCase[] = [
+const tests: Array<
+  InvalidTestCaseSet<MessagesOf<typeof rule>, OptionsOf<typeof rule>>
+> = [
   // {
   //   code: "var foo = function(x) { f(x); }",
   //   optionsSet: [[{ assumeTypes: true }]],

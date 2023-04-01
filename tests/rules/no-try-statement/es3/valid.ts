@@ -1,6 +1,7 @@
-import type { ValidTestCase } from "~/tests/helpers/util";
+import type { rule } from "~/rules/no-try-statements";
+import type { ValidTestCaseSet, OptionsOf } from "~/tests/helpers/util";
 
-const tests: ValidTestCase[] = [
+const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
   {
     code: `var x = 0;`,
     optionsSet: [[]],

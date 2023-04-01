@@ -152,6 +152,9 @@ const mutableTypeRegex = new RegExp(
   "u"
 );
 
+/**
+ * For backwards compatibility.
+ */
 function shouldIgnorePattern2(
   node: TSESTree.Node,
   context: TSESLint.RuleContext<string, BaseOptions>,
@@ -168,7 +171,7 @@ function shouldIgnorePattern2(
 
   if (isTypeNode) {
     return shouldIgnorePattern2(
-      node.parent!,
+      node.parent,
       context,
       ignorePattern,
       ignoreAccessorPattern

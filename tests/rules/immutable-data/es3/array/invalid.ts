@@ -1,8 +1,16 @@
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import dedent from "dedent";
 
-import type { InvalidTestCase } from "~/tests/helpers/util";
+import type { rule } from "~/rules/immutable-data";
+import type {
+  InvalidTestCaseSet,
+  MessagesOf,
+  OptionsOf,
+} from "~/tests/helpers/util";
 
-const tests: InvalidTestCase[] = [
+const tests: Array<
+  InvalidTestCaseSet<MessagesOf<typeof rule>, OptionsOf<typeof rule>>
+> = [
   {
     code: dedent`
       var x = [5, 6];
@@ -14,13 +22,13 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "generic",
-        type: "AssignmentExpression",
+        type: AST_NODE_TYPES.AssignmentExpression,
         line: 3,
         column: 1,
       },
       {
         messageId: "generic",
-        type: "AssignmentExpression",
+        type: AST_NODE_TYPES.AssignmentExpression,
         line: 4,
         column: 1,
       },
@@ -37,13 +45,13 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "generic",
-        type: "AssignmentExpression",
+        type: AST_NODE_TYPES.AssignmentExpression,
         line: 3,
         column: 1,
       },
       {
         messageId: "generic",
-        type: "AssignmentExpression",
+        type: AST_NODE_TYPES.AssignmentExpression,
         line: 4,
         column: 1,
       },
@@ -60,13 +68,13 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "generic",
-        type: "AssignmentExpression",
+        type: AST_NODE_TYPES.AssignmentExpression,
         line: 3,
         column: 1,
       },
       {
         messageId: "generic",
-        type: "AssignmentExpression",
+        type: AST_NODE_TYPES.AssignmentExpression,
         line: 4,
         column: 1,
       },
@@ -83,13 +91,13 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "generic",
-        type: "UnaryExpression",
+        type: AST_NODE_TYPES.UnaryExpression,
         line: 3,
         column: 1,
       },
       {
         messageId: "generic",
-        type: "UnaryExpression",
+        type: AST_NODE_TYPES.UnaryExpression,
         line: 4,
         column: 1,
       },
@@ -106,13 +114,13 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "generic",
-        type: "UpdateExpression",
+        type: AST_NODE_TYPES.UpdateExpression,
         line: 3,
         column: 1,
       },
       {
         messageId: "generic",
-        type: "UpdateExpression",
+        type: AST_NODE_TYPES.UpdateExpression,
         line: 4,
         column: 1,
       },
@@ -129,13 +137,13 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "generic",
-        type: "UpdateExpression",
+        type: AST_NODE_TYPES.UpdateExpression,
         line: 3,
         column: 1,
       },
       {
         messageId: "generic",
-        type: "UpdateExpression",
+        type: AST_NODE_TYPES.UpdateExpression,
         line: 4,
         column: 1,
       },
@@ -152,13 +160,13 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "generic",
-        type: "UpdateExpression",
+        type: AST_NODE_TYPES.UpdateExpression,
         line: 3,
         column: 1,
       },
       {
         messageId: "generic",
-        type: "UpdateExpression",
+        type: AST_NODE_TYPES.UpdateExpression,
         line: 4,
         column: 1,
       },
@@ -175,13 +183,13 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "generic",
-        type: "UpdateExpression",
+        type: AST_NODE_TYPES.UpdateExpression,
         line: 3,
         column: 1,
       },
       {
         messageId: "generic",
-        type: "UpdateExpression",
+        type: AST_NODE_TYPES.UpdateExpression,
         line: 4,
         column: 1,
       },
@@ -198,13 +206,13 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "generic",
-        type: "AssignmentExpression",
+        type: AST_NODE_TYPES.AssignmentExpression,
         line: 3,
         column: 5,
       },
       {
         messageId: "generic",
-        type: "AssignmentExpression",
+        type: AST_NODE_TYPES.AssignmentExpression,
         line: 4,
         column: 5,
       },
@@ -221,13 +229,13 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "generic",
-        type: "UpdateExpression",
+        type: AST_NODE_TYPES.UpdateExpression,
         line: 3,
         column: 5,
       },
       {
         messageId: "generic",
-        type: "UpdateExpression",
+        type: AST_NODE_TYPES.UpdateExpression,
         line: 4,
         column: 5,
       },
@@ -244,13 +252,13 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "generic",
-        type: "AssignmentExpression",
+        type: AST_NODE_TYPES.AssignmentExpression,
         line: 3,
         column: 1,
       },
       {
         messageId: "generic",
-        type: "AssignmentExpression",
+        type: AST_NODE_TYPES.AssignmentExpression,
         line: 4,
         column: 1,
       },
@@ -284,109 +292,109 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "array",
-        type: "CallExpression",
+        type: AST_NODE_TYPES.CallExpression,
         line: 2,
         column: 1,
       },
       {
         messageId: "array",
-        type: "CallExpression",
+        type: AST_NODE_TYPES.CallExpression,
         line: 3,
         column: 1,
       },
       {
         messageId: "array",
-        type: "CallExpression",
+        type: AST_NODE_TYPES.CallExpression,
         line: 4,
         column: 1,
       },
       {
         messageId: "array",
-        type: "CallExpression",
+        type: AST_NODE_TYPES.CallExpression,
         line: 5,
         column: 1,
       },
       {
         messageId: "array",
-        type: "CallExpression",
+        type: AST_NODE_TYPES.CallExpression,
         line: 6,
         column: 1,
       },
       {
         messageId: "array",
-        type: "CallExpression",
+        type: AST_NODE_TYPES.CallExpression,
         line: 7,
         column: 1,
       },
       {
         messageId: "array",
-        type: "CallExpression",
+        type: AST_NODE_TYPES.CallExpression,
         line: 8,
         column: 1,
       },
       {
         messageId: "array",
-        type: "CallExpression",
+        type: AST_NODE_TYPES.CallExpression,
         line: 9,
         column: 1,
       },
       {
         messageId: "array",
-        type: "CallExpression",
+        type: AST_NODE_TYPES.CallExpression,
         line: 10,
         column: 1,
       },
       {
         messageId: "array",
-        type: "CallExpression",
+        type: AST_NODE_TYPES.CallExpression,
         line: 12,
         column: 1,
       },
       {
         messageId: "array",
-        type: "CallExpression",
+        type: AST_NODE_TYPES.CallExpression,
         line: 13,
         column: 1,
       },
       {
         messageId: "array",
-        type: "CallExpression",
+        type: AST_NODE_TYPES.CallExpression,
         line: 14,
         column: 1,
       },
       {
         messageId: "array",
-        type: "CallExpression",
+        type: AST_NODE_TYPES.CallExpression,
         line: 15,
         column: 1,
       },
       {
         messageId: "array",
-        type: "CallExpression",
+        type: AST_NODE_TYPES.CallExpression,
         line: 16,
         column: 1,
       },
       {
         messageId: "array",
-        type: "CallExpression",
+        type: AST_NODE_TYPES.CallExpression,
         line: 17,
         column: 1,
       },
       {
         messageId: "array",
-        type: "CallExpression",
+        type: AST_NODE_TYPES.CallExpression,
         line: 18,
         column: 1,
       },
       {
         messageId: "array",
-        type: "CallExpression",
+        type: AST_NODE_TYPES.CallExpression,
         line: 19,
         column: 1,
       },
       {
         messageId: "array",
-        type: "CallExpression",
+        type: AST_NODE_TYPES.CallExpression,
         line: 20,
         column: 1,
       },
@@ -410,55 +418,55 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "array",
-        type: "CallExpression",
+        type: AST_NODE_TYPES.CallExpression,
         line: 1,
         column: 1,
       },
       {
         messageId: "array",
-        type: "CallExpression",
+        type: AST_NODE_TYPES.CallExpression,
         line: 2,
         column: 1,
       },
       {
         messageId: "array",
-        type: "CallExpression",
+        type: AST_NODE_TYPES.CallExpression,
         line: 3,
         column: 1,
       },
       {
         messageId: "array",
-        type: "CallExpression",
+        type: AST_NODE_TYPES.CallExpression,
         line: 4,
         column: 1,
       },
       {
         messageId: "array",
-        type: "CallExpression",
+        type: AST_NODE_TYPES.CallExpression,
         line: 5,
         column: 1,
       },
       {
         messageId: "array",
-        type: "CallExpression",
+        type: AST_NODE_TYPES.CallExpression,
         line: 6,
         column: 1,
       },
       {
         messageId: "array",
-        type: "CallExpression",
+        type: AST_NODE_TYPES.CallExpression,
         line: 7,
         column: 1,
       },
       {
         messageId: "array",
-        type: "CallExpression",
+        type: AST_NODE_TYPES.CallExpression,
         line: 8,
         column: 1,
       },
       {
         messageId: "array",
-        type: "CallExpression",
+        type: AST_NODE_TYPES.CallExpression,
         line: 9,
         column: 1,
       },

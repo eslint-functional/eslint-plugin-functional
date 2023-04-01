@@ -1,7 +1,13 @@
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import dedent from "dedent";
 import { Immutability } from "is-immutable-type";
 
-import type { InvalidTestCase } from "~/tests/helpers/util";
+import type { rule } from "~/rules/type-declaration-immutability";
+import type {
+  InvalidTestCaseSet,
+  MessagesOf,
+  OptionsOf,
+} from "~/tests/helpers/util";
 
 const recommended = {
   rules: [
@@ -48,7 +54,9 @@ const recommended = {
   ],
 };
 
-const tests: InvalidTestCase[] = [
+const tests: Array<
+  InvalidTestCaseSet<MessagesOf<typeof rule>, OptionsOf<typeof rule>>
+> = [
   {
     code: dedent`
       type ReadonlyFoo = { foo: number }
@@ -64,7 +72,7 @@ const tests: InvalidTestCase[] = [
           expected: Immutability[Immutability.ReadonlyShallow],
           actual: Immutability[Immutability.Mutable],
         },
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 1,
         column: 6,
       },
@@ -95,7 +103,7 @@ const tests: InvalidTestCase[] = [
           expected: Immutability[Immutability.ReadonlyShallow],
           actual: Immutability[Immutability.Mutable],
         },
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 1,
         column: 6,
       },
@@ -116,7 +124,7 @@ const tests: InvalidTestCase[] = [
           expected: Immutability[Immutability.ReadonlyShallow],
           actual: Immutability[Immutability.Mutable],
         },
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 1,
         column: 6,
       },
@@ -137,7 +145,7 @@ const tests: InvalidTestCase[] = [
           expected: Immutability[Immutability.ReadonlyShallow],
           actual: Immutability[Immutability.Mutable],
         },
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 1,
         column: 6,
       },
@@ -158,7 +166,7 @@ const tests: InvalidTestCase[] = [
           expected: Immutability[Immutability.ReadonlyDeep],
           actual: Immutability[Immutability.ReadonlyShallow],
         },
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 1,
         column: 6,
       },
@@ -176,7 +184,7 @@ const tests: InvalidTestCase[] = [
           expected: Immutability[Immutability.ReadonlyDeep],
           actual: Immutability[Immutability.ReadonlyShallow],
         },
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 1,
         column: 6,
       },
@@ -194,7 +202,7 @@ const tests: InvalidTestCase[] = [
           expected: Immutability[Immutability.ReadonlyDeep],
           actual: Immutability[Immutability.ReadonlyShallow],
         },
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 1,
         column: 6,
       },
@@ -215,7 +223,7 @@ const tests: InvalidTestCase[] = [
           expected: Immutability[Immutability.Immutable],
           actual: Immutability[Immutability.ReadonlyShallow],
         },
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 1,
         column: 6,
       },
@@ -233,7 +241,7 @@ const tests: InvalidTestCase[] = [
           expected: Immutability[Immutability.Immutable],
           actual: Immutability[Immutability.ReadonlyDeep],
         },
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 1,
         column: 6,
       },
@@ -251,7 +259,7 @@ const tests: InvalidTestCase[] = [
           expected: Immutability[Immutability.Immutable],
           actual: Immutability[Immutability.ReadonlyDeep],
         },
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 1,
         column: 6,
       },
@@ -269,7 +277,7 @@ const tests: InvalidTestCase[] = [
           expected: Immutability[Immutability.Mutable],
           actual: Immutability[Immutability.Immutable],
         },
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 1,
         column: 6,
       },
@@ -287,7 +295,7 @@ const tests: InvalidTestCase[] = [
           expected: Immutability[Immutability.Mutable],
           actual: Immutability[Immutability.Immutable],
         },
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 1,
         column: 6,
       },
@@ -308,7 +316,7 @@ const tests: InvalidTestCase[] = [
           expected: Immutability[Immutability.Mutable],
           actual: Immutability[Immutability.Immutable],
         },
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 1,
         column: 6,
       },
@@ -329,7 +337,7 @@ const tests: InvalidTestCase[] = [
           expected: Immutability[Immutability.Mutable],
           actual: Immutability[Immutability.ReadonlyShallow],
         },
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 1,
         column: 6,
       },
@@ -358,7 +366,7 @@ const tests: InvalidTestCase[] = [
           expected: Immutability[Immutability.ReadonlyDeep],
           actual: Immutability[Immutability.Mutable],
         },
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 1,
         column: 6,
       },
@@ -390,7 +398,7 @@ const tests: InvalidTestCase[] = [
           expected: Immutability[Immutability.ReadonlyDeep],
           actual: Immutability[Immutability.ReadonlyShallow],
         },
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 1,
         column: 6,
       },
@@ -417,7 +425,7 @@ const tests: InvalidTestCase[] = [
           expected: Immutability[Immutability.Mutable],
           actual: Immutability[Immutability.ReadonlyDeep],
         },
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 1,
         column: 6,
       },
@@ -463,7 +471,7 @@ const tests: InvalidTestCase[] = [
           expected: Immutability[Immutability.Mutable],
           actual: Immutability[Immutability.Immutable],
         },
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 1,
         column: 6,
       },

@@ -1,8 +1,16 @@
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import dedent from "dedent";
 
-import type { InvalidTestCase } from "~/tests/helpers/util";
+import type { rule } from "~/rules/prefer-property-signatures";
+import type {
+  InvalidTestCaseSet,
+  MessagesOf,
+  OptionsOf,
+} from "~/tests/helpers/util";
 
-const tests: InvalidTestCase[] = [
+const tests: Array<
+  InvalidTestCaseSet<MessagesOf<typeof rule>, OptionsOf<typeof rule>>
+> = [
   {
     code: dedent`
       interface Foo {
@@ -13,7 +21,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "generic",
-        type: "TSMethodSignature",
+        type: AST_NODE_TYPES.TSMethodSignature,
         line: 2,
         column: 3,
       },
@@ -29,7 +37,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "generic",
-        type: "TSMethodSignature",
+        type: AST_NODE_TYPES.TSMethodSignature,
         line: 2,
         column: 3,
       },
@@ -45,7 +53,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "generic",
-        type: "TSMethodSignature",
+        type: AST_NODE_TYPES.TSMethodSignature,
         line: 2,
         column: 3,
       },
@@ -63,7 +71,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "generic",
-        type: "TSMethodSignature",
+        type: AST_NODE_TYPES.TSMethodSignature,
         line: 3,
         column: 5,
       },
@@ -83,7 +91,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "generic",
-        type: "TSMethodSignature",
+        type: AST_NODE_TYPES.TSMethodSignature,
         line: 4,
         column: 7,
       },
@@ -103,7 +111,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "generic",
-        type: "TSMethodSignature",
+        type: AST_NODE_TYPES.TSMethodSignature,
         line: 4,
         column: 7,
       },

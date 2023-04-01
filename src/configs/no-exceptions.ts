@@ -1,4 +1,4 @@
-import type { Linter } from "eslint";
+import type { Linter } from "@typescript-eslint/utils/ts-eslint";
 
 import * as noThrowStatements from "~/rules/no-throw-statements";
 import * as noTryStatements from "~/rules/no-try-statements";

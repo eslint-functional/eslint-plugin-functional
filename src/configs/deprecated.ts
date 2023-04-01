@@ -1,4 +1,4 @@
-import type { Linter } from "eslint";
+import type { Linter } from "@typescript-eslint/utils/ts-eslint";
 
 import * as preferReadonlyType from "~/rules/prefer-readonly-type";
 

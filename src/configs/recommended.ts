@@ -1,4 +1,4 @@
-import type { Linter } from "eslint";
+import type { Linter } from "@typescript-eslint/utils/ts-eslint";
 import { Immutability } from "is-immutable-type";
 
 import * as functionalParameters from "~/rules/functional-parameters";

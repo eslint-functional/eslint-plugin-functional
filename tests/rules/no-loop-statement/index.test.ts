@@ -1,11 +1,16 @@
 import { name, rule } from "~/rules/no-loop-statements";
-import { testUsing } from "~/tests/helpers/testers";
+import { testRule } from "~/tests/helpers/testers";
 
+import es6Tests from "./es2015";
 import es3Tests from "./es3";
-import es6Tests from "./es6";
 
-testUsing.typescript(name, rule, es6Tests);
-testUsing.typescript(name, rule, es3Tests);
+const tester = testRule(name, rule);
 
-testUsing.es6(name, rule, es6Tests);
-testUsing.es3(name, rule, es3Tests);
+tester.typescript(es6Tests);
+tester.typescript(es6Tests);
+
+tester.esLatest(es3Tests);
+tester.esLatest(es3Tests);
+
+tester.es2015(es6Tests);
+tester.es3(es3Tests);

@@ -1,17 +1,15 @@
 import assert from "node:assert";
 
-import type { TSESLint } from "@typescript-eslint/utils";
-import test from "ava";
+import type { ValidTestCase } from "@typescript-eslint/utils/eslint-utils";
 import dedent from "dedent";
-import RuleTester from "eslint-ava-rule-tester";
 
 import type {
   IgnoreAccessorPatternOption,
   IgnorePatternOption,
 } from "~/options";
 import { shouldIgnorePattern } from "~/options";
+import { getAvaRuleTester } from "~/tests/helpers/AvaRuleTester";
 import { filename, configs } from "~/tests/helpers/configs";
-import { testWrapper } from "~/tests/helpers/testers";
 import { addFilename, createDummyRule } from "~/tests/helpers/util";
 
 /**
@@ -35,9 +33,7 @@ function createDummyAssignmentExpressionRule() {
   });
 }
 
-const tests: Array<
-  TSESLint.ValidTestCase<[boolean, IgnoreAccessorPatternOption]>
-> = [
+const tests: Array<ValidTestCase<[boolean, IgnoreAccessorPatternOption]>> = [
   // Exact match.
   {
     code: dedent`
@@ -164,17 +160,17 @@ const tests: Array<
   },
 ];
 
-new RuleTester(testWrapper(test), configs.es10).run(
+getAvaRuleTester("esLatest", configs.esLatest).run(
   "AssignmentExpression",
   createDummyAssignmentExpressionRule(),
   addFilename(filename, {
-    valid: [...(tests as RuleTester.ValidTestCase[])],
+    valid: tests,
     invalid: [],
   })
 );
 
 const assignmentExpressionTests: Array<
-  TSESLint.ValidTestCase<[boolean, IgnorePatternOption]>
+  ValidTestCase<[boolean, IgnorePatternOption]>
 > = [
   // Prefix match.
   {
@@ -211,17 +207,17 @@ const assignmentExpressionTests: Array<
   },
 ];
 
-new RuleTester(testWrapper(test), configs.es10).run(
+getAvaRuleTester("esLatest", configs.esLatest).run(
   "AssignmentExpression",
   createDummyAssignmentExpressionRule(),
   addFilename(filename, {
-    valid: [...(assignmentExpressionTests as RuleTester.ValidTestCase[])],
+    valid: assignmentExpressionTests,
     invalid: [],
   })
 );
 
 const expressionStatementTests: Array<
-  TSESLint.ValidTestCase<[boolean, IgnorePatternOption]>
+  ValidTestCase<[boolean, IgnorePatternOption]>
 > = [
   {
     code: dedent`
@@ -243,7 +239,7 @@ const expressionStatementTests: Array<
   },
 ];
 
-new RuleTester(testWrapper(test), configs.es10).run(
+getAvaRuleTester("esLatest", configs.esLatest).run(
   "ExpressionStatement",
   createDummyRule((context) => {
     const [allowed, options] = context.options;
@@ -256,7 +252,7 @@ new RuleTester(testWrapper(test), configs.es10).run(
     };
   }),
   addFilename(filename, {
-    valid: [...(expressionStatementTests as RuleTester.ValidTestCase[])],
+    valid: expressionStatementTests,
     invalid: [],
   })
 );

@@ -1,8 +1,16 @@
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import dedent from "dedent";
 
-import type { InvalidTestCase } from "~/tests/helpers/util";
+import type { rule } from "~/rules/no-return-void";
+import type {
+  InvalidTestCaseSet,
+  MessagesOf,
+  OptionsOf,
+} from "~/tests/helpers/util";
 
-const tests: InvalidTestCase[] = [
+const tests: Array<
+  InvalidTestCaseSet<MessagesOf<typeof rule>, OptionsOf<typeof rule>>
+> = [
   // Disallow void.
   {
     code: dedent`
@@ -14,7 +22,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "generic",
-        type: "TSTypeAnnotation",
+        type: AST_NODE_TYPES.TSTypeAnnotation,
         line: 1,
         column: 26,
       },
@@ -32,7 +40,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "generic",
-        type: "TSTypeAnnotation",
+        type: AST_NODE_TYPES.TSTypeAnnotation,
         line: 1,
         column: 26,
       },
@@ -50,7 +58,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "generic",
-        type: "TSTypeAnnotation",
+        type: AST_NODE_TYPES.TSTypeAnnotation,
         line: 1,
         column: 26,
       },
@@ -67,7 +75,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "generic",
-        type: "TSTypeAnnotation",
+        type: AST_NODE_TYPES.TSTypeAnnotation,
         line: 1,
         column: 42,
       },
@@ -88,7 +96,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "generic",
-        type: "FunctionDeclaration",
+        type: AST_NODE_TYPES.FunctionDeclaration,
         line: 1,
         column: 1,
       },

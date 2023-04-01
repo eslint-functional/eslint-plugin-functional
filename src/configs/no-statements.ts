@@ -1,4 +1,4 @@
-import type { Linter } from "eslint";
+import type { Linter } from "@typescript-eslint/utils/ts-eslint";
 
 import * as noConditionalStatements from "~/rules/no-conditional-statements";
 import * as noExpressionStatements from "~/rules/no-expression-statements";

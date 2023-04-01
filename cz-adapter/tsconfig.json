@@ -1,13 +1,11 @@
 {
-  "extends": "../tsconfig.base.json",
+  "extends": "../tsconfig.json",
   "compilerOptions": {
     "module": "commonjs",
     "moduleResolution": "node",
-    "skipLibCheck": true,
-    "declaration": false
+    "skipLibCheck": true
   },
   "ts-node": {
-    "emit": true,
-    "transpileOnly": true
+    "emit": true
   }
 }

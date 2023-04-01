@@ -1,15 +1,23 @@
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import dedent from "dedent";
 
-import type { InvalidTestCase } from "~/tests/helpers/util";
+import type { rule } from "~/rules/prefer-immutable-types";
+import type {
+  InvalidTestCaseSet,
+  MessagesOf,
+  OptionsOf,
+} from "~/tests/helpers/util";
 
-const tests: ReadonlyArray<InvalidTestCase> = [
+const tests: Array<
+  InvalidTestCaseSet<MessagesOf<typeof rule>, OptionsOf<typeof rule>>
+> = [
   {
     code: "function foo(): ReadonlySet<string> {}",
     optionsSet: [[{ returnTypes: "Immutable" }]],
     errors: [
       {
         messageId: "returnType",
-        type: "TSTypeAnnotation",
+        type: AST_NODE_TYPES.TSTypeAnnotation,
         line: 1,
         column: 15,
       },
@@ -21,7 +29,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     errors: [
       {
         messageId: "returnType",
-        type: "TSTypeAnnotation",
+        type: AST_NODE_TYPES.TSTypeAnnotation,
         line: 1,
         column: 15,
       },
@@ -37,7 +45,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     errors: [
       {
         messageId: "returnType",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 1,
         column: 10,
       },
@@ -55,11 +63,12 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     errors: [
       {
         messageId: "returnType",
-        type: "TSTypeAnnotation",
+        type: AST_NODE_TYPES.TSTypeAnnotation,
         line: 1,
         column: 26,
         suggestions: [
           {
+            messageId: "returnType",
             output: dedent`
               function foo(arg: number): Readonly<{ foo: string }>;
               function foo(arg: string): Readonly<{ foo: number }>;
@@ -71,11 +80,12 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       },
       {
         messageId: "returnType",
-        type: "TSTypeAnnotation",
+        type: AST_NODE_TYPES.TSTypeAnnotation,
         line: 3,
         column: 27,
         suggestions: [
           {
+            messageId: "returnType",
             output: dedent`
               function foo(arg: number): { foo: string };
               function foo(arg: string): Readonly<{ foo: number }>;
@@ -101,13 +111,13 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     errors: [
       {
         messageId: "returnType",
-        type: "TSTypeAnnotation",
+        type: AST_NODE_TYPES.TSTypeAnnotation,
         line: 1,
         column: 26,
       },
       {
         messageId: "returnType",
-        type: "TSTypeAnnotation",
+        type: AST_NODE_TYPES.TSTypeAnnotation,
         line: 3,
         column: 27,
       },
@@ -129,7 +139,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     errors: [
       {
         messageId: "returnType",
-        type: "TSTypeAnnotation",
+        type: AST_NODE_TYPES.TSTypeAnnotation,
         line: 1,
         column: 26,
       },
@@ -145,7 +155,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     errors: [
       {
         messageId: "returnType",
-        type: "TSTypeAnnotation",
+        type: AST_NODE_TYPES.TSTypeAnnotation,
         line: 2,
         column: 16,
       },
@@ -161,7 +171,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     errors: [
       {
         messageId: "returnType",
-        type: "TSTypeAnnotation",
+        type: AST_NODE_TYPES.TSTypeAnnotation,
         line: 2,
         column: 20,
       },

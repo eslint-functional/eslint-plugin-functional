@@ -1,8 +1,16 @@
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import dedent from "dedent";
 
-import type { InvalidTestCase } from "~/tests/helpers/util";
+import type { rule } from "~/rules/no-conditional-statements";
+import type {
+  InvalidTestCaseSet,
+  MessagesOf,
+  OptionsOf,
+} from "~/tests/helpers/util";
 
-const tests: InvalidTestCase[] = [
+const tests: Array<
+  InvalidTestCaseSet<MessagesOf<typeof rule>, OptionsOf<typeof rule>>
+> = [
   {
     code: dedent`
       if (i === 1) {
@@ -13,7 +21,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "unexpectedIf",
-        type: "IfStatement",
+        type: AST_NODE_TYPES.IfStatement,
         line: 1,
         column: 1,
       },
@@ -39,7 +47,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "unexpectedSwitch",
-        type: "SwitchStatement",
+        type: AST_NODE_TYPES.SwitchStatement,
         line: 3,
         column: 1,
       },
@@ -58,7 +66,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "unexpectedIf",
-        type: "IfStatement",
+        type: AST_NODE_TYPES.IfStatement,
         line: 2,
         column: 3,
       },
@@ -81,7 +89,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "unexpectedSwitch",
-        type: "SwitchStatement",
+        type: AST_NODE_TYPES.SwitchStatement,
         line: 2,
         column: 3,
       },
@@ -102,13 +110,13 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "incompleteBranch",
-        type: "BlockStatement",
+        type: AST_NODE_TYPES.BlockStatement,
         line: 2,
         column: 16,
       },
       {
         messageId: "incompleteBranch",
-        type: "ExpressionStatement",
+        type: AST_NODE_TYPES.ExpressionStatement,
         line: 5,
         column: 16,
       },
@@ -131,7 +139,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "incompleteBranch",
-        type: "SwitchCase",
+        type: AST_NODE_TYPES.SwitchCase,
         line: 7,
         column: 5,
       },
@@ -153,7 +161,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "incompleteBranch",
-        type: "BlockStatement",
+        type: AST_NODE_TYPES.BlockStatement,
         line: 5,
         column: 12,
       },
@@ -171,7 +179,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "incompleteIf",
-        type: "IfStatement",
+        type: AST_NODE_TYPES.IfStatement,
         line: 2,
         column: 3,
       },
@@ -191,7 +199,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "incompleteBranch",
-        type: "BlockStatement",
+        type: AST_NODE_TYPES.BlockStatement,
         line: 4,
         column: 10,
       },
@@ -212,7 +220,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "incompleteSwitch",
-        type: "SwitchStatement",
+        type: AST_NODE_TYPES.SwitchStatement,
         line: 2,
         column: 3,
       },
@@ -235,7 +243,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "incompleteBranch",
-        type: "SwitchCase",
+        type: AST_NODE_TYPES.SwitchCase,
         line: 7,
         column: 5,
       },

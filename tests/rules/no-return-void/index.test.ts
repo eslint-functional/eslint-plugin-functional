@@ -1,6 +1,8 @@
 import { name, rule } from "~/rules/no-return-void";
-import { testUsing } from "~/tests/helpers/testers";
+import { testRule } from "~/tests/helpers/testers";
 
 import tsTests from "./ts";
 
-testUsing.typescript(name, rule, tsTests);
+const tester = testRule(name, rule);
+
+tester.typescript(tsTests);

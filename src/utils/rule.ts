@@ -1,14 +1,20 @@
+import assert from "node:assert";
+
 import type {
   ParserServices,
+  ParserServicesWithTypeInformation,
   TSESLint,
   TSESTree,
 } from "@typescript-eslint/utils";
-import { ESLintUtils } from "@typescript-eslint/utils";
-import type { Rule } from "eslint";
+import {
+  getParserServices,
+  type NamedCreateRuleMeta,
+  RuleCreator,
+} from "@typescript-eslint/utils/eslint-utils";
+import type { RuleModule } from "@typescript-eslint/utils/ts-eslint";
 import type { ImmutabilityOverrides } from "is-immutable-type";
 import { getTypeImmutability, Immutability } from "is-immutable-type";
 import type { Node as TSNode, Type, TypeNode } from "typescript";
-import { isIdentifier } from "typescript";
 
 import ts from "~/conditional-imports/typescript";
 import { getImmutabilityOverrides } from "~/settings";
@@ -21,7 +27,7 @@ const __VERSION__ = "0.0.0-development";
  * Any custom rule meta properties.
  */
 export type NamedCreateRuleMetaWithCategory<T extends string> =
-  ESLintUtils.NamedCreateRuleMeta<T> & {
+  NamedCreateRuleMeta<T> & {
     docs: {
       /** Used for splitting the README rules list into sub-lists. */
       category: string;
@@ -102,7 +108,7 @@ export function createRule<
   meta: NamedCreateRuleMetaWithCategory<MessageIds>,
   defaultOptions: Options,
   ruleFunctionsMap: RuleFunctionsMap<any, MessageIds, Options>
-): Rule.RuleModule {
+): RuleModule<MessageIds, Options> {
   return createRuleUsingFunction(
     name,
     meta,
@@ -125,8 +131,8 @@ export function createRuleUsingFunction<
     context: TSESLint.RuleContext<MessageIds, Options>,
     options: Options
   ) => RuleFunctionsMap<any, MessageIds, Options>
-): Rule.RuleModule {
-  return ESLintUtils.RuleCreator(
+): RuleModule<MessageIds, Options> {
+  return RuleCreator(
     (ruleName) =>
       `https://github.com/eslint-functional/eslint-plugin-functional/blob/v${__VERSION__}/docs/rules/${ruleName}.md`
   )({
@@ -149,7 +155,7 @@ export function createRuleUsingFunction<
         ])
       );
     },
-  }) as unknown as Rule.RuleModule;
+  }) as RuleModule<MessageIds, Options>;
 }
 
 /**
@@ -157,22 +163,10 @@ export function createRuleUsingFunction<
  */
 export function getTypeOfNode<
   Context extends TSESLint.RuleContext<string, BaseOptions>
->(node: TSESTree.Node, context: Context): Type | null;
-export function getTypeOfNode(
-  node: TSESTree.Node,
-  parserServices: ParserServices
-): Type;
-export function getTypeOfNode<
-  Context extends TSESLint.RuleContext<string, BaseOptions>
->(
-  node: TSESTree.Node,
-  contextOrServices: Context | ParserServices
-): Type | null {
-  const parserServices = isParserServices(contextOrServices)
-    ? contextOrServices
-    : getParserServices(contextOrServices);
+>(node: TSESTree.Node, context: Context): Type | null {
+  const parserServices = getParserServices(context, true);
 
-  if (parserServices === null) {
+  if (!isParserServicesWithTypeInformation(parserServices)) {
     return null;
   }
 
@@ -195,13 +189,14 @@ export function getReturnTypesOfFunction<
     return null;
   }
 
-  const parserServices = getParserServices(context);
-  if (parserServices === null) {
+  const parserServices = getParserServices(context, true);
+  if (!isParserServicesWithTypeInformation(parserServices)) {
     return null;
   }
 
   const checker = parserServices.program.getTypeChecker();
-  const type = getTypeOfNode(node, parserServices);
+  const type = getTypeOfNode(node, context);
+  assert(type !== null);
 
   const signatures = checker.getSignaturesOfType(type, ts.SignatureKind.Call);
   return signatures.map((signature) =>
@@ -219,8 +214,8 @@ export function isImplementationOfOverload<
     return false;
   }
 
-  const parserServices = getParserServices(context);
-  if (parserServices === null) {
+  const parserServices = getParserServices(context, true);
+  if (!isParserServicesWithTypeInformation(parserServices)) {
     return false;
   }
 
@@ -231,64 +226,37 @@ export function isImplementationOfOverload<
 }
 
 /**
- * Get the type immutability of the the given node.
- */
-export function getTypeImmutabilityOfNode<
-  Context extends TSESLint.RuleContext<string, BaseOptions>
->(
-  node: TSESTree.Node,
-  context: Context,
-  maxImmutability?: Immutability
-): Immutability;
-
-/**
- * Get the type immutability of the the given node.
- */
-export function getTypeImmutabilityOfNode(
-  node: TSESTree.Node,
-  parserServices: ParserServices,
-  maxImmutability?: Immutability,
-  overrides?: ImmutabilityOverrides
-): Immutability;
-
-/**
  * Get the type immutability of the the given node or type.
  */
 export function getTypeImmutabilityOfNode<
   Context extends TSESLint.RuleContext<string, BaseOptions>
 >(
   node: TSESTree.Node,
-  contextOrServices: Context | ParserServices,
+  context: Context,
   maxImmutability?: Immutability,
   explicitOverrides?: ImmutabilityOverrides
 ): Immutability {
-  const givenParserServices = isParserServices(contextOrServices);
-
-  const parserServices = givenParserServices
-    ? contextOrServices
-    : getParserServices(contextOrServices);
-
-  const overrides = givenParserServices
-    ? explicitOverrides
-    : getImmutabilityOverrides(contextOrServices.settings);
-
-  if (parserServices === null) {
+  if (ts === undefined) {
     return Immutability.Unknown;
   }
 
-  const checker = parserServices.program.getTypeChecker();
+  const parserServices = getParserServices(context, true);
+  const overrides =
+    explicitOverrides ?? getImmutabilityOverrides(context.settings);
+
+  if (!isParserServicesWithTypeInformation(parserServices)) {
+    return Immutability.Unknown;
+  }
 
   const tsNode = parserServices.esTreeNodeToTSNodeMap.get(node);
-  const typedNode = isIdentifier(tsNode) ? tsNode.parent : tsNode;
+  const typedNode = ts.isIdentifier(tsNode) ? tsNode.parent : tsNode;
   const typeLike =
-    ((typedNode as any).type as TypeNode | undefined) ??
-    getTypeOfNode(
-      parserServices.tsNodeToESTreeNodeMap.get(typedNode),
-      parserServices
-    );
+    (typedNode as { type?: TypeNode }).type ??
+    getTypeOfNode(parserServices.tsNodeToESTreeNodeMap.get(typedNode), context);
+  assert(typeLike !== null);
 
   return getTypeImmutability(
-    checker,
+    parserServices.program,
     typeLike,
     overrides,
     // Don't use the global cache in testing environments as it may cause errors when switching between different config options.
@@ -305,45 +273,19 @@ export function getTypeImmutabilityOfType<
 >(
   typeOrTypeNode: Type | TypeNode,
   context: Context,
-  maxImmutability?: Immutability
-): Immutability;
-
-/**
- * Get the type immutability of the the given type.
- */
-export function getTypeImmutabilityOfType(
-  typeOrTypeNode: Type | TypeNode,
-  parserServices: ParserServices,
-  maxImmutability?: Immutability,
-  overrides?: ImmutabilityOverrides
-): Immutability;
-
-export function getTypeImmutabilityOfType<
-  Context extends TSESLint.RuleContext<string, BaseOptions>
->(
-  typeOrTypeNode: Type | TypeNode,
-  contextOrServices: Context | ParserServices,
   maxImmutability?: Immutability,
   explicitOverrides?: ImmutabilityOverrides
 ): Immutability {
-  const givenParserServices = isParserServices(contextOrServices);
+  const parserServices = getParserServices(context, true);
+  const overrides =
+    explicitOverrides ?? getImmutabilityOverrides(context.settings);
 
-  const parserServices = givenParserServices
-    ? contextOrServices
-    : getParserServices(contextOrServices);
-
-  const overrides = givenParserServices
-    ? explicitOverrides
-    : getImmutabilityOverrides(contextOrServices.settings);
-
-  if (parserServices === null) {
+  if (!isParserServicesWithTypeInformation(parserServices)) {
     return Immutability.Unknown;
   }
 
-  const checker = parserServices.program.getTypeChecker();
-
   return getTypeImmutability(
-    checker,
+    parserServices.program,
     typeOrTypeNode,
     overrides,
     // Don't use the global cache in testing environments as it may cause errors when switching between different config options.
@@ -357,51 +299,16 @@ export function getTypeImmutabilityOfType<
  */
 export function getESTreeNode<
   Context extends TSESLint.RuleContext<string, BaseOptions>
->(node: TSNode, context: Context): TSESTree.Node | null;
-export function getESTreeNode(
-  node: TSNode,
-  parserServices: ParserServices
-): TSESTree.Node;
-export function getESTreeNode<
-  Context extends TSESLint.RuleContext<string, BaseOptions>
->(
-  node: TSNode,
-  contextOrServices: Context | ParserServices
-): TSESTree.Node | null {
-  const parserServices = isParserServices(contextOrServices)
-    ? contextOrServices
-    : getParserServices(contextOrServices);
-
-  if (parserServices === null) {
-    return null;
-  }
-
+>(node: TSNode, context: Context): TSESTree.Node | null {
+  const parserServices = getParserServices(context, true);
   return parserServices.tsNodeToESTreeNodeMap.get(node);
 }
 
 /**
- * Get the parser services from the given context.
+ * Does the given parser services have type information.
  */
-function getParserServices<
-  Context extends TSESLint.RuleContext<string, BaseOptions>
->(context: Context) {
-  const { parserServices } = context;
-
-  if (parserServices === undefined || !parserServices.hasFullTypeInformation) {
-    return null;
-  }
-
-  return parserServices;
-}
-
-/**
- * Is the given value the parser services or just the context.
- */
-function isParserServices<
-  Context extends TSESLint.RuleContext<string, BaseOptions>
->(
-  contextOrServices: Context | ParserServices
-): contextOrServices is ParserServices {
-  // Only context has an id property and it will always have one.
-  return !Object.hasOwn(contextOrServices, "id");
+function isParserServicesWithTypeInformation(
+  parserServices: ParserServices
+): parserServices is ParserServicesWithTypeInformation {
+  return "getTypeAtLocation" in parserServices;
 }

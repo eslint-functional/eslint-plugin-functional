@@ -1,8 +1,16 @@
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import dedent from "dedent";
 
-import type { InvalidTestCase } from "~/tests/helpers/util";
+import type { rule } from "~/rules/immutable-data";
+import type {
+  InvalidTestCaseSet,
+  MessagesOf,
+  OptionsOf,
+} from "~/tests/helpers/util";
 
-const tests: InvalidTestCase[] = [
+const tests: Array<
+  InvalidTestCaseSet<MessagesOf<typeof rule>, OptionsOf<typeof rule>>
+> = [
   {
     code: dedent`
       class Klass {
@@ -23,13 +31,13 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "generic",
-        type: "AssignmentExpression",
+        type: AST_NODE_TYPES.AssignmentExpression,
         line: 10,
         column: 5,
       },
       {
         messageId: "generic",
-        type: "AssignmentExpression",
+        type: AST_NODE_TYPES.AssignmentExpression,
         line: 11,
         column: 5,
       },

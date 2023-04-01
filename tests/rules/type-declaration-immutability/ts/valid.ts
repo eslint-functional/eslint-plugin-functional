@@ -1,7 +1,8 @@
 import dedent from "dedent";
 import { Immutability } from "is-immutable-type";
 
-import type { ValidTestCase } from "~/tests/helpers/util";
+import type { rule } from "~/rules/type-declaration-immutability";
+import type { ValidTestCaseSet, OptionsOf } from "~/tests/helpers/util";
 
 const recommended = {
   rules: [
@@ -28,7 +29,7 @@ const recommended = {
   ],
 };
 
-const tests: ValidTestCase[] = [
+const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
   {
     code: "type ReadonlyString = string;",
     optionsSet: [[recommended]],
