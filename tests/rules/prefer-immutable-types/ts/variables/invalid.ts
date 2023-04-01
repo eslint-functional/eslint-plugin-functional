@@ -1,15 +1,23 @@
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import dedent from "dedent";
 
-import type { InvalidTestCase } from "~/tests/helpers/util";
+import type { rule } from "~/rules/prefer-immutable-types";
+import type {
+  InvalidTestCaseSet,
+  MessagesOf,
+  OptionsOf,
+} from "~/tests/helpers/util";
 
-const tests: ReadonlyArray<InvalidTestCase> = [
+const tests: Array<
+  InvalidTestCaseSet<MessagesOf<typeof rule>, OptionsOf<typeof rule>>
+> = [
   {
     code: "const foo: ReadonlySet<string> = {} as any",
     optionsSet: [[{ variables: "Immutable" }]],
     errors: [
       {
         messageId: "variable",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 1,
         column: 7,
       },
@@ -21,7 +29,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     errors: [
       {
         messageId: "variable",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 1,
         column: 7,
       },
@@ -37,7 +45,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     errors: [
       {
         messageId: "variable",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 1,
         column: 7,
       },
@@ -52,11 +60,12 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     errors: [
       {
         messageId: "variable",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 2,
         column: 7,
         suggestions: [
           {
+            messageId: "variable",
             output: dedent`
               const foo: Readonly<{ foo: string }> = {} as any,
                     bar: Readonly<{ foo: number }> = {} as any;
@@ -75,7 +84,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     errors: [
       {
         messageId: "variable",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 2,
         column: 7,
       },
@@ -90,7 +99,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     errors: [
       {
         messageId: "variable",
-        type: "RestElement",
+        type: AST_NODE_TYPES.RestElement,
         line: 1,
         column: 11,
       },
@@ -105,7 +114,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     errors: [
       {
         messageId: "variable",
-        type: "RestElement",
+        type: AST_NODE_TYPES.RestElement,
         line: 1,
         column: 12,
       },
@@ -128,13 +137,13 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     errors: [
       {
         messageId: "variable",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 2,
         column: 7,
       },
       {
         messageId: "returnType",
-        type: "TSTypeAnnotation",
+        type: AST_NODE_TYPES.TSTypeAnnotation,
         line: 5,
         column: 11,
       },
@@ -154,11 +163,12 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     errors: [
       {
         messageId: "propertyModifier",
-        type: "PropertyDefinition",
+        type: AST_NODE_TYPES.PropertyDefinition,
         line: 2,
         column: 3,
         suggestions: [
           {
+            messageId: "propertyModifier",
             output: dedent`
               class Klass {
                 readonly foo: number;
@@ -172,11 +182,12 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       },
       {
         messageId: "propertyModifier",
-        type: "PropertyDefinition",
+        type: AST_NODE_TYPES.PropertyDefinition,
         line: 3,
         column: 3,
         suggestions: [
           {
+            messageId: "propertyModifier",
             output: dedent`
               class Klass {
                 foo: number;
@@ -190,11 +201,12 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       },
       {
         messageId: "propertyModifier",
-        type: "PropertyDefinition",
+        type: AST_NODE_TYPES.PropertyDefinition,
         line: 4,
         column: 3,
         suggestions: [
           {
+            messageId: "propertyModifier",
             output: dedent`
               class Klass {
                 foo: number;
@@ -208,11 +220,12 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       },
       {
         messageId: "propertyModifier",
-        type: "PropertyDefinition",
+        type: AST_NODE_TYPES.PropertyDefinition,
         line: 5,
         column: 3,
         suggestions: [
           {
+            messageId: "propertyModifier",
             output: dedent`
               class Klass {
                 foo: number;
@@ -239,25 +252,25 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     errors: [
       {
         messageId: "propertyImmutability",
-        type: "PropertyDefinition",
+        type: AST_NODE_TYPES.PropertyDefinition,
         line: 2,
         column: 3,
       },
       {
         messageId: "propertyImmutability",
-        type: "PropertyDefinition",
+        type: AST_NODE_TYPES.PropertyDefinition,
         line: 3,
         column: 3,
       },
       {
         messageId: "propertyImmutability",
-        type: "PropertyDefinition",
+        type: AST_NODE_TYPES.PropertyDefinition,
         line: 4,
         column: 3,
       },
       {
         messageId: "propertyImmutability",
-        type: "PropertyDefinition",
+        type: AST_NODE_TYPES.PropertyDefinition,
         line: 5,
         column: 3,
       },

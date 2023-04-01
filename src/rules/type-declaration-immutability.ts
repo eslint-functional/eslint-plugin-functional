@@ -368,8 +368,7 @@ function checkTypeDeclaration(
     rule.comparator === RuleEnforcementComparator.AtLeast
       ? rule.immutability
       : rule.comparator === RuleEnforcementComparator.More
-      ? // eslint-disable-next-line @typescript-eslint/restrict-plus-operands -- immutability is a number
-        rule.immutability + 1
+      ? rule.immutability + 1
       : undefined;
 
   const immutability = getTypeImmutabilityOfNode(

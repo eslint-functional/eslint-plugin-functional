@@ -169,7 +169,6 @@ export const rule = createRuleUsingFunction<
 >(name, meta, defaultOptions, (context, options) => {
   const [{ checkInterfaces, checkTypeLiterals }] = options;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return Object.fromEntries<any>(
     (
       [

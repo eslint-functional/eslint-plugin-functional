@@ -1,8 +1,9 @@
 import dedent from "dedent";
 
-import type { ValidTestCase } from "~/tests/helpers/util";
+import type { rule } from "~/rules/immutable-data";
+import type { ValidTestCaseSet, OptionsOf } from "~/tests/helpers/util";
 
-const tests: ValidTestCase[] = [
+const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
   // Allowed non-array mutation patterns.
   {
     code: dedent`

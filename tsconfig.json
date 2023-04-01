@@ -1,8 +1,47 @@
 {
-  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "rootDir": ".",
-    "removeComments": true
+    "allowSyntheticDefaultImports": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "alwaysStrict": true,
+    "declaration": false,
+    "esModuleInterop": true,
+    "exactOptionalPropertyTypes": true,
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": false,
+    "lib": ["ESNext"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "newLine": "LF",
+    "noEmitOnError": true,
+    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "pretty": true,
+    "resolveJsonModule": true,
+    "sourceMap": false,
+    "strict": true,
+    "target": "ESNext",
+    "baseUrl": ".",
+    "paths": {
+      "~/index": ["./src"],
+      "~/configs/*": ["src/configs/*"],
+      "~/options": ["src/options"],
+      "~/rules": ["src/rules"],
+      "~/rules/*": ["src/rules/*"],
+      "~/settings": ["src/settings"],
+      "~/utils/*": ["src/utils/*"],
+      "~/conditional-imports/*": ["src/utils/conditional-imports/*"],
+      "~/tests/*": ["tests/*"]
+    }
   },
-  "exclude": ["tests"]
+  "ts-node": {
+    "transpileOnly": true,
+    "compilerOptions": {
+      "module": "CommonJS",
+      "moduleResolution": "node16"
+    }
+  }
 }

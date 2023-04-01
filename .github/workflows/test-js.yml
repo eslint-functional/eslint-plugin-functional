@@ -52,7 +52,7 @@ jobs:
         run: |
           node -e '
             const fs = require("fs");
-            const filename = "./tsconfig.base.json";
+            const filename = "./tsconfig.json";
             const tsConfig = require(filename);
             delete tsConfig.compilerOptions.exactOptionalPropertyTypes;
             delete tsConfig.compilerOptions.noPropertyAccessFromIndexSignature;

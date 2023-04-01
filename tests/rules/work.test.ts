@@ -4,8 +4,8 @@
  */
 
 import dedent from "dedent";
-import type { ValidTestCase, InvalidTestCase } from "../helpers/util";
-import { testUsing } from "~/tests/helpers/testers";
+import type { ValidTestCaseSet, InvalidTestCaseSet } from "../helpers/util";
+import { testRule } from "~/tests/helpers/testers";
 
 /*
  * Step 1.
@@ -17,7 +17,7 @@ import { name, rule } from "~/rules/prefer-immutable-types";
  * Step 2a.
  * Provide a valid test case.
  */
-const valid: Array<ValidTestCase> = [
+const valid: Array<ValidTestCaseSet<any[]>> = [
   // {
   //   code: dedent`
   //     // Valid Code.
@@ -31,7 +31,7 @@ const valid: Array<ValidTestCase> = [
  * Step 2b.
  * Or provide an invalid test case.
  */
-const invalid: Array<InvalidTestCase> = [
+const invalid: Array<InvalidTestCaseSet<any, any[]>> = [
   // {
   //   code: dedent`
   //     // Invalid Code.
@@ -54,4 +54,4 @@ const invalid: Array<InvalidTestCase> = [
  * Run test with `pnpm run test-work` or to debug in vscode, press F5 (with this
  * file open and focused).
  */
-testUsing.typescript(name, rule, { valid, invalid });
+testRule(name, rule).typescript({ valid, invalid });

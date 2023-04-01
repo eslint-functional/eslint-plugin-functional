@@ -1,8 +1,12 @@
 import { name, rule } from "~/rules/no-let";
-import { testUsing } from "~/tests/helpers/testers";
+import { testRule } from "~/tests/helpers/testers";
 
-import es6Tests from "./es6";
+import es6Tests from "./es2015";
 
-testUsing.typescript(name, rule, es6Tests);
+const tester = testRule(name, rule);
 
-testUsing.es6(name, rule, es6Tests);
+tester.typescript(es6Tests);
+
+tester.esLatest(es6Tests);
+
+tester.es2015(es6Tests);

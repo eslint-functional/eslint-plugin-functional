@@ -1,4 +1,4 @@
-import type { Linter, Rule } from "eslint";
+import type { Linter } from "@typescript-eslint/utils/ts-eslint";
 
 import all from "~/configs/all";
 import currying from "~/configs/currying";
@@ -15,15 +15,7 @@ import strict from "~/configs/strict";
 import stylistic from "~/configs/stylistic";
 import { rules } from "~/rules";
 
-/**
- * The config type object ESLint is expecting.
- */
-type EslintPluginConfig = {
-  rules: Record<string, Rule.RuleModule>;
-  configs: Record<string, Linter.Config>;
-};
-
-const config: EslintPluginConfig = {
+const config: Linter.Plugin = {
   rules,
   configs: {
     all,

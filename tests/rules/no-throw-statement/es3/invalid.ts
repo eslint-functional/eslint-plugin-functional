@@ -1,15 +1,23 @@
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import dedent from "dedent";
 
-import type { InvalidTestCase } from "~/tests/helpers/util";
+import type { rule } from "~/rules/no-throw-statements";
+import type {
+  InvalidTestCaseSet,
+  MessagesOf,
+  OptionsOf,
+} from "~/tests/helpers/util";
 
-const tests: InvalidTestCase[] = [
+const tests: Array<
+  InvalidTestCaseSet<MessagesOf<typeof rule>, OptionsOf<typeof rule>>
+> = [
   {
     code: `throw 'error';`,
     optionsSet: [[]],
     errors: [
       {
         messageId: "generic",
-        type: "ThrowStatement",
+        type: AST_NODE_TYPES.ThrowStatement,
         line: 1,
         column: 1,
       },

@@ -1,8 +1,16 @@
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import dedent from "dedent";
 
-import type { InvalidTestCase } from "~/tests/helpers/util";
+import type { rule } from "~/rules/prefer-tacit";
+import type {
+  InvalidTestCaseSet,
+  MessagesOf,
+  OptionsOf,
+} from "~/tests/helpers/util";
 
-const tests: InvalidTestCase[] = [
+const tests: Array<
+  InvalidTestCaseSet<MessagesOf<typeof rule>, OptionsOf<typeof rule>>
+> = [
   // Instantiation Expression
   {
     code: dedent`
@@ -13,11 +21,12 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "generic",
-        type: "ArrowFunctionExpression",
+        type: AST_NODE_TYPES.ArrowFunctionExpression,
         line: 2,
         column: 13,
         suggestions: [
           {
+            messageId: "generic",
             output: dedent`
               function f<T>(x: T): T {}
               const foo = f<number>;
@@ -36,11 +45,12 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "generic",
-        type: "FunctionDeclaration",
+        type: AST_NODE_TYPES.FunctionDeclaration,
         line: 2,
         column: 1,
         suggestions: [
           {
+            messageId: "generic",
             output: dedent`
               function f<T>(x: T): T {}
               const foo = f<number>;
@@ -59,11 +69,12 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "generic",
-        type: "FunctionDeclaration",
+        type: AST_NODE_TYPES.FunctionDeclaration,
         line: 2,
         column: 16,
         suggestions: [
           {
+            messageId: "generic",
             output: dedent`
               function f<T>(x: T): T {}
               export default f<number>

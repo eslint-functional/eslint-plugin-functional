@@ -25,9 +25,7 @@ export default defineConfig({
   plugins: [
     rollupPluginAutoExternal(),
     rollupPluginCommonjs(),
-    rollupPluginTypescript({
-      tsconfig: "tsconfig.build.json",
-    }),
+    rollupPluginTypescript(),
     rollupPluginJSON({
       preferConst: true,
     }),

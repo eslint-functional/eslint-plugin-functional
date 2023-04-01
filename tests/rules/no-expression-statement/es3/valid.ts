@@ -1,8 +1,9 @@
 import dedent from "dedent";
 
-import type { ValidTestCase } from "~/tests/helpers/util";
+import type { rule } from "~/rules/no-expression-statements";
+import type { ValidTestCaseSet, OptionsOf } from "~/tests/helpers/util";
 
-const tests: ValidTestCase[] = [
+const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
   // Defining variable should still be allowed.
   {
     code: `var x = [];`,

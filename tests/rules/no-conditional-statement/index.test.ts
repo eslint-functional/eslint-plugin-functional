@@ -1,10 +1,14 @@
 import { name, rule } from "~/rules/no-conditional-statements";
-import { testUsing } from "~/tests/helpers/testers";
+import { testRule } from "~/tests/helpers/testers";
 
 import es3Tests from "./es3";
 import tsTests from "./ts";
 
-testUsing.typescript(name, rule, tsTests);
-testUsing.typescript(name, rule, es3Tests);
+const tester = testRule(name, rule);
 
-testUsing.es3(name, rule, es3Tests);
+tester.typescript(tsTests);
+tester.typescript(es3Tests);
+
+tester.esLatest(es3Tests);
+
+tester.es3(es3Tests);

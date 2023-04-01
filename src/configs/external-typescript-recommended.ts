@@ -1,4 +1,4 @@
-import type { Linter } from "eslint";
+import type { Linter } from "@typescript-eslint/utils/ts-eslint";
 
 import externalVanillaRecommended from "~/configs/external-vanilla-recommended";
 import { mergeConfigs } from "~/utils/merge-configs";

@@ -1,4 +1,4 @@
-import type { Linter } from "eslint";
+import type { Linter } from "@typescript-eslint/utils/ts-eslint";
 
 import currying from "~/configs/currying";
 import noExceptions from "~/configs/no-exceptions";

@@ -1,4 +1,4 @@
-import type { Linter } from "eslint";
+import type { Linter } from "@typescript-eslint/utils/ts-eslint";
 
 import * as preferPropertySignatures from "~/rules/prefer-property-signatures";
 import * as preferTacit from "~/rules/prefer-tacit";

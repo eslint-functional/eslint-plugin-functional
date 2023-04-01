@@ -1,8 +1,16 @@
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import dedent from "dedent";
 
-import type { InvalidTestCase } from "~/tests/helpers/util";
+import type { rule } from "~/rules/no-expression-statements";
+import type {
+  InvalidTestCaseSet,
+  MessagesOf,
+  OptionsOf,
+} from "~/tests/helpers/util";
 
-const tests: InvalidTestCase[] = [
+const tests: Array<
+  InvalidTestCaseSet<MessagesOf<typeof rule>, OptionsOf<typeof rule>>
+> = [
   {
     code: dedent`
       var x = [];
@@ -12,7 +20,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "generic",
-        type: "ExpressionStatement",
+        type: AST_NODE_TYPES.ExpressionStatement,
         line: 2,
         column: 1,
       },
@@ -25,7 +33,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "generic",
-        type: "ExpressionStatement",
+        type: AST_NODE_TYPES.ExpressionStatement,
         line: 1,
         column: 1,
       },

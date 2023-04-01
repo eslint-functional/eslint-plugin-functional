@@ -202,7 +202,7 @@ export function isArgument(node: TSESTree.Node): boolean {
   return (
     node.parent !== undefined &&
     isCallExpression(node.parent) &&
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     node.parent.arguments.includes(node as any)
   );
 }
