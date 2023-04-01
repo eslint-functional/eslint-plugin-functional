@@ -4,7 +4,6 @@ import type { Linter } from "@typescript-eslint/utils/ts-eslint";
 
 export const filename = path.join(__dirname, "file.ts");
 
-// eslint-disable-next-line node/no-missing-require -- See https://github.com/mysticatea/eslint-plugin-node/issues/255
 const typescriptParser = require.resolve("@typescript-eslint/parser");
 const babelParser = require.resolve("@babel/eslint-parser");
 const espreeParser = require.resolve("espree");

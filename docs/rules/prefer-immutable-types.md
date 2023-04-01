@@ -61,7 +61,7 @@ interface Foo1 {
 interface Foo2 {
   new (arg: string[]): void;
 }
-const x = { foo(arg: string[]): void; };
+const x = { foo(arg: string[]): void {} };
 function foo(arg: string[]);
 type Foo3 = (arg: string[]) => void;
 interface Foo4 {
@@ -113,11 +113,14 @@ function primitive9(arg: string | number | undefined) {}
 
 function fnSig(arg: () => void) {}
 
-enum Foo { a, b }
+enum Foo {
+  a,
+  b,
+}
 function enum1(arg: Foo) {}
 
 function symb1(arg: symbol) {}
-const customSymbol = Symbol('a');
+const customSymbol = Symbol("a");
 function symb2(arg: typeof customSymbol) {}
 
 // function types
@@ -127,7 +130,7 @@ interface Foo1 {
 interface Foo2 {
   new (arg: ReadonlyArray<string>): void;
 }
-const x = { foo(arg: ReadonlyArray<string>): void; };
+const x = { foo(arg: ReadonlyArray<string>): void {} };
 function foo(arg: ReadonlyArray<string>);
 type Foo3 = (arg: ReadonlyArray<string>) => void;
 interface Foo4 {

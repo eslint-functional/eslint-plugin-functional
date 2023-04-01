@@ -2,7 +2,6 @@ import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { deepmerge } from "deepmerge-ts";
 import { Immutability } from "is-immutable-type";
 import type { JSONSchema4 } from "json-schema";
-import { OptionalChain } from "typescript";
 
 import type { IgnoreClassesOption } from "~/options";
 import {

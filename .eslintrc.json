@@ -129,12 +129,7 @@
         "import/no-unresolved": "off",
         "init-declarations": "off",
         "jsdoc/require-jsdoc": "off",
-        "no-console": "off",
-        "no-empty": "off",
-        "no-invalid-this": "off",
-        "no-undef": "off",
-        "no-useless-return": "off",
-        "node/handle-callback-err": "off",
+        "n/handle-callback-err": "off",
         "prefer-const": "off",
         "prettier/prettier": "off",
         "sonarjs/no-extra-arguments": "off",
@@ -142,10 +137,15 @@
         "unicorn/prefer-optional-catch-binding": "off",
         "unicorn/prefer-top-level-await": "off",
         "unicorn/switch-case-braces": "off",
-
-        "dot-notation": "error",
-        "no-implied-eval": "error",
-        "require-await": "error"
+        "no-console": "off",
+        "no-empty": "off",
+        "no-invalid-this": "off",
+        "no-undef": "off",
+        "no-useless-return": "off",
+        "dot-notation": "off",
+        "no-empty-function": "off",
+        "no-throw-literal": "off",
+        "no-unused-vars": "off"
       }
     }
   ]
