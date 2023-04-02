@@ -1,5 +1,7 @@
 import assert from "node:assert";
 
+import type { TypeOrValueSpecifier } from "@typescript-eslint/type-utils";
+import { typeMatchesSpecifier } from "@typescript-eslint/type-utils";
 import type {
   ParserServices,
   ParserServicesWithTypeInformation,
@@ -292,6 +294,21 @@ export function getTypeImmutabilityOfType<
     process.env["NODE_ENV"] !== "test",
     maxImmutability
   );
+}
+
+/**
+ * Does the given type match the given specifier?
+ */
+export function doesTypeMatchesSpecifier<
+  Context extends TSESLint.RuleContext<string, BaseOptions>
+>(type: Type, specifier: TypeOrValueSpecifier, context: Context): boolean {
+  const parserServices = getParserServices(context, true);
+
+  if (!isParserServicesWithTypeInformation(parserServices)) {
+    return false;
+  }
+
+  return typeMatchesSpecifier(type, specifier, parserServices.program);
 }
 
 /**

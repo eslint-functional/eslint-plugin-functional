@@ -610,6 +610,52 @@ const tests: Array<
       },
     ],
   },
+  // Ignore Specifiers
+  {
+    code: dedent`function foo(arg: RegExp) {}`,
+    optionsSet: [
+      [
+        {
+          parameters: {
+            enforcement: "ReadonlyDeep",
+            ignoreTypes: [{ from: "file", name: "RegExp" }],
+          },
+        },
+      ],
+    ],
+    errors: [
+      {
+        messageId: "parameter",
+        type: AST_NODE_TYPES.Identifier,
+        line: 1,
+        column: 14,
+      },
+    ],
+  },
+  {
+    code: dedent`
+      function foo(arg: Bar) {}
+      type Bar = { bar: string; };
+    `,
+    optionsSet: [
+      [
+        {
+          parameters: {
+            enforcement: "ReadonlyDeep",
+            ignoreTypes: [{ from: "file", name: "Foo" }],
+          },
+        },
+      ],
+    ],
+    errors: [
+      {
+        messageId: "parameter",
+        type: AST_NODE_TYPES.Identifier,
+        line: 1,
+        column: 14,
+      },
+    ],
+  },
 ];
 
 export default tests;

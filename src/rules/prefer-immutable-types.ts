@@ -1,7 +1,12 @@
+import assert from "node:assert";
+
+import type { TypeOrValueSpecifier } from "@typescript-eslint/type-utils";
+import { typeOrValueSpecifierSchema } from "@typescript-eslint/type-utils";
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { deepmerge } from "deepmerge-ts";
 import { Immutability } from "is-immutable-type";
 import type { JSONSchema4 } from "json-schema";
+import { hasType } from "ts-api-utils";
 
 import type { IgnoreClassesOption } from "~/options";
 import {
@@ -13,6 +18,11 @@ import {
 import type { ESFunctionType } from "~/utils/node-types";
 import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
 import {
+  getTSNode,
+  getTypeNodeOrTypeOfNode,
+  getTypeFromTypeNode,
+  getTypeOfNode,
+  doesTypeMatchesSpecifier,
   createRule,
   getReturnTypesOfFunction,
   getTypeImmutabilityOfNode,
@@ -45,6 +55,7 @@ type RawEnforcement =
 
 type Option = IgnoreClassesOption & {
   enforcement: RawEnforcement;
+  ignoreTypes?: TypeOrValueSpecifier[];
   ignoreInferredTypes: boolean;
   ignoreNamePattern?: string[] | string;
   ignoreTypePattern?: string[] | string;
@@ -117,6 +128,10 @@ const optionExpandedSchema: JSONSchema4 = deepmerge(ignoreClassesOptionSchema, {
   enforcement: {
     type: ["string", "number", "boolean"],
     enum: enforcementEnumOptions,
+  },
+  ignoreTypes: {
+    type: "array",
+    items: typeOrValueSpecifierSchema,
   },
   ignoreInferredTypes: {
     type: "boolean",
@@ -447,11 +462,13 @@ function getParameterTypeViolations(
   } = optionsObject;
   const {
     enforcement: rawEnforcement,
+    ignoreTypes,
     ignoreInferredTypes,
     ignoreClasses,
     ignoreNamePattern,
     ignoreTypePattern,
   } = {
+    ignoreTypes: optionsObject.ignoreTypes,
     ignoreInferredTypes: optionsObject.ignoreInferredTypes,
     ignoreClasses: optionsObject.ignoreClasses,
     ignoreNamePattern: optionsObject.ignoreNamePattern,
@@ -506,23 +523,44 @@ function getParameterTypeViolations(
 
       const actualParam = parameterProperty ? param.parameter : param;
 
+      // inferred types
+      if (ignoreInferredTypes && actualParam.typeAnnotation === undefined) {
+        return undefined;
+      }
+
+      // ignored pattern
       if (
-        // inferred types
-        (ignoreInferredTypes && actualParam.typeAnnotation === undefined) ||
-        // ignored
-        (actualParam.typeAnnotation !== undefined &&
-          shouldIgnorePattern(
-            actualParam.typeAnnotation,
-            context,
-            ignoreTypePattern
-          )) ||
-        // type guard
-        (node.returnType !== undefined &&
-          isTSTypePredicate(node.returnType.typeAnnotation) &&
-          isIdentifier(node.returnType.typeAnnotation.parameterName) &&
-          isIdentifier(actualParam) &&
-          actualParam.name ===
-            node.returnType.typeAnnotation.parameterName.name)
+        actualParam.typeAnnotation !== undefined &&
+        shouldIgnorePattern(
+          actualParam.typeAnnotation,
+          context,
+          ignoreTypePattern
+        )
+      ) {
+        return undefined;
+      }
+
+      // ignored specifiers
+      if (ignoreTypes !== undefined && ignoreTypes.length > 0) {
+        const paramType = getTypeOfNode(actualParam, context);
+
+        if (
+          paramType !== null &&
+          ignoreTypes.some((specifier) =>
+            doesTypeMatchesSpecifier(paramType, specifier, context)
+          )
+        ) {
+          return undefined;
+        }
+      }
+
+      // type guard
+      if (
+        node.returnType !== undefined &&
+        isTSTypePredicate(node.returnType.typeAnnotation) &&
+        isIdentifier(node.returnType.typeAnnotation.parameterName) &&
+        isIdentifier(actualParam) &&
+        actualParam.name === node.returnType.typeAnnotation.parameterName.name
       ) {
         return undefined;
       }

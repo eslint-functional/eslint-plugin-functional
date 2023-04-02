@@ -261,6 +261,39 @@ const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
     `,
     optionsSet: [[{ ignoreTypePattern: "^Readonly<.+>$" }]],
   },
+  // Ignore Specifiers
+  {
+    code: dedent`function foo(arg: RegExp) {}`,
+    optionsSet: [
+      [
+        {
+          parameters: {
+            enforcement: "ReadonlyDeep",
+            ignoreTypes: [{ from: "lib", name: "RegExp" }],
+          },
+        },
+      ],
+    ],
+  },
+  {
+    code: dedent`
+      function foo(arg: Bar) {}
+      type Bar = { bar: string; };
+    `,
+    optionsSet: [
+      [
+        {
+          parameters: {
+            enforcement: "ReadonlyDeep",
+            ignoreTypes: [
+              { from: "lib", name: "RegExp" },
+              { from: "file", name: "Bar" },
+            ],
+          },
+        },
+      ],
+    ],
+  },
 ];
 
 export default tests;
