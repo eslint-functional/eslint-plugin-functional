@@ -47,7 +47,7 @@ specifiers:
   eslint-plugin-eslint-comments: 3.2.0
   eslint-plugin-eslint-plugin: 5.0.8
   eslint-plugin-import: 2.27.5
-  eslint-plugin-jsdoc: 40.1.0
+  eslint-plugin-jsdoc: 40.1.2
   eslint-plugin-markdown: 3.0.0
   eslint-plugin-node: 11.1.0
   eslint-plugin-optimize-regex: 1.2.1
@@ -95,7 +95,7 @@ devDependencies:
   '@cspell/dict-cryptocurrencies': 3.0.1
   '@google/semantic-release-replace-plugin': 1.2.0
   '@istanbuljs/nyc-config-typescript': 1.0.2_nyc@15.1.0
-  '@rebeccastevens/eslint-config': 1.6.7_xewvu2luwh2gvpscyv642jwkeu
+  '@rebeccastevens/eslint-config': 1.6.7_kbvgw77ooy6kojmmtr4czvy3da
   '@rollup/plugin-commonjs': 24.0.1_rollup@3.20.2
   '@rollup/plugin-json': 6.0.0_rollup@3.20.2
   '@rollup/plugin-node-resolve': 15.0.2_rollup@3.20.2
@@ -129,7 +129,7 @@ devDependencies:
   eslint-plugin-eslint-comments: 3.2.0_eslint@8.36.0
   eslint-plugin-eslint-plugin: 5.0.8_eslint@8.36.0
   eslint-plugin-import: 2.27.5_57gkafm4v2ibxnqzb6ypeksvx4
-  eslint-plugin-jsdoc: 40.1.0_eslint@8.36.0
+  eslint-plugin-jsdoc: 40.1.2_eslint@8.36.0
   eslint-plugin-markdown: 3.0.0_eslint@8.36.0
   eslint-plugin-node: 11.1.0_eslint@8.36.0
   eslint-plugin-optimize-regex: 1.2.1
@@ -1174,7 +1174,7 @@ packages:
       config-chain: 1.1.13
     dev: true
 
-  /@rebeccastevens/eslint-config/1.6.7_xewvu2luwh2gvpscyv642jwkeu:
+  /@rebeccastevens/eslint-config/1.6.7_kbvgw77ooy6kojmmtr4czvy3da:
     resolution: {integrity: sha512-n8ypIFJpJzw9h9ogL23Ezr8pHm1mpXtxekcqY3djiPh9FR7YTgU5uphqjrQtHzvnaW6RfFjdFUaeH1XK91kVdg==}
     engines: {node: '>=18.12.1'}
     peerDependencies:
@@ -1200,7 +1200,7 @@ packages:
       eslint-import-resolver-typescript: 3.5.5_hcquemzarwhfckmlzp45r7dbdq
       eslint-plugin-eslint-comments: 3.2.0_eslint@8.36.0
       eslint-plugin-import: 2.27.5_57gkafm4v2ibxnqzb6ypeksvx4
-      eslint-plugin-jsdoc: 40.1.0_eslint@8.36.0
+      eslint-plugin-jsdoc: 40.1.2_eslint@8.36.0
       eslint-plugin-markdown: 3.0.0_eslint@8.36.0
       eslint-plugin-node: 11.1.0_eslint@8.36.0
       eslint-plugin-optimize-regex: 1.2.1
@@ -3283,8 +3283,8 @@ packages:
       - supports-color
     dev: true
 
-  /eslint-plugin-jsdoc/40.1.0_eslint@8.36.0:
-    resolution: {integrity: sha512-ANvrhiu62VlSorARM0hup60VQsS3hNyp0Ca7cnJDj8tpJzM7tNhBVqMVYXSuLzEmqrpwx6aAh+NAN2DdAGG5fQ==}
+  /eslint-plugin-jsdoc/40.1.2_eslint@8.36.0:
+    resolution: {integrity: sha512-U4Kt42OVjF0EXOWPEc8pjanT8O1ULvILwgA5k87CnhrCKG4xaJ8Sjsb6CWgDtaemOywN06u86duKU1yMaBp7IQ==}
     engines: {node: ^14 || ^16 || ^17 || ^18 || ^19}
     peerDependencies:
       eslint: ^7.0.0 || ^8.0.0
