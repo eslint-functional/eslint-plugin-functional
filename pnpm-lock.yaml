@@ -13,7 +13,7 @@ specifiers:
   '@rollup/plugin-commonjs': 24.0.1
   '@rollup/plugin-json': 6.0.0
   '@rollup/plugin-node-resolve': 15.0.2
-  '@rollup/plugin-typescript': 11.0.0
+  '@rollup/plugin-typescript': 11.1.0
   '@semantic-release/changelog': 6.0.3
   '@semantic-release/commit-analyzer': 9.0.2
   '@semantic-release/git': 10.0.1
@@ -99,7 +99,7 @@ devDependencies:
   '@rollup/plugin-commonjs': 24.0.1_rollup@3.20.2
   '@rollup/plugin-json': 6.0.0_rollup@3.20.2
   '@rollup/plugin-node-resolve': 15.0.2_rollup@3.20.2
-  '@rollup/plugin-typescript': 11.0.0_jpc74fqec5hlzgx6hn7dbz4c2y
+  '@rollup/plugin-typescript': 11.1.0_jpc74fqec5hlzgx6hn7dbz4c2y
   '@semantic-release/changelog': 6.0.3_semantic-release@21.0.1
   '@semantic-release/commit-analyzer': 9.0.2_semantic-release@21.0.1
   '@semantic-release/git': 10.0.1_semantic-release@21.0.1
@@ -1258,8 +1258,8 @@ packages:
       rollup: 3.20.2
     dev: true
 
-  /@rollup/plugin-typescript/11.0.0_jpc74fqec5hlzgx6hn7dbz4c2y:
-    resolution: {integrity: sha512-goPyCWBiimk1iJgSTgsehFD5OOFHiAknrRJjqFCudcW8JtWiBlK284Xnn4flqMqg6YAjVG/EE+3aVzrL5qNSzQ==}
+  /@rollup/plugin-typescript/11.1.0_jpc74fqec5hlzgx6hn7dbz4c2y:
+    resolution: {integrity: sha512-86flrfE+bSHB69znnTV6kVjkncs2LBMhcTCyxWgRxLyfXfQrxg4UwlAqENnjrrxnSNS/XKCDJCl8EkdFJVHOxw==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       rollup: ^2.14.0||^3.0.0
