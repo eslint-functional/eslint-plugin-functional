@@ -73,7 +73,7 @@ specifiers:
   semver: ^7.3.8
   ts-node: 10.9.1
   tsc-prog: 2.2.1
-  tsconfig-paths: 4.1.2
+  tsconfig-paths: 4.2.0
   tslib: 2.5.0
   typescript: 5.0.4
   word-wrap: 1.2.3
@@ -153,7 +153,7 @@ devDependencies:
   semantic-release: 21.0.1
   ts-node: 10.9.1_uciz3no5dm725o73i4uwoelgoi
   tsc-prog: 2.2.1_typescript@5.0.4
-  tsconfig-paths: 4.1.2
+  tsconfig-paths: 4.2.0
   tslib: 2.5.0
   typescript: 5.0.4
   word-wrap: 1.2.3
@@ -7042,8 +7042,8 @@ packages:
       strip-bom: 3.0.0
     dev: true
 
-  /tsconfig-paths/4.1.2:
-    resolution: {integrity: sha512-uhxiMgnXQp1IR622dUXI+9Ehnws7i/y6xvpZB9IbUVOPy0muvdvgXeZOn88UcGPiT98Vp3rJPTa8bFoalZ3Qhw==}
+  /tsconfig-paths/4.2.0:
+    resolution: {integrity: sha512-NoZ4roiN7LnbKn9QqE1amc9DJfzvZXxF4xDavcOWt1BPkdx+m+0gJuPM+S0vCe7zTJMYUP0R8pO2XMr+Y8oLIg==}
     engines: {node: '>=6'}
     dependencies:
       json5: 2.2.3
