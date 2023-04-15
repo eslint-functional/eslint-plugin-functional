@@ -11,6 +11,7 @@ import {
   isExpressionStatement,
   isIdentifier,
   isMemberExpression,
+  isPrivateIdentifier,
   isThisExpression,
   isTSTypeAnnotation,
   isUnaryExpression,
@@ -48,31 +49,32 @@ function getNodeIdentifierText(
     return undefined;
   }
 
-  const identifierText = isIdentifier(node)
-    ? node.name
-    : hasID(node) && isDefined(node.id)
-    ? getNodeIdentifierText(node.id, context)
-    : hasKey(node) && isDefined(node.key)
-    ? getNodeIdentifierText(node.key, context)
-    : isAssignmentExpression(node)
-    ? getNodeIdentifierText(node.left, context)
-    : isMemberExpression(node)
-    ? `${getNodeIdentifierText(node.object, context)}.${getNodeIdentifierText(
-        node.property,
-        context
-      )}`
-    : isThisExpression(node)
-    ? "this"
-    : isUnaryExpression(node)
-    ? getNodeIdentifierText(node.argument, context)
-    : isExpressionStatement(node)
-    ? context.getSourceCode().getText(node as TSESTree.Node)
-    : isTSTypeAnnotation(node)
-    ? context
-        .getSourceCode()
-        .getText(node.typeAnnotation as TSESTree.Node)
-        .replaceAll(/\s+/gmu, "")
-    : null;
+  const identifierText =
+    isIdentifier(node) || isPrivateIdentifier(node)
+      ? node.name
+      : hasID(node) && isDefined(node.id)
+      ? getNodeIdentifierText(node.id, context)
+      : hasKey(node) && isDefined(node.key)
+      ? getNodeIdentifierText(node.key, context)
+      : isAssignmentExpression(node)
+      ? getNodeIdentifierText(node.left, context)
+      : isMemberExpression(node)
+      ? `${getNodeIdentifierText(node.object, context)}.${getNodeIdentifierText(
+          node.property,
+          context
+        )}`
+      : isThisExpression(node)
+      ? "this"
+      : isUnaryExpression(node)
+      ? getNodeIdentifierText(node.argument, context)
+      : isExpressionStatement(node)
+      ? context.getSourceCode().getText(node as TSESTree.Node)
+      : isTSTypeAnnotation(node)
+      ? context
+          .getSourceCode()
+          .getText(node.typeAnnotation as TSESTree.Node)
+          .replaceAll(/\s+/gmu, "")
+      : null;
 
   if (identifierText !== null) {
     return identifierText;

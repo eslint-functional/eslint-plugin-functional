@@ -188,6 +188,12 @@ export function isObjectPattern(
   return node.type === AST_NODE_TYPES.ObjectPattern;
 }
 
+export function isPrivateIdentifier(
+  node: TSESTree.Node
+): node is TSESTree.PrivateIdentifier {
+  return node.type === AST_NODE_TYPES.PrivateIdentifier;
+}
+
 export function isProgram(node: TSESTree.Node): node is TSESTree.Program {
   return node.type === AST_NODE_TYPES.Program;
 }

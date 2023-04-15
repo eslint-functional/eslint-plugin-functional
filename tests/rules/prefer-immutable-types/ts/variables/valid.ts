@@ -233,6 +233,7 @@ const tests: ReadonlyArray<ValidTestCase> = [
       class Klass {
         mutableA: number;
         private mutableB: number;
+        #mutableC: number;
       }
     `,
     optionsSet: [[{ ignoreNamePattern: "^mutable" }]],
@@ -249,6 +250,7 @@ const tests: ReadonlyArray<ValidTestCase> = [
       class Klass {
         AMutable: number;
         private BMutable: number;
+        #CMutable: number;
       }
     `,
     optionsSet: [[{ ignoreNamePattern: "Mutable$" }]],
