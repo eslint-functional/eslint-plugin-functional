@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+## [5.0.8](https://github.com/eslint-functional/eslint-plugin-functional/compare/v5.0.7...v5.0.8) (2023-04-15)
+
+
+### Bug Fixes
+
+* **prefer-immutable-types:** support private identifier ([#634](https://github.com/eslint-functional/eslint-plugin-functional/issues/634)) ([6349a92](https://github.com/eslint-functional/eslint-plugin-functional/commit/6349a927b6e9f68ed0e2878c896f26234c0144c6))
+
 ## [5.0.7](https://github.com/eslint-functional/eslint-plugin-functional/compare/v5.0.6...v5.0.7) (2023-03-21)
 
 ## [5.0.6](https://github.com/eslint-functional/eslint-plugin-functional/compare/v5.0.5...v5.0.6) (2023-03-11)
