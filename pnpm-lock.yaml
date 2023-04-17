@@ -10,7 +10,7 @@ specifiers:
   '@google/semantic-release-replace-plugin': 1.2.0
   '@istanbuljs/nyc-config-typescript': 1.0.2
   '@rebeccastevens/eslint-config': 1.6.7
-  '@rollup/plugin-commonjs': 24.0.1
+  '@rollup/plugin-commonjs': 24.1.0
   '@rollup/plugin-json': 6.0.0
   '@rollup/plugin-node-resolve': 15.0.2
   '@rollup/plugin-typescript': 11.1.0
@@ -96,7 +96,7 @@ devDependencies:
   '@google/semantic-release-replace-plugin': 1.2.0
   '@istanbuljs/nyc-config-typescript': 1.0.2_nyc@15.1.0
   '@rebeccastevens/eslint-config': 1.6.7_qhim6l7pmgl7l27y6ybjvcdf5u
-  '@rollup/plugin-commonjs': 24.0.1_rollup@3.20.4
+  '@rollup/plugin-commonjs': 24.1.0_rollup@3.20.4
   '@rollup/plugin-json': 6.0.0_rollup@3.20.4
   '@rollup/plugin-node-resolve': 15.0.2_rollup@3.20.4
   '@rollup/plugin-typescript': 11.1.0_izi7uf24qffgyoca762tue46x4
@@ -1209,8 +1209,8 @@ packages:
       eslint-plugin-unicorn: 46.0.0_eslint@8.38.0
     dev: true
 
-  /@rollup/plugin-commonjs/24.0.1_rollup@3.20.4:
-    resolution: {integrity: sha512-15LsiWRZk4eOGqvrJyu3z3DaBu5BhXIMeWnijSRvd8irrrg9SHpQ1pH+BUK4H6Z9wL9yOxZJMTLU+Au86XHxow==}
+  /@rollup/plugin-commonjs/24.1.0_rollup@3.20.4:
+    resolution: {integrity: sha512-eSL45hjhCWI0jCCXcNtLVqM5N1JlBGvlFfY0m6oOYnLCJ6N0qEXoZql4sY2MOUArzhH4SA/qBpTxvvZp2Sc+DQ==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       rollup: ^2.68.0||^3.0.0
