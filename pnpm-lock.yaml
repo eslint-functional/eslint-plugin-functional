@@ -47,7 +47,7 @@ specifiers:
   eslint-plugin-eslint-comments: 3.2.0
   eslint-plugin-eslint-plugin: 5.0.8
   eslint-plugin-import: 2.27.5
-  eslint-plugin-jsdoc: 40.3.0
+  eslint-plugin-jsdoc: 41.1.2
   eslint-plugin-markdown: 3.0.0
   eslint-plugin-node: 11.1.0
   eslint-plugin-optimize-regex: 1.2.1
@@ -95,7 +95,7 @@ devDependencies:
   '@cspell/dict-cryptocurrencies': 3.0.1
   '@google/semantic-release-replace-plugin': 1.2.0
   '@istanbuljs/nyc-config-typescript': 1.0.2_nyc@15.1.0
-  '@rebeccastevens/eslint-config': 1.6.7_lslmydmqoukytjgnkg5t3tx3d4
+  '@rebeccastevens/eslint-config': 1.6.7_zva5uukm4xgreomymjvdjbmqpy
   '@rollup/plugin-commonjs': 24.1.0_rollup@3.20.4
   '@rollup/plugin-json': 6.0.0_rollup@3.20.4
   '@rollup/plugin-node-resolve': 15.0.2_rollup@3.20.4
@@ -129,7 +129,7 @@ devDependencies:
   eslint-plugin-eslint-comments: 3.2.0_eslint@8.38.0
   eslint-plugin-eslint-plugin: 5.0.8_eslint@8.38.0
   eslint-plugin-import: 2.27.5_zd47usm4wh46g3or3idhwsf3ym
-  eslint-plugin-jsdoc: 40.3.0_eslint@8.38.0
+  eslint-plugin-jsdoc: 41.1.2_eslint@8.38.0
   eslint-plugin-markdown: 3.0.0_eslint@8.38.0
   eslint-plugin-node: 11.1.0_eslint@8.38.0
   eslint-plugin-optimize-regex: 1.2.1
@@ -1174,7 +1174,7 @@ packages:
       config-chain: 1.1.13
     dev: true
 
-  /@rebeccastevens/eslint-config/1.6.7_lslmydmqoukytjgnkg5t3tx3d4:
+  /@rebeccastevens/eslint-config/1.6.7_zva5uukm4xgreomymjvdjbmqpy:
     resolution: {integrity: sha512-n8ypIFJpJzw9h9ogL23Ezr8pHm1mpXtxekcqY3djiPh9FR7YTgU5uphqjrQtHzvnaW6RfFjdFUaeH1XK91kVdg==}
     engines: {node: '>=18.12.1'}
     peerDependencies:
@@ -1200,7 +1200,7 @@ packages:
       eslint-import-resolver-typescript: 3.5.5_fxgwllf6ncffx65thrxnpb5tfm
       eslint-plugin-eslint-comments: 3.2.0_eslint@8.38.0
       eslint-plugin-import: 2.27.5_zd47usm4wh46g3or3idhwsf3ym
-      eslint-plugin-jsdoc: 40.3.0_eslint@8.38.0
+      eslint-plugin-jsdoc: 41.1.2_eslint@8.38.0
       eslint-plugin-markdown: 3.0.0_eslint@8.38.0
       eslint-plugin-node: 11.1.0_eslint@8.38.0
       eslint-plugin-optimize-regex: 1.2.1
@@ -1799,6 +1799,11 @@ packages:
 
   /archy/1.0.0:
     resolution: {integrity: sha512-Xg+9RwCg/0p32teKdGMPTPnVXKD0w3DfHnFTficozsAgsvq2XenPJq/MYpzzQ/v8zrOyJn6Ds39VA4JIDwFfqw==}
+    dev: true
+
+  /are-docs-informative/0.0.2:
+    resolution: {integrity: sha512-ixiS0nLNNG5jNQzgZJNoUpBKdo9yTYZMGJ+QgT2jmjR7G7+QHRCc4v6LQ3NgE7EBJq+o0ams3waJwkrlBom8Ig==}
+    engines: {node: '>=14'}
     dev: true
 
   /arg/4.1.3:
@@ -3283,13 +3288,14 @@ packages:
       - supports-color
     dev: true
 
-  /eslint-plugin-jsdoc/40.3.0_eslint@8.38.0:
-    resolution: {integrity: sha512-EhCqpzRkxoT2DUB4AnrU0ggBYvTh3bWrLZzQTupq6vSVE6XzNwJVKsOHa41GCoevnsWMBNmoDVjXWGqckjuG1g==}
+  /eslint-plugin-jsdoc/41.1.2_eslint@8.38.0:
+    resolution: {integrity: sha512-MePJXdGiPW7AG06CU5GbKzYtKpoHwTq1lKijjq+RwL/cQkZtBZ59Zbv5Ep0RVxSMnq6242249/n+w4XrTZ1Afg==}
     engines: {node: ^14 || ^16 || ^17 || ^18 || ^19}
     peerDependencies:
       eslint: ^7.0.0 || ^8.0.0
     dependencies:
       '@es-joy/jsdoccomment': 0.37.0
+      are-docs-informative: 0.0.2
       comment-parser: 1.3.1
       debug: 4.3.4
       escape-string-regexp: 4.0.0
