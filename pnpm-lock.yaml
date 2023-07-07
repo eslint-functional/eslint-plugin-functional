@@ -54,7 +54,7 @@ specifiers:
   eslint-plugin-prettier: 4.2.1
   eslint-plugin-promise: 6.1.1
   eslint-plugin-sonarjs: 0.19.0
-  eslint-plugin-unicorn: 46.0.0
+  eslint-plugin-unicorn: 47.0.0
   espree: 9.5.1
   husky: 8.0.3
   is-immutable-type: ^1.2.5
@@ -95,7 +95,7 @@ devDependencies:
   '@cspell/dict-cryptocurrencies': 3.0.1
   '@google/semantic-release-replace-plugin': 1.2.0
   '@istanbuljs/nyc-config-typescript': 1.0.2_nyc@15.1.0
-  '@rebeccastevens/eslint-config': 1.6.7_zva5uukm4xgreomymjvdjbmqpy
+  '@rebeccastevens/eslint-config': 1.6.7_iexeduassk2vfwfmvi36uhjxii
   '@rollup/plugin-commonjs': 24.1.0_rollup@3.20.4
   '@rollup/plugin-json': 6.0.0_rollup@3.20.4
   '@rollup/plugin-node-resolve': 15.0.2_rollup@3.20.4
@@ -136,7 +136,7 @@ devDependencies:
   eslint-plugin-prettier: 4.2.1_mrzcadguhkbme6yx3ehduvsjxu
   eslint-plugin-promise: 6.1.1_eslint@8.38.0
   eslint-plugin-sonarjs: 0.19.0_eslint@8.38.0
-  eslint-plugin-unicorn: 46.0.0_eslint@8.38.0
+  eslint-plugin-unicorn: 47.0.0_eslint@8.38.0
   espree: 9.5.1
   husky: 8.0.3
   json-schema: 0.4.0
@@ -839,8 +839,8 @@ packages:
       jsdoc-type-pratt-parser: 4.0.0
     dev: true
 
-  /@eslint-community/eslint-utils/4.2.0_eslint@8.38.0:
-    resolution: {integrity: sha512-gB8T4H4DEfX2IV9zGDJPOBgP1e/DbfCPDTtEqUMckpvzS1OYtva8JdFYBqMwYk7xAQ429WGF/UPqn8uQ//h2vQ==}
+  /@eslint-community/eslint-utils/4.4.0_eslint@8.38.0:
+    resolution: {integrity: sha512-1/sA4dwrzBAyeUoQ6oxahHKmrZvsnLCg4RfxW3ZFGGmQkSNQPFNLV9CUEFQP1x9EYXHTo5p6xdhZM1Ne9p/AfA==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     peerDependencies:
       eslint: ^6.0.0 || ^7.0.0 || >=8.0.0
@@ -874,6 +874,7 @@ packages:
 
   /@google/semantic-release-replace-plugin/1.2.0:
     resolution: {integrity: sha512-ucZHG4eOtWjW+mSD3GSHg/LKyqY4N5KYk/QYpWD580FDE7eii0fmns9v0jpbsDj8W+pV7QXmbSDqIpPVfBrptg==}
+    deprecated: This package has been renamed to semantic-release-replace-plugin.
     dependencies:
       jest-diff: 26.6.2
       lodash: 4.17.21
@@ -1174,7 +1175,7 @@ packages:
       config-chain: 1.1.13
     dev: true
 
-  /@rebeccastevens/eslint-config/1.6.7_zva5uukm4xgreomymjvdjbmqpy:
+  /@rebeccastevens/eslint-config/1.6.7_iexeduassk2vfwfmvi36uhjxii:
     resolution: {integrity: sha512-n8ypIFJpJzw9h9ogL23Ezr8pHm1mpXtxekcqY3djiPh9FR7YTgU5uphqjrQtHzvnaW6RfFjdFUaeH1XK91kVdg==}
     engines: {node: '>=18.12.1'}
     peerDependencies:
@@ -1206,7 +1207,7 @@ packages:
       eslint-plugin-optimize-regex: 1.2.1
       eslint-plugin-promise: 6.1.1_eslint@8.38.0
       eslint-plugin-sonarjs: 0.19.0_eslint@8.38.0
-      eslint-plugin-unicorn: 46.0.0_eslint@8.38.0
+      eslint-plugin-unicorn: 47.0.0_eslint@8.38.0
     dev: true
 
   /@rollup/plugin-commonjs/24.1.0_rollup@3.20.4:
@@ -1645,7 +1646,7 @@ packages:
     peerDependencies:
       eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
     dependencies:
-      '@eslint-community/eslint-utils': 4.2.0_eslint@8.38.0
+      '@eslint-community/eslint-utils': 4.4.0_eslint@8.38.0
       '@types/json-schema': 7.0.11
       '@types/semver': 7.3.13
       '@typescript-eslint/scope-manager': 5.59.0
@@ -3376,14 +3377,14 @@ packages:
       eslint: 8.38.0
     dev: true
 
-  /eslint-plugin-unicorn/46.0.0_eslint@8.38.0:
-    resolution: {integrity: sha512-j07WkC+PFZwk8J33LYp6JMoHa1lXc1u6R45pbSAipjpfpb7KIGr17VE2D685zCxR5VL4cjrl65kTJflziQWMDA==}
-    engines: {node: '>=14.18'}
+  /eslint-plugin-unicorn/47.0.0_eslint@8.38.0:
+    resolution: {integrity: sha512-ivB3bKk7fDIeWOUmmMm9o3Ax9zbMz1Bsza/R2qm46ufw4T6VBFBaJIR1uN3pCKSmSXm8/9Nri8V+iUut1NhQGA==}
+    engines: {node: '>=16'}
     peerDependencies:
-      eslint: '>=8.28.0'
+      eslint: '>=8.38.0'
     dependencies:
       '@babel/helper-validator-identifier': 7.19.1
-      '@eslint-community/eslint-utils': 4.2.0_eslint@8.38.0
+      '@eslint-community/eslint-utils': 4.4.0_eslint@8.38.0
       ci-info: 3.8.0
       clean-regexp: 1.0.0
       eslint: 8.38.0
@@ -3395,7 +3396,7 @@ packages:
       pluralize: 8.0.0
       read-pkg-up: 7.0.1
       regexp-tree: 0.1.24
-      regjsparser: 0.9.1
+      regjsparser: 0.10.0
       safe-regex: 2.1.1
       semver: 7.3.8
       strip-indent: 3.0.0
@@ -3451,7 +3452,7 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     hasBin: true
     dependencies:
-      '@eslint-community/eslint-utils': 4.2.0_eslint@8.38.0
+      '@eslint-community/eslint-utils': 4.4.0_eslint@8.38.0
       '@eslint-community/regexpp': 4.4.0
       '@eslint/eslintrc': 2.0.2
       '@eslint/js': 8.38.0
@@ -6276,8 +6277,8 @@ packages:
       '@pnpm/npm-conf': 2.1.0
     dev: true
 
-  /regjsparser/0.9.1:
-    resolution: {integrity: sha512-dQUtn90WanSNl+7mQKcXAgZxvUe7Z0SqXlgzv0za4LwiUhyzBC58yQO3liFoUgu8GiJVInAhJjkj1N0EtQ5nkQ==}
+  /regjsparser/0.10.0:
+    resolution: {integrity: sha512-qx+xQGZVsy55CH0a1hiVwHmqjLryfh7wQyF5HO07XJ9f7dQMY/gPQHhlyDkIzJKC+x2fUCpCcUODUUUFrm7SHA==}
     hasBin: true
     dependencies:
       jsesc: 0.5.0
