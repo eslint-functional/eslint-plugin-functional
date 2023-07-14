@@ -2,7 +2,8 @@ import path from "node:path";
 
 import { type RuleTesterConfig } from "@typescript-eslint/rule-tester";
 
-export const filename = path.join(__dirname, "file.ts");
+const fixturePath = path.join(__dirname, "../fixture");
+export const filename = path.join(fixturePath, "file.ts");
 
 const typescriptParser = require.resolve("@typescript-eslint/parser");
 const babelParser = require.resolve("@babel/eslint-parser");
@@ -13,7 +14,8 @@ export const configs = {
     parser: typescriptParser,
     parserOptions: {
       sourceType: "module",
-      project: path.join(__dirname, "./test-tsconfig.json"),
+      tsconfigRootDir: fixturePath,
+      project: "tsconfig.json",
     },
   } satisfies RuleTesterConfig,
 

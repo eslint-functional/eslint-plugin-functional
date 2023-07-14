@@ -41,6 +41,9 @@ RuleTester.it = function it(name: string, fn: () => void) {
   });
 };
 
+// eslint-disable-next-line functional/immutable-data
+RuleTester.afterAll = function afterAll() {};
+
 export function getAvaRuleTester(configName: string, config: RuleTesterConfig) {
   m_configName = configName;
   return new RuleTester(config);

@@ -95,7 +95,7 @@ function checkTypeLiteral(
                 (isPropertyDefinition(member) ||
                   isTSParameterProperty(member) ||
                   isTSPropertySignature(member)) &&
-                member.readonly === true
+                member.readonly
               ) {
                 return {
                   node: member.key,
@@ -129,7 +129,8 @@ function checkTypeLiteral(
             const wrapperStartPattern = /^Readonly\s*</gu;
             const wrapperEndPattern = /\s*>$/gu;
 
-            // const start = wrapperStartPattern.exec(text);
+            // eslint-disable-next-line functional/no-expression-statements -- Sets `wrapperStartPattern.lastIndex`.
+            wrapperStartPattern.exec(text);
             const end = wrapperEndPattern.exec(text);
 
             const startCutPoint = wrapperStartPattern.lastIndex;
@@ -153,7 +154,7 @@ function checkTypeLiteral(
                       isTSParameterProperty(member) ||
                       isTSPropertySignature(member)
                     ) ||
-                    member.readonly === true
+                    member.readonly
                   ) {
                     return undefined;
                   }
@@ -174,7 +175,7 @@ function checkTypeLiteral(
           isTSIndexSignature(member) ||
           isTSParameterProperty(member) ||
           isTSPropertySignature(member)) &&
-        member.readonly === true,
+        member.readonly,
     );
 
     if (needsWrapping) {
