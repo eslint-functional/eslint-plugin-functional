@@ -4,6 +4,96 @@ import { type rule } from "~/rules/immutable-data";
 import { type ValidTestCaseSet, type OptionsOf } from "~/tests/helpers/util";
 
 const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
+  // Allowed non-object mutation patterns.
+  {
+    code: dedent`
+      var y = x.a;
+      var z = x["a"];
+      if (x.a && y.a) {}
+      var w = ~x.a;
+      if (!x.a) {}
+    `,
+    optionsSet: [[]],
+  },
+  // Allow Object.assign() on non identifiers.
+  {
+    code: dedent`
+      var x = { msg1: "hello", obj: { a: 1, b: 2}, func: function() {} };
+      var bar = function(a, b, c) { return { a: a, b: b, c: c }; };
+
+      var a = Object.assign({}, { msg: "hello world" });
+      var b = Object.assign(bar(1, 2, 3), { d: 4 });
+      var c = Object.assign(x.func(), { d: 4 });
+    `,
+    optionsSet: [[]],
+  },
+  // IgnorePattern - objects.
+  {
+    code: dedent`
+      var mutableVar = { a: 1 };
+      delete mutableVar.a;
+    `,
+    optionsSet: [[{ ignorePattern: ["^mutable"] }]],
+  },
+  {
+    code: dedent`
+      var mutableVar = { a: 1 };
+      Object.assign(mutableVar, { b: 2 });
+    `,
+    optionsSet: [[{ ignorePattern: ["^mutable"] }]],
+  },
+  // IgnoreAccessorPattern - objects.
+  {
+    code: dedent`
+      var mutableVar = { a: 1 };
+      mutableVar.a = 0;
+      mutableVar.a++;
+    `,
+    optionsSet: [
+      [{ ignoreAccessorPattern: ["**.mutable*.a"] }],
+      [{ ignoreAccessorPattern: ["**.mutable*.*"] }],
+      [{ ignoreAccessorPattern: ["**.mutable*.*.**"] }],
+      [{ ignoreAccessorPattern: ["**.mutable*.**"] }],
+    ],
+  },
+  // Allow initialization of class members in constructor
+  {
+    code: dedent`
+      class Klass {
+        bar = 1;
+        constructor() {
+          this.baz = "hello";
+        }
+      }
+    `,
+    optionsSet: [[]],
+  },
+  // IgnoreAccessorPattern - classes.
+  {
+    code: dedent`
+      class Klass {
+        mutate() {
+          this.mutableField = 0;
+        }
+      }
+    `,
+    optionsSet: [
+      [{ ignoreAccessorPattern: ["this.*.**"] }],
+      [{ ignoreAccessorPattern: ["**.mutable*"] }],
+      [{ ignoreAccessorPattern: ["**.mutable*.**"] }],
+    ],
+  },
+  // Ignore class
+  {
+    code: dedent`
+      class Klass {
+        mutate() {
+          this.baz = "hello";
+        }
+      }
+    `,
+    optionsSet: [[{ ignoreClasses: true }], [{ ignoreClasses: "fieldsOnly" }]],
+  },
   // Allow initialization of class members in constructor
   {
     code: dedent`

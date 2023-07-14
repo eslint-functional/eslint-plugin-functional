@@ -11,6 +11,45 @@ import {
 const tests: Array<
   InvalidTestCaseSet<MessagesOf<typeof rule>, OptionsOf<typeof rule>>
 > = [
+  // {
+  //   code: "var foo = function(x) { f(x); }",
+  //   optionsSet: [[{ assumeTypes: true }]],
+  //   errors: [
+  //     {
+  //       messageId: "generic",
+  //       type: "ArrowFunctionExpression",
+  //       line: 1,
+  //       column: 13,
+  //       suggestions: [
+  //         {
+  //           output: dedent`
+  //             var foo = f;
+  //           `,
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // },
+  {
+    code: `const foo = x => f(x);`,
+    optionsSet: [[{ assumeTypes: true }]],
+    errors: [
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.ArrowFunctionExpression,
+        line: 1,
+        column: 13,
+        suggestions: [
+          {
+            messageId: "generic",
+            output: dedent`
+              const foo = f;
+            `,
+          },
+        ],
+      },
+    ],
+  },
   // FunctionDeclaration.
   {
     code: dedent`

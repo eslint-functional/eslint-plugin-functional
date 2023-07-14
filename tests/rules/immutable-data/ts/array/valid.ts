@@ -211,6 +211,22 @@ const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
       [{ ignoreAccessorPattern: "mutable*" }],
     ],
   },
+  {
+    code: dedent`
+      const x = 0;
+      x *= 1;
+      x **= 1;
+      x /= 1;
+      x %= 1;
+      x <<= 1;
+      x >>= 1;
+      x >>>= 1;
+      x &= 1;
+      x |= 1;
+      x ^= 1;
+    `,
+    optionsSet: [[]],
+  },
 ];
 
 export default tests;
