@@ -1,24 +1,28 @@
-import assert from "node:assert";
+import assert from "node:assert/strict";
 
-import type {
-  ParserServices,
-  ParserServicesWithTypeInformation,
-  TSESLint,
-  TSESTree,
+import {
+  type ParserServices,
+  type ParserServicesWithTypeInformation,
+  type TSESTree,
 } from "@typescript-eslint/utils";
 import {
   getParserServices,
   type NamedCreateRuleMeta,
   RuleCreator,
 } from "@typescript-eslint/utils/eslint-utils";
-import type { RuleModule } from "@typescript-eslint/utils/ts-eslint";
-import type { ImmutabilityOverrides } from "is-immutable-type";
+import {
+  type RuleContext,
+  type RuleModule,
+  type ReportDescriptor,
+  type RuleListener,
+} from "@typescript-eslint/utils/ts-eslint";
+import { type ImmutabilityOverrides } from "is-immutable-type";
 import { getTypeImmutability, Immutability } from "is-immutable-type";
-import type { Node as TSNode, Type, TypeNode } from "typescript";
+import { type Node as TSNode, type Type, type TypeNode } from "typescript";
 
 import ts from "~/conditional-imports/typescript";
 import { getImmutabilityOverrides } from "~/settings";
-import type { ESFunction } from "~/utils/node-types";
+import { type ESFunction } from "~/utils/node-types";
 
 // eslint-disable-next-line @typescript-eslint/naming-convention -- This is a special var.
 const __VERSION__ = "0.0.0-development";
@@ -44,10 +48,10 @@ export type BaseOptions = unknown[];
  */
 export type RuleResult<
   MessageIds extends string,
-  Options extends BaseOptions
+  Options extends BaseOptions,
 > = Readonly<{
-  context: TSESLint.RuleContext<MessageIds, Options>;
-  descriptors: Array<TSESLint.ReportDescriptor<MessageIds>>;
+  context: Readonly<RuleContext<MessageIds, Options>>;
+  descriptors: ReadonlyArray<ReportDescriptor<MessageIds>>;
 }>;
 
 /**
@@ -56,12 +60,12 @@ export type RuleResult<
 type RuleFunctionsMap<
   Node extends TSESTree.Node,
   MessageIds extends string,
-  Options extends BaseOptions
+  Options extends BaseOptions,
 > = Readonly<{
-  [K in keyof TSESLint.RuleListener]: (
+  [K in keyof RuleListener]: (
     node: Node,
-    context: TSESLint.RuleContext<MessageIds, Options>,
-    options: Options
+    context: RuleContext<MessageIds, Options>,
+    options: Options,
   ) => RuleResult<MessageIds, Options>;
 }>;
 
@@ -74,17 +78,17 @@ type RuleFunctionsMap<
  */
 function checkNode<
   MessageIds extends string,
-  Context extends TSESLint.RuleContext<MessageIds, BaseOptions>,
+  Context extends RuleContext<MessageIds, BaseOptions>,
   Node extends TSESTree.Node,
-  Options extends BaseOptions
+  Options extends BaseOptions,
 >(
   check: (
     node: Node,
     context: Context,
-    options: Options
+    options: Options,
   ) => RuleResult<MessageIds, Options>,
   context: Context,
-  options: Options
+  options: Options,
 ): (node: Node) => void {
   return (node: Node) => {
     const result = check(node, context, options);
@@ -102,18 +106,18 @@ function checkNode<
  */
 export function createRule<
   MessageIds extends string,
-  Options extends BaseOptions
+  Options extends BaseOptions,
 >(
   name: string,
   meta: NamedCreateRuleMetaWithCategory<MessageIds>,
   defaultOptions: Options,
-  ruleFunctionsMap: RuleFunctionsMap<any, MessageIds, Options>
+  ruleFunctionsMap: RuleFunctionsMap<any, MessageIds, Options>,
 ): RuleModule<MessageIds, Options> {
   return createRuleUsingFunction(
     name,
     meta,
     defaultOptions,
-    () => ruleFunctionsMap
+    () => ruleFunctionsMap,
   );
 }
 
@@ -122,37 +126,38 @@ export function createRule<
  */
 export function createRuleUsingFunction<
   MessageIds extends string,
-  Options extends BaseOptions
+  Options extends BaseOptions,
 >(
   name: string,
   meta: NamedCreateRuleMetaWithCategory<MessageIds>,
   defaultOptions: Options,
   createFunction: (
-    context: TSESLint.RuleContext<MessageIds, Options>,
-    options: Options
-  ) => RuleFunctionsMap<any, MessageIds, Options>
+    context: Readonly<RuleContext<MessageIds, Options>>,
+    options: Readonly<Options>,
+  ) => RuleFunctionsMap<any, MessageIds, Options>,
 ): RuleModule<MessageIds, Options> {
-  return RuleCreator(
+  const ruleCreator = RuleCreator(
     (ruleName) =>
-      `https://github.com/eslint-functional/eslint-plugin-functional/blob/v${__VERSION__}/docs/rules/${ruleName}.md`
-  )({
+      `https://github.com/eslint-functional/eslint-plugin-functional/blob/v${__VERSION__}/docs/rules/${ruleName}.md`,
+  );
+
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion -- false positive
+  return ruleCreator<Options, MessageIds>({
     name,
     meta,
     defaultOptions,
     create: (context, options) => {
-      const ruleFunctionsMap = createFunction(
-        context as unknown as TSESLint.RuleContext<MessageIds, Options>,
-        options as unknown as Options
-      );
+      const ruleFunctionsMap = createFunction(context, options);
       return Object.fromEntries(
         Object.entries(ruleFunctionsMap).map(([nodeSelector, ruleFunction]) => [
           nodeSelector,
-          checkNode(
-            ruleFunction,
-            context as unknown as TSESLint.RuleContext<MessageIds, Options>,
-            options as unknown as Options
-          ),
-        ])
+          checkNode<
+            MessageIds,
+            Readonly<RuleContext<MessageIds, Options>>,
+            TSESTree.Node,
+            Options
+          >(ruleFunction, context, options),
+        ]),
       );
     },
   }) as RuleModule<MessageIds, Options>;
@@ -161,10 +166,15 @@ export function createRuleUsingFunction<
 /**
  * Get the type of the the given node.
  */
-export function getTypeOfNode<
-  Context extends TSESLint.RuleContext<string, BaseOptions>
->(node: TSESTree.Node, context: Context): Type | null {
-  const parserServices = getParserServices(context, true);
+export function getTypeOfNode<Context extends RuleContext<string, BaseOptions>>(
+  node: TSESTree.Node,
+  context: Context,
+  allowWithoutFullTypeInformation = false,
+): Type | null {
+  const parserServices = getParserServices(
+    context,
+    allowWithoutFullTypeInformation,
+  );
 
   if (!isParserServicesWithTypeInformation(parserServices)) {
     return null;
@@ -173,7 +183,6 @@ export function getTypeOfNode<
   const checker = parserServices.program.getTypeChecker();
   const { esTreeNodeToTSNodeMap } = parserServices;
 
-  // checker.getReturnTypeOfSignature
   const nodeType = checker.getTypeAtLocation(esTreeNodeToTSNodeMap.get(node));
   const constrained = checker.getBaseConstraintOfType(nodeType);
   return constrained ?? nodeType;
@@ -183,7 +192,7 @@ export function getTypeOfNode<
  * Get the return type of the the given function node.
  */
 export function getReturnTypesOfFunction<
-  Context extends TSESLint.RuleContext<string, BaseOptions>
+  Context extends RuleContext<string, BaseOptions>,
 >(node: TSESTree.Node, context: Context) {
   if (ts === undefined) {
     return null;
@@ -200,7 +209,7 @@ export function getReturnTypesOfFunction<
 
   const signatures = checker.getSignaturesOfType(type, ts.SignatureKind.Call);
   return signatures.map((signature) =>
-    checker.getReturnTypeOfSignature(signature)
+    checker.getReturnTypeOfSignature(signature),
   );
 }
 
@@ -208,7 +217,7 @@ export function getReturnTypesOfFunction<
  * Does the given function have overloads?
  */
 export function isImplementationOfOverload<
-  Context extends TSESLint.RuleContext<string, BaseOptions>
+  Context extends RuleContext<string, BaseOptions>,
 >(func: ESFunction, context: Context) {
   if (ts === undefined) {
     return false;
@@ -229,12 +238,12 @@ export function isImplementationOfOverload<
  * Get the type immutability of the the given node or type.
  */
 export function getTypeImmutabilityOfNode<
-  Context extends TSESLint.RuleContext<string, BaseOptions>
+  Context extends RuleContext<string, BaseOptions>,
 >(
   node: TSESTree.Node,
   context: Context,
   maxImmutability?: Immutability,
-  explicitOverrides?: ImmutabilityOverrides
+  explicitOverrides?: ImmutabilityOverrides,
 ): Immutability {
   if (ts === undefined) {
     return Immutability.Unknown;
@@ -261,7 +270,7 @@ export function getTypeImmutabilityOfNode<
     overrides,
     // Don't use the global cache in testing environments as it may cause errors when switching between different config options.
     process.env["NODE_ENV"] !== "test",
-    maxImmutability
+    maxImmutability,
   );
 }
 
@@ -269,12 +278,12 @@ export function getTypeImmutabilityOfNode<
  * Get the type immutability of the the given type.
  */
 export function getTypeImmutabilityOfType<
-  Context extends TSESLint.RuleContext<string, BaseOptions>
+  Context extends RuleContext<string, BaseOptions>,
 >(
   typeOrTypeNode: Type | TypeNode,
   context: Context,
   maxImmutability?: Immutability,
-  explicitOverrides?: ImmutabilityOverrides
+  explicitOverrides?: ImmutabilityOverrides,
 ): Immutability {
   const parserServices = getParserServices(context, true);
   const overrides =
@@ -290,7 +299,7 @@ export function getTypeImmutabilityOfType<
     overrides,
     // Don't use the global cache in testing environments as it may cause errors when switching between different config options.
     process.env["NODE_ENV"] !== "test",
-    maxImmutability
+    maxImmutability,
   );
 }
 
@@ -298,7 +307,7 @@ export function getTypeImmutabilityOfType<
  * Get the es tree node from the given ts node.
  */
 export function getESTreeNode<
-  Context extends TSESLint.RuleContext<string, BaseOptions>
+  Context extends Readonly<RuleContext<string, BaseOptions>>,
 >(node: TSNode, context: Context): TSESTree.Node | null {
   const parserServices = getParserServices(context, true);
   return parserServices.tsNodeToESTreeNodeMap.get(node);
@@ -307,8 +316,8 @@ export function getESTreeNode<
 /**
  * Does the given parser services have type information.
  */
-function isParserServicesWithTypeInformation(
-  parserServices: ParserServices
+export function isParserServicesWithTypeInformation(
+  parserServices: ParserServices,
 ): parserServices is ParserServicesWithTypeInformation {
   return "getTypeAtLocation" in parserServices;
 }

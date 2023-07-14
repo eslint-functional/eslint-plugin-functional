@@ -1,15 +1,16 @@
-import type { SharedConfigurationSettings } from "@typescript-eslint/utils";
-import type { ImmutabilityOverrides } from "is-immutable-type";
+import { type SharedConfigurationSettings } from "@typescript-eslint/utils";
+import {
+  type ImmutabilityOverrides,
+  type TypeSpecifier,
+} from "is-immutable-type";
 import {
   Immutability,
   getDefaultOverrides as getDefaultImmutabilityOverrides,
 } from "is-immutable-type";
-import type { JSONSchema4 } from "json-schema";
 
 declare module "@typescript-eslint/utils" {
   type OverridesSetting = {
-    name?: string;
-    pattern?: string;
+    type: TypeSpecifier;
     to: Immutability | keyof typeof Immutability;
     from?: Immutability | keyof typeof Immutability;
   };
@@ -58,7 +59,7 @@ export function getImmutabilityOverrides({
  * Get all the overrides and upgrade them.
  */
 function loadImmutabilityOverrides(
-  immutabilitySettings: SharedConfigurationSettings["immutability"]
+  immutabilitySettings: SharedConfigurationSettings["immutability"],
 ): ImmutabilityOverrides | undefined {
   const overridesSetting = immutabilitySettings?.overrides;
 
@@ -71,10 +72,9 @@ function loadImmutabilityOverrides(
     : overridesSetting.values ?? [];
 
   const upgraded = raw.map(
-    ({ name, pattern, to, from }) =>
+    ({ type, to, from }) =>
       ({
-        name,
-        pattern: pattern === undefined ? pattern : new RegExp(pattern, "u"),
+        type,
         to: typeof to === "string" ? Immutability[to] : to,
         from:
           from === undefined
@@ -82,7 +82,7 @@ function loadImmutabilityOverrides(
             : typeof from === "string"
             ? Immutability[from]
             : from,
-      } as ImmutabilityOverrides[number])
+      }) as ImmutabilityOverrides[number],
   );
 
   const keepDefault =
@@ -92,120 +92,3 @@ function loadImmutabilityOverrides(
     ? [...getDefaultImmutabilityOverrides(), ...upgraded]
     : upgraded;
 }
-
-/**
- * The schema for the immutability configuration settings.
- */
-export const sharedConfigurationSettingsSchema: JSONSchema4 = [
-  {
-    type: "object",
-    properties: {
-      type: "object",
-      immutability: {
-        properties: {
-          overrides: {
-            oneOf: [
-              {
-                type: "object",
-                properties: {
-                  keepDefault: {
-                    type: "boolean",
-                  },
-                  values: {
-                    type: "array",
-                    items: {
-                      oneOf: [
-                        {
-                          type: "object",
-                          properties: {
-                            name: {
-                              type: "string",
-                            },
-                            to: {
-                              type: ["string", "number"],
-                              enum: Object.values(Immutability),
-                            },
-                            from: {
-                              type: ["string", "number"],
-                              enum: Object.values(Immutability),
-                            },
-                          },
-                          required: ["name", "to"],
-                          additionalProperties: false,
-                        },
-                        {
-                          type: "object",
-                          properties: {
-                            pattern: {
-                              type: "string",
-                            },
-                            to: {
-                              type: ["string", "number"],
-                              enum: Object.values(Immutability),
-                            },
-                            from: {
-                              type: ["string", "number"],
-                              enum: Object.values(Immutability),
-                            },
-                          },
-                          required: ["pattern", "to"],
-                          additionalProperties: false,
-                        },
-                      ],
-                    },
-                  },
-                },
-                additionalProperties: false,
-              },
-              {
-                type: "array",
-                items: {
-                  oneOf: [
-                    {
-                      type: "object",
-                      properties: {
-                        name: {
-                          type: "string",
-                        },
-                        to: {
-                          type: ["string", "number"],
-                          enum: Object.values(Immutability),
-                        },
-                        from: {
-                          type: ["string", "number"],
-                          enum: Object.values(Immutability),
-                        },
-                      },
-                      required: ["name", "to"],
-                      additionalProperties: false,
-                    },
-                    {
-                      type: "object",
-                      properties: {
-                        pattern: {
-                          type: "string",
-                        },
-                        to: {
-                          type: ["string", "number"],
-                          enum: Object.values(Immutability),
-                        },
-                        from: {
-                          type: ["string", "number"],
-                          enum: Object.values(Immutability),
-                        },
-                      },
-                      required: ["pattern", "to"],
-                      additionalProperties: false,
-                    },
-                  ],
-                },
-              },
-            ],
-          },
-        },
-      },
-      additionalProperties: false,
-    },
-    additionalProperties: true,
-  },
-];

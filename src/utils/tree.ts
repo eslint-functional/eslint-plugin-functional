@@ -1,4 +1,4 @@
-import type { TSESTree } from "@typescript-eslint/utils";
+import { type TSESTree } from "@typescript-eslint/utils";
 
 import {
   isBlockStatement,
@@ -27,7 +27,7 @@ import {
 function getAncestorOfType<T extends TSESTree.Node>(
   checker: (node: TSESTree.Node, child: TSESTree.Node | null) => node is T,
   node: TSESTree.Node,
-  child: TSESTree.Node | null = null
+  child: TSESTree.Node | null = null,
 ): T | null {
   return checker(node, child)
     ? node
@@ -44,17 +44,17 @@ function getAncestorOfType<T extends TSESTree.Node>(
  */
 export function isInFunctionBody(
   node: TSESTree.Node,
-  async?: boolean
+  async?: boolean,
 ): boolean {
   const functionNode = getAncestorOfType(
     (
       n,
-      c
+      c,
     ): n is
       | TSESTree.ArrowFunctionExpression
       | TSESTree.FunctionDeclaration
       | TSESTree.FunctionExpression => isFunctionLike(n) && n.body === c,
-    node
+    node,
   );
 
   return (
@@ -77,7 +77,7 @@ export function isInForLoopInitializer(node: TSESTree.Node): boolean {
   return (
     getAncestorOfType(
       (n, c): n is TSESTree.ForStatement => isForStatement(n) && n.init === c,
-      node
+      node,
     ) !== null
   );
 }
@@ -93,7 +93,7 @@ export function isInReadonly(node: TSESTree.Node): boolean {
  * Test if the given node is shallowly inside a `Readonly<{...}>`.
  */
 export function getReadonly(
-  node: TSESTree.Node
+  node: TSESTree.Node,
 ): TSESTree.TSTypeReference | TSESTree.TSInterfaceHeritage | null {
   // For nested cases, we shouldn't look for any parent, but the immediate parent.
   if (
@@ -146,7 +146,7 @@ export function isInReturnType(node: TSESTree.Node): boolean {
         isDefined(n.parent) &&
         isFunctionLike(n.parent) &&
         n.parent.returnType === n,
-      node
+      node,
     ) !== null
   );
 }
@@ -211,7 +211,7 @@ export function isArgument(node: TSESTree.Node): boolean {
  * Get the key the given node is assigned to in its parent ObjectExpression.
  */
 export function getKeyOfValueInObjectExpression(
-  node: TSESTree.Node
+  node: TSESTree.Node,
 ): string | null {
   if (!isDefined(node.parent)) {
     return null;
@@ -223,7 +223,7 @@ export function getKeyOfValueInObjectExpression(
   }
 
   const objectExpressionProps = objectExpression.properties.filter(
-    (prop) => isProperty(prop) && prop.value === node
+    (prop) => isProperty(prop) && prop.value === node,
   );
   if (objectExpressionProps.length !== 1) {
     return null;

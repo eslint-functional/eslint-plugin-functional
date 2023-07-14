@@ -1,7 +1,8 @@
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import { type TSESTree } from "@typescript-eslint/utils";
 import { AST_NODE_TYPES } from "@typescript-eslint/utils";
+import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
-import type { BaseOptions } from "~/utils/rule";
+import { type BaseOptions } from "~/utils/rule";
 import { getKeyOfValueInObjectExpression } from "~/utils/tree";
 import {
   hasID,
@@ -29,7 +30,7 @@ export function isExpected<T>(expected: T): (actual: T) => boolean {
  * Does the given ExpressionStatement specify directive prologues.
  */
 export function isDirectivePrologue(
-  node: TSESTree.ExpressionStatement
+  node: TSESTree.ExpressionStatement,
 ): boolean {
   return (
     node.expression.type === AST_NODE_TYPES.Literal &&
@@ -43,7 +44,7 @@ export function isDirectivePrologue(
  */
 function getNodeIdentifierText(
   node: TSESTree.Node | null | undefined,
-  context: TSESLint.RuleContext<string, BaseOptions>
+  context: Readonly<RuleContext<string, BaseOptions>>,
 ): string | undefined {
   if (!isDefined(node)) {
     return undefined;
@@ -61,7 +62,7 @@ function getNodeIdentifierText(
       : isMemberExpression(node)
       ? `${getNodeIdentifierText(node.object, context)}.${getNodeIdentifierText(
           node.property,
-          context
+          context,
         )}`
       : isThisExpression(node)
       ? "this"
@@ -93,12 +94,12 @@ function getNodeIdentifierText(
  */
 export function getNodeIdentifierTexts(
   node: TSESTree.Node,
-  context: TSESLint.RuleContext<string, BaseOptions>
+  context: Readonly<RuleContext<string, BaseOptions>>,
 ): string[] {
   return (
     isVariableDeclaration(node)
       ? node.declarations.flatMap((declarator) =>
-          getNodeIdentifierText(declarator, context)
+          getNodeIdentifierText(declarator, context),
         )
       : [getNodeIdentifierText(node, context)]
   ).filter<string>((text): text is string => text !== undefined);

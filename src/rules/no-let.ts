@@ -1,14 +1,21 @@
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import { type TSESTree } from "@typescript-eslint/utils";
+import {
+  type JSONSchema4,
+  type JSONSchema4ObjectSchema,
+} from "@typescript-eslint/utils/json-schema";
+import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import { deepmerge } from "deepmerge-ts";
-import type { JSONSchema4 } from "json-schema";
 
-import type { IgnorePatternOption } from "~/options";
+import { type IgnorePatternOption } from "~/options";
 import {
   shouldIgnorePattern,
   shouldIgnoreInFunction,
   ignorePatternOptionSchema,
 } from "~/options";
-import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
+import {
+  type RuleResult,
+  type NamedCreateRuleMetaWithCategory,
+} from "~/utils/rule";
 import { createRule } from "~/utils/rule";
 import { isInForLoopInitializer } from "~/utils/tree";
 
@@ -24,13 +31,13 @@ type Options = [
   IgnorePatternOption & {
     allowInForLoopInit: boolean;
     allowInFunctions: boolean;
-  }
+  },
 ];
 
 /**
  * The schema for the rule options.
  */
-const schema: JSONSchema4 = [
+const schema: JSONSchema4[] = [
   {
     type: "object",
     properties: deepmerge(ignorePatternOptionSchema, {
@@ -40,7 +47,7 @@ const schema: JSONSchema4 = [
       allowInFunctions: {
         type: "boolean",
       },
-    }),
+    } satisfies JSONSchema4ObjectSchema["properties"]),
     additionalProperties: false,
   },
 ];
@@ -80,8 +87,8 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
  */
 function checkVariableDeclaration(
   node: TSESTree.VariableDeclaration,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
   const { allowInForLoopInit, ignorePattern, allowInFunctions } = optionsObject;
@@ -111,5 +118,5 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   defaultOptions,
   {
     VariableDeclaration: checkVariableDeclaration,
-  }
+  },
 );

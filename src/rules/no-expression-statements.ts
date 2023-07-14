@@ -1,12 +1,19 @@
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import { type TSESTree } from "@typescript-eslint/utils";
+import {
+  type JSONSchema4,
+  type JSONSchema4ObjectSchema,
+} from "@typescript-eslint/utils/json-schema";
+import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import { deepmerge } from "deepmerge-ts";
-import type { JSONSchema4 } from "json-schema";
 
 import tsApiUtils from "~/conditional-imports/ts-api-utils";
-import type { IgnorePatternOption } from "~/options";
+import { type IgnorePatternOption } from "~/options";
 import { shouldIgnorePattern, ignorePatternOptionSchema } from "~/options";
 import { isDirectivePrologue } from "~/utils/misc";
-import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
+import {
+  type RuleResult,
+  type NamedCreateRuleMetaWithCategory,
+} from "~/utils/rule";
 import { createRule, getTypeOfNode } from "~/utils/rule";
 import { isYieldExpression } from "~/utils/type-guards";
 
@@ -21,20 +28,20 @@ export const name = "no-expression-statements" as const;
 type Options = [
   IgnorePatternOption & {
     ignoreVoid: boolean;
-  }
+  },
 ];
 
 /**
  * The schema for the rule options.
  */
-const schema: JSONSchema4 = [
+const schema: JSONSchema4[] = [
   {
     type: "object",
     properties: deepmerge(ignorePatternOptionSchema, {
       ignoreVoid: {
         type: "boolean",
       },
-    }),
+    } satisfies JSONSchema4ObjectSchema["properties"]),
     additionalProperties: false,
   },
 ];
@@ -73,8 +80,8 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
  */
 function checkExpressionStatement(
   node: TSESTree.ExpressionStatement,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
   const { ignorePattern } = optionsObject;
@@ -121,5 +128,5 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   defaultOptions,
   {
     ExpressionStatement: checkExpressionStatement,
-  }
+  },
 );

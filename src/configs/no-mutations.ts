@@ -1,4 +1,4 @@
-import type { Linter } from "@typescript-eslint/utils/ts-eslint";
+import { type Linter } from "@typescript-eslint/utils/ts-eslint";
 
 import * as immutableData from "~/rules/immutable-data";
 import * as noLet from "~/rules/no-let";

@@ -2,9 +2,8 @@ import { AssertionError } from "node:assert/strict";
 
 import {
   RuleTester,
-  // @ts-expect-error -- Non-public type
   type RuleTesterConfig,
-} from "@typescript-eslint/utils/eslint-utils/rule-tester";
+} from "@typescript-eslint/rule-tester";
 import test from "ava";
 
 import { isTsInstalled } from "./util";

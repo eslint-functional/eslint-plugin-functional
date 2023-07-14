@@ -2,11 +2,11 @@ import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import dedent from "dedent";
 import { Immutability } from "is-immutable-type";
 
-import type { rule } from "~/rules/type-declaration-immutability";
-import type {
-  InvalidTestCaseSet,
-  MessagesOf,
-  OptionsOf,
+import { type rule } from "~/rules/type-declaration-immutability";
+import {
+  type InvalidTestCaseSet,
+  type MessagesOf,
+  type OptionsOf,
 } from "~/tests/helpers/util";
 
 const recommended = {
@@ -443,7 +443,7 @@ const tests: Array<
             keepDefault: false,
             values: [
               {
-                name: "Set",
+                type: { from: "lib", name: "Set" },
                 to: Immutability.Immutable,
               },
             ],
@@ -456,7 +456,7 @@ const tests: Array<
             keepDefault: false,
             values: [
               {
-                name: "Set",
+                type: { from: "lib", name: "Set" },
                 to: "Immutable",
               },
             ],

@@ -1,13 +1,20 @@
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import { type TSESTree } from "@typescript-eslint/utils";
+import {
+  type JSONSchema4,
+  type JSONSchema4ObjectSchema,
+} from "@typescript-eslint/utils/json-schema";
+import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import { deepmerge } from "deepmerge-ts";
 import { Immutability } from "is-immutable-type";
-import type { JSONSchema4 } from "json-schema";
 
-import type { IgnorePatternOption } from "~/options";
+import { type IgnorePatternOption } from "~/options";
 import { shouldIgnorePattern, ignorePatternOptionSchema } from "~/options";
 import { getNodeIdentifierTexts } from "~/utils/misc";
-import type { ESTypeDeclaration } from "~/utils/node-types";
-import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
+import { type ESTypeDeclaration } from "~/utils/node-types";
+import {
+  type RuleResult,
+  type NamedCreateRuleMetaWithCategory,
+} from "~/utils/rule";
 import { getTypeImmutabilityOfNode, createRule } from "~/utils/rule";
 import { isTSInterfaceDeclaration } from "~/utils/type-guards";
 
@@ -54,7 +61,7 @@ type Options = [
       fixer?: FixerConfigRaw | FixerConfigRaw[] | false;
     }>;
     ignoreInterfaces: boolean;
-  }
+  },
 ];
 
 /**
@@ -91,7 +98,7 @@ const fixerSchema: JSONSchema4 = {
 /**
  * The schema for the rule options.
  */
-const schema: JSONSchema4 = [
+const schema: JSONSchema4[] = [
   {
     type: "object",
     properties: deepmerge(ignorePatternOptionSchema, {
@@ -111,7 +118,7 @@ const schema: JSONSchema4 = [
               enum: Object.values(Immutability).filter(
                 (i) =>
                   i !== Immutability.Unknown &&
-                  i !== Immutability[Immutability.Unknown]
+                  i !== Immutability[Immutability.Unknown],
               ),
             },
             comparator: {
@@ -127,7 +134,7 @@ const schema: JSONSchema4 = [
       ignoreInterfaces: {
         type: "boolean",
       },
-    }),
+    } satisfies JSONSchema4ObjectSchema["properties"]),
     additionalProperties: false,
   },
 ];
@@ -194,7 +201,7 @@ type Descriptor = RuleResult<
 /**
  * Get all the rules that were given and upgrade them.
  */
-function getRules(options: Options): ImmutabilityRule[] {
+function getRules(options: Readonly<Options>): ImmutabilityRule[] {
   const [optionsObject] = options;
   const { rules: rulesOptions } = optionsObject;
 
@@ -237,8 +244,8 @@ function getRules(options: Options): ImmutabilityRule[] {
  */
 function getRuleToApply(
   node: TSESTree.Node,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Readonly<Options>,
 ): ImmutabilityRule | undefined {
   const rules = getRules(options);
   if (rules.length === 0) {
@@ -252,7 +259,9 @@ function getRuleToApply(
   }
 
   return rules.find((rule) =>
-    rule.identifiers.some((pattern) => texts.some((text) => pattern.test(text)))
+    rule.identifiers.some((pattern) =>
+      texts.some((text) => pattern.test(text)),
+    ),
   );
 }
 
@@ -261,8 +270,8 @@ function getRuleToApply(
  */
 function getConfiuredFixer<T extends TSESTree.Node>(
   node: T,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  configs: FixerConfig[]
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  configs: FixerConfig[],
 ): NonNullable<Descriptor["fix"]> | null {
   const text = context.getSourceCode().getText(node);
   const config = configs.find((c) => c.pattern.test(text));
@@ -301,9 +310,9 @@ function compareImmutability(rule: ImmutabilityRule, actual: Immutability) {
  */
 function getResults(
   node: ESTypeDeclaration,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
   rule: ImmutabilityRule,
-  immutability: Immutability
+  immutability: Immutability,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const valid = compareImmutability(rule, immutability);
   if (valid) {
@@ -341,8 +350,8 @@ function getResults(
  */
 function checkTypeDeclaration(
   node: ESTypeDeclaration,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
   const { ignoreInterfaces, ignorePattern } = optionsObject;
@@ -374,7 +383,7 @@ function checkTypeDeclaration(
   const immutability = getTypeImmutabilityOfNode(
     node,
     context,
-    maxImmutability
+    maxImmutability,
   );
 
   return getResults(node, context, rule, immutability);
@@ -388,5 +397,5 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   {
     TSTypeAliasDeclaration: checkTypeDeclaration,
     TSInterfaceDeclaration: checkTypeDeclaration,
-  }
+  },
 );

@@ -1,11 +1,15 @@
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import { type TSESTree } from "@typescript-eslint/utils";
+import {
+  type JSONSchema4,
+  type JSONSchema4ObjectSchema,
+} from "@typescript-eslint/utils/json-schema";
+import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import { deepmerge } from "deepmerge-ts";
-import type { JSONSchema4 } from "json-schema";
 
-import type {
-  IgnoreAccessorPatternOption,
-  IgnorePatternOption,
-  IgnoreClassesOption,
+import {
+  type IgnoreAccessorPatternOption,
+  type IgnorePatternOption,
+  type IgnoreClassesOption,
 } from "~/options";
 import {
   shouldIgnorePattern,
@@ -16,7 +20,10 @@ import {
 } from "~/options";
 import { isExpected } from "~/utils/misc";
 import { createRule, getTypeOfNode } from "~/utils/rule";
-import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
+import {
+  type RuleResult,
+  type NamedCreateRuleMetaWithCategory,
+} from "~/utils/rule";
 import { isInConstructor } from "~/utils/tree";
 import {
   isArrayConstructorType,
@@ -48,13 +55,13 @@ type Options = [
             forArrays: boolean;
             forObjects: boolean;
           };
-    }
+    },
 ];
 
 /**
  * The schema for the rule options.
  */
-const schema: JSONSchema4 = [
+const schema: JSONSchema4[] = [
   {
     type: "object",
     properties: deepmerge(
@@ -84,7 +91,7 @@ const schema: JSONSchema4 = [
             },
           ],
         },
-      }
+      } satisfies JSONSchema4ObjectSchema["properties"],
     ),
     additionalProperties: false,
   },
@@ -182,8 +189,8 @@ const objectConstructorMutatorFunctions = new Set([
  */
 function checkAssignmentExpression(
   node: TSESTree.AssignmentExpression,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
   const { ignorePattern, ignoreAccessorPattern, ignoreClasses } = optionsObject;
@@ -212,8 +219,8 @@ function checkAssignmentExpression(
  */
 function checkUnaryExpression(
   node: TSESTree.UnaryExpression,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
   const { ignorePattern, ignoreAccessorPattern, ignoreClasses } = optionsObject;
@@ -241,8 +248,8 @@ function checkUnaryExpression(
  */
 function checkUpdateExpression(
   node: TSESTree.UpdateExpression,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
   const { ignorePattern, ignoreAccessorPattern, ignoreClasses } = optionsObject;
@@ -254,7 +261,7 @@ function checkUpdateExpression(
       node.argument,
       context,
       ignorePattern,
-      ignoreAccessorPattern
+      ignoreAccessorPattern,
     )
   ) {
     return {
@@ -278,8 +285,8 @@ function checkUpdateExpression(
  */
 function isInChainCallAndFollowsNew(
   node: TSESTree.MemberExpression,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  assumeArrayTypes: boolean
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  assumeArrayTypes: boolean,
 ): boolean {
   return (
     // Check for: [0, 1, 2]
@@ -289,23 +296,23 @@ function isInChainCallAndFollowsNew(
       isArrayConstructorType(
         getTypeOfNode(node.object.callee, context),
         assumeArrayTypes,
-        node.object.callee
+        node.object.callee,
       )) ||
     (isCallExpression(node.object) &&
       isMemberExpression(node.object.callee) &&
       isIdentifier(node.object.callee.property) &&
       // Check for: Array.from(iterable)
       ((arrayConstructorFunctions.some(
-        isExpected(node.object.callee.property.name)
+        isExpected(node.object.callee.property.name),
       ) &&
         isArrayConstructorType(
           getTypeOfNode(node.object.callee.object, context),
           assumeArrayTypes,
-          node.object.callee.object
+          node.object.callee.object,
         )) ||
         // Check for: array.slice(0)
         arrayNewObjectReturningMethods.some(
-          isExpected(node.object.callee.property.name)
+          isExpected(node.object.callee.property.name),
         )))
   );
 }
@@ -315,8 +322,8 @@ function isInChainCallAndFollowsNew(
  */
 function checkCallExpression(
   node: TSESTree.CallExpression,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
   const { ignorePattern, ignoreAccessorPattern, ignoreClasses } = optionsObject;
@@ -330,7 +337,7 @@ function checkCallExpression(
       node.callee.object,
       context,
       ignorePattern,
-      ignoreAccessorPattern
+      ignoreAccessorPattern,
     )
   ) {
     return {
@@ -352,12 +359,12 @@ function checkCallExpression(
       !isInChainCallAndFollowsNew(
         node.callee,
         context,
-        assumeTypesForArrays
+        assumeTypesForArrays,
       )) &&
     isArrayType(
       getTypeOfNode(node.callee.object, context),
       assumeTypesForArrays,
-      node.callee.object
+      node.callee.object,
     )
   ) {
     return {
@@ -381,12 +388,12 @@ function checkCallExpression(
       node.arguments[0],
       context,
       ignorePattern,
-      ignoreAccessorPattern
+      ignoreAccessorPattern,
     ) &&
     isObjectConstructorType(
       getTypeOfNode(node.callee.object, context),
       assumeTypesForObjects,
-      node.callee.object
+      node.callee.object,
     )
   ) {
     return {
@@ -411,5 +418,5 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
     UnaryExpression: checkUnaryExpression,
     UpdateExpression: checkUpdateExpression,
     CallExpression: checkCallExpression,
-  }
+  },
 );

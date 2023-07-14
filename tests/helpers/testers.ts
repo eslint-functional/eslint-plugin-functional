@@ -1,13 +1,13 @@
-import type { RuleModule } from "@typescript-eslint/utils/ts-eslint";
+import { type RuleModule } from "@typescript-eslint/utils/ts-eslint";
 
 import { getAvaRuleTester } from "./AvaRuleTester";
 import { configs } from "./configs";
 import { processInvalidTestCase, processValidTestCase } from "./util";
-import type { ValidTestCaseSet, InvalidTestCaseSet } from "./util";
+import { type ValidTestCaseSet, type InvalidTestCaseSet } from "./util";
 
 type TestFunction<
   TMessageIds extends string,
-  TOptions extends Readonly<unknown[]>
+  TOptions extends Readonly<unknown[]>,
 > = (tests: {
   valid: Array<ValidTestCaseSet<TOptions>>;
   invalid: Array<InvalidTestCaseSet<TMessageIds, TOptions>>;
@@ -15,13 +15,13 @@ type TestFunction<
 
 export function testRule<
   TMessageIds extends string,
-  TOptions extends Readonly<unknown[]>
+  TOptions extends Readonly<unknown[]>,
 >(ruleName: string, rule: RuleModule<TMessageIds, TOptions>) {
   return Object.fromEntries(
     [...Object.entries(configs)].map(
       ([configName, config]): [
         keyof typeof configs,
-        TestFunction<TMessageIds, TOptions>
+        TestFunction<TMessageIds, TOptions>,
       ] => [
         configName as keyof typeof configs,
         ({ valid, invalid }) => {
@@ -32,7 +32,7 @@ export function testRule<
             invalid: processInvalidTestCase(invalid),
           });
         },
-      ]
-    )
+      ],
+    ),
   ) as Record<keyof typeof configs, TestFunction<TMessageIds, TOptions>>;
 }

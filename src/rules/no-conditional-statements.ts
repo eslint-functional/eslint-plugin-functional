@@ -1,9 +1,13 @@
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-import type { JSONSchema4 } from "json-schema";
-import type { Type } from "typescript";
+import { type TSESTree } from "@typescript-eslint/utils";
+import { type JSONSchema4 } from "@typescript-eslint/utils/json-schema";
+import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
+import { type Type } from "typescript";
 
 import tsApiUtils from "~/conditional-imports/ts-api-utils";
-import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
+import {
+  type RuleResult,
+  type NamedCreateRuleMetaWithCategory,
+} from "~/utils/rule";
 import { createRule, getTypeOfNode } from "~/utils/rule";
 import {
   isBlockStatement,
@@ -27,13 +31,13 @@ export const name = "no-conditional-statements" as const;
 type Options = [
   {
     allowReturningBranches: boolean | "ifExhaustive";
-  }
+  },
 ];
 
 /**
  * The schema for the rule options.
  */
-const schema: JSONSchema4 = [
+const schema: JSONSchema4[] = [
   {
     type: "object",
     properties: {
@@ -94,7 +98,7 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
  * @returns A violation rule result.
  */
 function incompleteBranchViolation(
-  node: TSESTree.Node
+  node: TSESTree.Node,
 ): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
   return [{ node, messageId: "incompleteBranch" }];
 }
@@ -103,13 +107,13 @@ function incompleteBranchViolation(
  * Get a function that tests if the given statement is never returning.
  */
 function getIsNeverExpressions(
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
 ) {
   return (statement: TSESTree.Statement) => {
     if (isExpressionStatement(statement)) {
       const expressionStatementType = getTypeOfNode(
         statement.expression,
-        context
+        context,
       );
       return (
         expressionStatementType !== null &&
@@ -140,7 +144,7 @@ function isIfReturningBranch(statement: TSESTree.Statement) {
  */
 function getIfBranchViolations(
   node: TSESTree.IfStatement,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
 ): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
   const branches = [node.consequent, node.alternate];
   const violations = branches.filter<NonNullable<(typeof branches)[0]>>(
@@ -152,7 +156,7 @@ function getIfBranchViolations(
       if (isExpressionStatement(branch)) {
         const expressionStatementType = getTypeOfNode(
           branch.expression,
-          context
+          context,
         );
 
         if (
@@ -175,7 +179,7 @@ function getIfBranchViolations(
       }
 
       return true;
-    }
+    },
   );
 
   return violations.flatMap(incompleteBranchViolation);
@@ -199,7 +203,7 @@ function isSwitchReturningBranch(statement: TSESTree.Statement) {
  */
 function getSwitchViolations(
   node: TSESTree.SwitchStatement,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
 ): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
   const isNeverExpressions = getIsNeverExpressions(context);
 
@@ -241,7 +245,7 @@ function isExhaustiveIfViolation(node: TSESTree.IfStatement): boolean {
  */
 function isExhaustiveTypeSwitchViolation(
   node: TSESTree.SwitchStatement,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
 ): boolean {
   const discriminantType = getTypeOfNode(node.discriminant, context);
   if (discriminantType === null || !discriminantType.isUnion()) {
@@ -250,7 +254,7 @@ function isExhaustiveTypeSwitchViolation(
 
   const caseTypes = node.cases.reduce<ReadonlySet<Type>>(
     (types, c) => new Set([...types, getTypeOfNode(c.test!, context)!]),
-    new Set()
+    new Set(),
   );
 
   return discriminantType.types.some((unionType) => !caseTypes.has(unionType));
@@ -261,7 +265,7 @@ function isExhaustiveTypeSwitchViolation(
  */
 function isExhaustiveSwitchViolation(
   node: TSESTree.SwitchStatement,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
 ): boolean {
   return (
     // No cases defined.
@@ -276,8 +280,8 @@ function isExhaustiveSwitchViolation(
  */
 function checkIfStatement(
   node: TSESTree.IfStatement,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [{ allowReturningBranches }] = options;
 
@@ -299,8 +303,8 @@ function checkIfStatement(
  */
 function checkSwitchStatement(
   node: TSESTree.SwitchStatement,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [{ allowReturningBranches }] = options;
 
@@ -325,5 +329,5 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   {
     IfStatement: checkIfStatement,
     SwitchStatement: checkSwitchStatement,
-  }
+  },
 );

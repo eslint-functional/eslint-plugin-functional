@@ -1,4 +1,4 @@
-import type { Linter } from "@typescript-eslint/utils/ts-eslint";
+import { type Linter } from "@typescript-eslint/utils/ts-eslint";
 
 import * as noClasses from "~/rules/no-classes";
 import * as noMixedTypes from "~/rules/no-mixed-types";

@@ -1,7 +1,11 @@
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-import type { JSONSchema4 } from "json-schema";
+import { type TSESTree } from "@typescript-eslint/utils";
+import { type JSONSchema4 } from "@typescript-eslint/utils/json-schema";
+import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
-import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
+import {
+  type RuleResult,
+  type NamedCreateRuleMetaWithCategory,
+} from "~/utils/rule";
 import { createRule } from "~/utils/rule";
 
 /**
@@ -17,7 +21,7 @@ type Options = [{}];
 /**
  * The schema for the rule options.
  */
-const schema: JSONSchema4 = [];
+const schema: JSONSchema4[] = [];
 
 /**
  * The default options for the rule.
@@ -49,7 +53,7 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
  */
 function checkThisExpression(
   node: TSESTree.ThisExpression,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   // All throw statements violate this rule.
   return { context, descriptors: [{ node, messageId: "generic" }] };
@@ -62,5 +66,5 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   defaultOptions,
   {
     ThisExpression: checkThisExpression,
-  }
+  },
 );

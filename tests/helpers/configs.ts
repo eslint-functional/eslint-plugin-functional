@@ -1,6 +1,6 @@
 import path from "node:path";
 
-import type { Linter } from "@typescript-eslint/utils/ts-eslint";
+import { type RuleTesterConfig } from "@typescript-eslint/rule-tester";
 
 export const filename = path.join(__dirname, "file.ts");
 
@@ -15,7 +15,7 @@ export const configs = {
       sourceType: "module",
       project: path.join(__dirname, "./test-tsconfig.json"),
     },
-  } as Linter.Config,
+  } satisfies RuleTesterConfig,
 
   esLatest: {
     parser: babelParser,
@@ -27,7 +27,7 @@ export const configs = {
         configFile: false,
       },
     },
-  } as Linter.Config,
+  } satisfies RuleTesterConfig,
 
   es2022: {
     parser: babelParser,
@@ -39,7 +39,7 @@ export const configs = {
         configFile: false,
       },
     },
-  } as Linter.Config,
+  } satisfies RuleTesterConfig,
 
   es2021: {
     parser: babelParser,
@@ -51,7 +51,7 @@ export const configs = {
         configFile: false,
       },
     },
-  } as Linter.Config,
+  } satisfies RuleTesterConfig,
 
   es2020: {
     parser: babelParser,
@@ -63,7 +63,7 @@ export const configs = {
         configFile: false,
       },
     },
-  } as Linter.Config,
+  } satisfies RuleTesterConfig,
 
   es2019: {
     parser: babelParser,
@@ -75,7 +75,7 @@ export const configs = {
         configFile: false,
       },
     },
-  } as Linter.Config,
+  } satisfies RuleTesterConfig,
 
   es2018: {
     parser: babelParser,
@@ -87,7 +87,7 @@ export const configs = {
         configFile: false,
       },
     },
-  } as Linter.Config,
+  } satisfies RuleTesterConfig,
 
   es2017: {
     parser: babelParser,
@@ -99,7 +99,7 @@ export const configs = {
         configFile: false,
       },
     },
-  } as Linter.Config,
+  } satisfies RuleTesterConfig,
 
   es2016: {
     parser: babelParser,
@@ -111,7 +111,7 @@ export const configs = {
         configFile: false,
       },
     },
-  } as Linter.Config,
+  } satisfies RuleTesterConfig,
 
   es2015: {
     parser: babelParser,
@@ -123,19 +123,19 @@ export const configs = {
         configFile: false,
       },
     },
-  } as Linter.Config,
+  } satisfies RuleTesterConfig,
 
   es5: {
     parser: espreeParser,
     parserOptions: {
       ecmaVersion: 5,
     },
-  } as Linter.Config,
+  } satisfies RuleTesterConfig,
 
   es3: {
     parser: espreeParser,
     parserOptions: {
       ecmaVersion: 3,
     },
-  } as Linter.Config,
+  } satisfies RuleTesterConfig,
 };

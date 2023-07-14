@@ -1,13 +1,13 @@
-import type {
-  SharedConfigurationSettings,
-  TSESLint,
+import {
+  type SharedConfigurationSettings,
+  type TSESLint,
 } from "@typescript-eslint/utils";
-import type {
-  RuleModule,
-  ValidTestCase,
-  InvalidTestCase,
-  RunTests,
-  RuleListener,
+import {
+  type RuleModule,
+  type ValidTestCase,
+  type InvalidTestCase,
+  type RunTests,
+  type RuleListener,
 } from "@typescript-eslint/utils/ts-eslint";
 
 import ts from "~/conditional-imports/typescript";
@@ -18,7 +18,6 @@ type OptionsSets = {
   /**
    * The set of options this test case should pass for.
    */
-
   optionsSet: any[];
 
   /**
@@ -36,7 +35,7 @@ export type ValidTestCaseSet<TOptions extends Readonly<unknown[]>> = Omit<
 
 export type InvalidTestCaseSet<
   TMessageIds extends string,
-  TOptions extends Readonly<unknown[]>
+  TOptions extends Readonly<unknown[]>,
 > = Omit<InvalidTestCase<TMessageIds, TOptions>, "options" | "settings"> &
   OptionsSets;
 
@@ -45,9 +44,9 @@ export type InvalidTestCaseSet<
  */
 export function processInvalidTestCase<
   TMessageIds extends string,
-  TOptions extends Readonly<unknown[]>
+  TOptions extends Readonly<unknown[]>,
 >(
-  testCases: Array<InvalidTestCaseSet<TMessageIds, TOptions>>
+  testCases: Array<InvalidTestCaseSet<TMessageIds, TOptions>>,
 ): Array<InvalidTestCase<TMessageIds, TOptions>> {
   return testCases.flatMap((testCase) =>
     testCase.optionsSet.flatMap((options) => {
@@ -60,9 +59,9 @@ export function processInvalidTestCase<
           options,
           // @ts-expect-error -- upstream typing.
           settings,
-        })
+        }),
       );
-    })
+    }),
   );
 }
 
@@ -70,7 +69,7 @@ export function processInvalidTestCase<
  * Convert our test cases into ones eslint test runner is expecting.
  */
 export function processValidTestCase<TOptions extends Readonly<unknown[]>>(
-  testCases: Array<ValidTestCaseSet<TOptions>>
+  testCases: Array<ValidTestCaseSet<TOptions>>,
 ): Array<ValidTestCase<TOptions>> {
   // Ideally these two functions should be merged into 1 but I haven't been able
   // to get the typing information right - so for now they are two functions.
@@ -83,8 +82,8 @@ export function processValidTestCase<TOptions extends Readonly<unknown[]>>(
  */
 export function createDummyRule(
   create: (
-    context: TSESLint.RuleContext<"generic", any>
-  ) => TSESLint.RuleListener
+    context: TSESLint.RuleContext<"generic", any>,
+  ) => TSESLint.RuleListener,
 ): RuleModule<string, [boolean, ...unknown[]]> {
   const meta: TSESLint.RuleMetaData<"generic"> = {
     type: "suggestion",
@@ -96,7 +95,16 @@ export function createDummyRule(
       generic: "Error.",
     },
     fixable: "code",
-    schema: {},
+    schema: {
+      oneOf: [
+        {
+          type: "object",
+        },
+        {
+          type: "array",
+        },
+      ],
+    },
   };
 
   return {
@@ -110,10 +118,10 @@ export function createDummyRule(
  */
 export function addFilename<
   TMessageIds extends string,
-  TOptions extends Readonly<unknown[]>
+  TOptions extends Readonly<unknown[]>,
 >(
   filename: string,
-  tests: RunTests<TMessageIds, TOptions>
+  tests: RunTests<TMessageIds, TOptions>,
 ): RunTests<TMessageIds, TOptions> {
   const { valid, invalid } = tests;
   return {
@@ -126,7 +134,7 @@ export function addFilename<
       valid.map((test) =>
         typeof test === "string"
           ? { code: test, filename }
-          : { ...test, filename }
+          : { ...test, filename },
       ) ?? [],
   };
 }
@@ -138,12 +146,10 @@ export function isTsInstalled(): boolean {
   return ts !== undefined;
 }
 
-export type MessagesOf<
-  T extends RuleModule<string, ReadonlyArray<unknown>, RuleListener>
-> = T extends RuleModule<infer Messages, ReadonlyArray<unknown>, RuleListener>
-  ? Messages
-  : never;
+export type MessagesOf<T extends RuleModule<string, ReadonlyArray<unknown>>> =
+  T extends RuleModule<infer Messages, ReadonlyArray<unknown>>
+    ? Messages
+    : never;
 
-export type OptionsOf<
-  T extends RuleModule<string, ReadonlyArray<unknown>, RuleListener>
-> = T extends RuleModule<string, infer Options, RuleListener> ? Options : never;
+export type OptionsOf<T extends RuleModule<string, ReadonlyArray<unknown>>> =
+  T extends RuleModule<string, infer Options> ? Options : never;

@@ -1,7 +1,7 @@
 import dedent from "dedent";
 
-import type { rule } from "~/rules/prefer-readonly-type";
-import type { ValidTestCaseSet, OptionsOf } from "~/tests/helpers/util";
+import { type rule } from "~/rules/prefer-readonly-type";
+import { type ValidTestCaseSet, type OptionsOf } from "~/tests/helpers/util";
 
 const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
   // Should not fail on explicit ReadonlyArray parameter.

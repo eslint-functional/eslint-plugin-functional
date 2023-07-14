@@ -1,8 +1,8 @@
 import dedent from "dedent";
 import { Immutability } from "is-immutable-type";
 
-import type { rule } from "~/rules/type-declaration-immutability";
-import type { ValidTestCaseSet, OptionsOf } from "~/tests/helpers/util";
+import { type rule } from "~/rules/type-declaration-immutability";
+import { type ValidTestCaseSet, type OptionsOf } from "~/tests/helpers/util";
 
 const recommended = {
   rules: [
@@ -175,7 +175,7 @@ const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
         immutability: {
           overrides: [
             {
-              name: "ReadonlyDeep",
+              type: "ReadonlyDeep",
               to: Immutability.ReadonlyDeep,
             },
           ],

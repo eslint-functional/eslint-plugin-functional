@@ -16,10 +16,10 @@ import { rules } from "~/rules";
 
 const allRules = Object.values(rules);
 const allNonDeprecatedRules = allRules.filter(
-  (rule) => rule.meta === undefined || rule.meta.deprecated !== true
+  (rule) => rule.meta === undefined || rule.meta.deprecated !== true,
 );
 const allDeprecatedRules = allRules.filter(
-  (rule) => rule.meta.deprecated === true
+  (rule) => rule.meta.deprecated === true,
 );
 
 test('Config "All" - should have all the non-deprecated rules', (t) => {
@@ -29,17 +29,17 @@ test('Config "All" - should have all the non-deprecated rules', (t) => {
   t.is(
     configRules.length,
     allNonDeprecatedRules.length,
-    "should have every non-deprecated rule"
+    "should have every non-deprecated rule",
   );
 
   for (const name of configRules) {
     t.is(
       Boolean(
         rules[name.slice("functional/".length) as keyof typeof rules].meta
-          .deprecated
+          .deprecated,
       ),
       false,
-      `Rule "${name}" should not be deprecated.`
+      `Rule "${name}" should not be deprecated.`,
     );
   }
 });
@@ -51,7 +51,7 @@ test('Config "Deprecated" - should only have deprecated rules', (t) => {
   t.is(
     configRules.length,
     allDeprecatedRules.length,
-    "should have every deprecated rule"
+    "should have every deprecated rule",
   );
 
   for (const name of configRules) {
@@ -59,7 +59,7 @@ test('Config "Deprecated" - should only have deprecated rules', (t) => {
       rules[name.slice("functional/".length) as keyof typeof rules].meta
         .deprecated,
       true,
-      `Rule "${name}" should be deprecated.`
+      `Rule "${name}" should be deprecated.`,
     );
   }
 });
@@ -75,7 +75,7 @@ test('Config "Off" - should have all the rules but turned off', (t) => {
     t.is(
       severity,
       "off",
-      `Rule "${name}" should be turned off in the off config.`
+      `Rule "${name}" should be turned off in the off config.`,
     );
   }
 });
@@ -107,7 +107,7 @@ for (const [config, name] of configs.entries()) {
       t.not(
         all.rules?.[rule],
         undefined,
-        "should not have any rules that the `all` config does not have"
+        "should not have any rules that the `all` config does not have",
       );
     }
   });

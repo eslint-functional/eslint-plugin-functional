@@ -1,9 +1,12 @@
-import type { TSESLint } from "@typescript-eslint/utils";
-import type { JSONSchema4 } from "json-schema";
+import { type JSONSchema4 } from "@typescript-eslint/utils/json-schema";
+import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
 import tsApiUtils from "~/conditional-imports/ts-api-utils";
-import type { ESFunctionType } from "~/utils/node-types";
-import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
+import { type ESFunctionType } from "~/utils/node-types";
+import {
+  type RuleResult,
+  type NamedCreateRuleMetaWithCategory,
+} from "~/utils/rule";
 import { createRule, getTypeOfNode } from "~/utils/rule";
 import {
   isFunctionLike,
@@ -25,13 +28,13 @@ type Options = [
     allowNull: boolean;
     allowUndefined: boolean;
     ignoreInferredTypes: boolean;
-  }
+  },
 ];
 
 /**
  * The schema for the rule options.
  */
-const schema: JSONSchema4 = [
+const schema: JSONSchema4[] = [
   {
     type: "object",
     properties: {
@@ -85,8 +88,8 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
  */
 function checkFunction(
   node: ESFunctionType,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [{ ignoreInferredTypes, allowNull, allowUndefined }] = options;
 
@@ -142,5 +145,5 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
     TSEmptyBodyFunctionExpression: checkFunction,
     TSFunctionType: checkFunction,
     TSMethodSignature: checkFunction,
-  }
+  },
 );

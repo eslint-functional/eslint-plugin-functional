@@ -1,11 +1,11 @@
 import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import dedent from "dedent";
 
-import type { rule } from "~/rules/no-return-void";
-import type {
-  InvalidTestCaseSet,
-  MessagesOf,
-  OptionsOf,
+import { type rule } from "~/rules/no-return-void";
+import {
+  type InvalidTestCaseSet,
+  type MessagesOf,
+  type OptionsOf,
 } from "~/tests/helpers/util";
 
 const tests: Array<

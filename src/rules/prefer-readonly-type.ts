@@ -1,20 +1,21 @@
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-import type { JSONSchema4 } from "json-schema";
+import { type TSESTree } from "@typescript-eslint/utils";
+import { type JSONSchema4 } from "@typescript-eslint/utils/json-schema";
+import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
-import type {
-  IgnorePatternOption,
-  IgnoreAccessorPatternOption,
+import {
+  type IgnorePatternOption,
+  type IgnoreAccessorPatternOption,
 } from "~/options";
 import {
   shouldIgnoreInFunction,
   shouldIgnoreClasses,
   shouldIgnorePattern,
 } from "~/options";
-import type { ESArrayTupleType } from "~/utils/node-types";
-import type {
-  BaseOptions,
-  RuleResult,
-  NamedCreateRuleMetaWithCategory,
+import { type ESArrayTupleType } from "~/utils/node-types";
+import {
+  type BaseOptions,
+  type RuleResult,
+  type NamedCreateRuleMetaWithCategory,
 } from "~/utils/rule";
 import { createRule, getTypeOfNode } from "~/utils/rule";
 import { isInInterface, isInReturnType } from "~/utils/tree";
@@ -51,13 +52,13 @@ type Options = [
     ignoreClass: boolean | "fieldsOnly";
     ignoreInterface: boolean;
     ignorePattern?: string[] | string;
-  }
+  },
 ];
 
 /**
  * The schema for the rule options.
  */
-const schema: JSONSchema4 = [
+const schema: JSONSchema4[] = [
   {
     type: "object",
     properties: {
@@ -149,7 +150,7 @@ const mutableToImmutableTypes = new Map<string, string>([
 ]);
 const mutableTypeRegex = new RegExp(
   `^${[...mutableToImmutableTypes.keys()].join("|")}$`,
-  "u"
+  "u",
 );
 
 /**
@@ -157,9 +158,9 @@ const mutableTypeRegex = new RegExp(
  */
 function shouldIgnorePattern2(
   node: TSESTree.Node,
-  context: TSESLint.RuleContext<string, BaseOptions>,
+  context: Readonly<RuleContext<string, BaseOptions>>,
   ignorePattern: Partial<IgnorePatternOption>["ignorePattern"],
-  ignoreAccessorPattern?: Partial<IgnoreAccessorPatternOption>["ignoreAccessorPattern"]
+  ignoreAccessorPattern?: Partial<IgnoreAccessorPatternOption>["ignoreAccessorPattern"],
 ): boolean {
   const isTypeNode =
     isTSArrayType(node) ||
@@ -174,7 +175,7 @@ function shouldIgnorePattern2(
       node.parent,
       context,
       ignorePattern,
-      ignoreAccessorPattern
+      ignoreAccessorPattern,
     );
   }
 
@@ -182,7 +183,7 @@ function shouldIgnorePattern2(
     node,
     context,
     ignorePattern,
-    ignoreAccessorPattern
+    ignoreAccessorPattern,
   );
 }
 
@@ -191,8 +192,8 @@ function shouldIgnorePattern2(
  */
 function checkArrayOrTupleType(
   node: ESArrayTupleType,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
   const {
@@ -233,14 +234,14 @@ function checkArrayOrTupleType(
                   ? (fixer) => [
                       fixer.insertTextBefore(
                         node as TSESTree.Node,
-                        "(readonly "
+                        "(readonly ",
                       ),
                       fixer.insertTextAfter(node as TSESTree.Node, ")"),
                     ]
                   : (fixer) =>
                       fixer.insertTextBefore(
                         node as TSESTree.Node,
-                        "readonly "
+                        "readonly ",
                       ),
             },
           ]
@@ -253,8 +254,8 @@ function checkArrayOrTupleType(
  */
 function checkMappedType(
   node: TSESTree.TSMappedType,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
   const { allowLocalMutation, ignoreClass, ignoreInterface, ignorePattern } =
@@ -284,7 +285,7 @@ function checkMappedType(
               fix: (fixer) =>
                 fixer.insertTextBeforeRange(
                   [node.range[0] + 1, node.range[1]],
-                  " readonly"
+                  " readonly",
                 ),
             },
           ],
@@ -296,8 +297,8 @@ function checkMappedType(
  */
 function checkTypeReference(
   node: TSESTree.TSTypeReference,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
   const {
@@ -342,7 +343,7 @@ function checkTypeReference(
                 fix: (fixer) =>
                   fixer.replaceText(
                     node.typeName as TSESTree.Node,
-                    immutableType
+                    immutableType,
                   ),
               },
             ]
@@ -364,8 +365,8 @@ function checkProperty(
     | TSESTree.TSIndexSignature
     | TSESTree.TSParameterProperty
     | TSESTree.TSPropertySignature,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
   const {
@@ -405,12 +406,12 @@ function checkProperty(
                   ? (fixer) =>
                       fixer.insertTextBefore(
                         node.parameter as TSESTree.Node,
-                        "readonly "
+                        "readonly ",
                       )
                   : (fixer) =>
                       fixer.insertTextBefore(
                         node.key as TSESTree.Node,
-                        "readonly "
+                        "readonly ",
                       ),
             },
           ]
@@ -427,8 +428,8 @@ function checkImplicitType(
     | TSESTree.FunctionDeclaration
     | TSESTree.FunctionExpression
     | TSESTree.VariableDeclaration,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
   const {
@@ -468,7 +469,7 @@ function checkImplicitType(
                 init: param.right,
                 node: param,
               } as Declarator)
-            : undefined
+            : undefined,
         )
         .filter((param): param is Declarator => param !== undefined)
     : node.declarations.map(
@@ -477,7 +478,7 @@ function checkImplicitType(
             id: declaration.id,
             init: declaration.init,
             node: declaration,
-          } as Declarator)
+          }) as Declarator,
       );
 
   return {
@@ -496,7 +497,7 @@ function checkImplicitType(
                 fixer.insertTextAfter(declarator.id, ": readonly unknown[]"),
             },
           ]
-        : []
+        : [],
     ),
   };
 }
@@ -519,5 +520,5 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
     TSMappedType: checkMappedType,
     TSTypeReference: checkTypeReference,
     VariableDeclaration: checkImplicitType,
-  }
+  },
 );

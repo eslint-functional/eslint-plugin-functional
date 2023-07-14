@@ -1,8 +1,8 @@
-import type { rule } from "~/rules/prefer-tacit";
-import type {
-  InvalidTestCaseSet,
-  MessagesOf,
-  OptionsOf,
+import { type rule } from "~/rules/prefer-tacit";
+import {
+  type InvalidTestCaseSet,
+  type MessagesOf,
+  type OptionsOf,
 } from "~/tests/helpers/util";
 
 const tests: Array<

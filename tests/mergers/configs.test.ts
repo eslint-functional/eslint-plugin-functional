@@ -26,6 +26,6 @@ test("should replace rule config", (t) => {
   t.is(
     result.rules["plugin/rule"],
     expected.rules["plugin/rule"],
-    "rule value was not replaced"
+    "rule value was not replaced",
   );
 });

@@ -1,8 +1,15 @@
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-import type { JSONSchema4 } from "json-schema";
+import { type TSESTree } from "@typescript-eslint/utils";
+import { type JSONSchema4 } from "@typescript-eslint/utils/json-schema";
+import {
+  type ReportDescriptor,
+  type RuleContext,
+} from "@typescript-eslint/utils/ts-eslint";
 
 import { createRule } from "~/utils/rule";
-import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
+import {
+  type RuleResult,
+  type NamedCreateRuleMetaWithCategory,
+} from "~/utils/rule";
 import { getReadonly } from "~/utils/tree";
 import {
   isDefined,
@@ -26,11 +33,10 @@ type Options = ["generic" | "keyword"];
 /**
  * The schema for the rule options.
  */
-const schema: JSONSchema4 = [
+const schema: JSONSchema4[] = [
   {
     type: "string",
     enum: ["generic", "keyword"],
-    additionalProperties: false,
   },
 ];
 
@@ -64,10 +70,13 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
   schema,
 };
 
+/**
+ * Check for violations with a type literal.
+ */
 function checkTypeLiteral(
   node: TSESTree.TSTypeLiteral,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Options,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [mode] = options;
   const readonlyWrapper = getReadonly(node);
@@ -80,10 +89,8 @@ function checkTypeLiteral(
         descriptors: node.members
           .map(
             (
-              member
-            ):
-              | TSESLint.ReportDescriptor<keyof typeof errorMessages>
-              | undefined => {
+              member,
+            ): ReportDescriptor<keyof typeof errorMessages> | undefined => {
               if (
                 (isPropertyDefinition(member) ||
                   isTSParameterProperty(member) ||
@@ -96,13 +103,13 @@ function checkTypeLiteral(
                   fix: (fixer) =>
                     fixer.replaceText(
                       member,
-                      sourceCode.getText(member).replace(/readonly /u, "")
+                      sourceCode.getText(member).replace(/readonly /u, ""),
                     ),
                 };
               }
 
               return undefined;
-            }
+            },
           )
           .filter(isDefined),
       };
@@ -122,7 +129,7 @@ function checkTypeLiteral(
             const wrapperStartPattern = /^Readonly\s*</gu;
             const wrapperEndPattern = /\s*>$/gu;
 
-            const start = wrapperStartPattern.exec(text);
+            // const start = wrapperStartPattern.exec(text);
             const end = wrapperEndPattern.exec(text);
 
             const startCutPoint = wrapperStartPattern.lastIndex;
@@ -167,7 +174,7 @@ function checkTypeLiteral(
           isTSIndexSignature(member) ||
           isTSParameterProperty(member) ||
           isTSPropertySignature(member)) &&
-        member.readonly === true
+        member.readonly === true,
     );
 
     if (needsWrapping) {
@@ -183,8 +190,8 @@ function checkTypeLiteral(
               ...node.members.map((member) =>
                 fixer.replaceText(
                   member,
-                  sourceCode.getText(member).replace(/readonly /u, "")
-                )
+                  sourceCode.getText(member).replace(/readonly /u, ""),
+                ),
               ),
             ],
           },
@@ -206,5 +213,5 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   defaultOptions,
   {
     TSTypeLiteral: checkTypeLiteral,
-  }
+  },
 );

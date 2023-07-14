@@ -1,11 +1,11 @@
-import assert from "node:assert";
+import assert from "node:assert/strict";
 
-import type { ValidTestCase } from "@typescript-eslint/utils/eslint-utils";
+import { type ValidTestCase } from "@typescript-eslint/rule-tester";
 import dedent from "dedent";
 
-import type {
-  IgnoreAccessorPatternOption,
-  IgnorePatternOption,
+import {
+  type IgnoreAccessorPatternOption,
+  type IgnorePatternOption,
 } from "~/options";
 import { shouldIgnorePattern } from "~/options";
 import { getAvaRuleTester } from "~/tests/helpers/AvaRuleTester";
@@ -25,8 +25,8 @@ function createDummyAssignmentExpressionRule() {
             node,
             context,
             options.ignorePattern,
-            options.ignoreAccessorPattern
-          ) === allowed
+            options.ignoreAccessorPattern,
+          ) === allowed,
         );
       },
     };
@@ -166,7 +166,7 @@ getAvaRuleTester("esLatest", configs.esLatest).run(
   addFilename(filename, {
     valid: tests,
     invalid: [],
-  })
+  }),
 );
 
 const assignmentExpressionTests: Array<
@@ -213,7 +213,7 @@ getAvaRuleTester("esLatest", configs.esLatest).run(
   addFilename(filename, {
     valid: assignmentExpressionTests,
     invalid: [],
-  })
+  }),
 );
 
 const expressionStatementTests: Array<
@@ -246,7 +246,7 @@ getAvaRuleTester("esLatest", configs.esLatest).run(
     return {
       ExpressionStatement: (node) => {
         assert(
-          shouldIgnorePattern(node, context, options.ignorePattern) === allowed
+          shouldIgnorePattern(node, context, options.ignorePattern) === allowed,
         );
       },
     };
@@ -254,5 +254,5 @@ getAvaRuleTester("esLatest", configs.esLatest).run(
   addFilename(filename, {
     valid: expressionStatementTests,
     invalid: [],
-  })
+  }),
 );

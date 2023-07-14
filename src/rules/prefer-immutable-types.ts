@@ -1,17 +1,27 @@
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import { type TSESTree } from "@typescript-eslint/utils";
+import {
+  type JSONSchema4,
+  type JSONSchema4ObjectSchema,
+} from "@typescript-eslint/utils/json-schema";
+import {
+  type ReportFixFunction,
+  type RuleContext,
+} from "@typescript-eslint/utils/ts-eslint";
 import { deepmerge } from "deepmerge-ts";
 import { Immutability } from "is-immutable-type";
-import type { JSONSchema4 } from "json-schema";
 
-import type { IgnoreClassesOption } from "~/options";
+import { type IgnoreClassesOption } from "~/options";
 import {
   ignoreClassesOptionSchema,
   shouldIgnoreClasses,
   shouldIgnoreInFunction,
   shouldIgnorePattern,
 } from "~/options";
-import type { ESFunctionType } from "~/utils/node-types";
-import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
+import { type ESFunctionType } from "~/utils/node-types";
+import {
+  type RuleResult,
+  type NamedCreateRuleMetaWithCategory,
+} from "~/utils/rule";
 import {
   createRule,
   getReturnTypesOfFunction,
@@ -92,7 +102,7 @@ type Options = [
       | RawEnforcement;
     fixer?: FixerConfigRawMap;
     suggestions?: SuggestionConfigRawMap;
-  }
+  },
 ];
 
 /**
@@ -104,7 +114,7 @@ const enforcementEnumOptions = [
       i !== Immutability.Unknown &&
       i !== Immutability[Immutability.Unknown] &&
       i !== Immutability.Mutable &&
-      i !== Immutability[Immutability.Mutable]
+      i !== Immutability[Immutability.Mutable],
   ),
   "None",
   false,
@@ -113,27 +123,30 @@ const enforcementEnumOptions = [
 /**
  * The non-shorthand schema for each option.
  */
-const optionExpandedSchema: JSONSchema4 = deepmerge(ignoreClassesOptionSchema, {
-  enforcement: {
-    type: ["string", "number", "boolean"],
-    enum: enforcementEnumOptions,
-  },
-  ignoreInferredTypes: {
-    type: "boolean",
-  },
-  ignoreNamePattern: {
-    type: ["string", "array"],
-    items: {
-      type: "string",
+const optionExpandedSchema: JSONSchema4ObjectSchema["properties"] = deepmerge(
+  ignoreClassesOptionSchema,
+  {
+    enforcement: {
+      type: ["string", "number", "boolean"],
+      enum: enforcementEnumOptions,
     },
-  },
-  ignoreTypePattern: {
-    type: ["string", "array"],
-    items: {
-      type: "string",
+    ignoreInferredTypes: {
+      type: "boolean",
     },
-  },
-});
+    ignoreNamePattern: {
+      type: ["string", "array"],
+      items: {
+        type: "string",
+      },
+    },
+    ignoreTypePattern: {
+      type: ["string", "array"],
+      items: {
+        type: "string",
+      },
+    },
+  } satisfies JSONSchema4ObjectSchema["properties"],
+);
 
 /**
  * The schema for each option.
@@ -197,7 +210,7 @@ const suggestionsSchema: JSONSchema4 = {
 /**
  * The schema for the rule options.
  */
-const schema: JSONSchema4 = [
+const schema: JSONSchema4[] = [
   {
     type: "object",
     properties: deepmerge(optionExpandedSchema, {
@@ -310,8 +323,8 @@ type Descriptor = RuleResult<
 >["descriptors"][number];
 
 type AllFixers = {
-  fix: TSESLint.ReportFixFunction | null;
-  suggestionFixers: TSESLint.ReportFixFunction[] | null;
+  fix: ReportFixFunction | null;
+  suggestionFixers: ReportFixFunction[] | null;
 };
 
 /**
@@ -319,9 +332,9 @@ type AllFixers = {
  */
 function getAllFixers(
   node: TSESTree.Node,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
   fixerConfigs: FixerConfig[] | false,
-  suggestionsConfigs: SuggestionsConfig[] | false
+  suggestionsConfigs: SuggestionsConfig[] | false,
 ): AllFixers {
   const nodeText = context
     .getSourceCode()
@@ -347,7 +360,7 @@ function getAllFixers(
 function getConfiuredFixer(
   node: TSESTree.Node,
   text: string,
-  configs: FixerConfig[]
+  configs: FixerConfig[],
 ): NonNullable<Descriptor["fix"]> | null {
   const config = configs.find((c) => c.pattern.test(text));
   if (config === undefined) {
@@ -363,7 +376,7 @@ function getConfiuredFixer(
 function getConfiuredSuggestionFixers(
   node: TSESTree.Node,
   text: string,
-  suggestionsConfigs: SuggestionsConfig[]
+  suggestionsConfigs: SuggestionsConfig[],
 ) {
   return suggestionsConfigs
     .map((configs): NonNullable<Descriptor["fix"]> | null => {
@@ -393,7 +406,7 @@ function parseEnforcement(rawEnforcement: RawEnforcement) {
  */
 function parseFixerConfigs(
   allRawConfigs: Options[0]["fixer"],
-  enforcement: Immutability
+  enforcement: Immutability,
 ): FixerConfig[] | false {
   const key = Immutability[enforcement] as keyof NonNullable<
     typeof allRawConfigs
@@ -414,7 +427,7 @@ function parseFixerConfigs(
  */
 function parseSuggestionsConfigs(
   rawSuggestions: Options[0]["suggestions"],
-  enforcement: Immutability
+  enforcement: Immutability,
 ): SuggestionsConfig[] | false {
   const key = Immutability[enforcement] as keyof NonNullable<
     typeof rawSuggestions
@@ -427,7 +440,7 @@ function parseSuggestionsConfigs(
     rawConfigs.map((rawConfig) => ({
       ...rawConfig,
       pattern: new RegExp(rawConfig.pattern, "u"),
-    }))
+    })),
   );
 }
 
@@ -436,8 +449,8 @@ function parseSuggestionsConfigs(
  */
 function getParameterTypeViolations(
   node: ESFunctionType,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Readonly<Options>,
 ): Descriptor[] {
   const [optionsObject] = options;
   const {
@@ -464,7 +477,7 @@ function getParameterTypeViolations(
   };
 
   const enforcement = parseEnforcement(
-    rawEnforcement ?? optionsObject.enforcement
+    rawEnforcement ?? optionsObject.enforcement,
   );
   if (
     enforcement === false ||
@@ -476,7 +489,7 @@ function getParameterTypeViolations(
   const fixerConfigs = parseFixerConfigs(rawFixerConfig, enforcement);
   const suggestionsConfigs = parseSuggestionsConfigs(
     rawSuggestionsConfigs,
-    enforcement
+    enforcement,
   );
 
   return node.params
@@ -514,7 +527,7 @@ function getParameterTypeViolations(
           shouldIgnorePattern(
             actualParam.typeAnnotation,
             context,
-            ignoreTypePattern
+            ignoreTypePattern,
           )) ||
         // type guard
         (node.returnType !== undefined &&
@@ -530,7 +543,7 @@ function getParameterTypeViolations(
       const immutability = getTypeImmutabilityOfNode(
         actualParam,
         context,
-        enforcement
+        enforcement,
       );
 
       if (immutability >= enforcement) {
@@ -544,7 +557,7 @@ function getParameterTypeViolations(
               actualParam.typeAnnotation.typeAnnotation,
               context,
               fixerConfigs,
-              suggestionsConfigs
+              suggestionsConfigs,
             );
 
       const messageId = "parameter";
@@ -574,8 +587,8 @@ function getParameterTypeViolations(
  */
 function getReturnTypeViolations(
   node: ESFunctionType,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Readonly<Options>,
 ): Descriptor[] {
   const [optionsObject] = options;
   const {
@@ -598,7 +611,7 @@ function getReturnTypeViolations(
   };
 
   const enforcement = parseEnforcement(
-    rawEnforcement ?? optionsObject.enforcement
+    rawEnforcement ?? optionsObject.enforcement,
   );
 
   if (
@@ -613,7 +626,7 @@ function getReturnTypeViolations(
   const fixerConfigs = parseFixerConfigs(rawFixerConfig, enforcement);
   const suggestionsConfigs = parseSuggestionsConfigs(
     rawSuggestionsConfigs,
-    enforcement
+    enforcement,
   );
 
   if (
@@ -627,7 +640,7 @@ function getReturnTypeViolations(
     const immutability = getTypeImmutabilityOfNode(
       node.returnType.typeAnnotation,
       context,
-      enforcement
+      enforcement,
     );
 
     if (immutability >= enforcement) {
@@ -638,7 +651,7 @@ function getReturnTypeViolations(
       node.returnType.typeAnnotation,
       context,
       fixerConfigs,
-      suggestionsConfigs
+      suggestionsConfigs,
     );
 
     const messageId = "returnType";
@@ -679,7 +692,7 @@ function getReturnTypeViolations(
   const immutability = getTypeImmutabilityOfType(
     returnTypes[0]!,
     context,
-    enforcement
+    enforcement,
   );
 
   if (immutability >= enforcement) {
@@ -693,7 +706,7 @@ function getReturnTypeViolations(
           node.returnType.typeAnnotation,
           context,
           fixerConfigs,
-          suggestionsConfigs
+          suggestionsConfigs,
         );
 
   const messageId = "returnType";
@@ -723,8 +736,8 @@ function getReturnTypeViolations(
  */
 function checkFunction(
   node: ESFunctionType,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const descriptors = [
     ...getParameterTypeViolations(node, context, options),
@@ -742,8 +755,8 @@ function checkFunction(
  */
 function checkVarible(
   node: TSESTree.VariableDeclarator | TSESTree.PropertyDefinition,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
 
@@ -769,7 +782,7 @@ function checkVarible(
   };
 
   const enforcement = parseEnforcement(
-    rawEnforcement ?? optionsObject.enforcement
+    rawEnforcement ?? optionsObject.enforcement,
   );
 
   if (
@@ -826,7 +839,7 @@ function checkVarible(
     shouldIgnorePattern(
       nodeWithTypeAnnotation.typeAnnotation,
       context,
-      ignoreTypePattern
+      ignoreTypePattern,
     )
   ) {
     return {
@@ -849,7 +862,7 @@ function checkVarible(
     const immutability = getTypeImmutabilityOfNode(
       element,
       context,
-      enforcement
+      enforcement,
     );
 
     if (immutability >= enforcement) {
@@ -859,7 +872,7 @@ function checkVarible(
     const fixerConfigs = parseFixerConfigs(rawFixerConfig, enforcement);
     const suggestionsConfigs = parseSuggestionsConfigs(
       rawSuggestionsConfigs,
-      enforcement
+      enforcement,
     );
 
     const { fix, suggestionFixers } =
@@ -871,7 +884,7 @@ function checkVarible(
             element.typeAnnotation.typeAnnotation,
             context,
             fixerConfigs,
-            suggestionsConfigs
+            suggestionsConfigs,
           );
 
     return { element, immutability, fix, suggestionFixers };
@@ -922,5 +935,5 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
     TSMethodSignature: checkFunction,
     PropertyDefinition: checkVarible,
     VariableDeclarator: checkVarible,
-  }
+  },
 );
