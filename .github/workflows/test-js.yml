@@ -19,7 +19,7 @@ jobs:
         ts_version:
           - "next"
           - "latest"
-          - "4.0.2"
+          - "4.3.5"
           - "JS"
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.ts_version == 'next' }}
@@ -46,21 +46,6 @@ jobs:
       - name: Add TypeScript "${{ matrix.ts_version }}"
         if: matrix.ts_version != 'JS'
         run: pnpm add -D typescript@"${{ matrix.ts_version }}"
-
-      - name: Remove incompatible settings for ts 4.0.2
-        if: matrix.ts_version == '4.0.2'
-        run: |
-          node -e '
-            const fs = require("fs");
-            const filename = "./tsconfig.json";
-            const tsConfig = require(filename);
-            delete tsConfig.compilerOptions.exactOptionalPropertyTypes;
-            delete tsConfig.compilerOptions.noPropertyAccessFromIndexSignature;
-            delete tsConfig.compilerOptions.noUncheckedIndexedAccess;
-            const tsConfigString = JSON.stringify(tsConfig, undefined, 2);
-            fs.writeFileSync(filename, tsConfigString, { encoding: "utf8" });
-            console.log("TS Config updated successfully.");
-          '
 
       - name: Run Tests
         run: pnpm test-compiled
