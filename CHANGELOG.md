@@ -1,6 +1,33 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+# [6.0.0-next.1](https://github.com/eslint-functional/eslint-plugin-functional/compare/v5.0.8...v6.0.0-next.1) (2023-07-15)
+
+
+### Bug Fixes
+
+* further updates for v6 ([71ecdb5](https://github.com/eslint-functional/eslint-plugin-functional/commit/71ecdb50c5fe7cd392141fbd9009dc1d091368be))
+* migrate code for [@typescript-eslint](https://github.com/typescript-eslint) v6 ([5c6b1a2](https://github.com/eslint-functional/eslint-plugin-functional/commit/5c6b1a20937afd63425a65492cb05928f06d80ac))
+
+
+### Build System
+
+* increase minimum supported TypeScript version to 4.3.5 ([aefe6b2](https://github.com/eslint-functional/eslint-plugin-functional/commit/aefe6b2012440d54d006924732975e75ac903716))
+
+
+### Features
+
+* **prefer-immutable-types:** use suggestions instead of a fixer by default ([#598](https://github.com/eslint-functional/eslint-plugin-functional/issues/598)) ([3fb9028](https://github.com/eslint-functional/eslint-plugin-functional/commit/3fb902842fa256bde98c0b7fd9c360a6456fd250))
+* remove `assumeTypes` option ([6be5862](https://github.com/eslint-functional/eslint-plugin-functional/commit/6be5862a65c65b389f2cc787c93a42b10407938a))
+
+
+### BREAKING CHANGES
+
+* increase minimum supported TypeScript version to 4.3.5
+* remove `assumeTypes` option
+* **prefer-immutable-types:** The fixer config no longer inherits as many options as before; be sure to be
+explicit in your configs.
+
 ## [5.0.8](https://github.com/eslint-functional/eslint-plugin-functional/compare/v5.0.7...v5.0.8) (2023-04-15)
 
 
