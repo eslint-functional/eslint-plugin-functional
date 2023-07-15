@@ -12,7 +12,7 @@
     "prettier"
   ],
   "parserOptions": {
-    "project": ["./tsconfig.json"]
+    "project": true
   },
   "ignorePatterns": [
     "/build/",
