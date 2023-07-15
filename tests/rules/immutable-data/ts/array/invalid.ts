@@ -288,7 +288,7 @@ const tests: Array<
       y[0].z.splice(0, 1, 9);
       y[0].z.unshift(6);
     `,
-    optionsSet: [[{ assumeTypes: true }]],
+    optionsSet: [[]],
     errors: [
       {
         messageId: "array",

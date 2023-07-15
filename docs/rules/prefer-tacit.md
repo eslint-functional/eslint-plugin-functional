@@ -45,7 +45,6 @@ This rule accepts an options object of the following type:
 
 ```ts
 type Options = {
-  assumeTypes: boolean;
   ignorePattern?: string[] | string;
 };
 ```
@@ -53,26 +52,8 @@ type Options = {
 ### Default Options
 
 ```ts
-const defaults = {
-  assumeTypes: false,
-};
+const defaults = {};
 ```
-
-### `assumeTypes`
-
-The rule takes advantage of TypeScript's typing engine to check if callback wrapper is in fact safe to remove.
-
-This option will make the rule assume that the function only accepts the arguments given to it in the wrapper.
-However this may result in some false positives being picked up.
-
-<!-- eslint-disable functional/prefer-tacit -->
-
-```js
-const foo = (x) => f(x); // If `f` only accepts one parameter then this is violation of the rule.
-const bar = foo(1, 2, 3); // But if `f` accepts more than one parameter then it isn't.
-```
-
-Note: Enabling this option is the only way to get this rule to report violations in an environment without TypeScript's typing engine available (e.g. In Vanilla JS).
 
 ### `ignorePattern`
 

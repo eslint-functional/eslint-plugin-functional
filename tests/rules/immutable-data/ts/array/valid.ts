@@ -191,7 +191,7 @@ const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
       z.splice();
       z.unshift();
     `,
-    optionsSet: [[{ assumeTypes: false }]],
+    optionsSet: [[]],
   },
   {
     code: dedent`

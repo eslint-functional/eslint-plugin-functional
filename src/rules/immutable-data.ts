@@ -49,12 +49,6 @@ type Options = [
     IgnoreClassesOption &
     IgnorePatternOption & {
       ignoreImmediateMutation: boolean;
-      assumeTypes:
-        | boolean
-        | {
-            forArrays: boolean;
-            forObjects: boolean;
-          };
     },
 ];
 
@@ -72,25 +66,6 @@ const schema: JSONSchema4[] = [
         ignoreImmediateMutation: {
           type: "boolean",
         },
-        assumeTypes: {
-          oneOf: [
-            {
-              type: "boolean",
-            },
-            {
-              type: "object",
-              properties: {
-                forArrays: {
-                  type: "boolean",
-                },
-                forObjects: {
-                  type: "boolean",
-                },
-              },
-              additionalProperties: false,
-            },
-          ],
-        },
       } satisfies JSONSchema4ObjectSchema["properties"],
     ),
     additionalProperties: false,
@@ -104,10 +79,6 @@ const defaultOptions: Options = [
   {
     ignoreClasses: false,
     ignoreImmediateMutation: true,
-    assumeTypes: {
-      forArrays: true,
-      forObjects: true,
-    },
   },
 ];
 
@@ -286,18 +257,13 @@ function checkUpdateExpression(
 function isInChainCallAndFollowsNew(
   node: TSESTree.MemberExpression,
   context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-  assumeArrayTypes: boolean,
 ): boolean {
   return (
     // Check for: [0, 1, 2]
     isArrayExpression(node.object) ||
     // Check for: new Array()
     (isNewExpression(node.object) &&
-      isArrayConstructorType(
-        getTypeOfNode(node.object.callee, context),
-        assumeArrayTypes,
-        node.object.callee,
-      )) ||
+      isArrayConstructorType(getTypeOfNode(node.object.callee, context))) ||
     (isCallExpression(node.object) &&
       isMemberExpression(node.object.callee) &&
       isIdentifier(node.object.callee.property) &&
@@ -307,8 +273,6 @@ function isInChainCallAndFollowsNew(
       ) &&
         isArrayConstructorType(
           getTypeOfNode(node.object.callee.object, context),
-          assumeArrayTypes,
-          node.object.callee.object,
         )) ||
         // Check for: array.slice(0)
         arrayNewObjectReturningMethods.some(
@@ -346,36 +310,20 @@ function checkCallExpression(
     };
   }
 
-  const { assumeTypes, ignoreImmediateMutation } = optionsObject;
-
-  const assumeTypesForArrays =
-    assumeTypes === true ||
-    (assumeTypes !== false && assumeTypes.forArrays === true);
+  const { ignoreImmediateMutation } = optionsObject;
 
   // Array mutation?
   if (
     arrayMutatorMethods.has(node.callee.property.name) &&
     (!ignoreImmediateMutation ||
-      !isInChainCallAndFollowsNew(
-        node.callee,
-        context,
-        assumeTypesForArrays,
-      )) &&
-    isArrayType(
-      getTypeOfNode(node.callee.object, context),
-      assumeTypesForArrays,
-      node.callee.object,
-    )
+      !isInChainCallAndFollowsNew(node.callee, context)) &&
+    isArrayType(getTypeOfNode(node.callee.object, context))
   ) {
     return {
       context,
       descriptors: [{ node, messageId: "array" }],
     };
   }
-
-  const assumeTypesForObjects =
-    assumeTypes === true ||
-    (assumeTypes !== false && assumeTypes.forObjects === true);
 
   // Non-array object mutation (ex. Object.assign on identifier)?
   if (
@@ -390,11 +338,7 @@ function checkCallExpression(
       ignorePattern,
       ignoreAccessorPattern,
     ) &&
-    isObjectConstructorType(
-      getTypeOfNode(node.callee.object, context),
-      assumeTypesForObjects,
-      node.callee.object,
-    )
+    isObjectConstructorType(getTypeOfNode(node.callee.object, context))
   ) {
     return {
       context,

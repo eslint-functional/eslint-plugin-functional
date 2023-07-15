@@ -36,7 +36,7 @@ const config: Linter.Config = {
     [`functional/${noTryStatements.name}`]: "error",
     [`functional/${preferImmutableTypes.name}`]: "error",
     [`functional/${preferPropertySignatures.name}`]: "error",
-    [`functional/${preferTacit.name}`]: ["warn", { assumeTypes: true }],
+    [`functional/${preferTacit.name}`]: "warn",
     [`functional/${readonlyType.name}`]: "error",
     [`functional/${typeDeclarationImmutability.name}`]: "error",
   },

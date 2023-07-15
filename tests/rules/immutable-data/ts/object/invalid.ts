@@ -199,7 +199,7 @@ const tests: Array<
       Object.defineProperty(foo, "c", { value: 3, writable: false });
       Object.setPrototypeOf(foo, null);
     `,
-    optionsSet: [[{ assumeTypes: true }]],
+    optionsSet: [[]],
     errors: [
       {
         messageId: "object",

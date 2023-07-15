@@ -1,8 +1,5 @@
 import { TSESTree } from "@typescript-eslint/utils";
-import {
-  type JSONSchema4,
-  type JSONSchema4ObjectSchema,
-} from "@typescript-eslint/utils/json-schema";
+import { type JSONSchema4 } from "@typescript-eslint/utils/json-schema";
 import {
   type RuleFix,
   type RuleFixer,
@@ -10,7 +7,6 @@ import {
   type ReportDescriptor,
   type ReportSuggestionArray,
 } from "@typescript-eslint/utils/ts-eslint";
-import { deepmerge } from "deepmerge-ts";
 import * as semver from "semver";
 import { type Type } from "typescript";
 
@@ -42,11 +38,7 @@ export const name = "prefer-tacit" as const;
 /**
  * The options this rule can take.
  */
-type Options = [
-  IgnorePatternOption & {
-    assumeTypes: boolean;
-  },
-];
+type Options = [IgnorePatternOption];
 
 /**
  * The schema for the rule options.
@@ -54,11 +46,7 @@ type Options = [
 const schema: JSONSchema4[] = [
   {
     type: "object",
-    properties: deepmerge(ignorePatternOptionSchema, {
-      assumeTypes: {
-        type: "boolean",
-      },
-    } satisfies JSONSchema4ObjectSchema["properties"]),
+    properties: ignorePatternOptionSchema,
     additionalProperties: false,
   },
 ];
@@ -66,11 +54,7 @@ const schema: JSONSchema4[] = [
 /**
  * The default options for the rule.
  */
-const defaultOptions: Options = [
-  {
-    assumeTypes: false,
-  },
-];
+const defaultOptions: Options = [{}];
 
 /**
  * The possible error messages.
@@ -213,8 +197,6 @@ function getCallDescriptors(
   options: Options,
   caller: TSESTree.CallExpression,
 ): Array<ReportDescriptor<keyof typeof errorMessages>> {
-  const [{ assumeTypes }] = options;
-
   if (
     node.params.length === caller.arguments.length &&
     node.params.every((param, index) => {
@@ -227,14 +209,8 @@ function getCallDescriptors(
     })
   ) {
     const calleeType = getTypeOfNode(caller.callee, context);
-    const assumingTypes =
-      (calleeType === null || (calleeType.symbol as unknown) === undefined) &&
-      assumeTypes;
 
-    if (
-      assumingTypes ||
-      (calleeType !== null && isCallerViolation(caller, calleeType, context))
-    ) {
+    if (calleeType !== null && isCallerViolation(caller, calleeType, context)) {
       return [
         {
           node,
