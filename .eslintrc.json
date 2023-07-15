@@ -101,6 +101,8 @@
         "@typescript-eslint/no-explicit-any": "off",
         "@typescript-eslint/no-unused-expressions": "off",
         "@typescript-eslint/no-unused-vars": "off",
+        "@typescript-eslint/prefer-function-type": "off",
+        "@typescript-eslint/consistent-generic-constructors": "off",
         "import/no-unresolved": "off",
         "init-declarations": "off",
         "jsdoc/require-jsdoc": "off",

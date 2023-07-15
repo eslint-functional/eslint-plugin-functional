@@ -31,10 +31,10 @@ declare module "@typescript-eslint/utils" {
 /**
  * The settings that have been loaded - so we don't have to reload them.
  */
-const cachedSettings: WeakMap<
+const cachedSettings = new WeakMap<
   NonNullable<SharedConfigurationSettings["immutability"]>,
   ImmutabilityOverrides | undefined
-> = new WeakMap();
+>();
 
 /**
  * Get the immutability overrides defined in the settings.

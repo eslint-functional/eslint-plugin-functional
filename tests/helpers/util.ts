@@ -7,7 +7,6 @@ import {
   type ValidTestCase,
   type InvalidTestCase,
   type RunTests,
-  type RuleListener,
 } from "@typescript-eslint/utils/ts-eslint";
 
 import ts from "~/conditional-imports/typescript";

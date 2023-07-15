@@ -207,7 +207,7 @@ function checkArrayOrTupleType(
 
   if (
     shouldIgnoreClasses(node, context, ignoreClass) ||
-    (ignoreInterface === true && isInInterface(node)) ||
+    (ignoreInterface && isInInterface(node)) ||
     shouldIgnoreInFunction(node, context, allowLocalMutation) ||
     shouldIgnorePattern2(node, context, ignorePattern) ||
     ignoreCollections
@@ -263,7 +263,7 @@ function checkMappedType(
 
   if (
     shouldIgnoreClasses(node, context, ignoreClass) ||
-    (ignoreInterface === true && isInInterface(node)) ||
+    (ignoreInterface && isInInterface(node)) ||
     shouldIgnoreInFunction(node, context, allowLocalMutation) ||
     shouldIgnorePattern2(node, context, ignorePattern)
   ) {
@@ -312,7 +312,7 @@ function checkTypeReference(
 
   if (
     shouldIgnoreClasses(node, context, ignoreClass) ||
-    (ignoreInterface === true && isInInterface(node)) ||
+    (ignoreInterface && isInInterface(node)) ||
     shouldIgnoreInFunction(node, context, allowLocalMutation) ||
     shouldIgnorePattern2(node, context, ignorePattern)
   ) {
@@ -379,7 +379,7 @@ function checkProperty(
 
   if (
     shouldIgnoreClasses(node, context, ignoreClass) ||
-    (ignoreInterface === true && isInInterface(node)) ||
+    (ignoreInterface && isInInterface(node)) ||
     shouldIgnoreInFunction(node, context, allowLocalMutation) ||
     shouldIgnorePattern2(node, context, ignorePattern)
   ) {
@@ -392,8 +392,7 @@ function checkProperty(
   return {
     context,
     descriptors:
-      node.readonly !== true &&
-      (!allowMutableReturnType || !isInReturnType(node))
+      !node.readonly && (!allowMutableReturnType || !isInReturnType(node))
         ? [
             {
               node,
@@ -444,7 +443,7 @@ function checkImplicitType(
   if (
     !checkImplicit ||
     shouldIgnoreClasses(node, context, ignoreClass) ||
-    (ignoreInterface === true && isInInterface(node)) ||
+    (ignoreInterface && isInInterface(node)) ||
     shouldIgnoreInFunction(node, context, allowLocalMutation) ||
     shouldIgnorePattern2(node, context, ignorePattern)
   ) {

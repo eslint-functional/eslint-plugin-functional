@@ -173,7 +173,7 @@ export const rule = createRuleUsingFunction<
 >(name, meta, defaultOptions, (context, options) => {
   const [{ checkInterfaces, checkTypeLiterals }] = options;
 
-  return Object.fromEntries<any>(
+  return Object.fromEntries(
     (
       [
         [
@@ -186,5 +186,5 @@ export const rule = createRuleUsingFunction<
         ],
       ] as const
     ).filter(([sel, fn]) => fn !== undefined),
-  );
+  ) as Record<string, any>;
 });

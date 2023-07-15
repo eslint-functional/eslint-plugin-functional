@@ -103,7 +103,7 @@ function checkExpressionStatement(
 
   const { ignoreVoid } = optionsObject;
 
-  if (ignoreVoid === true) {
+  if (ignoreVoid) {
     const type = getTypeOfNode(node.expression, context);
 
     return {
