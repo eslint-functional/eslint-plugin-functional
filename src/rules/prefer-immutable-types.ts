@@ -499,7 +499,7 @@ function getParameterTypeViolations(
       }
 
       const parameterProperty = isTSParameterProperty(param);
-      if (parameterProperty && param.readonly !== true) {
+      if (parameterProperty && !param.readonly) {
         const messageId = "propertyModifier";
         const fix: NonNullable<Descriptor["fix"]> | null = (fixer) =>
           fixer.insertTextBefore(param.parameter, "readonly ");
@@ -799,7 +799,7 @@ function checkVarible(
 
   const propertyDefinition = isPropertyDefinition(node);
 
-  if (propertyDefinition && node.readonly !== true) {
+  if (propertyDefinition && !node.readonly) {
     const fix: NonNullable<Descriptor["fix"]> | null = (fixer) =>
       fixer.insertTextBefore(node.key, "readonly ");
 
