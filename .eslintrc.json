@@ -14,7 +14,13 @@
   "parserOptions": {
     "project": ["./tsconfig.json"]
   },
-  "ignorePatterns": ["/build/", "/coverage/", "/lib/", "/cz-adapter/**/*.js"],
+  "ignorePatterns": [
+    "/build/",
+    "/coverage/",
+    "/lib/",
+    "/tests-compiled/",
+    "/cz-adapter/**/*.js"
+  ],
   "rules": {
     "functional/prefer-immutable-types": "off",
     "@typescript-eslint/no-explicit-any": "warn",

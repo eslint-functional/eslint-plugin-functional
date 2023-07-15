@@ -2,7 +2,7 @@ import path from "node:path";
 
 import { type RuleTesterConfig } from "@typescript-eslint/rule-tester";
 
-const fixturePath = path.join(__dirname, "../fixture");
+const fixturePath = path.join(process.cwd(), "tests/fixture");
 export const filename = path.join(fixturePath, "file.ts");
 
 const typescriptParser = require.resolve("@typescript-eslint/parser");

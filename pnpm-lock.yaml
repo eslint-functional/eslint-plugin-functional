@@ -172,6 +172,9 @@ devDependencies:
   espree:
     specifier: 9.6.1
     version: 9.6.1
+  glob:
+    specifier: ^10.3.3
+    version: 10.3.3
   husky:
     specifier: 8.0.3
     version: 8.0.3
@@ -208,12 +211,6 @@ devDependencies:
   ts-node:
     specifier: 10.9.1
     version: 10.9.1(@types/node@16.18.23)(typescript@5.1.6)
-  ts-paths-esm-loader:
-    specifier: ^1.4.3
-    version: 1.4.3(ts-node@10.9.1)(tsconfig-paths@4.2.0)
-  tsc-prog:
-    specifier: 2.2.1
-    version: 2.2.1(typescript@5.1.6)
   tsconfig-paths:
     specifier: 4.2.0
     version: 4.2.0
@@ -7356,25 +7353,6 @@ packages:
       typescript: 5.1.6
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
-    dev: true
-
-  /ts-paths-esm-loader@1.4.3(ts-node@10.9.1)(tsconfig-paths@4.2.0):
-    resolution: {integrity: sha512-e3zWtkkq6Bk51LNi3v3g/b4kW0/qYwthYN//36HPFFnIi9qHFccMgwo215tCtx1niK538gO10G3Lf+j8D8DUqg==}
-    peerDependencies:
-      ts-node: ^10.4.0
-      tsconfig-paths: ^4.0.0 || ^3.12.0
-    dependencies:
-      ts-node: 10.9.1(@types/node@16.18.23)(typescript@5.1.6)
-      tsconfig-paths: 4.2.0
-    dev: true
-
-  /tsc-prog@2.2.1(typescript@5.1.6):
-    resolution: {integrity: sha512-whYQUQjB+wm9c2FoikigaBVnXesgAjIYXgHrbzlK+Etg9L657a92MSUcbi5hrD/YBaRmjuDcTIQVZmo/f74OZQ==}
-    engines: {node: '>=8.10'}
-    peerDependencies:
-      typescript: '>=3'
-    dependencies:
-      typescript: 5.1.6
     dev: true
 
   /tsconfig-paths@3.14.2:

@@ -11,14 +11,11 @@ function getBoolean(value) {
     : Boolean(asNumber);
 }
 
-const testAllFiles = getBoolean(process.env["TEST_ALL_FILES"]);
 const useCompiledTests = getBoolean(process.env["USE_COMPILED_TESTS"]);
 const onlyTestWorkFile = getBoolean(process.env["ONLY_TEST_WORK_FILE"]);
 
 const avaCommonConfig = {
-  files: testAllFiles
-    ? ["tests/rules/*.test.*"]
-    : onlyTestWorkFile
+  files: onlyTestWorkFile
     ? ["tests/rules/work.test.*"]
     : ["tests/**/!(work)*.test.*"],
   timeout: "5m",
@@ -33,6 +30,7 @@ const avaTsConfig = {
 
 const avaJsConfig = {
   ...avaCommonConfig,
+  files: avaCommonConfig.files.map((file) => `tests-compiled/${file}`),
 };
 
 export default useCompiledTests ? avaJsConfig : avaTsConfig;

@@ -1,6 +1,7 @@
 /lib/
 /build/
 /coverage/
+/tests-compiled/
 
 .nyc_output/
 
