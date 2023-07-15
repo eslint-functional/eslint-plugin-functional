@@ -446,6 +446,7 @@ const tests: Array<
       function foo(arg: ReadonlyMap<{foo: string}, {foo: string}>) {}
       function foo(arg: {foo: string}[]) {}
       function foo(arg: readonly {foo: string}[]) {}
+      type ReadonlyDeep<T> = T;
     `,
     optionsSet: [
       [
@@ -471,6 +472,7 @@ const tests: Array<
       function foo(arg: ReadonlyDeep<ReadonlyMap<{foo: string}, {foo: string}>>) {}
       function foo(arg: ReadonlyDeep<{foo: string}[]>) {}
       function foo(arg: ReadonlyDeep<readonly {foo: string}[]>) {}
+      type ReadonlyDeep<T> = T;
     `,
     errors: [
       {

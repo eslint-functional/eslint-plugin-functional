@@ -168,6 +168,7 @@ const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
   {
     code: dedent`
       type ReadonlyDeepFoo = ReadonlyDeep<{ foo: { bar: string; }; }>;
+      type ReadonlyDeep<T> = T;
     `,
     optionsSet: [[recommended]],
     settingsSet: [
