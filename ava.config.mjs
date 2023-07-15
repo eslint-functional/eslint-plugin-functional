@@ -22,7 +22,7 @@ const avaCommonConfig = {
     ? ["tests/rules/work.test.*"]
     : ["tests/**/!(work)*.test.*"],
   timeout: "5m",
-  nodeArguments: ["--no-warnings"],
+  nodeArguments: ["--no-warnings=ExperimentalWarning"],
 };
 
 const avaTsConfig = {

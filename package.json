@@ -46,7 +46,7 @@
   ],
   "scripts": {
     "build": "pnpm run build:node && pnpm run build:docs",
-    "build-tests": "rimraf build && ts-node -P tsconfig.json scripts/compile-tests.mts",
+    "build-tests": "rimraf build && node --no-warnings=ExperimentalWarning --loader=ts-paths-esm-loader/transpile-only --experimental-specifier-resolution=node scripts/compile-tests.mts",
     "build:docs": "eslint-doc-generator",
     "build:node": "rimraf lib && rollup -c rollup.config.ts --configPlugin @rollup/plugin-typescript",
     "cz": "git-cz",
@@ -140,6 +140,7 @@
     "rollup-plugin-auto-external": "2.0.0",
     "semantic-release": "21.0.7",
     "ts-node": "10.9.1",
+    "ts-paths-esm-loader": "^1.4.3",
     "tsc-prog": "2.2.1",
     "tsconfig-paths": "4.2.0",
     "tslib": "2.6.0",
