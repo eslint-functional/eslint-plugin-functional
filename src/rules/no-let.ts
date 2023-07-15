@@ -6,18 +6,18 @@ import {
 import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import { deepmerge } from "deepmerge-ts";
 
-import { type IgnorePatternOption } from "~/options";
+import { type IgnorePatternOption } from "#eslint-plugin-functional/options";
 import {
   shouldIgnorePattern,
   shouldIgnoreInFunction,
   ignorePatternOptionSchema,
-} from "~/options";
+} from "#eslint-plugin-functional/options";
 import {
   type RuleResult,
   type NamedCreateRuleMetaWithCategory,
-} from "~/utils/rule";
-import { createRule } from "~/utils/rule";
-import { isInForLoopInitializer } from "~/utils/tree";
+} from "#eslint-plugin-functional/utils/rule";
+import { createRule } from "#eslint-plugin-functional/utils/rule";
+import { isInForLoopInitializer } from "#eslint-plugin-functional/utils/tree";
 
 /**
  * The name of this rule.

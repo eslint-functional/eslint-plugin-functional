@@ -1,7 +1,7 @@
 import { type Linter } from "@typescript-eslint/utils/ts-eslint";
 
-import externalVanillaRecommended from "~/configs/external-vanilla-recommended";
-import { mergeConfigs } from "~/utils/merge-configs";
+import externalVanillaRecommended from "#eslint-plugin-functional/configs/external-vanilla-recommended";
+import { mergeConfigs } from "#eslint-plugin-functional/utils/merge-configs";
 
 const tsConfig: Linter.Config = {
   rules: {

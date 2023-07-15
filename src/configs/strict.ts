@@ -1,11 +1,11 @@
 import { type Linter } from "@typescript-eslint/utils/ts-eslint";
 
-import currying from "~/configs/currying";
-import noExceptions from "~/configs/no-exceptions";
-import noMutations from "~/configs/no-mutations";
-import noOtherParadigms from "~/configs/no-other-paradigms";
-import noStatements from "~/configs/no-statements";
-import { mergeConfigs } from "~/utils/merge-configs";
+import currying from "#eslint-plugin-functional/configs/currying";
+import noExceptions from "#eslint-plugin-functional/configs/no-exceptions";
+import noMutations from "#eslint-plugin-functional/configs/no-mutations";
+import noOtherParadigms from "#eslint-plugin-functional/configs/no-other-paradigms";
+import noStatements from "#eslint-plugin-functional/configs/no-statements";
+import { mergeConfigs } from "#eslint-plugin-functional/utils/merge-configs";
 
 const config: Linter.Config = mergeConfigs(
   currying,

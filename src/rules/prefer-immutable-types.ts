@@ -10,25 +10,25 @@ import {
 import { deepmerge } from "deepmerge-ts";
 import { Immutability } from "is-immutable-type";
 
-import { type IgnoreClassesOption } from "~/options";
+import { type IgnoreClassesOption } from "#eslint-plugin-functional/options";
 import {
   ignoreClassesOptionSchema,
   shouldIgnoreClasses,
   shouldIgnoreInFunction,
   shouldIgnorePattern,
-} from "~/options";
-import { type ESFunctionType } from "~/utils/node-types";
+} from "#eslint-plugin-functional/options";
+import { type ESFunctionType } from "#eslint-plugin-functional/utils/node-types";
 import {
   type RuleResult,
   type NamedCreateRuleMetaWithCategory,
-} from "~/utils/rule";
+} from "#eslint-plugin-functional/utils/rule";
 import {
   createRule,
   getReturnTypesOfFunction,
   getTypeImmutabilityOfNode,
   getTypeImmutabilityOfType,
   isImplementationOfOverload,
-} from "~/utils/rule";
+} from "#eslint-plugin-functional/utils/rule";
 import {
   hasID,
   isArrayPattern,
@@ -41,7 +41,7 @@ import {
   isPropertyDefinition,
   isTSParameterProperty,
   isTSTypePredicate,
-} from "~/utils/type-guards";
+} from "#eslint-plugin-functional/utils/type-guards";
 
 /**
  * The name of this rule.

@@ -1,5 +1,8 @@
-import { name, rule } from "~/rules/prefer-property-signatures";
-import { testRule } from "~/tests/helpers/testers";
+import {
+  name,
+  rule,
+} from "#eslint-plugin-functional/rules/prefer-property-signatures";
+import { testRule } from "#eslint-plugin-functional/tests/helpers/testers";
 
 import tsTests from "./ts";
 

@@ -10,21 +10,24 @@ import {
   type IgnoreAccessorPatternOption,
   type IgnorePatternOption,
   type IgnoreClassesOption,
-} from "~/options";
+} from "#eslint-plugin-functional/options";
 import {
   shouldIgnorePattern,
   shouldIgnoreClasses,
   ignoreAccessorPatternOptionSchema,
   ignoreClassesOptionSchema,
   ignorePatternOptionSchema,
-} from "~/options";
-import { isExpected } from "~/utils/misc";
-import { createRule, getTypeOfNode } from "~/utils/rule";
+} from "#eslint-plugin-functional/options";
+import { isExpected } from "#eslint-plugin-functional/utils/misc";
+import {
+  createRule,
+  getTypeOfNode,
+} from "#eslint-plugin-functional/utils/rule";
 import {
   type RuleResult,
   type NamedCreateRuleMetaWithCategory,
-} from "~/utils/rule";
-import { isInConstructor } from "~/utils/tree";
+} from "#eslint-plugin-functional/utils/rule";
+import { isInConstructor } from "#eslint-plugin-functional/utils/tree";
 import {
   isArrayConstructorType,
   isArrayExpression,
@@ -34,7 +37,7 @@ import {
   isMemberExpression,
   isNewExpression,
   isObjectConstructorType,
-} from "~/utils/type-guards";
+} from "#eslint-plugin-functional/utils/type-guards";
 
 /**
  * The name of this rule.

@@ -7,16 +7,22 @@ import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import { deepmerge } from "deepmerge-ts";
 import { Immutability } from "is-immutable-type";
 
-import { type IgnorePatternOption } from "~/options";
-import { shouldIgnorePattern, ignorePatternOptionSchema } from "~/options";
-import { getNodeIdentifierTexts } from "~/utils/misc";
-import { type ESTypeDeclaration } from "~/utils/node-types";
+import { type IgnorePatternOption } from "#eslint-plugin-functional/options";
+import {
+  shouldIgnorePattern,
+  ignorePatternOptionSchema,
+} from "#eslint-plugin-functional/options";
+import { getNodeIdentifierTexts } from "#eslint-plugin-functional/utils/misc";
+import { type ESTypeDeclaration } from "#eslint-plugin-functional/utils/node-types";
 import {
   type RuleResult,
   type NamedCreateRuleMetaWithCategory,
-} from "~/utils/rule";
-import { getTypeImmutabilityOfNode, createRule } from "~/utils/rule";
-import { isTSInterfaceDeclaration } from "~/utils/type-guards";
+} from "#eslint-plugin-functional/utils/rule";
+import {
+  getTypeImmutabilityOfNode,
+  createRule,
+} from "#eslint-plugin-functional/utils/rule";
+import { isTSInterfaceDeclaration } from "#eslint-plugin-functional/utils/type-guards";
 
 /**
  * The name of this rule.

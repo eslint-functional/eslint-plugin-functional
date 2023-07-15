@@ -10,16 +10,20 @@ import {
 import * as semver from "semver";
 import { type Type } from "typescript";
 
-import ts from "~/conditional-imports/typescript";
-import { type IgnorePatternOption } from "~/options";
-import { ignorePatternOptionSchema } from "~/options";
-import { type ESFunction } from "~/utils/node-types";
+import ts from "#eslint-plugin-functional/conditional-imports/typescript";
+import { type IgnorePatternOption } from "#eslint-plugin-functional/options";
+import { ignorePatternOptionSchema } from "#eslint-plugin-functional/options";
+import { type ESFunction } from "#eslint-plugin-functional/utils/node-types";
 import {
   type RuleResult,
   type NamedCreateRuleMetaWithCategory,
-} from "~/utils/rule";
-import { createRule, getESTreeNode, getTypeOfNode } from "~/utils/rule";
-import { isNested } from "~/utils/tree";
+} from "#eslint-plugin-functional/utils/rule";
+import {
+  createRule,
+  getESTreeNode,
+  getTypeOfNode,
+} from "#eslint-plugin-functional/utils/rule";
+import { isNested } from "#eslint-plugin-functional/utils/tree";
 import {
   isBlockStatement,
   isCallExpression,
@@ -28,7 +32,7 @@ import {
   isIdentifier,
   isReturnStatement,
   isTSFunctionType,
-} from "~/utils/type-guards";
+} from "#eslint-plugin-functional/utils/type-guards";
 
 /**
  * The name of this rule.

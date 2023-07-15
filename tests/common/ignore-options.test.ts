@@ -6,11 +6,17 @@ import dedent from "dedent";
 import {
   type IgnoreAccessorPatternOption,
   type IgnorePatternOption,
-} from "~/options";
-import { shouldIgnorePattern } from "~/options";
-import { getAvaRuleTester } from "~/tests/helpers/AvaRuleTester";
-import { filename, configs } from "~/tests/helpers/configs";
-import { addFilename, createDummyRule } from "~/tests/helpers/util";
+} from "#eslint-plugin-functional/options";
+import { shouldIgnorePattern } from "#eslint-plugin-functional/options";
+import { getAvaRuleTester } from "#eslint-plugin-functional/tests/helpers/AvaRuleTester";
+import {
+  filename,
+  configs,
+} from "#eslint-plugin-functional/tests/helpers/configs";
+import {
+  addFilename,
+  createDummyRule,
+} from "#eslint-plugin-functional/tests/helpers/util";
 
 /**
  * Create a dummy rule that operates on AssignmentExpression nodes.

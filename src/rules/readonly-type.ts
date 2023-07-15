@@ -5,12 +5,12 @@ import {
   type RuleContext,
 } from "@typescript-eslint/utils/ts-eslint";
 
-import { createRule } from "~/utils/rule";
+import { createRule } from "#eslint-plugin-functional/utils/rule";
 import {
   type RuleResult,
   type NamedCreateRuleMetaWithCategory,
-} from "~/utils/rule";
-import { getReadonly } from "~/utils/tree";
+} from "#eslint-plugin-functional/utils/rule";
+import { getReadonly } from "#eslint-plugin-functional/utils/tree";
 import {
   isDefined,
   isTSIndexSignature,
@@ -18,7 +18,7 @@ import {
   isTSPropertySignature,
   isPropertyDefinition,
   isTSTypeReference,
-} from "~/utils/type-guards";
+} from "#eslint-plugin-functional/utils/type-guards";
 
 /**
  * The name of this rule.

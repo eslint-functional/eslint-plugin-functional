@@ -1,5 +1,8 @@
-import { name, rule } from "~/rules/functional-parameters";
-import { testRule } from "~/tests/helpers/testers";
+import {
+  name,
+  rule,
+} from "#eslint-plugin-functional/rules/functional-parameters";
+import { testRule } from "#eslint-plugin-functional/tests/helpers/testers";
 
 import es6Tests from "./es2015";
 import es3Tests from "./es3";

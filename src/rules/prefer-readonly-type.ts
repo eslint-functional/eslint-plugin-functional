@@ -5,20 +5,26 @@ import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import {
   type IgnorePatternOption,
   type IgnoreAccessorPatternOption,
-} from "~/options";
+} from "#eslint-plugin-functional/options";
 import {
   shouldIgnoreInFunction,
   shouldIgnoreClasses,
   shouldIgnorePattern,
-} from "~/options";
-import { type ESArrayTupleType } from "~/utils/node-types";
+} from "#eslint-plugin-functional/options";
+import { type ESArrayTupleType } from "#eslint-plugin-functional/utils/node-types";
 import {
   type BaseOptions,
   type RuleResult,
   type NamedCreateRuleMetaWithCategory,
-} from "~/utils/rule";
-import { createRule, getTypeOfNode } from "~/utils/rule";
-import { isInInterface, isInReturnType } from "~/utils/tree";
+} from "#eslint-plugin-functional/utils/rule";
+import {
+  createRule,
+  getTypeOfNode,
+} from "#eslint-plugin-functional/utils/rule";
+import {
+  isInInterface,
+  isInReturnType,
+} from "#eslint-plugin-functional/utils/tree";
 import {
   isArrayType,
   isAssignmentPattern,
@@ -33,7 +39,7 @@ import {
   isTSTypeLiteral,
   isTSTypeOperator,
   isTSTypeReference,
-} from "~/utils/type-guards";
+} from "#eslint-plugin-functional/utils/type-guards";
 
 /**
  * The name of this rule.

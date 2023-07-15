@@ -6,7 +6,7 @@ import { readdirSync } from "node:fs";
 
 import test from "ava";
 
-import plugin from "~/index";
+import plugin from "#eslint-plugin-functional";
 
 const ruleFiles: string[] = readdirSync("./src/rules").filter(
   (file) => file !== "index.ts" && file.endsWith(".ts"),

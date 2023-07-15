@@ -5,13 +5,16 @@
 
 import dedent from "dedent";
 import type { ValidTestCaseSet, InvalidTestCaseSet } from "../helpers/util";
-import { testRule } from "~/tests/helpers/testers";
+import { testRule } from "#eslint-plugin-functional/tests/helpers/testers";
 
 /*
  * Step 1.
  * Import the rule to test.
  */
-import { name, rule } from "~/rules/prefer-immutable-types";
+import {
+  name,
+  rule,
+} from "#eslint-plugin-functional/rules/prefer-immutable-types";
 
 /*
  * Step 2a.

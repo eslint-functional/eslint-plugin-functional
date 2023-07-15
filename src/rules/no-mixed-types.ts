@@ -6,14 +6,14 @@ import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import {
   type RuleResult,
   type NamedCreateRuleMetaWithCategory,
-} from "~/utils/rule";
-import { createRuleUsingFunction } from "~/utils/rule";
+} from "#eslint-plugin-functional/utils/rule";
+import { createRuleUsingFunction } from "#eslint-plugin-functional/utils/rule";
 import {
   isIdentifier,
   isTSPropertySignature,
   isTSTypeLiteral,
   isTSTypeReference,
-} from "~/utils/type-guards";
+} from "#eslint-plugin-functional/utils/type-guards";
 
 /**
  * The name of this rule.

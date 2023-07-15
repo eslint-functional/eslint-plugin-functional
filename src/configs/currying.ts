@@ -1,6 +1,6 @@
 import { type Linter } from "@typescript-eslint/utils/ts-eslint";
 
-import * as functionalParameters from "~/rules/functional-parameters";
+import * as functionalParameters from "#eslint-plugin-functional/rules/functional-parameters";
 
 const config: Linter.Config = {
   rules: {

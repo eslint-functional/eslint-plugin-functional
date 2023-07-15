@@ -1,8 +1,8 @@
 import * as semver from "semver";
 
-import ts from "~/conditional-imports/typescript";
-import { name, rule } from "~/rules/prefer-tacit";
-import { testRule } from "~/tests/helpers/testers";
+import ts from "#eslint-plugin-functional/conditional-imports/typescript";
+import { name, rule } from "#eslint-plugin-functional/rules/prefer-tacit";
+import { testRule } from "#eslint-plugin-functional/tests/helpers/testers";
 
 import tsTests from "./ts";
 import tsAtLeast4Dot7Tests from "./ts-at-least-4.7";

@@ -2,7 +2,7 @@ import * as fs from "node:fs";
 
 import test from "ava";
 
-import { rules } from "~/rules";
+import { rules } from "#eslint-plugin-functional/rules";
 
 const rulesNames: string[] = Object.keys(rules);
 const files: string[] = fs

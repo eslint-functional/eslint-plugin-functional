@@ -1,5 +1,5 @@
-import { name, rule } from "~/rules/no-let";
-import { testRule } from "~/tests/helpers/testers";
+import { name, rule } from "#eslint-plugin-functional/rules/no-let";
+import { testRule } from "#eslint-plugin-functional/tests/helpers/testers";
 
 import es6Tests from "./es2015";
 

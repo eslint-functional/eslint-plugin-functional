@@ -1,7 +1,7 @@
 import chalk from "chalk";
 import wrap from "word-wrap";
 
-import { rules } from "~/rules";
+import { rules } from "#eslint-plugin-functional/rules";
 
 import { type Options } from "./options";
 

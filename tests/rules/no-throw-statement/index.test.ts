@@ -1,5 +1,8 @@
-import { name, rule } from "~/rules/no-throw-statements";
-import { testRule } from "~/tests/helpers/testers";
+import {
+  name,
+  rule,
+} from "#eslint-plugin-functional/rules/no-throw-statements";
+import { testRule } from "#eslint-plugin-functional/tests/helpers/testers";
 
 import es7Tests from "./es2016";
 import es3Tests from "./es3";

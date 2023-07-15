@@ -1,5 +1,8 @@
-import { name, rule } from "~/rules/no-this-expressions";
-import { testRule } from "~/tests/helpers/testers";
+import {
+  name,
+  rule,
+} from "#eslint-plugin-functional/rules/no-this-expressions";
+import { testRule } from "#eslint-plugin-functional/tests/helpers/testers";
 
 import es3Tests from "./es3";
 

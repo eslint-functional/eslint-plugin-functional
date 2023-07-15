@@ -1,12 +1,12 @@
 import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import dedent from "dedent";
 
-import { type rule } from "~/rules/prefer-immutable-types";
+import { type rule } from "#eslint-plugin-functional/rules/prefer-immutable-types";
 import {
   type InvalidTestCaseSet,
   type MessagesOf,
   type OptionsOf,
-} from "~/tests/helpers/util";
+} from "#eslint-plugin-functional/tests/helpers/util";
 
 const tests: Array<
   InvalidTestCaseSet<MessagesOf<typeof rule>, OptionsOf<typeof rule>>

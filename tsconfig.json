@@ -26,15 +26,17 @@
     "target": "ESNext",
     "baseUrl": ".",
     "paths": {
-      "~/index": ["./src"],
-      "~/configs/*": ["src/configs/*"],
-      "~/options": ["src/options"],
-      "~/rules": ["src/rules"],
-      "~/rules/*": ["src/rules/*"],
-      "~/settings": ["src/settings"],
-      "~/utils/*": ["src/utils/*"],
-      "~/conditional-imports/*": ["src/utils/conditional-imports/*"],
-      "~/tests/*": ["tests/*"]
+      "#eslint-plugin-functional": ["src"],
+      "#eslint-plugin-functional/configs/*": ["src/configs/*"],
+      "#eslint-plugin-functional/options": ["src/options"],
+      "#eslint-plugin-functional/rules": ["src/rules"],
+      "#eslint-plugin-functional/rules/*": ["src/rules/*"],
+      "#eslint-plugin-functional/settings": ["src/settings"],
+      "#eslint-plugin-functional/utils/*": ["src/utils/*"],
+      "#eslint-plugin-functional/conditional-imports/*": [
+        "src/utils/conditional-imports/*"
+      ],
+      "#eslint-plugin-functional/tests/*": ["tests/*"]
     }
   },
   "ts-node": {

@@ -1,5 +1,5 @@
-import { name, rule } from "~/rules/immutable-data";
-import { testRule } from "~/tests/helpers/testers";
+import { name, rule } from "#eslint-plugin-functional/rules/immutable-data";
+import { testRule } from "#eslint-plugin-functional/tests/helpers/testers";
 
 import tsTests from "./ts";
 

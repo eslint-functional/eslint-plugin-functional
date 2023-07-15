@@ -1,23 +1,23 @@
 import { type Linter } from "@typescript-eslint/utils/ts-eslint";
 
-import * as functionalParameters from "~/rules/functional-parameters";
-import * as immutableData from "~/rules/immutable-data";
-import * as noClasses from "~/rules/no-classes";
-import * as noConditionalStatements from "~/rules/no-conditional-statements";
-import * as noExpressionStatements from "~/rules/no-expression-statements";
-import * as noLet from "~/rules/no-let";
-import * as noLoopStatements from "~/rules/no-loop-statements";
-import * as noMixedTypes from "~/rules/no-mixed-types";
-import * as noPromiseReject from "~/rules/no-promise-reject";
-import * as noReturnVoid from "~/rules/no-return-void";
-import * as noThisExpressions from "~/rules/no-this-expressions";
-import * as noThrowStatements from "~/rules/no-throw-statements";
-import * as noTryStatements from "~/rules/no-try-statements";
-import * as preferImmutableTypes from "~/rules/prefer-immutable-types";
-import * as preferPropertySignatures from "~/rules/prefer-property-signatures";
-import * as preferTacit from "~/rules/prefer-tacit";
-import * as readonlyType from "~/rules/readonly-type";
-import * as typeDeclarationImmutability from "~/rules/type-declaration-immutability";
+import * as functionalParameters from "#eslint-plugin-functional/rules/functional-parameters";
+import * as immutableData from "#eslint-plugin-functional/rules/immutable-data";
+import * as noClasses from "#eslint-plugin-functional/rules/no-classes";
+import * as noConditionalStatements from "#eslint-plugin-functional/rules/no-conditional-statements";
+import * as noExpressionStatements from "#eslint-plugin-functional/rules/no-expression-statements";
+import * as noLet from "#eslint-plugin-functional/rules/no-let";
+import * as noLoopStatements from "#eslint-plugin-functional/rules/no-loop-statements";
+import * as noMixedTypes from "#eslint-plugin-functional/rules/no-mixed-types";
+import * as noPromiseReject from "#eslint-plugin-functional/rules/no-promise-reject";
+import * as noReturnVoid from "#eslint-plugin-functional/rules/no-return-void";
+import * as noThisExpressions from "#eslint-plugin-functional/rules/no-this-expressions";
+import * as noThrowStatements from "#eslint-plugin-functional/rules/no-throw-statements";
+import * as noTryStatements from "#eslint-plugin-functional/rules/no-try-statements";
+import * as preferImmutableTypes from "#eslint-plugin-functional/rules/prefer-immutable-types";
+import * as preferPropertySignatures from "#eslint-plugin-functional/rules/prefer-property-signatures";
+import * as preferTacit from "#eslint-plugin-functional/rules/prefer-tacit";
+import * as readonlyType from "#eslint-plugin-functional/rules/readonly-type";
+import * as typeDeclarationImmutability from "#eslint-plugin-functional/rules/type-declaration-immutability";
 
 const config: Linter.Config = {
   rules: {

@@ -9,25 +9,25 @@ import { deepmerge } from "deepmerge-ts";
 import {
   type IgnorePatternOption,
   type IgnorePrefixSelectorOption,
-} from "~/options";
+} from "#eslint-plugin-functional/options";
 import {
   shouldIgnorePattern,
   ignorePatternOptionSchema,
   ignorePrefixSelectorOptionSchema,
-} from "~/options";
-import { type ESFunction } from "~/utils/node-types";
+} from "#eslint-plugin-functional/options";
+import { type ESFunction } from "#eslint-plugin-functional/utils/node-types";
 import {
   type RuleResult,
   type NamedCreateRuleMetaWithCategory,
-} from "~/utils/rule";
-import { createRuleUsingFunction } from "~/utils/rule";
+} from "#eslint-plugin-functional/utils/rule";
+import { createRuleUsingFunction } from "#eslint-plugin-functional/utils/rule";
 import {
   isArgument,
   isIIFE,
   isPropertyAccess,
   isPropertyName,
-} from "~/utils/tree";
-import { isRestElement } from "~/utils/type-guards";
+} from "#eslint-plugin-functional/utils/tree";
+import { isRestElement } from "#eslint-plugin-functional/utils/type-guards";
 
 /**
  * The name of this rule.

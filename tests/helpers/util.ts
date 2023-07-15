@@ -9,7 +9,7 @@ import {
   type RunTests,
 } from "@typescript-eslint/utils/ts-eslint";
 
-import ts from "~/conditional-imports/typescript";
+import ts from "#eslint-plugin-functional/conditional-imports/typescript";
 
 import { filename as dummyFilename } from "./configs";
 

@@ -20,9 +20,9 @@ import { type ImmutabilityOverrides } from "is-immutable-type";
 import { getTypeImmutability, Immutability } from "is-immutable-type";
 import { type Node as TSNode, type Type, type TypeNode } from "typescript";
 
-import ts from "~/conditional-imports/typescript";
-import { getImmutabilityOverrides } from "~/settings";
-import { type ESFunction } from "~/utils/node-types";
+import ts from "#eslint-plugin-functional/conditional-imports/typescript";
+import { getImmutabilityOverrides } from "#eslint-plugin-functional/settings";
+import { type ESFunction } from "#eslint-plugin-functional/utils/node-types";
 
 // eslint-disable-next-line @typescript-eslint/naming-convention -- This is a special var.
 const __VERSION__ = "0.0.0-development";

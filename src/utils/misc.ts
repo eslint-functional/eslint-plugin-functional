@@ -2,8 +2,8 @@ import { type TSESTree } from "@typescript-eslint/utils";
 import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
-import { type BaseOptions } from "~/utils/rule";
-import { getKeyOfValueInObjectExpression } from "~/utils/tree";
+import { type BaseOptions } from "#eslint-plugin-functional/utils/rule";
+import { getKeyOfValueInObjectExpression } from "#eslint-plugin-functional/utils/tree";
 import {
   hasID,
   hasKey,
@@ -17,7 +17,7 @@ import {
   isTSTypeAnnotation,
   isUnaryExpression,
   isVariableDeclaration,
-} from "~/utils/type-guards";
+} from "#eslint-plugin-functional/utils/type-guards";
 
 /**
  * Higher order function to check if the two given values are the same.

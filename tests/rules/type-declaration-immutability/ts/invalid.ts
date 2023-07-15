@@ -2,12 +2,12 @@ import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import dedent from "dedent";
 import { Immutability } from "is-immutable-type";
 
-import { type rule } from "~/rules/type-declaration-immutability";
+import { type rule } from "#eslint-plugin-functional/rules/type-declaration-immutability";
 import {
   type InvalidTestCaseSet,
   type MessagesOf,
   type OptionsOf,
-} from "~/tests/helpers/util";
+} from "#eslint-plugin-functional/tests/helpers/util";
 
 const recommended = {
   rules: [

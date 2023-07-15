@@ -5,9 +5,12 @@ import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import {
   type RuleResult,
   type NamedCreateRuleMetaWithCategory,
-} from "~/utils/rule";
-import { createRule } from "~/utils/rule";
-import { isIdentifier, isMemberExpression } from "~/utils/type-guards";
+} from "#eslint-plugin-functional/utils/rule";
+import { createRule } from "#eslint-plugin-functional/utils/rule";
+import {
+  isIdentifier,
+  isMemberExpression,
+} from "#eslint-plugin-functional/utils/type-guards";
 
 /**
  * The name of this rule.

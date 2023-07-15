@@ -6,16 +6,22 @@ import {
 import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import { deepmerge } from "deepmerge-ts";
 
-import tsApiUtils from "~/conditional-imports/ts-api-utils";
-import { type IgnorePatternOption } from "~/options";
-import { shouldIgnorePattern, ignorePatternOptionSchema } from "~/options";
-import { isDirectivePrologue } from "~/utils/misc";
+import tsApiUtils from "#eslint-plugin-functional/conditional-imports/ts-api-utils";
+import { type IgnorePatternOption } from "#eslint-plugin-functional/options";
+import {
+  shouldIgnorePattern,
+  ignorePatternOptionSchema,
+} from "#eslint-plugin-functional/options";
+import { isDirectivePrologue } from "#eslint-plugin-functional/utils/misc";
 import {
   type RuleResult,
   type NamedCreateRuleMetaWithCategory,
-} from "~/utils/rule";
-import { createRule, getTypeOfNode } from "~/utils/rule";
-import { isYieldExpression } from "~/utils/type-guards";
+} from "#eslint-plugin-functional/utils/rule";
+import {
+  createRule,
+  getTypeOfNode,
+} from "#eslint-plugin-functional/utils/rule";
+import { isYieldExpression } from "#eslint-plugin-functional/utils/type-guards";
 
 /**
  * The name of this rule.

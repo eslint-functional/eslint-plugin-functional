@@ -1,6 +1,6 @@
 import test from "ava";
 
-import { mergeConfigs } from "~/utils/merge-configs";
+import { mergeConfigs } from "#eslint-plugin-functional/utils/merge-configs";
 
 test("should replace rule config", (t) => {
   const a = {

@@ -6,7 +6,7 @@ import { type TSESTree } from "@typescript-eslint/utils";
 import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import { type Type, type UnionType } from "typescript";
 
-import ts from "~/conditional-imports/typescript";
+import ts from "#eslint-plugin-functional/conditional-imports/typescript";
 
 /*
  * TS Types.
