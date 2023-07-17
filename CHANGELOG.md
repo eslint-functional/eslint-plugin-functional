@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+# [6.0.0-next.2](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.0.0-next.1...v6.0.0-next.2) (2023-07-17)
+
+
+### Features
+
+* **functional-parameters:** add option to ignore getters and setters ([9c89b9e](https://github.com/eslint-functional/eslint-plugin-functional/commit/9c89b9e4f8960e4ee211b640cd7bb2e3c79b0ed8))
+
 # [6.0.0-next.1](https://github.com/eslint-functional/eslint-plugin-functional/compare/v5.0.8...v6.0.0-next.1) (2023-07-15)
 
 
