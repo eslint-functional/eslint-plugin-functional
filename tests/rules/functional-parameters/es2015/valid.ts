@@ -102,6 +102,16 @@ const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
     `,
     optionsSet: [[{ enforceParameterCount: { ignoreLambdaExpression: true } }]],
   },
+  {
+    code: dedent`
+      const foo = {
+        get bar() {
+          return "baz";
+        }
+      }
+    `,
+    optionsSet: [[{ enforceParameterCount: {} }]],
+  },
 ];
 
 export default tests;

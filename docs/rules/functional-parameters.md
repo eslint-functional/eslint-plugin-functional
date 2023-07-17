@@ -63,6 +63,7 @@ type Options = {
         count: "atLeastOne" | "exactlyOne";
         ignoreLambdaExpression: boolean;
         ignoreIIFE: boolean;
+        ignoreGettersAndSetters: boolean;
       };
   ignorePattern?: string[] | string;
   ignorePrefixSelector?: string[] | string;
@@ -79,6 +80,7 @@ const defaults = {
     count: "atLeastOne",
     ignoreLambdaExpression: false,
     ignoreIIFE: true,
+    ignoreGettersAndSetters: true,
   },
 };
 ```
@@ -92,6 +94,7 @@ const recommendedOptions = {
   enforceParameterCount: {
     ignoreLambdaExpression: true,
     ignoreIIFE: true,
+    ignoreGettersAndSetters: true,
   },
 };
 ```
@@ -162,6 +165,10 @@ Here, a lambda function expression refers to any function being defined in place
 #### `enforceParameterCount.ignoreIIFE`
 
 If true, this option allows for the use of [IIFEs](https://developer.mozilla.org/en-US/docs/Glossary/IIFE) that do not have any parameters.
+
+#### `enforceParameterCount.ignoreGettersAndSetters`
+
+Getters should always take zero parameters, and setter one. If for some reason you want to treat these function like any other function, then you can set this option to `false`.
 
 ### `ignorePrefixSelector`
 

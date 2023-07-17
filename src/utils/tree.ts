@@ -208,6 +208,28 @@ export function isArgument(node: TSESTree.Node): boolean {
 }
 
 /**
+ * Is the given node a getter function?
+ */
+export function isGetter(node: TSESTree.Node): boolean {
+  return (
+    node.parent !== undefined &&
+    isProperty(node.parent) &&
+    node.parent.kind === "get"
+  );
+}
+
+/**
+ * Is the given node a setter function?
+ */
+export function isSetter(node: TSESTree.Node): boolean {
+  return (
+    node.parent !== undefined &&
+    isProperty(node.parent) &&
+    node.parent.kind === "set"
+  );
+}
+
+/**
  * Get the key the given node is assigned to in its parent ObjectExpression.
  */
 export function getKeyOfValueInObjectExpression(

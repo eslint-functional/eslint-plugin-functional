@@ -22,6 +22,7 @@ const overrides: Linter.Config = {
         enforceParameterCount: {
           ignoreLambdaExpression: true,
           ignoreIIFE: true,
+          ignoreGettersAndSetters: true,
         },
       },
     ],

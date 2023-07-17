@@ -23,6 +23,8 @@ import {
 import { createRuleUsingFunction } from "#eslint-plugin-functional/utils/rule";
 import {
   isArgument,
+  isGetter,
+  isSetter,
   isIIFE,
   isPropertyAccess,
   isPropertyName,
@@ -54,6 +56,7 @@ type Options = [
             count: ParameterCountOptions;
             ignoreLambdaExpression: boolean;
             ignoreIIFE: boolean;
+            ignoreGettersAndSetters: boolean;
           };
     },
 ];
@@ -91,6 +94,9 @@ const schema: JSONSchema4[] = [
                   type: "string",
                   enum: ["atLeastOne", "exactlyOne"],
                 },
+                ignoreGettersAndSetters: {
+                  type: "boolean",
+                },
                 ignoreLambdaExpression: {
                   type: "boolean",
                 },
@@ -119,6 +125,7 @@ const defaultOptions: Options = [
       count: "atLeastOne",
       ignoreLambdaExpression: false,
       ignoreIIFE: true,
+      ignoreGettersAndSetters: true,
     },
   },
 ];
@@ -179,7 +186,9 @@ function getParamCountViolations(
     (node.params.length === 0 &&
       typeof enforceParameterCount === "object" &&
       ((enforceParameterCount.ignoreIIFE && isIIFE(node)) ||
-        (enforceParameterCount.ignoreLambdaExpression && isArgument(node))))
+        (enforceParameterCount.ignoreLambdaExpression && isArgument(node)) ||
+        (enforceParameterCount.ignoreGettersAndSetters &&
+          (isGetter(node) || isSetter(node)))))
   ) {
     return [];
   }
