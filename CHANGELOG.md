@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+# [6.0.0-next.3](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.0.0-next.2...v6.0.0-next.3) (2023-07-17)
+
+
+### Bug Fixes
+
+* add sanity checks to type immutablity override settings ([d3ce5b0](https://github.com/eslint-functional/eslint-plugin-functional/commit/d3ce5b0db162af843886489850706c070f375d01))
+
 # [6.0.0-next.2](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.0.0-next.1...v6.0.0-next.2) (2023-07-17)
 
 
