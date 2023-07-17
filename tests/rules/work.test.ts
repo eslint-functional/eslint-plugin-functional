@@ -14,20 +14,20 @@ import { testRule } from "#eslint-plugin-functional/tests/helpers/testers";
 import {
   name,
   rule,
-} from "#eslint-plugin-functional/rules/prefer-immutable-types";
+} from "#eslint-plugin-functional/rules/no-expression-statements";
 
 /*
  * Step 2a.
  * Provide a valid test case.
  */
 const valid: Array<ValidTestCaseSet<any[]>> = [
-  // {
-  //   code: dedent`
-  //     // Valid Code.
-  //   `,
-  //   optionsSet: [[]],
-  //   settingsSet: [{}],
-  // }
+  {
+    code: dedent`
+      const foo = { bar() { return this; }};
+      foo.bar();
+    `,
+    optionsSet: [[{ ignoreSelfReturning: true }]],
+  },
 ];
 
 /*

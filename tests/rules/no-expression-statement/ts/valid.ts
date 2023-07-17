@@ -43,6 +43,14 @@ const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
     `,
     optionsSet: [[{ ignoreVoid: true }]],
   },
+  // Allowed ignoring self returning expressions.
+  {
+    code: dedent`
+      const foo = { bar() { return this; }};
+      foo.bar();
+    `,
+    optionsSet: [[{ ignoreSelfReturning: true }]],
+  },
 ];
 
 export default tests;
