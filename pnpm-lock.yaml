@@ -34,7 +34,7 @@ specifiers:
   chalk: 4.1.2
   commitizen: 4.3.0
   conventional-commit-types: 3.0.0
-  cspell: 6.31.1
+  cspell: 6.31.2
   dedent: 0.7.0
   deepmerge-ts: ^5.0.0
   escape-string-regexp: ^4.0.0
@@ -118,7 +118,7 @@ devDependencies:
   chalk: 4.1.2
   commitizen: 4.3.0
   conventional-commit-types: 3.0.0
-  cspell: 6.31.1
+  cspell: 6.31.2
   dedent: 0.7.0
   eslint: 8.38.0
   eslint-ava-rule-tester: 4.0.0_eslint@8.38.0
@@ -560,8 +560,8 @@ packages:
       chalk: 4.1.2
     dev: true
 
-  /@cspell/cspell-bundled-dicts/6.31.1:
-    resolution: {integrity: sha512-rsIev+dk1Vd8H1OKZhNhXycIVsMfeWJaeW3QUi1l4oIoGwQfJVbs1ZPZPHE5cglzyHOW1jQNStXf34UKaC6siA==}
+  /@cspell/cspell-bundled-dicts/6.31.2:
+    resolution: {integrity: sha512-rQ5y/U1Ah5AaduIh3NU2z371hRrOr1cmNdhhP8oiuz2E4VqmcoVHflXIct9DgY8uIJpwsSCdR6ypOQWZYXYnwA==}
     engines: {node: '>=14'}
     dependencies:
       '@cspell/dict-ada': 4.0.1
@@ -581,7 +581,7 @@ packages:
       '@cspell/dict-en-gb': 1.1.33
       '@cspell/dict-en_us': 4.3.2
       '@cspell/dict-filetypes': 3.0.0
-      '@cspell/dict-fonts': 3.0.1
+      '@cspell/dict-fonts': 3.0.2
       '@cspell/dict-fullstack': 3.1.5
       '@cspell/dict-gaming-terms': 1.0.4
       '@cspell/dict-git': 2.0.0
@@ -695,8 +695,8 @@ packages:
     resolution: {integrity: sha512-Fiyp0z5uWaK0d2TfR9GMUGDKmUMAsOhGD5A0kHoqnNGswL2iw0KB0mFBONEquxU65fEnQv4R+jdM2d9oucujuA==}
     dev: true
 
-  /@cspell/dict-fonts/3.0.1:
-    resolution: {integrity: sha512-o2zVFKT3KcIBo88xlWhG4yOD0XQDjP7guc7C30ZZcSN8YCwaNc1nGoxU3QRea8iKcwk3cXH0G53nrQur7g9DjQ==}
+  /@cspell/dict-fonts/3.0.2:
+    resolution: {integrity: sha512-Z5QdbgEI7DV+KPXrAeDA6dDm/vTzyaW53SGlKqz6PI5VhkOjgkBXv3YtZjnxMZ4dY2ZIqq+RUK6qa9Pi8rQdGQ==}
     dev: true
 
   /@cspell/dict-fullstack/3.1.5:
@@ -2563,17 +2563,17 @@ packages:
       gensequence: 5.0.2
     dev: true
 
-  /cspell-gitignore/6.31.1:
-    resolution: {integrity: sha512-PAcmjN6X89Z8qgjem6HYb+VmvVtKuc+fWs4sk21+jv2MiLk23Bkp+8slSaIDVR//58fxJkMx17PHyo2cDO/69A==}
+  /cspell-gitignore/6.31.2:
+    resolution: {integrity: sha512-B1i8aiXCIbb/08u0K3xnDyXtg0qD+lb5B2itOOXi7KXlPkKvIuN4hWyXxhVDweWyYWEzyXD5wBpPrqICVrStHQ==}
     engines: {node: '>=14'}
     hasBin: true
     dependencies:
-      cspell-glob: 6.31.1
+      cspell-glob: 6.31.2
       find-up: 5.0.0
     dev: true
 
-  /cspell-glob/6.31.1:
-    resolution: {integrity: sha512-ygEmr5hgE4QtO5+L3/ihfMKBhPipbapfS22ilksFSChKMc15Regds0z+z/1ZBoe+OFAPneQfIuBxMwQ/fB00GQ==}
+  /cspell-glob/6.31.2:
+    resolution: {integrity: sha512-ceTjHM4HaBgvG5S3oiB+PTPYq58EQYG6MmYpycDHzpR5I2H1NurK9lxWHfANmLbi0DsHn58tIZNDMUnnQj19Jw==}
     engines: {node: '>=14'}
     dependencies:
       micromatch: 4.0.5
@@ -2588,8 +2588,8 @@ packages:
       '@cspell/cspell-types': 6.31.1
     dev: true
 
-  /cspell-io/6.31.1:
-    resolution: {integrity: sha512-deZcpvTYY/NmLfOdOtzcm+nDvJZozKmj4TY3pPpX0HquPX0A/w42bFRT/zZNmRslFl8vvrCZZUog7SOc6ha3uA==}
+  /cspell-io/6.31.2:
+    resolution: {integrity: sha512-Lp7LsF/f35LaOneROb/9mWiprShz2ONxjYFAt3bYP7gIxq41lWi8QhO+SN6spoqPp/wQXjSqJ7MuTZsemxPRnA==}
     engines: {node: '>=14'}
     dependencies:
       '@cspell/cspell-service-bus': 6.31.1
@@ -2598,11 +2598,11 @@ packages:
       - encoding
     dev: true
 
-  /cspell-lib/6.31.1:
-    resolution: {integrity: sha512-KgSiulbLExY+z2jGwkO77+aAkyugsPAw7y07j3hTQLpd+0esPCZqrmbo2ItnkvkDNd/c34PqQCr7/044/rz8gw==}
+  /cspell-lib/6.31.2:
+    resolution: {integrity: sha512-LqaB2ZfVfQHKL5aZzYoKU6/UxxAtWeXAYwpC9l+satXmajYyXtAh4kWmuW+y7kKRH2jA79rJQS3QE6ToeSqgQQ==}
     engines: {node: '>=14.6'}
     dependencies:
-      '@cspell/cspell-bundled-dicts': 6.31.1
+      '@cspell/cspell-bundled-dicts': 6.31.2
       '@cspell/cspell-pipe': 6.31.1
       '@cspell/cspell-types': 6.31.1
       '@cspell/strong-weak-map': 6.31.1
@@ -2611,9 +2611,9 @@ packages:
       configstore: 5.0.1
       cosmiconfig: 8.0.0
       cspell-dictionary: 6.31.1
-      cspell-glob: 6.31.1
+      cspell-glob: 6.31.2
       cspell-grammar: 6.31.1
-      cspell-io: 6.31.1
+      cspell-io: 6.31.2
       cspell-trie-lib: 6.31.1
       fast-equals: 4.0.3
       find-up: 5.0.0
@@ -2636,19 +2636,20 @@ packages:
       gensequence: 5.0.2
     dev: true
 
-  /cspell/6.31.1:
-    resolution: {integrity: sha512-gyCtpkOpwI/TGibbtIgMBFnAUUp2hnYdvW/9Ky4RcneHtLH0+V/jUEbZD8HbRKz0GVZ6mhKWbNRSEyP9p3Cejw==}
+  /cspell/6.31.2:
+    resolution: {integrity: sha512-HJcQ8jqL/1N3Mj5dufFnIZCX3ACuRoFTSVY6h3Bo5wBqd2iiJTyeQ1SY9Zymlxtb2KyJ6jQRiFmkWeFx2HVs7w==}
     engines: {node: '>=14'}
     hasBin: true
     dependencies:
       '@cspell/cspell-pipe': 6.31.1
+      '@cspell/cspell-types': 6.31.1
       '@cspell/dynamic-import': 6.31.1
       chalk: 4.1.2
       commander: 10.0.0
-      cspell-gitignore: 6.31.1
-      cspell-glob: 6.31.1
-      cspell-io: 6.31.1
-      cspell-lib: 6.31.1
+      cspell-gitignore: 6.31.2
+      cspell-glob: 6.31.2
+      cspell-io: 6.31.2
+      cspell-lib: 6.31.2
       fast-glob: 3.2.12
       fast-json-stable-stringify: 2.1.0
       file-entry-cache: 6.0.1
