@@ -11,8 +11,6 @@ import * as semver from "semver";
 import { type Type } from "typescript";
 
 import ts from "#eslint-plugin-functional/conditional-imports/typescript";
-import { type IgnorePatternOption } from "#eslint-plugin-functional/options";
-import { ignorePatternOptionSchema } from "#eslint-plugin-functional/options";
 import { type ESFunction } from "#eslint-plugin-functional/utils/node-types";
 import {
   type RuleResult,
@@ -42,23 +40,17 @@ export const name = "prefer-tacit" as const;
 /**
  * The options this rule can take.
  */
-type Options = [IgnorePatternOption];
+type Options = [];
 
 /**
  * The schema for the rule options.
  */
-const schema: JSONSchema4[] = [
-  {
-    type: "object",
-    properties: ignorePatternOptionSchema,
-    additionalProperties: false,
-  },
-];
+const schema: JSONSchema4[] = [];
 
 /**
  * The default options for the rule.
  */
-const defaultOptions: Options = [{}];
+const defaultOptions: Options = [];
 
 /**
  * The possible error messages.

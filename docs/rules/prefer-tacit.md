@@ -10,8 +10,10 @@ This rule enforces using functions directly if they can be without wrapping them
 
 ## Rule Details
 
-Generally there's no reason to wrap a function with a callback wrapper if it's directly called anyway.
-Doing so creates extra inline lambdas that slow the runtime down.
+If a function can be used directly without being in a callback wrapper, then it's generally better to use it directly.
+Extra inline lambdas can slow the runtime down.
+
+⚠️ Warning ⚠️: Use with caution as if not all parameters should be passed to the function, a wrapper function is then required.
 
 ### ❌ Incorrect
 
@@ -21,10 +23,10 @@ Doing so creates extra inline lambdas that slow the runtime down.
 /* eslint functional/prefer-tacit: "error" */
 
 function f(x) {
-  // ...
+  return x + 1;
 }
 
-const foo = (x) => f(x);
+const foo = [1, 2, 3].map((x) => f(x));
 ```
 
 ### ✅ Correct
@@ -33,28 +35,8 @@ const foo = (x) => f(x);
 /* eslint functional/prefer-tacit: "error" */
 
 function f(x) {
-  // ...
+  return x + 1;
 }
 
-const foo = f;
+const foo = [1, 2, 3].map(f);
 ```
-
-## Options
-
-This rule accepts an options object of the following type:
-
-```ts
-type Options = {
-  ignorePattern?: string[] | string;
-};
-```
-
-### Default Options
-
-```ts
-const defaults = {};
-```
-
-### `ignorePattern`
-
-See the [ignorePattern](./options/ignore-pattern.md) docs.
