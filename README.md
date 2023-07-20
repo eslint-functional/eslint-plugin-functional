@@ -20,6 +20,13 @@ An [ESLint](http://eslint.org) plugin to disable mutation and promote functional
 
 [Any donations would be much appreciated](./DONATIONS.md). 😄
 
+### Enterprise Users
+
+`eslint-plugin-functional` is available as part of the Tidelift Subscription.
+
+Tidelift is working with the maintainers of `eslint-plugin-functional` and a growing network of open source maintainers to ensure your open source software supply chain meets enterprise standards now and into the future.
+[Learn more.](https://tidelift.com/subscription/pkg/npm-eslint-plugin-functional?utm_source=npm-eslint-plugin-functional&utm_medium=referral&utm_campaign=enterprise&utm_term=repo)
+
 ## Getting Started
 
 [See our getting started guide](./GETTING_STARTED.md).
