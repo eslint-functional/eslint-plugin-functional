@@ -60,12 +60,13 @@ Enable rulesets via the "extends" property of your `.eslintrc` configuration fil
 
 Add `@typescript-eslint/parser` to the "parser" filed in your `.eslintrc` configuration file.
 To use type information, you will need to specify a path to your `tsconfig.json` file in the "project" property of "parserOptions".
+Alternatively, you can just set "project" to `true` to automatically use the nearest `tsconfig.json` files.
 
 ```jsonc
 {
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "project": "./tsconfig.json"
+    "project": true
   }
 }
 ```
@@ -78,7 +79,7 @@ See [@typescript-eslint/parser's README.md](https://github.com/typescript-eslint
 {
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "project": "tsconfig.json"
+    "project": true
   },
   "env": {
     "es6": true
