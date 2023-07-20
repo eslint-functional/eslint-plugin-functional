@@ -122,5 +122,5 @@ See the [allowLocalMutation](./options/allow-local-mutation.md) docs for more in
 
 ### `ignorePattern`
 
-Patterns will be matched against variable names.
-See the [ignorePattern](./options/ignore-pattern.md) docs.
+This option takes a RegExp string or an array of RegExp strings.
+It allows for the ability to ignore violations based on a variable's name.

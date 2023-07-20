@@ -191,4 +191,5 @@ A boolean to specify whether interfaces should be exempt from these rules.
 
 ### `ignorePattern`
 
-See the [ignorePattern](./options/ignore-pattern.md) docs.
+This option takes a RegExp string or an array of RegExp strings.
+It allows for the ability to ignore violations based on a type's name.

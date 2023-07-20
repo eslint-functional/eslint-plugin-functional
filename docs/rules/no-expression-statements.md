@@ -77,5 +77,5 @@ When enabled, expression of type void are not flagged as violations. This option
 
 ### `ignorePattern`
 
-Patterns will be matched against the line(s) of code.
-See the [ignorePattern](./options/ignore-pattern.md) docs for more information.
+This option takes a RegExp string or an array of RegExp strings.
+It allows for the ability to ignore violations based on the line(s) of code.

@@ -222,4 +222,5 @@ See the [allowLocalMutation](./options/allow-local-mutation.md) docs.
 
 ### `ignorePattern`
 
-See the [ignorePattern](./options/ignore-pattern.md) docs.
+This option takes a RegExp string or an array of RegExp strings.
+It allows for the ability to ignore violations based on a type's name.

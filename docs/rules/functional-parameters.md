@@ -194,5 +194,5 @@ const sum = [1, 2, 3].reduce((carry, current) => current, 0);
 
 ### `ignorePattern`
 
-Patterns will be matched against function names.
-See the [ignorePattern](./options/ignore-pattern.md) docs for more information.
+This option takes a RegExp string or an array of RegExp strings.
+It allows for the ability to ignore violations based on a function's name.
