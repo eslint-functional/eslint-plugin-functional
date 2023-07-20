@@ -27,7 +27,10 @@ readonly, then no override will be applied.
     "immutability": {
       "overrides": [
         {
-          "name": "ReadonlyArray",
+          "type": {
+            "from": "lib",
+            "name": "ReadonlyArray",
+          },
           "to": "Immutable",
           "from": "ReadonlyDeep"
         }
