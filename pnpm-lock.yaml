@@ -22,7 +22,7 @@ specifiers:
   '@semantic-release/release-notes-generator': 10.0.3
   '@types/dedent': 0.7.0
   '@types/eslint': 8.37.0
-  '@types/json-schema': 7.0.11
+  '@types/json-schema': 7.0.12
   '@types/node': 16.18.23
   '@types/rollup-plugin-auto-external': 2.0.2
   '@types/semver': 7.3.13
@@ -108,7 +108,7 @@ devDependencies:
   '@semantic-release/release-notes-generator': 10.0.3_semantic-release@21.0.1
   '@types/dedent': 0.7.0
   '@types/eslint': 8.37.0
-  '@types/json-schema': 7.0.11
+  '@types/json-schema': 7.0.12
   '@types/node': 16.18.23
   '@types/rollup-plugin-auto-external': 2.0.2
   '@types/semver': 7.3.13
@@ -1456,15 +1456,15 @@ packages:
     resolution: {integrity: sha512-Piet7dG2JBuDIfohBngQ3rCt7MgO9xCO4xIMKxBThCq5PNRB91IjlJ10eJVwfoNtvTErmxLzwBZ7rHZtbOMmFQ==}
     dependencies:
       '@types/estree': 1.0.0
-      '@types/json-schema': 7.0.11
+      '@types/json-schema': 7.0.12
     dev: true
 
   /@types/estree/1.0.0:
     resolution: {integrity: sha512-WulqXMDUTYAXCjZnk6JtIHPigp55cVtDgDrO2gHRwhyJto21+1zbVCtOYB2L1F9w4qCQ0rOGWBnBe0FNTiEJIQ==}
     dev: true
 
-  /@types/json-schema/7.0.11:
-    resolution: {integrity: sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==}
+  /@types/json-schema/7.0.12:
+    resolution: {integrity: sha512-Hr5Jfhc9eYOQNPYO5WLDq/n4jqijdHNlDXjuAQkkt+mWdQR+XJToOHrsD4cPaMXpn6KO7y2+wM8AZEs8VpBLVA==}
 
   /@types/json5/0.0.29:
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
@@ -1614,7 +1614,7 @@ packages:
       eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
     dependencies:
       '@eslint-community/eslint-utils': 4.2.0_eslint@8.38.0
-      '@types/json-schema': 7.0.11
+      '@types/json-schema': 7.0.12
       '@types/semver': 7.3.13
       '@typescript-eslint/scope-manager': 5.59.0
       '@typescript-eslint/types': 5.59.0
