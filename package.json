@@ -85,7 +85,7 @@
     "@commitlint/cli": "17.6.7",
     "@commitlint/config-conventional": "17.6.7",
     "@cspell/dict-cryptocurrencies": "3.0.1",
-    "@google/semantic-release-replace-plugin": "1.2.0",
+    "@google/semantic-release-replace-plugin": "1.2.7",
     "@istanbuljs/nyc-config-typescript": "1.0.2",
     "@rebeccastevens/eslint-config": "1.6.7",
     "@rollup/plugin-commonjs": "24.1.0",
