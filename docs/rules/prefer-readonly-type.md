@@ -218,7 +218,7 @@ const qux: Map<string, string> = new Map();
 
 ### `allowLocalMutation`
 
-See the [allowLocalMutation](./options/allow-local-mutation.md) docs.
+If `true`, local state is allowed to use non-readonly types. Local state is simply any code inside of a function.
 
 ### `ignorePattern`
 

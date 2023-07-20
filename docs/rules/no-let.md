@@ -118,8 +118,6 @@ for (let [index, element] of array.entries()) {
 
 If true, the rule will not flag any statements that are inside of function bodies.
 
-See the [allowLocalMutation](./options/allow-local-mutation.md) docs for more information.
-
 ### `ignorePattern`
 
 This option takes a RegExp string or an array of RegExp strings.

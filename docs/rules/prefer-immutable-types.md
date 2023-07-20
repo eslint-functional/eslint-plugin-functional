@@ -381,8 +381,6 @@ Override the options specifically for the given type of types.
 
 If true, the rule will not flag any variables that are inside of function bodies.
 
-See the [allowLocalMutation](./options/allow-local-mutation.md) docs for more information.
-
 ### `fixer`
 
 Configure the fixer to work with your setup.
