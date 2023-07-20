@@ -13,7 +13,7 @@ specifiers:
   '@rollup/plugin-commonjs': 24.1.0
   '@rollup/plugin-json': 6.0.0
   '@rollup/plugin-node-resolve': 15.0.2
-  '@rollup/plugin-typescript': 11.1.0
+  '@rollup/plugin-typescript': 11.1.2
   '@semantic-release/changelog': 6.0.3
   '@semantic-release/commit-analyzer': 9.0.2
   '@semantic-release/git': 10.0.1
@@ -99,7 +99,7 @@ devDependencies:
   '@rollup/plugin-commonjs': 24.1.0_rollup@3.20.4
   '@rollup/plugin-json': 6.0.0_rollup@3.20.4
   '@rollup/plugin-node-resolve': 15.0.2_rollup@3.20.4
-  '@rollup/plugin-typescript': 11.1.0_izi7uf24qffgyoca762tue46x4
+  '@rollup/plugin-typescript': 11.1.2_izi7uf24qffgyoca762tue46x4
   '@semantic-release/changelog': 6.0.3_semantic-release@21.0.1
   '@semantic-release/commit-analyzer': 9.0.2_semantic-release@21.0.1
   '@semantic-release/git': 10.0.1_semantic-release@21.0.1
@@ -1252,8 +1252,8 @@ packages:
       rollup: 3.20.4
     dev: true
 
-  /@rollup/plugin-typescript/11.1.0_izi7uf24qffgyoca762tue46x4:
-    resolution: {integrity: sha512-86flrfE+bSHB69znnTV6kVjkncs2LBMhcTCyxWgRxLyfXfQrxg4UwlAqENnjrrxnSNS/XKCDJCl8EkdFJVHOxw==}
+  /@rollup/plugin-typescript/11.1.2_izi7uf24qffgyoca762tue46x4:
+    resolution: {integrity: sha512-0ghSOCMcA7fl1JM+0gYRf+Q/HWyg+zg7/gDSc+fRLmlJWcW5K1I+CLRzaRhXf4Y3DRyPnnDo4M2ktw+a6JcDEg==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
       rollup: ^2.14.0||^3.0.0
