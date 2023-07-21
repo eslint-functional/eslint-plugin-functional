@@ -16,7 +16,7 @@ const tests: Array<
     optionsSet: [
       [],
       [{ allowInFunctions: true }],
-      [{ ignorePattern: "^mutable" }],
+      [{ ignoreIdentifierPattern: "^mutable" }],
     ],
     errors: [
       {
@@ -32,7 +32,7 @@ const tests: Array<
     optionsSet: [
       [],
       [{ allowInFunctions: true }],
-      [{ ignorePattern: "^mutable" }],
+      [{ ignoreIdentifierPattern: "^mutable" }],
     ],
     errors: [
       {
@@ -48,7 +48,7 @@ const tests: Array<
     optionsSet: [
       [],
       [{ allowInFunctions: true }],
-      [{ ignorePattern: "^mutable" }],
+      [{ ignoreIdentifierPattern: "^mutable" }],
     ],
     errors: [
       {
@@ -64,7 +64,7 @@ const tests: Array<
     optionsSet: [
       [],
       [{ allowInFunctions: true }],
-      [{ ignorePattern: "^mutable" }],
+      [{ ignoreIdentifierPattern: "^mutable" }],
     ],
     errors: [
       {
@@ -80,7 +80,7 @@ const tests: Array<
     optionsSet: [
       [],
       [{ allowInFunctions: true }],
-      [{ ignorePattern: "^mutable" }],
+      [{ ignoreIdentifierPattern: "^mutable" }],
     ],
     errors: [
       {
@@ -96,7 +96,7 @@ const tests: Array<
     optionsSet: [
       [],
       [{ allowInFunctions: true }],
-      [{ ignorePattern: "^mutable" }],
+      [{ ignoreIdentifierPattern: "^mutable" }],
     ],
     errors: [
       {
@@ -114,7 +114,7 @@ const tests: Array<
         let y = 0;
       }
     `,
-    optionsSet: [[], [{ ignorePattern: "^mutable" }]],
+    optionsSet: [[], [{ ignoreIdentifierPattern: "^mutable" }]],
     errors: [
       {
         messageId: "generic",
@@ -137,7 +137,7 @@ const tests: Array<
         let y = 0;
       }
     `,
-    optionsSet: [[], [{ ignorePattern: "^mutable" }]],
+    optionsSet: [[], [{ ignoreIdentifierPattern: "^mutable" }]],
     errors: [
       {
         messageId: "generic",
@@ -162,7 +162,7 @@ const tests: Array<
         }
       }
     `,
-    optionsSet: [[], [{ ignorePattern: "^mutable" }]],
+    optionsSet: [[], [{ ignoreIdentifierPattern: "^mutable" }]],
     errors: [
       {
         messageId: "generic",

@@ -3,7 +3,7 @@ import { type JSONSchema4 } from "@typescript-eslint/utils/json-schema";
 import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
 import {
-  type IgnorePatternOption,
+  type IgnoreCodePatternOption,
   type IgnoreAccessorPatternOption,
 } from "#eslint-plugin-functional/options";
 import {
@@ -165,7 +165,7 @@ const mutableTypeRegex = new RegExp(
 function shouldIgnorePattern2(
   node: TSESTree.Node,
   context: Readonly<RuleContext<string, BaseOptions>>,
-  ignorePattern: Partial<IgnorePatternOption>["ignorePattern"],
+  ignorePattern: Partial<IgnoreCodePatternOption>["ignoreCodePattern"],
   ignoreAccessorPattern?: Partial<IgnoreAccessorPatternOption>["ignoreAccessorPattern"],
 ): boolean {
   const isTypeNode =

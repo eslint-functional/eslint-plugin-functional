@@ -43,7 +43,12 @@ const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
     `,
     optionsSet: [
       [{ enforceParameterCount: "atLeastOne" }],
-      [{ ignorePattern: "^foo", enforceParameterCount: "exactlyOne" }],
+      [
+        {
+          ignoreIdentifierPattern: "^foo",
+          enforceParameterCount: "exactlyOne",
+        },
+      ],
     ],
   },
   {

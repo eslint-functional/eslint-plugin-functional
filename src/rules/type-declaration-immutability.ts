@@ -7,10 +7,10 @@ import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import { deepmerge } from "deepmerge-ts";
 import { Immutability } from "is-immutable-type";
 
-import { type IgnorePatternOption } from "#eslint-plugin-functional/options";
+import { type IgnoreIdentifierPatternOption } from "#eslint-plugin-functional/options";
 import {
   shouldIgnorePattern,
-  ignorePatternOptionSchema,
+  ignoreIdentifierPatternOptionSchema,
 } from "#eslint-plugin-functional/options";
 import { getNodeIdentifierTexts } from "#eslint-plugin-functional/utils/misc";
 import { type ESTypeDeclaration } from "#eslint-plugin-functional/utils/node-types";
@@ -54,7 +54,7 @@ type FixerConfig = {
  * The options this rule can take.
  */
 type Options = [
-  IgnorePatternOption & {
+  IgnoreIdentifierPatternOption & {
     rules: Array<{
       identifiers: string | string[];
       immutability: Exclude<
@@ -107,7 +107,7 @@ const fixerSchema: JSONSchema4 = {
 const schema: JSONSchema4[] = [
   {
     type: "object",
-    properties: deepmerge(ignorePatternOptionSchema, {
+    properties: deepmerge(ignoreIdentifierPatternOptionSchema, {
       rules: {
         type: "array",
         items: {
@@ -360,9 +360,9 @@ function checkTypeDeclaration(
   options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
-  const { ignoreInterfaces, ignorePattern } = optionsObject;
+  const { ignoreInterfaces, ignoreIdentifierPattern } = optionsObject;
   if (
-    shouldIgnorePattern(node, context, ignorePattern) ||
+    shouldIgnorePattern(node, context, ignoreIdentifierPattern) ||
     (ignoreInterfaces && isTSInterfaceDeclaration(node))
   ) {
     return {

@@ -57,7 +57,7 @@ This rule accepts an options object of the following type:
 ```ts
 type Options = {
   allowInFunctions: boolean;
-  ignorePattern?: string[] | string;
+  ignoreIdentifierPattern?: string[] | string;
 };
 ```
 
@@ -118,7 +118,7 @@ for (let [index, element] of array.entries()) {
 
 If true, the rule will not flag any statements that are inside of function bodies.
 
-### `ignorePattern`
+### `ignoreIdentifierPattern`
 
 This option takes a RegExp string or an array of RegExp strings.
 It allows for the ability to ignore violations based on a variable's name.

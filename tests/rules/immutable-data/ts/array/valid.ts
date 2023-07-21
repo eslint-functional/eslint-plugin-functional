@@ -210,7 +210,7 @@ const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
       mutableX.unshift(6);
     `,
     optionsSet: [
-      [{ ignorePattern: "^mutable" }],
+      [{ ignoreIdentifierPattern: "^mutable" }],
       [{ ignoreAccessorPattern: "mutable*" }],
     ],
   },

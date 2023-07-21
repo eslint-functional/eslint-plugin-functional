@@ -68,8 +68,6 @@ function getNodeIdentifierText(
       ? "this"
       : isUnaryExpression(node)
       ? getNodeIdentifierText(node.argument, context)
-      : isExpressionStatement(node)
-      ? context.getSourceCode().getText(node as TSESTree.Node)
       : isTSTypeAnnotation(node)
       ? context
           .getSourceCode()
@@ -87,6 +85,16 @@ function getNodeIdentifierText(
   }
 
   return undefined;
+}
+
+/**
+ * Get the code of the given node.
+ */
+export function getNodeCode(
+  node: TSESTree.Node,
+  context: Readonly<RuleContext<string, BaseOptions>>,
+): string {
+  return context.getSourceCode().getText(node);
 }
 
 /**

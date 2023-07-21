@@ -18,7 +18,13 @@ const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
       console.log("yo");
       console.error("yo");
     `,
-    optionsSet: [[{ ignorePattern: "^console\\." }]],
+    optionsSet: [[{ ignoreCodePattern: "^console\\." }]],
+  },
+  {
+    code: dedent`
+      assert(1 !== 2);
+    `,
+    optionsSet: [[{ ignoreCodePattern: "^assert" }]],
   },
   // Allow specifying directive prologues.
   {

@@ -9,10 +9,10 @@ import { isThisKeyword } from "ts-api-utils";
 
 import tsApiUtils from "#eslint-plugin-functional/conditional-imports/ts-api-utils";
 import typescript from "#eslint-plugin-functional/conditional-imports/typescript";
-import { type IgnorePatternOption } from "#eslint-plugin-functional/options";
+import { type IgnoreCodePatternOption } from "#eslint-plugin-functional/options";
 import {
   shouldIgnorePattern,
-  ignorePatternOptionSchema,
+  ignoreCodePatternOptionSchema,
 } from "#eslint-plugin-functional/options";
 import { isDirectivePrologue } from "#eslint-plugin-functional/utils/misc";
 import {
@@ -37,7 +37,7 @@ export const name = "no-expression-statements" as const;
  * The options this rule can take.
  */
 type Options = [
-  IgnorePatternOption & {
+  IgnoreCodePatternOption & {
     ignoreVoid: boolean;
     ignoreSelfReturning: boolean;
   },
@@ -49,7 +49,7 @@ type Options = [
 const schema: JSONSchema4[] = [
   {
     type: "object",
-    properties: deepmerge(ignorePatternOptionSchema, {
+    properties: deepmerge(ignoreCodePatternOptionSchema, {
       ignoreVoid: {
         type: "boolean",
       },
@@ -100,9 +100,11 @@ function checkExpressionStatement(
   options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
-  const { ignorePattern } = optionsObject;
+  const { ignoreCodePattern } = optionsObject;
 
-  if (shouldIgnorePattern(node, context, ignorePattern)) {
+  if (
+    shouldIgnorePattern(node, context, undefined, undefined, ignoreCodePattern)
+  ) {
     return {
       context,
       descriptors: [],

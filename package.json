@@ -87,7 +87,7 @@
     "@cspell/dict-cryptocurrencies": "3.0.1",
     "@google/semantic-release-replace-plugin": "1.2.7",
     "@istanbuljs/nyc-config-typescript": "1.0.2",
-    "@rebeccastevens/eslint-config": "2.0.1",
+    "@rebeccastevens/eslint-config": "2.0.2",
     "@rollup/plugin-commonjs": "25.0.3",
     "@rollup/plugin-json": "6.0.0",
     "@rollup/plugin-typescript": "11.1.2",

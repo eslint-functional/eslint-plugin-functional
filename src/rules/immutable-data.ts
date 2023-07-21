@@ -8,7 +8,7 @@ import { deepmerge } from "deepmerge-ts";
 
 import {
   type IgnoreAccessorPatternOption,
-  type IgnorePatternOption,
+  type IgnoreIdentifierPatternOption,
   type IgnoreClassesOption,
 } from "#eslint-plugin-functional/options";
 import {
@@ -16,7 +16,7 @@ import {
   shouldIgnoreClasses,
   ignoreAccessorPatternOptionSchema,
   ignoreClassesOptionSchema,
-  ignorePatternOptionSchema,
+  ignoreIdentifierPatternOptionSchema,
 } from "#eslint-plugin-functional/options";
 import { isExpected } from "#eslint-plugin-functional/utils/misc";
 import {
@@ -50,7 +50,7 @@ export const name = "immutable-data" as const;
 type Options = [
   IgnoreAccessorPatternOption &
     IgnoreClassesOption &
-    IgnorePatternOption & {
+    IgnoreIdentifierPatternOption & {
       ignoreImmediateMutation: boolean;
     },
 ];
@@ -62,7 +62,7 @@ const schema: JSONSchema4[] = [
   {
     type: "object",
     properties: deepmerge(
-      ignorePatternOptionSchema,
+      ignoreIdentifierPatternOptionSchema,
       ignoreAccessorPatternOptionSchema,
       ignoreClassesOptionSchema,
       {
@@ -167,12 +167,18 @@ function checkAssignmentExpression(
   options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
-  const { ignorePattern, ignoreAccessorPattern, ignoreClasses } = optionsObject;
+  const { ignoreIdentifierPattern, ignoreAccessorPattern, ignoreClasses } =
+    optionsObject;
 
   if (
     !isMemberExpression(node.left) ||
     shouldIgnoreClasses(node, context, ignoreClasses) ||
-    shouldIgnorePattern(node, context, ignorePattern, ignoreAccessorPattern)
+    shouldIgnorePattern(
+      node,
+      context,
+      ignoreIdentifierPattern,
+      ignoreAccessorPattern,
+    )
   ) {
     return {
       context,
@@ -197,12 +203,18 @@ function checkUnaryExpression(
   options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
-  const { ignorePattern, ignoreAccessorPattern, ignoreClasses } = optionsObject;
+  const { ignoreIdentifierPattern, ignoreAccessorPattern, ignoreClasses } =
+    optionsObject;
 
   if (
     !isMemberExpression(node.argument) ||
     shouldIgnoreClasses(node, context, ignoreClasses) ||
-    shouldIgnorePattern(node, context, ignorePattern, ignoreAccessorPattern)
+    shouldIgnorePattern(
+      node,
+      context,
+      ignoreIdentifierPattern,
+      ignoreAccessorPattern,
+    )
   ) {
     return {
       context,
@@ -226,7 +238,8 @@ function checkUpdateExpression(
   options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
-  const { ignorePattern, ignoreAccessorPattern, ignoreClasses } = optionsObject;
+  const { ignoreIdentifierPattern, ignoreAccessorPattern, ignoreClasses } =
+    optionsObject;
 
   if (
     !isMemberExpression(node.argument) ||
@@ -234,7 +247,7 @@ function checkUpdateExpression(
     shouldIgnorePattern(
       node.argument,
       context,
-      ignorePattern,
+      ignoreIdentifierPattern,
       ignoreAccessorPattern,
     )
   ) {
@@ -293,7 +306,8 @@ function checkCallExpression(
   options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
-  const { ignorePattern, ignoreAccessorPattern, ignoreClasses } = optionsObject;
+  const { ignoreIdentifierPattern, ignoreAccessorPattern, ignoreClasses } =
+    optionsObject;
 
   // Not potential object mutation?
   if (
@@ -303,7 +317,7 @@ function checkCallExpression(
     shouldIgnorePattern(
       node.callee.object,
       context,
-      ignorePattern,
+      ignoreIdentifierPattern,
       ignoreAccessorPattern,
     )
   ) {
@@ -338,7 +352,7 @@ function checkCallExpression(
     !shouldIgnorePattern(
       node.arguments[0],
       context,
-      ignorePattern,
+      ignoreIdentifierPattern,
       ignoreAccessorPattern,
     ) &&
     isObjectConstructorType(getTypeOfNode(node.callee.object, context))

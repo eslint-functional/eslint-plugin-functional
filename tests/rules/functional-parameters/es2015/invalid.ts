@@ -54,7 +54,7 @@ const tests: Array<
         },
       }
     `,
-    optionsSet: [[{ ignorePattern: "^foo" }]],
+    optionsSet: [[{ ignoreIdentifierPattern: "^foo" }]],
     errors: [
       {
         messageId: "restParam",

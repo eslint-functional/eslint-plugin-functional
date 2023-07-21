@@ -6,11 +6,11 @@ import {
 import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import { deepmerge } from "deepmerge-ts";
 
-import { type IgnorePatternOption } from "#eslint-plugin-functional/options";
+import { type IgnoreIdentifierPatternOption } from "#eslint-plugin-functional/options";
 import {
   shouldIgnorePattern,
   shouldIgnoreInFunction,
-  ignorePatternOptionSchema,
+  ignoreIdentifierPatternOptionSchema,
 } from "#eslint-plugin-functional/options";
 import {
   type RuleResult,
@@ -28,7 +28,7 @@ export const name = "no-let" as const;
  * The options this rule can take.
  */
 type Options = [
-  IgnorePatternOption & {
+  IgnoreIdentifierPatternOption & {
     allowInForLoopInit: boolean;
     allowInFunctions: boolean;
   },
@@ -40,7 +40,7 @@ type Options = [
 const schema: JSONSchema4[] = [
   {
     type: "object",
-    properties: deepmerge(ignorePatternOptionSchema, {
+    properties: deepmerge(ignoreIdentifierPatternOptionSchema, {
       allowInForLoopInit: {
         type: "boolean",
       },
@@ -91,12 +91,13 @@ function checkVariableDeclaration(
   options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
-  const { allowInForLoopInit, ignorePattern, allowInFunctions } = optionsObject;
+  const { allowInForLoopInit, ignoreIdentifierPattern, allowInFunctions } =
+    optionsObject;
 
   if (
     node.kind !== "let" ||
     shouldIgnoreInFunction(node, context, allowInFunctions) ||
-    shouldIgnorePattern(node, context, ignorePattern) ||
+    shouldIgnorePattern(node, context, ignoreIdentifierPattern) ||
     (allowInForLoopInit && isInForLoopInitializer(node))
   ) {
     return {

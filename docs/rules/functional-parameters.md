@@ -65,7 +65,7 @@ type Options = {
         ignoreIIFE: boolean;
         ignoreGettersAndSetters: boolean;
       };
-  ignorePattern?: string[] | string;
+  ignoreIdentifierPattern?: string[] | string;
   ignorePrefixSelector?: string[] | string;
 };
 ```
@@ -192,7 +192,7 @@ The following inline callback won't be flagged:
 const sum = [1, 2, 3].reduce((carry, current) => current, 0);
 ```
 
-### `ignorePattern`
+### `ignoreIdentifierPattern`
 
 This option takes a RegExp string or an array of RegExp strings.
 It allows for the ability to ignore violations based on a function's name.

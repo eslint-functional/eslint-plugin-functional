@@ -41,26 +41,26 @@ const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
       let mutable;
       let mutableX
     `,
-    optionsSet: [[{ ignorePattern: "^mutable" }]],
+    optionsSet: [[{ ignoreIdentifierPattern: "^mutable" }]],
   },
   {
     code: dedent`
       let mutable = 0;
       let mutableX = 0
     `,
-    optionsSet: [[{ ignorePattern: "^mutable" }]],
+    optionsSet: [[{ ignoreIdentifierPattern: "^mutable" }]],
   },
   {
     code: `for (let mutableX = 0; x < 1; x++);`,
-    optionsSet: [[{ ignorePattern: "^mutable" }]],
+    optionsSet: [[{ ignoreIdentifierPattern: "^mutable" }]],
   },
   {
     code: `for (let mutableX in {});`,
-    optionsSet: [[{ ignorePattern: "^mutable" }]],
+    optionsSet: [[{ ignoreIdentifierPattern: "^mutable" }]],
   },
   {
     code: `for (let mutableX of []);`,
-    optionsSet: [[{ ignorePattern: "^mutable" }]],
+    optionsSet: [[{ ignoreIdentifierPattern: "^mutable" }]],
   },
   {
     code: dedent`
@@ -69,7 +69,7 @@ const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
         let mutableY = 0;
       }
     `,
-    optionsSet: [[{ ignorePattern: "^mutable" }]],
+    optionsSet: [[{ ignoreIdentifierPattern: "^mutable" }]],
   },
   {
     code: dedent`
@@ -78,7 +78,7 @@ const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
         let mutableY = 0;
       }
     `,
-    optionsSet: [[{ ignorePattern: "^mutable" }]],
+    optionsSet: [[{ ignoreIdentifierPattern: "^mutable" }]],
   },
   {
     code: dedent`
@@ -89,33 +89,33 @@ const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
         }
       }
     `,
-    optionsSet: [[{ ignorePattern: "^mutable" }]],
+    optionsSet: [[{ ignoreIdentifierPattern: "^mutable" }]],
   },
   {
     code: dedent`
       let Mutable;
       let xMutable
     `,
-    optionsSet: [[{ ignorePattern: "Mutable$" }]],
+    optionsSet: [[{ ignoreIdentifierPattern: "Mutable$" }]],
   },
   {
     code: dedent`
       let Mutable = 0;
       let xMutable = 0
     `,
-    optionsSet: [[{ ignorePattern: "Mutable$" }]],
+    optionsSet: [[{ ignoreIdentifierPattern: "Mutable$" }]],
   },
   {
     code: `for (let xMutable = 0; x < 1; x++);`,
-    optionsSet: [[{ ignorePattern: "Mutable$" }]],
+    optionsSet: [[{ ignoreIdentifierPattern: "Mutable$" }]],
   },
   {
     code: `for (let xMutable in {});`,
-    optionsSet: [[{ ignorePattern: "Mutable$" }]],
+    optionsSet: [[{ ignoreIdentifierPattern: "Mutable$" }]],
   },
   {
     code: `for (let xMutable of []);`,
-    optionsSet: [[{ ignorePattern: "Mutable$" }]],
+    optionsSet: [[{ ignoreIdentifierPattern: "Mutable$" }]],
   },
   {
     code: dedent`
@@ -124,7 +124,7 @@ const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
         let yMutable = 0;
       }
     `,
-    optionsSet: [[{ ignorePattern: "Mutable$" }]],
+    optionsSet: [[{ ignoreIdentifierPattern: "Mutable$" }]],
   },
   {
     code: dedent`
@@ -133,7 +133,7 @@ const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
         let yMutable = 0;
       }
     `,
-    optionsSet: [[{ ignorePattern: "Mutable$" }]],
+    optionsSet: [[{ ignoreIdentifierPattern: "Mutable$" }]],
   },
   {
     code: dedent`
@@ -144,7 +144,7 @@ const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
         }
       }
     `,
-    optionsSet: [[{ ignorePattern: "Mutable$" }]],
+    optionsSet: [[{ ignoreIdentifierPattern: "Mutable$" }]],
   },
   {
     code: `for (let x = 0; x < 1; x++);`,

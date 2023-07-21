@@ -30,20 +30,20 @@ const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
     `,
     optionsSet: [[]],
   },
-  // IgnorePattern - objects.
+  // ignoreIdentifierPattern - objects.
   {
     code: dedent`
       var mutableVar = { a: 1 };
       delete mutableVar.a;
     `,
-    optionsSet: [[{ ignorePattern: ["^mutable"] }]],
+    optionsSet: [[{ ignoreIdentifierPattern: ["^mutable"] }]],
   },
   {
     code: dedent`
       var mutableVar = { a: 1 };
       Object.assign(mutableVar, { b: 2 });
     `,
-    optionsSet: [[{ ignorePattern: ["^mutable"] }]],
+    optionsSet: [[{ ignoreIdentifierPattern: ["^mutable"] }]],
   },
   // IgnoreAccessorPattern - objects.
   {

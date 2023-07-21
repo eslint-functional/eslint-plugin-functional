@@ -86,7 +86,7 @@ type Options = {
       | false;
   }>;
   ignoreInterfaces: boolean;
-  ignorePattern: string[] | string;
+  ignoreIdentifierPattern: string[] | string;
 };
 ```
 
@@ -189,7 +189,7 @@ If not set, or set to `false`, the fixer will be disabled.
 A boolean to specify whether interfaces should be exempt from these rules.
 `false` by default.
 
-### `ignorePattern`
+### `ignoreIdentifierPattern`
 
 This option takes a RegExp string or an array of RegExp strings.
 It allows for the ability to ignore violations based on a type's name.

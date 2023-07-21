@@ -7,12 +7,12 @@ import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import { deepmerge } from "deepmerge-ts";
 
 import {
-  type IgnorePatternOption,
+  type IgnoreIdentifierPatternOption,
   type IgnorePrefixSelectorOption,
 } from "#eslint-plugin-functional/options";
 import {
   shouldIgnorePattern,
-  ignorePatternOptionSchema,
+  ignoreIdentifierPatternOptionSchema,
   ignorePrefixSelectorOptionSchema,
 } from "#eslint-plugin-functional/options";
 import { type ESFunction } from "#eslint-plugin-functional/utils/node-types";
@@ -45,7 +45,7 @@ type ParameterCountOptions = "atLeastOne" | "exactlyOne";
  * The options this rule can take.
  */
 type Options = [
-  IgnorePatternOption &
+  IgnoreIdentifierPatternOption &
     IgnorePrefixSelectorOption & {
       allowRestParameter: boolean;
       allowArgumentsKeyword: boolean;
@@ -68,7 +68,7 @@ const schema: JSONSchema4[] = [
   {
     type: "object",
     properties: deepmerge(
-      ignorePatternOptionSchema,
+      ignoreIdentifierPatternOptionSchema,
       ignorePrefixSelectorOptionSchema,
       {
         allowRestParameter: {
@@ -230,9 +230,9 @@ function checkFunction(
   options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
-  const { ignorePattern } = optionsObject;
+  const { ignoreIdentifierPattern } = optionsObject;
 
-  if (shouldIgnorePattern(node, context, ignorePattern)) {
+  if (shouldIgnorePattern(node, context, ignoreIdentifierPattern)) {
     return {
       context,
       descriptors: [],
@@ -257,9 +257,9 @@ function checkIdentifier(
   options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
-  const { ignorePattern } = optionsObject;
+  const { ignoreIdentifierPattern } = optionsObject;
 
-  if (shouldIgnorePattern(node, context, ignorePattern)) {
+  if (shouldIgnorePattern(node, context, ignoreIdentifierPattern)) {
     return {
       context,
       descriptors: [],

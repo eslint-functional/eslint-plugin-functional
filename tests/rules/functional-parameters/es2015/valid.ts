@@ -29,7 +29,7 @@ const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
         console.log(bar);
       }
     `,
-    optionsSet: [[{ ignorePattern: "^foo" }]],
+    optionsSet: [[{ ignoreIdentifierPattern: "^foo" }]],
   },
   {
     code: dedent`
@@ -39,7 +39,7 @@ const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
         }
       }
     `,
-    optionsSet: [[{ ignorePattern: "^foo" }]],
+    optionsSet: [[{ ignoreIdentifierPattern: "^foo" }]],
   },
   {
     code: dedent`

@@ -29,7 +29,7 @@ const tests: Array<
   // Non-allowed expressions should cause failures.
   {
     code: `console.trace();`,
-    optionsSet: [[{ ignorePattern: "^console\\.log" }]],
+    optionsSet: [[{ ignoreCodePattern: "^console\\.log" }]],
     errors: [
       {
         messageId: "generic",

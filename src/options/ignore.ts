@@ -3,7 +3,10 @@ import { type JSONSchema4ObjectSchema } from "@typescript-eslint/utils/json-sche
 import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import escapeRegExp from "escape-string-regexp";
 
-import { getNodeIdentifierTexts } from "#eslint-plugin-functional/utils/misc";
+import {
+  getNodeCode,
+  getNodeIdentifierTexts,
+} from "#eslint-plugin-functional/utils/misc";
 import { type BaseOptions } from "#eslint-plugin-functional/utils/rule";
 import {
   isInClass,
@@ -20,16 +23,36 @@ import {
 /**
  * The option to ignore patterns.
  */
-export type IgnorePatternOption = Readonly<{
-  ignorePattern?: ReadonlyArray<string> | string;
+export type IgnoreIdentifierPatternOption = Readonly<{
+  ignoreIdentifierPattern?: ReadonlyArray<string> | string;
 }>;
 
 /**
  * The schema for the option to ignore patterns.
  */
-export const ignorePatternOptionSchema: JSONSchema4ObjectSchema["properties"] =
+export const ignoreIdentifierPatternOptionSchema: JSONSchema4ObjectSchema["properties"] =
   {
-    ignorePattern: {
+    ignoreIdentifierPattern: {
+      type: ["string", "array"],
+      items: {
+        type: "string",
+      },
+    },
+  };
+
+/**
+ * The option to ignore patterns.
+ */
+export type IgnoreCodePatternOption = Readonly<{
+  ignoreCodePattern?: ReadonlyArray<string> | string;
+}>;
+
+/**
+ * The schema for the option to ignore patterns.
+ */
+export const ignoreCodePatternOptionSchema: JSONSchema4ObjectSchema["properties"] =
+  {
+    ignoreCodePattern: {
       type: ["string", "array"],
       items: {
         type: "string",
@@ -109,14 +132,12 @@ export const ignorePrefixSelectorOptionSchema: JSONSchema4ObjectSchema["properti
  */
 function shouldIgnoreViaPattern(
   text: string,
-  ignorePattern: ReadonlyArray<string> | string,
+  pattern: ReadonlyArray<string> | string,
 ): boolean {
-  const patterns = Array.isArray(ignorePattern)
-    ? ignorePattern
-    : [ignorePattern];
+  const patterns = Array.isArray(pattern) ? pattern : [pattern];
 
   // One or more patterns match?
-  return patterns.some((pattern) => new RegExp(pattern, "u").test(text));
+  return patterns.some((p) => new RegExp(p, "u").test(text));
 }
 
 /**
@@ -173,15 +194,13 @@ function accessorPatternMatch(
  */
 function shouldIgnoreViaAccessorPattern(
   text: string,
-  ignorePattern: ReadonlyArray<string> | string,
+  pattern: ReadonlyArray<string> | string,
 ): boolean {
-  const patterns = Array.isArray(ignorePattern)
-    ? ignorePattern
-    : [ignorePattern];
+  const patterns = Array.isArray(pattern) ? pattern : [pattern];
 
   // One or more patterns match?
-  return patterns.some((pattern) =>
-    accessorPatternMatch(pattern.split("."), text.split(".")),
+  return patterns.some((p) =>
+    accessorPatternMatch(p.split("."), text.split(".")),
   );
 }
 
@@ -223,30 +242,43 @@ export function shouldIgnoreClasses(
  * Should the given node be allowed base off the following rule options?
  *
  * - IgnoreAccessorPatternOption.
- * - IgnorePatternOption.
+ * - IgnoreIdentifierPatternOption.
  */
 export function shouldIgnorePattern(
   node: TSESTree.Node,
   context: Readonly<RuleContext<string, BaseOptions>>,
-  ignorePattern: Readonly<Partial<IgnorePatternOption>["ignorePattern"]>,
+  ignoreIdentifierPattern: Readonly<
+    Partial<IgnoreIdentifierPatternOption>["ignoreIdentifierPattern"]
+  >,
   ignoreAccessorPattern?: Readonly<
     Partial<IgnoreAccessorPatternOption>["ignoreAccessorPattern"]
+  >,
+  ignoreCodePattern?: Readonly<
+    Partial<IgnoreCodePatternOption>["ignoreCodePattern"]
   >,
 ): boolean {
   const texts = getNodeIdentifierTexts(node, context);
 
   if (texts.length === 0) {
-    return false;
+    return (
+      ignoreCodePattern !== undefined &&
+      shouldIgnoreViaPattern(getNodeCode(node, context), ignoreCodePattern)
+    );
   }
 
   return (
-    // Ignore if ignorePattern is set and a pattern matches.
-    (ignorePattern !== undefined &&
-      texts.every((text) => shouldIgnoreViaPattern(text, ignorePattern))) ||
+    // Ignore if ignoreIdentifierPattern is set and a pattern matches.
+    (ignoreIdentifierPattern !== undefined &&
+      texts.every((text) =>
+        shouldIgnoreViaPattern(text, ignoreIdentifierPattern),
+      )) ||
     // Ignore if ignoreAccessorPattern is set and an accessor pattern matches.
     (ignoreAccessorPattern !== undefined &&
       texts.every((text) =>
         shouldIgnoreViaAccessorPattern(text, ignoreAccessorPattern),
-      ))
+      )) ||
+    // Ignore if ignoreCodePattern is set and a code pattern matches.
+    (ignoreCodePattern !== undefined &&
+      shouldIgnoreViaPattern(getNodeCode(node, context), ignoreCodePattern))
   );
 }

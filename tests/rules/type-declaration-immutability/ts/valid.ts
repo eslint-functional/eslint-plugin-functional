@@ -118,7 +118,7 @@ const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
     optionsSet: [
       [
         {
-          ignorePattern: "Foo",
+          ignoreIdentifierPattern: "Foo",
         },
       ],
     ],
@@ -128,7 +128,7 @@ const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
     optionsSet: [
       [
         {
-          ignorePattern: "Foo",
+          ignoreIdentifierPattern: "Foo",
         },
       ],
       [

@@ -61,7 +61,7 @@ This rule accepts an options object of the following type:
 type Options = {
   ignoreClasses: boolean | "fieldsOnly";
   ignoreImmediateMutation: boolean;
-  ignorePattern?: string[] | string;
+  ignoreIdentifierPattern?: string[] | string;
   ignoreAccessorPattern?: string[] | string;
 };
 ```
@@ -103,7 +103,7 @@ Ignore mutations inside classes.
 
 Classes already aren't functional so ignore mutations going on inside them.
 
-### `ignorePattern`
+### `ignoreIdentifierPattern`
 
 This option takes a RegExp string or an array of RegExp strings.
 It allows for the ability to ignore violations based on a variable's name.

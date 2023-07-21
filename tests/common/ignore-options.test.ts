@@ -4,8 +4,9 @@ import { type ValidTestCase } from "@typescript-eslint/rule-tester";
 import dedent from "dedent";
 
 import {
+  type IgnoreIdentifierPatternOption,
   type IgnoreAccessorPatternOption,
-  type IgnorePatternOption,
+  type IgnoreCodePatternOption,
 } from "#eslint-plugin-functional/options";
 import { shouldIgnorePattern } from "#eslint-plugin-functional/options";
 import { getAvaRuleTester } from "#eslint-plugin-functional/tests/helpers/AvaRuleTester";
@@ -30,8 +31,9 @@ function createDummyAssignmentExpressionRule() {
           shouldIgnorePattern(
             node,
             context,
-            options.ignorePattern,
+            options.ignoreIdentifierPattern,
             options.ignoreAccessorPattern,
+            options.ignoreCodePattern,
           ) === allowed,
         );
       },
@@ -176,7 +178,9 @@ getAvaRuleTester("esLatest", configs.esLatest).run(
 );
 
 const assignmentExpressionTests: Array<
-  ValidTestCase<[boolean, IgnorePatternOption]>
+  ValidTestCase<
+    [boolean, IgnoreCodePatternOption & IgnoreIdentifierPatternOption]
+  >
 > = [
   // Prefix match.
   {
@@ -186,7 +190,7 @@ const assignmentExpressionTests: Array<
       mutable_xxx.foo = 0;
       mutable_xxx[0] = 0;
     `,
-    options: [true, { ignorePattern: "^mutable_" }],
+    options: [true, { ignoreIdentifierPattern: "^mutable_" }],
   },
   // Suffix match.
   {
@@ -195,21 +199,21 @@ const assignmentExpressionTests: Array<
       xxx_mutable = 0;
       foo.xxx_mutable = 0;
     `,
-    options: [true, { ignorePattern: "_mutable$" }],
+    options: [true, { ignoreIdentifierPattern: "_mutable$" }],
   },
   // Middle match.
   {
     code: dedent`
       mutable = 0;
     `,
-    options: [true, { ignorePattern: "^mutable$" }],
+    options: [true, { ignoreIdentifierPattern: "^mutable$" }],
   },
   {
     code: dedent`
       mutable.foo.bar = 0;
       mutable.bar[0] = 0;
     `,
-    options: [false, { ignorePattern: "^mutable$" }],
+    options: [false, { ignoreIdentifierPattern: "^mutable$" }],
   },
 ];
 
@@ -223,25 +227,27 @@ getAvaRuleTester("esLatest", configs.esLatest).run(
 );
 
 const expressionStatementTests: Array<
-  ValidTestCase<[boolean, IgnorePatternOption]>
+  ValidTestCase<
+    [boolean, IgnoreCodePatternOption & IgnoreIdentifierPatternOption]
+  >
 > = [
   {
     code: dedent`
       const x = 0;
     `,
-    options: [true, { ignorePattern: "^const x" }],
+    options: [true, { ignoreCodePattern: "^const x" }],
   },
   {
     code: dedent`
       const x = 0;
     `,
-    options: [true, { ignorePattern: "= 0;$" }],
+    options: [true, { ignoreCodePattern: "= 0;$" }],
   },
   {
     code: dedent`
       const x = 0;
     `,
-    options: [true, { ignorePattern: "^const x = 0;$" }],
+    options: [true, { ignoreCodePattern: "^const x = 0;$" }],
   },
 ];
 
@@ -252,7 +258,13 @@ getAvaRuleTester("esLatest", configs.esLatest).run(
     return {
       ExpressionStatement: (node) => {
         assert(
-          shouldIgnorePattern(node, context, options.ignorePattern) === allowed,
+          shouldIgnorePattern(
+            node,
+            context,
+            undefined,
+            undefined,
+            options.ignoreCodePattern,
+          ) === allowed,
         );
       },
     };
