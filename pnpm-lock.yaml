@@ -61,7 +61,7 @@ specifiers:
   json-schema: 0.4.0
   jsonc-parser: 3.2.0
   knip: 2.9.0
-  lint-staged: 13.2.1
+  lint-staged: 13.2.3
   markdownlint-cli: 0.33.0
   nyc: 15.1.0
   prettier: 2.8.7
@@ -142,7 +142,7 @@ devDependencies:
   json-schema: 0.4.0
   jsonc-parser: 3.2.0
   knip: 2.9.0
-  lint-staged: 13.2.1
+  lint-staged: 13.2.3
   markdownlint-cli: 0.33.0
   nyc: 15.1.0
   prettier: 2.8.7
@@ -4841,8 +4841,8 @@ packages:
       uc.micro: 1.0.6
     dev: true
 
-  /lint-staged/13.2.1:
-    resolution: {integrity: sha512-8gfzinVXoPfga5Dz/ZOn8I2GOhf81Wvs+KwbEXQn/oWZAvCVS2PivrXfVbFJc93zD16uC0neS47RXHIjXKYZQw==}
+  /lint-staged/13.2.3:
+    resolution: {integrity: sha512-zVVEXLuQIhr1Y7R7YAWx4TZLdvuzk7DnmrsTNL0fax6Z3jrpFcas+vKbzxhhvp6TA55m1SQuWkpzI1qbfDZbAg==}
     engines: {node: ^14.13.1 || >=16.0.0}
     hasBin: true
     dependencies:
@@ -4858,7 +4858,7 @@ packages:
       object-inspect: 1.12.3
       pidtree: 0.6.0
       string-argv: 0.3.1
-      yaml: 2.2.1
+      yaml: 2.3.1
     transitivePeerDependencies:
       - enquirer
       - supports-color
@@ -7319,8 +7319,8 @@ packages:
   /yallist/4.0.0:
     resolution: {integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==}
 
-  /yaml/2.2.1:
-    resolution: {integrity: sha512-e0WHiYql7+9wr4cWMx3TVQrNwejKaEe7/rHNmQmqRjazfOP5W8PB6Jpebb5o6fIapbz9o9+2ipcaTM2ZwDI6lw==}
+  /yaml/2.3.1:
+    resolution: {integrity: sha512-2eHWfjaoXgTBC2jNM1LRef62VQa0umtvRiDSk6HSzW7RvS5YtkabJrwYLLEKWBc8a5U2PTSCs+dJjUTJdlHsWQ==}
     engines: {node: '>= 14'}
     dev: true
 
