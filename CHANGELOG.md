@@ -1,6 +1,18 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+# [6.0.0-next.5](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.0.0-next.4...v6.0.0-next.5) (2023-07-21)
+
+
+### Bug Fixes
+
+* replace `ignorePattern` option with `ignoreIdentifierPattern` and `ignoreCodePattern` ([48d8eba](https://github.com/eslint-functional/eslint-plugin-functional/commit/48d8eba1356c54b2e0fa568c5cb2526e224c31ed)), closes [#467](https://github.com/eslint-functional/eslint-plugin-functional/issues/467)
+
+
+### BREAKING CHANGES
+
+* replace `ignorePattern` option with `ignoreIdentifierPattern` and `ignoreCodePattern`
+
 # [6.0.0-next.4](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.0.0-next.3...v6.0.0-next.4) (2023-07-21)
 
 
