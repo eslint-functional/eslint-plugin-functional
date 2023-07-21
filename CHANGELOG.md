@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+# [6.0.0-next.4](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.0.0-next.3...v6.0.0-next.4) (2023-07-21)
+
+
+### Features
+
+* **no-expression-statements:** add option to ignore self returning functions ([894fb91](https://github.com/eslint-functional/eslint-plugin-functional/commit/894fb915b5418e7ee47019b3d7296eee0e307f20)), closes [#611](https://github.com/eslint-functional/eslint-plugin-functional/issues/611)
+
 # [6.0.0-next.3](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.0.0-next.2...v6.0.0-next.3) (2023-07-17)
 
 
