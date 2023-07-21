@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+# [6.0.0-next.6](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.0.0-next.5...v6.0.0-next.6) (2023-07-21)
+
+
+### Features
+
+* **immutable-data:** add new option `ignoreNonConstDeclarations` ([ecde24a](https://github.com/eslint-functional/eslint-plugin-functional/commit/ecde24afed487b9b495832ea067c662a0848825a)), closes [#691](https://github.com/eslint-functional/eslint-plugin-functional/issues/691)
+
 # [6.0.0-next.5](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.0.0-next.4...v6.0.0-next.5) (2023-07-21)
 
 
