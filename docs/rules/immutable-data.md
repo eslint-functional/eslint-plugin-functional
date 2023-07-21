@@ -61,6 +61,7 @@ This rule accepts an options object of the following type:
 type Options = {
   ignoreClasses: boolean | "fieldsOnly";
   ignoreImmediateMutation: boolean;
+  ignoreNonConstDeclarations: boolean;
   ignoreIdentifierPattern?: string[] | string;
   ignoreAccessorPattern?: string[] | string;
 };
@@ -72,6 +73,7 @@ type Options = {
 type Options = {
   ignoreClasses: false;
   ignoreImmediateMutation: true;
+  ignoreNonConstDeclarations: false;
 };
 ```
 
@@ -96,6 +98,11 @@ For example, an array can be immutably sorted like so:
 const original = ["foo", "bar", "baz"];
 const sorted = [...original].sort((a, b) => a.localeCompare(b)); // This is OK with ignoreImmediateMutation.
 ```
+
+### `ignoreNonConstDeclarations`
+
+If true, this rule will ignore any mutations that happen on non-const variables.
+This allow for more easily using mutable data by simply using the `let` keyword instead of `const`.
 
 ### `ignoreClasses`
 

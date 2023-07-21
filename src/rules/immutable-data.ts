@@ -5,7 +5,10 @@ import {
 } from "@typescript-eslint/utils/json-schema";
 import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import { deepmerge } from "deepmerge-ts";
+import { isNodeFlagSet } from "ts-api-utils";
+import type ts from "typescript";
 
+import typescript from "#eslint-plugin-functional/conditional-imports/typescript";
 import {
   type IgnoreAccessorPatternOption,
   type IgnoreIdentifierPatternOption,
@@ -52,6 +55,7 @@ type Options = [
     IgnoreClassesOption &
     IgnoreIdentifierPatternOption & {
       ignoreImmediateMutation: boolean;
+      ignoreNonConstDeclarations: boolean;
     },
 ];
 
@@ -69,6 +73,9 @@ const schema: JSONSchema4[] = [
         ignoreImmediateMutation: {
           type: "boolean",
         },
+        ignoreNonConstDeclarations: {
+          type: "boolean",
+        },
       } satisfies JSONSchema4ObjectSchema["properties"],
     ),
     additionalProperties: false,
@@ -82,6 +89,7 @@ const defaultOptions: Options = [
   {
     ignoreClasses: false,
     ignoreImmediateMutation: true,
+    ignoreNonConstDeclarations: false,
   },
 ];
 
@@ -159,6 +167,39 @@ const objectConstructorMutatorFunctions = new Set([
 ]);
 
 /**
+ * Is the given identifier defined by a mutable variable (let or var)?
+ */
+function isDefinedByMutableVaraible(
+  node: TSESTree.Identifier,
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+) {
+  if (typescript === undefined) {
+    return true;
+  }
+
+  const tsNode = context.parserServices?.esTreeNodeToTSNodeMap.get(node);
+  const variableDeclaration =
+    tsNode !== undefined &&
+    "flowNode" in tsNode &&
+    typeof tsNode.flowNode === "object" &&
+    tsNode.flowNode !== null &&
+    "node" in tsNode.flowNode &&
+    typeof tsNode.flowNode.node === "object" &&
+    tsNode.flowNode.node !== null &&
+    typescript.isVariableDeclaration(tsNode.flowNode.node as ts.Node)
+      ? (tsNode.flowNode.node as ts.VariableDeclaration)
+      : undefined;
+
+  const variableDeclarationList = variableDeclaration?.parent;
+
+  return (
+    variableDeclarationList === undefined ||
+    !typescript.isVariableDeclarationList(variableDeclarationList) ||
+    !isNodeFlagSet(variableDeclarationList, typescript.NodeFlags.Const)
+  );
+}
+
+/**
  * Check if the given assignment expression violates this rule.
  */
 function checkAssignmentExpression(
@@ -167,8 +208,12 @@ function checkAssignmentExpression(
   options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
-  const { ignoreIdentifierPattern, ignoreAccessorPattern, ignoreClasses } =
-    optionsObject;
+  const {
+    ignoreIdentifierPattern,
+    ignoreAccessorPattern,
+    ignoreNonConstDeclarations,
+    ignoreClasses,
+  } = optionsObject;
 
   if (
     !isMemberExpression(node.left) ||
@@ -179,6 +224,17 @@ function checkAssignmentExpression(
       ignoreIdentifierPattern,
       ignoreAccessorPattern,
     )
+  ) {
+    return {
+      context,
+      descriptors: [],
+    };
+  }
+
+  if (
+    ignoreNonConstDeclarations &&
+    isIdentifier(node.left.object) &&
+    isDefinedByMutableVaraible(node.left.object, context)
   ) {
     return {
       context,
@@ -203,8 +259,12 @@ function checkUnaryExpression(
   options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
-  const { ignoreIdentifierPattern, ignoreAccessorPattern, ignoreClasses } =
-    optionsObject;
+  const {
+    ignoreIdentifierPattern,
+    ignoreAccessorPattern,
+    ignoreNonConstDeclarations,
+    ignoreClasses,
+  } = optionsObject;
 
   if (
     !isMemberExpression(node.argument) ||
@@ -215,6 +275,17 @@ function checkUnaryExpression(
       ignoreIdentifierPattern,
       ignoreAccessorPattern,
     )
+  ) {
+    return {
+      context,
+      descriptors: [],
+    };
+  }
+
+  if (
+    ignoreNonConstDeclarations &&
+    isIdentifier(node.argument.object) &&
+    isDefinedByMutableVaraible(node.argument.object, context)
   ) {
     return {
       context,
@@ -238,8 +309,12 @@ function checkUpdateExpression(
   options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
-  const { ignoreIdentifierPattern, ignoreAccessorPattern, ignoreClasses } =
-    optionsObject;
+  const {
+    ignoreIdentifierPattern,
+    ignoreAccessorPattern,
+    ignoreNonConstDeclarations,
+    ignoreClasses,
+  } = optionsObject;
 
   if (
     !isMemberExpression(node.argument) ||
@@ -250,6 +325,17 @@ function checkUpdateExpression(
       ignoreIdentifierPattern,
       ignoreAccessorPattern,
     )
+  ) {
+    return {
+      context,
+      descriptors: [],
+    };
+  }
+
+  if (
+    ignoreNonConstDeclarations &&
+    isIdentifier(node.argument.object) &&
+    isDefinedByMutableVaraible(node.argument.object, context)
   ) {
     return {
       context,
@@ -306,8 +392,12 @@ function checkCallExpression(
   options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
-  const { ignoreIdentifierPattern, ignoreAccessorPattern, ignoreClasses } =
-    optionsObject;
+  const {
+    ignoreIdentifierPattern,
+    ignoreAccessorPattern,
+    ignoreNonConstDeclarations,
+    ignoreClasses,
+  } = optionsObject;
 
   // Not potential object mutation?
   if (
@@ -334,7 +424,10 @@ function checkCallExpression(
     arrayMutatorMethods.has(node.callee.property.name) &&
     (!ignoreImmediateMutation ||
       !isInChainCallAndFollowsNew(node.callee, context)) &&
-    isArrayType(getTypeOfNode(node.callee.object, context))
+    isArrayType(getTypeOfNode(node.callee.object, context)) &&
+    (!ignoreNonConstDeclarations ||
+      !isIdentifier(node.callee.object) ||
+      !isDefinedByMutableVaraible(node.callee.object, context))
   ) {
     return {
       context,
@@ -355,7 +448,10 @@ function checkCallExpression(
       ignoreIdentifierPattern,
       ignoreAccessorPattern,
     ) &&
-    isObjectConstructorType(getTypeOfNode(node.callee.object, context))
+    isObjectConstructorType(getTypeOfNode(node.callee.object, context)) &&
+    (!ignoreNonConstDeclarations ||
+      !isIdentifier(node.callee.object) ||
+      !isDefinedByMutableVaraible(node.callee.object, context))
   ) {
     return {
       context,

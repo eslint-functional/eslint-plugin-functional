@@ -702,6 +702,52 @@ const tests: Array<
       },
     ],
   },
+  // ignoreNonConstDeclarations.
+  {
+    code: dedent`
+      const foo = [0, 1];
+      foo[0] += 1;
+    `,
+    optionsSet: [[{ ignoreNonConstDeclarations: true }]],
+    errors: [
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.AssignmentExpression,
+        line: 2,
+        column: 1,
+      },
+    ],
+  },
+  {
+    code: dedent`
+      const foo = [0, 1];
+      foo[1]++;
+    `,
+    optionsSet: [[{ ignoreNonConstDeclarations: true }]],
+    errors: [
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.UpdateExpression,
+        line: 2,
+        column: 1,
+      },
+    ],
+  },
+  {
+    code: dedent`
+      const foo = [0, 1];
+      foo.pop();
+    `,
+    optionsSet: [[{ ignoreNonConstDeclarations: true }]],
+    errors: [
+      {
+        messageId: "array",
+        type: AST_NODE_TYPES.CallExpression,
+        line: 2,
+        column: 1,
+      },
+    ],
+  },
 ];
 
 export default tests;

@@ -320,6 +320,37 @@ const tests: Array<
       },
     ],
   },
+  // ignoreNonConstDeclarations.
+  {
+    code: dedent`
+      const mutableVar = { a: 1 };
+      mutableVar.a++;
+    `,
+    optionsSet: [[{ ignoreNonConstDeclarations: true }]],
+    errors: [
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.UpdateExpression,
+        line: 2,
+        column: 1,
+      },
+    ],
+  },
+  {
+    code: dedent`
+      const mutableVar = { a: 1 };
+      mutableVar.a = 0;
+    `,
+    optionsSet: [[{ ignoreNonConstDeclarations: true }]],
+    errors: [
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.AssignmentExpression,
+        line: 2,
+        column: 1,
+      },
+    ],
+  },
 ];
 
 export default tests;

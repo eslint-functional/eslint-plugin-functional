@@ -310,7 +310,7 @@ export function getESTreeNode<
   Context extends Readonly<RuleContext<string, BaseOptions>>,
 >(node: TSNode, context: Context): TSESTree.Node | null {
   const parserServices = getParserServices(context, true);
-  return parserServices.tsNodeToESTreeNodeMap.get(node);
+  return parserServices.tsNodeToESTreeNodeMap.get(node) ?? null;
 }
 
 /**

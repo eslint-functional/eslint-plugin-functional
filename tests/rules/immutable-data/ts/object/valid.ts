@@ -59,6 +59,23 @@ const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
       [{ ignoreAccessorPattern: ["**.mutable*.**"] }],
     ],
   },
+  // ignoreNonConstDeclarations.
+  {
+    code: dedent`
+      var mutableVar = { a: 1 };
+      mutableVar.a = 0;
+      mutableVar.a++;
+    `,
+    optionsSet: [[{ ignoreNonConstDeclarations: true }]],
+  },
+  {
+    code: dedent`
+      let mutableVar = { a: 1 };
+      mutableVar.a = 0;
+      mutableVar.a++;
+    `,
+    optionsSet: [[{ ignoreNonConstDeclarations: true }]],
+  },
   // Allow initialization of class members in constructor
   {
     code: dedent`

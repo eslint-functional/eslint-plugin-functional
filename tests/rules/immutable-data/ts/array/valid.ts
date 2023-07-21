@@ -230,6 +230,25 @@ const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
     `,
     optionsSet: [[]],
   },
+  // ignoreNonConstDeclarations.
+  {
+    code: dedent`
+      var mutableVar = [0, 1];
+      mutableVar[0] += 1;
+      mutableVar[1]++;
+      mutableVar.pop();
+    `,
+    optionsSet: [[{ ignoreNonConstDeclarations: true }]],
+  },
+  {
+    code: dedent`
+      let mutableVar = [0, 1];
+      mutableVar[0] += 1;
+      mutableVar[1]++;
+      mutableVar.pop();
+    `,
+    optionsSet: [[{ ignoreNonConstDeclarations: true }]],
+  },
 ];
 
 export default tests;
