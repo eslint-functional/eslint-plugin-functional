@@ -60,6 +60,7 @@ This rule accepts an options object of the following type:
 type Options = {
   ignorePattern?: string[] | string;
   ignoreVoid?: boolean;
+  ignoreSelfReturning?: boolean;
 };
 ```
 
@@ -68,12 +69,19 @@ type Options = {
 ```ts
 const defaults = {
   ignoreVoid: false,
+  ignoreSelfReturning: false,
 };
 ```
 
 ### `ignoreVoid`
 
 When enabled, expression of type void are not flagged as violations. This options requires TypeScript in order to work.
+
+### `ignoreSelfReturning`
+
+Like `ignoreVoid` but instead does not flag function calls that always only return `this`.
+
+Limitation: The function declaration must explicitly use `return this`; equivalents (such as assign this to a variable first, that is then returned) won't be considered valid.
 
 ### `ignorePattern`
 

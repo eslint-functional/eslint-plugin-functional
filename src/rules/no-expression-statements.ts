@@ -5,8 +5,10 @@ import {
 } from "@typescript-eslint/utils/json-schema";
 import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import { deepmerge } from "deepmerge-ts";
+import { isThisKeyword } from "ts-api-utils";
 
 import tsApiUtils from "#eslint-plugin-functional/conditional-imports/ts-api-utils";
+import typescript from "#eslint-plugin-functional/conditional-imports/typescript";
 import { type IgnorePatternOption } from "#eslint-plugin-functional/options";
 import {
   shouldIgnorePattern,
@@ -21,7 +23,10 @@ import {
   createRule,
   getTypeOfNode,
 } from "#eslint-plugin-functional/utils/rule";
-import { isYieldExpression } from "#eslint-plugin-functional/utils/type-guards";
+import {
+  isCallExpression,
+  isYieldExpression,
+} from "#eslint-plugin-functional/utils/type-guards";
 
 /**
  * The name of this rule.
@@ -34,6 +39,7 @@ export const name = "no-expression-statements" as const;
 type Options = [
   IgnorePatternOption & {
     ignoreVoid: boolean;
+    ignoreSelfReturning: boolean;
   },
 ];
 
@@ -47,6 +53,9 @@ const schema: JSONSchema4[] = [
       ignoreVoid: {
         type: "boolean",
       },
+      ignoreSelfReturning: {
+        type: "boolean",
+      },
     } satisfies JSONSchema4ObjectSchema["properties"]),
     additionalProperties: false,
   },
@@ -58,6 +67,7 @@ const schema: JSONSchema4[] = [
 const defaultOptions: Options = [
   {
     ignoreVoid: false,
+    ignoreSelfReturning: false,
   },
 ];
 
@@ -107,18 +117,58 @@ function checkExpressionStatement(
     };
   }
 
-  const { ignoreVoid } = optionsObject;
+  const { ignoreVoid, ignoreSelfReturning } = optionsObject;
 
-  if (ignoreVoid) {
-    const type = getTypeOfNode(node.expression, context);
+  if (
+    (ignoreVoid || ignoreSelfReturning) &&
+    isCallExpression(node.expression)
+  ) {
+    const returnType = getTypeOfNode(node.expression, context);
+    if (returnType === null) {
+      return {
+        context,
+        descriptors: [{ node, messageId: "generic" }],
+      };
+    }
 
-    return {
-      context,
-      descriptors:
-        type !== null && tsApiUtils?.isIntrinsicVoidType(type) === true
-          ? []
-          : [{ node, messageId: "generic" }],
-    };
+    if (ignoreVoid && tsApiUtils?.isIntrinsicVoidType(returnType) === true) {
+      return {
+        context,
+        descriptors: [],
+      };
+    }
+
+    if (ignoreSelfReturning) {
+      const type = getTypeOfNode(node.expression.callee, context);
+      if (type !== null) {
+        const declaration = type.getSymbol()?.valueDeclaration;
+        if (
+          typescript !== undefined &&
+          declaration !== undefined &&
+          typescript.isFunctionLike(declaration) &&
+          "body" in declaration &&
+          declaration.body !== undefined &&
+          typescript.isBlock(declaration.body)
+        ) {
+          const returnStatements = declaration.body.statements.filter(
+            typescript.isReturnStatement,
+          );
+
+          if (
+            returnStatements.every(
+              (statement) =>
+                statement.expression !== undefined &&
+                isThisKeyword(statement.expression),
+            )
+          ) {
+            return {
+              context,
+              descriptors: [],
+            };
+          }
+        }
+      }
+    }
   }
 
   return {
