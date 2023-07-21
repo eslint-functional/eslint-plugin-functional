@@ -80,8 +80,8 @@
   },
   "devDependencies": {
     "@ava/typescript": "4.0.0",
-    "@babel/core": "7.21.4",
-    "@babel/eslint-parser": "7.21.3",
+    "@babel/core": "7.22.9",
+    "@babel/eslint-parser": "7.22.9",
     "@commitlint/cli": "17.6.7",
     "@commitlint/config-conventional": "17.6.7",
     "@cspell/dict-cryptocurrencies": "3.0.1",
