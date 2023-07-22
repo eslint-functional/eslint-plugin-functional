@@ -62,7 +62,7 @@ specifiers:
   jsonc-parser: 3.2.0
   knip: 2.16.1
   lint-staged: 13.2.3
-  markdownlint-cli: 0.33.0
+  markdownlint-cli: 0.35.0
   nyc: 15.1.0
   prettier: 2.8.8
   prettier-plugin-packagejson: 2.4.5
@@ -143,7 +143,7 @@ devDependencies:
   jsonc-parser: 3.2.0
   knip: 2.16.1
   lint-staged: 13.2.3
-  markdownlint-cli: 0.33.0
+  markdownlint-cli: 0.35.0
   nyc: 15.1.0
   prettier: 2.8.8
   prettier-plugin-packagejson: 2.4.5_prettier@2.8.8
@@ -2332,14 +2332,14 @@ packages:
     engines: {node: '>=14'}
     dev: true
 
+  /commander/11.0.0:
+    resolution: {integrity: sha512-9HMlXtt/BNoYr8ooyjjNRdIilOTkVJXB+GhxMTtOKwk0R4j4lS4NpjuqmRxroBfnfTSHQIHQB7wryHhXarNjmQ==}
+    engines: {node: '>=16'}
+    dev: true
+
   /commander/4.1.1:
     resolution: {integrity: sha512-NOKm8xhkzAjzFx8B2v5OAHT+u5pRQc2UCa2Vq9jYL/31o2wi9mxBA7LIFs3sV5VSC49z6pEhfbMULvShKj26WA==}
     engines: {node: '>= 6'}
-    dev: true
-
-  /commander/9.4.1:
-    resolution: {integrity: sha512-5EEkTNyHNGFPD2H+c/dXXfQZYa/scCKasxWcXJaWnNJ99pnQN9Vnmqow+p+PlFPE63Q6mThaZws1T+HxfpgtPw==}
-    engines: {node: ^12.20.0 || >=14}
     dev: true
 
   /comment-json/4.2.3:
@@ -3873,6 +3873,18 @@ packages:
     dependencies:
       is-glob: 4.0.3
 
+  /glob/10.2.7:
+    resolution: {integrity: sha512-jTKehsravOJo8IJxUGfZILnkvVJM/MOfHRs8QcXolVef2zNI9Tqyy5+SeuOAZd3upViEZQLyFpQhYiHLrMUNmA==}
+    engines: {node: '>=16 || 14 >=14.17'}
+    hasBin: true
+    dependencies:
+      foreground-child: 3.1.1
+      jackspeak: 2.2.1
+      minimatch: 9.0.3
+      minipass: 5.0.0
+      path-scurry: 1.10.1
+    dev: true
+
   /glob/10.3.3:
     resolution: {integrity: sha512-92vPiMb/iqpmEgsOoIDvTjc50wf9CCCvMzsi6W0JLPeUKE8TWP1a73PgqSrqy7iAZxaSD1YdzU7QZR5LF51MJw==}
     engines: {node: '>=16 || 14 >=14.17'}
@@ -3894,17 +3906,6 @@ packages:
       minimatch: 3.1.2
       once: 1.4.0
       path-is-absolute: 1.0.1
-
-  /glob/8.0.3:
-    resolution: {integrity: sha512-ull455NHSHI/Y1FqGaaYFaLGkNMMJbavMrEGFXG/PGrg6y7sutWHUHrz6gy6WEBH6akM1M414dWKCNs+IhKdiQ==}
-    engines: {node: '>=12'}
-    dependencies:
-      fs.realpath: 1.0.0
-      inflight: 1.0.6
-      inherits: 2.0.4
-      minimatch: 5.1.6
-      once: 1.4.0
-    dev: true
 
   /glob/8.1.0:
     resolution: {integrity: sha512-r8hpEjiQEYlF2QU0df3dS+nxxSIreXQS1qRhMJM0Q5NDdR386C7jb7Hwwod8Fgiuex+k0GFjgft18yvxm5XoCQ==}
@@ -5117,27 +5118,33 @@ packages:
     resolution: {integrity: sha512-Z1NL3Tb1M9wH4XESsCDEksWoKTdlUafKc4pt0GRwjUyXaCFZ+dc3g2erqB6zm3szA2IUSi7VnPI+o/9jnxh9hw==}
     dev: true
 
-  /markdownlint-cli/0.33.0:
-    resolution: {integrity: sha512-zMK1oHpjYkhjO+94+ngARiBBrRDEUMzooDHBAHtmEIJ9oYddd9l3chCReY2mPlecwH7gflQp1ApilTo+o0zopQ==}
-    engines: {node: '>=14'}
+  /markdownlint-cli/0.35.0:
+    resolution: {integrity: sha512-lVIIIV1MrUtjoocgDqXLxUCxlRbn7Ve8rsWppfwciUNwLlNS28AhNiyQ3PU7jjj4Qvj+rWTTvwkqg7AcdG988g==}
+    engines: {node: '>=16'}
     hasBin: true
     dependencies:
-      commander: 9.4.1
+      commander: 11.0.0
       get-stdin: 9.0.0
-      glob: 8.0.3
+      glob: 10.2.7
       ignore: 5.2.4
       js-yaml: 4.1.0
       jsonc-parser: 3.2.0
-      markdownlint: 0.27.0
-      minimatch: 5.1.6
+      markdownlint: 0.29.0
+      minimatch: 9.0.3
       run-con: 1.2.11
     dev: true
 
-  /markdownlint/0.27.0:
-    resolution: {integrity: sha512-HtfVr/hzJJmE0C198F99JLaeada+646B5SaG2pVoEakLFI6iRGsvMqrnnrflq8hm1zQgwskEgqSnhDW11JBp0w==}
-    engines: {node: '>=14.18.0'}
+  /markdownlint-micromark/0.1.5:
+    resolution: {integrity: sha512-HvofNU4QCvfUCWnocQP1IAWaqop5wpWrB0mKB6SSh0fcpV0PdmQNS6tdUuFew1utpYlUvYYzz84oDkrD76GB9A==}
+    engines: {node: '>=16'}
+    dev: true
+
+  /markdownlint/0.29.0:
+    resolution: {integrity: sha512-ASAzqpODstu/Qsk0xW5BPgWnK/qjpBQ4e7IpsSvvFXcfYIjanLTdwFRJK1SIEEh0fGSMKXcJf/qhaZYHyME0wA==}
+    engines: {node: '>=16'}
     dependencies:
       markdown-it: 13.0.1
+      markdownlint-micromark: 0.1.5
     dev: true
 
   /marked-terminal/5.1.1_marked@4.2.12:
