@@ -55,7 +55,7 @@ specifiers:
   eslint-plugin-promise: 6.1.1
   eslint-plugin-sonarjs: 0.19.0
   eslint-plugin-unicorn: 46.0.1
-  espree: 9.5.1
+  espree: 9.6.1
   husky: 8.0.3
   is-immutable-type: ^1.2.5
   json-schema: 0.4.0
@@ -137,7 +137,7 @@ devDependencies:
   eslint-plugin-promise: 6.1.1_eslint@8.45.0
   eslint-plugin-sonarjs: 0.19.0_eslint@8.45.0
   eslint-plugin-unicorn: 46.0.1_eslint@8.45.0
-  espree: 9.5.1
+  espree: 9.6.1
   husky: 8.0.3
   json-schema: 0.4.0
   jsonc-parser: 3.2.0
@@ -3183,7 +3183,7 @@ packages:
       enhance-visitors: 1.0.0
       eslint: 8.45.0
       eslint-utils: 3.0.0_eslint@8.45.0
-      espree: 9.5.1
+      espree: 9.6.1
       espurify: 2.1.1
       import-modules: 2.1.0
       micro-spelling-correcter: 1.1.1
@@ -3459,15 +3459,6 @@ packages:
       text-table: 0.2.0
     transitivePeerDependencies:
       - supports-color
-
-  /espree/9.5.1:
-    resolution: {integrity: sha512-5yxtHSZXRSW5pvv3hAlXM5+/Oswi1AUFqBmbibKb5s6bp3rGIDkyXU6xCoyuuLhijr4SFwPrXRoZjz0AZDN9tg==}
-    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
-    dependencies:
-      acorn: 8.10.0
-      acorn-jsx: 5.3.2_acorn@8.10.0
-      eslint-visitor-keys: 3.4.1
-    dev: true
 
   /espree/9.6.1:
     resolution: {integrity: sha512-oruZaFkjorTpF32kDSI5/75ViwGeZginGGy2NoOSg3Q9bnwlnmDm4HLnkl0RE3n+njDXR037aY1+x58Z/zFdwQ==}
