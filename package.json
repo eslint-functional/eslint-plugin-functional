@@ -133,7 +133,7 @@
     "husky": "8.0.3",
     "json-schema": "0.4.0",
     "jsonc-parser": "3.2.0",
-    "knip": "2.9.0",
+    "knip": "2.16.1",
     "lint-staged": "13.2.3",
     "markdownlint-cli": "0.33.0",
     "nyc": "15.1.0",

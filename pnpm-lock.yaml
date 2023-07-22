@@ -60,7 +60,7 @@ specifiers:
   is-immutable-type: ^1.2.5
   json-schema: 0.4.0
   jsonc-parser: 3.2.0
-  knip: 2.9.0
+  knip: 2.16.1
   lint-staged: 13.2.3
   markdownlint-cli: 0.33.0
   nyc: 15.1.0
@@ -141,7 +141,7 @@ devDependencies:
   husky: 8.0.3
   json-schema: 0.4.0
   jsonc-parser: 3.2.0
-  knip: 2.9.0
+  knip: 2.16.1
   lint-staged: 13.2.3
   markdownlint-cli: 0.33.0
   nyc: 15.1.0
@@ -832,6 +832,31 @@ packages:
       '@jridgewell/trace-mapping': 0.3.9
     dev: true
 
+  /@ericcornelissen/bash-parser/0.5.2:
+    resolution: {integrity: sha512-4pIMTa1nEFfMXitv7oaNEWOdM+zpOZavesa5GaiWTgda6Zk32CFGxjUp/iIaN0PwgUW1yTq/fztSjbpE8SLGZQ==}
+    engines: {node: '>=4'}
+    dependencies:
+      array-last: 1.3.0
+      babylon: 6.18.0
+      compose-function: 3.0.3
+      deep-freeze: 0.0.1
+      filter-iterator: 0.0.1
+      filter-obj: 1.1.0
+      has-own-property: 0.1.0
+      identity-function: 1.0.0
+      is-iterable: 1.1.1
+      iterable-lookahead: 1.0.0
+      lodash.curry: 4.1.1
+      magic-string: 0.16.0
+      map-obj: 2.0.0
+      object-pairs: 0.1.0
+      object-values: 1.0.0
+      reverse-arguments: 1.0.0
+      shell-quote-word: 1.0.1
+      to-pascal-case: 1.0.0
+      unescape-js: 1.1.4
+    dev: true
+
   /@es-joy/jsdoccomment/0.37.0:
     resolution: {integrity: sha512-hjK0wnsPCYLlF+HHB4R/RbUjOWeLW2SlarB67+Do5WsKILOkmIZvvPJFbtWSmbypxcjpoECLAMzoao0D4Bg5ZQ==}
     engines: {node: ^14 || ^16 || ^17 || ^18 || ^19}
@@ -1018,13 +1043,13 @@ packages:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.15.0
 
-  /@npmcli/map-workspaces/3.0.2:
-    resolution: {integrity: sha512-bCEC4PG7HbadtAYkW/TTUVNEOSr5Dhfmv6yGLgByJgCvdCqq7teq09cjvJ1LhzJU/euWjvYMcQxsfj7yDD2ikg==}
+  /@npmcli/map-workspaces/3.0.4:
+    resolution: {integrity: sha512-Z0TbvXkRbacjFFLpVpV0e2mheCh+WzQpcqL+4xp49uNJOxOnIAPZyXtUxZ5Qn3QBTGKA11Exjd9a5411rBrhDg==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
     dependencies:
       '@npmcli/name-from-folder': 2.0.0
-      glob: 8.1.0
-      minimatch: 6.2.0
+      glob: 10.3.3
+      minimatch: 9.0.3
       read-package-json-fast: 3.0.2
     dev: true
 
@@ -1971,33 +1996,6 @@ packages:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
     dev: true
 
-  /bash-parser/0.5.0:
-    resolution: {integrity: sha512-AQR43o4W4sj4Jf+oy4cFtGgyBps4B+MYnJg6Xds8VVC7yomFtQekhOORQNHfQ8D6YJ0XENykr3TpxMn3rUtgeg==}
-    engines: {node: '>=4'}
-    dependencies:
-      array-last: 1.3.0
-      babylon: 6.18.0
-      compose-function: 3.0.3
-      curry: 1.2.0
-      deep-freeze: 0.0.1
-      filter-iterator: 0.0.1
-      filter-obj: 1.1.0
-      has-own-property: 0.1.0
-      identity-function: 1.0.0
-      iterable-lookahead: 1.0.0
-      iterable-transform-replace: 1.2.0
-      magic-string: 0.16.0
-      map-iterable: 1.0.1
-      map-obj: 2.0.0
-      object-pairs: 0.1.0
-      object-values: 1.0.0
-      reverse-arguments: 1.0.0
-      shell-quote-word: 1.0.1
-      to-pascal-case: 1.0.0
-      transform-spread-iterable: 1.4.1
-      unescape-js: 1.1.4
-    dev: true
-
   /before-after-hook/2.2.3:
     resolution: {integrity: sha512-NzUnlZexiaH/46WDhANlyR2bXRopNg4F/zuSA3OpZnllCUgRaOF2znDioDWrmbNVsuZk6l9pMquQB38cfBZwkQ==}
     dev: true
@@ -2686,10 +2684,6 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       array-find-index: 1.0.2
-    dev: true
-
-  /curry/1.2.0:
-    resolution: {integrity: sha512-PAdmqPH2DUYTCc/aknv6RxRxmqdRHclvbz+wP8t1Xpg2Nu13qg+oLb6/5iFoDmf4dbmC9loYoy9PwwGbFt/AqA==}
     dev: true
 
   /cz-conventional-changelog/3.3.0:
@@ -4651,12 +4645,6 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
-  /iterable-transform-replace/1.2.0:
-    resolution: {integrity: sha512-AVCCj7CTUifWQ0ubraDgx5/e6tOWaL5qh/C8BDTjH0GuhNyFMCSsSmDtYpa4Y3ReAAQNSjUWfQ+ojhmjX10pdQ==}
-    dependencies:
-      curry: 1.2.0
-    dev: true
-
   /jackspeak/2.2.1:
     resolution: {integrity: sha512-MXbxovZ/Pm42f6cDIDkl3xpwv1AGwObKwfmjs2nQePiy85tP3fatofl3FC1aBsOtP/6fq5SbtgHwWcMsLP+bDw==}
     engines: {node: '>=14'}
@@ -4686,8 +4674,8 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dev: true
 
-  /jiti/1.18.2:
-    resolution: {integrity: sha512-QAdOptna2NYiSSpv0O/BwoHBSmz4YhpzJHyi+fnMRTXFjp7B8i/YG5Z8IfusxB1ufjcD2Sre1F3R+nX3fvy7gg==}
+  /jiti/1.19.1:
+    resolution: {integrity: sha512-oVhqoRDaBXf7sjkll95LHVS6Myyyb1zaunVwk4Z0+WPSW4gjS0pl01zYKHScTuyEhQsFxV5L4DR5r+YqSyqyyg==}
     hasBin: true
     dev: true
 
@@ -4802,19 +4790,19 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /knip/2.9.0:
-    resolution: {integrity: sha512-1Hw89B7vjQwXKlbqypwIVv7FAnjrX9Xli+hftvKUpk6rWCFsY0Iqv13O8U8/ACSdnTgWQ4pHZYIIXsKfxNNkDQ==}
+  /knip/2.16.1:
+    resolution: {integrity: sha512-c09jhMEDOXm5i985QoDpcWqbDQ6c50IOPvWCUQe8rU1jXn+AUo92l9cJNe72eR3tUZ11ldXv7UPboaWMrpOWfA==}
     engines: {node: '>=16.17.0 <17 || >=18.6.0'}
     hasBin: true
     dependencies:
-      '@npmcli/map-workspaces': 3.0.2
+      '@ericcornelissen/bash-parser': 0.5.2
+      '@npmcli/map-workspaces': 3.0.4
       '@snyk/github-codeowners': 1.1.0
-      bash-parser: 0.5.0
       chalk: 5.2.0
       easy-table: 1.2.0
       fast-glob: 3.3.0
       globby: 13.2.2
-      jiti: 1.18.2
+      jiti: 1.19.1
       js-yaml: 4.1.0
       micromatch: 4.0.5
       minimist: 1.2.8
@@ -4823,7 +4811,7 @@ packages:
       summary: 2.1.0
       typescript: 5.0.4
       zod: 3.21.4
-      zod-validation-error: 1.2.1_zod@3.21.4
+      zod-validation-error: 1.3.1_zod@3.21.4
     dev: true
 
   /levn/0.4.1:
@@ -4948,6 +4936,10 @@ packages:
 
   /lodash.capitalize/4.2.1:
     resolution: {integrity: sha512-kZzYOKspf8XVX5AvmQF94gQW0lejFVgb80G85bU4ZWzoJ6C03PQg3coYAUpSTpQWelrZELd3XWgHzw4Ck5kaIw==}
+    dev: true
+
+  /lodash.curry/4.1.1:
+    resolution: {integrity: sha512-/u14pXGviLaweY5JI0IUzgzF2J6Ne8INyzAZjImcryjgkZ+ebruBxy2/JaOOkTqScddcYtakjhSaeemV8lR0tA==}
     dev: true
 
   /lodash.escaperegexp/4.1.2:
@@ -5093,14 +5085,6 @@ packages:
     engines: {node: '>=6'}
     dependencies:
       p-defer: 1.0.0
-    dev: true
-
-  /map-iterable/1.0.1:
-    resolution: {integrity: sha512-siKFftph+ka2jWt8faiOWFzKP+eEuXrHuhYBitssJ5zJm209FCw5JBnaNLDiaCCb/CYZmxprdM6P7p16nA6YRA==}
-    engines: {node: '>=4'}
-    dependencies:
-      curry: 1.2.0
-      is-iterable: 1.1.1
     dev: true
 
   /map-obj/1.0.1:
@@ -5296,13 +5280,6 @@ packages:
 
   /minimatch/5.1.6:
     resolution: {integrity: sha512-lKwV/1brpG6mBUFHtb7NUmtABCb2WZZmm2wNiOA5hAb8VdCS4B3dtMWyvcoViccwAW/COERjXLt0zP1zXUN26g==}
-    engines: {node: '>=10'}
-    dependencies:
-      brace-expansion: 2.0.1
-    dev: true
-
-  /minimatch/6.2.0:
-    resolution: {integrity: sha512-sauLxniAmvnhhRjFwPNnJKaPFYyddAgbYdeUpHULtCT/GhzdCx/MDNy+Y40lBxTQUrMzDE8e0S43Z5uqfO0REg==}
     engines: {node: '>=10'}
     dependencies:
       brace-expansion: 2.0.1
@@ -6937,12 +6914,6 @@ packages:
     resolution: {integrity: sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==}
     dev: true
 
-  /transform-spread-iterable/1.4.1:
-    resolution: {integrity: sha512-/GnF26X3zC8wfWyRzvuXX/Vb31TrU3Rwipmr4MC5hTi6X/yOXxXUSw4+pcHmKJ2+0KRrcS21YWZw77ukhVJBdQ==}
-    dependencies:
-      curry: 1.2.0
-    dev: true
-
   /traverse/0.6.7:
     resolution: {integrity: sha512-/y956gpUo9ZNCb99YjxG7OaslxZWHfCHAUUfshwqOXmxUIvqLjVO581BT+gM59+QV9tFe6/CGG53tsA1Y7RSdg==}
     dev: true
@@ -7414,8 +7385,8 @@ packages:
     engines: {node: '>=12.20'}
     dev: true
 
-  /zod-validation-error/1.2.1_zod@3.21.4:
-    resolution: {integrity: sha512-xsWqzuFukr0C56QSoDCOJPrFOGWSmktNbTSPxV2ntT2ikUf1dOqHuM0Nt8g28Up7Cz889NTX8rc4K8LN7vy0Vw==}
+  /zod-validation-error/1.3.1_zod@3.21.4:
+    resolution: {integrity: sha512-cNEXpla+tREtNdAnNKY4xKY1SGOn2yzyuZMu4O0RQylX9apRpUjNcPkEc3uHIAr5Ct7LenjZt6RzjEH6+JsqVQ==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       zod: ^3.18.0
