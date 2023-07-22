@@ -25,7 +25,7 @@ specifiers:
   '@types/json-schema': 7.0.12
   '@types/node': 16.18.38
   '@types/rollup-plugin-auto-external': 2.0.2
-  '@types/semver': 7.3.13
+  '@types/semver': 7.5.0
   '@typescript-eslint/eslint-plugin': 5.59.0
   '@typescript-eslint/parser': 5.59.0
   '@typescript-eslint/type-utils': ^5.50.0
@@ -111,7 +111,7 @@ devDependencies:
   '@types/json-schema': 7.0.12
   '@types/node': 16.18.38
   '@types/rollup-plugin-auto-external': 2.0.2
-  '@types/semver': 7.3.13
+  '@types/semver': 7.5.0
   '@typescript-eslint/eslint-plugin': 5.59.0_wsbkzerfphvgr4lle7vmeh64yi
   '@typescript-eslint/parser': 5.59.0_voubu7prgxjfsfbgx5d4sqnwiy
   ava: 5.2.0_@ava+typescript@4.1.0
@@ -1519,8 +1519,8 @@ packages:
       rollup: 3.20.4
     dev: true
 
-  /@types/semver/7.3.13:
-    resolution: {integrity: sha512-21cFJr9z3g5dW8B0CVI9g2O9beqaThGQ6ZFBqHfwhzLDKUxaqTIy3vnfah/UPkfOiF2pLq+tGz+W8RyCskuslw==}
+  /@types/semver/7.5.0:
+    resolution: {integrity: sha512-G8hZ6XJiHnuhQKR7ZmysCeJWE08o8T0AXtk5darsCaTVsYZhhgUrq53jizaR2FvsoeCwJhlmwTjkXBY5Pn/ZHw==}
 
   /@types/unist/2.0.6:
     resolution: {integrity: sha512-PBjIUxZHOuj0R15/xuwJYjFi+KZdNFrehocChv4g5hu6aFroHue8m0lBP0POdK2nKzbw0cgV1mws8+V/JAcEkQ==}
@@ -1632,7 +1632,7 @@ packages:
     dependencies:
       '@eslint-community/eslint-utils': 4.2.0_eslint@8.38.0
       '@types/json-schema': 7.0.12
-      '@types/semver': 7.3.13
+      '@types/semver': 7.5.0
       '@typescript-eslint/scope-manager': 5.59.0
       '@typescript-eslint/types': 5.59.0
       '@typescript-eslint/typescript-estree': 5.59.0_typescript@5.0.4
