@@ -111,7 +111,7 @@
     "commitizen": "4.3.0",
     "conventional-commit-types": "3.0.0",
     "cspell": "6.31.2",
-    "dedent": "0.7.0",
+    "dedent": "1.2.0",
     "eslint": "8.45.0",
     "eslint-ava-rule-tester": "4.0.0",
     "eslint-config-prettier": "8.8.0",

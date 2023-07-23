@@ -35,7 +35,7 @@ specifiers:
   commitizen: 4.3.0
   conventional-commit-types: 3.0.0
   cspell: 6.31.2
-  dedent: 0.7.0
+  dedent: 1.2.0
   deepmerge-ts: ^5.0.0
   escape-string-regexp: ^4.0.0
   eslint: 8.45.0
@@ -119,7 +119,7 @@ devDependencies:
   commitizen: 4.3.0
   conventional-commit-types: 3.0.0
   cspell: 6.31.2
-  dedent: 0.7.0
+  dedent: 1.2.0
   eslint: 8.45.0
   eslint-ava-rule-tester: 4.0.0_eslint@8.45.0
   eslint-config-prettier: 8.8.0_eslint@8.45.0
@@ -2950,6 +2950,15 @@ packages:
 
   /dedent/0.7.0:
     resolution: {integrity: sha512-Q6fKUPqnAHAyhiUgFU7BUzLiv0kd8saH9al7tnu5Q/okj6dnupxyTgFIBjVzJATdfIAm9NAsvXNzjaKa+bxVyA==}
+    dev: true
+
+  /dedent/1.2.0:
+    resolution: {integrity: sha512-i4tcg0ClgvMUSxwHpt+NHQ01ZJmAkl6eBvDNrSZG9e+oLRTCSHv0wpr/Bzjpf6CwKeIHGevE1M34Y1Axdms5VQ==}
+    peerDependencies:
+      babel-plugin-macros: ^3.1.0
+    peerDependenciesMeta:
+      babel-plugin-macros:
+        optional: true
     dev: true
 
   /deep-extend/0.6.0:
