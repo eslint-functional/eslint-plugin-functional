@@ -140,7 +140,7 @@
     "prettier": "2.8.8",
     "prettier-plugin-packagejson": "2.4.5",
     "rimraf": "5.0.1",
-    "rollup": "3.20.4",
+    "rollup": "3.26.3",
     "rollup-plugin-auto-external": "2.0.0",
     "semantic-release": "21.0.1",
     "ts-node": "10.9.1",
