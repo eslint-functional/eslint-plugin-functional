@@ -74,7 +74,7 @@ specifiers:
   ts-node: 10.9.1
   tsc-prog: 2.2.1
   tsconfig-paths: 4.2.0
-  tslib: 2.5.0
+  tslib: 2.6.0
   typescript: 5.0.4
   word-wrap: 1.2.3
 
@@ -99,7 +99,7 @@ devDependencies:
   '@rollup/plugin-commonjs': 24.1.0_rollup@3.26.3
   '@rollup/plugin-json': 6.0.0_rollup@3.26.3
   '@rollup/plugin-node-resolve': 15.1.0_rollup@3.26.3
-  '@rollup/plugin-typescript': 11.1.2_zouc22b3x4kdyhpr2niojiidxi
+  '@rollup/plugin-typescript': 11.1.2_kobqyyfco5x2jsejhg3ymngbcq
   '@semantic-release/changelog': 6.0.3_semantic-release@21.0.1
   '@semantic-release/commit-analyzer': 9.0.2_semantic-release@21.0.1
   '@semantic-release/git': 10.0.1_semantic-release@21.0.1
@@ -154,7 +154,7 @@ devDependencies:
   ts-node: 10.9.1_g44x2riw4irqxvf5igsnqhpnxa
   tsc-prog: 2.2.1_typescript@5.0.4
   tsconfig-paths: 4.2.0
-  tslib: 2.5.0
+  tslib: 2.6.0
   typescript: 5.0.4
   word-wrap: 1.2.3
 
@@ -1190,7 +1190,7 @@ packages:
       open: 8.4.2
       picocolors: 1.0.0
       tiny-glob: 0.2.9
-      tslib: 2.5.0
+      tslib: 2.6.0
     dev: true
 
   /@pnpm/config.env-replace/1.0.0:
@@ -1298,7 +1298,7 @@ packages:
       rollup: 3.26.3
     dev: true
 
-  /@rollup/plugin-typescript/11.1.2_zouc22b3x4kdyhpr2niojiidxi:
+  /@rollup/plugin-typescript/11.1.2_kobqyyfco5x2jsejhg3ymngbcq:
     resolution: {integrity: sha512-0ghSOCMcA7fl1JM+0gYRf+Q/HWyg+zg7/gDSc+fRLmlJWcW5K1I+CLRzaRhXf4Y3DRyPnnDo4M2ktw+a6JcDEg==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
@@ -1314,7 +1314,7 @@ packages:
       '@rollup/pluginutils': 5.0.2_rollup@3.26.3
       resolve: 1.22.1
       rollup: 3.26.3
-      tslib: 2.5.0
+      tslib: 2.6.0
       typescript: 5.0.4
     dev: true
 
@@ -5032,7 +5032,7 @@ packages:
   /lower-case/2.0.2:
     resolution: {integrity: sha512-7fm3l3NAF9WfN6W3JOmf5drwpVqX78JtoGJ3A6W0a6ZnldM41w2fV5D490psKFTpMds8TJse/eHLFFsNHHjHgg==}
     dependencies:
-      tslib: 2.5.0
+      tslib: 2.6.0
     dev: true
 
   /lru-cache/10.0.0:
@@ -5356,7 +5356,7 @@ packages:
     resolution: {integrity: sha512-fgAN3jGAh+RoxUGZHTSOLJIqUc2wmoBwGR4tbpNAKmmovFoWq0OdRkb0VkldReO2a2iBT/OEulG9XSUc10r3zg==}
     dependencies:
       lower-case: 2.0.2
-      tslib: 2.5.0
+      tslib: 2.6.0
     dev: true
 
   /node-emoji/1.11.0:
@@ -6373,7 +6373,7 @@ packages:
   /rxjs/7.8.0:
     resolution: {integrity: sha512-F2+gxDshqmIub1KdvZkaEfGDwLNpPvk9Fs6LD/MyQxNgMds/WH9OdDDXOmxUZpME+iSK3rQCctkL0DYyytUqMg==}
     dependencies:
-      tslib: 2.5.0
+      tslib: 2.6.0
     dev: true
 
   /safe-buffer/5.1.2:
@@ -6809,7 +6809,7 @@ packages:
     engines: {node: ^14.18.0 || >=16.0.0}
     dependencies:
       '@pkgr/utils': 2.3.1
-      tslib: 2.5.0
+      tslib: 2.6.0
     dev: true
 
   /tapable/2.2.1:
@@ -6991,8 +6991,8 @@ packages:
   /tslib/1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
 
-  /tslib/2.5.0:
-    resolution: {integrity: sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg==}
+  /tslib/2.6.0:
+    resolution: {integrity: sha512-7At1WUettjcSRHXCyYtTselblcHl9PJFFVKiCAy/bY97+BPZXSQ2wbq0P9s8tK2G7dFQfNnlJnPAiArVBVBsfA==}
     dev: true
 
   /tsutils/3.21.0_typescript@5.0.4:

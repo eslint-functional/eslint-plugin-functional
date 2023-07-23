@@ -146,7 +146,7 @@
     "ts-node": "10.9.1",
     "tsc-prog": "2.2.1",
     "tsconfig-paths": "4.2.0",
-    "tslib": "2.5.0",
+    "tslib": "2.6.0",
     "typescript": "5.0.4",
     "word-wrap": "1.2.3"
   },
