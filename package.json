@@ -148,7 +148,7 @@
     "tsconfig-paths": "4.2.0",
     "tslib": "2.6.0",
     "typescript": "5.1.6",
-    "word-wrap": "1.2.3"
+    "word-wrap": "1.2.5"
   },
   "peerDependencies": {
     "eslint": "^8.0.0",

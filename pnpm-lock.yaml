@@ -76,7 +76,7 @@ specifiers:
   tsconfig-paths: 4.2.0
   tslib: 2.6.0
   typescript: 5.1.6
-  word-wrap: 1.2.3
+  word-wrap: 1.2.5
 
 dependencies:
   '@typescript-eslint/type-utils': 5.62.0_ko3fmmbeyij36muomfgt2u76xu
@@ -156,7 +156,7 @@ devDependencies:
   tsconfig-paths: 4.2.0
   tslib: 2.6.0
   typescript: 5.1.6
-  word-wrap: 1.2.3
+  word-wrap: 1.2.5
 
 packages:
 
@@ -2889,7 +2889,7 @@ packages:
       conventional-commit-types: 3.0.0
       lodash.map: 4.6.0
       longest: 2.0.1
-      word-wrap: 1.2.3
+      word-wrap: 1.2.5
     optionalDependencies:
       '@commitlint/load': 17.6.7
     transitivePeerDependencies:
@@ -7443,8 +7443,8 @@ packages:
     dependencies:
       isexe: 2.0.0
 
-  /word-wrap/1.2.3:
-    resolution: {integrity: sha512-Hz/mrNwitNRh/HUAtM/VT/5VH+ygD6DV7mYKZAtHOrbs8U7lvPS6xf7EJKMF0uW1KJCl0H701g3ZGus+muE5vQ==}
+  /word-wrap/1.2.5:
+    resolution: {integrity: sha512-BN22B5eaMMI9UMtjrGd5g5eCYPpCPDUy0FJXbYsaT5zYxjFOckS53SQDE3pWkVoWpHXVb3BrYcEN4Twa55B5cA==}
     engines: {node: '>=0.10.0'}
     dev: true
 
