@@ -233,19 +233,78 @@ const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
   // ignoreNonConstDeclarations.
   {
     code: dedent`
-      var mutableVar = [0, 1];
-      mutableVar[0] += 1;
-      mutableVar[1]++;
-      mutableVar.pop();
+      var arr = [0, 1];
+      arr[0] += 1;
+      arr[1]++;
+      delete arr[0];
+      arr.copyWithin(0, 1, 2);
+      arr.fill(3);
+      arr.pop();
+      arr.push(3);
+      arr.reverse();
+      arr.shift();
+      arr.sort();
+      arr.splice(0, 1, 9);
+      arr.unshift(6);
     `,
     optionsSet: [[{ ignoreNonConstDeclarations: true }]],
   },
   {
     code: dedent`
-      let mutableVar = [0, 1];
-      mutableVar[0] += 1;
-      mutableVar[1]++;
-      mutableVar.pop();
+      let arr = [0, 1];
+      arr[0] += 1;
+      arr[1]++;
+      delete arr[0];
+      arr.copyWithin(0, 1, 2);
+      arr.fill(3);
+      arr.pop();
+      arr.push(3);
+      arr.reverse();
+      arr.shift();
+      arr.sort();
+      arr.splice(0, 1, 9);
+      arr.unshift(6);
+    `,
+    optionsSet: [[{ ignoreNonConstDeclarations: true }]],
+  },
+  {
+    code: dedent`
+      let arr = [0];
+      for (const x of [1, 2]) {
+        for (const y of [3, 4]) {
+          arr[x][y] += 1;
+          arr[x][y]++;
+          delete arr[x][y];
+          arr[x].copyWithin(x, 1, 2);
+          arr[x].fill(x);
+          arr[x].pop();
+          arr[x].push(x);
+          arr[x].reverse();
+          arr[x].shift();
+          arr[x].sort();
+          arr[x].splice(x, 1, 9);
+          arr[x].unshift(x);
+        }
+      }
+    `,
+    optionsSet: [[{ ignoreNonConstDeclarations: true }]],
+  },
+  {
+    code: dedent`
+      const constArr = [[0, 1], [2, 3]];
+      let arr = constArr[0];
+      arr[0] += 1;
+      arr[1]++;
+      delete arr[0];
+      arr.copyWithin(0, 1, 2);
+      arr.fill(3);
+      arr.pop();
+      arr.push(3);
+      arr.reverse();
+      arr.shift();
+      arr.sort();
+      arr.splice(0, 1, 9);
+      arr.unshift(6);
     `,
     optionsSet: [[{ ignoreNonConstDeclarations: true }]],
   },

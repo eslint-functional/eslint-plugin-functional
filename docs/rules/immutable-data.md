@@ -104,6 +104,10 @@ const sorted = [...original].sort((a, b) => a.localeCompare(b)); // This is OK w
 If true, this rule will ignore any mutations that happen on non-const variables.
 This allow for more easily using mutable data by simply using the `let` keyword instead of `const`.
 
+Note: If a value is referenced by both a `let` and a `const` variable, the `let`
+reference can be modified while the `const` one can't. The may lead to value of
+the `const` variable unexpectedly changing when the `let` one is modified elsewhere.
+
 ### `ignoreClasses`
 
 Ignore mutations inside classes.

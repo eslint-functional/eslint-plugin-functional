@@ -1,5 +1,10 @@
 import { type TSESTree } from "@typescript-eslint/utils";
+import { getParserServices } from "@typescript-eslint/utils/eslint-utils";
+import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
+import typescript from "#eslint-plugin-functional/conditional-imports/typescript";
+
+import { type BaseOptions } from "./rule";
 import {
   isBlockStatement,
   isCallExpression,
@@ -19,6 +24,7 @@ import {
   isTSTypeAnnotation,
   isTSTypeLiteral,
   isTSTypeReference,
+  isVariableDeclaration,
 } from "./type-guards";
 
 /**
@@ -260,4 +266,45 @@ export function getKeyOfValueInObjectExpression(
   }
 
   return objectExpressionProp.key.name;
+}
+
+/**
+ * Is the given identifier defined by a mutable variable (let or var)?
+ */
+export function isDefinedByMutableVaraible<
+  Context extends RuleContext<string, BaseOptions>,
+>(node: TSESTree.Identifier, context: Context) {
+  const services = getParserServices(context);
+  const symbol = services.getSymbolAtLocation(node);
+  const variableDeclaration = symbol?.valueDeclaration;
+  if (
+    variableDeclaration === undefined ||
+    !typescript!.isVariableDeclaration(variableDeclaration)
+  ) {
+    return true;
+  }
+
+  const variableDeclarator =
+    context.parserServices?.tsNodeToESTreeNodeMap.get(variableDeclaration);
+  if (
+    variableDeclarator?.parent === undefined ||
+    !isVariableDeclaration(variableDeclarator.parent)
+  ) {
+    return true;
+  }
+
+  return variableDeclarator.parent.kind !== "const";
+}
+
+/**
+ * Get the root identifier of an expression.
+ */
+export function findRootIdentifier(node: TSESTree.Expression) {
+  if (isIdentifier(node)) {
+    return node;
+  }
+  if (isMemberExpression(node)) {
+    return findRootIdentifier(node.object);
+  }
+  return undefined;
 }

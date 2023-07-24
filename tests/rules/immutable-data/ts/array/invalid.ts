@@ -705,8 +705,19 @@ const tests: Array<
   // ignoreNonConstDeclarations.
   {
     code: dedent`
-      const foo = [0, 1];
-      foo[0] += 1;
+      const arr = [0, 1];
+      arr[0] += 1;
+      arr[1]++;
+      delete arr[0];
+      arr.copyWithin(0, 1, 2);
+      arr.fill(3);
+      arr.pop();
+      arr.push(3);
+      arr.reverse();
+      arr.shift();
+      arr.sort();
+      arr.splice(0, 1, 9);
+      arr.unshift(6);
     `,
     optionsSet: [[{ ignoreNonConstDeclarations: true }]],
     errors: [
@@ -716,34 +727,70 @@ const tests: Array<
         line: 2,
         column: 1,
       },
-    ],
-  },
-  {
-    code: dedent`
-      const foo = [0, 1];
-      foo[1]++;
-    `,
-    optionsSet: [[{ ignoreNonConstDeclarations: true }]],
-    errors: [
       {
         messageId: "generic",
         type: AST_NODE_TYPES.UpdateExpression,
-        line: 2,
+        line: 3,
         column: 1,
       },
-    ],
-  },
-  {
-    code: dedent`
-      const foo = [0, 1];
-      foo.pop();
-    `,
-    optionsSet: [[{ ignoreNonConstDeclarations: true }]],
-    errors: [
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.UnaryExpression,
+        line: 4,
+        column: 1,
+      },
       {
         messageId: "array",
         type: AST_NODE_TYPES.CallExpression,
-        line: 2,
+        line: 5,
+        column: 1,
+      },
+      {
+        messageId: "array",
+        type: AST_NODE_TYPES.CallExpression,
+        line: 6,
+        column: 1,
+      },
+      {
+        messageId: "array",
+        type: AST_NODE_TYPES.CallExpression,
+        line: 7,
+        column: 1,
+      },
+      {
+        messageId: "array",
+        type: AST_NODE_TYPES.CallExpression,
+        line: 8,
+        column: 1,
+      },
+      {
+        messageId: "array",
+        type: AST_NODE_TYPES.CallExpression,
+        line: 9,
+        column: 1,
+      },
+      {
+        messageId: "array",
+        type: AST_NODE_TYPES.CallExpression,
+        line: 10,
+        column: 1,
+      },
+      {
+        messageId: "array",
+        type: AST_NODE_TYPES.CallExpression,
+        line: 11,
+        column: 1,
+      },
+      {
+        messageId: "array",
+        type: AST_NODE_TYPES.CallExpression,
+        line: 12,
+        column: 1,
+      },
+      {
+        messageId: "array",
+        type: AST_NODE_TYPES.CallExpression,
+        line: 13,
         column: 1,
       },
     ],

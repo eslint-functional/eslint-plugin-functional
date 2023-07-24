@@ -127,6 +127,74 @@ const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
     `,
     optionsSet: [[]],
   },
+  // ignoreNonConstDeclarations.
+  {
+    code: dedent`
+      let x = {a: 1, b:{}};
+      x.foo = "bar";
+      x["foo"] = "bar";
+      x.a += 1;
+      x.a -= 1;
+      x.a *= 1;
+      x.a /= 1;
+      x.a %= 1;
+      x.a <<= 1;
+      x.a >>= 1;
+      x.a >>>= 1;
+      x.a &= 1;
+      x.a |= 1;
+      x.a ^= 1;
+      x.a **= 1;
+      delete x.a;
+      delete x["a"];
+      x.a++;
+      x.a--;
+      ++x.a;
+      --x.a;
+      if (x.a = 2) {}
+      if (x.a++) {}
+      Object.assign(x, { c: "world" });
+      Object.assign(x.b, { c: "world" });
+      Object.defineProperties(x, { d: { value: 2, writable: false }});
+      Object.defineProperty(x, "e", { value: 3, writable: false });
+      Object.setPrototypeOf(x, null);
+    `,
+    optionsSet: [[{ ignoreNonConstDeclarations: true }]],
+  },
+  {
+    code: dedent`
+      const y = {x: {a: 1, b:{}}};
+      let x = y.x;
+      x.foo = "bar";
+      x["foo"] = "bar";
+      x.a += 1;
+      x.a -= 1;
+      x.a *= 1;
+      x.a /= 1;
+      x.a %= 1;
+      x.a <<= 1;
+      x.a >>= 1;
+      x.a >>>= 1;
+      x.a &= 1;
+      x.a |= 1;
+      x.a ^= 1;
+      x.a **= 1;
+      delete x.a;
+      delete x["a"];
+      x.a++;
+      x.a--;
+      ++x.a;
+      --x.a;
+      if (x.a = 2) {}
+      if (x.a++) {}
+      Object.assign(x, { c: "world" });
+      Object.assign(x.b, { c: "world" });
+      Object.defineProperties(x, { d: { value: 2, writable: false }});
+      Object.defineProperty(x, "e", { value: 3, writable: false });
+      Object.setPrototypeOf(x, null);
+    `,
+    optionsSet: [[{ ignoreNonConstDeclarations: true }]],
+  },
 ];
 
 export default tests;

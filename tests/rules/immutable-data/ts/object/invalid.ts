@@ -28,6 +28,7 @@ const tests: Array<
       x.a &= 1;
       x.a |= 1;
       x.a ^= 1;
+      x.a **= 1;
       delete x.a;
       delete x["a"];
       x.a++;
@@ -119,7 +120,7 @@ const tests: Array<
       },
       {
         messageId: "generic",
-        type: AST_NODE_TYPES.UnaryExpression,
+        type: AST_NODE_TYPES.AssignmentExpression,
         line: 15,
         column: 1,
       },
@@ -131,7 +132,7 @@ const tests: Array<
       },
       {
         messageId: "generic",
-        type: AST_NODE_TYPES.UpdateExpression,
+        type: AST_NODE_TYPES.UnaryExpression,
         line: 17,
         column: 1,
       },
@@ -155,14 +156,20 @@ const tests: Array<
       },
       {
         messageId: "generic",
-        type: AST_NODE_TYPES.AssignmentExpression,
+        type: AST_NODE_TYPES.UpdateExpression,
         line: 21,
+        column: 1,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.AssignmentExpression,
+        line: 22,
         column: 5,
       },
       {
         messageId: "generic",
         type: AST_NODE_TYPES.UpdateExpression,
-        line: 22,
+        line: 23,
         column: 5,
       },
     ],
@@ -217,21 +224,6 @@ const tests: Array<
         messageId: "object",
         type: AST_NODE_TYPES.CallExpression,
         line: 4,
-        column: 1,
-      },
-    ],
-  },
-  {
-    code: dedent`
-      const x = {a: 1};
-      x.a **= 1;
-    `,
-    optionsSet: [[]],
-    errors: [
-      {
-        messageId: "generic",
-        type: AST_NODE_TYPES.AssignmentExpression,
-        line: 2,
         column: 1,
       },
     ],
@@ -348,6 +340,174 @@ const tests: Array<
         type: AST_NODE_TYPES.AssignmentExpression,
         line: 2,
         column: 1,
+      },
+    ],
+  },
+  // ignoreNonConstDeclarations.
+  {
+    code: dedent`
+      const x = {a: 1, b:{}};
+      x.foo = "bar";
+      x["foo"] = "bar";
+      x.a += 1;
+      x.a -= 1;
+      x.a *= 1;
+      x.a /= 1;
+      x.a %= 1;
+      x.a <<= 1;
+      x.a >>= 1;
+      x.a >>>= 1;
+      x.a &= 1;
+      x.a |= 1;
+      x.a ^= 1;
+      x.a **= 1;
+      delete x.a;
+      delete x["a"];
+      x.a++;
+      x.a--;
+      ++x.a;
+      --x.a;
+      if (x.a = 2) {}
+      if (x.a++) {}
+      Object.assign(x, { c: "world" });
+      Object.assign(x.b, { c: "world" });
+      Object.defineProperties(x, { d: { value: 2, writable: false }});
+      Object.defineProperty(x, "e", { value: 3, writable: false });
+      Object.setPrototypeOf(x, null);
+    `,
+    optionsSet: [[{ ignoreNonConstDeclarations: true }]],
+    errors: [
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.AssignmentExpression,
+        line: 2,
+        column: 1,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.AssignmentExpression,
+        line: 3,
+        column: 1,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.AssignmentExpression,
+        line: 4,
+        column: 1,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.AssignmentExpression,
+        line: 5,
+        column: 1,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.AssignmentExpression,
+        line: 6,
+        column: 1,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.AssignmentExpression,
+        line: 7,
+        column: 1,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.AssignmentExpression,
+        line: 8,
+        column: 1,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.AssignmentExpression,
+        line: 9,
+        column: 1,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.AssignmentExpression,
+        line: 10,
+        column: 1,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.AssignmentExpression,
+        line: 11,
+        column: 1,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.AssignmentExpression,
+        line: 12,
+        column: 1,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.AssignmentExpression,
+        line: 13,
+        column: 1,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.AssignmentExpression,
+        line: 14,
+        column: 1,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.AssignmentExpression,
+        line: 15,
+        column: 1,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.UnaryExpression,
+        line: 16,
+        column: 1,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.UnaryExpression,
+        line: 17,
+        column: 1,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.UpdateExpression,
+        line: 18,
+        column: 1,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.UpdateExpression,
+        line: 19,
+        column: 1,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.UpdateExpression,
+        line: 20,
+        column: 1,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.UpdateExpression,
+        line: 21,
+        column: 1,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.AssignmentExpression,
+        line: 22,
+        column: 5,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.UpdateExpression,
+        line: 23,
+        column: 5,
       },
     ],
   },

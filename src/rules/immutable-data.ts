@@ -5,10 +5,7 @@ import {
 } from "@typescript-eslint/utils/json-schema";
 import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import { deepmerge } from "deepmerge-ts";
-import { isNodeFlagSet } from "ts-api-utils";
-import type ts from "typescript";
 
-import typescript from "#eslint-plugin-functional/conditional-imports/typescript";
 import {
   type IgnoreAccessorPatternOption,
   type IgnoreIdentifierPatternOption,
@@ -30,7 +27,11 @@ import {
   type RuleResult,
   type NamedCreateRuleMetaWithCategory,
 } from "#eslint-plugin-functional/utils/rule";
-import { isInConstructor } from "#eslint-plugin-functional/utils/tree";
+import {
+  findRootIdentifier,
+  isDefinedByMutableVaraible,
+  isInConstructor,
+} from "#eslint-plugin-functional/utils/tree";
 import {
   isArrayConstructorType,
   isArrayExpression,
@@ -167,39 +168,6 @@ const objectConstructorMutatorFunctions = new Set([
 ]);
 
 /**
- * Is the given identifier defined by a mutable variable (let or var)?
- */
-function isDefinedByMutableVaraible(
-  node: TSESTree.Identifier,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-) {
-  if (typescript === undefined) {
-    return true;
-  }
-
-  const tsNode = context.parserServices?.esTreeNodeToTSNodeMap.get(node);
-  const variableDeclaration =
-    tsNode !== undefined &&
-    "flowNode" in tsNode &&
-    typeof tsNode.flowNode === "object" &&
-    tsNode.flowNode !== null &&
-    "node" in tsNode.flowNode &&
-    typeof tsNode.flowNode.node === "object" &&
-    tsNode.flowNode.node !== null &&
-    typescript.isVariableDeclaration(tsNode.flowNode.node as ts.Node)
-      ? (tsNode.flowNode.node as ts.VariableDeclaration)
-      : undefined;
-
-  const variableDeclarationList = variableDeclaration?.parent;
-
-  return (
-    variableDeclarationList === undefined ||
-    !typescript.isVariableDeclarationList(variableDeclarationList) ||
-    !isNodeFlagSet(variableDeclarationList, typescript.NodeFlags.Const)
-  );
-}
-
-/**
  * Check if the given assignment expression violates this rule.
  */
 function checkAssignmentExpression(
@@ -231,15 +199,17 @@ function checkAssignmentExpression(
     };
   }
 
-  if (
-    ignoreNonConstDeclarations &&
-    isIdentifier(node.left.object) &&
-    isDefinedByMutableVaraible(node.left.object, context)
-  ) {
-    return {
-      context,
-      descriptors: [],
-    };
+  if (ignoreNonConstDeclarations) {
+    const rootIdentifier = findRootIdentifier(node.left.object);
+    if (
+      rootIdentifier !== undefined &&
+      isDefinedByMutableVaraible(rootIdentifier, context)
+    ) {
+      return {
+        context,
+        descriptors: [],
+      };
+    }
   }
 
   return {
@@ -282,15 +252,17 @@ function checkUnaryExpression(
     };
   }
 
-  if (
-    ignoreNonConstDeclarations &&
-    isIdentifier(node.argument.object) &&
-    isDefinedByMutableVaraible(node.argument.object, context)
-  ) {
-    return {
-      context,
-      descriptors: [],
-    };
+  if (ignoreNonConstDeclarations) {
+    const rootIdentifier = findRootIdentifier(node.argument.object);
+    if (
+      rootIdentifier !== undefined &&
+      isDefinedByMutableVaraible(rootIdentifier, context)
+    ) {
+      return {
+        context,
+        descriptors: [],
+      };
+    }
   }
 
   return {
@@ -332,15 +304,17 @@ function checkUpdateExpression(
     };
   }
 
-  if (
-    ignoreNonConstDeclarations &&
-    isIdentifier(node.argument.object) &&
-    isDefinedByMutableVaraible(node.argument.object, context)
-  ) {
-    return {
-      context,
-      descriptors: [],
-    };
+  if (ignoreNonConstDeclarations) {
+    const rootIdentifier = findRootIdentifier(node.argument.object);
+    if (
+      rootIdentifier !== undefined &&
+      isDefinedByMutableVaraible(rootIdentifier, context)
+    ) {
+      return {
+        context,
+        descriptors: [],
+      };
+    }
   }
 
   return {
@@ -424,15 +398,25 @@ function checkCallExpression(
     arrayMutatorMethods.has(node.callee.property.name) &&
     (!ignoreImmediateMutation ||
       !isInChainCallAndFollowsNew(node.callee, context)) &&
-    isArrayType(getTypeOfNode(node.callee.object, context)) &&
-    (!ignoreNonConstDeclarations ||
-      !isIdentifier(node.callee.object) ||
-      !isDefinedByMutableVaraible(node.callee.object, context))
+    isArrayType(getTypeOfNode(node.callee.object, context))
   ) {
-    return {
-      context,
-      descriptors: [{ node, messageId: "array" }],
-    };
+    if (ignoreNonConstDeclarations) {
+      const rootIdentifier = findRootIdentifier(node.callee.object);
+      if (
+        rootIdentifier === undefined ||
+        !isDefinedByMutableVaraible(rootIdentifier, context)
+      ) {
+        return {
+          context,
+          descriptors: [{ node, messageId: "array" }],
+        };
+      }
+    } else {
+      return {
+        context,
+        descriptors: [{ node, messageId: "array" }],
+      };
+    }
   }
 
   // Non-array object mutation (ex. Object.assign on identifier)?
@@ -448,15 +432,25 @@ function checkCallExpression(
       ignoreIdentifierPattern,
       ignoreAccessorPattern,
     ) &&
-    isObjectConstructorType(getTypeOfNode(node.callee.object, context)) &&
-    (!ignoreNonConstDeclarations ||
-      !isIdentifier(node.callee.object) ||
-      !isDefinedByMutableVaraible(node.callee.object, context))
+    isObjectConstructorType(getTypeOfNode(node.callee.object, context))
   ) {
-    return {
-      context,
-      descriptors: [{ node, messageId: "object" }],
-    };
+    if (ignoreNonConstDeclarations) {
+      const rootIdentifier = findRootIdentifier(node.callee.object);
+      if (
+        rootIdentifier === undefined ||
+        !isDefinedByMutableVaraible(rootIdentifier, context)
+      ) {
+        return {
+          context,
+          descriptors: [{ node, messageId: "object" }],
+        };
+      }
+    } else {
+      return {
+        context,
+        descriptors: [{ node, messageId: "object" }],
+      };
+    }
   }
 
   return {
