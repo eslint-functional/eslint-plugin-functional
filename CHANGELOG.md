@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+# [6.0.0-next.7](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.0.0-next.6...v6.0.0-next.7) (2023-07-24)
+
+
+### Bug Fixes
+
+* **immutable-data:** rework logic, it should work now ([9644994](https://github.com/eslint-functional/eslint-plugin-functional/commit/96449949d35b5b8dcbb87f91065f1d08131364fb)), closes [#692](https://github.com/eslint-functional/eslint-plugin-functional/issues/692)
+
 # [6.0.0-next.6](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.0.0-next.5...v6.0.0-next.6) (2023-07-21)
 
 
