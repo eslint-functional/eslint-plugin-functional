@@ -75,7 +75,7 @@
     "@typescript-eslint/utils": "^5.50.0",
     "deepmerge-ts": "^5.0.0",
     "escape-string-regexp": "^4.0.0",
-    "is-immutable-type": "^1.2.5",
+    "is-immutable-type": "^2.0.0",
     "semver": "^7.3.8"
   },
   "devDependencies": {
