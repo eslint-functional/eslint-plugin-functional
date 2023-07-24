@@ -9,7 +9,7 @@ specifiers:
   '@cspell/dict-cryptocurrencies': 3.0.1
   '@google/semantic-release-replace-plugin': 1.2.7
   '@istanbuljs/nyc-config-typescript': 1.0.2
-  '@rebeccastevens/eslint-config': 1.6.7
+  '@rebeccastevens/eslint-config': 1.7.8
   '@rollup/plugin-commonjs': 25.0.3
   '@rollup/plugin-json': 6.0.0
   '@rollup/plugin-node-resolve': 15.1.0
@@ -81,7 +81,7 @@ specifiers:
 dependencies:
   '@typescript-eslint/type-utils': 5.62.0_ko3fmmbeyij36muomfgt2u76xu
   '@typescript-eslint/utils': 5.62.0_ko3fmmbeyij36muomfgt2u76xu
-  deepmerge-ts: 5.0.0
+  deepmerge-ts: 5.1.0
   escape-string-regexp: 4.0.0
   is-immutable-type: 1.2.5_kfc54qcd2qvnqhc4ipdxkc5nfy
   semver: 7.5.4
@@ -95,7 +95,7 @@ devDependencies:
   '@cspell/dict-cryptocurrencies': 3.0.1
   '@google/semantic-release-replace-plugin': 1.2.7_semantic-release@21.0.7
   '@istanbuljs/nyc-config-typescript': 1.0.2_nyc@15.1.0
-  '@rebeccastevens/eslint-config': 1.6.7_yadurfq5d7qy2ppb63phpnhzpi
+  '@rebeccastevens/eslint-config': 1.7.8_pdf2xgb6cyt7ncnls4h2clpb44
   '@rollup/plugin-commonjs': 25.0.3_rollup@3.26.3
   '@rollup/plugin-json': 6.0.0_rollup@3.26.3
   '@rollup/plugin-node-resolve': 15.1.0_rollup@3.26.3
@@ -1197,8 +1197,8 @@ packages:
       config-chain: 1.1.13
     dev: true
 
-  /@rebeccastevens/eslint-config/1.6.7_yadurfq5d7qy2ppb63phpnhzpi:
-    resolution: {integrity: sha512-n8ypIFJpJzw9h9ogL23Ezr8pHm1mpXtxekcqY3djiPh9FR7YTgU5uphqjrQtHzvnaW6RfFjdFUaeH1XK91kVdg==}
+  /@rebeccastevens/eslint-config/1.7.8_pdf2xgb6cyt7ncnls4h2clpb44:
+    resolution: {integrity: sha512-ZgsWoMYZYujgHXcevzte4r3OdbKuqWj0Mn9Y0wOE63IWIxpOsrl5GD1x79o4PfE9RR3HLEKzJzoXlMrgilex0Q==}
     engines: {node: '>=18.12.1'}
     peerDependencies:
       '@typescript-eslint/eslint-plugin': '*'
@@ -1210,7 +1210,7 @@ packages:
       eslint-plugin-import: '*'
       eslint-plugin-jsdoc: '*'
       eslint-plugin-markdown: '*'
-      eslint-plugin-node: '*'
+      eslint-plugin-n: '*'
       eslint-plugin-optimize-regex: '*'
       eslint-plugin-promise: '*'
       eslint-plugin-sonarjs: '*'
@@ -1218,14 +1218,13 @@ packages:
     dependencies:
       '@typescript-eslint/eslint-plugin': 5.62.0_tbbci4he2x65aggpp4j2oxxdvm
       '@typescript-eslint/parser': 5.62.0_ko3fmmbeyij36muomfgt2u76xu
-      deepmerge-ts: 5.0.0
+      deepmerge-ts: 5.1.0
       eslint: 8.45.0
       eslint-import-resolver-typescript: 3.5.5_ghbswvk3c6mlonlxyojs7rvnca
       eslint-plugin-eslint-comments: 3.2.0_eslint@8.45.0
       eslint-plugin-import: 2.27.5_e5imconihjuiegtkjrayaxwwxe
       eslint-plugin-jsdoc: 41.1.2_eslint@8.45.0
       eslint-plugin-markdown: 3.0.0_eslint@8.45.0
-      eslint-plugin-node: 11.1.0_eslint@8.45.0
       eslint-plugin-optimize-regex: 1.2.1
       eslint-plugin-promise: 6.1.1_eslint@8.45.0
       eslint-plugin-sonarjs: 0.19.0_eslint@8.45.0
@@ -2773,8 +2772,8 @@ packages:
   /deep-is/0.1.4:
     resolution: {integrity: sha512-oIPzksmTg4/MriiaYGO+okXDT7ztn/w3Eptv/+gSIdMdKsJo0u4CfYNFJPy+4SKMuCqGw2wxnA+URMg3t8a/bQ==}
 
-  /deepmerge-ts/5.0.0:
-    resolution: {integrity: sha512-esq9xUO8+CQCG63IlpkoOBNlpm1m4WBm0NRLFrGL/dcgzqWi1tmTLfG7QTvffqYt6T+dS+xaxrHxdexqGWkV1g==}
+  /deepmerge-ts/5.1.0:
+    resolution: {integrity: sha512-eS8dRJOckyo9maw9Tu5O5RUi/4inFLrnoLkBe3cPfDMx3WZioXtmOew4TXQaxq7Rhl4xjDtR7c6x8nNTxOvbFw==}
     engines: {node: '>=16.0.0'}
 
   /deepmerge/4.3.0:
