@@ -25,7 +25,7 @@ Libraries should therefore always enforce this rule for parameters.
 
 ### ❌ Incorrect
 
-<!-- eslint-disable functional/prefer-immutable-types -->
+<!-- eslint-skip -->
 
 ```ts
 /* eslint functional/prefer-immutable-types: "error" */
@@ -71,7 +71,7 @@ interface Foo4 {
 
 ### ✅ Correct
 
-<!-- eslint-disable functional/prefer-immutable-types -->
+<!-- eslint-skip -->
 
 ```ts
 /* eslint functional/prefer-immutable-types: "error" */
@@ -268,7 +268,7 @@ The level of immutability that should be enforced. One of the following:
 
 #### ❌ Incorrect
 
-<!-- eslint-disable functional/prefer-immutable-types -->
+<!-- eslint-skip -->
 
 ```ts
 /* eslint functional/prefer-immutable-types: ["error", { "enforcement": "Immutable" }] */
@@ -280,7 +280,7 @@ function map(arg: ReadonlyMap<string>) {} // ReadonlyMap is not immutable
 
 #### ✅ Correct
 
-<!-- eslint-disable functional/prefer-immutable-types -->
+<!-- eslint-skip -->
 
 ```ts
 /* eslint functional/prefer-immutable-types: ["error", { "enforcement": "Immutable" }] */
@@ -290,7 +290,7 @@ function map(arg: Readonly<ReadonlyMap<string>>) {}
 function object(arg: Readonly<{ prop: string }>) {}
 ```
 
-<!-- eslint-disable functional/prefer-immutable-types -->
+<!-- eslint-skip -->
 
 ```ts
 /* eslint functional/prefer-immutable-types: ["error", { "enforcement": "ReadonlyShallow" }] */
@@ -319,7 +319,7 @@ A boolean to specify if checking classes should be ignored. `false` by default.
 
 #### ❌ Incorrect
 
-<!-- eslint-disable functional/prefer-immutable-types -->
+<!-- eslint-skip -->
 
 ```ts
 /* eslint functional/prefer-immutable-types: ["error", { "ignoreInferredTypes": true }] */
@@ -346,7 +346,7 @@ export const acceptsCallback: AcceptsCallback;
 
 #### ✅ Correct
 
-<!-- eslint-disable functional/prefer-immutable-types -->
+<!-- eslint-skip -->
 
 ```ts
 /* eslint functional/prefer-immutable-types: ["error", { "ignoreInferredTypes": true }] */

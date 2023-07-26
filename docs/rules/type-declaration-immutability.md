@@ -20,7 +20,7 @@ section](https://github.com/RebeccaStevens/is-immutable-type#immutability) of
 
 ### ❌ Incorrect
 
-<!-- eslint-disable functional/type-declaration-immutability -->
+<!-- eslint-skip -->
 
 ```ts
 /* eslint functional/type-declaration-immutability: "error" */
@@ -43,7 +43,7 @@ type MutableElement = Readonly<{
 
 ### ✅ Correct
 
-<!-- eslint-disable functional/type-declaration-immutability -->
+<!-- eslint-skip -->
 
 ```ts
 /* eslint functional/type-declaration-immutability: "error" */
