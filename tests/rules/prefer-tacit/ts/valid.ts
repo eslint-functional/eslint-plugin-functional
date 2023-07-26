@@ -78,6 +78,16 @@ const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
     `,
     optionsSet: [[]],
   },
+  // Instantiation Expression
+  {
+    code: dedent`
+      const foo = f<number>;
+    `,
+    dependencyConstraints: {
+      typescript: "4.7.0",
+    },
+    optionsSet: [[]],
+  },
 ];
 
 export default tests;

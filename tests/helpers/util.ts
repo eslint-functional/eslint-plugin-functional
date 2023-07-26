@@ -1,3 +1,4 @@
+import { type DependencyConstraint } from "@typescript-eslint/rule-tester";
 import {
   type SharedConfigurationSettings,
   type TSESLint,
@@ -34,13 +35,19 @@ export type ValidTestCaseSet<TOptions extends Readonly<unknown[]>> = Omit<
   ValidTestCase<TOptions>,
   "options" | "settings"
 > &
-  OptionsSets;
+  OptionsSets & {
+    // This should be part of `ValidTestCase`
+    dependencyConstraints?: DependencyConstraint;
+  };
 
 export type InvalidTestCaseSet<
   TMessageIds extends string,
   TOptions extends Readonly<unknown[]>,
 > = Omit<InvalidTestCase<TMessageIds, TOptions>, "options" | "settings"> &
-  OptionsSets;
+  OptionsSets & {
+    // This should be part of `InvalidTestCase`
+    dependencyConstraints?: DependencyConstraint;
+  };
 
 /**
  * Convert our test cases into ones eslint test runner is expecting.
