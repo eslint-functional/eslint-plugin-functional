@@ -6,11 +6,12 @@ import es3Tests from "./es3";
 
 const tester = testRule(name, rule);
 
-tester.typescript(es6Tests);
-tester.typescript(es6Tests);
+const allTest = {
+  valid: [...es3Tests.valid, ...es6Tests.valid],
+  invalid: [...es3Tests.invalid, ...es6Tests.invalid],
+};
 
-tester.esLatest(es3Tests);
-tester.esLatest(es3Tests);
+tester.typescript(allTest);
+tester.esLatest(allTest);
 
-tester.es2015(es6Tests);
 tester.es3(es3Tests);

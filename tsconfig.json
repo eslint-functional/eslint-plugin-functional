@@ -38,12 +38,5 @@
       ],
       "#eslint-plugin-functional/tests/*": ["tests/*"]
     }
-  },
-  "ts-node": {
-    "transpileOnly": true,
-    "compilerOptions": {
-      "module": "CommonJS",
-      "moduleResolution": "node16"
-    }
   }
 }

@@ -5,9 +5,11 @@ import { type RuleTesterConfig } from "@typescript-eslint/rule-tester";
 const fixturePath = path.join(process.cwd(), "tests/fixture");
 export const filename = path.join(fixturePath, "file.ts");
 
+/* eslint-disable unicorn/prefer-module */
 const typescriptParser = require.resolve("@typescript-eslint/parser");
 const babelParser = require.resolve("@babel/eslint-parser");
 const espreeParser = require.resolve("espree");
+/* eslint-enable unicorn/prefer-module */
 
 export const configs = {
   typescript: {

@@ -9,7 +9,11 @@ import {
   type RunTests,
 } from "@typescript-eslint/utils/ts-eslint";
 
-import ts from "#eslint-plugin-functional/conditional-imports/typescript";
+import {
+  type RuleFunctionsMap,
+  type NamedCreateRuleMetaWithCategory,
+  createRuleUsingFunction,
+} from "#eslint-plugin-functional/utils/rule";
 
 import { filename as dummyFilename } from "./configs";
 
@@ -81,19 +85,18 @@ export function processValidTestCase<TOptions extends Readonly<unknown[]>>(
  */
 export function createDummyRule(
   create: (
-    context: TSESLint.RuleContext<"generic", any>,
-  ) => TSESLint.RuleListener,
+    context: Readonly<TSESLint.RuleContext<"generic", any>>,
+  ) => RuleFunctionsMap<any, "generic", any>,
 ): RuleModule<string, [boolean, ...unknown[]]> {
-  const meta: TSESLint.RuleMetaData<"generic"> = {
+  const meta: NamedCreateRuleMetaWithCategory<"generic"> = {
     type: "suggestion",
     docs: {
-      description: "Disallow mutable variables.",
-      url: "",
+      category: "testing",
+      description: "rule used in testing",
     },
     messages: {
       generic: "Error.",
     },
-    fixable: "code",
     schema: {
       oneOf: [
         {
@@ -106,10 +109,7 @@ export function createDummyRule(
     },
   };
 
-  return {
-    meta,
-    create,
-  } as RuleModule<string, [boolean, ...unknown[]]>;
+  return createRuleUsingFunction("dummy-rule", meta, [true, {}], create);
 }
 
 /**
@@ -136,13 +136,6 @@ export function addFilename<
           : { ...test, filename },
       ) ?? [],
   };
-}
-
-/**
- * Returns whether or not TypeScript is installed locally.
- */
-export function isTsInstalled(): boolean {
-  return ts !== undefined;
 }
 
 export type MessagesOf<T extends RuleModule<string, ReadonlyArray<unknown>>> =

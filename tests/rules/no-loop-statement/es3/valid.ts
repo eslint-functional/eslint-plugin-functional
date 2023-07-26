@@ -4,6 +4,11 @@ import {
   type OptionsOf,
 } from "#eslint-plugin-functional/tests/helpers/util";
 
-const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [];
+const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
+  {
+    code: `if (true) { console.log(); }`,
+    optionsSet: [[]],
+  },
+];
 
 export default tests;

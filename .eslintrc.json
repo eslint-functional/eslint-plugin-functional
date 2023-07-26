@@ -64,21 +64,26 @@
     },
     {
       "files": ["**/*.test.ts"],
-      "plugins": ["ava"],
-      "extends": ["plugin:ava/recommended"],
       "rules": {
         "@typescript-eslint/no-unsafe-argument": "off",
         "@typescript-eslint/no-unsafe-assignment": "off",
         "@typescript-eslint/no-unsafe-call": "off",
         "@typescript-eslint/no-unsafe-member-access": "off",
         "@typescript-eslint/no-unsafe-return": "off",
-        "jsdoc/require-jsdoc": "off"
-      }
-    },
-    {
-      "files": "tests/helpers/testers.ts",
-      "rules": {
-        "ava/no-ignored-test-files": "off"
+        "@typescript-eslint/no-unused-vars-experimental": "off",
+        "@typescript-eslint/strict-boolean-expressions": "off",
+        "eslint-comments/disable-enable-pair": "off",
+        "eslint-comments/no-unlimited-disable": "off",
+        "functional/functional-parameters": "off",
+        "functional/no-conditional-statements": "off",
+        "functional/no-expression-statements": "off",
+        "functional/no-loop-statements": "off",
+        "functional/no-return-void": "off",
+        "import/no-named-as-default-member": "off",
+        "jsdoc/require-jsdoc": "off",
+        "sonarjs/no-duplicate-string": "off",
+        "sonarjs/no-identical-functions": "off",
+        "unicorn/prefer-module": "off"
       }
     },
     {

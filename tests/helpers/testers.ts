@@ -1,6 +1,6 @@
 import { type RuleModule } from "@typescript-eslint/utils/ts-eslint";
 
-import { getAvaRuleTester } from "./AvaRuleTester";
+import { getRuleTester } from "./RuleTester";
 import { configs } from "./configs";
 import { processInvalidTestCase, processValidTestCase } from "./util";
 import { type ValidTestCaseSet, type InvalidTestCaseSet } from "./util";
@@ -25,7 +25,7 @@ export function testRule<
       ] => [
         configName as keyof typeof configs,
         ({ valid, invalid }) => {
-          const ruleTester = getAvaRuleTester(configName, config);
+          const ruleTester = getRuleTester(config);
 
           ruleTester.run(ruleName, rule, {
             valid: processValidTestCase(valid),

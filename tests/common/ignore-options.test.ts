@@ -1,6 +1,7 @@
-import assert from "node:assert/strict";
-
-import { type ValidTestCase } from "@typescript-eslint/rule-tester";
+import {
+  type InvalidTestCase,
+  type ValidTestCase,
+} from "@typescript-eslint/rule-tester";
 import dedent from "dedent";
 
 import {
@@ -9,7 +10,7 @@ import {
   type IgnoreCodePatternOption,
 } from "#eslint-plugin-functional/options";
 import { shouldIgnorePattern } from "#eslint-plugin-functional/options";
-import { getAvaRuleTester } from "#eslint-plugin-functional/tests/helpers/AvaRuleTester";
+import { getRuleTester } from "#eslint-plugin-functional/tests/helpers/RuleTester";
 import {
   filename,
   configs,
@@ -22,165 +23,185 @@ import {
 /**
  * Create a dummy rule that operates on AssignmentExpression nodes.
  */
-function createDummyAssignmentExpressionRule() {
+function createDummyRuleFor(nodeType: string) {
   return createDummyRule((context) => {
     const [allowed, options] = context.options;
     return {
-      AssignmentExpression: (node) => {
-        assert(
-          shouldIgnorePattern(
-            node,
-            context,
-            options.ignoreIdentifierPattern,
-            options.ignoreAccessorPattern,
-            options.ignoreCodePattern,
-          ) === allowed,
-        );
+      [nodeType]: (node) => {
+        return {
+          context,
+          descriptors:
+            shouldIgnorePattern(
+              node,
+              context,
+              options.ignoreIdentifierPattern,
+              options.ignoreAccessorPattern,
+              options.ignoreCodePattern,
+            ) === allowed
+              ? []
+              : [{ node, messageId: "generic" }],
+        };
       },
     };
   });
 }
 
-const tests: Array<ValidTestCase<[boolean, IgnoreAccessorPatternOption]>> = [
+const validTests: Array<ValidTestCase<[boolean, IgnoreAccessorPatternOption]>> =
+  [
+    // Exact match.
+    {
+      code: dedent`
+        mutable = 0;
+      `,
+      options: [true, { ignoreAccessorPattern: "mutable" }],
+    },
+    {
+      code: dedent`
+        mutable.foo = 0;
+      `,
+      options: [true, { ignoreAccessorPattern: "mutable.foo" }],
+    },
+    {
+      code: dedent`
+        x = 0;
+        xxx_mutable_xxx = 0;
+        mutable.foo.bar = 0;
+        mutable.foo[0] = 0;
+        mutable.foo["foo-bar"] = 0;
+      `,
+      options: [false, { ignoreAccessorPattern: "mutable" }],
+    },
+    // Prefix match.
+    {
+      code: dedent`
+        mutable_ = 0;
+        mutable_xxx = 0;
+      `,
+      options: [true, { ignoreAccessorPattern: "mutable_*" }],
+    },
+    {
+      code: dedent`
+        x = 0;
+        xxx_mutable_xxx = 0;
+        mutable_xxx.foo = 0;
+        mutable_xxx[0] = 0;
+        mutable_xxx["foo-bar"] = 0;
+      `,
+      options: [false, { ignoreAccessorPattern: "mutable_*" }],
+    },
+    // Suffix match.
+    {
+      code: dedent`
+        _mutable = 0;
+        xxx_mutable = 0;
+      `,
+      options: [true, { ignoreAccessorPattern: "*_mutable" }],
+    },
+    {
+      code: dedent`
+        x = 0;
+        xxx_mutable_xxx = 0;
+        xxx_mutable.foo = 0;
+        xxx_mutable[0] = 0;
+        xxx_mutable["foo-bar"] = 0;
+      `,
+      options: [false, { ignoreAccessorPattern: "*_mutable" }],
+    },
+    // Middle match.
+    {
+      code: dedent`
+        xxx_mutable_xxx = 0;
+      `,
+      options: [true, { ignoreAccessorPattern: "*_mutable_*" }],
+    },
+    {
+      code: dedent`
+        x = 0;
+        xxx_mutable_xxx.foo = 0;
+        xxx_mutable_xxx[0] = 0;
+        xxx_mutable_xxx["foo-bar"] = 0;
+      `,
+      options: [false, { ignoreAccessorPattern: "*_mutable_*" }],
+    },
+    // Mutable properties.
+    {
+      code: dedent`
+        mutable_xxx.foo = 0;
+        mutable_xxx[0] = 0;
+        mutable_xxx["foo-bar"] = 0;
+      `,
+      options: [true, { ignoreAccessorPattern: "mutable_*.*" }],
+    },
+    {
+      code: dedent`
+        mutable_xxx = 0;
+        mutable_xxx.foo.bar = 0;
+        mutable_xxx.foo[0] = 0;
+        mutable_xxx.foo["foo-bar"] = 0;
+      `,
+      options: [false, { ignoreAccessorPattern: "mutable_*.*" }],
+    },
+    // Mutable deep properties.
+    {
+      code: dedent`
+        mutable_xxx.foo.bar[0] = 0;
+        mutable_xxx.foo.bar["foo-bar"] = 0;
+        mutable_xxx.foo.bar = [0, 1, 2];
+        mutable_xxx.foo = 0;
+        mutable_xxx[0] = 0;
+        mutable_xxx["foo-bar"] = 0;
+      `,
+      options: [true, { ignoreAccessorPattern: "mutable_*.*.**" }],
+    },
+    {
+      code: dedent`
+        mutable_xxx = 0;
+      `,
+      options: [false, { ignoreAccessorPattern: "mutable_*.*.**" }],
+    },
+    // Mutable deep properties and container.
+    {
+      code: dedent`
+        mutable_xxx.foo.bar[0] = 0;
+        mutable_xxx.foo.bar["foo-bar"] = 0;
+        mutable_xxx.foo.bar = [0, 1, 2];
+        mutable_xxx.foo = 0;
+        mutable_xxx[0] = 0;
+        mutable_xxx["foo-bar"] = 0;
+        mutable_xxx = 0;
+      `,
+      options: [true, { ignoreAccessorPattern: "mutable_*.**" }],
+    },
+  ];
+
+const invalidTests: Array<
+  InvalidTestCase<"generic", [boolean, IgnoreAccessorPatternOption]>
+> = [
   // Exact match.
   {
     code: dedent`
-      mutable = 0;
+      immutable = 0;
     `,
     options: [true, { ignoreAccessorPattern: "mutable" }],
-  },
-  {
-    code: dedent`
-      mutable.foo = 0;
-    `,
-    options: [true, { ignoreAccessorPattern: "mutable.foo" }],
-  },
-  {
-    code: dedent`
-      x = 0;
-      xxx_mutable_xxx = 0;
-      mutable.foo.bar = 0;
-      mutable.foo[0] = 0;
-      mutable.foo["foo-bar"] = 0;
-    `,
-    options: [false, { ignoreAccessorPattern: "mutable" }],
-  },
-  // Prefix match.
-  {
-    code: dedent`
-      mutable_ = 0;
-      mutable_xxx = 0;
-    `,
-    options: [true, { ignoreAccessorPattern: "mutable_*" }],
-  },
-  {
-    code: dedent`
-      x = 0;
-      xxx_mutable_xxx = 0;
-      mutable_xxx.foo = 0;
-      mutable_xxx[0] = 0;
-      mutable_xxx["foo-bar"] = 0;
-    `,
-    options: [false, { ignoreAccessorPattern: "mutable_*" }],
-  },
-  // Suffix match.
-  {
-    code: dedent`
-      _mutable = 0;
-      xxx_mutable = 0;
-    `,
-    options: [true, { ignoreAccessorPattern: "*_mutable" }],
-  },
-  {
-    code: dedent`
-      x = 0;
-      xxx_mutable_xxx = 0;
-      xxx_mutable.foo = 0;
-      xxx_mutable[0] = 0;
-      xxx_mutable["foo-bar"] = 0;
-    `,
-    options: [false, { ignoreAccessorPattern: "*_mutable" }],
-  },
-  // Middle match.
-  {
-    code: dedent`
-      xxx_mutable_xxx = 0;
-    `,
-    options: [true, { ignoreAccessorPattern: "*_mutable_*" }],
-  },
-  {
-    code: dedent`
-      x = 0;
-      xxx_mutable_xxx.foo = 0;
-      xxx_mutable_xxx[0] = 0;
-      xxx_mutable_xxx["foo-bar"] = 0;
-    `,
-    options: [false, { ignoreAccessorPattern: "*_mutable_*" }],
-  },
-  // Mutable properties.
-  {
-    code: dedent`
-      mutable_xxx.foo = 0;
-      mutable_xxx[0] = 0;
-      mutable_xxx["foo-bar"] = 0;
-    `,
-    options: [true, { ignoreAccessorPattern: "mutable_*.*" }],
-  },
-  {
-    code: dedent`
-      mutable_xxx = 0;
-      mutable_xxx.foo.bar = 0;
-      mutable_xxx.foo[0] = 0;
-      mutable_xxx.foo["foo-bar"] = 0;
-    `,
-    options: [false, { ignoreAccessorPattern: "mutable_*.*" }],
-  },
-  // Mutable deep properties.
-  {
-    code: dedent`
-      mutable_xxx.foo.bar[0] = 0;
-      mutable_xxx.foo.bar["foo-bar"] = 0;
-      mutable_xxx.foo.bar = [0, 1, 2];
-      mutable_xxx.foo = 0;
-      mutable_xxx[0] = 0;
-      mutable_xxx["foo-bar"] = 0;
-    `,
-    options: [true, { ignoreAccessorPattern: "mutable_*.*.**" }],
-  },
-  {
-    code: dedent`
-      mutable_xxx = 0;
-    `,
-    options: [false, { ignoreAccessorPattern: "mutable_*.*.**" }],
-  },
-  // Mutable deep properties and container.
-  {
-    code: dedent`
-      mutable_xxx.foo.bar[0] = 0;
-      mutable_xxx.foo.bar["foo-bar"] = 0;
-      mutable_xxx.foo.bar = [0, 1, 2];
-      mutable_xxx.foo = 0;
-      mutable_xxx[0] = 0;
-      mutable_xxx["foo-bar"] = 0;
-      mutable_xxx = 0;
-    `,
-    options: [true, { ignoreAccessorPattern: "mutable_*.**" }],
+    errors: [
+      {
+        messageId: "generic",
+      },
+    ],
   },
 ];
 
-getAvaRuleTester("esLatest", configs.esLatest).run(
-  "AssignmentExpression",
-  createDummyAssignmentExpressionRule(),
+getRuleTester(configs.esLatest).run(
+  "ignoreAccessorPattern",
+  createDummyRuleFor("AssignmentExpression"),
   addFilename(filename, {
-    valid: tests,
-    invalid: [],
+    valid: validTests,
+    invalid: invalidTests,
   }),
 );
 
-const assignmentExpressionTests: Array<
-  ValidTestCase<
-    [boolean, IgnoreCodePatternOption & IgnoreIdentifierPatternOption]
-  >
+const assignmentExpressionValidTests: Array<
+  ValidTestCase<[boolean, IgnoreIdentifierPatternOption]>
 > = [
   // Prefix match.
   {
@@ -217,19 +238,34 @@ const assignmentExpressionTests: Array<
   },
 ];
 
-getAvaRuleTester("esLatest", configs.esLatest).run(
-  "AssignmentExpression",
-  createDummyAssignmentExpressionRule(),
+const assignmentExpressionInvalidTests: Array<
+  InvalidTestCase<"generic", [boolean, IgnoreIdentifierPatternOption]>
+> = [
+  // Exact match.
+  {
+    code: dedent`
+      immutable_xxx = 0;
+    `,
+    options: [true, { ignoreIdentifierPattern: "^mutable_" }],
+    errors: [
+      {
+        messageId: "generic",
+      },
+    ],
+  },
+];
+
+getRuleTester(configs.esLatest).run(
+  "ignoreIdentifierPattern",
+  createDummyRuleFor("AssignmentExpression"),
   addFilename(filename, {
-    valid: assignmentExpressionTests,
-    invalid: [],
+    valid: assignmentExpressionValidTests,
+    invalid: assignmentExpressionInvalidTests,
   }),
 );
 
-const expressionStatementTests: Array<
-  ValidTestCase<
-    [boolean, IgnoreCodePatternOption & IgnoreIdentifierPatternOption]
-  >
+const expressionStatementValidTests: Array<
+  ValidTestCase<[boolean, IgnoreCodePatternOption]>
 > = [
   {
     code: dedent`
@@ -251,26 +287,27 @@ const expressionStatementTests: Array<
   },
 ];
 
-getAvaRuleTester("esLatest", configs.esLatest).run(
-  "ExpressionStatement",
-  createDummyRule((context) => {
-    const [allowed, options] = context.options;
-    return {
-      ExpressionStatement: (node) => {
-        assert(
-          shouldIgnorePattern(
-            node,
-            context,
-            undefined,
-            undefined,
-            options.ignoreCodePattern,
-          ) === allowed,
-        );
+const expressionStatementInvalidTests: Array<
+  InvalidTestCase<"generic", [boolean, IgnoreCodePatternOption]>
+> = [
+  {
+    code: dedent`
+      const x = 0;
+    `,
+    options: [true, { ignoreCodePattern: "^const y" }],
+    errors: [
+      {
+        messageId: "generic",
       },
-    };
-  }),
+    ],
+  },
+];
+
+getRuleTester(configs.esLatest).run(
+  "ignoreCodePattern",
+  createDummyRuleFor("VariableDeclaration"),
   addFilename(filename, {
-    valid: expressionStatementTests,
-    invalid: [],
+    valid: expressionStatementValidTests,
+    invalid: expressionStatementInvalidTests,
   }),
 );

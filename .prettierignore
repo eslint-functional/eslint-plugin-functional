@@ -4,8 +4,6 @@
 /coverage/
 /tests-compiled/
 
-.nyc_output/
-
 node_modules/
 pnpm-lock.yaml
 

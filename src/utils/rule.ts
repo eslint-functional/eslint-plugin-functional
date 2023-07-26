@@ -57,7 +57,7 @@ export type RuleResult<
 /**
  * A map of nodes to functions that a rule operate on.
  */
-type RuleFunctionsMap<
+export type RuleFunctionsMap<
   Node extends TSESTree.Node,
   MessageIds extends string,
   Options extends BaseOptions,

@@ -12,9 +12,9 @@ export default defineConfig({
 
   output: [
     {
-      sourcemap: false,
       dir: "tests-compiled",
-      format: "cjs",
+      format: "esm",
+      sourcemap: true,
     },
   ],
 
