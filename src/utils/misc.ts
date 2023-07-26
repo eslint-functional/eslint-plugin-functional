@@ -9,7 +9,6 @@ import {
   hasKey,
   isAssignmentExpression,
   isDefined,
-  isExpressionStatement,
   isIdentifier,
   isMemberExpression,
   isPrivateIdentifier,
