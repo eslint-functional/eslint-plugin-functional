@@ -71,8 +71,8 @@
     "verify": "pnpm run lint && pnpm run type-check && pnpm run build-tests && pnpm run test-compiled && rimraf build"
   },
   "dependencies": {
-    "@typescript-eslint/type-utils": "^5.50.0",
-    "@typescript-eslint/utils": "^5.50.0",
+    "@typescript-eslint/type-utils": "^6.0.0",
+    "@typescript-eslint/utils": "^6.0.0",
     "deepmerge-ts": "^5.0.0",
     "escape-string-regexp": "^4.0.0",
     "is-immutable-type": "^1.2.5",
@@ -104,8 +104,8 @@
     "@types/node": "16.18.39",
     "@types/rollup-plugin-auto-external": "2.0.2",
     "@types/semver": "7.5.0",
-    "@typescript-eslint/eslint-plugin": "5.62.0",
-    "@typescript-eslint/parser": "5.62.0",
+    "@typescript-eslint/eslint-plugin": "6.2.0",
+    "@typescript-eslint/parser": "6.2.0",
     "ava": "5.3.1",
     "chalk": "4.1.2",
     "commitizen": "4.3.0",
