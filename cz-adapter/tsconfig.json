@@ -6,6 +6,7 @@
     "skipLibCheck": true
   },
   "ts-node": {
-    "emit": true
+    "emit": true,
+    "transpileOnly": true
   }
 }
