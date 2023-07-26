@@ -83,9 +83,7 @@ const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
     code: dedent`
       const foo = f<number>;
     `,
-    dependencyConstraints: {
-      typescript: "4.7.0",
-    },
+    dependencyConstraints: { typescript: "4.7.0" },
     optionsSet: [[]],
   },
 ];

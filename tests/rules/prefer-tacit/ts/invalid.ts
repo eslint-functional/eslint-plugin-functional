@@ -167,9 +167,7 @@ const tests: Array<
       function f<T>(x: T): T {}
       const foo = x => f<number>(x);
     `,
-    dependencyConstraints: {
-      typescript: "4.7.0",
-    },
+    dependencyConstraints: { typescript: "4.7.0" },
     optionsSet: [[]],
     errors: [
       {
@@ -194,9 +192,7 @@ const tests: Array<
       function f<T>(x: T): T {}
       function foo(x) { return f<number>(x); }
     `,
-    dependencyConstraints: {
-      typescript: "4.7.0",
-    },
+    dependencyConstraints: { typescript: "4.7.0" },
     optionsSet: [[]],
     errors: [
       {
@@ -221,9 +217,7 @@ const tests: Array<
       function f<T>(x: T): T {}
       export default function (x) { return f<number>(x); }
     `,
-    dependencyConstraints: {
-      typescript: "4.7.0",
-    },
+    dependencyConstraints: { typescript: "4.7.0" },
     optionsSet: [[]],
     errors: [
       {
@@ -249,11 +243,7 @@ const tests: Array<
       function f<T>(x: T): T {}
       function foo(x) { return f<number>(x); }
     `,
-    dependencyConstraints: {
-      typescript: {
-        range: "<4.7.0",
-      },
-    },
+    dependencyConstraints: { typescript: { range: "<4.7.0" } },
     optionsSet: [[]],
     errors: [
       {
@@ -269,11 +259,7 @@ const tests: Array<
       function f<T>(x: T): T {}
       export default function (x) { return f<number>(x); }
     `,
-    dependencyConstraints: {
-      typescript: {
-        range: "<4.7.0",
-      },
-    },
+    dependencyConstraints: { typescript: { range: "<4.7.0" } },
     optionsSet: [[]],
     errors: [
       {

@@ -19,6 +19,9 @@ export const configs = {
       tsconfigRootDir: fixturePath,
       project: "tsconfig.json",
     },
+    dependencyConstraints: {
+      typescript: "4.3.5",
+    },
   } satisfies RuleTesterConfig,
 
   esLatest: {
