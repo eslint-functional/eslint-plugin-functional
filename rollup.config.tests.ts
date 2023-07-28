@@ -16,7 +16,14 @@ export default defineConfig({
     },
   ],
 
-  plugins: [rollupPluginAutoExternal(), rollupPluginTypescript()],
+  plugins: [
+    rollupPluginAutoExternal(),
+    rollupPluginTypescript({
+      compilerOptions: {
+        sourceMap: true,
+      },
+    }),
+  ],
 
   external: [],
 
