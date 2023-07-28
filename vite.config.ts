@@ -28,7 +28,6 @@ export default defineConfig({
     coverage: {
       provider: "c8",
       include: ["src/**/*.ts"],
-      exclude: ["src/util/conditional-imports/**/*.ts"],
       // @ts-expect-error -- Untyped option.
       excludeAfterRemap: true,
       clean: true,
