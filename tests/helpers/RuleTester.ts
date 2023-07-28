@@ -2,15 +2,21 @@ import {
   RuleTester,
   type RuleTesterConfig,
 } from "@typescript-eslint/rule-tester";
-import { afterAll, it, describe } from "vitest";
+import { afterAll, beforeAll, it, describe } from "vitest";
 
-/* eslint-disable functional/immutable-data */
-RuleTester.afterAll = afterAll;
-RuleTester.it = it;
-RuleTester.itOnly = it.only;
-RuleTester.describe = describe;
-/* eslint-enable functional/immutable-data */
+/* eslint-disable @typescript-eslint/naming-convention */
+class VitestRuleTester extends RuleTester {
+  public static afterAll = afterAll;
+  public static beforeAll = beforeAll;
+  public static it = it;
+  public static itOnly = it.only;
+  public static itSkip = it.skip;
+  public static describe = describe;
+  public static describeOnly = describe.only;
+  public static describeSkip = describe.skip;
+}
+/* eslint-enable @typescript-eslint/naming-convention */
 
 export function getRuleTester(config: RuleTesterConfig) {
-  return new RuleTester(config);
+  return new VitestRuleTester(config);
 }
