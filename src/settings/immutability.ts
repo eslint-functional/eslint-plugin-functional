@@ -84,6 +84,7 @@ function loadImmutabilityOverrides(
           : from,
     } as ImmutabilityOverrides[number];
 
+    /* c8 ignore start */
     if (value.type === undefined) {
       // eslint-disable-next-line functional/no-throw-statements
       throw new Error(
@@ -109,6 +110,7 @@ function loadImmutabilityOverrides(
         )}". Value: "${JSON.stringify(rawValue)}"`,
       );
     }
+    /* c8 ignore stop */
 
     return value;
   });
