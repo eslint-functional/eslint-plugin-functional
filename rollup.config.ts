@@ -1,5 +1,3 @@
-import rollupPluginCommonjs from "@rollup/plugin-commonjs";
-import rollupPluginJSON from "@rollup/plugin-json";
 import rollupPluginTypescript from "@rollup/plugin-typescript";
 import { defineConfig } from "rollup";
 import rollupPluginAutoExternal from "rollup-plugin-auto-external";
@@ -11,25 +9,18 @@ export default defineConfig({
 
   output: [
     {
-      sourcemap: false,
       file: pkg.exports.import,
       format: "esm",
+      sourcemap: false,
     },
     {
-      sourcemap: false,
       file: pkg.exports.require,
       format: "cjs",
+      sourcemap: false,
     },
   ],
 
-  plugins: [
-    rollupPluginAutoExternal(),
-    rollupPluginCommonjs(),
-    rollupPluginTypescript(),
-    rollupPluginJSON({
-      preferConst: true,
-    }),
-  ],
+  plugins: [rollupPluginAutoExternal(), rollupPluginTypescript()],
 
   external: [],
 

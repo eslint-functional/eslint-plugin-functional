@@ -1,5 +1,3 @@
-import rollupPluginCommonjs from "@rollup/plugin-commonjs";
-import rollupPluginJSON from "@rollup/plugin-json";
 import rollupPluginTypescript from "@rollup/plugin-typescript";
 import { glob } from "glob";
 import { defineConfig } from "rollup";
@@ -18,14 +16,7 @@ export default defineConfig({
     },
   ],
 
-  plugins: [
-    rollupPluginAutoExternal(),
-    rollupPluginCommonjs(),
-    rollupPluginTypescript(),
-    rollupPluginJSON({
-      preferConst: true,
-    }),
-  ],
+  plugins: [rollupPluginAutoExternal(), rollupPluginTypescript()],
 
   external: [],
 
