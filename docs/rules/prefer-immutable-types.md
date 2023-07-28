@@ -23,6 +23,50 @@ something like a readonly array to a functional that wants a mutable array; even
 if the function does not actually mutate said array.
 Libraries should therefore always enforce this rule for parameters.
 
+### Pure Functions
+
+Ideally a pure function should always take immutable parameters and return a mutable value.
+This is because pure functions don't cause any side-effects, such as mutating the parameters;
+and they don't care what the caller then does with the returned value. However in practice this
+isn't often practical.
+
+For example, take this snippet of code:
+
+```ts
+type Foo = { hello: number };
+type Bar = { world: number };
+
+function addBar(foo: Readonly<Foo>) {
+  return {
+    foo,
+    bar: { world: 2 },
+  };
+}
+
+const foobar = addBar({ hello: 1 });
+```
+
+Here the return type of `addBar` is shallowly mutable, but it's not deeply
+mutable as its `foo` property is immutable. To make it mutable, we'd need to
+deeply clone the contents of `foo`, but in many cases, and for many reasons,
+this would be a very bad thing to do. Simply casting `foo` to a mutable type can
+also lead to type issues later in your codebase.
+
+It also worth noting that the above function isn't ideally typed. The return
+type of `addBar` will always state that `foo` is immutable, even if the caller
+passed in a mutable `foo` value. It's putting an extra constraint on the return
+type that shouldn't exits. A better typed version of this function would be as
+so:
+
+```ts
+function addBar<F extends Readonly<Foo>>(foo: F) {
+  return {
+    foo,
+    bar: { world: 2 },
+  };
+}
+```
+
 ### ❌ Incorrect
 
 <!-- eslint-skip -->
