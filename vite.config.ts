@@ -18,7 +18,7 @@ const useCompiledTests = getBoolean(process.env["USE_COMPILED_TESTS"]);
 
 const testFilePattern = `${
   useCompiledTests ? "tests-compiled" : "."
-}/**/*.test.${useCompiledTests ? "ts.js" : "ts"}`;
+}/**/*.test.${useCompiledTests ? "js" : "ts"}`;
 
 export default defineConfig({
   plugins: [tsconfigPaths()],

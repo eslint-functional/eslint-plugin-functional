@@ -4,7 +4,6 @@
   "project": ["src/**/*.ts!", "tests/**/*.ts", "cz-adapter/**/*.ts"],
   "ignoreDependencies": [
     "@typescript-eslint/eslint-plugin-disable-type-checked",
-    "glob",
     "@vitest/coverage-c8"
   ],
   "ignore": ["tests/fixture/file.ts"]
