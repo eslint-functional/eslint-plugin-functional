@@ -6,8 +6,8 @@ import {
 import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import { deepmerge } from "deepmerge-ts";
 
-import { type IgnoreIdentifierPatternOption } from "#eslint-plugin-functional/options";
 import {
+  type IgnoreIdentifierPatternOption,
   shouldIgnorePattern,
   shouldIgnoreInFunction,
   ignoreIdentifierPatternOptionSchema,
@@ -15,8 +15,8 @@ import {
 import {
   type RuleResult,
   type NamedCreateRuleMetaWithCategory,
+  createRule,
 } from "#eslint-plugin-functional/utils/rule";
-import { createRule } from "#eslint-plugin-functional/utils/rule";
 import { isInForLoopInitializer } from "#eslint-plugin-functional/utils/tree";
 
 /**

@@ -10,8 +10,11 @@ import {
   type ReportDescriptor,
   type RuleListener,
 } from "@typescript-eslint/utils/ts-eslint";
-import { type ImmutabilityOverrides } from "is-immutable-type";
-import { getTypeImmutability, Immutability } from "is-immutable-type";
+import {
+  type ImmutabilityOverrides,
+  getTypeImmutability,
+  Immutability,
+} from "is-immutable-type";
 import { type Node as TSNode, type Type, type TypeNode } from "typescript";
 
 import ts from "#eslint-plugin-functional/conditional-imports/typescript";

@@ -10,8 +10,8 @@ import {
 import { deepmerge } from "deepmerge-ts";
 import { Immutability } from "is-immutable-type";
 
-import { type IgnoreClassesOption } from "#eslint-plugin-functional/options";
 import {
+  type IgnoreClassesOption,
   ignoreClassesOptionSchema,
   shouldIgnoreClasses,
   shouldIgnoreInFunction,
@@ -21,8 +21,6 @@ import { type ESFunctionType } from "#eslint-plugin-functional/utils/node-types"
 import {
   type RuleResult,
   type NamedCreateRuleMetaWithCategory,
-} from "#eslint-plugin-functional/utils/rule";
-import {
   createRule,
   getReturnTypesOfFunction,
   getTypeImmutabilityOfNode,

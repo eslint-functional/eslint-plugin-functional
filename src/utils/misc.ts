@@ -1,5 +1,4 @@
-import { type TSESTree } from "@typescript-eslint/utils";
-import { AST_NODE_TYPES } from "@typescript-eslint/utils";
+import { type TSESTree, AST_NODE_TYPES } from "@typescript-eslint/utils";
 import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
 import { type BaseOptions } from "#eslint-plugin-functional/utils/rule";

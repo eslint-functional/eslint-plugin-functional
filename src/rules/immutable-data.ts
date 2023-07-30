@@ -10,8 +10,6 @@ import {
   type IgnoreAccessorPatternOption,
   type IgnoreIdentifierPatternOption,
   type IgnoreClassesOption,
-} from "#eslint-plugin-functional/options";
-import {
   shouldIgnorePattern,
   shouldIgnoreClasses,
   ignoreAccessorPatternOptionSchema,
@@ -22,8 +20,6 @@ import { isExpected } from "#eslint-plugin-functional/utils/misc";
 import {
   createRule,
   getTypeOfNode,
-} from "#eslint-plugin-functional/utils/rule";
-import {
   type RuleResult,
   type NamedCreateRuleMetaWithCategory,
 } from "#eslint-plugin-functional/utils/rule";

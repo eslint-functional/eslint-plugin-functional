@@ -8,8 +8,8 @@ import {
   type IgnoreIdentifierPatternOption,
   type IgnoreAccessorPatternOption,
   type IgnoreCodePatternOption,
+  shouldIgnorePattern,
 } from "#eslint-plugin-functional/options";
-import { shouldIgnorePattern } from "#eslint-plugin-functional/options";
 import { getRuleTester } from "#eslint-plugin-functional/tests/helpers/RuleTester";
 import {
   filename,

@@ -2,8 +2,12 @@ import { type RuleModule } from "@typescript-eslint/utils/ts-eslint";
 
 import { getRuleTester } from "./RuleTester";
 import { configs } from "./configs";
-import { processInvalidTestCase, processValidTestCase } from "./util";
-import { type ValidTestCaseSet, type InvalidTestCaseSet } from "./util";
+import {
+  processInvalidTestCase,
+  processValidTestCase,
+  type ValidTestCaseSet,
+  type InvalidTestCaseSet,
+} from "./util";
 
 type TestFunction<
   TMessageIds extends string,

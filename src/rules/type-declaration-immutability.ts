@@ -7,8 +7,8 @@ import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import { deepmerge } from "deepmerge-ts";
 import { Immutability } from "is-immutable-type";
 
-import { type IgnoreIdentifierPatternOption } from "#eslint-plugin-functional/options";
 import {
+  type IgnoreIdentifierPatternOption,
   shouldIgnorePattern,
   ignoreIdentifierPatternOptionSchema,
 } from "#eslint-plugin-functional/options";
@@ -17,8 +17,6 @@ import { type ESTypeDeclaration } from "#eslint-plugin-functional/utils/node-typ
 import {
   type RuleResult,
   type NamedCreateRuleMetaWithCategory,
-} from "#eslint-plugin-functional/utils/rule";
-import {
   getTypeImmutabilityOfNode,
   createRule,
 } from "#eslint-plugin-functional/utils/rule";

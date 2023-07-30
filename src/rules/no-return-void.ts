@@ -6,8 +6,6 @@ import { type ESFunctionType } from "#eslint-plugin-functional/utils/node-types"
 import {
   type RuleResult,
   type NamedCreateRuleMetaWithCategory,
-} from "#eslint-plugin-functional/utils/rule";
-import {
   createRule,
   getTypeOfNode,
 } from "#eslint-plugin-functional/utils/rule";

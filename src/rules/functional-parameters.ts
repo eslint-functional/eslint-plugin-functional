@@ -9,8 +9,6 @@ import { deepmerge } from "deepmerge-ts";
 import {
   type IgnoreIdentifierPatternOption,
   type IgnorePrefixSelectorOption,
-} from "#eslint-plugin-functional/options";
-import {
   shouldIgnorePattern,
   ignoreIdentifierPatternOptionSchema,
   ignorePrefixSelectorOptionSchema,
@@ -19,8 +17,8 @@ import { type ESFunction } from "#eslint-plugin-functional/utils/node-types";
 import {
   type RuleResult,
   type NamedCreateRuleMetaWithCategory,
+  createRuleUsingFunction,
 } from "#eslint-plugin-functional/utils/rule";
-import { createRuleUsingFunction } from "#eslint-plugin-functional/utils/rule";
 import {
   isArgument,
   isGetter,

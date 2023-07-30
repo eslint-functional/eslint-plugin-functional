@@ -7,8 +7,6 @@ import tsApiUtils from "#eslint-plugin-functional/conditional-imports/ts-api-uti
 import {
   type RuleResult,
   type NamedCreateRuleMetaWithCategory,
-} from "#eslint-plugin-functional/utils/rule";
-import {
   createRule,
   getTypeOfNode,
 } from "#eslint-plugin-functional/utils/rule";

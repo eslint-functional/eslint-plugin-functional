@@ -5,8 +5,6 @@ import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import {
   type IgnoreCodePatternOption,
   type IgnoreAccessorPatternOption,
-} from "#eslint-plugin-functional/options";
-import {
   shouldIgnoreInFunction,
   shouldIgnoreClasses,
   shouldIgnorePattern,
@@ -16,8 +14,6 @@ import {
   type BaseOptions,
   type RuleResult,
   type NamedCreateRuleMetaWithCategory,
-} from "#eslint-plugin-functional/utils/rule";
-import {
   createRule,
   getTypeOfNode,
 } from "#eslint-plugin-functional/utils/rule";

@@ -5,8 +5,8 @@ import { type ESLoop } from "#eslint-plugin-functional/utils/node-types";
 import {
   type RuleResult,
   type NamedCreateRuleMetaWithCategory,
+  createRule,
 } from "#eslint-plugin-functional/utils/rule";
-import { createRule } from "#eslint-plugin-functional/utils/rule";
 
 /**
  * The name of this rule.

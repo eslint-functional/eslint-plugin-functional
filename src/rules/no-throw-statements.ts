@@ -5,8 +5,8 @@ import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import {
   type RuleResult,
   type NamedCreateRuleMetaWithCategory,
+  createRule,
 } from "#eslint-plugin-functional/utils/rule";
-import { createRule } from "#eslint-plugin-functional/utils/rule";
 import { isInFunctionBody } from "#eslint-plugin-functional/utils/tree";
 
 /**
