@@ -44,7 +44,7 @@ plugins:
     - changelogTitle: "# Changelog
 
         All notable changes to this project will be documented in this file. Dates are displayed in UTC."
-  - - "@google/semantic-release-replace-plugin"
+  - - "semantic-release-replace-plugin"
     - replacements:
         - files:
             - "./lib/**/*"
