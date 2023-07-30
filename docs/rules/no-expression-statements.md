@@ -58,8 +58,9 @@ This rule accepts an options object of the following type:
 
 ```ts
 type Options = {
-  ignorePattern?: string[] | string;
+  ignoreCodePattern?: string[] | string;
   ignoreVoid?: boolean;
+  ignoreSelfReturning?: boolean;
 };
 ```
 
@@ -68,6 +69,7 @@ type Options = {
 ```ts
 const defaults = {
   ignoreVoid: false,
+  ignoreSelfReturning: false,
 };
 ```
 
@@ -75,7 +77,13 @@ const defaults = {
 
 When enabled, expression of type void are not flagged as violations. This options requires TypeScript in order to work.
 
-### `ignorePattern`
+### `ignoreSelfReturning`
 
-Patterns will be matched against the line(s) of code.
-See the [ignorePattern](./options/ignore-pattern.md) docs for more information.
+Like `ignoreVoid` but instead does not flag function calls that always only return `this`.
+
+Limitation: The function declaration must explicitly use `return this`; equivalents (such as assign this to a variable first, that is then returned) won't be considered valid.
+
+### `ignoreCodePattern`
+
+This option takes a RegExp string or an array of RegExp strings.
+It allows for the ability to ignore violations based on the code itself.

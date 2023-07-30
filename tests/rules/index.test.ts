@@ -1,14 +1,16 @@
 import * as fs from "node:fs";
 
-import test from "ava";
+import { describe, it } from "vitest";
 
-import { rules } from "~/rules";
+import { rules } from "#eslint-plugin-functional/rules";
 
-const rulesNames: string[] = Object.keys(rules);
-const files: string[] = fs
-  .readdirSync("./src/rules")
-  .filter((file) => file !== "index.ts" && file.endsWith(".ts"));
+describe("rules index", () => {
+  it("to import all rule files", (t) => {
+    const rulesNames: string[] = Object.keys(rules);
+    const files: string[] = fs
+      .readdirSync("./src/rules")
+      .filter((file) => file !== "index.ts" && file.endsWith(".ts"));
 
-test("all rule files are imported", (t) => {
-  t.is(rulesNames.length, files.length);
+    t.expect(rulesNames.length).to.equal(files.length);
+  });
 });

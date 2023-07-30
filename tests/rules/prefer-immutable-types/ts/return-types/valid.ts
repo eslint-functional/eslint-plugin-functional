@@ -1,8 +1,12 @@
 import dedent from "dedent";
 
-import type { ValidTestCase } from "~/tests/helpers/util";
+import { type rule } from "#eslint-plugin-functional/rules/prefer-immutable-types";
+import {
+  type ValidTestCaseSet,
+  type OptionsOf,
+} from "#eslint-plugin-functional/tests/helpers/util";
 
-const tests: ReadonlyArray<ValidTestCase> = [
+const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
   {
     code: "function foo(): boolean {}",
     optionsSet: [
@@ -55,7 +59,7 @@ const tests: ReadonlyArray<ValidTestCase> = [
         immutability: {
           overrides: [
             {
-              name: "ReadonlyArray",
+              type: { from: "lib", name: "ReadonlyArray" },
               to: "Immutable",
             },
           ],

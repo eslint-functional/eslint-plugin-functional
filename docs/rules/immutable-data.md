@@ -59,15 +59,10 @@ This rule accepts an options object of the following type:
 
 ```ts
 type Options = {
-  assumeTypes:
-    | boolean
-    | {
-        forArrays: boolean;
-        forObjects: boolean;
-      };
   ignoreClasses: boolean | "fieldsOnly";
   ignoreImmediateMutation: boolean;
-  ignorePattern?: string[] | string;
+  ignoreNonConstDeclarations: boolean;
+  ignoreIdentifierPattern?: string[] | string;
   ignoreAccessorPattern?: string[] | string;
 };
 ```
@@ -76,9 +71,9 @@ type Options = {
 
 ```ts
 type Options = {
-  assumeTypes: true;
   ignoreClasses: false;
   ignoreImmediateMutation: true;
+  ignoreNonConstDeclarations: false;
 };
 ```
 
@@ -92,25 +87,6 @@ const liteOptions = {
 };
 ```
 
-### `assumeTypes`
-
-The rule takes advantage of TypeScript's typing engine to check if mutation is taking place.
-If you are not using TypeScript, type checking cannot be performed; hence this option exists.
-
-This option will make the rule assume the type of the nodes it is checking are of type Array/Object.
-However this may result in some false positives being picked up.
-
-Disabling this option can result in false negatives, for example:
-
-```js
-// When this option is DISABLED (and type info is not available).
-const x = [0, 1, 2];
-x.push(3); // This will NOT be flagged.
-// This is due to the fact that without a typing engine, we cannot tell that x is an array.
-```
-
-Note: This option will have no effect if the TypeScript typing engine is available (i.e. you are using TypeScript and have configured ESLint correctly).
-
 ### `ignoreImmediateMutation`
 
 If true, immediate mutation of objects before they are assigned to a variable is allowed.
@@ -123,16 +99,25 @@ const original = ["foo", "bar", "baz"];
 const sorted = [...original].sort((a, b) => a.localeCompare(b)); // This is OK with ignoreImmediateMutation.
 ```
 
+### `ignoreNonConstDeclarations`
+
+If true, this rule will ignore any mutations that happen on non-const variables.
+This allow for more easily using mutable data by simply using the `let` keyword instead of `const`.
+
+Note: If a value is referenced by both a `let` and a `const` variable, the `let`
+reference can be modified while the `const` one can't. The may lead to value of
+the `const` variable unexpectedly changing when the `let` one is modified elsewhere.
+
 ### `ignoreClasses`
 
 Ignore mutations inside classes.
 
 Classes already aren't functional so ignore mutations going on inside them.
 
-### `ignorePattern`
+### `ignoreIdentifierPattern`
 
-Patterns will be matched against variable names.
-See the [ignorePattern](./options/ignore-pattern.md) docs for more information.
+This option takes a RegExp string or an array of RegExp strings.
+It allows for the ability to ignore violations based on a variable's name.
 
 ### `ignoreAccessorPattern`
 

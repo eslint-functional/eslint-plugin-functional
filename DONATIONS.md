@@ -2,6 +2,10 @@
 
 Any donations would be much appreciated. 😄
 
+## Enterprise Users
+
+`eslint-plugin-functional` is available as part of the [Tidelift Subscription](https://tidelift.com/subscription/pkg/npm-eslint-plugin-functional?utm_source=npm-eslint-plugin-functional&utm_medium=referral&utm_campaign=enterprise&utm_term=repo).
+
 ## Real money
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/rebeccastevens)

@@ -1,8 +1,12 @@
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-import type { JSONSchema4 } from "json-schema";
+import { type TSESTree } from "@typescript-eslint/utils";
+import { type JSONSchema4 } from "@typescript-eslint/utils/json-schema";
+import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
-import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
-import { createRule } from "~/utils/rule";
+import {
+  type RuleResult,
+  type NamedCreateRuleMetaWithCategory,
+  createRule,
+} from "#eslint-plugin-functional/utils/rule";
 
 /**
  * The name of this rule.
@@ -16,13 +20,13 @@ type Options = [
   {
     allowCatch: boolean;
     allowFinally: boolean;
-  }
+  },
 ];
 
 /**
  * The schema for the rule options.
  */
-const schema: JSONSchema4 = [
+const schema: JSONSchema4[] = [
   {
     type: "object",
     properties: {
@@ -63,7 +67,6 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
   docs: {
     category: "No Exceptions",
     description: "Disallow try-catch[-finally] and try-finally patterns.",
-    recommended: "strict",
   },
   messages: errorMessages,
   schema,
@@ -74,8 +77,8 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
  */
 function checkTryStatement(
   node: TSESTree.TryStatement,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [{ allowCatch, allowFinally }] = options;
 
@@ -97,5 +100,5 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   defaultOptions,
   {
     TryStatement: checkTryStatement,
-  }
+  },
 );

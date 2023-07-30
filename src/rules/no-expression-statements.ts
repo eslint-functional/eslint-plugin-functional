@@ -1,13 +1,30 @@
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import { type TSESTree } from "@typescript-eslint/utils";
+import {
+  type JSONSchema4,
+  type JSONSchema4ObjectSchema,
+} from "@typescript-eslint/utils/json-schema";
+import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import { deepmerge } from "deepmerge-ts";
-import type { JSONSchema4 } from "json-schema";
+import { isThisKeyword } from "ts-api-utils";
 
-import type { IgnorePatternOption } from "~/options";
-import { shouldIgnorePattern, ignorePatternOptionSchema } from "~/options";
-import { isDirectivePrologue } from "~/utils/misc";
-import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
-import { createRule, getTypeOfNode } from "~/utils/rule";
-import { isVoidType, isYieldExpression } from "~/utils/type-guards";
+import tsApiUtils from "#eslint-plugin-functional/conditional-imports/ts-api-utils";
+import typescript from "#eslint-plugin-functional/conditional-imports/typescript";
+import {
+  type IgnoreCodePatternOption,
+  shouldIgnorePattern,
+  ignoreCodePatternOptionSchema,
+} from "#eslint-plugin-functional/options";
+import { isDirectivePrologue } from "#eslint-plugin-functional/utils/misc";
+import {
+  type RuleResult,
+  type NamedCreateRuleMetaWithCategory,
+  createRule,
+  getTypeOfNode,
+} from "#eslint-plugin-functional/utils/rule";
+import {
+  isCallExpression,
+  isYieldExpression,
+} from "#eslint-plugin-functional/utils/type-guards";
 
 /**
  * The name of this rule.
@@ -18,22 +35,26 @@ export const name = "no-expression-statements" as const;
  * The options this rule can take.
  */
 type Options = [
-  IgnorePatternOption & {
+  IgnoreCodePatternOption & {
     ignoreVoid: boolean;
-  }
+    ignoreSelfReturning: boolean;
+  },
 ];
 
 /**
  * The schema for the rule options.
  */
-const schema: JSONSchema4 = [
+const schema: JSONSchema4[] = [
   {
     type: "object",
-    properties: deepmerge(ignorePatternOptionSchema, {
+    properties: deepmerge(ignoreCodePatternOptionSchema, {
       ignoreVoid: {
         type: "boolean",
       },
-    }),
+      ignoreSelfReturning: {
+        type: "boolean",
+      },
+    } satisfies JSONSchema4ObjectSchema["properties"]),
     additionalProperties: false,
   },
 ];
@@ -44,6 +65,7 @@ const schema: JSONSchema4 = [
 const defaultOptions: Options = [
   {
     ignoreVoid: false,
+    ignoreSelfReturning: false,
   },
 ];
 
@@ -62,7 +84,6 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
   docs: {
     category: "No Statements",
     description: "Disallow expression statements.",
-    recommended: "strict",
   },
   messages: errorMessages,
   schema,
@@ -73,13 +94,15 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
  */
 function checkExpressionStatement(
   node: TSESTree.ExpressionStatement,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
-  const { ignorePattern } = optionsObject;
+  const { ignoreCodePattern } = optionsObject;
 
-  if (shouldIgnorePattern(node, context, ignorePattern)) {
+  if (
+    shouldIgnorePattern(node, context, undefined, undefined, ignoreCodePattern)
+  ) {
     return {
       context,
       descriptors: [],
@@ -94,18 +117,58 @@ function checkExpressionStatement(
     };
   }
 
-  const { ignoreVoid } = optionsObject;
+  const { ignoreVoid, ignoreSelfReturning } = optionsObject;
 
-  if (ignoreVoid === true) {
-    const type = getTypeOfNode(node.expression, context);
+  if (
+    (ignoreVoid || ignoreSelfReturning) &&
+    isCallExpression(node.expression)
+  ) {
+    const returnType = getTypeOfNode(node.expression, context);
+    if (returnType === null) {
+      return {
+        context,
+        descriptors: [{ node, messageId: "generic" }],
+      };
+    }
 
-    return {
-      context,
-      descriptors:
-        type !== null && isVoidType(type)
-          ? []
-          : [{ node, messageId: "generic" }],
-    };
+    if (ignoreVoid && tsApiUtils?.isIntrinsicVoidType(returnType) === true) {
+      return {
+        context,
+        descriptors: [],
+      };
+    }
+
+    if (ignoreSelfReturning) {
+      const type = getTypeOfNode(node.expression.callee, context);
+      if (type !== null) {
+        const declaration = type.getSymbol()?.valueDeclaration;
+        if (
+          typescript !== undefined &&
+          declaration !== undefined &&
+          typescript.isFunctionLike(declaration) &&
+          "body" in declaration &&
+          declaration.body !== undefined &&
+          typescript.isBlock(declaration.body)
+        ) {
+          const returnStatements = declaration.body.statements.filter(
+            typescript.isReturnStatement,
+          );
+
+          if (
+            returnStatements.every(
+              (statement) =>
+                statement.expression !== undefined &&
+                isThisKeyword(statement.expression),
+            )
+          ) {
+            return {
+              context,
+              descriptors: [],
+            };
+          }
+        }
+      }
+    }
   }
 
   return {
@@ -121,5 +184,5 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   defaultOptions,
   {
     ExpressionStatement: checkExpressionStatement,
-  }
+  },
 );

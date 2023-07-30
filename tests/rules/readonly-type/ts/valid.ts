@@ -1,8 +1,12 @@
 import dedent from "dedent";
 
-import type { ValidTestCase } from "~/tests/helpers/util";
+import { type rule } from "#eslint-plugin-functional/rules/readonly-type";
+import {
+  type ValidTestCaseSet,
+  type OptionsOf,
+} from "#eslint-plugin-functional/tests/helpers/util";
 
-const tests: ValidTestCase[] = [
+const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
   // Not readonly
   {
     code: dedent`

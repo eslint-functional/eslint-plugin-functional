@@ -2,7 +2,7 @@
 
 💼 This rule is enabled in the following configs: ☑️ `lite`, `no-mutations`, ✅ `recommended`, 🔒 `strict`.
 
-🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
 
 <!-- end auto-generated rule header -->
 
@@ -23,9 +23,53 @@ something like a readonly array to a functional that wants a mutable array; even
 if the function does not actually mutate said array.
 Libraries should therefore always enforce this rule for parameters.
 
+### Pure Functions
+
+Ideally a pure function should always take immutable parameters and return a mutable value.
+This is because pure functions don't cause any side-effects, such as mutating the parameters;
+and they don't care what the caller then does with the returned value. However in practice this
+isn't often practical.
+
+For example, take this snippet of code:
+
+```ts
+type Foo = { hello: number };
+type Bar = { world: number };
+
+function addBar(foo: Readonly<Foo>) {
+  return {
+    foo,
+    bar: { world: 2 },
+  };
+}
+
+const foobar = addBar({ hello: 1 });
+```
+
+Here the return type of `addBar` is shallowly mutable, but it's not deeply
+mutable as its `foo` property is immutable. To make it mutable, we'd need to
+deeply clone the contents of `foo`, but in many cases, and for many reasons,
+this would be a very bad thing to do. Simply casting `foo` to a mutable type can
+also lead to type issues later in your codebase.
+
+It also worth noting that the above function isn't ideally typed. The return
+type of `addBar` will always state that `foo` is immutable, even if the caller
+passed in a mutable `foo` value. It's putting an extra constraint on the return
+type that shouldn't exits. A better typed version of this function would be as
+so:
+
+```ts
+function addBar<F extends Readonly<Foo>>(foo: F) {
+  return {
+    foo,
+    bar: { world: 2 },
+  };
+}
+```
+
 ### ❌ Incorrect
 
-<!-- eslint-disable functional/prefer-immutable-types -->
+<!-- eslint-skip -->
 
 ```ts
 /* eslint functional/prefer-immutable-types: "error" */
@@ -61,7 +105,7 @@ interface Foo1 {
 interface Foo2 {
   new (arg: string[]): void;
 }
-const x = { foo(arg: string[]): void; };
+const x = { foo(arg: string[]): void {} };
 function foo(arg: string[]);
 type Foo3 = (arg: string[]) => void;
 interface Foo4 {
@@ -71,7 +115,7 @@ interface Foo4 {
 
 ### ✅ Correct
 
-<!-- eslint-disable functional/prefer-immutable-types -->
+<!-- eslint-skip -->
 
 ```ts
 /* eslint functional/prefer-immutable-types: "error" */
@@ -113,11 +157,14 @@ function primitive9(arg: string | number | undefined) {}
 
 function fnSig(arg: () => void) {}
 
-enum Foo { a, b }
+enum Foo {
+  a,
+  b,
+}
 function enum1(arg: Foo) {}
 
 function symb1(arg: symbol) {}
-const customSymbol = Symbol('a');
+const customSymbol = Symbol("a");
 function symb2(arg: typeof customSymbol) {}
 
 // function types
@@ -127,7 +174,7 @@ interface Foo1 {
 interface Foo2 {
   new (arg: ReadonlyArray<string>): void;
 }
-const x = { foo(arg: ReadonlyArray<string>): void; };
+const x = { foo(arg: ReadonlyArray<string>): void {} };
 function foo(arg: ReadonlyArray<string>);
 type Foo3 = (arg: ReadonlyArray<string>) => void;
 interface Foo4 {
@@ -178,22 +225,23 @@ type Options = {
     ignoreTypePattern?: string[] | string;
   };
 
-  fixer?:
-    | {
-        ReadonlyShallow?:
-          | { pattern: string; replace: string }
-          | Array<{ pattern: string; replace: string }>
-          | false;
-        ReadonlyDeep?:
-          | { pattern: string; replace: string }
-          | Array<{ pattern: string; replace: string }>
-          | false;
-        Immutable?:
-          | { pattern: string; replace: string }
-          | Array<{ pattern: string; replace: string }>
-          | false;
-      }
-    | false;
+  fixer?: {
+    ReadonlyShallow?:
+      | { pattern: string; replace: string }
+      | Array<{ pattern: string; replace: string }>;
+    ReadonlyDeep?:
+      | { pattern: string; replace: string }
+      | Array<{ pattern: string; replace: string }>;
+    Immutable?:
+      | { pattern: string; replace: string }
+      | Array<{ pattern: string; replace: string }>;
+  };
+
+  suggestions?: {
+    ReadonlyShallow?: Array<Array<{ pattern: string; replace: string }>>;
+    ReadonlyDeep?: Array<Array<{ pattern: string; replace: string }>>;
+    Immutable?: Array<Array<{ pattern: string; replace: string }>>;
+  };
 };
 ```
 
@@ -204,23 +252,25 @@ const defaults = {
   enforcement: "Immutable",
   ignoreClasses: false,
   ignoreInferredTypes: false,
-  fixer: {
+  fixer: false,
+  suggestions: {
     ReadonlyShallow: [
-      {
-        pattern: "^([_$a-zA-Z\\xA0-\\uFFFF][_$a-zA-Z0-9\\xA0-\\uFFFF]*\\[\\])$",
-        replace: "readonly $1",
-      },
-      {
-        pattern: "^(Array|Map|Set)<(.+)>$",
-        replace: "Readonly$1<$2>",
-      },
-      {
-        pattern: "^(.+)$",
-        replace: "Readonly<$1>",
-      },
+      [
+        {
+          pattern:
+            "^([_$a-zA-Z\\xA0-\\uFFFF][_$a-zA-Z0-9\\xA0-\\uFFFF]*\\[\\])$",
+          replace: "readonly $1",
+        },
+        {
+          pattern: "^(Array|Map|Set)<(.+)>$",
+          replace: "Readonly$1<$2>",
+        },
+        {
+          pattern: "^(.+)$",
+          replace: "Readonly<$1>",
+        },
+      ],
     ],
-    ReadonlyDeep: false,
-    Immutable: false,
   },
 };
 ```
@@ -262,7 +312,7 @@ The level of immutability that should be enforced. One of the following:
 
 #### ❌ Incorrect
 
-<!-- eslint-disable functional/prefer-immutable-types -->
+<!-- eslint-skip -->
 
 ```ts
 /* eslint functional/prefer-immutable-types: ["error", { "enforcement": "Immutable" }] */
@@ -274,7 +324,7 @@ function map(arg: ReadonlyMap<string>) {} // ReadonlyMap is not immutable
 
 #### ✅ Correct
 
-<!-- eslint-disable functional/prefer-immutable-types -->
+<!-- eslint-skip -->
 
 ```ts
 /* eslint functional/prefer-immutable-types: ["error", { "enforcement": "Immutable" }] */
@@ -284,7 +334,7 @@ function map(arg: Readonly<ReadonlyMap<string>>) {}
 function object(arg: Readonly<{ prop: string }>) {}
 ```
 
-<!-- eslint-disable functional/prefer-immutable-types -->
+<!-- eslint-skip -->
 
 ```ts
 /* eslint functional/prefer-immutable-types: ["error", { "enforcement": "ReadonlyShallow" }] */
@@ -313,7 +363,7 @@ A boolean to specify if checking classes should be ignored. `false` by default.
 
 #### ❌ Incorrect
 
-<!-- eslint-disable functional/prefer-immutable-types -->
+<!-- eslint-skip -->
 
 ```ts
 /* eslint functional/prefer-immutable-types: ["error", { "ignoreInferredTypes": true }] */
@@ -340,7 +390,7 @@ export const acceptsCallback: AcceptsCallback;
 
 #### ✅ Correct
 
-<!-- eslint-disable functional/prefer-immutable-types -->
+<!-- eslint-skip -->
 
 ```ts
 /* eslint functional/prefer-immutable-types: ["error", { "ignoreInferredTypes": true }] */
@@ -375,8 +425,6 @@ Override the options specifically for the given type of types.
 
 If true, the rule will not flag any variables that are inside of function bodies.
 
-See the [allowLocalMutation](./options/allow-local-mutation.md) docs for more information.
-
 ### `fixer`
 
 Configure the fixer to work with your setup.
@@ -384,7 +432,18 @@ If set to `false`, the fixer will be disabled.
 
 #### `fixer.*`
 
-By default we only configure the fixer to correct shallow readonly violations as TypeScript itself provides a utility type for this.
+Configure how the fixer should fix issue of each of the different enforcement levels.
+
+### `suggestions`
+
+This is the same as `fixer` but for manual suggestions instead of automatic fixers.
+If set to `false`, the no suggestions will be enabled.
+
+### `suggestions[*].*`
+
+Configure how the suggestion should fix issue of each of the different enforcement levels.
+
+By default we only configure the suggestions to correct shallow readonly violations as TypeScript itself provides a utility type for this.
 If you have access to other utility types (such as [type-fest's `ReadonlyDeep`](https://github.com/sindresorhus/type-fest#:~:text=set%20to%20optional.-,ReadonlyDeep,-%2D%20Create%20a%20deeply)), you can configure the fixer to use them with this option.
 
 Example using `ReadonlyDeep` instead of `Readonly`:
@@ -392,12 +451,14 @@ Example using `ReadonlyDeep` instead of `Readonly`:
 ```jsonc
 {
   // ...
-  "fixer": {
+  "suggestions": {
     "ReadonlyDeep": [
-      {
-        "pattern": "^(?:Readonly<(.+)>|(.+))$",
-        "replace": "ReadonlyDeep<$1$2>"
-      }
+      [
+        {
+          "pattern": "^(?:Readonly<(.+)>|(.+))$",
+          "replace": "ReadonlyDeep<$1$2>"
+        }
+      ]
     ]
   }
 }

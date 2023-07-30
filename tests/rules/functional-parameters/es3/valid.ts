@@ -1,8 +1,12 @@
 import dedent from "dedent";
 
-import type { ValidTestCase } from "~/tests/helpers/util";
+import { type rule } from "#eslint-plugin-functional/rules/functional-parameters";
+import {
+  type ValidTestCaseSet,
+  type OptionsOf,
+} from "#eslint-plugin-functional/tests/helpers/util";
 
-const tests: ValidTestCase[] = [
+const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
   {
     code: dedent`
       var foo = {
@@ -39,7 +43,12 @@ const tests: ValidTestCase[] = [
     `,
     optionsSet: [
       [{ enforceParameterCount: "atLeastOne" }],
-      [{ ignorePattern: "^foo", enforceParameterCount: "exactlyOne" }],
+      [
+        {
+          ignoreIdentifierPattern: "^foo",
+          enforceParameterCount: "exactlyOne",
+        },
+      ],
     ],
   },
   {

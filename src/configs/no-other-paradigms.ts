@@ -1,8 +1,8 @@
-import type { Linter } from "eslint";
+import { type Linter } from "@typescript-eslint/utils/ts-eslint";
 
-import * as noClasses from "~/rules/no-classes";
-import * as noMixedTypes from "~/rules/no-mixed-types";
-import * as noThisExpressions from "~/rules/no-this-expressions";
+import * as noClasses from "#eslint-plugin-functional/rules/no-classes";
+import * as noMixedTypes from "#eslint-plugin-functional/rules/no-mixed-types";
+import * as noThisExpressions from "#eslint-plugin-functional/rules/no-this-expressions";
 
 const config: Linter.Config = {
   rules: {

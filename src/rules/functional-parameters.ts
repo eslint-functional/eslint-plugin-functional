@@ -1,26 +1,33 @@
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-import { deepmerge } from "deepmerge-ts";
-import type { JSONSchema4 } from "json-schema";
-
-import type {
-  IgnorePatternOption,
-  IgnorePrefixSelectorOption,
-} from "~/options";
+import { type TSESTree } from "@typescript-eslint/utils";
 import {
+  type JSONSchema4,
+  type JSONSchema4ObjectSchema,
+} from "@typescript-eslint/utils/json-schema";
+import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
+import { deepmerge } from "deepmerge-ts";
+
+import {
+  type IgnoreIdentifierPatternOption,
+  type IgnorePrefixSelectorOption,
   shouldIgnorePattern,
-  ignorePatternOptionSchema,
+  ignoreIdentifierPatternOptionSchema,
   ignorePrefixSelectorOptionSchema,
-} from "~/options";
-import type { ESFunction } from "~/utils/node-types";
-import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
-import { createRuleUsingFunction } from "~/utils/rule";
+} from "#eslint-plugin-functional/options";
+import { type ESFunction } from "#eslint-plugin-functional/utils/node-types";
+import {
+  type RuleResult,
+  type NamedCreateRuleMetaWithCategory,
+  createRuleUsingFunction,
+} from "#eslint-plugin-functional/utils/rule";
 import {
   isArgument,
+  isGetter,
+  isSetter,
   isIIFE,
   isPropertyAccess,
   isPropertyName,
-} from "~/utils/tree";
-import { isRestElement } from "~/utils/type-guards";
+} from "#eslint-plugin-functional/utils/tree";
+import { isRestElement } from "#eslint-plugin-functional/utils/type-guards";
 
 /**
  * The name of this rule.
@@ -36,7 +43,7 @@ type ParameterCountOptions = "atLeastOne" | "exactlyOne";
  * The options this rule can take.
  */
 type Options = [
-  IgnorePatternOption &
+  IgnoreIdentifierPatternOption &
     IgnorePrefixSelectorOption & {
       allowRestParameter: boolean;
       allowArgumentsKeyword: boolean;
@@ -47,18 +54,19 @@ type Options = [
             count: ParameterCountOptions;
             ignoreLambdaExpression: boolean;
             ignoreIIFE: boolean;
+            ignoreGettersAndSetters: boolean;
           };
-    }
+    },
 ];
 
 /**
  * The schema for the rule options.
  */
-const schema: JSONSchema4 = [
+const schema: JSONSchema4[] = [
   {
     type: "object",
     properties: deepmerge(
-      ignorePatternOptionSchema,
+      ignoreIdentifierPatternOptionSchema,
       ignorePrefixSelectorOptionSchema,
       {
         allowRestParameter: {
@@ -84,6 +92,9 @@ const schema: JSONSchema4 = [
                   type: "string",
                   enum: ["atLeastOne", "exactlyOne"],
                 },
+                ignoreGettersAndSetters: {
+                  type: "boolean",
+                },
                 ignoreLambdaExpression: {
                   type: "boolean",
                 },
@@ -95,7 +106,7 @@ const schema: JSONSchema4 = [
             },
           ],
         },
-      }
+      } satisfies JSONSchema4ObjectSchema["properties"],
     ),
     additionalProperties: false,
   },
@@ -112,6 +123,7 @@ const defaultOptions: Options = [
       count: "atLeastOne",
       ignoreLambdaExpression: false,
       ignoreIIFE: true,
+      ignoreGettersAndSetters: true,
     },
   },
 ];
@@ -136,7 +148,6 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
   docs: {
     category: "Currying",
     description: "Enforce functional parameters.",
-    recommended: "error",
   },
   messages: errorMessages,
   schema,
@@ -146,8 +157,8 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
  * Get the rest parameter violations.
  */
 function getRestParamViolations(
-  [{ allowRestParameter }]: Options,
-  node: ESFunction
+  [{ allowRestParameter }]: Readonly<Options>,
+  node: ESFunction,
 ): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
   return !allowRestParameter &&
     node.params.length > 0 &&
@@ -165,15 +176,17 @@ function getRestParamViolations(
  * Get the parameter count violations.
  */
 function getParamCountViolations(
-  [{ enforceParameterCount }]: Options,
-  node: ESFunction
+  [{ enforceParameterCount }]: Readonly<Options>,
+  node: ESFunction,
 ): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
   if (
     enforceParameterCount === false ||
     (node.params.length === 0 &&
       typeof enforceParameterCount === "object" &&
       ((enforceParameterCount.ignoreIIFE && isIIFE(node)) ||
-        (enforceParameterCount.ignoreLambdaExpression && isArgument(node))))
+        (enforceParameterCount.ignoreLambdaExpression && isArgument(node)) ||
+        (enforceParameterCount.ignoreGettersAndSetters &&
+          (isGetter(node) || isSetter(node)))))
   ) {
     return [];
   }
@@ -211,13 +224,13 @@ function getParamCountViolations(
  */
 function checkFunction(
   node: ESFunction,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
-  const { ignorePattern } = optionsObject;
+  const { ignoreIdentifierPattern } = optionsObject;
 
-  if (shouldIgnorePattern(node, context, ignorePattern)) {
+  if (shouldIgnorePattern(node, context, ignoreIdentifierPattern)) {
     return {
       context,
       descriptors: [],
@@ -238,13 +251,13 @@ function checkFunction(
  */
 function checkIdentifier(
   node: TSESTree.Identifier,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
-  const { ignorePattern } = optionsObject;
+  const { ignoreIdentifierPattern } = optionsObject;
 
-  if (shouldIgnorePattern(node, context, ignorePattern)) {
+  if (shouldIgnorePattern(node, context, ignoreIdentifierPattern)) {
     return {
       context,
       descriptors: [],
@@ -294,12 +307,12 @@ export const rule = createRuleUsingFunction<
   const fullFunctionSelectors = baseFunctionSelectors.flatMap((baseSelector) =>
     ignoreSelectors === undefined
       ? [baseSelector]
-      : `:not(:matches(${ignoreSelectors.join(",")})) > ${baseSelector}`
+      : `:not(:matches(${ignoreSelectors.join(",")})) > ${baseSelector}`,
   );
 
   return {
     ...Object.fromEntries(
-      fullFunctionSelectors.map((selector) => [selector, checkFunction])
+      fullFunctionSelectors.map((selector) => [selector, checkFunction]),
     ),
     Identifier: checkIdentifier,
   };

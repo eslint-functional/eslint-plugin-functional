@@ -1,16 +1,25 @@
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-import { deepmerge } from "deepmerge-ts";
-import type { JSONSchema4 } from "json-schema";
+import { TSESTree } from "@typescript-eslint/utils";
+import { type JSONSchema4 } from "@typescript-eslint/utils/json-schema";
+import {
+  type RuleFix,
+  type RuleFixer,
+  type RuleContext,
+  type ReportDescriptor,
+  type ReportSuggestionArray,
+} from "@typescript-eslint/utils/ts-eslint";
 import * as semver from "semver";
-import type { Type } from "typescript";
+import { type Type } from "typescript";
 
-import ts from "~/conditional-imports/typescript";
-import type { IgnorePatternOption } from "~/options";
-import { ignorePatternOptionSchema } from "~/options";
-import type { ESFunction } from "~/utils/node-types";
-import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
-import { createRule, getESTreeNode, getTypeOfNode } from "~/utils/rule";
-import { isNested } from "~/utils/tree";
+import ts from "#eslint-plugin-functional/conditional-imports/typescript";
+import { type ESFunction } from "#eslint-plugin-functional/utils/node-types";
+import {
+  type RuleResult,
+  type NamedCreateRuleMetaWithCategory,
+  createRule,
+  getESTreeNode,
+  getTypeOfNode,
+} from "#eslint-plugin-functional/utils/rule";
+import { isNested } from "#eslint-plugin-functional/utils/tree";
 import {
   isBlockStatement,
   isCallExpression,
@@ -19,7 +28,7 @@ import {
   isIdentifier,
   isReturnStatement,
   isTSFunctionType,
-} from "~/utils/type-guards";
+} from "#eslint-plugin-functional/utils/type-guards";
 
 /**
  * The name of this rule.
@@ -29,35 +38,17 @@ export const name = "prefer-tacit" as const;
 /**
  * The options this rule can take.
  */
-type Options = [
-  IgnorePatternOption & {
-    assumeTypes: boolean;
-  }
-];
+type Options = [];
 
 /**
  * The schema for the rule options.
  */
-const schema: JSONSchema4 = [
-  {
-    type: "object",
-    properties: deepmerge(ignorePatternOptionSchema, {
-      assumeTypes: {
-        type: "boolean",
-      },
-    }),
-    additionalProperties: false,
-  },
-];
+const schema: JSONSchema4[] = [];
 
 /**
  * The default options for the rule.
  */
-const defaultOptions: Options = [
-  {
-    assumeTypes: false,
-  },
-];
+const defaultOptions: Options = [];
 
 /**
  * The possible error messages.
@@ -74,7 +65,6 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
   docs: {
     category: "Stylistic",
     description: "Replaces `x => f(x)` with just `f`.",
-    recommended: false,
   },
   messages: errorMessages,
   hasSuggestions: true,
@@ -96,7 +86,7 @@ const isTS4dot7 =
 function isCallerViolation(
   caller: TSESTree.CallExpression,
   calleeType: Type,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
 ): boolean {
   if ((calleeType.symbol as unknown) === undefined) {
     return false;
@@ -116,12 +106,15 @@ function isCallerViolation(
   );
 }
 
+/**
+ * Get the fixes for a call to a reference violation.
+ */
 function fixFunctionCallToReference(
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  fixer: TSESLint.RuleFixer,
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  fixer: RuleFixer,
   node: ESFunction,
-  caller: TSESTree.CallExpression
-): TSESLint.RuleFix[] | null {
+  caller: TSESTree.CallExpression,
+): RuleFix[] | null {
   // Fix to Instantiation Expression.
   if (
     caller.typeParameters !== undefined &&
@@ -138,7 +131,7 @@ function fixFunctionCallToReference(
   return [
     fixer.replaceText(
       node as TSESTree.Node,
-      context.getSourceCode().getText(caller.callee as TSESTree.Node)
+      context.getSourceCode().getText(caller.callee as TSESTree.Node),
     ),
   ];
 }
@@ -147,10 +140,10 @@ function fixFunctionCallToReference(
  * Creates the suggestions.
  */
 function buildSuggestions(
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
   node: ESFunction,
-  caller: TSESTree.CallExpression
-): TSESLint.ReportSuggestionArray<keyof typeof errorMessages> {
+  caller: TSESTree.CallExpression,
+): ReportSuggestionArray<keyof typeof errorMessages> {
   return [
     {
       messageId: "generic",
@@ -159,13 +152,16 @@ function buildSuggestions(
           context,
           fixer,
           node,
-          caller
+          caller,
         );
         if (functionCallToReference === null) {
           return null;
         }
 
-        if (node.type === "FunctionDeclaration" && !isNested(node)) {
+        if (
+          node.type === TSESTree.AST_NODE_TYPES.FunctionDeclaration &&
+          !isNested(node)
+        ) {
           if (node.id === null) {
             return null;
           }
@@ -173,7 +169,7 @@ function buildSuggestions(
           return [
             fixer.insertTextBefore(
               node as TSESTree.Node,
-              `const ${node.id.name} = `
+              `const ${node.id.name} = `,
             ),
             fixer.insertTextAfter(node as TSESTree.Node, `;`),
             ...functionCallToReference,
@@ -191,12 +187,10 @@ function buildSuggestions(
  */
 function getCallDescriptors(
   node: ESFunction,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
   options: Options,
-  caller: TSESTree.CallExpression
-): Array<TSESLint.ReportDescriptor<keyof typeof errorMessages>> {
-  const [{ assumeTypes }] = options;
-
+  caller: TSESTree.CallExpression,
+): Array<ReportDescriptor<keyof typeof errorMessages>> {
   if (
     node.params.length === caller.arguments.length &&
     node.params.every((param, index) => {
@@ -209,14 +203,8 @@ function getCallDescriptors(
     })
   ) {
     const calleeType = getTypeOfNode(caller.callee, context);
-    const assumingTypes =
-      (calleeType === null || (calleeType.symbol as unknown) === undefined) &&
-      assumeTypes;
 
-    if (
-      assumingTypes ||
-      (calleeType !== null && isCallerViolation(caller, calleeType, context))
-    ) {
+    if (calleeType !== null && isCallerViolation(caller, calleeType, context)) {
       return [
         {
           node,
@@ -235,9 +223,9 @@ function getCallDescriptors(
  */
 function getDirectCallDescriptors(
   node: ESFunction,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
-): Array<TSESLint.ReportDescriptor<keyof typeof errorMessages>> {
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Options,
+): Array<ReportDescriptor<keyof typeof errorMessages>> {
   if (isCallExpression(node.body)) {
     return getCallDescriptors(node, context, options, node.body);
   }
@@ -249,9 +237,9 @@ function getDirectCallDescriptors(
  */
 function getNestedCallDescriptors(
   node: ESFunction,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
-): Array<TSESLint.ReportDescriptor<keyof typeof errorMessages>> {
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Options,
+): Array<ReportDescriptor<keyof typeof errorMessages>> {
   if (
     isBlockStatement(node.body) &&
     node.body.body.length === 1 &&
@@ -263,7 +251,7 @@ function getNestedCallDescriptors(
       node,
       context,
       options,
-      node.body.body[0].argument
+      node.body.body[0].argument,
     );
   }
   return [];
@@ -274,8 +262,8 @@ function getNestedCallDescriptors(
  */
 function checkFunction(
   node: ESFunction,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Options,
 ): RuleResult<keyof typeof errorMessages, Options> {
   return {
     context,
@@ -295,5 +283,5 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
     FunctionDeclaration: checkFunction,
     FunctionExpression: checkFunction,
     ArrowFunctionExpression: checkFunction,
-  }
+  },
 );

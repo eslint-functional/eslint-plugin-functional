@@ -1,13 +1,22 @@
-import type { InvalidTestCase } from "~/tests/helpers/util";
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 
-const tests: InvalidTestCase[] = [
+import { type rule } from "#eslint-plugin-functional/rules/no-try-statements";
+import {
+  type InvalidTestCaseSet,
+  type MessagesOf,
+  type OptionsOf,
+} from "#eslint-plugin-functional/tests/helpers/util";
+
+const tests: Array<
+  InvalidTestCaseSet<MessagesOf<typeof rule>, OptionsOf<typeof rule>>
+> = [
   {
     code: `try {} catch (e) {}`,
     optionsSet: [[]],
     errors: [
       {
         messageId: "catch",
-        type: "TryStatement",
+        type: AST_NODE_TYPES.TryStatement,
         line: 1,
         column: 1,
       },
@@ -19,7 +28,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "catch",
-        type: "TryStatement",
+        type: AST_NODE_TYPES.TryStatement,
         line: 1,
         column: 1,
       },
@@ -31,7 +40,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "finally",
-        type: "TryStatement",
+        type: AST_NODE_TYPES.TryStatement,
         line: 1,
         column: 1,
       },
@@ -43,7 +52,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "catch",
-        type: "TryStatement",
+        type: AST_NODE_TYPES.TryStatement,
         line: 1,
         column: 1,
       },
@@ -55,7 +64,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "finally",
-        type: "TryStatement",
+        type: AST_NODE_TYPES.TryStatement,
         line: 1,
         column: 1,
       },

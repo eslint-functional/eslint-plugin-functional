@@ -1,5 +1,10 @@
 {
   "$schema": "https://unpkg.com/knip@next/schema.json",
   "entry": ["src/index.ts!", "tests/**/*.test.ts", "cz-adapter/index.ts"],
-  "project": ["src/**/*.ts!", "tests/**/*.ts", "cz-adapter/**/*.ts"]
+  "project": ["src/**/*.ts!", "tests/**/*.ts", "cz-adapter/**/*.ts"],
+  "ignoreDependencies": [
+    "@typescript-eslint/eslint-plugin-disable-type-checked",
+    "@vitest/coverage-c8"
+  ],
+  "ignore": ["tests/fixture/file.ts"]
 }

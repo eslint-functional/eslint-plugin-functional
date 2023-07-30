@@ -1,6 +1,80 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+# [6.0.0-next.7](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.0.0-next.6...v6.0.0-next.7) (2023-07-24)
+
+
+### Bug Fixes
+
+* **immutable-data:** rework logic, it should work now ([9644994](https://github.com/eslint-functional/eslint-plugin-functional/commit/96449949d35b5b8dcbb87f91065f1d08131364fb)), closes [#692](https://github.com/eslint-functional/eslint-plugin-functional/issues/692)
+
+# [6.0.0-next.6](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.0.0-next.5...v6.0.0-next.6) (2023-07-21)
+
+
+### Features
+
+* **immutable-data:** add new option `ignoreNonConstDeclarations` ([ecde24a](https://github.com/eslint-functional/eslint-plugin-functional/commit/ecde24afed487b9b495832ea067c662a0848825a)), closes [#691](https://github.com/eslint-functional/eslint-plugin-functional/issues/691)
+
+# [6.0.0-next.5](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.0.0-next.4...v6.0.0-next.5) (2023-07-21)
+
+
+### Bug Fixes
+
+* replace `ignorePattern` option with `ignoreIdentifierPattern` and `ignoreCodePattern` ([48d8eba](https://github.com/eslint-functional/eslint-plugin-functional/commit/48d8eba1356c54b2e0fa568c5cb2526e224c31ed)), closes [#467](https://github.com/eslint-functional/eslint-plugin-functional/issues/467)
+
+
+### BREAKING CHANGES
+
+* replace `ignorePattern` option with `ignoreIdentifierPattern` and `ignoreCodePattern`
+
+# [6.0.0-next.4](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.0.0-next.3...v6.0.0-next.4) (2023-07-21)
+
+
+### Features
+
+* **no-expression-statements:** add option to ignore self returning functions ([894fb91](https://github.com/eslint-functional/eslint-plugin-functional/commit/894fb915b5418e7ee47019b3d7296eee0e307f20)), closes [#611](https://github.com/eslint-functional/eslint-plugin-functional/issues/611)
+
+# [6.0.0-next.3](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.0.0-next.2...v6.0.0-next.3) (2023-07-17)
+
+
+### Bug Fixes
+
+* add sanity checks to type immutablity override settings ([d3ce5b0](https://github.com/eslint-functional/eslint-plugin-functional/commit/d3ce5b0db162af843886489850706c070f375d01))
+
+# [6.0.0-next.2](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.0.0-next.1...v6.0.0-next.2) (2023-07-17)
+
+
+### Features
+
+* **functional-parameters:** add option to ignore getters and setters ([9c89b9e](https://github.com/eslint-functional/eslint-plugin-functional/commit/9c89b9e4f8960e4ee211b640cd7bb2e3c79b0ed8))
+
+# [6.0.0-next.1](https://github.com/eslint-functional/eslint-plugin-functional/compare/v5.0.8...v6.0.0-next.1) (2023-07-15)
+
+
+### Bug Fixes
+
+* further updates for v6 ([71ecdb5](https://github.com/eslint-functional/eslint-plugin-functional/commit/71ecdb50c5fe7cd392141fbd9009dc1d091368be))
+* migrate code for [@typescript-eslint](https://github.com/typescript-eslint) v6 ([5c6b1a2](https://github.com/eslint-functional/eslint-plugin-functional/commit/5c6b1a20937afd63425a65492cb05928f06d80ac))
+
+
+### Build System
+
+* increase minimum supported TypeScript version to 4.3.5 ([aefe6b2](https://github.com/eslint-functional/eslint-plugin-functional/commit/aefe6b2012440d54d006924732975e75ac903716))
+
+
+### Features
+
+* **prefer-immutable-types:** use suggestions instead of a fixer by default ([#598](https://github.com/eslint-functional/eslint-plugin-functional/issues/598)) ([3fb9028](https://github.com/eslint-functional/eslint-plugin-functional/commit/3fb902842fa256bde98c0b7fd9c360a6456fd250))
+* remove `assumeTypes` option ([6be5862](https://github.com/eslint-functional/eslint-plugin-functional/commit/6be5862a65c65b389f2cc787c93a42b10407938a))
+
+
+### BREAKING CHANGES
+
+* increase minimum supported TypeScript version to 4.3.5
+* remove `assumeTypes` option
+* **prefer-immutable-types:** The fixer config no longer inherits as many options as before; be sure to be
+explicit in your configs.
+
 ## [5.0.8](https://github.com/eslint-functional/eslint-plugin-functional/compare/v5.0.7...v5.0.8) (2023-04-15)
 
 

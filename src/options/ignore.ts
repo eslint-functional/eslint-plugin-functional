@@ -1,55 +1,84 @@
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import { type TSESTree } from "@typescript-eslint/utils";
+import { type JSONSchema4ObjectSchema } from "@typescript-eslint/utils/json-schema";
+import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import escapeRegExp from "escape-string-regexp";
-import type { JSONSchema4 } from "json-schema";
 
-import { getNodeIdentifierTexts } from "~/utils/misc";
-import type { BaseOptions } from "~/utils/rule";
-import { isInClass, isInFunctionBody } from "~/utils/tree";
+import {
+  getNodeCode,
+  getNodeIdentifierTexts,
+} from "#eslint-plugin-functional/utils/misc";
+import { type BaseOptions } from "#eslint-plugin-functional/utils/rule";
+import {
+  isInClass,
+  isInFunctionBody,
+} from "#eslint-plugin-functional/utils/tree";
 import {
   isAssignmentExpression,
   isClassLike,
   isPropertyDefinition,
   isMemberExpression,
   isThisExpression,
-} from "~/utils/type-guards";
+} from "#eslint-plugin-functional/utils/type-guards";
 
 /**
  * The option to ignore patterns.
  */
-export type IgnorePatternOption = Readonly<{
-  ignorePattern?: string[] | string;
+export type IgnoreIdentifierPatternOption = Readonly<{
+  ignoreIdentifierPattern?: ReadonlyArray<string> | string;
 }>;
 
 /**
  * The schema for the option to ignore patterns.
  */
-export const ignorePatternOptionSchema: JSONSchema4["properties"] = {
-  ignorePattern: {
-    type: ["string", "array"],
-    items: {
-      type: "string",
+export const ignoreIdentifierPatternOptionSchema: JSONSchema4ObjectSchema["properties"] =
+  {
+    ignoreIdentifierPattern: {
+      type: ["string", "array"],
+      items: {
+        type: "string",
+      },
     },
-  },
-};
+  };
+
+/**
+ * The option to ignore patterns.
+ */
+export type IgnoreCodePatternOption = Readonly<{
+  ignoreCodePattern?: ReadonlyArray<string> | string;
+}>;
+
+/**
+ * The schema for the option to ignore patterns.
+ */
+export const ignoreCodePatternOptionSchema: JSONSchema4ObjectSchema["properties"] =
+  {
+    ignoreCodePattern: {
+      type: ["string", "array"],
+      items: {
+        type: "string",
+      },
+    },
+  };
 
 /**
  * The option to ignore accessor patterns.
  */
 export type IgnoreAccessorPatternOption = Readonly<{
-  ignoreAccessorPattern?: string[] | string;
+  ignoreAccessorPattern?: ReadonlyArray<string> | string;
 }>;
 
 /**
  * The schema for the option to ignore accessor patterns.
  */
-export const ignoreAccessorPatternOptionSchema: JSONSchema4["properties"] = {
-  ignoreAccessorPattern: {
-    type: ["string", "array"],
-    items: {
-      type: "string",
+export const ignoreAccessorPatternOptionSchema: JSONSchema4ObjectSchema["properties"] =
+  {
+    ignoreAccessorPattern: {
+      type: ["string", "array"],
+      items: {
+        type: "string",
+      },
     },
-  },
-};
+  };
 
 /**
  * The option to ignore classes.
@@ -61,38 +90,40 @@ export type IgnoreClassesOption = Readonly<{
 /**
  * The schema for the option to ignore classes.
  */
-export const ignoreClassesOptionSchema: JSONSchema4["properties"] = {
-  ignoreClasses: {
-    oneOf: [
-      {
-        type: "boolean",
-      },
-      {
-        type: "string",
-        enum: ["fieldsOnly"],
-      },
-    ],
-  },
-};
+export const ignoreClassesOptionSchema: JSONSchema4ObjectSchema["properties"] =
+  {
+    ignoreClasses: {
+      oneOf: [
+        {
+          type: "boolean",
+        },
+        {
+          type: "string",
+          enum: ["fieldsOnly"],
+        },
+      ],
+    },
+  };
 
 /**
  * The option to ignore prefix selector.
  */
 export type IgnorePrefixSelectorOption = Readonly<{
-  ignorePrefixSelector?: string[] | string;
+  ignorePrefixSelector?: ReadonlyArray<string> | string;
 }>;
 
 /**
  * The schema for the option to ignore prefix selector.
  */
-export const ignorePrefixSelectorOptionSchema: JSONSchema4["properties"] = {
-  ignorePrefixSelector: {
-    type: ["string", "array"],
-    items: {
-      type: "string",
+export const ignorePrefixSelectorOptionSchema: JSONSchema4ObjectSchema["properties"] =
+  {
+    ignorePrefixSelector: {
+      type: ["string", "array"],
+      items: {
+        type: "string",
+      },
     },
-  },
-};
+  };
 
 /**
  * Should the given text be allowed?
@@ -101,14 +132,12 @@ export const ignorePrefixSelectorOptionSchema: JSONSchema4["properties"] = {
  */
 function shouldIgnoreViaPattern(
   text: string,
-  ignorePattern: string[] | string
+  pattern: ReadonlyArray<string> | string,
 ): boolean {
-  const patterns = Array.isArray(ignorePattern)
-    ? ignorePattern
-    : [ignorePattern];
+  const patterns = Array.isArray(pattern) ? pattern : [pattern];
 
   // One or more patterns match?
-  return patterns.some((pattern) => new RegExp(pattern, "u").test(text));
+  return patterns.some((p) => new RegExp(p, "u").test(text));
 }
 
 /**
@@ -119,9 +148,9 @@ function shouldIgnoreViaPattern(
  * Does the given text match the given pattern.
  */
 function accessorPatternMatch(
-  [pattern, ...remainingPatternParts]: string[],
-  textParts: string[],
-  allowExtra = false
+  [pattern, ...remainingPatternParts]: ReadonlyArray<string>,
+  textParts: ReadonlyArray<string>,
+  allowExtra = false,
 ): boolean {
   return pattern === undefined
     ? allowExtra || textParts.length === 0
@@ -135,8 +164,8 @@ function accessorPatternMatch(
             accessorPatternMatch(
               remainingPatternParts,
               textParts.slice(offset),
-              true
-            )
+              true,
+            ),
           )
     : // Match anything?
     pattern === "*"
@@ -144,17 +173,17 @@ function accessorPatternMatch(
       accessorPatternMatch(
         remainingPatternParts,
         textParts.slice(1),
-        allowExtra
+        allowExtra,
       )
     : // Text matches pattern?
       new RegExp(
         `^${escapeRegExp(pattern).replaceAll("\\*", ".*")}$`,
-        "u"
+        "u",
       ).test(textParts[0]!) &&
       accessorPatternMatch(
         remainingPatternParts,
         textParts.slice(1),
-        allowExtra
+        allowExtra,
       );
 }
 
@@ -165,15 +194,13 @@ function accessorPatternMatch(
  */
 function shouldIgnoreViaAccessorPattern(
   text: string,
-  ignorePattern: string[] | string
+  pattern: ReadonlyArray<string> | string,
 ): boolean {
-  const patterns = Array.isArray(ignorePattern)
-    ? ignorePattern
-    : [ignorePattern];
+  const patterns = Array.isArray(pattern) ? pattern : [pattern];
 
   // One or more patterns match?
-  return patterns.some((pattern) =>
-    accessorPatternMatch(pattern.split("."), text.split("."))
+  return patterns.some((p) =>
+    accessorPatternMatch(p.split("."), text.split(".")),
   );
 }
 
@@ -184,8 +211,8 @@ function shouldIgnoreViaAccessorPattern(
  */
 export function shouldIgnoreInFunction(
   node: TSESTree.Node,
-  context: TSESLint.RuleContext<string, BaseOptions>,
-  allowInFunction: boolean | undefined
+  context: Readonly<RuleContext<string, BaseOptions>>,
+  allowInFunction: boolean | undefined,
 ): boolean {
   return allowInFunction === true && isInFunctionBody(node);
 }
@@ -197,8 +224,8 @@ export function shouldIgnoreInFunction(
  */
 export function shouldIgnoreClasses(
   node: TSESTree.Node,
-  context: TSESLint.RuleContext<string, BaseOptions>,
-  ignoreClasses: Partial<IgnoreClassesOption>["ignoreClasses"]
+  context: Readonly<RuleContext<string, BaseOptions>>,
+  ignoreClasses: Readonly<Partial<IgnoreClassesOption>["ignoreClasses"]>,
 ): boolean {
   return (
     (ignoreClasses === true && (isClassLike(node) || isInClass(node))) ||
@@ -215,28 +242,43 @@ export function shouldIgnoreClasses(
  * Should the given node be allowed base off the following rule options?
  *
  * - IgnoreAccessorPatternOption.
- * - IgnorePatternOption.
+ * - IgnoreIdentifierPatternOption.
  */
 export function shouldIgnorePattern(
   node: TSESTree.Node,
-  context: TSESLint.RuleContext<string, BaseOptions>,
-  ignorePattern: Partial<IgnorePatternOption>["ignorePattern"],
-  ignoreAccessorPattern?: Partial<IgnoreAccessorPatternOption>["ignoreAccessorPattern"]
+  context: Readonly<RuleContext<string, BaseOptions>>,
+  ignoreIdentifierPattern: Readonly<
+    Partial<IgnoreIdentifierPatternOption>["ignoreIdentifierPattern"]
+  >,
+  ignoreAccessorPattern?: Readonly<
+    Partial<IgnoreAccessorPatternOption>["ignoreAccessorPattern"]
+  >,
+  ignoreCodePattern?: Readonly<
+    Partial<IgnoreCodePatternOption>["ignoreCodePattern"]
+  >,
 ): boolean {
   const texts = getNodeIdentifierTexts(node, context);
 
   if (texts.length === 0) {
-    return false;
+    return (
+      ignoreCodePattern !== undefined &&
+      shouldIgnoreViaPattern(getNodeCode(node, context), ignoreCodePattern)
+    );
   }
 
   return (
-    // Ignore if ignorePattern is set and a pattern matches.
-    (ignorePattern !== undefined &&
-      texts.every((text) => shouldIgnoreViaPattern(text, ignorePattern))) ||
+    // Ignore if ignoreIdentifierPattern is set and a pattern matches.
+    (ignoreIdentifierPattern !== undefined &&
+      texts.every((text) =>
+        shouldIgnoreViaPattern(text, ignoreIdentifierPattern),
+      )) ||
     // Ignore if ignoreAccessorPattern is set and an accessor pattern matches.
     (ignoreAccessorPattern !== undefined &&
       texts.every((text) =>
-        shouldIgnoreViaAccessorPattern(text, ignoreAccessorPattern)
-      ))
+        shouldIgnoreViaAccessorPattern(text, ignoreAccessorPattern),
+      )) ||
+    // Ignore if ignoreCodePattern is set and a code pattern matches.
+    (ignoreCodePattern !== undefined &&
+      shouldIgnoreViaPattern(getNodeCode(node, context), ignoreCodePattern))
   );
 }

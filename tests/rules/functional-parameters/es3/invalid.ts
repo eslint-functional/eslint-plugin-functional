@@ -1,8 +1,16 @@
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import dedent from "dedent";
 
-import type { InvalidTestCase } from "~/tests/helpers/util";
+import { type rule } from "#eslint-plugin-functional/rules/functional-parameters";
+import {
+  type InvalidTestCaseSet,
+  type MessagesOf,
+  type OptionsOf,
+} from "#eslint-plugin-functional/tests/helpers/util";
 
-const tests: InvalidTestCase[] = [
+const tests: Array<
+  InvalidTestCaseSet<MessagesOf<typeof rule>, OptionsOf<typeof rule>>
+> = [
   {
     code: dedent`
       function foo() {
@@ -13,7 +21,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "paramCountAtLeastOne",
-        type: "FunctionDeclaration",
+        type: AST_NODE_TYPES.FunctionDeclaration,
         line: 1,
         column: 1,
       },
@@ -29,7 +37,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "paramCountAtLeastOne",
-        type: "FunctionExpression",
+        type: AST_NODE_TYPES.FunctionExpression,
         line: 1,
         column: 2,
       },
@@ -45,7 +53,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "arguments",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 2,
         column: 15,
       },
@@ -61,7 +69,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "paramCountAtLeastOne",
-        type: "FunctionDeclaration",
+        type: AST_NODE_TYPES.FunctionDeclaration,
         line: 1,
         column: 1,
       },
@@ -77,7 +85,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "paramCountExactlyOne",
-        type: "FunctionDeclaration",
+        type: AST_NODE_TYPES.FunctionDeclaration,
         line: 1,
         column: 1,
       },
@@ -93,7 +101,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "paramCountExactlyOne",
-        type: "FunctionDeclaration",
+        type: AST_NODE_TYPES.FunctionDeclaration,
         line: 1,
         column: 1,
       },
@@ -118,13 +126,13 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "paramCountExactlyOne",
-        type: "FunctionExpression",
+        type: AST_NODE_TYPES.FunctionExpression,
         line: 3,
         column: 5,
       },
       {
         messageId: "paramCountExactlyOne",
-        type: "FunctionExpression",
+        type: AST_NODE_TYPES.FunctionExpression,
         line: 8,
         column: 5,
       },
@@ -139,7 +147,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "paramCountAtLeastOne",
-        type: "FunctionExpression",
+        type: AST_NODE_TYPES.FunctionExpression,
         line: 2,
         column: 5,
       },

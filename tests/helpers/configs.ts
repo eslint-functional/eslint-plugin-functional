@@ -1,105 +1,148 @@
 import path from "node:path";
 
-import type { Linter } from "eslint";
+import { type RuleTesterConfig } from "@typescript-eslint/rule-tester";
 
-export const filename = path.join(__dirname, "file.ts");
+const fixturePath = path.join(process.cwd(), "tests/fixture");
+export const filename = path.join(fixturePath, "file.ts");
 
+/* eslint-disable unicorn/prefer-module */
 const typescriptParser = require.resolve("@typescript-eslint/parser");
 const babelParser = require.resolve("@babel/eslint-parser");
 const espreeParser = require.resolve("espree");
+/* eslint-enable unicorn/prefer-module */
 
 export const configs = {
   typescript: {
     parser: typescriptParser,
     parserOptions: {
       sourceType: "module",
-      project: path.join(__dirname, "./test-tsconfig.json"),
+      tsconfigRootDir: fixturePath,
+      project: "tsconfig.json",
     },
-  } as Linter.Config,
+    dependencyConstraints: {
+      typescript: "4.3.5",
+    },
+  } satisfies RuleTesterConfig,
 
-  es11: {
+  esLatest: {
     parser: babelParser,
     parserOptions: {
-      ecmaVersion: 11,
+      ecmaVersion: "latest",
       requireConfigFile: false,
       babelOptions: {
         babelrc: false,
         configFile: false,
       },
     },
-  } as Linter.Config,
+  } satisfies RuleTesterConfig,
 
-  es10: {
+  es2022: {
     parser: babelParser,
     parserOptions: {
-      ecmaVersion: 10,
+      ecmaVersion: 2022,
       requireConfigFile: false,
       babelOptions: {
         babelrc: false,
         configFile: false,
       },
     },
-  } as Linter.Config,
+  } satisfies RuleTesterConfig,
 
-  es9: {
+  es2021: {
     parser: babelParser,
     parserOptions: {
-      ecmaVersion: 9,
+      ecmaVersion: 2021,
       requireConfigFile: false,
       babelOptions: {
         babelrc: false,
         configFile: false,
       },
     },
-  } as Linter.Config,
+  } satisfies RuleTesterConfig,
 
-  es8: {
+  es2020: {
     parser: babelParser,
     parserOptions: {
-      ecmaVersion: 8,
+      ecmaVersion: 2020,
       requireConfigFile: false,
       babelOptions: {
         babelrc: false,
         configFile: false,
       },
     },
-  } as Linter.Config,
+  } satisfies RuleTesterConfig,
 
-  es7: {
+  es2019: {
     parser: babelParser,
     parserOptions: {
-      ecmaVersion: 7,
+      ecmaVersion: 2019,
       requireConfigFile: false,
       babelOptions: {
         babelrc: false,
         configFile: false,
       },
     },
-  } as Linter.Config,
+  } satisfies RuleTesterConfig,
 
-  es6: {
+  es2018: {
     parser: babelParser,
     parserOptions: {
-      ecmaVersion: 6,
+      ecmaVersion: 2018,
       requireConfigFile: false,
       babelOptions: {
         babelrc: false,
         configFile: false,
       },
     },
-  } as Linter.Config,
+  } satisfies RuleTesterConfig,
+
+  es2017: {
+    parser: babelParser,
+    parserOptions: {
+      ecmaVersion: 2017,
+      requireConfigFile: false,
+      babelOptions: {
+        babelrc: false,
+        configFile: false,
+      },
+    },
+  } satisfies RuleTesterConfig,
+
+  es2016: {
+    parser: babelParser,
+    parserOptions: {
+      ecmaVersion: 2016,
+      requireConfigFile: false,
+      babelOptions: {
+        babelrc: false,
+        configFile: false,
+      },
+    },
+  } satisfies RuleTesterConfig,
+
+  es2015: {
+    parser: babelParser,
+    parserOptions: {
+      ecmaVersion: 2015,
+      requireConfigFile: false,
+      babelOptions: {
+        babelrc: false,
+        configFile: false,
+      },
+    },
+  } satisfies RuleTesterConfig,
 
   es5: {
     parser: espreeParser,
     parserOptions: {
       ecmaVersion: 5,
     },
-  } as Linter.Config,
+  } satisfies RuleTesterConfig,
 
   es3: {
     parser: espreeParser,
     parserOptions: {
       ecmaVersion: 3,
     },
-  } as Linter.Config,
+  } satisfies RuleTesterConfig,
 };

@@ -1,8 +1,16 @@
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import dedent from "dedent";
 
-import type { InvalidTestCase } from "~/tests/helpers/util";
+import { type rule } from "#eslint-plugin-functional/rules/no-mixed-types";
+import {
+  type InvalidTestCaseSet,
+  type MessagesOf,
+  type OptionsOf,
+} from "#eslint-plugin-functional/tests/helpers/util";
 
-const tests: InvalidTestCase[] = [
+const tests: Array<
+  InvalidTestCaseSet<MessagesOf<typeof rule>, OptionsOf<typeof rule>>
+> = [
   // Mixing properties and methods (MethodSignature) should produce failures.
   {
     code: dedent`
@@ -15,7 +23,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "generic",
-        type: "TSTypeAliasDeclaration",
+        type: AST_NODE_TYPES.TSTypeAliasDeclaration,
         line: 1,
         column: 1,
       },
@@ -32,7 +40,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "generic",
-        type: "TSTypeAliasDeclaration",
+        type: AST_NODE_TYPES.TSTypeAliasDeclaration,
         line: 1,
         column: 1,
       },
@@ -49,7 +57,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "generic",
-        type: "TSInterfaceDeclaration",
+        type: AST_NODE_TYPES.TSInterfaceDeclaration,
         line: 1,
         column: 1,
       },
@@ -67,7 +75,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "generic",
-        type: "TSTypeAliasDeclaration",
+        type: AST_NODE_TYPES.TSTypeAliasDeclaration,
         line: 1,
         column: 1,
       },
@@ -84,7 +92,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "generic",
-        type: "TSTypeAliasDeclaration",
+        type: AST_NODE_TYPES.TSTypeAliasDeclaration,
         line: 1,
         column: 1,
       },
@@ -101,7 +109,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "generic",
-        type: "TSInterfaceDeclaration",
+        type: AST_NODE_TYPES.TSInterfaceDeclaration,
         line: 1,
         column: 1,
       },

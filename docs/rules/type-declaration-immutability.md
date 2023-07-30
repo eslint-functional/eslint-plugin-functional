@@ -20,7 +20,7 @@ section](https://github.com/RebeccaStevens/is-immutable-type#immutability) of
 
 ### ❌ Incorrect
 
-<!-- eslint-disable functional/type-declaration-immutability -->
+<!-- eslint-skip -->
 
 ```ts
 /* eslint functional/type-declaration-immutability: "error" */
@@ -43,7 +43,7 @@ type MutableElement = Readonly<{
 
 ### ✅ Correct
 
-<!-- eslint-disable functional/type-declaration-immutability -->
+<!-- eslint-skip -->
 
 ```ts
 /* eslint functional/type-declaration-immutability: "error" */
@@ -86,7 +86,7 @@ type Options = {
       | false;
   }>;
   ignoreInterfaces: boolean;
-  ignorePattern: string[] | string;
+  ignoreIdentifierPattern: string[] | string;
 };
 ```
 
@@ -189,6 +189,7 @@ If not set, or set to `false`, the fixer will be disabled.
 A boolean to specify whether interfaces should be exempt from these rules.
 `false` by default.
 
-### `ignorePattern`
+### `ignoreIdentifierPattern`
 
-See the [ignorePattern](./options/ignore-pattern.md) docs.
+This option takes a RegExp string or an array of RegExp strings.
+It allows for the ability to ignore violations based on a type's name.

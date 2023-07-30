@@ -1,8 +1,95 @@
 import dedent from "dedent";
 
-import type { ValidTestCase } from "~/tests/helpers/util";
+import { type rule } from "#eslint-plugin-functional/rules/no-conditional-statements";
+import {
+  type ValidTestCaseSet,
+  type OptionsOf,
+} from "#eslint-plugin-functional/tests/helpers/util";
 
-const tests: ValidTestCase[] = [
+const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
+  {
+    code: dedent`
+      function foo(i) {
+        if (i === 1) {
+          return 1;
+        }
+      }
+    `,
+    optionsSet: [[{ allowReturningBranches: true }]],
+  },
+  {
+    code: dedent`
+      function foo(i) {
+        if (i === 1) {
+          return 1;
+        } else {
+          return 0;
+        }
+      }
+    `,
+    optionsSet: [
+      [{ allowReturningBranches: true }],
+      [{ allowReturningBranches: "ifExhaustive" }],
+    ],
+  },
+  {
+    code: dedent`
+      function foo(i) {
+        switch(i) {
+          case "a":
+            return 1;
+          case "b":
+          case "c":
+            return 2;
+        }
+      }
+    `,
+    optionsSet: [[{ allowReturningBranches: true }]],
+  },
+  {
+    code: dedent`
+      function foo(i) {
+        switch(i) {
+          case "a":
+            return 1;
+          case "b":
+            return 2;
+          default:
+            return 3;
+        }
+      }
+    `,
+    optionsSet: [
+      [{ allowReturningBranches: true }],
+      [{ allowReturningBranches: "ifExhaustive" }],
+    ],
+  },
+  // Check Break and Continue
+  {
+    code: dedent`
+      for(var i = 0; i < j; i++) {
+        if (e === 1) {
+          break;
+        }
+      }
+    `,
+    optionsSet: [[{ allowReturningBranches: true }]],
+  },
+  {
+    code: dedent`
+      for(var i = 0; i < j; i++) {
+        if (e === 1) {
+          break;
+        } else {
+          continue;
+        }
+      }
+    `,
+    optionsSet: [
+      [{ allowReturningBranches: true }],
+      [{ allowReturningBranches: "ifExhaustive" }],
+    ],
+  },
   // Exhaustive type test.
   {
     code: dedent`

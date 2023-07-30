@@ -1,8 +1,7 @@
 /lib/
 /build/
 /coverage/
-
-.nyc_output/
+/tests-compiled/
 
 node_modules/
 

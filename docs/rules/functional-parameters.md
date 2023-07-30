@@ -63,8 +63,9 @@ type Options = {
         count: "atLeastOne" | "exactlyOne";
         ignoreLambdaExpression: boolean;
         ignoreIIFE: boolean;
+        ignoreGettersAndSetters: boolean;
       };
-  ignorePattern?: string[] | string;
+  ignoreIdentifierPattern?: string[] | string;
   ignorePrefixSelector?: string[] | string;
 };
 ```
@@ -79,6 +80,7 @@ const defaults = {
     count: "atLeastOne",
     ignoreLambdaExpression: false,
     ignoreIIFE: true,
+    ignoreGettersAndSetters: true,
   },
 };
 ```
@@ -92,6 +94,7 @@ const recommendedOptions = {
   enforceParameterCount: {
     ignoreLambdaExpression: true,
     ignoreIIFE: true,
+    ignoreGettersAndSetters: true,
   },
 };
 ```
@@ -163,6 +166,10 @@ Here, a lambda function expression refers to any function being defined in place
 
 If true, this option allows for the use of [IIFEs](https://developer.mozilla.org/en-US/docs/Glossary/IIFE) that do not have any parameters.
 
+#### `enforceParameterCount.ignoreGettersAndSetters`
+
+Getters should always take zero parameters, and setter one. If for some reason you want to treat these function like any other function, then you can set this option to `false`.
+
 ### `ignorePrefixSelector`
 
 This allows for ignore functions where one of the given selectors matches the parent node in the AST of the function node.\
@@ -185,7 +192,7 @@ The following inline callback won't be flagged:
 const sum = [1, 2, 3].reduce((carry, current) => current, 0);
 ```
 
-### `ignorePattern`
+### `ignoreIdentifierPattern`
 
-Patterns will be matched against function names.
-See the [ignorePattern](./options/ignore-pattern.md) docs for more information.
+This option takes a RegExp string or an array of RegExp strings.
+It allows for the ability to ignore violations based on a function's name.

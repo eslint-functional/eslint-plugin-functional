@@ -1,18 +1,20 @@
-import type { TSESLint } from "@typescript-eslint/utils";
-import type { JSONSchema4 } from "json-schema";
+import { type JSONSchema4 } from "@typescript-eslint/utils/json-schema";
+import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
-import type { ESFunctionType } from "~/utils/node-types";
-import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
-import { createRule, getTypeOfNode } from "~/utils/rule";
+import tsApiUtils from "#eslint-plugin-functional/conditional-imports/ts-api-utils";
+import { type ESFunctionType } from "#eslint-plugin-functional/utils/node-types";
+import {
+  type RuleResult,
+  type NamedCreateRuleMetaWithCategory,
+  createRule,
+  getTypeOfNode,
+} from "#eslint-plugin-functional/utils/rule";
 import {
   isFunctionLike,
-  isNullType,
   isTSNullKeyword,
   isTSUndefinedKeyword,
   isTSVoidKeyword,
-  isUndefinedType,
-  isVoidType,
-} from "~/utils/type-guards";
+} from "#eslint-plugin-functional/utils/type-guards";
 
 /**
  * The name of this rule.
@@ -27,13 +29,13 @@ type Options = [
     allowNull: boolean;
     allowUndefined: boolean;
     ignoreInferredTypes: boolean;
-  }
+  },
 ];
 
 /**
  * The schema for the rule options.
  */
-const schema: JSONSchema4 = [
+const schema: JSONSchema4[] = [
   {
     type: "object",
     properties: {
@@ -77,7 +79,6 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
   docs: {
     category: "No Statements",
     description: "Disallow functions that don't return anything.",
-    recommended: "error",
   },
   messages: errorMessages,
   schema,
@@ -88,8 +89,8 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
  */
 function checkFunction(
   node: ESFunctionType,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [{ ignoreInferredTypes, allowNull, allowUndefined }] = options;
 
@@ -102,9 +103,10 @@ function checkFunction(
 
       if (
         returnType !== undefined &&
-        (isVoidType(returnType) ||
-          (!allowNull && isNullType(returnType)) ||
-          (!allowUndefined && isUndefinedType(returnType)))
+        tsApiUtils !== undefined &&
+        (tsApiUtils.isIntrinsicVoidType(returnType) ||
+          (!allowNull && tsApiUtils.isIntrinsicNullType(returnType)) ||
+          (!allowUndefined && tsApiUtils.isIntrinsicUndefinedType(returnType)))
       ) {
         return {
           context,
@@ -144,5 +146,5 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
     TSEmptyBodyFunctionExpression: checkFunction,
     TSFunctionType: checkFunction,
     TSMethodSignature: checkFunction,
-  }
+  },
 );

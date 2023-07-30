@@ -1,6 +1,5 @@
 {
   "files.exclude": {
-    ".nyc_output": true,
     "coverage": true,
     "cz-adapter/index.js": true
   },

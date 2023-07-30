@@ -1,15 +1,23 @@
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import dedent from "dedent";
 
-import type { InvalidTestCase } from "~/tests/helpers/util";
+import { type rule } from "#eslint-plugin-functional/rules/prefer-immutable-types";
+import {
+  type InvalidTestCaseSet,
+  type MessagesOf,
+  type OptionsOf,
+} from "#eslint-plugin-functional/tests/helpers/util";
 
-const tests: ReadonlyArray<InvalidTestCase> = [
+const tests: Array<
+  InvalidTestCaseSet<MessagesOf<typeof rule>, OptionsOf<typeof rule>>
+> = [
   {
     code: "function foo(arg: ReadonlySet<string>) {}",
     optionsSet: [[{ parameters: "Immutable" }]],
     errors: [
       {
         messageId: "parameter",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 1,
         column: 14,
       },
@@ -21,7 +29,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     errors: [
       {
         messageId: "parameter",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 1,
         column: 14,
       },
@@ -30,20 +38,32 @@ const tests: ReadonlyArray<InvalidTestCase> = [
   {
     code: "function foo(arg1: { foo: string }, arg2: { foo: number }) {}",
     optionsSet: [[{ parameters: "ReadonlyShallow" }]],
-    output:
-      "function foo(arg1: Readonly<{ foo: string }>, arg2: Readonly<{ foo: number }>) {}",
     errors: [
       {
         messageId: "parameter",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 1,
         column: 14,
+        suggestions: [
+          {
+            messageId: "parameter",
+            output:
+              "function foo(arg1: Readonly<{ foo: string }>, arg2: { foo: number }) {}",
+          },
+        ],
       },
       {
         messageId: "parameter",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 1,
         column: 37,
+        suggestions: [
+          {
+            messageId: "parameter",
+            output:
+              "function foo(arg1: { foo: string }, arg2: Readonly<{ foo: number }>) {}",
+          },
+        ],
       },
     ],
   },
@@ -56,13 +76,13 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     errors: [
       {
         messageId: "parameter",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 1,
         column: 14,
       },
       {
         messageId: "parameter",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 1,
         column: 37,
       },
@@ -83,25 +103,25 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     errors: [
       {
         messageId: "parameter",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 3,
         column: 22,
       },
       {
         messageId: "parameter",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 4,
         column: 21,
       },
       {
         messageId: "parameter",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 5,
         column: 24,
       },
       {
         messageId: "parameter",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 6,
         column: 14,
       },
@@ -117,7 +137,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     errors: [
       {
         messageId: "parameter",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 2,
         column: 4,
       },
@@ -133,7 +153,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     errors: [
       {
         messageId: "parameter",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 2,
         column: 8,
       },
@@ -151,47 +171,85 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       }
     `,
     optionsSet: [[]],
-    output: dedent`
-      class Klass {
-        constructor (
-          public readonly publicProp: string,
-          protected readonly protectedProp: string,
-          private readonly privateProp: string,
-      ) { }
-      }
-    `,
     errors: [
       {
         messageId: "propertyModifier",
-        type: "TSParameterProperty",
+        type: AST_NODE_TYPES.TSParameterProperty,
         line: 3,
         column: 5,
+        suggestions: [
+          {
+            messageId: "propertyModifier",
+            output: dedent`
+              class Klass {
+                constructor (
+                  public readonly publicProp: string,
+                  protected protectedProp: string,
+                  private privateProp: string,
+              ) { }
+              }
+            `,
+          },
+        ],
       },
       {
         messageId: "propertyModifier",
-        type: "TSParameterProperty",
+        type: AST_NODE_TYPES.TSParameterProperty,
         line: 4,
         column: 5,
+        suggestions: [
+          {
+            messageId: "propertyModifier",
+            output: dedent`
+              class Klass {
+                constructor (
+                  public publicProp: string,
+                  protected readonly protectedProp: string,
+                  private privateProp: string,
+              ) { }
+              }
+            `,
+          },
+        ],
       },
       {
         messageId: "propertyModifier",
-        type: "TSParameterProperty",
+        type: AST_NODE_TYPES.TSParameterProperty,
         line: 5,
         column: 5,
+        suggestions: [
+          {
+            messageId: "propertyModifier",
+            output: dedent`
+              class Klass {
+                constructor (
+                  public publicProp: string,
+                  protected protectedProp: string,
+                  private readonly privateProp: string,
+              ) { }
+              }
+            `,
+          },
+        ],
       },
     ],
   },
   {
     code: "function foo(arg0: { foo: string | number }, arg1: { foo: string | number }): arg0 is { foo: number } {}",
     optionsSet: [[{ parameters: "ReadonlyShallow" }]],
-    output:
-      "function foo(arg0: { foo: string | number }, arg1: Readonly<{ foo: string | number }>): arg0 is { foo: number } {}",
     errors: [
       {
         messageId: "parameter",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 1,
         column: 46,
+        suggestions: [
+          {
+            messageId: "parameter",
+            output:
+              "function foo(arg0: { foo: string | number }, arg1: Readonly<{ foo: string | number }>): arg0 is { foo: number } {}",
+          },
+        ],
       },
     ],
   },
@@ -204,7 +262,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     errors: [
       {
         messageId: "parameter",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 1,
         column: 46,
       },
@@ -215,48 +273,32 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     optionsSet: [
       [
         {
-          parameters: "ReadonlyShallow",
-          fixer: {
-            ReadonlyDeep: {
-              pattern: "^(.+)$",
-              replace: "ReadonlyDeep<$1>",
-            },
-          },
-        },
-      ],
-    ],
-    output: "function foo(arg1: Readonly<{ foo: string }>) {}",
-    errors: [
-      {
-        messageId: "parameter",
-        type: "Identifier",
-        line: 1,
-        column: 14,
-      },
-    ],
-  },
-  {
-    code: "function foo(arg1: { foo: string }) {}",
-    optionsSet: [
-      [
-        {
           parameters: "ReadonlyDeep",
-          fixer: {
-            ReadonlyDeep: {
-              pattern: "^(.+)$",
-              replace: "ReadonlyDeep<$1>",
-            },
+          suggestions: {
+            ReadonlyDeep: [
+              [
+                {
+                  pattern: "^(.+)$",
+                  replace: "ReadonlyDeep<$1>",
+                },
+              ],
+            ],
           },
         },
       ],
     ],
-    output: "function foo(arg1: ReadonlyDeep<{ foo: string }>) {}",
     errors: [
       {
         messageId: "parameter",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 1,
         column: 14,
+        suggestions: [
+          {
+            messageId: "parameter",
+            output: "function foo(arg1: ReadonlyDeep<{ foo: string }>) {}",
+          },
+        ],
       },
     ],
   },
@@ -266,22 +308,32 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       [
         {
           parameters: "ReadonlyDeep",
-          fixer: {
-            ReadonlyDeep: {
-              pattern: "^Readonly<(.+)>|(.+)$",
-              replace: "ReadonlyDeep<$1$2>",
-            },
+          suggestions: {
+            ReadonlyDeep: [
+              [
+                {
+                  pattern: "^Readonly<(.+)>|(.+)$",
+                  replace: "ReadonlyDeep<$1$2>",
+                },
+              ],
+            ],
           },
         },
       ],
     ],
-    output: "function foo(arg1: ReadonlyDeep<{ foo: { bar: string } }>) {}",
     errors: [
       {
         messageId: "parameter",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 1,
         column: 14,
+        suggestions: [
+          {
+            messageId: "parameter",
+            output:
+              "function foo(arg1: ReadonlyDeep<{ foo: { bar: string } }>) {}",
+          },
+        ],
       },
     ],
   },
@@ -297,40 +349,90 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       function foo(arg: ReadonlyMap<string, string>) {}
     `,
     optionsSet: [[{ parameters: "ReadonlyShallow" }]],
-    output: dedent`
-      function foo(arg: ReadonlyArray<string>) {}
-      function foo(arg: readonly string[]) {}
-      function foo(arg: ReadonlySet<string>) {}
-      function foo(arg: ReadonlyMap<string, string>) {}
-      function foo(arg: ReadonlyArray<string>) {}
-      function foo(arg: readonly string[]) {}
-      function foo(arg: ReadonlySet<string>) {}
-      function foo(arg: ReadonlyMap<string, string>) {}
-    `,
     errors: [
       {
         messageId: "parameter",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 1,
         column: 14,
+        suggestions: [
+          {
+            messageId: "parameter",
+            output: dedent`
+              function foo(arg: ReadonlyArray<string>) {}
+              function foo(arg: string[]) {}
+              function foo(arg: Set<string>) {}
+              function foo(arg: Map<string, string>) {}
+              function foo(arg: ReadonlyArray<string>) {}
+              function foo(arg: readonly string[]) {}
+              function foo(arg: ReadonlySet<string>) {}
+              function foo(arg: ReadonlyMap<string, string>) {}
+            `,
+          },
+        ],
       },
       {
         messageId: "parameter",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 2,
         column: 14,
+        suggestions: [
+          {
+            messageId: "parameter",
+            output: dedent`
+              function foo(arg: Array<string>) {}
+              function foo(arg: readonly string[]) {}
+              function foo(arg: Set<string>) {}
+              function foo(arg: Map<string, string>) {}
+              function foo(arg: ReadonlyArray<string>) {}
+              function foo(arg: readonly string[]) {}
+              function foo(arg: ReadonlySet<string>) {}
+              function foo(arg: ReadonlyMap<string, string>) {}
+            `,
+          },
+        ],
       },
       {
         messageId: "parameter",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 3,
         column: 14,
+        suggestions: [
+          {
+            messageId: "parameter",
+            output: dedent`
+              function foo(arg: Array<string>) {}
+              function foo(arg: string[]) {}
+              function foo(arg: ReadonlySet<string>) {}
+              function foo(arg: Map<string, string>) {}
+              function foo(arg: ReadonlyArray<string>) {}
+              function foo(arg: readonly string[]) {}
+              function foo(arg: ReadonlySet<string>) {}
+              function foo(arg: ReadonlyMap<string, string>) {}
+            `,
+          },
+        ],
       },
       {
         messageId: "parameter",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 4,
         column: 14,
+        suggestions: [
+          {
+            messageId: "parameter",
+            output: dedent`
+              function foo(arg: Array<string>) {}
+              function foo(arg: string[]) {}
+              function foo(arg: Set<string>) {}
+              function foo(arg: ReadonlyMap<string, string>) {}
+              function foo(arg: ReadonlyArray<string>) {}
+              function foo(arg: readonly string[]) {}
+              function foo(arg: ReadonlySet<string>) {}
+              function foo(arg: ReadonlyMap<string, string>) {}
+            `,
+          },
+        ],
       },
     ],
   },
@@ -344,6 +446,7 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       function foo(arg: ReadonlyMap<{foo: string}, {foo: string}>) {}
       function foo(arg: {foo: string}[]) {}
       function foo(arg: readonly {foo: string}[]) {}
+      type ReadonlyDeep<T> = T;
     `,
     optionsSet: [
       [
@@ -369,53 +472,54 @@ const tests: ReadonlyArray<InvalidTestCase> = [
       function foo(arg: ReadonlyDeep<ReadonlyMap<{foo: string}, {foo: string}>>) {}
       function foo(arg: ReadonlyDeep<{foo: string}[]>) {}
       function foo(arg: ReadonlyDeep<readonly {foo: string}[]>) {}
+      type ReadonlyDeep<T> = T;
     `,
     errors: [
       {
         messageId: "parameter",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 1,
         column: 14,
       },
       {
         messageId: "parameter",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 2,
         column: 14,
       },
       {
         messageId: "parameter",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 3,
         column: 14,
       },
       {
         messageId: "parameter",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 4,
         column: 14,
       },
       {
         messageId: "parameter",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 5,
         column: 14,
       },
       {
         messageId: "parameter",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 6,
         column: 14,
       },
       {
         messageId: "parameter",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 7,
         column: 14,
       },
       {
         messageId: "parameter",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 8,
         column: 14,
       },
@@ -460,49 +564,49 @@ const tests: ReadonlyArray<InvalidTestCase> = [
     errors: [
       {
         messageId: "parameter",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 1,
         column: 14,
       },
       {
         messageId: "parameter",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 2,
         column: 14,
       },
       {
         messageId: "parameter",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 3,
         column: 14,
       },
       {
         messageId: "parameter",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 4,
         column: 14,
       },
       {
         messageId: "parameter",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 5,
         column: 14,
       },
       {
         messageId: "parameter",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 6,
         column: 14,
       },
       {
         messageId: "parameter",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 7,
         column: 14,
       },
       {
         messageId: "parameter",
-        type: "Identifier",
+        type: AST_NODE_TYPES.Identifier,
         line: 8,
         column: 14,
       },

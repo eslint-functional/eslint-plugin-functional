@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "sourceMap": true,
+    "outDir": "tests-compiled",
+    "skipLibCheck": true
+  },
+  "include": ["src", "tests"]
+}

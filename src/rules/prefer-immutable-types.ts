@@ -1,24 +1,32 @@
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import { type TSESTree } from "@typescript-eslint/utils";
+import {
+  type JSONSchema4,
+  type JSONSchema4ObjectSchema,
+} from "@typescript-eslint/utils/json-schema";
+import {
+  type ReportFixFunction,
+  type RuleContext,
+} from "@typescript-eslint/utils/ts-eslint";
 import { deepmerge } from "deepmerge-ts";
 import { Immutability } from "is-immutable-type";
-import type { JSONSchema4 } from "json-schema";
 
-import type { IgnoreClassesOption } from "~/options";
 import {
+  type IgnoreClassesOption,
   ignoreClassesOptionSchema,
   shouldIgnoreClasses,
   shouldIgnoreInFunction,
   shouldIgnorePattern,
-} from "~/options";
-import type { ESFunctionType } from "~/utils/node-types";
-import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
+} from "#eslint-plugin-functional/options";
+import { type ESFunctionType } from "#eslint-plugin-functional/utils/node-types";
 import {
+  type RuleResult,
+  type NamedCreateRuleMetaWithCategory,
   createRule,
   getReturnTypesOfFunction,
   getTypeImmutabilityOfNode,
   getTypeImmutabilityOfType,
   isImplementationOfOverload,
-} from "~/utils/rule";
+} from "#eslint-plugin-functional/utils/rule";
 import {
   hasID,
   isArrayPattern,
@@ -31,7 +39,7 @@ import {
   isPropertyDefinition,
   isTSParameterProperty,
   isTSTypePredicate,
-} from "~/utils/type-guards";
+} from "#eslint-plugin-functional/utils/type-guards";
 
 /**
  * The name of this rule.
@@ -55,10 +63,26 @@ type FixerConfigRaw = {
   replace: string;
 };
 
+type FixerConfigRawMap = Partial<
+  Record<
+    "ReadonlyShallow" | "ReadonlyDeep" | "Immutable",
+    FixerConfigRaw | FixerConfigRaw[] | undefined
+  >
+>;
+
+type SuggestionConfigRawMap = Partial<
+  Record<
+    "ReadonlyShallow" | "ReadonlyDeep" | "Immutable",
+    FixerConfigRaw[][] | undefined
+  >
+>;
+
 type FixerConfig = {
   pattern: RegExp;
   replace: string;
 };
+
+type SuggestionsConfig = FixerConfig[];
 
 /**
  * The options this rule can take.
@@ -74,13 +98,9 @@ type Options = [
           }
         >
       | RawEnforcement;
-    fixer:
-      | Record<
-          "ReadonlyShallow" | "ReadonlyDeep" | "Immutable",
-          FixerConfigRaw | FixerConfigRaw[] | false | undefined
-        >
-      | false;
-  }
+    fixer?: FixerConfigRawMap;
+    suggestions?: SuggestionConfigRawMap;
+  },
 ];
 
 /**
@@ -92,7 +112,7 @@ const enforcementEnumOptions = [
       i !== Immutability.Unknown &&
       i !== Immutability[Immutability.Unknown] &&
       i !== Immutability.Mutable &&
-      i !== Immutability[Immutability.Mutable]
+      i !== Immutability[Immutability.Mutable],
   ),
   "None",
   false,
@@ -101,27 +121,30 @@ const enforcementEnumOptions = [
 /**
  * The non-shorthand schema for each option.
  */
-const optionExpandedSchema: JSONSchema4 = deepmerge(ignoreClassesOptionSchema, {
-  enforcement: {
-    type: ["string", "number", "boolean"],
-    enum: enforcementEnumOptions,
-  },
-  ignoreInferredTypes: {
-    type: "boolean",
-  },
-  ignoreNamePattern: {
-    type: ["string", "array"],
-    items: {
-      type: "string",
+const optionExpandedSchema: JSONSchema4ObjectSchema["properties"] = deepmerge(
+  ignoreClassesOptionSchema,
+  {
+    enforcement: {
+      type: ["string", "number", "boolean"],
+      enum: enforcementEnumOptions,
     },
-  },
-  ignoreTypePattern: {
-    type: ["string", "array"],
-    items: {
-      type: "string",
+    ignoreInferredTypes: {
+      type: "boolean",
     },
-  },
-});
+    ignoreNamePattern: {
+      type: ["string", "array"],
+      items: {
+        type: "string",
+      },
+    },
+    ignoreTypePattern: {
+      type: ["string", "array"],
+      items: {
+        type: "string",
+      },
+    },
+  } satisfies JSONSchema4ObjectSchema["properties"],
+);
 
 /**
  * The schema for each option.
@@ -146,10 +169,6 @@ const optionSchema: JSONSchema4 = {
 const fixerSchema: JSONSchema4 = {
   oneOf: [
     {
-      type: "boolean",
-      enum: [false],
-    },
-    {
       type: "object",
       properties: {
         pattern: { type: "string" },
@@ -171,10 +190,25 @@ const fixerSchema: JSONSchema4 = {
   ],
 };
 
+const suggestionsSchema: JSONSchema4 = {
+  type: "array",
+  items: {
+    type: "array",
+    items: {
+      type: "object",
+      properties: {
+        pattern: { type: "string" },
+        replace: { type: "string" },
+      },
+      additionalProperties: false,
+    },
+  },
+};
+
 /**
  * The schema for the rule options.
  */
-const schema: JSONSchema4 = [
+const schema: JSONSchema4[] = [
   {
     type: "object",
     properties: deepmerge(optionExpandedSchema, {
@@ -198,21 +232,22 @@ const schema: JSONSchema4 = [
         ],
       },
       fixer: {
-        oneOf: [
-          {
-            type: "boolean",
-            enum: [false],
-          },
-          {
-            type: "object",
-            properties: {
-              ReadonlyShallow: fixerSchema,
-              ReadonlyDeep: fixerSchema,
-              Immutable: fixerSchema,
-            },
-            additionalProperties: false,
-          },
-        ],
+        type: "object",
+        properties: {
+          ReadonlyShallow: fixerSchema,
+          ReadonlyDeep: fixerSchema,
+          Immutable: fixerSchema,
+        },
+        additionalProperties: false,
+      },
+      suggestions: {
+        type: "object",
+        properties: {
+          ReadonlyShallow: suggestionsSchema,
+          ReadonlyDeep: suggestionsSchema,
+          Immutable: suggestionsSchema,
+        },
+        additionalProperties: false,
       },
     }),
     additionalProperties: false,
@@ -227,24 +262,24 @@ const defaultOptions: Options = [
     enforcement: Immutability.Immutable,
     ignoreInferredTypes: false,
     ignoreClasses: false,
-    fixer: {
+    suggestions: {
       ReadonlyShallow: [
-        {
-          pattern:
-            "^([_$a-zA-Z\\xA0-\\uFFFF][_$a-zA-Z0-9\\xA0-\\uFFFF]*\\[\\])$",
-          replace: "readonly $1",
-        },
-        {
-          pattern: "^(Array|Map|Set)<(.+)>$",
-          replace: "Readonly$1<$2>",
-        },
-        {
-          pattern: "^(.+)$",
-          replace: "Readonly<$1>",
-        },
+        [
+          {
+            pattern:
+              "^([_$a-zA-Z\\xA0-\\uFFFF][_$a-zA-Z0-9\\xA0-\\uFFFF]*\\[\\])$",
+            replace: "readonly $1",
+          },
+          {
+            pattern: "^(Array|Map|Set)<(.+)>$",
+            replace: "Readonly$1<$2>",
+          },
+          {
+            pattern: "^(.+)$",
+            replace: "Readonly<$1>",
+          },
+        ],
       ],
-      ReadonlyDeep: false,
-      Immutable: false,
     },
   },
 ];
@@ -273,9 +308,9 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
     category: "No Mutations",
     description:
       "Require function parameters to be typed as certain immutability",
-    recommended: "error",
   },
   fixable: "code",
+  hasSuggestions: true,
   messages: errorMessages,
   schema,
 };
@@ -285,21 +320,72 @@ type Descriptor = RuleResult<
   Options
 >["descriptors"][number];
 
+type AllFixers = {
+  fix: ReportFixFunction | null;
+  suggestionFixers: ReportFixFunction[] | null;
+};
+
+/**
+ * Get the fixer and the suggestions' fixers.
+ */
+function getAllFixers(
+  node: TSESTree.Node,
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  fixerConfigs: FixerConfig[] | false,
+  suggestionsConfigs: SuggestionsConfig[] | false,
+): AllFixers {
+  const nodeText = context
+    .getSourceCode()
+    .getText(node)
+    .replaceAll(/\s+/gmu, " ");
+
+  const fix =
+    fixerConfigs === false
+      ? null
+      : getConfiuredFixer(node, nodeText, fixerConfigs);
+
+  const suggestionFixers =
+    suggestionsConfigs === false
+      ? null
+      : getConfiuredSuggestionFixers(node, nodeText, suggestionsConfigs);
+
+  return { fix, suggestionFixers };
+}
+
 /**
  * Get a fixer that uses the user config.
  */
-function getConfiuredFixer<T extends TSESTree.Node>(
-  node: T,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  configs: FixerConfig[]
+function getConfiuredFixer(
+  node: TSESTree.Node,
+  text: string,
+  configs: FixerConfig[],
 ): NonNullable<Descriptor["fix"]> | null {
-  const text = context.getSourceCode().getText(node).replaceAll(/\s+/gmu, " ");
   const config = configs.find((c) => c.pattern.test(text));
   if (config === undefined) {
     return null;
   }
   return (fixer) =>
     fixer.replaceText(node, text.replace(config.pattern, config.replace));
+}
+
+/**
+ * Get a fixer that uses the user config.
+ */
+function getConfiuredSuggestionFixers(
+  node: TSESTree.Node,
+  text: string,
+  suggestionsConfigs: SuggestionsConfig[],
+) {
+  return suggestionsConfigs
+    .map((configs): NonNullable<Descriptor["fix"]> | null => {
+      const config = configs.find((c) => c.pattern.test(text));
+      if (config === undefined) {
+        return null;
+      }
+      return (fixer) =>
+        fixer.replaceText(node, text.replace(config.pattern, config.replace));
+    })
+    .filter(isDefined);
 }
 
 /**
@@ -318,16 +404,13 @@ function parseEnforcement(rawEnforcement: RawEnforcement) {
  */
 function parseFixerConfigs(
   allRawConfigs: Options[0]["fixer"],
-  enforcement: Immutability
+  enforcement: Immutability,
 ): FixerConfig[] | false {
-  if (allRawConfigs === false) {
-    return false;
-  }
-  const key = Immutability[enforcement] as keyof typeof allRawConfigs;
-  const rawConfigs =
-    allRawConfigs[key] ??
-    (defaultOptions[0].fixer === false ? false : defaultOptions[0].fixer[key]);
-  if (rawConfigs === undefined || rawConfigs === false) {
+  const key = Immutability[enforcement] as keyof NonNullable<
+    typeof allRawConfigs
+  >;
+  const rawConfigs = allRawConfigs?.[key];
+  if (rawConfigs === undefined) {
     return false;
   }
   const raws = Array.isArray(rawConfigs) ? rawConfigs : [rawConfigs];
@@ -338,15 +421,41 @@ function parseFixerConfigs(
 }
 
 /**
+ * Get the suggestions config for the the given enforcement level from the raw config given.
+ */
+function parseSuggestionsConfigs(
+  rawSuggestions: Options[0]["suggestions"],
+  enforcement: Immutability,
+): SuggestionsConfig[] | false {
+  const key = Immutability[enforcement] as keyof NonNullable<
+    typeof rawSuggestions
+  >;
+  const rawConfigsSet = rawSuggestions?.[key];
+  if (rawConfigsSet === undefined) {
+    return false;
+  }
+  return rawConfigsSet.map((rawConfigs) =>
+    rawConfigs.map((rawConfig) => ({
+      ...rawConfig,
+      pattern: new RegExp(rawConfig.pattern, "u"),
+    })),
+  );
+}
+
+/**
  * Get the parameter type violations.
  */
 function getParameterTypeViolations(
   node: ESFunctionType,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Readonly<Options>,
 ): Descriptor[] {
   const [optionsObject] = options;
-  const { parameters: rawOption, fixer: rawFixerConfig } = optionsObject;
+  const {
+    parameters: rawOption,
+    fixer: rawFixerConfig,
+    suggestions: rawSuggestionsConfigs,
+  } = optionsObject;
   const {
     enforcement: rawEnforcement,
     ignoreInferredTypes,
@@ -366,7 +475,7 @@ function getParameterTypeViolations(
   };
 
   const enforcement = parseEnforcement(
-    rawEnforcement ?? optionsObject.enforcement
+    rawEnforcement ?? optionsObject.enforcement,
   );
   if (
     enforcement === false ||
@@ -376,6 +485,10 @@ function getParameterTypeViolations(
   }
 
   const fixerConfigs = parseFixerConfigs(rawFixerConfig, enforcement);
+  const suggestionsConfigs = parseSuggestionsConfigs(
+    rawSuggestionsConfigs,
+    enforcement,
+  );
 
   return node.params
     .map((param): Descriptor | undefined => {
@@ -384,14 +497,21 @@ function getParameterTypeViolations(
       }
 
       const parameterProperty = isTSParameterProperty(param);
-      if (parameterProperty && param.readonly !== true) {
+      if (parameterProperty && !param.readonly) {
+        const messageId = "propertyModifier";
+        const fix: NonNullable<Descriptor["fix"]> | null = (fixer) =>
+          fixer.insertTextBefore(param.parameter, "readonly ");
+
         return {
           node: param,
-          messageId: "propertyModifier",
-          fix:
-            rawFixerConfig === false
-              ? null
-              : (fixer) => fixer.insertTextBefore(param.parameter, "readonly "),
+          messageId,
+          fix: fixerConfigs === false ? null : fix,
+          suggest: [
+            {
+              messageId,
+              fix,
+            },
+          ],
         };
       }
 
@@ -405,7 +525,7 @@ function getParameterTypeViolations(
           shouldIgnorePattern(
             actualParam.typeAnnotation,
             context,
-            ignoreTypePattern
+            ignoreTypePattern,
           )) ||
         // type guard
         (node.returnType !== undefined &&
@@ -421,30 +541,40 @@ function getParameterTypeViolations(
       const immutability = getTypeImmutabilityOfNode(
         actualParam,
         context,
-        enforcement
+        enforcement,
       );
 
       if (immutability >= enforcement) {
         return undefined;
       }
 
-      const fix =
-        fixerConfigs === false || actualParam.typeAnnotation === undefined
-          ? null
-          : getConfiuredFixer(
+      const { fix, suggestionFixers } =
+        actualParam.typeAnnotation === undefined
+          ? ({} as AllFixers)
+          : getAllFixers(
               actualParam.typeAnnotation.typeAnnotation,
               context,
-              fixerConfigs
+              fixerConfigs,
+              suggestionsConfigs,
             );
+
+      const messageId = "parameter";
+      const data = {
+        actual: Immutability[immutability],
+        expected: Immutability[enforcement],
+      };
 
       return {
         node: actualParam,
-        messageId: "parameter",
-        data: {
-          actual: Immutability[immutability],
-          expected: Immutability[enforcement],
-        },
+        messageId,
+        data,
         fix,
+        suggest:
+          suggestionFixers?.map((fix) => ({
+            messageId,
+            data,
+            fix,
+          })) ?? null,
       };
     })
     .filter(isDefined);
@@ -455,11 +585,15 @@ function getParameterTypeViolations(
  */
 function getReturnTypeViolations(
   node: ESFunctionType,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Readonly<Options>,
 ): Descriptor[] {
   const [optionsObject] = options;
-  const { returnTypes: rawOption, fixer: rawFixerConfig } = optionsObject;
+  const {
+    returnTypes: rawOption,
+    fixer: rawFixerConfig,
+    suggestions: rawSuggestionsConfigs,
+  } = optionsObject;
   const {
     enforcement: rawEnforcement,
     ignoreInferredTypes,
@@ -475,7 +609,7 @@ function getReturnTypeViolations(
   };
 
   const enforcement = parseEnforcement(
-    rawEnforcement ?? optionsObject.enforcement
+    rawEnforcement ?? optionsObject.enforcement,
   );
 
   if (
@@ -488,6 +622,10 @@ function getReturnTypeViolations(
   }
 
   const fixerConfigs = parseFixerConfigs(rawFixerConfig, enforcement);
+  const suggestionsConfigs = parseSuggestionsConfigs(
+    rawSuggestionsConfigs,
+    enforcement,
+  );
 
   if (
     node.returnType?.typeAnnotation !== undefined &&
@@ -500,31 +638,38 @@ function getReturnTypeViolations(
     const immutability = getTypeImmutabilityOfNode(
       node.returnType.typeAnnotation,
       context,
-      enforcement
+      enforcement,
     );
 
     if (immutability >= enforcement) {
       return [];
     }
 
-    const fix =
-      fixerConfigs === false
-        ? null
-        : getConfiuredFixer(
-            node.returnType.typeAnnotation,
-            context,
-            fixerConfigs
-          );
+    const { fix, suggestionFixers } = getAllFixers(
+      node.returnType.typeAnnotation,
+      context,
+      fixerConfigs,
+      suggestionsConfigs,
+    );
+
+    const messageId = "returnType";
+    const data = {
+      actual: Immutability[immutability],
+      expected: Immutability[enforcement],
+    };
 
     return [
       {
         node: node.returnType,
-        messageId: "returnType",
-        data: {
-          actual: Immutability[immutability],
-          expected: Immutability[enforcement],
-        },
+        messageId,
+        data,
         fix,
+        suggest:
+          suggestionFixers?.map((fix) => ({
+            messageId,
+            data,
+            fix,
+          })) ?? null,
       },
     ];
   }
@@ -545,31 +690,41 @@ function getReturnTypeViolations(
   const immutability = getTypeImmutabilityOfType(
     returnTypes[0]!,
     context,
-    enforcement
+    enforcement,
   );
 
   if (immutability >= enforcement) {
     return [];
   }
 
-  const fix =
-    fixerConfigs === false || node.returnType?.typeAnnotation === undefined
-      ? null
-      : getConfiuredFixer(
+  const { fix, suggestionFixers } =
+    node.returnType?.typeAnnotation === undefined
+      ? ({} as AllFixers)
+      : getAllFixers(
           node.returnType.typeAnnotation,
           context,
-          fixerConfigs
+          fixerConfigs,
+          suggestionsConfigs,
         );
+
+  const messageId = "returnType";
+  const data = {
+    actual: Immutability[immutability],
+    expected: Immutability[enforcement],
+  };
 
   return [
     {
       node: hasID(node) && node.id !== null ? node.id : node,
-      messageId: "returnType",
-      data: {
-        actual: Immutability[immutability],
-        expected: Immutability[enforcement],
-      },
+      messageId,
+      data,
       fix,
+      suggest:
+        suggestionFixers?.map((fix) => ({
+          messageId,
+          data,
+          fix,
+        })) ?? null,
     },
   ];
 }
@@ -579,8 +734,8 @@ function getReturnTypeViolations(
  */
 function checkFunction(
   node: ESFunctionType,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const descriptors = [
     ...getParameterTypeViolations(node, context, options),
@@ -598,12 +753,16 @@ function checkFunction(
  */
 function checkVarible(
   node: TSESTree.VariableDeclarator | TSESTree.PropertyDefinition,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
 
-  const { variables: rawOption, fixer: rawFixerConfig } = optionsObject;
+  const {
+    variables: rawOption,
+    fixer: rawFixerConfig,
+    suggestions: rawSuggestionsConfigs,
+  } = optionsObject;
   const {
     enforcement: rawEnforcement,
     ignoreInferredTypes,
@@ -621,7 +780,7 @@ function checkVarible(
   };
 
   const enforcement = parseEnforcement(
-    rawEnforcement ?? optionsObject.enforcement
+    rawEnforcement ?? optionsObject.enforcement,
   );
 
   if (
@@ -638,17 +797,24 @@ function checkVarible(
 
   const propertyDefinition = isPropertyDefinition(node);
 
-  if (propertyDefinition && node.readonly !== true) {
+  if (propertyDefinition && !node.readonly) {
+    const fix: NonNullable<Descriptor["fix"]> | null = (fixer) =>
+      fixer.insertTextBefore(node.key, "readonly ");
+
+    const messageId = "propertyModifier";
     return {
       context,
       descriptors: [
         {
           node,
-          messageId: "propertyModifier",
-          fix:
-            rawFixerConfig === false
-              ? null
-              : (fixer) => fixer.insertTextBefore(node.key, "readonly "),
+          messageId,
+          fix: rawFixerConfig === undefined ? null : fix,
+          suggest: [
+            {
+              messageId,
+              fix,
+            },
+          ],
         },
       ],
     };
@@ -671,7 +837,7 @@ function checkVarible(
     shouldIgnorePattern(
       nodeWithTypeAnnotation.typeAnnotation,
       context,
-      ignoreTypePattern
+      ignoreTypePattern,
     )
   ) {
     return {
@@ -694,7 +860,7 @@ function checkVarible(
     const immutability = getTypeImmutabilityOfNode(
       element,
       context,
-      enforcement
+      enforcement,
     );
 
     if (immutability >= enforcement) {
@@ -702,34 +868,51 @@ function checkVarible(
     }
 
     const fixerConfigs = parseFixerConfigs(rawFixerConfig, enforcement);
-    const fix =
-      fixerConfigs === false ||
+    const suggestionsConfigs = parseSuggestionsConfigs(
+      rawSuggestionsConfigs,
+      enforcement,
+    );
+
+    const { fix, suggestionFixers } =
       isMemberExpression(element) ||
       isProperty(element) ||
       element.typeAnnotation === undefined
-        ? null
-        : getConfiuredFixer(
+        ? ({} as AllFixers)
+        : getAllFixers(
             element.typeAnnotation.typeAnnotation,
             context,
-            fixerConfigs
+            fixerConfigs,
+            suggestionsConfigs,
           );
 
-    return { element, immutability, fix };
+    return { element, immutability, fix, suggestionFixers };
   });
+
+  const messageId = propertyDefinition ? "propertyImmutability" : "variable";
 
   return {
     context,
     descriptors: elementResults
       .filter(isDefined)
-      .map(({ element, immutability, fix }) => ({
-        node: element,
-        messageId: propertyDefinition ? "propertyImmutability" : "variable",
-        data: {
+      .map(({ element, immutability, fix, suggestionFixers }) => {
+        const data = {
           actual: Immutability[immutability],
           expected: Immutability[enforcement],
-        },
-        fix,
-      })),
+        };
+
+        return {
+          node: element,
+          messageId,
+          data,
+          fix,
+          suggest:
+            suggestionFixers?.map((fix) => ({
+              messageId,
+              data,
+              fix,
+            })) ?? null,
+        };
+      }),
   };
 }
 
@@ -750,5 +933,5 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
     TSMethodSignature: checkFunction,
     PropertyDefinition: checkVarible,
     VariableDeclarator: checkVarible,
-  }
+  },
 );

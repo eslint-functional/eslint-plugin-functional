@@ -1,9 +1,13 @@
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-import type { JSONSchema4 } from "json-schema";
+import { type TSESTree } from "@typescript-eslint/utils";
+import { type JSONSchema4 } from "@typescript-eslint/utils/json-schema";
+import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
-import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
-import { createRule } from "~/utils/rule";
-import { isInFunctionBody } from "~/utils/tree";
+import {
+  type RuleResult,
+  type NamedCreateRuleMetaWithCategory,
+  createRule,
+} from "#eslint-plugin-functional/utils/rule";
+import { isInFunctionBody } from "#eslint-plugin-functional/utils/tree";
 
 /**
  * The name of this rule.
@@ -16,13 +20,13 @@ export const name = "no-throw-statements" as const;
 type Options = [
   {
     allowInAsyncFunctions: boolean;
-  }
+  },
 ];
 
 /**
  * The schema for the rule options.
  */
-const schema: JSONSchema4 = [
+const schema: JSONSchema4[] = [
   {
     type: "object",
     properties: {
@@ -58,7 +62,6 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
   docs: {
     category: "No Exceptions",
     description: "Disallow throwing exceptions.",
-    recommended: "error",
   },
   messages: errorMessages,
   schema,
@@ -69,8 +72,8 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
  */
 function checkThrowStatement(
   node: TSESTree.ThrowStatement,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [{ allowInAsyncFunctions }] = options;
 
@@ -91,5 +94,5 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   defaultOptions,
   {
     ThrowStatement: checkThrowStatement,
-  }
+  },
 );

@@ -1,16 +1,23 @@
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-import { deepmerge } from "deepmerge-ts";
-import type { JSONSchema4 } from "json-schema";
-
-import type { IgnorePatternOption } from "~/options";
+import { type TSESTree } from "@typescript-eslint/utils";
 import {
+  type JSONSchema4,
+  type JSONSchema4ObjectSchema,
+} from "@typescript-eslint/utils/json-schema";
+import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
+import { deepmerge } from "deepmerge-ts";
+
+import {
+  type IgnoreIdentifierPatternOption,
   shouldIgnorePattern,
   shouldIgnoreInFunction,
-  ignorePatternOptionSchema,
-} from "~/options";
-import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
-import { createRule } from "~/utils/rule";
-import { isInForLoopInitializer } from "~/utils/tree";
+  ignoreIdentifierPatternOptionSchema,
+} from "#eslint-plugin-functional/options";
+import {
+  type RuleResult,
+  type NamedCreateRuleMetaWithCategory,
+  createRule,
+} from "#eslint-plugin-functional/utils/rule";
+import { isInForLoopInitializer } from "#eslint-plugin-functional/utils/tree";
 
 /**
  * The name of this rule.
@@ -21,26 +28,26 @@ export const name = "no-let" as const;
  * The options this rule can take.
  */
 type Options = [
-  IgnorePatternOption & {
+  IgnoreIdentifierPatternOption & {
     allowInForLoopInit: boolean;
     allowInFunctions: boolean;
-  }
+  },
 ];
 
 /**
  * The schema for the rule options.
  */
-const schema: JSONSchema4 = [
+const schema: JSONSchema4[] = [
   {
     type: "object",
-    properties: deepmerge(ignorePatternOptionSchema, {
+    properties: deepmerge(ignoreIdentifierPatternOptionSchema, {
       allowInForLoopInit: {
         type: "boolean",
       },
       allowInFunctions: {
         type: "boolean",
       },
-    }),
+    } satisfies JSONSchema4ObjectSchema["properties"]),
     additionalProperties: false,
   },
 ];
@@ -70,7 +77,6 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
   docs: {
     category: "No Mutations",
     description: "Disallow mutable variables.",
-    recommended: "error",
   },
   messages: errorMessages,
   schema,
@@ -81,16 +87,17 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
  */
 function checkVariableDeclaration(
   node: TSESTree.VariableDeclaration,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
-  const { allowInForLoopInit, ignorePattern, allowInFunctions } = optionsObject;
+  const { allowInForLoopInit, ignoreIdentifierPattern, allowInFunctions } =
+    optionsObject;
 
   if (
     node.kind !== "let" ||
     shouldIgnoreInFunction(node, context, allowInFunctions) ||
-    shouldIgnorePattern(node, context, ignorePattern) ||
+    shouldIgnorePattern(node, context, ignoreIdentifierPattern) ||
     (allowInForLoopInit && isInForLoopInitializer(node))
   ) {
     return {
@@ -112,5 +119,5 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   defaultOptions,
   {
     VariableDeclaration: checkVariableDeclaration,
-  }
+  },
 );

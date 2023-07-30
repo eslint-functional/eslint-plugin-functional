@@ -1,13 +1,22 @@
-import type { InvalidTestCase } from "~/tests/helpers/util";
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 
-const tests: InvalidTestCase[] = [
+import { type rule } from "#eslint-plugin-functional/rules/no-loop-statements";
+import {
+  type InvalidTestCaseSet,
+  type MessagesOf,
+  type OptionsOf,
+} from "#eslint-plugin-functional/tests/helpers/util";
+
+const tests: Array<
+  InvalidTestCaseSet<MessagesOf<typeof rule>, OptionsOf<typeof rule>>
+> = [
   {
     code: `for (var x = 0; x < 10; x++) { console.log(x); }`,
     optionsSet: [[]],
     errors: [
       {
         messageId: "generic",
-        type: "ForStatement",
+        type: AST_NODE_TYPES.ForStatement,
         line: 1,
         column: 1,
       },
@@ -19,7 +28,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "generic",
-        type: "ForInStatement",
+        type: AST_NODE_TYPES.ForInStatement,
         line: 1,
         column: 1,
       },
@@ -31,7 +40,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "generic",
-        type: "WhileStatement",
+        type: AST_NODE_TYPES.WhileStatement,
         line: 1,
         column: 1,
       },
@@ -43,7 +52,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "generic",
-        type: "DoWhileStatement",
+        type: AST_NODE_TYPES.DoWhileStatement,
         line: 1,
         column: 1,
       },

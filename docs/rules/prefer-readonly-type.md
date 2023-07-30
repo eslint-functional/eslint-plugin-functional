@@ -157,7 +157,7 @@ Examples of **correct** code for the `{ "ignoreClass": true }` option:
 ```ts
 /* eslint functional/prefer-readonly-type: ["error", { "ignoreClass": true }] */
 
-class {
+class C {
   myprop: string;
 }
 ```
@@ -218,8 +218,9 @@ const qux: Map<string, string> = new Map();
 
 ### `allowLocalMutation`
 
-See the [allowLocalMutation](./options/allow-local-mutation.md) docs.
+If `true`, local state is allowed to use non-readonly types. Local state is simply any code inside of a function.
 
 ### `ignorePattern`
 
-See the [ignorePattern](./options/ignore-pattern.md) docs.
+This option takes a RegExp string or an array of RegExp strings.
+It allows for the ability to ignore violations based on a type's name.

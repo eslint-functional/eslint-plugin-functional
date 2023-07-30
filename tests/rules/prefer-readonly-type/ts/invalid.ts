@@ -1,8 +1,16 @@
+import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import dedent from "dedent";
 
-import type { InvalidTestCase } from "~/tests/helpers/util";
+import { type rule } from "#eslint-plugin-functional/rules/prefer-readonly-type";
+import {
+  type InvalidTestCaseSet,
+  type MessagesOf,
+  type OptionsOf,
+} from "#eslint-plugin-functional/tests/helpers/util";
 
-const tests: InvalidTestCase[] = [
+const tests: Array<
+  InvalidTestCaseSet<MessagesOf<typeof rule>, OptionsOf<typeof rule>>
+> = [
   {
     code: dedent`
       function foo(...numbers: number[]) {
@@ -16,7 +24,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "array",
-        type: "TSArrayType",
+        type: AST_NODE_TYPES.TSArrayType,
         line: 1,
         column: 26,
       },
@@ -35,7 +43,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "type",
-        type: "TSTypeReference",
+        type: AST_NODE_TYPES.TSTypeReference,
         line: 1,
         column: 26,
       },
@@ -54,7 +62,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "type",
-        type: "TSTypeReference",
+        type: AST_NODE_TYPES.TSTypeReference,
         line: 1,
         column: 23,
       },
@@ -73,7 +81,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "type",
-        type: "TSTypeReference",
+        type: AST_NODE_TYPES.TSTypeReference,
         line: 1,
         column: 23,
       },
@@ -95,7 +103,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "type",
-        type: "TSTypeReference",
+        type: AST_NODE_TYPES.TSTypeReference,
         line: 2,
         column: 17,
       },
@@ -121,7 +129,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "type",
-        type: "TSTypeReference",
+        type: AST_NODE_TYPES.TSTypeReference,
         line: 3,
         column: 22,
       },
@@ -147,13 +155,13 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "type",
-        type: "TSTypeReference",
+        type: AST_NODE_TYPES.TSTypeReference,
         line: 1,
         column: 17,
       },
       {
         messageId: "type",
-        type: "TSTypeReference",
+        type: AST_NODE_TYPES.TSTypeReference,
         line: 3,
         column: 19,
       },
@@ -179,13 +187,13 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "type",
-        type: "TSTypeReference",
+        type: AST_NODE_TYPES.TSTypeReference,
         line: 1,
         column: 17,
       },
       {
         messageId: "type",
-        type: "TSTypeReference",
+        type: AST_NODE_TYPES.TSTypeReference,
         line: 3,
         column: 19,
       },
@@ -205,7 +213,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "array",
-        type: "TSArrayType",
+        type: AST_NODE_TYPES.TSArrayType,
         line: 1,
         column: 17,
       },
@@ -219,7 +227,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "array",
-        type: "TSArrayType",
+        type: AST_NODE_TYPES.TSArrayType,
         line: 1,
         column: 17,
       },
@@ -241,7 +249,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "type",
-        type: "TSTypeReference",
+        type: AST_NODE_TYPES.TSTypeReference,
         line: 2,
         column: 12,
       },
@@ -261,7 +269,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "tuple",
-        type: "TSTupleType",
+        type: AST_NODE_TYPES.TSTupleType,
         line: 1,
         column: 21,
       },
@@ -280,13 +288,13 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "tuple",
-        type: "TSTupleType",
+        type: AST_NODE_TYPES.TSTupleType,
         line: 1,
         column: 21,
       },
       {
         messageId: "tuple",
-        type: "TSTupleType",
+        type: AST_NODE_TYPES.TSTupleType,
         line: 1,
         column: 38,
       },
@@ -305,7 +313,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "tuple",
-        type: "TSTupleType",
+        type: AST_NODE_TYPES.TSTupleType,
         line: 1,
         column: 47,
       },
@@ -324,7 +332,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "tuple",
-        type: "TSTupleType",
+        type: AST_NODE_TYPES.TSTupleType,
         line: 1,
         column: 21,
       },
@@ -376,19 +384,19 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "type",
-        type: "TSTypeReference",
+        type: AST_NODE_TYPES.TSTypeReference,
         line: 3,
         column: 19,
       },
       {
         messageId: "type",
-        type: "TSTypeReference",
+        type: AST_NODE_TYPES.TSTypeReference,
         line: 7,
         column: 17,
       },
       {
         messageId: "type",
-        type: "TSTypeReference",
+        type: AST_NODE_TYPES.TSTypeReference,
         line: 11,
         column: 19,
       },
@@ -402,7 +410,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "type",
-        type: "TSTypeReference",
+        type: AST_NODE_TYPES.TSTypeReference,
         line: 1,
         column: 12,
       },
@@ -428,7 +436,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "type",
-        type: "TSTypeReference",
+        type: AST_NODE_TYPES.TSTypeReference,
         line: 3,
         column: 19,
       },
@@ -450,7 +458,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "type",
-        type: "TSTypeReference",
+        type: AST_NODE_TYPES.TSTypeReference,
         line: 2,
         column: 14,
       },
@@ -476,7 +484,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "type",
-        type: "TSTypeReference",
+        type: AST_NODE_TYPES.TSTypeReference,
         line: 3,
         column: 19,
       },
@@ -490,7 +498,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "type",
-        type: "TSTypeReference",
+        type: AST_NODE_TYPES.TSTypeReference,
         line: 1,
         column: 12,
       },
@@ -504,7 +512,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "array",
-        type: "TSArrayType",
+        type: AST_NODE_TYPES.TSArrayType,
         line: 1,
         column: 12,
       },
@@ -518,7 +526,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "type",
-        type: "TSTypeReference",
+        type: AST_NODE_TYPES.TSTypeReference,
         line: 1,
         column: 12,
       },
@@ -532,7 +540,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "array",
-        type: "TSArrayType",
+        type: AST_NODE_TYPES.TSArrayType,
         line: 1,
         column: 17,
       },
@@ -552,13 +560,13 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "implicit",
-        type: "VariableDeclarator",
+        type: AST_NODE_TYPES.VariableDeclarator,
         line: 1,
         column: 7,
       },
       {
         messageId: "implicit",
-        type: "AssignmentPattern",
+        type: AST_NODE_TYPES.AssignmentPattern,
         line: 2,
         column: 14,
       },
@@ -586,25 +594,25 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "property",
-        type: "PropertyDefinition",
+        type: AST_NODE_TYPES.PropertyDefinition,
         line: 2,
         column: 3,
       },
       {
         messageId: "property",
-        type: "PropertyDefinition",
+        type: AST_NODE_TYPES.PropertyDefinition,
         line: 3,
         column: 3,
       },
       {
         messageId: "property",
-        type: "PropertyDefinition",
+        type: AST_NODE_TYPES.PropertyDefinition,
         line: 4,
         column: 3,
       },
       {
         messageId: "property",
-        type: "PropertyDefinition",
+        type: AST_NODE_TYPES.PropertyDefinition,
         line: 5,
         column: 3,
       },
@@ -634,19 +642,19 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "property",
-        type: "TSParameterProperty",
+        type: AST_NODE_TYPES.TSParameterProperty,
         line: 3,
         column: 5,
       },
       {
         messageId: "property",
-        type: "TSParameterProperty",
+        type: AST_NODE_TYPES.TSParameterProperty,
         line: 4,
         column: 5,
       },
       {
         messageId: "property",
-        type: "TSParameterProperty",
+        type: AST_NODE_TYPES.TSParameterProperty,
         line: 5,
         column: 5,
       },
@@ -674,19 +682,19 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "property",
-        type: "TSIndexSignature",
+        type: AST_NODE_TYPES.TSIndexSignature,
         line: 2,
         column: 3,
       },
       {
         messageId: "property",
-        type: "TSIndexSignature",
+        type: AST_NODE_TYPES.TSIndexSignature,
         line: 5,
         column: 3,
       },
       {
         messageId: "property",
-        type: "TSPropertySignature",
+        type: AST_NODE_TYPES.TSPropertySignature,
         line: 5,
         column: 20,
       },
@@ -714,13 +722,13 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "property",
-        type: "TSIndexSignature",
+        type: AST_NODE_TYPES.TSIndexSignature,
         line: 1,
         column: 19,
       },
       {
         messageId: "property",
-        type: "TSIndexSignature",
+        type: AST_NODE_TYPES.TSIndexSignature,
         line: 4,
         column: 23,
       },
@@ -734,7 +742,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "property",
-        type: "TSIndexSignature",
+        type: AST_NODE_TYPES.TSIndexSignature,
         line: 1,
         column: 12,
       },
@@ -758,13 +766,13 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "property",
-        type: "TSPropertySignature",
+        type: AST_NODE_TYPES.TSPropertySignature,
         line: 2,
         column: 3,
       },
       {
         messageId: "property",
-        type: "TSPropertySignature",
+        type: AST_NODE_TYPES.TSPropertySignature,
         line: 3,
         column: 3,
       },
@@ -809,61 +817,61 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "property",
-        type: "TSPropertySignature",
+        type: AST_NODE_TYPES.TSPropertySignature,
         line: 2,
         column: 3,
       },
       {
         messageId: "property",
-        type: "TSPropertySignature",
+        type: AST_NODE_TYPES.TSPropertySignature,
         line: 3,
         column: 3,
       },
       {
         messageId: "property",
-        type: "TSPropertySignature",
+        type: AST_NODE_TYPES.TSPropertySignature,
         line: 4,
         column: 3,
       },
       {
         messageId: "property",
-        type: "TSPropertySignature",
+        type: AST_NODE_TYPES.TSPropertySignature,
         line: 5,
         column: 3,
       },
       {
         messageId: "property",
-        type: "TSIndexSignature",
+        type: AST_NODE_TYPES.TSIndexSignature,
         line: 6,
         column: 3,
       },
       {
         messageId: "property",
-        type: "TSPropertySignature",
+        type: AST_NODE_TYPES.TSPropertySignature,
         line: 8,
         column: 5,
       },
       {
         messageId: "property",
-        type: "TSPropertySignature",
+        type: AST_NODE_TYPES.TSPropertySignature,
         line: 9,
         column: 5,
       },
       {
         messageId: "property",
-        type: "TSPropertySignature",
+        type: AST_NODE_TYPES.TSPropertySignature,
         line: 10,
         column: 5,
       },
       {
         messageId: "property",
-        type: "TSPropertySignature",
+        type: AST_NODE_TYPES.TSPropertySignature,
         line: 11,
         column: 5,
       },
       {
         messageId: "property",
-        type: "TSIndexSignature",
+        type: AST_NODE_TYPES.TSIndexSignature,
         line: 12,
         column: 5,
       },
@@ -882,7 +890,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "property",
-        type: "TSPropertySignature",
+        type: AST_NODE_TYPES.TSPropertySignature,
         line: 1,
         column: 21,
       },
@@ -900,7 +908,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "property",
-        type: "TSMappedType",
+        type: AST_NODE_TYPES.TSMappedType,
         line: 1,
         column: 18,
       },
@@ -930,7 +938,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "property",
-        type: "TSPropertySignature",
+        type: AST_NODE_TYPES.TSPropertySignature,
         line: 4,
         column: 7,
       },
@@ -954,7 +962,7 @@ const tests: InvalidTestCase[] = [
     errors: [
       {
         messageId: "property",
-        type: "TSPropertySignature",
+        type: AST_NODE_TYPES.TSPropertySignature,
         line: 3,
         column: 3,
       },

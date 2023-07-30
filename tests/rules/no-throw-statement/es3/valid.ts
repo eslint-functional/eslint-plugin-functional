@@ -1,5 +1,20 @@
-import type { ValidTestCase } from "~/tests/helpers/util";
+import dedent from "dedent";
 
-const tests: ValidTestCase[] = [];
+import { type rule } from "#eslint-plugin-functional/rules/no-throw-statements";
+import {
+  type ValidTestCaseSet,
+  type OptionsOf,
+} from "#eslint-plugin-functional/tests/helpers/util";
+
+const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
+  {
+    code: dedent`
+      function foo() {
+        console.error("boop");
+      }
+    `,
+    optionsSet: [[]],
+  },
+];
 
 export default tests;

@@ -1,23 +1,33 @@
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-import { deepmerge } from "deepmerge-ts";
-import type { JSONSchema4 } from "json-schema";
-
-import type {
-  IgnoreAccessorPatternOption,
-  IgnorePatternOption,
-  IgnoreClassesOption,
-} from "~/options";
+import { type TSESTree } from "@typescript-eslint/utils";
 import {
+  type JSONSchema4,
+  type JSONSchema4ObjectSchema,
+} from "@typescript-eslint/utils/json-schema";
+import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
+import { deepmerge } from "deepmerge-ts";
+
+import {
+  type IgnoreAccessorPatternOption,
+  type IgnoreIdentifierPatternOption,
+  type IgnoreClassesOption,
   shouldIgnorePattern,
   shouldIgnoreClasses,
   ignoreAccessorPatternOptionSchema,
   ignoreClassesOptionSchema,
-  ignorePatternOptionSchema,
-} from "~/options";
-import { isExpected } from "~/utils/misc";
-import { createRule, getTypeOfNode } from "~/utils/rule";
-import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
-import { isInConstructor } from "~/utils/tree";
+  ignoreIdentifierPatternOptionSchema,
+} from "#eslint-plugin-functional/options";
+import { isExpected } from "#eslint-plugin-functional/utils/misc";
+import {
+  createRule,
+  getTypeOfNode,
+  type RuleResult,
+  type NamedCreateRuleMetaWithCategory,
+} from "#eslint-plugin-functional/utils/rule";
+import {
+  findRootIdentifier,
+  isDefinedByMutableVaraible,
+  isInConstructor,
+} from "#eslint-plugin-functional/utils/tree";
 import {
   isArrayConstructorType,
   isArrayExpression,
@@ -27,7 +37,7 @@ import {
   isMemberExpression,
   isNewExpression,
   isObjectConstructorType,
-} from "~/utils/type-guards";
+} from "#eslint-plugin-functional/utils/type-guards";
 
 /**
  * The name of this rule.
@@ -40,51 +50,30 @@ export const name = "immutable-data" as const;
 type Options = [
   IgnoreAccessorPatternOption &
     IgnoreClassesOption &
-    IgnorePatternOption & {
+    IgnoreIdentifierPatternOption & {
       ignoreImmediateMutation: boolean;
-      assumeTypes:
-        | boolean
-        | {
-            forArrays: boolean;
-            forObjects: boolean;
-          };
-    }
+      ignoreNonConstDeclarations: boolean;
+    },
 ];
 
 /**
  * The schema for the rule options.
  */
-const schema: JSONSchema4 = [
+const schema: JSONSchema4[] = [
   {
     type: "object",
     properties: deepmerge(
-      ignorePatternOptionSchema,
+      ignoreIdentifierPatternOptionSchema,
       ignoreAccessorPatternOptionSchema,
       ignoreClassesOptionSchema,
       {
         ignoreImmediateMutation: {
           type: "boolean",
         },
-        assumeTypes: {
-          oneOf: [
-            {
-              type: "boolean",
-            },
-            {
-              type: "object",
-              properties: {
-                forArrays: {
-                  type: "boolean",
-                },
-                forObjects: {
-                  type: "boolean",
-                },
-              },
-              additionalProperties: false,
-            },
-          ],
+        ignoreNonConstDeclarations: {
+          type: "boolean",
         },
-      }
+      } satisfies JSONSchema4ObjectSchema["properties"],
     ),
     additionalProperties: false,
   },
@@ -97,10 +86,7 @@ const defaultOptions: Options = [
   {
     ignoreClasses: false,
     ignoreImmediateMutation: true,
-    assumeTypes: {
-      forArrays: true,
-      forObjects: true,
-    },
+    ignoreNonConstDeclarations: false,
   },
 ];
 
@@ -121,7 +107,6 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
   docs: {
     category: "No Mutations",
     description: "Enforce treating data as immutable.",
-    recommended: "error",
   },
   messages: errorMessages,
   schema,
@@ -183,21 +168,44 @@ const objectConstructorMutatorFunctions = new Set([
  */
 function checkAssignmentExpression(
   node: TSESTree.AssignmentExpression,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
-  const { ignorePattern, ignoreAccessorPattern, ignoreClasses } = optionsObject;
+  const {
+    ignoreIdentifierPattern,
+    ignoreAccessorPattern,
+    ignoreNonConstDeclarations,
+    ignoreClasses,
+  } = optionsObject;
 
   if (
     !isMemberExpression(node.left) ||
     shouldIgnoreClasses(node, context, ignoreClasses) ||
-    shouldIgnorePattern(node, context, ignorePattern, ignoreAccessorPattern)
+    shouldIgnorePattern(
+      node,
+      context,
+      ignoreIdentifierPattern,
+      ignoreAccessorPattern,
+    )
   ) {
     return {
       context,
       descriptors: [],
     };
+  }
+
+  if (ignoreNonConstDeclarations) {
+    const rootIdentifier = findRootIdentifier(node.left.object);
+    if (
+      rootIdentifier !== undefined &&
+      isDefinedByMutableVaraible(rootIdentifier, context)
+    ) {
+      return {
+        context,
+        descriptors: [],
+      };
+    }
   }
 
   return {
@@ -213,21 +221,44 @@ function checkAssignmentExpression(
  */
 function checkUnaryExpression(
   node: TSESTree.UnaryExpression,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
-  const { ignorePattern, ignoreAccessorPattern, ignoreClasses } = optionsObject;
+  const {
+    ignoreIdentifierPattern,
+    ignoreAccessorPattern,
+    ignoreNonConstDeclarations,
+    ignoreClasses,
+  } = optionsObject;
 
   if (
     !isMemberExpression(node.argument) ||
     shouldIgnoreClasses(node, context, ignoreClasses) ||
-    shouldIgnorePattern(node, context, ignorePattern, ignoreAccessorPattern)
+    shouldIgnorePattern(
+      node,
+      context,
+      ignoreIdentifierPattern,
+      ignoreAccessorPattern,
+    )
   ) {
     return {
       context,
       descriptors: [],
     };
+  }
+
+  if (ignoreNonConstDeclarations) {
+    const rootIdentifier = findRootIdentifier(node.argument.object);
+    if (
+      rootIdentifier !== undefined &&
+      isDefinedByMutableVaraible(rootIdentifier, context)
+    ) {
+      return {
+        context,
+        descriptors: [],
+      };
+    }
   }
 
   return {
@@ -242,11 +273,16 @@ function checkUnaryExpression(
  */
 function checkUpdateExpression(
   node: TSESTree.UpdateExpression,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
-  const { ignorePattern, ignoreAccessorPattern, ignoreClasses } = optionsObject;
+  const {
+    ignoreIdentifierPattern,
+    ignoreAccessorPattern,
+    ignoreNonConstDeclarations,
+    ignoreClasses,
+  } = optionsObject;
 
   if (
     !isMemberExpression(node.argument) ||
@@ -254,14 +290,27 @@ function checkUpdateExpression(
     shouldIgnorePattern(
       node.argument,
       context,
-      ignorePattern,
-      ignoreAccessorPattern
+      ignoreIdentifierPattern,
+      ignoreAccessorPattern,
     )
   ) {
     return {
       context,
       descriptors: [],
     };
+  }
+
+  if (ignoreNonConstDeclarations) {
+    const rootIdentifier = findRootIdentifier(node.argument.object);
+    if (
+      rootIdentifier !== undefined &&
+      isDefinedByMutableVaraible(rootIdentifier, context)
+    ) {
+      return {
+        context,
+        descriptors: [],
+      };
+    }
   }
 
   return {
@@ -279,34 +328,27 @@ function checkUpdateExpression(
  */
 function isInChainCallAndFollowsNew(
   node: TSESTree.MemberExpression,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  assumeArrayTypes: boolean
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
 ): boolean {
   return (
     // Check for: [0, 1, 2]
     isArrayExpression(node.object) ||
     // Check for: new Array()
     (isNewExpression(node.object) &&
-      isArrayConstructorType(
-        getTypeOfNode(node.object.callee, context),
-        assumeArrayTypes,
-        node.object.callee
-      )) ||
+      isArrayConstructorType(getTypeOfNode(node.object.callee, context))) ||
     (isCallExpression(node.object) &&
       isMemberExpression(node.object.callee) &&
       isIdentifier(node.object.callee.property) &&
       // Check for: Array.from(iterable)
       ((arrayConstructorFunctions.some(
-        isExpected(node.object.callee.property.name)
+        isExpected(node.object.callee.property.name),
       ) &&
         isArrayConstructorType(
           getTypeOfNode(node.object.callee.object, context),
-          assumeArrayTypes,
-          node.object.callee.object
         )) ||
         // Check for: array.slice(0)
         arrayNewObjectReturningMethods.some(
-          isExpected(node.object.callee.property.name)
+          isExpected(node.object.callee.property.name),
         )))
   );
 }
@@ -316,11 +358,16 @@ function isInChainCallAndFollowsNew(
  */
 function checkCallExpression(
   node: TSESTree.CallExpression,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
-  const { ignorePattern, ignoreAccessorPattern, ignoreClasses } = optionsObject;
+  const {
+    ignoreIdentifierPattern,
+    ignoreAccessorPattern,
+    ignoreNonConstDeclarations,
+    ignoreClasses,
+  } = optionsObject;
 
   // Not potential object mutation?
   if (
@@ -330,8 +377,8 @@ function checkCallExpression(
     shouldIgnorePattern(
       node.callee.object,
       context,
-      ignorePattern,
-      ignoreAccessorPattern
+      ignoreIdentifierPattern,
+      ignoreAccessorPattern,
     )
   ) {
     return {
@@ -340,36 +387,33 @@ function checkCallExpression(
     };
   }
 
-  const { assumeTypes, ignoreImmediateMutation } = optionsObject;
-
-  const assumeTypesForArrays =
-    assumeTypes === true ||
-    (assumeTypes !== false && assumeTypes.forArrays === true);
+  const { ignoreImmediateMutation } = optionsObject;
 
   // Array mutation?
   if (
     arrayMutatorMethods.has(node.callee.property.name) &&
     (!ignoreImmediateMutation ||
-      !isInChainCallAndFollowsNew(
-        node.callee,
-        context,
-        assumeTypesForArrays
-      )) &&
-    isArrayType(
-      getTypeOfNode(node.callee.object, context),
-      assumeTypesForArrays,
-      node.callee.object
-    )
+      !isInChainCallAndFollowsNew(node.callee, context)) &&
+    isArrayType(getTypeOfNode(node.callee.object, context))
   ) {
-    return {
-      context,
-      descriptors: [{ node, messageId: "array" }],
-    };
+    if (ignoreNonConstDeclarations) {
+      const rootIdentifier = findRootIdentifier(node.callee.object);
+      if (
+        rootIdentifier === undefined ||
+        !isDefinedByMutableVaraible(rootIdentifier, context)
+      ) {
+        return {
+          context,
+          descriptors: [{ node, messageId: "array" }],
+        };
+      }
+    } else {
+      return {
+        context,
+        descriptors: [{ node, messageId: "array" }],
+      };
+    }
   }
-
-  const assumeTypesForObjects =
-    assumeTypes === true ||
-    (assumeTypes !== false && assumeTypes.forObjects === true);
 
   // Non-array object mutation (ex. Object.assign on identifier)?
   if (
@@ -381,19 +425,28 @@ function checkCallExpression(
     !shouldIgnorePattern(
       node.arguments[0],
       context,
-      ignorePattern,
-      ignoreAccessorPattern
+      ignoreIdentifierPattern,
+      ignoreAccessorPattern,
     ) &&
-    isObjectConstructorType(
-      getTypeOfNode(node.callee.object, context),
-      assumeTypesForObjects,
-      node.callee.object
-    )
+    isObjectConstructorType(getTypeOfNode(node.callee.object, context))
   ) {
-    return {
-      context,
-      descriptors: [{ node, messageId: "object" }],
-    };
+    if (ignoreNonConstDeclarations) {
+      const rootIdentifier = findRootIdentifier(node.callee.object);
+      if (
+        rootIdentifier === undefined ||
+        !isDefinedByMutableVaraible(rootIdentifier, context)
+      ) {
+        return {
+          context,
+          descriptors: [{ node, messageId: "object" }],
+        };
+      }
+    } else {
+      return {
+        context,
+        descriptors: [{ node, messageId: "object" }],
+      };
+    }
   }
 
   return {
@@ -412,5 +465,5 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
     UnaryExpression: checkUnaryExpression,
     UpdateExpression: checkUpdateExpression,
     CallExpression: checkCallExpression,
-  }
+  },
 );

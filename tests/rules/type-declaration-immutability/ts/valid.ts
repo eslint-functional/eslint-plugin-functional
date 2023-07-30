@@ -1,7 +1,11 @@
 import dedent from "dedent";
 import { Immutability } from "is-immutable-type";
 
-import type { ValidTestCase } from "~/tests/helpers/util";
+import { type rule } from "#eslint-plugin-functional/rules/type-declaration-immutability";
+import {
+  type ValidTestCaseSet,
+  type OptionsOf,
+} from "#eslint-plugin-functional/tests/helpers/util";
 
 const recommended = {
   rules: [
@@ -28,7 +32,7 @@ const recommended = {
   ],
 };
 
-const tests: ValidTestCase[] = [
+const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
   {
     code: "type ReadonlyString = string;",
     optionsSet: [[recommended]],
@@ -114,7 +118,7 @@ const tests: ValidTestCase[] = [
     optionsSet: [
       [
         {
-          ignorePattern: "Foo",
+          ignoreIdentifierPattern: "Foo",
         },
       ],
     ],
@@ -124,7 +128,7 @@ const tests: ValidTestCase[] = [
     optionsSet: [
       [
         {
-          ignorePattern: "Foo",
+          ignoreIdentifierPattern: "Foo",
         },
       ],
       [
@@ -167,6 +171,7 @@ const tests: ValidTestCase[] = [
   {
     code: dedent`
       type ReadonlyDeepFoo = ReadonlyDeep<{ foo: { bar: string; }; }>;
+      type ReadonlyDeep<T> = T;
     `,
     optionsSet: [[recommended]],
     settingsSet: [
@@ -174,7 +179,7 @@ const tests: ValidTestCase[] = [
         immutability: {
           overrides: [
             {
-              name: "ReadonlyDeep",
+              type: "ReadonlyDeep",
               to: Immutability.ReadonlyDeep,
             },
           ],

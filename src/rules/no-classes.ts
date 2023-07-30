@@ -1,9 +1,12 @@
-import type { TSESLint } from "@typescript-eslint/utils";
-import type { JSONSchema4 } from "json-schema";
+import { type JSONSchema4 } from "@typescript-eslint/utils/json-schema";
+import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
-import type { ESClass } from "~/utils/node-types";
-import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
-import { createRule } from "~/utils/rule";
+import { type ESClass } from "#eslint-plugin-functional/utils/node-types";
+import {
+  type RuleResult,
+  type NamedCreateRuleMetaWithCategory,
+  createRule,
+} from "#eslint-plugin-functional/utils/rule";
 
 /**
  * The name of this rule.
@@ -18,7 +21,7 @@ type Options = [{}];
 /**
  * The schema for the rule options.
  */
-const schema: JSONSchema4 = [];
+const schema: JSONSchema4[] = [];
 
 /**
  * The default options for the rule.
@@ -40,7 +43,6 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
   docs: {
     category: "No Other Paradigms",
     description: "Disallow classes.",
-    recommended: "error",
   },
   messages: errorMessages,
   schema,
@@ -51,7 +53,7 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
  */
 function checkClass(
   node: ESClass,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   // All class nodes violate this rule.
   return { context, descriptors: [{ node, messageId: "generic" }] };
@@ -62,5 +64,5 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   name,
   meta,
   defaultOptions,
-  { ClassDeclaration: checkClass, ClassExpression: checkClass }
+  { ClassDeclaration: checkClass, ClassExpression: checkClass },
 );

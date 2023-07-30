@@ -1,9 +1,9 @@
 import chalk from "chalk";
 import wrap from "word-wrap";
 
-import { rules } from "~/rules";
+import { rules } from "#eslint-plugin-functional/rules";
 
-import type { Options } from "./options";
+import { type Options } from "./options";
 
 type Answers = Readonly<{
   type: string;
@@ -22,7 +22,7 @@ type CZ = any;
  * The engine.
  */
 export default (
-  options: Options
+  options: Options,
 ): { prompter: (cz: CZ, commit: (msg: string) => unknown) => void } => {
   return {
     prompter: (cz, commit) =>
@@ -47,7 +47,7 @@ function promptUser(cz: CZ, options: Options) {
     Object.keys(types).reduce(
       (longest, current) =>
         longest >= current.length ? longest : current.length,
-      0
+      0,
     ) + 1;
   const typesChoices = Object.entries(types).map(([key, type]) => {
     const label = `${key}:`.padEnd(typesLength);
@@ -117,7 +117,7 @@ function promptUser(cz: CZ, options: Options) {
       message(answers: Answers) {
         return `Write a short, imperative tense description of the change (max ${maxSummaryLength(
           options,
-          answers
+          answers,
         )} chars):\n`;
       },
       default: defaultSubject,
@@ -129,7 +129,7 @@ function promptUser(cz: CZ, options: Options) {
           ? true
           : `Subject length must be less than or equal to ${maxSummaryLength(
               options,
-              answers
+              answers,
             )} characters. Current length is ${
               filteredSubject.length
             } characters.`;
@@ -174,7 +174,7 @@ function promptUser(cz: CZ, options: Options) {
  */
 function doCommit(
   commit: (msg: string) => unknown,
-  options: Options
+  options: Options,
 ): (answers: Answers) => unknown {
   const wrapOptions = {
     trim: true,

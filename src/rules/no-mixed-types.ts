@@ -1,15 +1,18 @@
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-import { AST_NODE_TYPES } from "@typescript-eslint/utils";
-import type { JSONSchema4 } from "json-schema";
+import { type TSESTree, AST_NODE_TYPES } from "@typescript-eslint/utils";
+import { type JSONSchema4 } from "@typescript-eslint/utils/json-schema";
+import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
-import type { RuleResult, NamedCreateRuleMetaWithCategory } from "~/utils/rule";
-import { createRuleUsingFunction } from "~/utils/rule";
+import {
+  type RuleResult,
+  type NamedCreateRuleMetaWithCategory,
+  createRuleUsingFunction,
+} from "#eslint-plugin-functional/utils/rule";
 import {
   isIdentifier,
   isTSPropertySignature,
   isTSTypeLiteral,
   isTSTypeReference,
-} from "~/utils/type-guards";
+} from "#eslint-plugin-functional/utils/type-guards";
 
 /**
  * The name of this rule.
@@ -23,13 +26,13 @@ type Options = [
   {
     checkInterfaces: boolean;
     checkTypeLiterals: boolean;
-  }
+  },
 ];
 
 /**
  * The schema for the rule options.
  */
-const schema: JSONSchema4 = [
+const schema: JSONSchema4[] = [
   {
     type: "object",
     properties: {
@@ -70,7 +73,6 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
     category: "No Other Paradigms",
     description:
       "Restrict types so that only members of the same kind are allowed in them.",
-    recommended: "error",
   },
   messages: errorMessages,
   schema,
@@ -80,7 +82,7 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
  * Does the given type elements violate the rule.
  */
 function hasTypeElementViolations(
-  typeElements: TSESTree.TypeElement[]
+  typeElements: TSESTree.TypeElement[],
 ): boolean {
   type CarryType = {
     readonly prevMemberType: AST_NODE_TYPES | undefined;
@@ -115,7 +117,7 @@ function hasTypeElementViolations(
       prevMemberType: undefined,
       prevMemberTypeAnnotation: undefined,
       violations: false,
-    }
+    },
   ).violations;
 }
 
@@ -124,8 +126,8 @@ function hasTypeElementViolations(
  */
 function checkTSInterfaceDeclaration(
   node: TSESTree.TSInterfaceDeclaration,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   return {
     context,
@@ -140,8 +142,8 @@ function checkTSInterfaceDeclaration(
  */
 function checkTSTypeAliasDeclaration(
   node: TSESTree.TSTypeAliasDeclaration,
-  context: TSESLint.RuleContext<keyof typeof errorMessages, Options>,
-  options: Options
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   return {
     context,
@@ -156,7 +158,7 @@ function checkTSTypeAliasDeclaration(
         node.typeAnnotation.typeParameters.params.length === 1 &&
         isTSTypeLiteral(node.typeAnnotation.typeParameters.params[0]!) &&
         hasTypeElementViolations(
-          node.typeAnnotation.typeParameters.params[0].members
+          node.typeAnnotation.typeParameters.params[0].members,
         ))
         ? [{ node, messageId: "generic" }]
         : [],
@@ -170,8 +172,7 @@ export const rule = createRuleUsingFunction<
 >(name, meta, defaultOptions, (context, options) => {
   const [{ checkInterfaces, checkTypeLiterals }] = options;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return Object.fromEntries<any>(
+  return Object.fromEntries(
     (
       [
         [
@@ -183,6 +184,6 @@ export const rule = createRuleUsingFunction<
           checkTypeLiterals ? checkTSTypeAliasDeclaration : undefined,
         ],
       ] as const
-    ).filter(([sel, fn]) => fn !== undefined)
-  );
+    ).filter(([sel, fn]) => fn !== undefined),
+  ) as Record<string, any>;
 });

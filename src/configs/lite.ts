@@ -1,11 +1,11 @@
-import type { Linter } from "eslint";
+import { type Linter } from "@typescript-eslint/utils/ts-eslint";
 
-import * as functionalParameters from "~/rules/functional-parameters";
-import * as immutableData from "~/rules/immutable-data";
-import * as noConditionalStatements from "~/rules/no-conditional-statements";
-import * as noExpressionStatements from "~/rules/no-expression-statements";
-import * as preferImmutableTypes from "~/rules/prefer-immutable-types";
-import { mergeConfigs } from "~/utils/merge-configs";
+import * as functionalParameters from "#eslint-plugin-functional/rules/functional-parameters";
+import * as immutableData from "#eslint-plugin-functional/rules/immutable-data";
+import * as noConditionalStatements from "#eslint-plugin-functional/rules/no-conditional-statements";
+import * as noExpressionStatements from "#eslint-plugin-functional/rules/no-expression-statements";
+import * as preferImmutableTypes from "#eslint-plugin-functional/rules/prefer-immutable-types";
+import { mergeConfigs } from "#eslint-plugin-functional/utils/merge-configs";
 
 import recommended from "./recommended";
 
