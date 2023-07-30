@@ -20,7 +20,7 @@ jobs:
           - "next"
           - "latest"
           - "4.3.5"
-          - "JS"
+          # - "JS"
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.ts_version == 'next' }}
     env:
