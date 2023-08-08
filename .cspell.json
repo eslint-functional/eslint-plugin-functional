@@ -26,8 +26,8 @@
   "import": ["@cspell/dict-cryptocurrencies/cspell-ext.json"],
   "ignoreRegExpList": [
     "/[^\\s@]+@([^\\s@]+\\.)+[^\\s@]{2,4}/",
-    "/[A-Fa-f0-9]{6}/",
-    "/[A-Za-z0-9]{32,}/",
+    "/\\b[A-Fa-f0-9]{6}\\b/",
+    "/\\b[A-Za-z0-9]{32,}\\b/",
     "// @ts-.*",
     "/\\.\\/docs\\/rules\\/[^.]*.md/",
     "/\\STS\\S+/",
