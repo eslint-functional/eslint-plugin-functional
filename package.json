@@ -104,7 +104,7 @@
     "chalk": "4.1.2",
     "commitizen": "4.3.0",
     "conventional-commit-types": "3.0.0",
-    "cspell": "6.31.2",
+    "cspell": "6.31.3",
     "dedent": "1.5.1",
     "eslint": "8.46.0",
     "eslint-config-prettier": "9.0.0",
