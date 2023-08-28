@@ -272,7 +272,7 @@ function getRuleToApply(
 /**
  * Get a fixer that uses the user config.
  */
-function getConfiuredFixer<T extends TSESTree.Node>(
+function getConfiguredFixer<T extends TSESTree.Node>(
   node: T,
   context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
   configs: FixerConfig[],
@@ -329,7 +329,7 @@ function getResults(
   const fix =
     rule.fixers === false || isTSInterfaceDeclaration(node)
       ? null
-      : getConfiuredFixer(node.typeAnnotation, context, rule.fixers);
+      : getConfiguredFixer(node.typeAnnotation, context, rule.fixers);
 
   return {
     context,

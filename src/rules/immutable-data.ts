@@ -25,7 +25,7 @@ import {
 } from "#eslint-plugin-functional/utils/rule";
 import {
   findRootIdentifier,
-  isDefinedByMutableVaraible,
+  isDefinedByMutableVariable,
   isInConstructor,
 } from "#eslint-plugin-functional/utils/tree";
 import {
@@ -199,7 +199,7 @@ function checkAssignmentExpression(
     const rootIdentifier = findRootIdentifier(node.left.object);
     if (
       rootIdentifier !== undefined &&
-      isDefinedByMutableVaraible(rootIdentifier, context)
+      isDefinedByMutableVariable(rootIdentifier, context)
     ) {
       return {
         context,
@@ -252,7 +252,7 @@ function checkUnaryExpression(
     const rootIdentifier = findRootIdentifier(node.argument.object);
     if (
       rootIdentifier !== undefined &&
-      isDefinedByMutableVaraible(rootIdentifier, context)
+      isDefinedByMutableVariable(rootIdentifier, context)
     ) {
       return {
         context,
@@ -304,7 +304,7 @@ function checkUpdateExpression(
     const rootIdentifier = findRootIdentifier(node.argument.object);
     if (
       rootIdentifier !== undefined &&
-      isDefinedByMutableVaraible(rootIdentifier, context)
+      isDefinedByMutableVariable(rootIdentifier, context)
     ) {
       return {
         context,
@@ -400,7 +400,7 @@ function checkCallExpression(
       const rootIdentifier = findRootIdentifier(node.callee.object);
       if (
         rootIdentifier === undefined ||
-        !isDefinedByMutableVaraible(rootIdentifier, context)
+        !isDefinedByMutableVariable(rootIdentifier, context)
       ) {
         return {
           context,
@@ -434,7 +434,7 @@ function checkCallExpression(
       const rootIdentifier = findRootIdentifier(node.callee.object);
       if (
         rootIdentifier === undefined ||
-        !isDefinedByMutableVaraible(rootIdentifier, context)
+        !isDefinedByMutableVariable(rootIdentifier, context)
       ) {
         return {
           context,

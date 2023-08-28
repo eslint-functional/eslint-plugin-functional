@@ -342,12 +342,12 @@ function getAllFixers(
   const fix =
     fixerConfigs === false
       ? null
-      : getConfiuredFixer(node, nodeText, fixerConfigs);
+      : getConfiguredFixer(node, nodeText, fixerConfigs);
 
   const suggestionFixers =
     suggestionsConfigs === false
       ? null
-      : getConfiuredSuggestionFixers(node, nodeText, suggestionsConfigs);
+      : getConfiguredSuggestionFixers(node, nodeText, suggestionsConfigs);
 
   return { fix, suggestionFixers };
 }
@@ -355,7 +355,7 @@ function getAllFixers(
 /**
  * Get a fixer that uses the user config.
  */
-function getConfiuredFixer(
+function getConfiguredFixer(
   node: TSESTree.Node,
   text: string,
   configs: FixerConfig[],
@@ -371,7 +371,7 @@ function getConfiuredFixer(
 /**
  * Get a fixer that uses the user config.
  */
-function getConfiuredSuggestionFixers(
+function getConfiguredSuggestionFixers(
   node: TSESTree.Node,
   text: string,
   suggestionsConfigs: SuggestionsConfig[],
@@ -751,7 +751,7 @@ function checkFunction(
 /**
  * Check if the given function node violates this rule.
  */
-function checkVarible(
+function checkVariable(
   node: TSESTree.VariableDeclarator | TSESTree.PropertyDefinition,
   context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
   options: Readonly<Options>,
@@ -931,7 +931,7 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
     TSEmptyBodyFunctionExpression: checkFunction,
     TSFunctionType: checkFunction,
     TSMethodSignature: checkFunction,
-    PropertyDefinition: checkVarible,
-    VariableDeclarator: checkVarible,
+    PropertyDefinition: checkVariable,
+    VariableDeclarator: checkVariable,
   },
 );

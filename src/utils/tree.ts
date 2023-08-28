@@ -271,7 +271,7 @@ export function getKeyOfValueInObjectExpression(
 /**
  * Is the given identifier defined by a mutable variable (let or var)?
  */
-export function isDefinedByMutableVaraible<
+export function isDefinedByMutableVariable<
   Context extends RuleContext<string, BaseOptions>,
 >(node: TSESTree.Identifier, context: Context) {
   const services = getParserServices(context);
