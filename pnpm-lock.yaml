@@ -38,8 +38,8 @@ devDependencies:
     specifier: 17.6.7
     version: 17.6.7
   '@cspell/dict-cryptocurrencies':
-    specifier: 3.0.1
-    version: 3.0.1
+    specifier: 4.0.0
+    version: 4.0.0
   '@rebeccastevens/eslint-config':
     specifier: 2.0.2
     version: 2.0.2(@typescript-eslint/eslint-plugin@6.2.0)(@typescript-eslint/parser@6.2.0)(eslint-import-resolver-typescript@3.5.5)(eslint-plugin-eslint-comments@3.2.0)(eslint-plugin-functional@5.0.8)(eslint-plugin-import@2.28.0)(eslint-plugin-jsdoc@46.4.6)(eslint-plugin-markdown@3.0.1)(eslint-plugin-n@16.0.1)(eslint-plugin-optimize-regex@1.2.1)(eslint-plugin-promise@6.1.1)(eslint-plugin-sonarjs@0.19.0)(eslint-plugin-unicorn@48.0.1)(eslint@8.46.0)
@@ -701,6 +701,10 @@ packages:
 
   /@cspell/dict-cryptocurrencies@3.0.1:
     resolution: {integrity: sha512-Tdlr0Ahpp5yxtwM0ukC13V6+uYCI0p9fCRGMGZt36rWv8JQZHIuHfehNl7FB/Qc09NCF7p5ep0GXbL+sVTd/+w==}
+    dev: true
+
+  /@cspell/dict-cryptocurrencies@4.0.0:
+    resolution: {integrity: sha512-EiZp91ATyRxTmauIQfOX9adLYCunKjHEh092rrM7o2eMXP9n7zpXAL9BK7LviL+LbB8VDOm21q+s83cKrrRrsg==}
     dev: true
 
   /@cspell/dict-csharp@4.0.2:
