@@ -191,8 +191,8 @@ devDependencies:
     specifier: 10.9.1
     version: 10.9.1(@types/node@16.18.39)(typescript@5.1.6)
   tsc-alias:
-    specifier: 1.8.7
-    version: 1.8.7
+    specifier: 1.8.8
+    version: 1.8.8
   tsconfig-paths:
     specifier: 4.2.0
     version: 4.2.0
@@ -6989,8 +6989,8 @@ packages:
       yn: 3.1.1
     dev: true
 
-  /tsc-alias@1.8.7:
-    resolution: {integrity: sha512-59Q/zUQa3miTf99mLbSqaW0hi1jt4WoG8Uhe5hSZJHQpSoFW9eEwvW7jlKMHXWvT+zrzy3SN9PE/YBhQ+WVydA==}
+  /tsc-alias@1.8.8:
+    resolution: {integrity: sha512-OYUOd2wl0H858NvABWr/BoSKNERw3N9GTi3rHPK8Iv4O1UyUXIrTTOAZNHsjlVpXFOhpJBVARI1s+rzwLivN3Q==}
     hasBin: true
     dependencies:
       chokidar: 3.5.3
