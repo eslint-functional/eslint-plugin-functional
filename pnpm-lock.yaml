@@ -65,8 +65,8 @@ devDependencies:
     specifier: 11.0.4
     version: 11.0.4(semantic-release@21.0.7)
   '@types/dedent':
-    specifier: 0.7.0
-    version: 0.7.0
+    specifier: 0.7.2
+    version: 0.7.2
   '@types/eslint':
     specifier: 8.44.2
     version: 8.44.2
@@ -1648,8 +1648,8 @@ packages:
     resolution: {integrity: sha512-mEo1sAde+UCE6b2hxn332f1g1E8WfYRu6p5SvTKr2ZKC1f7gFJXk4h5PyGP9Dt6gCaG8y8XhwnXWC6Iy2cmBng==}
     dev: true
 
-  /@types/dedent@0.7.0:
-    resolution: {integrity: sha512-EGlKlgMhnLt/cM4DbUSafFdrkeJoC9Mvnj0PUCU7tFmTjMjNRT957kXCx0wYm3JuEq4o4ZsS5vG+NlkM2DMd2A==}
+  /@types/dedent@0.7.2:
+    resolution: {integrity: sha512-kRiitIeUg1mPV9yH4VUJ/1uk2XjyANfeL8/7rH1tsjvHeO9PJLBHJIYsFWmAvmGj5u8rj+1TZx7PZzW2qLw3Lw==}
     dev: true
 
   /@types/eslint@8.44.2:
