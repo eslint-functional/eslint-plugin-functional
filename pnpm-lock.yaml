@@ -74,8 +74,8 @@ devDependencies:
     specifier: 16.18.39
     version: 16.18.39
   '@types/rollup-plugin-auto-external':
-    specifier: 2.0.2
-    version: 2.0.2
+    specifier: 2.0.5
+    version: 2.0.5
   '@types/semver':
     specifier: 7.5.0
     version: 7.5.0
@@ -1692,8 +1692,8 @@ packages:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
     dev: true
 
-  /@types/rollup-plugin-auto-external@2.0.2:
-    resolution: {integrity: sha512-1Xtl9S4yQapD+A4mX1sqYVXm3UmVA9oIEf2YKEhRTCUNxlAM3DoKK1HPxrGMemDJNfhe6Yl3w0JsAGvIN5j/ow==}
+  /@types/rollup-plugin-auto-external@2.0.5:
+    resolution: {integrity: sha512-jspE/1q/4MjrC0lilOpF7Ej5z2vvByPq6lb5ERHt9jCRnp0WJRq+SLK9oPfYroy0xhFhDqQoXLeSHcKqATDaoA==}
     dependencies:
       rollup: 3.27.2
     dev: true
