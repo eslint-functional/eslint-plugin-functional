@@ -44,8 +44,8 @@ devDependencies:
     specifier: 2.0.2
     version: 2.0.2(@typescript-eslint/eslint-plugin@6.2.0)(@typescript-eslint/parser@6.2.0)(eslint-import-resolver-typescript@3.5.5)(eslint-plugin-eslint-comments@3.2.0)(eslint-plugin-functional@5.0.8)(eslint-plugin-import@2.28.0)(eslint-plugin-jsdoc@46.4.6)(eslint-plugin-markdown@3.0.1)(eslint-plugin-n@16.0.1)(eslint-plugin-optimize-regex@1.2.1)(eslint-plugin-promise@6.1.1)(eslint-plugin-sonarjs@0.19.0)(eslint-plugin-unicorn@48.0.1)(eslint@8.46.0)
   '@rollup/plugin-typescript':
-    specifier: 11.1.2
-    version: 11.1.2(rollup@3.27.2)(tslib@2.6.1)(typescript@5.1.6)
+    specifier: 11.1.6
+    version: 11.1.6(rollup@3.27.2)(tslib@2.6.1)(typescript@5.1.6)
   '@semantic-release/changelog':
     specifier: 6.0.3
     version: 6.0.3(semantic-release@21.0.7)
@@ -1443,11 +1443,11 @@ packages:
       eslint-plugin-unicorn: 48.0.1(eslint@8.46.0)
     dev: true
 
-  /@rollup/plugin-typescript@11.1.2(rollup@3.27.2)(tslib@2.6.1)(typescript@5.1.6):
-    resolution: {integrity: sha512-0ghSOCMcA7fl1JM+0gYRf+Q/HWyg+zg7/gDSc+fRLmlJWcW5K1I+CLRzaRhXf4Y3DRyPnnDo4M2ktw+a6JcDEg==}
+  /@rollup/plugin-typescript@11.1.6(rollup@3.27.2)(tslib@2.6.1)(typescript@5.1.6):
+    resolution: {integrity: sha512-R92yOmIACgYdJ7dJ97p4K69I8gg6IEHt8M7dUBxN3W6nrO8uUxX5ixl0yU/N3aZTi8WhPuICvOHXQvF6FaykAA==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
-      rollup: ^2.14.0||^3.0.0
+      rollup: ^2.14.0||^3.0.0||^4.0.0
       tslib: '*'
       typescript: '>=3.7.0'
     peerDependenciesMeta:
@@ -1456,18 +1456,18 @@ packages:
       tslib:
         optional: true
     dependencies:
-      '@rollup/pluginutils': 5.0.2(rollup@3.27.2)
+      '@rollup/pluginutils': 5.1.0(rollup@3.27.2)
       resolve: 1.22.3
       rollup: 3.27.2
       tslib: 2.6.1
       typescript: 5.1.6
     dev: true
 
-  /@rollup/pluginutils@5.0.2(rollup@3.27.2):
-    resolution: {integrity: sha512-pTd9rIsP92h+B6wWwFbW8RkZv4hiR/xKsqre4SIuAOaOEQRxi0lqLke9k2/7WegC85GgUs9pjmOjCUi3In4vwA==}
+  /@rollup/pluginutils@5.1.0(rollup@3.27.2):
+    resolution: {integrity: sha512-XTIWOPPcpvyKI6L1NHo0lFlCyznUEyPmPY1mc3KpPVDYulHSTvyeLNVW00QTLIAFNhR3kYnJTQHeGqU4M3n09g==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
-      rollup: ^1.20.0||^2.0.0||^3.0.0
+      rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
     peerDependenciesMeta:
       rollup:
         optional: true
@@ -5152,6 +5152,7 @@ packages:
 
   /loupe@2.3.6:
     resolution: {integrity: sha512-RaPMZKiMy8/JruncMU5Bt6na1eftNoo++R4Y+N2FrxkDVTrGvcyzFTsaGif4QTeKESheMGegbhw6iUAq+5A8zA==}
+    deprecated: Please upgrade to 2.3.7 which fixes GHSA-4q6p-r6v2-jvc5
     dependencies:
       get-func-name: 2.0.0
     dev: true
