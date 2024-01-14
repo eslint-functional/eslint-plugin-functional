@@ -113,8 +113,8 @@ devDependencies:
     specifier: 9.0.0
     version: 9.0.0(eslint@8.46.0)
   eslint-doc-generator:
-    specifier: 1.4.3
-    version: 1.4.3(eslint@8.46.0)(typescript@5.1.6)
+    specifier: 1.6.2
+    version: 1.6.2(eslint@8.46.0)(typescript@5.1.6)
   eslint-import-resolver-typescript:
     specifier: 3.5.5
     version: 3.5.5(@typescript-eslint/parser@6.2.0)(eslint-plugin-import@2.28.0)(eslint@8.46.0)
@@ -3297,8 +3297,8 @@ packages:
       eslint: 8.46.0
     dev: true
 
-  /eslint-doc-generator@1.4.3(eslint@8.46.0)(typescript@5.1.6):
-    resolution: {integrity: sha512-cn9KXE7xuKlxKi/9VbirR3cbz7W1geRObwWzZjJAnpTeNBoqA8Rj+lD8/HHHJ7PnOdaTrRyhhoYdCtxqq3U7Bw==}
+  /eslint-doc-generator@1.6.2(eslint@8.46.0)(typescript@5.1.6):
+    resolution: {integrity: sha512-wqaRDZgeaQQK/7IypBUgkV/q8BV9KnZed7K1YWG+kKVRQKX4LWgGoWZlBYhyO3Ye1uV8exuWIYIlNfbZVR10fw==}
     engines: {node: ^14.18.0 || ^16.0.0 || >=18.0.0}
     hasBin: true
     peerDependencies:
@@ -5152,6 +5152,7 @@ packages:
 
   /loupe@2.3.6:
     resolution: {integrity: sha512-RaPMZKiMy8/JruncMU5Bt6na1eftNoo++R4Y+N2FrxkDVTrGvcyzFTsaGif4QTeKESheMGegbhw6iUAq+5A8zA==}
+    deprecated: Please upgrade to 2.3.7 which fixes GHSA-4q6p-r6v2-jvc5
     dependencies:
       get-func-name: 2.0.0
     dev: true
