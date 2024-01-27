@@ -41,8 +41,8 @@ devDependencies:
     specifier: 3.0.1
     version: 3.0.1
   '@rebeccastevens/eslint-config':
-    specifier: 2.0.2
-    version: 2.0.2(@typescript-eslint/eslint-plugin@6.2.0)(@typescript-eslint/parser@6.2.0)(eslint-import-resolver-typescript@3.5.5)(eslint-plugin-eslint-comments@3.2.0)(eslint-plugin-functional@5.0.8)(eslint-plugin-import@2.28.0)(eslint-plugin-jsdoc@46.4.6)(eslint-plugin-markdown@3.0.1)(eslint-plugin-n@16.0.1)(eslint-plugin-optimize-regex@1.2.1)(eslint-plugin-promise@6.1.1)(eslint-plugin-sonarjs@0.19.0)(eslint-plugin-unicorn@48.0.1)(eslint@8.46.0)
+    specifier: 2.0.10
+    version: 2.0.10(@typescript-eslint/eslint-plugin@6.2.0)(@typescript-eslint/parser@6.2.0)(eslint-import-resolver-typescript@3.5.5)(eslint-plugin-eslint-comments@3.2.0)(eslint-plugin-functional@5.0.8)(eslint-plugin-import@2.28.0)(eslint-plugin-jsdoc@46.4.6)(eslint-plugin-markdown@3.0.1)(eslint-plugin-n@16.0.1)(eslint-plugin-optimize-regex@1.2.1)(eslint-plugin-promise@6.1.1)(eslint-plugin-sonarjs@0.19.0)(eslint-plugin-unicorn@48.0.1)(eslint@8.46.0)
   '@rollup/plugin-typescript':
     specifier: 11.1.2
     version: 11.1.2(rollup@3.27.2)(tslib@2.6.1)(typescript@5.1.6)
@@ -1407,8 +1407,8 @@ packages:
       config-chain: 1.1.13
     dev: true
 
-  /@rebeccastevens/eslint-config@2.0.2(@typescript-eslint/eslint-plugin@6.2.0)(@typescript-eslint/parser@6.2.0)(eslint-import-resolver-typescript@3.5.5)(eslint-plugin-eslint-comments@3.2.0)(eslint-plugin-functional@5.0.8)(eslint-plugin-import@2.28.0)(eslint-plugin-jsdoc@46.4.6)(eslint-plugin-markdown@3.0.1)(eslint-plugin-n@16.0.1)(eslint-plugin-optimize-regex@1.2.1)(eslint-plugin-promise@6.1.1)(eslint-plugin-sonarjs@0.19.0)(eslint-plugin-unicorn@48.0.1)(eslint@8.46.0):
-    resolution: {integrity: sha512-ddBQU8sklFnHmA9ybsubaMaoBC+rBmQnBoU7G7yU3lrfJ07Mm+YAcsFuM3rCrDW+vDg4t5t0yDMX3lyPIHURuw==}
+  /@rebeccastevens/eslint-config@2.0.10(@typescript-eslint/eslint-plugin@6.2.0)(@typescript-eslint/parser@6.2.0)(eslint-import-resolver-typescript@3.5.5)(eslint-plugin-eslint-comments@3.2.0)(eslint-plugin-functional@5.0.8)(eslint-plugin-import@2.28.0)(eslint-plugin-jsdoc@46.4.6)(eslint-plugin-markdown@3.0.1)(eslint-plugin-n@16.0.1)(eslint-plugin-optimize-regex@1.2.1)(eslint-plugin-promise@6.1.1)(eslint-plugin-sonarjs@0.19.0)(eslint-plugin-unicorn@48.0.1)(eslint@8.46.0):
+    resolution: {integrity: sha512-Rq5OdOibdgqh4/X9jv063LaQ68xumAX5hgGaab3m/kbwVeUrfFnp9LKHfLHaXDENQJLy64cpfhjjlJEdwrXSzg==}
     engines: {node: '>=18.12.1'}
     peerDependencies:
       '@typescript-eslint/eslint-plugin': '>=6.0.0'
@@ -5152,6 +5152,7 @@ packages:
 
   /loupe@2.3.6:
     resolution: {integrity: sha512-RaPMZKiMy8/JruncMU5Bt6na1eftNoo++R4Y+N2FrxkDVTrGvcyzFTsaGif4QTeKESheMGegbhw6iUAq+5A8zA==}
+    deprecated: Please upgrade to 2.3.7 which fixes GHSA-4q6p-r6v2-jvc5
     dependencies:
       get-func-name: 2.0.0
     dev: true
