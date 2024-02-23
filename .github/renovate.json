@@ -2,6 +2,9 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     ":ignoreModulesAndTests",
+    "replacements:all",
+    "workarounds:all",
+    "group:allNonMajor",
     "group:monorepos",
     "group:recommended",
     ":automergeAll",
@@ -10,7 +13,6 @@
     ":prHourlyLimitNone",
     ":prConcurrentLimitNone",
     "helpers:disableTypesNodeMajor",
-    "workarounds:typesNodeVersioning",
     "schedule:weekly"
   ],
   "labels": ["Type: Maintenance", ":blue_heart:"],

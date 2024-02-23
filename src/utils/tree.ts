@@ -112,14 +112,14 @@ export function getReadonly(
   }
 
   const typeRef = getAncestorOfType(isTSTypeReference, node);
-  const intHerit = getAncestorOfType(isTSInterfaceHeritage, node);
+  const intHeritage = getAncestorOfType(isTSInterfaceHeritage, node);
 
-  const expressionOrTypeName = typeRef?.typeName ?? intHerit?.expression;
+  const expressionOrTypeName = typeRef?.typeName ?? intHeritage?.expression;
 
   return expressionOrTypeName !== undefined &&
     isIdentifier(expressionOrTypeName) &&
     expressionOrTypeName.name === "Readonly"
-    ? typeRef ?? intHerit
+    ? typeRef ?? intHeritage
     : null;
 }
 
