@@ -128,7 +128,7 @@
     "prettier": "3.0.1",
     "prettier-plugin-packagejson": "2.4.5",
     "rimraf": "5.0.1",
-    "rollup": "3.27.2",
+    "rollup": "4.12.0",
     "rollup-plugin-auto-external": "2.0.0",
     "semantic-release": "21.1.2",
     "semantic-release-replace-plugin": "1.2.7",
