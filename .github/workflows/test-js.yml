@@ -26,7 +26,7 @@ jobs:
     env:
       REPORT_COVERAGE: ${{ fromJSON('["false", "true"]')[matrix.node_version == '18' && matrix.os == 'ubuntu-latest'] }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/prepare
 
       - name: Build
