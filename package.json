@@ -79,7 +79,7 @@
     "ts-api-utils": "^1.0.1"
   },
   "devDependencies": {
-    "@babel/core": "7.23.9",
+    "@babel/core": "7.24.0",
     "@babel/eslint-parser": "7.23.10",
     "@commitlint/cli": "18.6.1",
     "@commitlint/config-conventional": "18.6.2",
