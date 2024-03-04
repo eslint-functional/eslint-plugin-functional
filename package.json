@@ -81,8 +81,8 @@
   "devDependencies": {
     "@babel/core": "7.24.0",
     "@babel/eslint-parser": "7.23.10",
-    "@commitlint/cli": "18.6.1",
-    "@commitlint/config-conventional": "18.6.2",
+    "@commitlint/cli": "19.0.3",
+    "@commitlint/config-conventional": "19.0.3",
     "@rebeccastevens/eslint-config": "2.0.2",
     "@rollup/plugin-typescript": "11.1.2",
     "@semantic-release/changelog": "6.0.3",
