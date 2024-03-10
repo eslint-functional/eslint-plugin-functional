@@ -79,6 +79,7 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
   docs: {
     category: "No Statements",
     description: "Disallow functions that don't return anything.",
+    requiresTypeChecking: true,
   },
   messages: errorMessages,
   schema,
