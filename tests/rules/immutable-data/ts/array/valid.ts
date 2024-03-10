@@ -2,8 +2,8 @@ import dedent from "dedent";
 
 import { type rule } from "#eslint-plugin-functional/rules/immutable-data";
 import {
-  type ValidTestCaseSet,
   type OptionsOf,
+  type ValidTestCaseSet,
 } from "#eslint-plugin-functional/tests/helpers/util";
 
 const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
@@ -307,6 +307,28 @@ const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
       arr.unshift(6);
     `,
     optionsSet: [[{ ignoreNonConstDeclarations: true }]],
+  },
+  {
+    code: dedent`
+      [0, 1, 2].copyWithin(0, 1, 2);
+      [0, 1, 2].fill(3);
+      [0, 1, 2].pop();
+      [0, 1, 2].push(3);
+      [0, 1, 2].reverse();
+      [0, 1, 2].shift();
+      [0, 1, 2].sort();
+      [0, 1, 2].splice(0, 1, 9);
+      [0, 1, 2].unshift(6);
+    `,
+    optionsSet: [[{ ignoreImmediateMutation: true }]],
+  },
+  {
+    code: dedent`
+      Object.entries({}).sort();
+      Object.keys({}).sort();
+      Object.values({}).sort();
+    `,
+    optionsSet: [[{ ignoreImmediateMutation: true }]],
   },
 ];
 
