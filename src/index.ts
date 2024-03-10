@@ -2,6 +2,7 @@ import { type Linter } from "@typescript-eslint/utils/ts-eslint";
 
 import all from "#eslint-plugin-functional/configs/all";
 import currying from "#eslint-plugin-functional/configs/currying";
+import disableTypeChecked from "#eslint-plugin-functional/configs/disable-type-checked";
 import externalTypeScriptRecommended from "#eslint-plugin-functional/configs/external-typescript-recommended";
 import externalVanillaRecommended from "#eslint-plugin-functional/configs/external-vanilla-recommended";
 import lite from "#eslint-plugin-functional/configs/lite";
@@ -23,6 +24,7 @@ const config: Linter.Plugin = {
     recommended,
     strict,
     off,
+    "disable-type-checked": disableTypeChecked,
     "external-vanilla-recommended": externalVanillaRecommended,
     "external-typescript-recommended": externalTypeScriptRecommended,
     currying,
