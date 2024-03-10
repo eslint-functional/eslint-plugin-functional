@@ -2,8 +2,8 @@ import dedent from "dedent";
 
 import { type rule } from "#eslint-plugin-functional/rules/no-return-void";
 import {
-  type ValidTestCaseSet,
   type OptionsOf,
+  type ValidTestCaseSet,
 } from "#eslint-plugin-functional/tests/helpers/util";
 
 const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [

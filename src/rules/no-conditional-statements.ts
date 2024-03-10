@@ -5,10 +5,10 @@ import { type Type } from "typescript";
 
 import tsApiUtils from "#eslint-plugin-functional/conditional-imports/ts-api-utils";
 import {
-  type RuleResult,
-  type NamedCreateRuleMetaWithCategory,
   createRule,
   getTypeOfNode,
+  type NamedCreateRuleMetaWithCategory,
+  type RuleResult,
 } from "#eslint-plugin-functional/utils/rule";
 import {
   isBlockStatement,

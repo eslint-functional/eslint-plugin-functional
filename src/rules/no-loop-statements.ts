@@ -3,9 +3,9 @@ import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
 import { type ESLoop } from "#eslint-plugin-functional/utils/node-types";
 import {
-  type RuleResult,
-  type NamedCreateRuleMetaWithCategory,
   createRule,
+  type NamedCreateRuleMetaWithCategory,
+  type RuleResult,
 } from "#eslint-plugin-functional/utils/rule";
 
 /**

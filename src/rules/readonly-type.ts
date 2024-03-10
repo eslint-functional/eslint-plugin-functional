@@ -7,16 +7,16 @@ import {
 
 import {
   createRule,
-  type RuleResult,
   type NamedCreateRuleMetaWithCategory,
+  type RuleResult,
 } from "#eslint-plugin-functional/utils/rule";
 import { getReadonly } from "#eslint-plugin-functional/utils/tree";
 import {
   isDefined,
+  isPropertyDefinition,
   isTSIndexSignature,
   isTSParameterProperty,
   isTSPropertySignature,
-  isPropertyDefinition,
   isTSTypeReference,
 } from "#eslint-plugin-functional/utils/type-guards";
 

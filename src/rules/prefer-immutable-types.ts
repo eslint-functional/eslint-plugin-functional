@@ -11,21 +11,21 @@ import { deepmerge } from "deepmerge-ts";
 import { Immutability } from "is-immutable-type";
 
 import {
-  type IgnoreClassesOption,
   ignoreClassesOptionSchema,
   shouldIgnoreClasses,
   shouldIgnoreInFunction,
   shouldIgnorePattern,
+  type IgnoreClassesOption,
 } from "#eslint-plugin-functional/options";
 import { type ESFunctionType } from "#eslint-plugin-functional/utils/node-types";
 import {
-  type RuleResult,
-  type NamedCreateRuleMetaWithCategory,
   createRule,
   getReturnTypesOfFunction,
   getTypeImmutabilityOfNode,
   getTypeImmutabilityOfType,
   isImplementationOfOverload,
+  type NamedCreateRuleMetaWithCategory,
+  type RuleResult,
 } from "#eslint-plugin-functional/utils/rule";
 import {
   hasID,

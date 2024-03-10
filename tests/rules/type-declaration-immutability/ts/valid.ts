@@ -3,8 +3,8 @@ import { Immutability } from "is-immutable-type";
 
 import { type rule } from "#eslint-plugin-functional/rules/type-declaration-immutability";
 import {
-  type ValidTestCaseSet,
   type OptionsOf,
+  type ValidTestCaseSet,
 } from "#eslint-plugin-functional/tests/helpers/util";
 
 const recommended = {

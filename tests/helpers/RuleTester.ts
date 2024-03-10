@@ -2,7 +2,7 @@ import {
   RuleTester,
   type RuleTesterConfig,
 } from "@typescript-eslint/rule-tester";
-import { afterAll, beforeAll, it, describe } from "vitest";
+import { afterAll, beforeAll, describe, it } from "vitest";
 
 /* eslint-disable @typescript-eslint/naming-convention */
 class VitestRuleTester extends RuleTester {

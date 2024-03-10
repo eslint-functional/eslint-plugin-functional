@@ -15,8 +15,8 @@ import {
 import {
   isAssignmentExpression,
   isClassLike,
-  isPropertyDefinition,
   isMemberExpression,
+  isPropertyDefinition,
   isThisExpression,
 } from "#eslint-plugin-functional/utils/type-guards";
 

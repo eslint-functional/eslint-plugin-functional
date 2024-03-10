@@ -10,16 +10,16 @@ import { isThisKeyword } from "ts-api-utils";
 import tsApiUtils from "#eslint-plugin-functional/conditional-imports/ts-api-utils";
 import typescript from "#eslint-plugin-functional/conditional-imports/typescript";
 import {
-  type IgnoreCodePatternOption,
-  shouldIgnorePattern,
   ignoreCodePatternOptionSchema,
+  shouldIgnorePattern,
+  type IgnoreCodePatternOption,
 } from "#eslint-plugin-functional/options";
 import { isDirectivePrologue } from "#eslint-plugin-functional/utils/misc";
 import {
-  type RuleResult,
-  type NamedCreateRuleMetaWithCategory,
   createRule,
   getTypeOfNode,
+  type NamedCreateRuleMetaWithCategory,
+  type RuleResult,
 } from "#eslint-plugin-functional/utils/rule";
 import {
   isCallExpression,

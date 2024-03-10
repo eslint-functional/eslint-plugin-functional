@@ -1,11 +1,11 @@
-import { type TSESTree, AST_NODE_TYPES } from "@typescript-eslint/utils";
+import { AST_NODE_TYPES, type TSESTree } from "@typescript-eslint/utils";
 import { type JSONSchema4 } from "@typescript-eslint/utils/json-schema";
 import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
 import {
-  type RuleResult,
-  type NamedCreateRuleMetaWithCategory,
   createRuleUsingFunction,
+  type NamedCreateRuleMetaWithCategory,
+  type RuleResult,
 } from "#eslint-plugin-functional/utils/rule";
 import {
   isIdentifier,

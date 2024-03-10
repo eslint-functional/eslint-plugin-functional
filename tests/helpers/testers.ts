@@ -5,8 +5,8 @@ import { configs } from "./configs";
 import {
   processInvalidTestCase,
   processValidTestCase,
-  type ValidTestCaseSet,
   type InvalidTestCaseSet,
+  type ValidTestCaseSet,
 } from "./util";
 
 type TestFunction<

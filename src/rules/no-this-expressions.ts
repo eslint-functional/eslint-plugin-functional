@@ -3,9 +3,9 @@ import { type JSONSchema4 } from "@typescript-eslint/utils/json-schema";
 import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
 import {
-  type RuleResult,
-  type NamedCreateRuleMetaWithCategory,
   createRule,
+  type NamedCreateRuleMetaWithCategory,
+  type RuleResult,
 } from "#eslint-plugin-functional/utils/rule";
 
 /**

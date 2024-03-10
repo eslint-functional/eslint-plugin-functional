@@ -1,11 +1,11 @@
 import { TSESTree } from "@typescript-eslint/utils";
 import { type JSONSchema4 } from "@typescript-eslint/utils/json-schema";
 import {
-  type RuleFix,
-  type RuleFixer,
-  type RuleContext,
   type ReportDescriptor,
   type ReportSuggestionArray,
+  type RuleContext,
+  type RuleFix,
+  type RuleFixer,
 } from "@typescript-eslint/utils/ts-eslint";
 import * as semver from "semver";
 import { type Type } from "typescript";
@@ -13,11 +13,11 @@ import { type Type } from "typescript";
 import ts from "#eslint-plugin-functional/conditional-imports/typescript";
 import { type ESFunction } from "#eslint-plugin-functional/utils/node-types";
 import {
-  type RuleResult,
-  type NamedCreateRuleMetaWithCategory,
   createRule,
   getESTreeNode,
   getTypeOfNode,
+  type NamedCreateRuleMetaWithCategory,
+  type RuleResult,
 } from "#eslint-plugin-functional/utils/rule";
 import { isNested } from "#eslint-plugin-functional/utils/tree";
 import {

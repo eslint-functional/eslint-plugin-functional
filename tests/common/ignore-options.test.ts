@@ -5,15 +5,15 @@ import {
 import dedent from "dedent";
 
 import {
-  type IgnoreIdentifierPatternOption,
+  shouldIgnorePattern,
   type IgnoreAccessorPatternOption,
   type IgnoreCodePatternOption,
-  shouldIgnorePattern,
+  type IgnoreIdentifierPatternOption,
 } from "#eslint-plugin-functional/options";
 import { getRuleTester } from "#eslint-plugin-functional/tests/helpers/RuleTester";
 import {
-  filename,
   configs,
+  filename,
 } from "#eslint-plugin-functional/tests/helpers/configs";
 import {
   addFilename,

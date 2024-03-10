@@ -1,9 +1,9 @@
 import { type SharedConfigurationSettings } from "@typescript-eslint/utils";
 import {
-  type ImmutabilityOverrides,
-  type TypeSpecifier,
   Immutability,
   getDefaultOverrides as getDefaultImmutabilityOverrides,
+  type ImmutabilityOverrides,
+  type TypeSpecifier,
 } from "is-immutable-type";
 
 declare module "@typescript-eslint/utils" {

@@ -1,19 +1,19 @@
 import { type TSESTree } from "@typescript-eslint/utils";
 import {
+  RuleCreator,
   getParserServices,
   type NamedCreateRuleMeta,
-  RuleCreator,
 } from "@typescript-eslint/utils/eslint-utils";
 import {
-  type RuleContext,
-  type RuleModule,
   type ReportDescriptor,
+  type RuleContext,
   type RuleListener,
+  type RuleModule,
 } from "@typescript-eslint/utils/ts-eslint";
 import {
-  type ImmutabilityOverrides,
-  getTypeImmutability,
   Immutability,
+  getTypeImmutability,
+  type ImmutabilityOverrides,
 } from "is-immutable-type";
 import { type Node as TSNode, type Type, type TypeNode } from "typescript";
 

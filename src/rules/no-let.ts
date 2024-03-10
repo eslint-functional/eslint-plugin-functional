@@ -7,15 +7,15 @@ import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import { deepmerge } from "deepmerge-ts";
 
 import {
-  type IgnoreIdentifierPatternOption,
-  shouldIgnorePattern,
-  shouldIgnoreInFunction,
   ignoreIdentifierPatternOptionSchema,
+  shouldIgnoreInFunction,
+  shouldIgnorePattern,
+  type IgnoreIdentifierPatternOption,
 } from "#eslint-plugin-functional/options";
 import {
-  type RuleResult,
-  type NamedCreateRuleMetaWithCategory,
   createRule,
+  type NamedCreateRuleMetaWithCategory,
+  type RuleResult,
 } from "#eslint-plugin-functional/utils/rule";
 import { isInForLoopInitializer } from "#eslint-plugin-functional/utils/tree";
 

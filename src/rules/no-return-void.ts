@@ -4,10 +4,10 @@ import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import tsApiUtils from "#eslint-plugin-functional/conditional-imports/ts-api-utils";
 import { type ESFunctionType } from "#eslint-plugin-functional/utils/node-types";
 import {
-  type RuleResult,
-  type NamedCreateRuleMetaWithCategory,
   createRule,
   getTypeOfNode,
+  type NamedCreateRuleMetaWithCategory,
+  type RuleResult,
 } from "#eslint-plugin-functional/utils/rule";
 import {
   isFunctionLike,

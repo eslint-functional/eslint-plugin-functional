@@ -8,17 +8,17 @@ import { deepmerge } from "deepmerge-ts";
 import { Immutability } from "is-immutable-type";
 
 import {
-  type IgnoreIdentifierPatternOption,
-  shouldIgnorePattern,
   ignoreIdentifierPatternOptionSchema,
+  shouldIgnorePattern,
+  type IgnoreIdentifierPatternOption,
 } from "#eslint-plugin-functional/options";
 import { getNodeIdentifierTexts } from "#eslint-plugin-functional/utils/misc";
 import { type ESTypeDeclaration } from "#eslint-plugin-functional/utils/node-types";
 import {
-  type RuleResult,
-  type NamedCreateRuleMetaWithCategory,
-  getTypeImmutabilityOfNode,
   createRule,
+  getTypeImmutabilityOfNode,
+  type NamedCreateRuleMetaWithCategory,
+  type RuleResult,
 } from "#eslint-plugin-functional/utils/rule";
 import { isTSInterfaceDeclaration } from "#eslint-plugin-functional/utils/type-guards";
 
