@@ -45,13 +45,16 @@ There are several rulesets provided by this plugin.
 [See below](#rulesets) for what they are and what rules are included in each.
 Enable rulesets via the "extends" property of your `.eslintrc` configuration file.
 
+Be sure to include the `"plugin:functional/disable-type-checked"` ruleset to disable rules that require TypeScript.
+
 ```jsonc
 {
   // ...
   "extends": [
     "plugin:functional/external-vanilla-recommended",
     "plugin:functional/recommended",
-    "plugin:functional/stylistic"
+    "plugin:functional/stylistic",
+    "plugin:functional/disable-type-checked"
   ]
 }
 ```
