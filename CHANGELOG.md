@@ -1,6 +1,18 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+# [6.1.0](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.0.1...v6.1.0) (2024-03-10)
+
+
+### Bug Fixes
+
+* **immutable-data:** treat Object.entries({}).sort() as immediate mutation ([245886f](https://github.com/eslint-functional/eslint-plugin-functional/commit/245886f7f4ff0b84e680f8b2db6b0a94ccbea383)), closes [#773](https://github.com/eslint-functional/eslint-plugin-functional/issues/773)
+
+
+### Features
+
+* new config to disable all rules that require type info ([af30f15](https://github.com/eslint-functional/eslint-plugin-functional/commit/af30f15f2ece3012b6b4f4826686cffcd6039a8c))
+
 ## [6.0.1](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.0.0...v6.0.1) (2024-02-23)
 
 
