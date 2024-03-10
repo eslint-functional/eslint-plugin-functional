@@ -7,21 +7,21 @@ import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import { deepmerge } from "deepmerge-ts";
 
 import {
-  type IgnoreAccessorPatternOption,
-  type IgnoreIdentifierPatternOption,
-  type IgnoreClassesOption,
-  shouldIgnorePattern,
-  shouldIgnoreClasses,
   ignoreAccessorPatternOptionSchema,
   ignoreClassesOptionSchema,
   ignoreIdentifierPatternOptionSchema,
+  shouldIgnoreClasses,
+  shouldIgnorePattern,
+  type IgnoreAccessorPatternOption,
+  type IgnoreClassesOption,
+  type IgnoreIdentifierPatternOption,
 } from "#eslint-plugin-functional/options";
 import { isExpected } from "#eslint-plugin-functional/utils/misc";
 import {
   createRule,
   getTypeOfNode,
-  type RuleResult,
   type NamedCreateRuleMetaWithCategory,
+  type RuleResult,
 } from "#eslint-plugin-functional/utils/rule";
 import {
   findRootIdentifier,
@@ -162,6 +162,22 @@ const objectConstructorMutatorFunctions = new Set([
   "defineProperty",
   "setPrototypeOf",
 ]);
+
+/**
+ * Object constructor functions that return a new array.
+ */
+const objectConstructorNewObjectReturningMethods = [
+  "create",
+  "entries",
+  "fromEntries",
+  "getOwnPropertyDescriptor",
+  "getOwnPropertyDescriptors",
+  "getOwnPropertyNames",
+  "getOwnPropertySymbols",
+  "groupBy",
+  "keys",
+  "values",
+];
 
 /**
  * Check if the given assignment expression violates this rule.
@@ -330,27 +346,55 @@ function isInChainCallAndFollowsNew(
   node: TSESTree.MemberExpression,
   context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
 ): boolean {
-  return (
-    // Check for: [0, 1, 2]
-    isArrayExpression(node.object) ||
-    // Check for: new Array()
-    (isNewExpression(node.object) &&
-      isArrayConstructorType(getTypeOfNode(node.object.callee, context))) ||
-    (isCallExpression(node.object) &&
-      isMemberExpression(node.object.callee) &&
-      isIdentifier(node.object.callee.property) &&
-      // Check for: Array.from(iterable)
-      ((arrayConstructorFunctions.some(
+  // Check for: [0, 1, 2]
+  if (isArrayExpression(node.object)) {
+    return true;
+  }
+
+  // Check for: new Array()
+  if (
+    isNewExpression(node.object) &&
+    isArrayConstructorType(getTypeOfNode(node.object.callee, context))
+  ) {
+    return true;
+  }
+
+  if (
+    isCallExpression(node.object) &&
+    isMemberExpression(node.object.callee) &&
+    isIdentifier(node.object.callee.property)
+  ) {
+    // Check for: Array.from(iterable)
+    if (
+      arrayConstructorFunctions.some(
         isExpected(node.object.callee.property.name),
       ) &&
-        isArrayConstructorType(
-          getTypeOfNode(node.object.callee.object, context),
-        )) ||
-        // Check for: array.slice(0)
-        arrayNewObjectReturningMethods.some(
-          isExpected(node.object.callee.property.name),
-        )))
-  );
+      isArrayConstructorType(getTypeOfNode(node.object.callee.object, context))
+    ) {
+      return true;
+    }
+
+    // Check for: array.slice(0)
+    if (
+      arrayNewObjectReturningMethods.some(
+        isExpected(node.object.callee.property.name),
+      )
+    ) {
+      return true;
+    }
+
+    // Check for: Object.entries(object)
+    if (
+      objectConstructorNewObjectReturningMethods.some(
+        isExpected(node.object.callee.property.name),
+      ) &&
+      isObjectConstructorType(getTypeOfNode(node.object.callee.object, context))
+    ) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 /**

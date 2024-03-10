@@ -412,7 +412,7 @@ const tests: Array<
       [0, 1, 2].shift();
       [0, 1, 2].sort();
       [0, 1, 2].splice(0, 1, 9);
-      [0, 1, 2].unshift(6)
+      [0, 1, 2].unshift(6);
     `,
     optionsSet: [[{ ignoreImmediateMutation: false }]],
     errors: [
