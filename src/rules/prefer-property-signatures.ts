@@ -63,6 +63,7 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
   docs: {
     category: "Stylistic",
     description: "Prefer property signatures over method signatures.",
+    requiresTypeChecking: true,
   },
   messages: errorMessages,
   schema,

@@ -1,6 +1,8 @@
 # Prefer property signatures over method signatures (`functional/prefer-property-signatures`)
 
-💼 This rule is enabled in the 🎨 `stylistic` config.
+💼🚫 This rule is enabled in the 🎨 `stylistic` config. This rule is _disabled_ in the `disable-type-checked` config.
+
+💭 This rule requires type information.
 
 <!-- end auto-generated rule header -->
 

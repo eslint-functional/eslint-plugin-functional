@@ -73,6 +73,7 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
     category: "No Other Paradigms",
     description:
       "Restrict types so that only members of the same kind are allowed in them.",
+    requiresTypeChecking: true,
   },
   messages: errorMessages,
   schema,

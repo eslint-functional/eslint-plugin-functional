@@ -84,6 +84,7 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
   docs: {
     category: "No Statements",
     description: "Disallow expression statements.",
+    requiresTypeChecking: true,
   },
   messages: errorMessages,
   schema,

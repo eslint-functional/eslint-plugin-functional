@@ -308,6 +308,7 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
     category: "No Mutations",
     description:
       "Require function parameters to be typed as certain immutability",
+    requiresTypeChecking: true,
   },
   fixable: "code",
   hasSuggestions: true,

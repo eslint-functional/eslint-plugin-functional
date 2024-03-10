@@ -64,6 +64,7 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
     category: "Stylistic",
     description:
       "Require consistently using either `readonly` keywords or `Readonly<T>`",
+    requiresTypeChecking: true,
   },
   fixable: "code",
   messages: errorMessages,

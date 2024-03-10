@@ -1,8 +1,10 @@
 # Replaces `x => f(x)` with just `f` (`functional/prefer-tacit`)
 
-⚠️ This rule _warns_ in the 🎨 `stylistic` config.
+⚠️🚫 This rule _warns_ in the 🎨 `stylistic` config. This rule is _disabled_ in the `disable-type-checked` config.
 
 💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
+
+💭 This rule requires type information.
 
 <!-- end auto-generated rule header -->
 

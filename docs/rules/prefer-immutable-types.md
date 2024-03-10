@@ -1,8 +1,10 @@
 # Require function parameters to be typed as certain immutability (`functional/prefer-immutable-types`)
 
-💼 This rule is enabled in the following configs: ☑️ `lite`, `no-mutations`, ✅ `recommended`, 🔒 `strict`.
+💼🚫 This rule is enabled in the following configs: ☑️ `lite`, `no-mutations`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the `disable-type-checked` config.
 
 🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/developer-guide/working-with-rules#providing-suggestions).
+
+💭 This rule requires type information.
 
 <!-- end auto-generated rule header -->
 

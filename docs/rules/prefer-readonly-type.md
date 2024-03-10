@@ -2,7 +2,11 @@
 
 ❌ This rule is deprecated. It was replaced by [`functional/prefer-immutable-types`](prefer-immutable-types.md),[`functional/type-declaration-immutability`](type-declaration-immutability.md).
 
+🚫 This rule is _disabled_ in the `disable-type-checked` config.
+
 🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+💭 This rule requires type information.
 
 <!-- end auto-generated rule header -->
 

@@ -1,6 +1,8 @@
 # Disallow functions that don't return anything (`functional/no-return-void`)
 
-💼 This rule is enabled in the following configs: ☑️ `lite`, `no-statements`, ✅ `recommended`, 🔒 `strict`.
+💼🚫 This rule is enabled in the following configs: ☑️ `lite`, `no-statements`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the `disable-type-checked` config.
+
+💭 This rule requires type information.
 
 <!-- end auto-generated rule header -->
 
