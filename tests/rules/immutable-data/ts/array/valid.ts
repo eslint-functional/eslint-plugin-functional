@@ -330,6 +330,14 @@ const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
     `,
     optionsSet: [[{ ignoreImmediateMutation: true }]],
   },
+  {
+    code: dedent`
+      "foo".split("").sort();
+      const bar = "bar";
+      bar.split("").sort();
+    `,
+    optionsSet: [[{ ignoreImmediateMutation: true }]],
+  },
 ];
 
 export default tests;
