@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+## [6.1.1](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.1.0...v6.1.1) (2024-03-11)
+
+
+### Bug Fixes
+
+* **immutable-data:** handle immediate mutation of arrays generated from strings ([b003d1c](https://github.com/eslint-functional/eslint-plugin-functional/commit/b003d1c31834508870dfccb9e325e6f47f7e4a22)), closes [#759](https://github.com/eslint-functional/eslint-plugin-functional/issues/759)
+
 # [6.1.0](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.0.1...v6.1.0) (2024-03-10)
 
 
