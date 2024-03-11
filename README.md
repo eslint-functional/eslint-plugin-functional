@@ -108,7 +108,7 @@ The [below section](#rules) gives details on which rules are enabled by each rul
 
 | Name                                                     | Description                                            | 💼                                | ⚠️  | 🚫    | 🔧  | 💡  | 💭  | ❌  |
 | :------------------------------------------------------- | :----------------------------------------------------- | :-------------------------------- | :-- | :---- | :-- | :-- | :-- | :-- |
-| [no-promise-reject](docs/rules/no-promise-reject.md)     | Disallow try-catch[-finally] and try-finally patterns. |                                   |     |       |     |     |     |     |
+| [no-promise-reject](docs/rules/no-promise-reject.md)     | Disallow rejecting promises.                           |                                   |     |       |     |     |     |     |
 | [no-throw-statements](docs/rules/no-throw-statements.md) | Disallow throwing exceptions.                          | ☑️ ✅ 🔒 ![badge-no-exceptions][] |     |       |     |     |     |     |
 | [no-try-statements](docs/rules/no-try-statements.md)     | Disallow try-catch[-finally] and try-finally patterns. | 🔒 ![badge-no-exceptions][]       |     | ☑️ ✅ |     |     |     |     |
 

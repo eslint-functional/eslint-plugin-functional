@@ -1,4 +1,4 @@
-# Disallow rejecting promises
+# Disallow rejecting promises (`functional/no-promise-reject`)
 
 <!-- end auto-generated rule header -->
 
@@ -37,6 +37,6 @@ async function divide(x, y) {
 
   return yv === 0
     ? { error: new Error("Cannot divide by zero.") }
-    : { value: xv / yv};
+    : { value: xv / yv };
 }
 ```
