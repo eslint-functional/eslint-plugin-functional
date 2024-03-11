@@ -74,6 +74,9 @@ Other:
 - **Off** (`plugin:functional/off`)\
   Disable all rules defined in this plugin.
 
+- **Disable Type Checked** (`plugin:functional/disableTypeChecked`)\
+  Disable all rules that require type information.
+
 - **External Vanilla Recommended** (`plugin:functional/external-vanilla-recommended`)\
   Configures recommended [vanilla ESLint](https://www.npmjs.com/package/eslint) rules.
 
