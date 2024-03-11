@@ -1,16 +1,15 @@
-# Disallow try-catch[-finally] and try-finally patterns (`functional/no-promise-reject`)
+# Disallow rejecting promises
 
 <!-- end auto-generated rule header -->
 
 This rule disallows use of `Promise.reject()`.
 
-We don't recommend this rule but it's there for those who want it.
-
 ## Rule Details
 
-You can view a `Promise` as a result object with built-in error (something like `{ value: T } | { error: Error }`) in which case a rejected `Promise` can be viewed as a returned result and thus fits with functional programming.
-You can also view a rejected promise as something similar to an exception and as such something that does not fit with functional programming.
-If your view is the latter you can use the `no-promise-reject` rule to disallow rejected promises.
+It is useful when using an `Option` type (something like `{ value: T } | { error: Error }`)
+for handling errors. In this case a promise should always resolve with an `Option` and never reject.
+
+This rule should be used in conjunction with [`no-throw-statements`](./no-throw-statements.md).
 
 ### ❌ Incorrect
 
@@ -36,6 +35,8 @@ async function divide(x, y) {
 async function divide(x, y) {
   const [xv, yv] = await Promise.all([x, y]);
 
-  return yv === 0 ? new Error("Cannot divide by zero.") : xv / yv;
+  return yv === 0
+    ? { error: new Error("Cannot divide by zero.") }
+    : { value: xv / yv};
 }
 ```

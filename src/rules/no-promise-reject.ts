@@ -46,7 +46,7 @@ const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     category: "No Exceptions",
-    description: "Disallow try-catch[-finally] and try-finally patterns.",
+    description: "Disallow rejecting promises.",
   },
   messages: errorMessages,
   schema,
