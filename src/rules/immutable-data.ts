@@ -165,7 +165,7 @@ const objectConstructorMutatorFunctions = new Set([
 ]);
 
 /**
- * Object constructor functions that return a new array.
+ * Object constructor functions that return new objects.
  */
 const objectConstructorNewObjectReturningMethods = [
   "create",
@@ -179,6 +179,13 @@ const objectConstructorNewObjectReturningMethods = [
   "keys",
   "values",
 ];
+
+/**
+ * String constructor functions that return new objects.
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String#Methods
+ */
+const stringConstructorNewObjectReturningMethods = ["split"];
 
 /**
  * Check if the given assignment expression violates this rule.
@@ -390,6 +397,16 @@ function isInChainCallAndFollowsNew(
         isExpected(node.object.callee.property.name),
       ) &&
       isObjectConstructorType(getTypeOfNode(node.object.callee.object, context))
+    ) {
+      return true;
+    }
+
+    // Check for: "".split("")
+    if (
+      stringConstructorNewObjectReturningMethods.some(
+        isExpected(node.object.callee.property.name),
+      ) &&
+      getTypeOfNode(node.object.callee.object, context).isStringLiteral()
     ) {
       return true;
     }
