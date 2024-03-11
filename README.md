@@ -155,6 +155,7 @@ The [below section](#rules) gives details on which rules are enabled by each rul
 [badge-no-mutations]: https://img.shields.io/badge/-no--mutations-orange.svg
 [badge-no-other-paradigms]: https://img.shields.io/badge/-no--other--paradigms-yellow.svg
 [badge-no-statements]: https://img.shields.io/badge/-no--statements-purple.svg
+[badge-disable-type-checked]: https://img.shields.io/badge/-disable--type--checked-navy.svg
 
 ## External Recommended Rules
 
