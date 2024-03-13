@@ -51,7 +51,7 @@ plugins:
           from: "\\$\\{__VERSION__\\}"
           to: "${nextRelease.version}"
           results:
-            - file: "./lib/index.js"
+            - file: "./lib/index.cjs"
               hasChanged: true
               numMatches: 1
               numReplacements: 1
