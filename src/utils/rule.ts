@@ -19,26 +19,44 @@ import { type Node as TSNode, type Type, type TypeNode } from "typescript";
 
 import ts from "#eslint-plugin-functional/conditional-imports/typescript";
 import { getImmutabilityOverrides } from "#eslint-plugin-functional/settings";
+import { __VERSION__ } from "#eslint-plugin-functional/utils/constants";
 import { type ESFunction } from "#eslint-plugin-functional/utils/node-types";
-
-// eslint-disable-next-line @typescript-eslint/naming-convention -- This is a special var.
-const __VERSION__ = "0.0.0-development";
 
 /**
  * Any custom rule meta properties.
  */
-export type NamedCreateRuleMetaWithCategory<T extends string> =
-  NamedCreateRuleMeta<T> & {
-    docs: {
-      /** Used for splitting the README rules list into sub-lists. */
-      category: string;
-    };
-  };
+export type NamedCreateRuleCustomMeta<T extends string> = Omit<
+  NamedCreateRuleMeta<T>,
+  "docs"
+> & {
+  docs: {
+    /**
+     * Used for creating category configs and splitting the README rules list into sub-lists.
+     */
+    category:
+      | "Currying"
+      | "No Exceptions"
+      | "No Mutations"
+      | "No Other Paradigms"
+      | "No Statements"
+      | "Stylistic";
+
+    recommended: "recommended" | "strict" | false;
+    recommendedSeverity: "error" | "warn";
+  } & Omit<NamedCreateRuleMeta<T>["docs"], "recommended">;
+};
 
 /**
  * All options must extends this type.
  */
-export type BaseOptions = unknown[];
+export type BaseOptions = ReadonlyArray<unknown>;
+
+export type CustomRuleModule<
+  MessageIds extends string,
+  Options extends BaseOptions,
+> = Omit<RuleModule<MessageIds, Options>, "meta"> & {
+  readonly meta: NamedCreateRuleCustomMeta<MessageIds>;
+};
 
 /**
  * The result all rules return.
@@ -106,10 +124,10 @@ export function createRule<
   Options extends BaseOptions,
 >(
   name: string,
-  meta: NamedCreateRuleMetaWithCategory<MessageIds>,
+  meta: NamedCreateRuleCustomMeta<MessageIds>,
   defaultOptions: Options,
   ruleFunctionsMap: RuleFunctionsMap<any, MessageIds, Options>,
-): RuleModule<MessageIds, Options> {
+) {
   return createRuleUsingFunction(
     name,
     meta,
@@ -126,22 +144,21 @@ export function createRuleUsingFunction<
   Options extends BaseOptions,
 >(
   name: string,
-  meta: NamedCreateRuleMetaWithCategory<MessageIds>,
+  meta: NamedCreateRuleCustomMeta<MessageIds>,
   defaultOptions: Options,
   createFunction: (
     context: Readonly<RuleContext<MessageIds, Options>>,
     options: Readonly<Options>,
   ) => RuleFunctionsMap<any, MessageIds, Options>,
-): RuleModule<MessageIds, Options> {
+) {
   const ruleCreator = RuleCreator(
     (ruleName) =>
       `https://github.com/eslint-functional/eslint-plugin-functional/blob/v${__VERSION__}/docs/rules/${ruleName}.md`,
   );
 
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion -- false positive
   return ruleCreator<Options, MessageIds>({
     name,
-    meta,
+    meta: meta as any,
     defaultOptions,
     create: (context, options) => {
       const ruleFunctionsMap = createFunction(context, options);
@@ -157,7 +174,7 @@ export function createRuleUsingFunction<
         ]),
       );
     },
-  }) as RuleModule<MessageIds, Options>;
+  }) as CustomRuleModule<MessageIds, Options>;
 }
 
 /**

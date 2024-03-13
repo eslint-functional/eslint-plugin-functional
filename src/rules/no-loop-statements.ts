@@ -1,10 +1,11 @@
 import { type JSONSchema4 } from "@typescript-eslint/utils/json-schema";
 import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
+import { ruleNameScope } from "#eslint-plugin-functional/utils/misc";
 import { type ESLoop } from "#eslint-plugin-functional/utils/node-types";
 import {
   createRule,
-  type NamedCreateRuleMetaWithCategory,
+  type NamedCreateRuleCustomMeta,
   type RuleResult,
 } from "#eslint-plugin-functional/utils/rule";
 
@@ -12,6 +13,11 @@ import {
  * The name of this rule.
  */
 export const name = "no-loop-statements" as const;
+
+/**
+ * The full name of this rule.
+ */
+export const fullName = `${ruleNameScope}/${name}` as const;
 
 /**
  * The options this rule can take.
@@ -38,11 +44,13 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     category: "No Statements",
     description: "Disallow imperative loops.",
+    recommended: "recommended",
+    recommendedSeverity: "error",
   },
   messages: errorMessages,
   schema,

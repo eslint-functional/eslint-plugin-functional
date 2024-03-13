@@ -5,9 +5,10 @@ import {
   type RuleContext,
 } from "@typescript-eslint/utils/ts-eslint";
 
+import { ruleNameScope } from "#eslint-plugin-functional/utils/misc";
 import {
   createRule,
-  type NamedCreateRuleMetaWithCategory,
+  type NamedCreateRuleCustomMeta,
   type RuleResult,
 } from "#eslint-plugin-functional/utils/rule";
 import { getReadonly } from "#eslint-plugin-functional/utils/tree";
@@ -24,6 +25,11 @@ import {
  * The name of this rule.
  */
 export const name = "readonly-type" as const;
+
+/**
+ * The full name of this rule.
+ */
+export const fullName = `${ruleNameScope}/${name}` as const;
 
 /**
  * The options this rule can take.
@@ -58,12 +64,14 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     category: "Stylistic",
     description:
       "Require consistently using either `readonly` keywords or `Readonly<T>`",
+    recommended: "recommended",
+    recommendedSeverity: "error",
     requiresTypeChecking: true,
   },
   fixable: "code",
@@ -81,7 +89,7 @@ function checkTypeLiteral(
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [mode] = options;
   const readonlyWrapper = getReadonly(node);
-  const sourceCode = context.getSourceCode();
+  const { sourceCode } = context;
 
   if (readonlyWrapper !== null) {
     if (mode === "generic") {

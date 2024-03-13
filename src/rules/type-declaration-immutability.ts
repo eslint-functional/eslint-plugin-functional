@@ -12,12 +12,15 @@ import {
   shouldIgnorePattern,
   type IgnoreIdentifierPatternOption,
 } from "#eslint-plugin-functional/options";
-import { getNodeIdentifierTexts } from "#eslint-plugin-functional/utils/misc";
+import {
+  getNodeIdentifierTexts,
+  ruleNameScope,
+} from "#eslint-plugin-functional/utils/misc";
 import { type ESTypeDeclaration } from "#eslint-plugin-functional/utils/node-types";
 import {
   createRule,
   getTypeImmutabilityOfNode,
-  type NamedCreateRuleMetaWithCategory,
+  type NamedCreateRuleCustomMeta,
   type RuleResult,
 } from "#eslint-plugin-functional/utils/rule";
 import { isTSInterfaceDeclaration } from "#eslint-plugin-functional/utils/type-guards";
@@ -26,6 +29,11 @@ import { isTSInterfaceDeclaration } from "#eslint-plugin-functional/utils/type-g
  * The name of this rule.
  */
 export const name = "type-declaration-immutability" as const;
+
+/**
+ * The full name of this rule.
+ */
+export const fullName = `${ruleNameScope}/${name}` as const;
 
 /**
  * How the actual immutability should be compared to the given immutability.
@@ -176,11 +184,13 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     category: "No Mutations",
     description: "Enforce the immutability of types based on patterns.",
+    recommended: "recommended",
+    recommendedSeverity: "error",
     requiresTypeChecking: true,
   },
   messages: errorMessages,
@@ -278,7 +288,7 @@ function getConfiguredFixer<T extends TSESTree.Node>(
   context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
   configs: FixerConfig[],
 ): NonNullable<Descriptor["fix"]> | null {
-  const text = context.getSourceCode().getText(node);
+  const text = context.sourceCode.getText(node);
   const config = configs.find((c) => c.pattern.test(text));
   if (config === undefined) {
     return null;

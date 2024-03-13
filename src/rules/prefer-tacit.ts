@@ -11,12 +11,13 @@ import * as semver from "semver";
 import { type Type } from "typescript";
 
 import ts from "#eslint-plugin-functional/conditional-imports/typescript";
+import { ruleNameScope } from "#eslint-plugin-functional/utils/misc";
 import { type ESFunction } from "#eslint-plugin-functional/utils/node-types";
 import {
   createRule,
   getESTreeNode,
   getTypeOfNode,
-  type NamedCreateRuleMetaWithCategory,
+  type NamedCreateRuleCustomMeta,
   type RuleResult,
 } from "#eslint-plugin-functional/utils/rule";
 import { isNested } from "#eslint-plugin-functional/utils/tree";
@@ -34,6 +35,11 @@ import {
  * The name of this rule.
  */
 export const name = "prefer-tacit" as const;
+
+/**
+ * The full name of this rule.
+ */
+export const fullName = `${ruleNameScope}/${name}` as const;
 
 /**
  * The options this rule can take.
@@ -60,11 +66,13 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     category: "Stylistic",
     description: "Replaces `x => f(x)` with just `f`.",
+    recommended: "recommended",
+    recommendedSeverity: "warn",
     requiresTypeChecking: true,
   },
   messages: errorMessages,
@@ -132,7 +140,7 @@ function fixFunctionCallToReference(
   return [
     fixer.replaceText(
       node as TSESTree.Node,
-      context.getSourceCode().getText(caller.callee as TSESTree.Node),
+      context.sourceCode.getText(caller.callee as TSESTree.Node),
     ),
   ];
 }

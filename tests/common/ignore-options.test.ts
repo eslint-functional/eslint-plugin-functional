@@ -193,7 +193,7 @@ const invalidTests: Array<
 
 getRuleTester(configs.esLatest).run(
   "ignoreAccessorPattern",
-  createDummyRuleFor("AssignmentExpression"),
+  createDummyRuleFor("AssignmentExpression") as any,
   addFilename(filename, {
     valid: validTests,
     invalid: invalidTests,
@@ -257,7 +257,7 @@ const assignmentExpressionInvalidTests: Array<
 
 getRuleTester(configs.esLatest).run(
   "ignoreIdentifierPattern",
-  createDummyRuleFor("AssignmentExpression"),
+  createDummyRuleFor("AssignmentExpression") as any,
   addFilename(filename, {
     valid: assignmentExpressionValidTests,
     invalid: assignmentExpressionInvalidTests,
@@ -305,7 +305,7 @@ const expressionStatementInvalidTests: Array<
 
 getRuleTester(configs.esLatest).run(
   "ignoreCodePattern",
-  createDummyRuleFor("VariableDeclaration"),
+  createDummyRuleFor("VariableDeclaration") as any,
   addFilename(filename, {
     valid: expressionStatementValidTests,
     invalid: expressionStatementInvalidTests,

@@ -17,6 +17,7 @@ import {
   shouldIgnorePattern,
   type IgnoreClassesOption,
 } from "#eslint-plugin-functional/options";
+import { ruleNameScope } from "#eslint-plugin-functional/utils/misc";
 import { type ESFunctionType } from "#eslint-plugin-functional/utils/node-types";
 import {
   createRule,
@@ -24,7 +25,7 @@ import {
   getTypeImmutabilityOfNode,
   getTypeImmutabilityOfType,
   isImplementationOfOverload,
-  type NamedCreateRuleMetaWithCategory,
+  type NamedCreateRuleCustomMeta,
   type RuleResult,
 } from "#eslint-plugin-functional/utils/rule";
 import {
@@ -45,6 +46,11 @@ import {
  * The name of this rule.
  */
 export const name = "prefer-immutable-types" as const;
+
+/**
+ * The full name of this rule.
+ */
+export const fullName = `${ruleNameScope}/${name}` as const;
 
 type RawEnforcement =
   | Exclude<Immutability | keyof typeof Immutability, "Unknown" | "Mutable">
@@ -302,12 +308,14 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     category: "No Mutations",
     description:
       "Require function parameters to be typed as certain immutability",
+    recommended: "recommended",
+    recommendedSeverity: "error",
     requiresTypeChecking: true,
   },
   fixable: "code",
@@ -335,10 +343,7 @@ function getAllFixers(
   fixerConfigs: FixerConfig[] | false,
   suggestionsConfigs: SuggestionsConfig[] | false,
 ): AllFixers {
-  const nodeText = context
-    .getSourceCode()
-    .getText(node)
-    .replaceAll(/\s+/gmu, " ");
+  const nodeText = context.sourceCode.getText(node).replaceAll(/\s+/gmu, " ");
 
   const fix =
     fixerConfigs === false

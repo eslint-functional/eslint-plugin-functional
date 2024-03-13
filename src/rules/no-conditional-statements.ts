@@ -4,10 +4,11 @@ import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import { type Type } from "typescript";
 
 import tsApiUtils from "#eslint-plugin-functional/conditional-imports/ts-api-utils";
+import { ruleNameScope } from "#eslint-plugin-functional/utils/misc";
 import {
   createRule,
   getTypeOfNode,
-  type NamedCreateRuleMetaWithCategory,
+  type NamedCreateRuleCustomMeta,
   type RuleResult,
 } from "#eslint-plugin-functional/utils/rule";
 import {
@@ -25,6 +26,11 @@ import {
  * The name of this rule.
  */
 export const name = "no-conditional-statements" as const;
+
+/**
+ * The full name of this rule.
+ */
+export const fullName = `${ruleNameScope}/${name}` as const;
 
 /**
  * The options this rule can take.
@@ -82,11 +88,13 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     category: "No Statements",
     description: "Disallow conditional statements.",
+    recommended: "recommended",
+    recommendedSeverity: "error",
     requiresTypeChecking: true,
   },
   messages: errorMessages,
