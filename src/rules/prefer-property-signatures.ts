@@ -2,9 +2,10 @@ import { type TSESTree } from "@typescript-eslint/utils";
 import { type JSONSchema4 } from "@typescript-eslint/utils/json-schema";
 import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
+import { ruleNameScope } from "#eslint-plugin-functional/utils/misc";
 import {
   createRule,
-  type NamedCreateRuleMetaWithCategory,
+  type NamedCreateRuleCustomMeta,
   type RuleResult,
 } from "#eslint-plugin-functional/utils/rule";
 import { isInReadonly } from "#eslint-plugin-functional/utils/tree";
@@ -13,6 +14,11 @@ import { isInReadonly } from "#eslint-plugin-functional/utils/tree";
  * The name of this rule.
  */
 export const name = "prefer-property-signatures" as const;
+
+/**
+ * The full name of this rule.
+ */
+export const fullName = `${ruleNameScope}/${name}` as const;
 
 /**
  * The options this rule can take.
@@ -58,11 +64,13 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     category: "Stylistic",
     description: "Prefer property signatures over method signatures.",
+    recommended: "recommended",
+    recommendedSeverity: "error",
     requiresTypeChecking: true,
   },
   messages: errorMessages,

@@ -17,6 +17,8 @@ import {
   isVariableDeclaration,
 } from "#eslint-plugin-functional/utils/type-guards";
 
+export const ruleNameScope = "functional";
+
 /**
  * Higher order function to check if the two given values are the same.
  */
@@ -67,8 +69,7 @@ function getNodeIdentifierText(
                 : isUnaryExpression(node)
                   ? getNodeIdentifierText(node.argument, context)
                   : isTSTypeAnnotation(node)
-                    ? context
-                        .getSourceCode()
+                    ? context.sourceCode
                         .getText(node.typeAnnotation as TSESTree.Node)
                         .replaceAll(/\s+/gmu, "")
                     : null;
@@ -92,7 +93,7 @@ export function getNodeCode(
   node: TSESTree.Node,
   context: Readonly<RuleContext<string, BaseOptions>>,
 ): string {
-  return context.getSourceCode().getText(node);
+  return context.sourceCode.getText(node);
 }
 
 /**

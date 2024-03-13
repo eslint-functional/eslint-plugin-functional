@@ -1,13 +1,18 @@
-import { type Linter } from "@typescript-eslint/utils/ts-eslint";
+import { type FlatConfig } from "@typescript-eslint/utils/ts-eslint";
 
-import * as noThrowStatements from "#eslint-plugin-functional/rules/no-throw-statements";
-import * as noTryStatements from "#eslint-plugin-functional/rules/no-try-statements";
+import { rules } from "#eslint-plugin-functional/rules";
+import { ruleNameScope } from "#eslint-plugin-functional/utils/misc";
 
-const config: Linter.Config = {
-  rules: {
-    [`functional/${noThrowStatements.name}`]: "error",
-    [`functional/${noTryStatements.name}`]: "error",
-  },
-};
-
-export default config;
+export default Object.fromEntries(
+  Object.entries(rules)
+    .filter(
+      ([, rule]) =>
+        rule.meta.deprecated !== true &&
+        rule.meta.docs.category === "No Exceptions" &&
+        rule.meta.docs.recommended !== false,
+    )
+    .map(([name, rule]) => [
+      `${ruleNameScope}/${name}`,
+      rule.meta.docs.recommendedSeverity,
+    ]),
+) satisfies FlatConfig.Config["rules"];

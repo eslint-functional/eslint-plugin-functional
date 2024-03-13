@@ -1,5 +1,7 @@
 import { type RuleModule } from "@typescript-eslint/utils/ts-eslint";
 
+import { type CustomRuleModule } from "#eslint-plugin-functional/utils/rule";
+
 import { getRuleTester } from "./RuleTester";
 import { configs } from "./configs";
 import {
@@ -20,7 +22,7 @@ type TestFunction<
 export function testRule<
   TMessageIds extends string,
   TOptions extends Readonly<unknown[]>,
->(ruleName: string, rule: RuleModule<TMessageIds, TOptions>) {
+>(ruleName: string, rule: CustomRuleModule<TMessageIds, TOptions>) {
   return Object.fromEntries(
     [...Object.entries(configs)].map(
       ([configName, config]): [
@@ -31,7 +33,7 @@ export function testRule<
         ({ valid, invalid }) => {
           const ruleTester = getRuleTester(config);
 
-          ruleTester.run(ruleName, rule, {
+          ruleTester.run(ruleName, rule as RuleModule<TMessageIds, TOptions>, {
             valid: processValidTestCase(valid),
             invalid: processInvalidTestCase(invalid),
           });

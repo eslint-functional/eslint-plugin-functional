@@ -1,17 +1,18 @@
-import { type Linter } from "@typescript-eslint/utils/ts-eslint";
+import { type FlatConfig } from "@typescript-eslint/utils/ts-eslint";
 
-import * as immutableData from "#eslint-plugin-functional/rules/immutable-data";
-import * as noLet from "#eslint-plugin-functional/rules/no-let";
-import * as preferImmutableTypes from "#eslint-plugin-functional/rules/prefer-immutable-types";
-import * as typeDeclarationImmutability from "#eslint-plugin-functional/rules/type-declaration-immutability";
+import { rules } from "#eslint-plugin-functional/rules";
+import { ruleNameScope } from "#eslint-plugin-functional/utils/misc";
 
-const config: Linter.Config = {
-  rules: {
-    [`functional/${immutableData.name}`]: "error",
-    [`functional/${noLet.name}`]: "error",
-    [`functional/${preferImmutableTypes.name}`]: "error",
-    [`functional/${typeDeclarationImmutability.name}`]: "error",
-  },
-};
-
-export default config;
+export default Object.fromEntries(
+  Object.entries(rules)
+    .filter(
+      ([, rule]) =>
+        rule.meta.deprecated !== true &&
+        rule.meta.docs.category === "No Mutations" &&
+        rule.meta.docs.recommended !== false,
+    )
+    .map(([name, rule]) => [
+      `${ruleNameScope}/${name}`,
+      rule.meta.docs.recommendedSeverity,
+    ]),
+) satisfies FlatConfig.Config["rules"];

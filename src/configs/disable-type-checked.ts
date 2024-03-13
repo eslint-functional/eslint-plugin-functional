@@ -1,13 +1,10 @@
-import { type Linter } from "@typescript-eslint/utils/ts-eslint";
+import { type FlatConfig } from "@typescript-eslint/utils/ts-eslint";
 
 import { rules } from "#eslint-plugin-functional/rules";
+import { ruleNameScope } from "#eslint-plugin-functional/utils/misc";
 
-const config: Linter.Config = {
-  rules: Object.fromEntries(
-    Object.entries(rules)
-      .filter(([, rule]) => rule.meta.docs?.requiresTypeChecking === true)
-      .map(([name]) => [`functional/${name}`, "off"]),
-  ),
-};
-
-export default config;
+export default Object.fromEntries(
+  Object.entries(rules)
+    .filter(([, rule]) => rule.meta.docs?.requiresTypeChecking === true)
+    .map(([name]) => [`${ruleNameScope}/${name}`, "off"]),
+) satisfies FlatConfig.Config["rules"];

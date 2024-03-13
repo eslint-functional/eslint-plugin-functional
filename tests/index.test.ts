@@ -30,7 +30,7 @@ describe("index.ts", () => {
       Object.hasOwn(plugin, "configs"),
       'The plugin\'s config object should have a "configs" property.',
     );
-    expect(configFiles.length - 1).to.equal(
+    expect(2 * configFiles.length).to.equal(
       Object.keys(plugin.configs ?? {}).length,
       "should have all the configs except deprecated",
     );
