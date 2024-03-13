@@ -8,11 +8,13 @@ dictionaryDefinitions:
     path: ./project-dictionary.txt
     addWords: true
 
+allowCompoundWords: true
+caseSensitive: false
+useGitignore: true
+
 dictionaries:
   - en_US
   - bash
-  - csharp
-  - css
   - filetypes
   - fonts
   - html
@@ -22,6 +24,9 @@ dictionaries:
   - softwareTerms
   - typescript
   - project-dictionary
+
+import:
+  - "@cspell/dict-cryptocurrencies/cspell-ext.json"
 
 ignorePaths:
   - .eslintrc.json
@@ -34,14 +39,11 @@ ignorePaths:
   - .npmrc
   - .prettierignore
   - .prettierrc.yml
-  - .stylelintrc.json
   - .vscode
   - "*.pdn"
   - CHANGELOG.md
   - coverage
-  - coverage
-  - cspell.config.yaml
-  - dist
+  - cspell.config.yml
   - lib
   - node_modules
   - package.json
@@ -50,12 +52,16 @@ ignorePaths:
   - project-dictionary.txt
 
 ignoreRegExpList:
-  - /\b[A-Fa-f0-9]{6}\b/ # ignore hex color codes
-  - /\b[A-Za-z0-9]{32,}\b/ # ignore long string of hex characters
-  - /`[^`]*`/ # ignore things in `...`
-  - /```[\w\W]*?```/ # ignore things in ```...```
+  - /\b[a-f0-9]{6}\b/ui # ignore hex color codes
+  - /\b[a-z0-9]{32,}\b/ui # ignore long string of hex characters
+  - /`[^`]*`/u # ignore things in `...`
+  - /```[\w\W]*?```/u # ignore things in ```...```
 
 overrides:
+  - filename: "**/*.yml"
+    ignoreRegExpList:
+      - /^\s*(?:[a-z0-9]|-|_|\"|')+:/ui # ignore keys
+
   - filename: ".github/(actions|workflows)/*.yml"
     ignoreRegExpList:
       - /\b(?:[A-Za-z0-9\-_])+\/(?:[A-Za-z0-9\-_])+@v\d+(?:\.\d+){0,2}\b/ui # ignore action

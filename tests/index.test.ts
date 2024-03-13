@@ -4,33 +4,33 @@
 
 import { readdirSync } from "node:fs";
 
-import { describe, it } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import plugin from "#eslint-plugin-functional";
 
 describe("index.ts", () => {
-  it("should have all the rules", (t) => {
+  it("should have all the rules", () => {
     const ruleFiles: string[] = readdirSync("./src/rules").filter(
       (file) => file !== "index.ts" && file.endsWith(".ts"),
     );
 
-    t.expect(
+    expect(
       Object.hasOwn(plugin, "rules"),
       'The plugin\'s config object should have a "rules" property.',
     );
-    t.expect(ruleFiles.length).to.equal(Object.keys(plugin.rules ?? {}).length);
+    expect(ruleFiles.length).to.equal(Object.keys(plugin.rules ?? {}).length);
   });
 
-  it("should have all the configs", (t) => {
+  it("should have all the configs", () => {
     const configFiles: string[] = readdirSync("./src/configs").filter(
       (file) => file !== "index.ts" && file.endsWith(".ts"),
     );
 
-    t.expect(
+    expect(
       Object.hasOwn(plugin, "configs"),
       'The plugin\'s config object should have a "configs" property.',
     );
-    t.expect(configFiles.length - 1).to.equal(
+    expect(configFiles.length - 1).to.equal(
       Object.keys(plugin.configs ?? {}).length,
       "should have all the configs except deprecated",
     );

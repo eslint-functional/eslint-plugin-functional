@@ -1,10 +1,7 @@
-/CHANGELOG.md
-/lib/
 /build/
-/coverage/
+/coverage*/
+/lib/
 /tests-compiled/
-
-node_modules/
-pnpm-lock.yaml
-
-*.log
+/node_modules/
+/CHANGELOG.md
+/pnpm-lock.yaml

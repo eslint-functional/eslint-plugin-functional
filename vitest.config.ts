@@ -25,12 +25,10 @@ export default defineConfig({
 
   test: {
     include: [testFilePattern],
+    exclude: ["lib", "node_modules"],
     coverage: {
-      provider: "c8",
-      include: ["src/**/*.ts"],
-      // @ts-expect-error -- Untyped option.
-      excludeAfterRemap: true,
-      clean: true,
+      provider: useCompiledTests ? "istanbul" : "v8",
+      include: ["src"],
       reporter: ["lcov", "text"],
       watermarks: {
         lines: [80, 95],

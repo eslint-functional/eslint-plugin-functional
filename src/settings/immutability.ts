@@ -78,8 +78,8 @@ function loadImmutabilityOverrides(
         from === undefined
           ? undefined
           : typeof from === "string"
-          ? Immutability[from]
-          : from,
+            ? Immutability[from]
+            : from,
     } as ImmutabilityOverrides[number];
 
     /* c8 ignore start */

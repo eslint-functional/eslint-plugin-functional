@@ -155,36 +155,36 @@ function accessorPatternMatch(
   return pattern === undefined
     ? allowExtra || textParts.length === 0
     : // Match any depth (including 0)?
-    pattern === "**"
-    ? textParts.length === 0
-      ? accessorPatternMatch(remainingPatternParts, [], allowExtra)
-      : Array.from({ length: textParts.length })
-          .map((element, index) => index)
-          .some((offset) =>
-            accessorPatternMatch(
-              remainingPatternParts,
-              textParts.slice(offset),
-              true,
-            ),
+      pattern === "**"
+      ? textParts.length === 0
+        ? accessorPatternMatch(remainingPatternParts, [], allowExtra)
+        : Array.from({ length: textParts.length })
+            .map((element, index) => index)
+            .some((offset) =>
+              accessorPatternMatch(
+                remainingPatternParts,
+                textParts.slice(offset),
+                true,
+              ),
+            )
+      : // Match anything?
+        pattern === "*"
+        ? textParts.length > 0 &&
+          accessorPatternMatch(
+            remainingPatternParts,
+            textParts.slice(1),
+            allowExtra,
           )
-    : // Match anything?
-    pattern === "*"
-    ? textParts.length > 0 &&
-      accessorPatternMatch(
-        remainingPatternParts,
-        textParts.slice(1),
-        allowExtra,
-      )
-    : // Text matches pattern?
-      new RegExp(
-        `^${escapeRegExp(pattern).replaceAll("\\*", ".*")}$`,
-        "u",
-      ).test(textParts[0]!) &&
-      accessorPatternMatch(
-        remainingPatternParts,
-        textParts.slice(1),
-        allowExtra,
-      );
+        : // Text matches pattern?
+          new RegExp(
+            `^${escapeRegExp(pattern).replaceAll("\\*", ".*")}$`,
+            "u",
+          ).test(textParts[0]!) &&
+          accessorPatternMatch(
+            remainingPatternParts,
+            textParts.slice(1),
+            allowExtra,
+          );
 }
 
 /**

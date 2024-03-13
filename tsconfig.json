@@ -1,42 +1,7 @@
 {
+  "extends": "./tsconfig.build.json",
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "allowUnreachableCode": false,
-    "allowUnusedLabels": false,
-    "alwaysStrict": true,
-    "declaration": false,
-    "esModuleInterop": true,
-    "exactOptionalPropertyTypes": true,
-    "forceConsistentCasingInFileNames": true,
-    "importHelpers": false,
-    "lib": ["ESNext"],
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "newLine": "LF",
-    "noEmitOnError": true,
-    "noImplicitReturns": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noUncheckedIndexedAccess": true,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "pretty": true,
-    "resolveJsonModule": true,
-    "sourceMap": false,
-    "strict": true,
-    "target": "ESNext",
-    "baseUrl": ".",
-    "paths": {
-      "#eslint-plugin-functional": ["src"],
-      "#eslint-plugin-functional/configs/*": ["src/configs/*"],
-      "#eslint-plugin-functional/options": ["src/options"],
-      "#eslint-plugin-functional/rules": ["src/rules"],
-      "#eslint-plugin-functional/rules/*": ["src/rules/*"],
-      "#eslint-plugin-functional/settings": ["src/settings"],
-      "#eslint-plugin-functional/utils/*": ["src/utils/*"],
-      "#eslint-plugin-functional/conditional-imports/*": [
-        "src/utils/conditional-imports/*"
-      ],
-      "#eslint-plugin-functional/tests/*": ["tests/*"]
-    }
-  }
+    "rootDir": "."
+  },
+  "include": [".", "src", "tests", "typings"]
 }
