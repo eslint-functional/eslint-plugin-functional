@@ -38,8 +38,8 @@ function getAncestorOfType<T extends TSESTree.Node>(
   return checker(node, child)
     ? node
     : isDefined(node.parent)
-    ? getAncestorOfType(checker, node.parent, node)
-    : null;
+      ? getAncestorOfType(checker, node.parent, node)
+      : null;
 }
 
 /**

@@ -405,16 +405,16 @@ function checkProperty(
                   ? (fixer) =>
                       fixer.insertTextBefore(node as TSESTree.Node, "readonly ")
                   : isTSParameterProperty(node)
-                  ? (fixer) =>
-                      fixer.insertTextBefore(
-                        node.parameter as TSESTree.Node,
-                        "readonly ",
-                      )
-                  : (fixer) =>
-                      fixer.insertTextBefore(
-                        node.key as TSESTree.Node,
-                        "readonly ",
-                      ),
+                    ? (fixer) =>
+                        fixer.insertTextBefore(
+                          node.parameter as TSESTree.Node,
+                          "readonly ",
+                        )
+                    : (fixer) =>
+                        fixer.insertTextBefore(
+                          node.key as TSESTree.Node,
+                          "readonly ",
+                        ),
             },
           ]
         : [],

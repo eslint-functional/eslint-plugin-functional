@@ -1,4 +1,19 @@
 {
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.fixAll.eslint": "explicit",
+    "source.formatDocument": "explicit",
+    "source.organizeImports": "explicit",
+    "source.sortImports": "explicit"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "file",
+  "editor.rulers": [80],
+  "files.associations": {
+    ".markdownlint.json": "jsonc",
+    ".markdownlintignore": "ignore"
+  },
   "files.exclude": {
     "coverage": true,
     "cz-adapter/index.js": true
@@ -10,33 +25,10 @@
     ".vscode/": true,
     "build/": true,
     "lib/": true,
-    "ava.config.cjs": true,
-    "rollup.config.cjs": true,
-    "yarn.lock": true
+    "pnpm-lock.yaml": true
   },
   "typescript.tsdk": "./node_modules/typescript/lib",
-  "files.associations": {
-    ".markdownlint.json": "jsonc",
-    ".markdownlintignore": "ignore"
-  },
   "[markdown]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true
-  },
-  "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true
-  },
-  "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true
-  },
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true
+    "editor.rulers": [160]
   }
 }

@@ -1,4 +1,4 @@
-import { describe, it } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import { mergeConfigs } from "#eslint-plugin-functional/utils/merge-configs";
 
@@ -23,8 +23,8 @@ describe("merge eslint configs", () => {
 
     const result = mergeConfigs(a, b);
 
-    t.expect(result).to.deep.equal(expected, "result is not merged correctly");
-    t.expect(result.rules["plugin/rule"]).to.equal(
+    expect(result).to.deep.equal(expected, "result is not merged correctly");
+    expect(result.rules["plugin/rule"]).to.equal(
       expected.rules["plugin/rule"],
       "rule value was not replaced",
     );

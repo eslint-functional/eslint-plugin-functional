@@ -42,7 +42,7 @@ Add `functional` to the plugins section of your `.eslintrc` configuration file. 
 ```
 
 There are several rulesets provided by this plugin.
-[See below](#rulesets) for what they are and what rules are included in each.
+[See the README](./README.md#rulesets) for what they are and what rules are included in each.
 Enable rulesets via the "extends" property of your `.eslintrc` configuration file.
 
 Be sure to include the `"plugin:functional/disable-type-checked"` ruleset to disable rules that require TypeScript.

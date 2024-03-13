@@ -1,8 +1,8 @@
 # Disallow functions that don't return anything (`functional/no-return-void`)
 
-💼🚫 This rule is enabled in the following configs: ☑️ `lite`, `no-statements`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the `disable-type-checked` config.
+💼🚫 This rule is enabled in the following configs: 🌐 `all`, `lite`, `no-statements`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the following configs: `disable-type-checked`, `off`.
 
-💭 This rule requires type information.
+💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 
 <!-- end auto-generated rule header -->
 

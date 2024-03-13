@@ -1,10 +1,7 @@
 {
-  "$schema": "https://unpkg.com/knip@next/schema.json",
-  "entry": ["src/index.ts!", "tests/**/*.test.ts", "cz-adapter/index.ts"],
-  "project": ["src/**/*.ts!", "tests/**/*.ts", "cz-adapter/**/*.ts"],
-  "ignoreDependencies": [
-    "@typescript-eslint/eslint-plugin-disable-type-checked",
-    "@vitest/coverage-c8"
-  ],
-  "ignore": ["tests/fixture/file.ts"]
+  "$schema": "node_modules/knip/schema-jsonc.json",
+  "entry": ["src/index.ts!", "tests/**/*.test.ts", "cz-adapter/index.js"],
+  "project": ["src/**/*.ts!", "tests/**/*.ts", "cz-adapter/**/*.{js,ts}"],
+  "ignore": ["tests/fixture/file.ts"],
+  "ignoreDependencies": ["@types/eslint", "@vitest/coverage-istanbul"],
 }

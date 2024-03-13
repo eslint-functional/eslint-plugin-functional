@@ -396,8 +396,8 @@ function parseEnforcement(rawEnforcement: RawEnforcement) {
   return rawEnforcement === "None"
     ? false
     : typeof rawEnforcement === "string"
-    ? Immutability[rawEnforcement]
-    : rawEnforcement;
+      ? Immutability[rawEnforcement]
+      : rawEnforcement;
 }
 
 /**
@@ -850,8 +850,8 @@ function checkVariable(
   const elements = isArrayPattern(nodeWithTypeAnnotation)
     ? nodeWithTypeAnnotation.elements
     : isObjectPattern(nodeWithTypeAnnotation)
-    ? nodeWithTypeAnnotation.properties
-    : [nodeWithTypeAnnotation];
+      ? nodeWithTypeAnnotation.properties
+      : [nodeWithTypeAnnotation];
 
   const elementResults = elements.map((element) => {
     if (!isDefined(element)) {

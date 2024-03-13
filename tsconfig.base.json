@@ -1,0 +1,48 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "alwaysStrict": true,
+    "declaration": false,
+    "esModuleInterop": true,
+    "exactOptionalPropertyTypes": true,
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": false,
+    "lib": ["ESNext"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "newLine": "LF",
+    "noEmitOnError": true,
+    "noErrorTruncation": true,
+    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "preserveConstEnums": true,
+    "pretty": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": false,
+    "strict": true,
+    "target": "ESNext",
+    "useUnknownInCatchVariables": true,
+    "types": ["vitest/importMeta"],
+    "baseUrl": ".",
+    "paths": {
+      "#eslint-plugin-functional": ["src"],
+      "#eslint-plugin-functional/configs/*": ["src/configs/*"],
+      "#eslint-plugin-functional/options": ["src/options"],
+      "#eslint-plugin-functional/rules": ["src/rules"],
+      "#eslint-plugin-functional/rules/*": ["src/rules/*"],
+      "#eslint-plugin-functional/settings": ["src/settings"],
+      "#eslint-plugin-functional/utils/*": ["src/utils/*"],
+      "#eslint-plugin-functional/conditional-imports/*": [
+        "src/utils/conditional-imports/*"
+      ],
+      "#eslint-plugin-functional/tests/*": ["tests/*"]
+    }
+  },
+  "exclude": ["dist/"]
+}

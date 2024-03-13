@@ -52,26 +52,26 @@ function getNodeIdentifierText(
     isIdentifier(node) || isPrivateIdentifier(node)
       ? node.name
       : hasID(node) && isDefined(node.id)
-      ? getNodeIdentifierText(node.id, context)
-      : hasKey(node) && isDefined(node.key)
-      ? getNodeIdentifierText(node.key, context)
-      : isAssignmentExpression(node)
-      ? getNodeIdentifierText(node.left, context)
-      : isMemberExpression(node)
-      ? `${getNodeIdentifierText(node.object, context)}.${getNodeIdentifierText(
-          node.property,
-          context,
-        )}`
-      : isThisExpression(node)
-      ? "this"
-      : isUnaryExpression(node)
-      ? getNodeIdentifierText(node.argument, context)
-      : isTSTypeAnnotation(node)
-      ? context
-          .getSourceCode()
-          .getText(node.typeAnnotation as TSESTree.Node)
-          .replaceAll(/\s+/gmu, "")
-      : null;
+        ? getNodeIdentifierText(node.id, context)
+        : hasKey(node) && isDefined(node.key)
+          ? getNodeIdentifierText(node.key, context)
+          : isAssignmentExpression(node)
+            ? getNodeIdentifierText(node.left, context)
+            : isMemberExpression(node)
+              ? `${getNodeIdentifierText(node.object, context)}.${getNodeIdentifierText(
+                  node.property,
+                  context,
+                )}`
+              : isThisExpression(node)
+                ? "this"
+                : isUnaryExpression(node)
+                  ? getNodeIdentifierText(node.argument, context)
+                  : isTSTypeAnnotation(node)
+                    ? context
+                        .getSourceCode()
+                        .getText(node.typeAnnotation as TSESTree.Node)
+                        .replaceAll(/\s+/gmu, "")
+                    : null;
 
   if (identifierText !== null) {
     return identifierText;

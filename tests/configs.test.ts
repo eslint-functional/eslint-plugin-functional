@@ -1,4 +1,4 @@
-import { describe, it } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import all from "#eslint-plugin-functional/configs/all";
 import currying from "#eslint-plugin-functional/configs/currying";
@@ -23,98 +23,85 @@ describe("Configs", () => {
     (rule) => rule.meta.deprecated === true,
   );
 
-  it('"All" - should have all the non-deprecated rules', (t) => {
-    const configRules = Object.keys(all.rules ?? {});
+  const allConfigRules = Object.keys(all.rules ?? {});
+  const deprecatedConfigRules = Object.keys(deprecated.rules ?? {});
+  const offConfigRules = Object.entries(off.rules ?? {});
 
-    t.expect(all.overrides).to.equal(
-      undefined,
-      "should not have any overrides",
-    );
-    t.expect(configRules.length).to.equal(
-      allNonDeprecatedRules.length,
-      "should have every non-deprecated rule",
-    );
-
-    for (const name of configRules) {
-      t.expect(
-        Boolean(
-          rules[name.slice("functional/".length) as keyof typeof rules].meta
-            .deprecated,
-        ),
-      ).to.equal(false, `Rule "${name}" should not be deprecated.`);
-    }
+  it('"All" - should have the right number of rules', () => {
+    expect(allConfigRules.length).to.equal(allNonDeprecatedRules.length);
   });
 
-  it('"Deprecated" - should only have deprecated rules', (t) => {
-    const configRules = Object.keys(deprecated.rules ?? {});
+  it.each(allConfigRules)(
+    '"All" - should have not have deprecated rules',
+    (name) => {
+      expect(
+        rules[name.slice("functional/".length) as keyof typeof rules].meta
+          .deprecated,
+      ).to.not.equal(true, `All Config contains deprecated rule "${name}".`);
+    },
+  );
 
-    t.expect(deprecated.overrides).to.equal(
-      undefined,
-      "should not have any overrides",
-    );
-    t.expect(configRules.length).to.equal(
+  it('"Deprecated" - should have the right number of rules', () => {
+    expect(deprecatedConfigRules.length).to.equal(
       allDeprecatedRules.length,
       "should have every deprecated rule",
     );
-
-    for (const name of configRules) {
-      t.expect(
-        rules[name.slice("functional/".length) as keyof typeof rules].meta
-          .deprecated,
-      ).to.equal(true, `Rule "${name}" should be deprecated.`);
-    }
   });
 
-  it('"Off" - should have all the rules but turned off', (t) => {
-    t.expect(off.overrides).to.equal(
-      undefined,
-      "should not have any overrides",
-    );
+  it.each(deprecatedConfigRules)(
+    '"Deprecated" - should have not have deprecated rules',
+    (name) => {
+      expect(
+        rules[name.slice("functional/".length) as keyof typeof rules].meta
+          .deprecated,
+      ).to.equal(
+        true,
+        `Deprecated Config contains non-deprecated rule "${name}".`,
+      );
+    },
+  );
 
-    const configRules = Object.entries(off.rules ?? {});
-    t.expect(configRules.length).to.equal(
+  it('"Off" - should have the right number of rules', () => {
+    expect(offConfigRules.length).to.equal(
       allRules.length,
       "should have every rule",
     );
+  });
 
-    for (const [name, value] of configRules) {
+  it.each(offConfigRules)(
+    '"Off" - should turn off all rules',
+    (name, value) => {
       const severity = Array.isArray(value) ? value[0] : value;
-      t.expect(severity).to.equal(
+      expect(severity).to.equal(
         "off",
         `Rule "${name}" should be turned off in the off config.`,
       );
-    }
-  });
+    },
+  );
 
   /**
    * A map of each config (except the special ones) to it's name.
    */
-  const configs = new Map([
-    [currying, "Currying"],
-    [recommended, "Recommended"],
-    [lite, "Lite"],
-    [strict, "Functional Strict"],
-    [noExceptions, "No Exceptions"],
-    [noMutations, "No Mutations"],
-    [noOtherParadigms, "No Other Paradigms"],
-    [noStatements, "No Statements"],
-    [stylistic, "Stylistic"],
-  ]);
+  const configs = [
+    ["Currying", currying],
+    ["Recommended", recommended],
+    ["Lite", lite],
+    ["Functional Strict", strict],
+    ["No Exceptions", noExceptions],
+    ["No Mutations", noMutations],
+    ["No Other Paradigms", noOtherParadigms],
+    ["No Statements", noStatements],
+    ["Stylistic", stylistic],
+  ] as const;
 
-  for (const [config, name] of configs.entries()) {
-    it(`Config "${name}"`, (t) => {
-      t.expect(config.overrides).to.equal(
-        undefined,
-        "should not have any overrides",
-      );
+  describe.each(configs)(
+    '"%s" Config rules are in the "All" Config',
+    (name, config) => {
+      const ruleNames = Object.keys(config.rules ?? {});
 
-      const rulesNames = Object.keys(config.rules ?? {});
-      if (rulesNames.length === 0) {
-        t.expect.fail("no rules");
-      }
-      for (const rule of rulesNames) {
-        t.expect(all.rules?.[rule]).toBeDefined();
-      }
-    });
-  }
+      it.each(ruleNames)(`%s`, (rule) => {
+        expect(all.rules?.[rule]).toBeDefined();
+      });
+    },
+  );
 });

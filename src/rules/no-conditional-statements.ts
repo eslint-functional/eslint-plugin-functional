@@ -218,7 +218,7 @@ function getSwitchViolations(
     }
 
     if (branch.consequent.every(isBlockStatement)) {
-      const lastBlock = branch.consequent.at(-1)!;
+      const lastBlock = branch.consequent.at(-1);
 
       if (lastBlock.body.some(isSwitchReturningBranch)) {
         return false;
@@ -255,7 +255,7 @@ function isExhaustiveTypeSwitchViolation(
   }
 
   const caseTypes = node.cases.reduce<ReadonlySet<Type>>(
-    (types, c) => new Set([...types, getTypeOfNode(c.test!, context)!]),
+    (types, c) => new Set([...types, getTypeOfNode(c.test!, context)]),
     new Set(),
   );
 
@@ -293,10 +293,10 @@ function checkIfStatement(
       allowReturningBranches === false
         ? [{ node, messageId: "unexpectedIf" }]
         : allowReturningBranches === "ifExhaustive"
-        ? isExhaustiveIfViolation(node)
-          ? [{ node, messageId: "incompleteIf" }]
-          : getIfBranchViolations(node, context)
-        : getIfBranchViolations(node, context),
+          ? isExhaustiveIfViolation(node)
+            ? [{ node, messageId: "incompleteIf" }]
+            : getIfBranchViolations(node, context)
+          : getIfBranchViolations(node, context),
   };
 }
 
@@ -316,10 +316,10 @@ function checkSwitchStatement(
       allowReturningBranches === false
         ? [{ node, messageId: "unexpectedSwitch" }]
         : allowReturningBranches === "ifExhaustive"
-        ? isExhaustiveSwitchViolation(node, context)
-          ? [{ node, messageId: "incompleteSwitch" }]
-          : getSwitchViolations(node, context)
-        : getSwitchViolations(node, context),
+          ? isExhaustiveSwitchViolation(node, context)
+            ? [{ node, messageId: "incompleteSwitch" }]
+            : getSwitchViolations(node, context)
+          : getSwitchViolations(node, context),
   };
 }
 

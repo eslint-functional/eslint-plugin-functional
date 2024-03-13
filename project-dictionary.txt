@@ -1,4 +1,5 @@
 automerge
+deassert
 declarator
 declarators
 deepmerge
@@ -10,6 +11,7 @@ klass
 knip
 lcov
 litecoin
+markdownlint
 noreply
 rebeccastevens
 ruleset

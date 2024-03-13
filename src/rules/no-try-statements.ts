@@ -88,8 +88,8 @@ function checkTryStatement(
       !allowCatch && node.handler !== null
         ? [{ node, messageId: "catch" }]
         : !allowFinally && node.finalizer !== null
-        ? [{ node, messageId: "finally" }]
-        : [],
+          ? [{ node, messageId: "finally" }]
+          : [],
   };
 }
 

@@ -224,8 +224,8 @@ function getRules(options: Readonly<Options>): ImmutabilityRule[] {
       rule.comparator === undefined
         ? RuleEnforcementComparator.AtLeast
         : typeof rule.comparator === "string"
-        ? RuleEnforcementComparator[rule.comparator]
-        : rule.comparator;
+          ? RuleEnforcementComparator[rule.comparator]
+          : rule.comparator;
 
     const fixers =
       rule.fixer === undefined || rule.fixer === false
@@ -382,8 +382,8 @@ function checkTypeDeclaration(
     rule.comparator === RuleEnforcementComparator.AtLeast
       ? rule.immutability
       : rule.comparator === RuleEnforcementComparator.More
-      ? rule.immutability + 1
-      : undefined;
+        ? rule.immutability + 1
+        : undefined;
 
   const immutability = getTypeImmutabilityOfNode(
     node,
