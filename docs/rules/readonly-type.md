@@ -1,6 +1,6 @@
 # Require consistently using either `readonly` keywords or `Readonly<T>` (`functional/readonly-type`)
 
-💼🚫 This rule is enabled in the following configs: 🌐 `all`, 🎨 `stylistic`. This rule is _disabled_ in the following configs: `disable-type-checked`, `off`.
+💼 This rule is enabled in the 🎨 `stylistic` config.
 
 🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 

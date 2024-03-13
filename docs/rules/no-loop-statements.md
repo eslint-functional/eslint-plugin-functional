@@ -1,6 +1,6 @@
 # Disallow imperative loops (`functional/no-loop-statements`)
 
-💼🚫 This rule is enabled in the following configs: 🌐 `all`, `lite`, `no-statements`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the `off` config.
+💼 This rule is enabled in the following configs: ☑️ `lite`, `no-statements`, ✅ `recommended`, 🔒 `strict`.
 
 <!-- end auto-generated rule header -->
 

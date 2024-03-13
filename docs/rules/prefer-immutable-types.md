@@ -1,6 +1,6 @@
 # Require function parameters to be typed as certain immutability (`functional/prefer-immutable-types`)
 
-💼🚫 This rule is enabled in the following configs: 🌐 `all`, `lite`, `no-mutations`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the following configs: `disable-type-checked`, `off`.
+💼 This rule is enabled in the following configs: ☑️ `lite`, `no-mutations`, ✅ `recommended`, 🔒 `strict`.
 
 🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 
@@ -458,11 +458,11 @@ Example using `ReadonlyDeep` instead of `Readonly`:
       [
         {
           "pattern": "^(?:Readonly<(.+)>|(.+))$",
-          "replace": "ReadonlyDeep<$1$2>"
-        }
-      ]
-    ]
-  }
+          "replace": "ReadonlyDeep<$1$2>",
+        },
+      ],
+    ],
+  },
 }
 ```
 

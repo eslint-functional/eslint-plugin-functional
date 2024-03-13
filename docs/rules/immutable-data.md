@@ -1,6 +1,6 @@
 # Enforce treating data as immutable (`functional/immutable-data`)
 
-💼🚫 This rule is enabled in the following configs: 🌐 `all`, `lite`, `no-mutations`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the following configs: `disable-type-checked`, `off`.
+💼 This rule is enabled in the following configs: ☑️ `lite`, `no-mutations`, ✅ `recommended`, 🔒 `strict`.
 
 💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 
@@ -132,28 +132,28 @@ For example:
 ```jsonc
 {
   // Ignore all reassigning to object properties that are prefixed with "mutable_".
-  "ignoreAccessorPattern": "**.mutable_*"
+  "ignoreAccessorPattern": "**.mutable_*",
 }
 ```
 
 ```jsonc
 {
   // Ignore all shallow mutations made to object properties that are prefixed with "mutable_".
-  "ignoreAccessorPattern": "**.mutable_*.*"
+  "ignoreAccessorPattern": "**.mutable_*.*",
 }
 ```
 
 ```jsonc
 {
   // Ignore all deep mutations made to object properties that are prefixed with "mutable_".
-  "ignoreAccessorPattern": "**.mutable_*.*.**"
+  "ignoreAccessorPattern": "**.mutable_*.*.**",
 }
 ```
 
 ```jsonc
 {
   // Ignore all deep mutations and reassigning to object properties that are prefixed with "mutable_".
-  "ignoreAccessorPattern": "**.mutable_*.**"
+  "ignoreAccessorPattern": "**.mutable_*.**",
   // This is the same as `"ignoreAccessorPattern": ["**.mutable_*", "**.mutable_*.*.**"]`
 }
 ```

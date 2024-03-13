@@ -1,6 +1,6 @@
 # Disallow this access (`functional/no-this-expressions`)
 
-💼🚫 This rule is enabled in the following configs: 🌐 `all`, `no-other-paradigms`, 🔒 `strict`. This rule is _disabled_ in the following configs: `lite`, `off`, ✅ `recommended`.
+💼🚫 This rule is enabled in the following configs: `no-other-paradigms`, 🔒 `strict`. This rule is _disabled_ in the following configs: ☑️ `lite`, ✅ `recommended`.
 
 <!-- end auto-generated rule header -->
 

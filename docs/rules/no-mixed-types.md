@@ -1,6 +1,6 @@
 # Restrict types so that only members of the same kind are allowed in them (`functional/no-mixed-types`)
 
-💼🚫 This rule is enabled in the following configs: 🌐 `all`, `lite`, `no-other-paradigms`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the following configs: `disable-type-checked`, `off`.
+💼 This rule is enabled in the following configs: ☑️ `lite`, `no-other-paradigms`, ✅ `recommended`, 🔒 `strict`.
 
 💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 

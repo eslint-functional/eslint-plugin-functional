@@ -1,6 +1,6 @@
 # Prefer property signatures over method signatures (`functional/prefer-property-signatures`)
 
-💼🚫 This rule is enabled in the following configs: 🌐 `all`, 🎨 `stylistic`. This rule is _disabled_ in the following configs: `disable-type-checked`, `off`.
+💼 This rule is enabled in the 🎨 `stylistic` config.
 
 💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 

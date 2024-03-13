@@ -1,6 +1,6 @@
 # Disallow expression statements (`functional/no-expression-statements`)
 
-💼🚫 This rule is enabled in the following configs: 🌐 `all`, `no-statements`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the following configs: `disable-type-checked`, `lite`, `off`.
+💼🚫 This rule is enabled in the following configs: `no-statements`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the ☑️ `lite` config.
 
 💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 

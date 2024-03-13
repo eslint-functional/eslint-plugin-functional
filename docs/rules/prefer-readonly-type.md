@@ -2,8 +2,6 @@
 
 ❌ This rule is deprecated. It was replaced by [`functional/prefer-immutable-types`](prefer-immutable-types.md),[`functional/type-declaration-immutability`](type-declaration-immutability.md).
 
-🚫 This rule is _disabled_ in the following configs: `disable-type-checked`, `off`.
-
 🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
 💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
