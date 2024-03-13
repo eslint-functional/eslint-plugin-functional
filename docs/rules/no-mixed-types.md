@@ -1,8 +1,8 @@
 # Restrict types so that only members of the same kind are allowed in them (`functional/no-mixed-types`)
 
-💼🚫 This rule is enabled in the following configs: ☑️ `lite`, `no-other-paradigms`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the `disable-type-checked` config.
+💼🚫 This rule is enabled in the following configs: `flat/all`, `flat/lite`, `flat/no-other-paradigms`, `flat/recommended`, `flat/strict`, ☑️ `lite`, `no-other-paradigms`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the following configs: `disable-type-checked`, `flat/disable-type-checked`, `flat/off`.
 
-💭 This rule requires type information.
+💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 
 <!-- end auto-generated rule header -->
 

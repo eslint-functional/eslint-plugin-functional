@@ -8,9 +8,6 @@ on:
       - .github/labels.yml
   workflow_dispatch:
 
-permissions:
-  pull-requests: write
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -18,7 +15,5 @@ jobs:
       - uses: actions/checkout@v4
 
       - uses: micnncim/action-label-syncer@v1
-        with:
-          manifest: .github/labels.yml
         env:
           GITHUB_TOKEN: ${{ github.token }}

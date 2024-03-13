@@ -24,10 +24,12 @@ jobs:
     uses: ./.github/workflows/lint-knip-prod.yml
   lint_markdown:
     uses: ./.github/workflows/lint-markdown.yml
-  lint_spelling:
-    uses: ./.github/workflows/lint-spelling.yml
+  lint_packages:
+    uses: ./.github/workflows/lint-packages.yml
   lint_prettier:
     uses: ./.github/workflows/lint-prettier.yml
+  lint_spelling:
+    uses: ./.github/workflows/lint-spelling.yml
   test:
     uses: ./.github/workflows/test-js.yml
   type_check:
@@ -39,8 +41,9 @@ jobs:
       - lint_docs
       - lint_knip_prod
       - lint_markdown
-      - lint_spelling
+      - lint_packages
       - lint_prettier
+      - lint_spelling
       - test
       - type_check
     runs-on: ubuntu-latest
@@ -50,8 +53,6 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
       - uses: ./.github/actions/prepare
-        with:
-          node-version: v20
 
       - name: Build
         run: pnpm run build

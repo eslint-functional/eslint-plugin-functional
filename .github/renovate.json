@@ -1,64 +1,64 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "automergeStrategy": "rebase",
   "extends": [
+    ":automergeAll",
+    ":automergePr",
     ":ignoreModulesAndTests",
-    "replacements:all",
-    "workarounds:all",
+    ":prConcurrentLimitNone",
+    ":prHourlyLimitNone",
+    ":semanticCommits",
     "group:allNonMajor",
     "group:monorepos",
     "group:recommended",
-    ":automergeAll",
-    ":automergePr",
-    ":semanticCommits",
-    ":prHourlyLimitNone",
-    ":prConcurrentLimitNone",
     "helpers:disableTypesNodeMajor",
-    "schedule:weekly"
+    "replacements:all",
+    "schedule:monthly",
+    "workarounds:all"
   ],
   "labels": ["Type: Maintenance", ":blue_heart:"],
-  "automergeStrategy": "rebase",
-  "postUpdateOptions": ["pnpmDedupe"],
   "packageRules": [
     {
-      "matchManagers": ["npm"],
+      "major": {
+        "semanticCommitType": "build"
+      },
       "matchDepTypes": ["dependencies"],
+      "matchManagers": ["npm"],
       "rangeStrategy": "update-lockfile",
-      "semanticCommitType": "chore",
       "semanticCommitScope": "deps",
-      "major": {
-        "semanticCommitType": "build"
-      }
+      "semanticCommitType": "chore"
     },
     {
-      "matchManagers": ["npm"],
       "matchDepTypes": ["devDependencies"],
+      "matchManagers": ["npm"],
       "rangeStrategy": "pin",
-      "semanticCommitType": "chore",
-      "semanticCommitScope": "dev-deps"
+      "semanticCommitScope": "dev-deps",
+      "semanticCommitType": "chore"
     },
     {
-      "matchManagers": ["npm"],
-      "matchDepTypes": ["peerDependencies"],
-      "rangeStrategy": "widen",
-      "semanticCommitType": "chore",
-      "semanticCommitScope": "peer-deps",
       "major": {
         "semanticCommitType": "build"
-      }
+      },
+      "matchDepTypes": ["peerDependencies"],
+      "matchManagers": ["npm"],
+      "rangeStrategy": "widen",
+      "semanticCommitScope": "peer-deps",
+      "semanticCommitType": "chore"
     },
     {
       "matchManagers": ["github-actions"],
       "rangeStrategy": "replace",
-      "semanticCommitType": "ci",
-      "semanticCommitScope": "dev-deps"
+      "semanticCommitScope": "dev-deps",
+      "semanticCommitType": "ci"
     },
     {
-      "matchPackageNames": ["escape-string-regexp"],
-      "allowedVersions": "<5"
+      "allowedVersions": "<5",
+      "matchPackageNames": ["escape-string-regexp"]
     },
     {
-      "matchPackageNames": ["chalk"],
-      "allowedVersions": "<5"
+      "allowedVersions": "<5",
+      "matchPackageNames": ["chalk"]
     }
-  ]
+  ],
+  "postUpdateOptions": ["pnpmDedupe"]
 }

@@ -1,6 +1,6 @@
 # Disallow try-catch[-finally] and try-finally patterns (`functional/no-try-statements`)
 
-💼🚫 This rule is enabled in the following configs: `no-exceptions`, 🔒 `strict`. This rule is _disabled_ in the following configs: ☑️ `lite`, ✅ `recommended`.
+💼🚫 This rule is enabled in the following configs: `flat/all`, `flat/no-exceptions`, `flat/strict`, `no-exceptions`, 🔒 `strict`. This rule is _disabled_ in the following configs: `flat/lite`, `flat/off`, `flat/recommended`, ☑️ `lite`, ✅ `recommended`.
 
 <!-- end auto-generated rule header -->
 

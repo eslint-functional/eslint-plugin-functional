@@ -12,14 +12,15 @@
     "prettier"
   ],
   "parserOptions": {
-    "project": true
+    "project": "./tsconfig.eslint.json"
   },
   "ignorePatterns": [
     "/build/",
     "/coverage/",
     "/lib/",
     "/tests-compiled/",
-    "/cz-adapter/**/*.js"
+    "/node_modules/",
+    "/pnpm-lock.yaml"
   ],
   "rules": {
     "functional/prefer-immutable-types": "off",
@@ -64,7 +65,10 @@
     },
     {
       "files": ["**/*.test.ts"],
+      "plugins": ["vitest"],
+      "extends": ["plugin:vitest/recommended", "plugin:functional/off"],
       "rules": {
+        "@typescript-eslint/no-empty-function": "off",
         "@typescript-eslint/no-unsafe-argument": "off",
         "@typescript-eslint/no-unsafe-assignment": "off",
         "@typescript-eslint/no-unsafe-call": "off",
@@ -92,6 +96,13 @@
       "rules": {
         "@typescript-eslint/no-unused-vars": "off",
         "@typescript-eslint/no-explicit-any": "off"
+      }
+    },
+    {
+      "files": ["./**/*.cjs"],
+      "extends": ["plugin:@typescript-eslint/disable-type-checked"],
+      "parserOptions": {
+        "project": false
       }
     },
     // FIXME: This override is defined in the upsteam; it shouldn't need to be redefined here. Why?

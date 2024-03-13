@@ -1,6 +1,6 @@
 # Disallow throwing exceptions (`functional/no-throw-statements`)
 
-💼 This rule is enabled in the following configs: ☑️ `lite`, `no-exceptions`, ✅ `recommended`, 🔒 `strict`.
+💼🚫 This rule is enabled in the following configs: `flat/all`, `flat/lite`, `flat/no-exceptions`, `flat/recommended`, `flat/strict`, ☑️ `lite`, `no-exceptions`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the `flat/off` config.
 
 <!-- end auto-generated rule header -->
 

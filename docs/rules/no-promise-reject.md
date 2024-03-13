@@ -1,5 +1,7 @@
 # Disallow rejecting promises (`functional/no-promise-reject`)
 
+💼🚫 This rule is enabled in the `flat/all` config. This rule is _disabled_ in the `flat/off` config.
+
 <!-- end auto-generated rule header -->
 
 This rule disallows use of `Promise.reject()`.

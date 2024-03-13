@@ -1,11 +1,16 @@
-import { type Linter } from "@typescript-eslint/utils/ts-eslint";
+import { FlatConfig } from "@typescript-eslint/utils/ts-eslint";
 
-import * as preferReadonlyType from "#eslint-plugin-functional/rules/prefer-readonly-type";
+import { rules } from "#eslint-plugin-functional/rules";
+import { ruleNameScope } from "#eslint-plugin-functional/utils/misc";
 
-const config: Linter.Config = {
-  rules: {
-    [`functional/${preferReadonlyType.name}`]: "warn",
-  },
-};
-
-export default config;
+export default Object.fromEntries(
+  Object.entries(rules)
+    .filter(
+      ([, rule]) =>
+        rule.meta.deprecated === true && rule.meta.docs.recommended !== false,
+    )
+    .map(([name, rule]) => [
+      `${ruleNameScope}/${name}`,
+      rule.meta.docs.recommendedServerity,
+    ]),
+) satisfies FlatConfig.Config["rules"];

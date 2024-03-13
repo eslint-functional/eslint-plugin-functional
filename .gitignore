@@ -1,9 +1,9 @@
-/lib/
+node_modules/
+
 /build/
 /coverage/
+/lib/
 /tests-compiled/
-
-node_modules/
 
 *.log
 

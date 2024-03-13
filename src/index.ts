@@ -1,4 +1,8 @@
-import { type Linter } from "@typescript-eslint/utils/ts-eslint";
+import {
+  ClassicConfig,
+  FlatConfig,
+  type Linter,
+} from "@typescript-eslint/utils/ts-eslint";
 
 import all from "#eslint-plugin-functional/configs/all";
 import currying from "#eslint-plugin-functional/configs/currying";
@@ -14,26 +18,69 @@ import off from "#eslint-plugin-functional/configs/off";
 import recommended from "#eslint-plugin-functional/configs/recommended";
 import strict from "#eslint-plugin-functional/configs/strict";
 import stylistic from "#eslint-plugin-functional/configs/stylistic";
+import { name } from "#eslint-plugin-functional/package.json";
 import { rules } from "#eslint-plugin-functional/rules";
+import { __VERSION__ } from "#eslint-plugin-functional/utils/constants";
+import { ruleNameScope } from "#eslint-plugin-functional/utils/misc";
 
-const config: Linter.Plugin = {
-  rules,
-  configs: {
-    all,
-    lite,
-    recommended,
-    strict,
-    off,
-    "disable-type-checked": disableTypeChecked,
-    "external-vanilla-recommended": externalVanillaRecommended,
-    "external-typescript-recommended": externalTypeScriptRecommended,
-    currying,
-    "no-exceptions": noExceptions,
-    "no-mutations": noMutations,
-    "no-other-paradigms": noOtherParadigms,
-    "no-statements": noStatements,
-    stylistic,
+const createConfig = (
+  rules: NonNullable<FlatConfig.Config["rules"]>,
+  isLegacyConfig = false,
+) =>
+  isLegacyConfig
+    ? ({ plugins: [ruleNameScope], rules } satisfies ClassicConfig.Config)
+    : ({ plugins: { functional }, rules } satisfies FlatConfig.Config);
+
+const functional = {
+  meta: {
+    name,
+    version: __VERSION__,
   },
-};
+  rules,
+} satisfies Omit<FlatConfig.Plugin, "configs">;
 
-export default config;
+const configs = Object.fromEntries(
+  (
+    [
+      [false, "flat/"],
+      [true, ""],
+    ] as [boolean, string][]
+  ).flatMap(
+    ([isLegacyConfig, prefix]): [
+      string,
+      FlatConfig.Config | ClassicConfig.Config,
+    ][] => [
+      [`${prefix}all`, createConfig(all, isLegacyConfig)],
+      [`${prefix}lite`, createConfig(lite, isLegacyConfig)],
+      [`${prefix}recommended`, createConfig(recommended, isLegacyConfig)],
+      [`${prefix}strict`, createConfig(strict, isLegacyConfig)],
+      [`${prefix}off`, createConfig(off, isLegacyConfig)],
+      [
+        `${prefix}disable-type-checked`,
+        createConfig(disableTypeChecked, isLegacyConfig),
+      ],
+      [
+        `${prefix}external-vanilla-recommended`,
+        createConfig(externalVanillaRecommended, isLegacyConfig),
+      ],
+      [
+        `${prefix}external-typescript-recommended`,
+        createConfig(externalTypeScriptRecommended, isLegacyConfig),
+      ],
+      [`${prefix}currying`, createConfig(currying, isLegacyConfig)],
+      [`${prefix}no-exceptions`, createConfig(noExceptions, isLegacyConfig)],
+      [`${prefix}no-mutations`, createConfig(noMutations, isLegacyConfig)],
+      [
+        `${prefix}no-other-paradigms`,
+        createConfig(noOtherParadigms, isLegacyConfig),
+      ],
+      [`${prefix}no-statements`, createConfig(noStatements, isLegacyConfig)],
+      [`${prefix}stylistic`, createConfig(stylistic, isLegacyConfig)],
+    ],
+  ),
+) satisfies Record<string, FlatConfig.Config | ClassicConfig.Config>;
+
+export default {
+  ...functional,
+  configs,
+} as Linter.Plugin;

@@ -1,10 +1,11 @@
+import { ruleNameScope } from "#eslint-plugin-functional/utils/misc";
 import { type TSESTree } from "@typescript-eslint/utils";
 import { type JSONSchema4 } from "@typescript-eslint/utils/json-schema";
 import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
 import {
   createRule,
-  type NamedCreateRuleMetaWithCategory,
+  type NamedCreateRuleCustomMeta,
   type RuleResult,
 } from "#eslint-plugin-functional/utils/rule";
 import {
@@ -16,6 +17,11 @@ import {
  * The name of this rule.
  */
 export const name = "no-promise-reject" as const;
+
+/**
+ * The full name of this rule.
+ */
+export const fullName = `${ruleNameScope}/${name}` as const;
 
 /**
  * The options this rule can take.
@@ -42,11 +48,13 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     category: "No Exceptions",
     description: "Disallow rejecting promises.",
+    recommended: false,
+    recommendedServerity: "error",
   },
   messages: errorMessages,
   schema,

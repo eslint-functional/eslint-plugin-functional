@@ -1,18 +1,37 @@
 {
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Debug Current Test File",
       "type": "node",
       "request": "launch",
-      "name": "Debug Current Test File",
-      "autoAttachChildProcesses": true,
-      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
+
+      // Run tester.
       "program": "${workspaceRoot}/node_modules/vitest/vitest.mjs",
       "args": ["run", "${relativeFile}"],
+      "autoAttachChildProcesses": true,
+
       "smartStep": true,
       "sourceMaps": true,
-      "console": "integratedTerminal"
+
+      /*
+       * Open terminal when debugging starts.
+       * Useful to see console.logs
+       */
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+
+      // Files to exclude from debugger.
+      "skipFiles": [
+        // Node.js internal core modules.
+        "<node_internals>/**",
+
+        // Ignore all dependencies.
+        "${workspaceFolder}/node_modules/**"
+      ]
     }
   ]
 }

@@ -1,10 +1,20 @@
-import rollupPluginTypescript from "@rollup/plugin-typescript";
-import { defineConfig } from "rollup";
+import rollupPluginJson from "@rollup/plugin-json";
+import rollupPluginReplace from "@rollup/plugin-replace";
+import { rollupPlugin as rollupPluginDeassert } from "deassert";
+import { type RollupOptions } from "rollup";
 import rollupPluginAutoExternal from "rollup-plugin-auto-external";
+import rollupPluginTs from "rollup-plugin-ts";
 
 import pkg from "./package.json" assert { type: "json" };
 
-export default defineConfig({
+const treeshake = {
+  annotations: true,
+  moduleSideEffects: [],
+  propertyReadSideEffects: false,
+  unknownGlobalSideEffects: false,
+} satisfies RollupOptions["treeshake"];
+
+const library = {
   input: "src/index.ts",
 
   output: [
@@ -20,14 +30,25 @@ export default defineConfig({
     },
   ],
 
-  plugins: [rollupPluginAutoExternal(), rollupPluginTypescript()],
+  plugins: [
+    rollupPluginAutoExternal(),
+    rollupPluginTs({
+      transpileOnly: true,
+      tsconfig: "tsconfig.build.json",
+    }),
+    rollupPluginJson(),
+    rollupPluginReplace({
+      values: {
+        "import.meta.vitest": "undefined",
+      },
+      preventAssignment: true,
+    }),
+    rollupPluginDeassert({
+      include: ["**/*.{js,ts}"],
+    }),
+  ],
 
-  external: [],
+  treeshake,
+} satisfies RollupOptions;
 
-  treeshake: {
-    annotations: true,
-    moduleSideEffects: [],
-    propertyReadSideEffects: false,
-    unknownGlobalSideEffects: false,
-  },
-});
+export default [library];

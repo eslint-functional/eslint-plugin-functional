@@ -11,10 +11,10 @@ import { type RuleModule } from "@typescript-eslint/utils/ts-eslint";
 
 import {
   createRuleUsingFunction,
-  type NamedCreateRuleMetaWithCategory,
   type RuleFunctionsMap,
 } from "#eslint-plugin-functional/utils/rule";
 
+import { NamedCreateRuleMeta } from "@typescript-eslint/utils/eslint-utils";
 import { filename as dummyFilename } from "./configs";
 
 type OptionsSets = {
@@ -88,10 +88,9 @@ export function createDummyRule(
     context: Readonly<TSESLint.RuleContext<"generic", any>>,
   ) => RuleFunctionsMap<any, "generic", any>,
 ): RuleModule<string, [boolean, ...unknown[]]> {
-  const meta: NamedCreateRuleMetaWithCategory<"generic"> = {
+  const meta: NamedCreateRuleMeta<"generic"> = {
     type: "suggestion",
     docs: {
-      category: "testing",
       description: "rule used in testing",
     },
     messages: {
@@ -109,7 +108,12 @@ export function createDummyRule(
     },
   };
 
-  return createRuleUsingFunction("dummy-rule", meta, [true, {}], create);
+  return createRuleUsingFunction(
+    "dummy-rule",
+    meta as any,
+    [true, {}],
+    create,
+  ) as any;
 }
 
 /**

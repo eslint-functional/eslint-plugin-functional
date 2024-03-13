@@ -1,12 +1,17 @@
 "*.{json,yml}":
   - prettier --ignore-unknown --write
+  - cspell lint --no-progress --show-suggestions --show-context --no-must-find-files --dot
 
 "*.ts":
   - prettier --ignore-unknown --write
   - eslint --fix
-  - cspell
+  - cspell lint --no-progress --show-suggestions --show-context --no-must-find-files --dot
+  - tsc-files -p tsconfig.build.json --noEmit
 
 "*.md":
   - prettier --ignore-unknown --write
   - markdownlint --config=.markdownlint.json --ignore-path=.markdownlintignore
-  - cspell
+  - cspell lint --no-progress --show-suggestions --show-context --no-must-find-files --dot
+
+"pnpm-lock.yaml":
+  - "pnpm dedupe && :"

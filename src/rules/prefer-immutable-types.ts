@@ -1,3 +1,4 @@
+import { ruleNameScope } from "#eslint-plugin-functional/utils/misc";
 import { type TSESTree } from "@typescript-eslint/utils";
 import {
   type JSONSchema4,
@@ -24,7 +25,7 @@ import {
   getTypeImmutabilityOfNode,
   getTypeImmutabilityOfType,
   isImplementationOfOverload,
-  type NamedCreateRuleMetaWithCategory,
+  type NamedCreateRuleCustomMeta,
   type RuleResult,
 } from "#eslint-plugin-functional/utils/rule";
 import {
@@ -45,6 +46,11 @@ import {
  * The name of this rule.
  */
 export const name = "prefer-immutable-types" as const;
+
+/**
+ * The full name of this rule.
+ */
+export const fullName = `${ruleNameScope}/${name}` as const;
 
 type RawEnforcement =
   | Exclude<Immutability | keyof typeof Immutability, "Unknown" | "Mutable">
@@ -302,12 +308,14 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     category: "No Mutations",
     description:
       "Require function parameters to be typed as certain immutability",
+    recommended: "recommended",
+    recommendedServerity: "error",
     requiresTypeChecking: true,
   },
   fixable: "code",
@@ -335,10 +343,7 @@ function getAllFixers(
   fixerConfigs: FixerConfig[] | false,
   suggestionsConfigs: SuggestionsConfig[] | false,
 ): AllFixers {
-  const nodeText = context
-    .getSourceCode()
-    .getText(node)
-    .replaceAll(/\s+/gmu, " ");
+  const nodeText = context.sourceCode.getText(node).replaceAll(/\s+/gmu, " ");
 
   const fix =
     fixerConfigs === false
@@ -396,8 +401,8 @@ function parseEnforcement(rawEnforcement: RawEnforcement) {
   return rawEnforcement === "None"
     ? false
     : typeof rawEnforcement === "string"
-    ? Immutability[rawEnforcement]
-    : rawEnforcement;
+      ? Immutability[rawEnforcement]
+      : rawEnforcement;
 }
 
 /**
@@ -850,8 +855,8 @@ function checkVariable(
   const elements = isArrayPattern(nodeWithTypeAnnotation)
     ? nodeWithTypeAnnotation.elements
     : isObjectPattern(nodeWithTypeAnnotation)
-    ? nodeWithTypeAnnotation.properties
-    : [nodeWithTypeAnnotation];
+      ? nodeWithTypeAnnotation.properties
+      : [nodeWithTypeAnnotation];
 
   const elementResults = elements.map((element) => {
     if (!isDefined(element)) {

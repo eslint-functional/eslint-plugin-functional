@@ -1,12 +1,10 @@
-const { format } = require("prettier");
+import type { GenerateOptions } from "eslint-doc-generator";
+import { format } from "prettier";
 
-/** @type {import('eslint-doc-generator').GenerateOptions} */
-const config = {
+export default {
   configEmoji: [["lite", "☑️"]],
   ignoreConfig: ["all", "off"],
   ruleDocSectionInclude: ["Rule Details"],
   ruleListSplit: "meta.docs.category",
   postprocess: (doc) => format(doc, { parser: "markdown" }),
-};
-
-module.exports = config;
+} satisfies GenerateOptions;

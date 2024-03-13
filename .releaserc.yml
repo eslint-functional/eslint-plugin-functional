@@ -48,10 +48,10 @@ plugins:
     - replacements:
         - files:
             - "./lib/**/*"
-          from: "\\$\\{__VERSION__\\}"
-          to: "${nextRelease.version}"
+          from: __VERSION__ = "0.0.0-development"
+          to: __VERSION__ = "${nextRelease.version}"
           results:
-            - file: "./lib/index.js"
+            - file: "./lib/index.cjs"
               hasChanged: true
               numMatches: 1
               numReplacements: 1

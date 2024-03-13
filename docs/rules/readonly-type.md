@@ -1,10 +1,10 @@
 # Require consistently using either `readonly` keywords or `Readonly<T>` (`functional/readonly-type`)
 
-💼🚫 This rule is enabled in the 🎨 `stylistic` config. This rule is _disabled_ in the `disable-type-checked` config.
+💼🚫 This rule is enabled in the following configs: `flat/all`, `flat/stylistic`, 🎨 `stylistic`. This rule is _disabled_ in the following configs: `disable-type-checked`, `flat/disable-type-checked`, `flat/off`.
 
 🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
-💭 This rule requires type information.
+💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 
 <!-- end auto-generated rule header -->
 

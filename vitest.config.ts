@@ -17,7 +17,7 @@ function getBoolean(value: string | undefined) {
 const useCompiledTests = getBoolean(process.env["USE_COMPILED_TESTS"]);
 
 const testFilePattern = `${
-  useCompiledTests ? "tests-compiled" : "."
+  useCompiledTests ? "./tests-compiled" : "."
 }/**/*.test.${useCompiledTests ? "js" : "ts"}`;
 
 export default defineConfig({
@@ -25,12 +25,11 @@ export default defineConfig({
 
   test: {
     include: [testFilePattern],
+    exclude: ["lib", "node_modules"],
     coverage: {
-      provider: "c8",
-      include: ["src/**/*.ts"],
-      // @ts-expect-error -- Untyped option.
-      excludeAfterRemap: true,
-      clean: true,
+      all: true,
+      include: ["src"],
+      exclude: ["lib"],
       reporter: ["lcov", "text"],
       watermarks: {
         lines: [80, 95],
