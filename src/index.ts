@@ -1,7 +1,6 @@
 import {
   type ClassicConfig,
   type FlatConfig,
-  type Linter,
 } from "@typescript-eslint/utils/ts-eslint";
 
 import all from "#eslint-plugin-functional/configs/all";
@@ -26,59 +25,72 @@ const functional = {
   meta: {
     name: "eslint-plugin-functional",
     version: __VERSION__,
-  },
+  } as const,
   rules,
 } satisfies Omit<FlatConfig.Plugin, "configs">;
 
-const createConfig = (
-  rules: NonNullable<FlatConfig.Config["rules"]>,
-  isLegacyConfig = false,
-) =>
-  isLegacyConfig
-    ? ({ plugins: [ruleNameScope], rules } satisfies ClassicConfig.Config)
-    : ({ plugins: { functional }, rules } satisfies FlatConfig.Config);
+const classicConfigs = {
+  all: { plugins: [ruleNameScope], rules: all },
+  lite: { plugins: [ruleNameScope], rules: lite },
+  recommended: { plugins: [ruleNameScope], rules: recommended },
+  strict: { plugins: [ruleNameScope], rules: strict },
+  off: { plugins: [ruleNameScope], rules: off },
+  "disable-type-checked": {
+    plugins: [ruleNameScope],
+    rules: disableTypeChecked,
+  },
+  "external-vanilla-recommended": {
+    plugins: [ruleNameScope],
+    rules: externalVanillaRecommended,
+  },
+  "external-typescript-recommended": {
+    plugins: [ruleNameScope],
+    rules: externalTypeScriptRecommended,
+  },
+  currying: { plugins: [ruleNameScope], rules: currying },
+  "no-exceptions": { plugins: [ruleNameScope], rules: noExceptions },
+  "no-mutations": { plugins: [ruleNameScope], rules: noMutations },
+  "no-other-paradigms": { plugins: [ruleNameScope], rules: noOtherParadigms },
+  "no-statements": { plugins: [ruleNameScope], rules: noStatements },
+  stylistic: { plugins: [ruleNameScope], rules: stylistic },
+} satisfies Record<string, ClassicConfig.Config>;
 
-const configs = Object.fromEntries(
-  (
-    [
-      [false, "flat/"],
-      [true, ""],
-    ] as Array<[boolean, string]>
-  ).flatMap(
-    ([isLegacyConfig, prefix]): Array<
-      [string, FlatConfig.Config | ClassicConfig.Config]
-    > => [
-      [`${prefix}all`, createConfig(all, isLegacyConfig)],
-      [`${prefix}lite`, createConfig(lite, isLegacyConfig)],
-      [`${prefix}recommended`, createConfig(recommended, isLegacyConfig)],
-      [`${prefix}strict`, createConfig(strict, isLegacyConfig)],
-      [`${prefix}off`, createConfig(off, isLegacyConfig)],
-      [
-        `${prefix}disable-type-checked`,
-        createConfig(disableTypeChecked, isLegacyConfig),
-      ],
-      [
-        `${prefix}external-vanilla-recommended`,
-        createConfig(externalVanillaRecommended, isLegacyConfig),
-      ],
-      [
-        `${prefix}external-typescript-recommended`,
-        createConfig(externalTypeScriptRecommended, isLegacyConfig),
-      ],
-      [`${prefix}currying`, createConfig(currying, isLegacyConfig)],
-      [`${prefix}no-exceptions`, createConfig(noExceptions, isLegacyConfig)],
-      [`${prefix}no-mutations`, createConfig(noMutations, isLegacyConfig)],
-      [
-        `${prefix}no-other-paradigms`,
-        createConfig(noOtherParadigms, isLegacyConfig),
-      ],
-      [`${prefix}no-statements`, createConfig(noStatements, isLegacyConfig)],
-      [`${prefix}stylistic`, createConfig(stylistic, isLegacyConfig)],
-    ],
-  ),
-) satisfies Record<string, FlatConfig.Config | ClassicConfig.Config>;
+const flatConfigs = {
+  "flat/all": { plugins: { functional }, rules: all },
+  "flat/lite": { plugins: { functional }, rules: lite },
+  "flat/recommended": { plugins: { functional }, rules: recommended },
+  "flat/strict": { plugins: { functional }, rules: strict },
+  "flat/off": { plugins: { functional }, rules: off },
+  "flat/disable-type-checked": {
+    plugins: { functional },
+    rules: disableTypeChecked,
+  },
+  "flat/external-vanilla-recommended": {
+    plugins: { functional },
+    rules: externalVanillaRecommended,
+  },
+  "flat/external-typescript-recommended": {
+    plugins: { functional },
+    rules: externalTypeScriptRecommended,
+  },
+  "flat/currying": { plugins: { functional }, rules: currying },
+  "flat/no-exceptions": { plugins: { functional }, rules: noExceptions },
+  "flat/no-mutations": { plugins: { functional }, rules: noMutations },
+  "flat/no-other-paradigms": {
+    plugins: { functional },
+    rules: noOtherParadigms,
+  },
+  "flat/no-statements": { plugins: { functional }, rules: noStatements },
+  "flat/stylistic": { plugins: { functional }, rules: stylistic },
+} satisfies Record<string, FlatConfig.Config>;
 
 export default {
   ...functional,
-  configs,
-} as Linter.Plugin;
+  configs: {
+    ...(flatConfigs as Record<keyof typeof flatConfigs, FlatConfig.Config>),
+    ...(classicConfigs as Record<
+      keyof typeof classicConfigs,
+      ClassicConfig.Config
+    >),
+  } as const,
+} as const;
