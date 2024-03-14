@@ -55,6 +55,14 @@ plugins:
               hasChanged: true
               numMatches: 1
               numReplacements: 1
+            - file: "./lib/index.d.cts"
+              hasChanged: false
+              numMatches: 0
+              numReplacements: 0
+            - file: "./lib/index.d.mts"
+              hasChanged: false
+              numMatches: 0
+              numReplacements: 0
             - file: "./lib/index.mjs"
               hasChanged: true
               numMatches: 1

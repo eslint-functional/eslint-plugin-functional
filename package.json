@@ -34,10 +34,15 @@
     "Jonas Kello"
   ],
   "exports": {
+    "types": {
+      "import": "./lib/index.d.mts",
+      "require": "./lib/index.d.cts"
+    },
     "import": "./lib/index.mjs",
     "require": "./lib/index.cjs"
   },
   "main": "lib/index.cjs",
+  "types": "lib/index.d.cts",
   "files": [
     "lib/",
     "package.json",
