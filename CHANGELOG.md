@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+# [6.2.0-next.3](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.2.0-next.2...v6.2.0-next.3) (2024-03-14)
+
+
+### Features
+
+* move flat configs to new "flat" subpackage ([1d3533f](https://github.com/eslint-functional/eslint-plugin-functional/commit/1d3533fca47673ca1dc9e50dbe5a00ad8adb5362))
+
 # [6.2.0-next.2](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.2.0-next.1...v6.2.0-next.2) (2024-03-14)
 
 
