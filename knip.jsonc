@@ -1,6 +1,11 @@
 {
   "$schema": "node_modules/knip/schema-jsonc.json",
-  "entry": ["src/index.ts!", "tests/**/*.test.ts", "cz-adapter/index.js"],
+  "entry": [
+    "src/flat.ts!",
+    "src/classic.ts!",
+    "tests/**/*.test.ts",
+    "cz-adapter/index.js",
+  ],
   "project": ["src/**/*.ts!", "tests/**/*.ts", "cz-adapter/**/*.{js,ts}"],
   "ignore": ["tests/fixture/file.ts"],
   "ignoreDependencies": ["@types/eslint", "@vitest/coverage-istanbul"],

@@ -30,6 +30,17 @@ pnpm add -D eslint @typescript-eslint/parser eslint-plugin-functional
 
 ## Usage
 
+### Flat Config
+
+If using the new [flat config](https://eslint.org/docs/latest/use/configure/configuration-files-new),
+import from `eslint-plugin-functional/flat`.
+
+```ts
+import functional from "eslint-plugin-functional/flat";
+```
+
+### Classic Config
+
 Add `functional` to the plugins section of your `.eslintrc` configuration file. Then configure the rules you want to use under the rules section.
 
 ```jsonc

@@ -12,17 +12,17 @@ const treeshake = {
   unknownGlobalSideEffects: false,
 } satisfies RollupOptions["treeshake"];
 
-const library = {
-  input: "src/index.ts",
+const classic = {
+  input: "src/classic.ts",
 
   output: [
     {
-      file: pkg.exports.import,
+      file: pkg.exports["."].import,
       format: "esm",
       sourcemap: false,
     },
     {
-      file: pkg.exports.require,
+      file: pkg.exports["."].require,
       format: "cjs",
       sourcemap: false,
     },
@@ -42,4 +42,34 @@ const library = {
   treeshake,
 } satisfies RollupOptions;
 
-export default [library];
+const flat = {
+  input: "src/flat.ts",
+
+  output: [
+    {
+      file: pkg.exports["./flat"].import,
+      format: "esm",
+      sourcemap: false,
+    },
+    {
+      file: pkg.exports["./flat"].require,
+      format: "cjs",
+      sourcemap: false,
+    },
+  ],
+
+  plugins: [
+    rollupPluginAutoExternal(),
+    rollupPluginTs({
+      transpileOnly: true,
+      tsconfig: "tsconfig.build.json",
+    }),
+    rollupPluginDeassert({
+      include: ["**/*.{js,ts}"],
+    }),
+  ],
+
+  treeshake,
+} satisfies RollupOptions;
+
+export default [classic, flat];

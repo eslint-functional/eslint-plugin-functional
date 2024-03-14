@@ -31,7 +31,8 @@
     "types": ["vitest/importMeta"],
     "baseUrl": ".",
     "paths": {
-      "#eslint-plugin-functional": ["src"],
+      "#eslint-plugin-functional/flat": ["src/flat.ts"],
+      "#eslint-plugin-functional/classic": ["src/classic.ts"],
       "#eslint-plugin-functional/configs/*": ["src/configs/*"],
       "#eslint-plugin-functional/options": ["src/options"],
       "#eslint-plugin-functional/rules": ["src/rules"],

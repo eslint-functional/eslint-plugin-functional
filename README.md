@@ -35,9 +35,6 @@ Tidelift is working with the maintainers of `eslint-plugin-functional` and a gro
 
 The following rulesets are made available by this plugin.
 
-Note: if using a [flat config](https://eslint.org/docs/latest/use/configure/configuration-files-new) add a `flat/` prefix to the preset name
-(e.g. `functional.configs["flat/recommended"]`).
-
 Presets:
 
 - **Strict** (`plugin:functional/strict`)\

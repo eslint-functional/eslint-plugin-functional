@@ -34,15 +34,25 @@
     "Jonas Kello"
   ],
   "exports": {
-    "types": {
-      "import": "./lib/index.d.mts",
-      "require": "./lib/index.d.cts"
+    ".": {
+      "types": {
+        "import": "./lib/classic.d.mts",
+        "require": "./lib/classic.d.cts"
+      },
+      "import": "./lib/classic.mjs",
+      "require": "./lib/classic.cjs"
     },
-    "import": "./lib/index.mjs",
-    "require": "./lib/index.cjs"
+    "./flat": {
+      "types": {
+        "import": "./lib/flat.d.mts",
+        "require": "./lib/flat.d.cts"
+      },
+      "import": "./lib/flat.mjs",
+      "require": "./lib/flat.cjs"
+    }
   },
-  "main": "lib/index.cjs",
-  "types": "lib/index.d.cts",
+  "main": "lib/classic.cjs",
+  "types": "lib/classic.d.cts",
   "files": [
     "lib/",
     "package.json",
