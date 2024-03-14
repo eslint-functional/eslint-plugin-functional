@@ -1,6 +1,14 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+# [6.2.0-next.2](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.2.0-next.1...v6.2.0-next.2) (2024-03-14)
+
+
+### Bug Fixes
+
+* build types ([054a862](https://github.com/eslint-functional/eslint-plugin-functional/commit/054a86299e5b6c97a78f72a7711938273d56ef82))
+* improve types ([2340489](https://github.com/eslint-functional/eslint-plugin-functional/commit/23404897399caa4f70ed0d5eb24b9ab300b65600))
+
 # [6.2.0-next.1](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.1.1...v6.2.0-next.1) (2024-03-13)
 
 
