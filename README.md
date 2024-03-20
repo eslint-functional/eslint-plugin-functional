@@ -33,7 +33,7 @@ Tidelift is working with the maintainers of `eslint-plugin-functional` and a gro
 
 ## Rulesets
 
-The following rulesets are made available by this plugin:
+The following rulesets are made available by this plugin.
 
 Presets:
 

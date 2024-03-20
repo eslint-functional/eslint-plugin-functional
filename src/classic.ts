@@ -15,25 +15,33 @@ import recommended from "#eslint-plugin-functional/configs/recommended";
 import strict from "#eslint-plugin-functional/configs/strict";
 import stylistic from "#eslint-plugin-functional/configs/stylistic";
 import { rules } from "#eslint-plugin-functional/rules";
+import { ruleNameScope } from "#eslint-plugin-functional/utils/misc";
 
-const config: Linter.Plugin = {
+export default {
   rules,
   configs: {
-    all,
-    lite,
-    recommended,
-    strict,
-    off,
-    "disable-type-checked": disableTypeChecked,
-    "external-vanilla-recommended": externalVanillaRecommended,
-    "external-typescript-recommended": externalTypeScriptRecommended,
-    currying,
-    "no-exceptions": noExceptions,
-    "no-mutations": noMutations,
-    "no-other-paradigms": noOtherParadigms,
-    "no-statements": noStatements,
-    stylistic,
+    all: { plugins: [ruleNameScope], rules: all },
+    lite: { plugins: [ruleNameScope], rules: lite },
+    recommended: { plugins: [ruleNameScope], rules: recommended },
+    strict: { plugins: [ruleNameScope], rules: strict },
+    off: { plugins: [ruleNameScope], rules: off },
+    "disable-type-checked": {
+      plugins: [ruleNameScope],
+      rules: disableTypeChecked,
+    },
+    "external-vanilla-recommended": {
+      plugins: [ruleNameScope],
+      rules: externalVanillaRecommended,
+    },
+    "external-typescript-recommended": {
+      plugins: [ruleNameScope],
+      rules: externalTypeScriptRecommended,
+    },
+    currying: { plugins: [ruleNameScope], rules: currying },
+    "no-exceptions": { plugins: [ruleNameScope], rules: noExceptions },
+    "no-mutations": { plugins: [ruleNameScope], rules: noMutations },
+    "no-other-paradigms": { plugins: [ruleNameScope], rules: noOtherParadigms },
+    "no-statements": { plugins: [ruleNameScope], rules: noStatements },
+    stylistic: { plugins: [ruleNameScope], rules: stylistic },
   },
-};
-
-export default config;
+} as Linter.Plugin;

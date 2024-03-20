@@ -1,11 +1,18 @@
-import { type Linter } from "@typescript-eslint/utils/ts-eslint";
+import { type FlatConfig } from "@typescript-eslint/utils/ts-eslint";
 
-import * as functionalParameters from "#eslint-plugin-functional/rules/functional-parameters";
+import { rules } from "#eslint-plugin-functional/rules";
+import { ruleNameScope } from "#eslint-plugin-functional/utils/misc";
 
-const config: Linter.Config = {
-  rules: {
-    [`functional/${functionalParameters.name}`]: "error",
-  },
-};
-
-export default config;
+export default Object.fromEntries(
+  Object.entries(rules)
+    .filter(
+      ([, rule]) =>
+        rule.meta.deprecated !== true &&
+        rule.meta.docs.category === "Currying" &&
+        rule.meta.docs.recommended !== false,
+    )
+    .map(([name, rule]) => [
+      `${ruleNameScope}/${name}`,
+      rule.meta.docs.recommendedSeverity,
+    ]),
+) satisfies FlatConfig.Config["rules"];

@@ -2,7 +2,6 @@ import { describe, expect, it } from "vitest";
 
 import all from "#eslint-plugin-functional/configs/all";
 import currying from "#eslint-plugin-functional/configs/currying";
-import deprecated from "#eslint-plugin-functional/configs/deprecated";
 import lite from "#eslint-plugin-functional/configs/lite";
 import noExceptions from "#eslint-plugin-functional/configs/no-exceptions";
 import noMutations from "#eslint-plugin-functional/configs/no-mutations";
@@ -16,16 +15,11 @@ import { rules } from "#eslint-plugin-functional/rules";
 
 describe("Configs", () => {
   const allRules = Object.values(rules);
+  const allConfigRules = Object.keys(all ?? {});
+  const offConfigRules = Object.entries(off ?? {});
   const allNonDeprecatedRules = allRules.filter(
     (rule) => rule.meta === undefined || rule.meta.deprecated !== true,
   );
-  const allDeprecatedRules = allRules.filter(
-    (rule) => rule.meta.deprecated === true,
-  );
-
-  const allConfigRules = Object.keys(all.rules ?? {});
-  const deprecatedConfigRules = Object.keys(deprecated.rules ?? {});
-  const offConfigRules = Object.entries(off.rules ?? {});
 
   it('"All" - should have the right number of rules', () => {
     expect(allConfigRules.length).to.equal(allNonDeprecatedRules.length);
@@ -38,26 +32,6 @@ describe("Configs", () => {
         rules[name.slice("functional/".length) as keyof typeof rules].meta
           .deprecated,
       ).to.not.equal(true, `All Config contains deprecated rule "${name}".`);
-    },
-  );
-
-  it('"Deprecated" - should have the right number of rules', () => {
-    expect(deprecatedConfigRules.length).to.equal(
-      allDeprecatedRules.length,
-      "should have every deprecated rule",
-    );
-  });
-
-  it.each(deprecatedConfigRules)(
-    '"Deprecated" - should have not have deprecated rules',
-    (name) => {
-      expect(
-        rules[name.slice("functional/".length) as keyof typeof rules].meta
-          .deprecated,
-      ).to.equal(
-        true,
-        `Deprecated Config contains non-deprecated rule "${name}".`,
-      );
     },
   );
 
@@ -97,10 +71,10 @@ describe("Configs", () => {
   describe.each(configs)(
     '"%s" Config rules are in the "All" Config',
     (name, config) => {
-      const ruleNames = Object.keys(config.rules ?? {});
+      const ruleNames = Object.keys(config ?? {});
 
       it.each(ruleNames)(`%s`, (rule) => {
-        expect(all.rules?.[rule]).toBeDefined();
+        expect(all?.[rule]).toBeDefined();
       });
     },
   );

@@ -51,11 +51,35 @@ plugins:
           from: "\\$\\{__VERSION__\\}"
           to: "${nextRelease.version}"
           results:
-            - file: "./lib/index.js"
+            - file: "./lib/classic.cjs"
               hasChanged: true
               numMatches: 1
               numReplacements: 1
-            - file: "./lib/index.mjs"
+            - file: "./lib/classic.d.cts"
+              hasChanged: false
+              numMatches: 0
+              numReplacements: 0
+            - file: "./lib/classic.d.mts"
+              hasChanged: false
+              numMatches: 0
+              numReplacements: 0
+            - file: "./lib/classic.mjs"
+              hasChanged: true
+              numMatches: 1
+              numReplacements: 1
+            - file: "./lib/flat.cjs"
+              hasChanged: true
+              numMatches: 1
+              numReplacements: 1
+            - file: "./lib/flat.d.cts"
+              hasChanged: false
+              numMatches: 0
+              numReplacements: 0
+            - file: "./lib/flat.d.mts"
+              hasChanged: false
+              numMatches: 0
+              numReplacements: 0
+            - file: "./lib/flat.mjs"
               hasChanged: true
               numMatches: 1
               numReplacements: 1

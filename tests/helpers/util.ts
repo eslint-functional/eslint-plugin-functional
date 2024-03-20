@@ -7,11 +7,11 @@ import {
   type SharedConfigurationSettings,
   type TSESLint,
 } from "@typescript-eslint/utils";
-import { type RuleModule } from "@typescript-eslint/utils/ts-eslint";
+import { type NamedCreateRuleMeta } from "@typescript-eslint/utils/eslint-utils";
 
 import {
+  type CustomRuleModule,
   createRuleUsingFunction,
-  type NamedCreateRuleMetaWithCategory,
   type RuleFunctionsMap,
 } from "#eslint-plugin-functional/utils/rule";
 
@@ -87,11 +87,10 @@ export function createDummyRule(
   create: (
     context: Readonly<TSESLint.RuleContext<"generic", any>>,
   ) => RuleFunctionsMap<any, "generic", any>,
-): RuleModule<string, [boolean, ...unknown[]]> {
-  const meta: NamedCreateRuleMetaWithCategory<"generic"> = {
+): CustomRuleModule<string, [boolean, ...unknown[]]> {
+  const meta: NamedCreateRuleMeta<"generic"> = {
     type: "suggestion",
     docs: {
-      category: "testing",
       description: "rule used in testing",
     },
     messages: {
@@ -109,7 +108,12 @@ export function createDummyRule(
     },
   };
 
-  return createRuleUsingFunction("dummy-rule", meta, [true, {}], create);
+  return createRuleUsingFunction(
+    "dummy-rule",
+    meta as any,
+    [true, {}],
+    create,
+  ) as any;
 }
 
 /**
@@ -138,10 +142,13 @@ export function addFilename<
   };
 }
 
-export type MessagesOf<T extends RuleModule<string, ReadonlyArray<unknown>>> =
-  T extends RuleModule<infer Messages, ReadonlyArray<unknown>>
+export type MessagesOf<
+  T extends CustomRuleModule<string, ReadonlyArray<unknown>>,
+> =
+  T extends CustomRuleModule<infer Messages, ReadonlyArray<unknown>>
     ? Messages
     : never;
 
-export type OptionsOf<T extends RuleModule<string, ReadonlyArray<unknown>>> =
-  T extends RuleModule<string, infer Options> ? Options : never;
+export type OptionsOf<
+  T extends CustomRuleModule<string, ReadonlyArray<unknown>>,
+> = T extends CustomRuleModule<string, infer Options> ? Options : never;

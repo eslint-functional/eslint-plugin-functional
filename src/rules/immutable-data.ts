@@ -16,11 +16,14 @@ import {
   type IgnoreClassesOption,
   type IgnoreIdentifierPatternOption,
 } from "#eslint-plugin-functional/options";
-import { isExpected } from "#eslint-plugin-functional/utils/misc";
+import {
+  isExpected,
+  ruleNameScope,
+} from "#eslint-plugin-functional/utils/misc";
 import {
   createRule,
   getTypeOfNode,
-  type NamedCreateRuleMetaWithCategory,
+  type NamedCreateRuleCustomMeta,
   type RuleResult,
 } from "#eslint-plugin-functional/utils/rule";
 import {
@@ -43,6 +46,11 @@ import {
  * The name of this rule.
  */
 export const name = "immutable-data" as const;
+
+/**
+ * The full name of this rule.
+ */
+export const fullName = `${ruleNameScope}/${name}` as const;
 
 /**
  * The options this rule can take.
@@ -102,11 +110,13 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleMetaWithCategory<keyof typeof errorMessages> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     category: "No Mutations",
     description: "Enforce treating data as immutable.",
+    recommended: "recommended",
+    recommendedSeverity: "error",
     requiresTypeChecking: true,
   },
   messages: errorMessages,

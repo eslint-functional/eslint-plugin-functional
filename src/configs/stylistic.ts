@@ -1,15 +1,18 @@
-import { type Linter } from "@typescript-eslint/utils/ts-eslint";
+import { type FlatConfig } from "@typescript-eslint/utils/ts-eslint";
 
-import * as preferPropertySignatures from "#eslint-plugin-functional/rules/prefer-property-signatures";
-import * as preferTacit from "#eslint-plugin-functional/rules/prefer-tacit";
-import * as readonlyType from "#eslint-plugin-functional/rules/readonly-type";
+import { rules } from "#eslint-plugin-functional/rules";
+import { ruleNameScope } from "#eslint-plugin-functional/utils/misc";
 
-const config: Linter.Config = {
-  rules: {
-    [`functional/${preferPropertySignatures.name}`]: "error",
-    [`functional/${preferTacit.name}`]: "warn",
-    [`functional/${readonlyType.name}`]: "error",
-  },
-};
-
-export default config;
+export default Object.fromEntries(
+  Object.entries(rules)
+    .filter(
+      ([, rule]) =>
+        rule.meta.deprecated !== true &&
+        rule.meta.docs.category === "Stylistic" &&
+        rule.meta.docs.recommended !== false,
+    )
+    .map(([name, rule]) => [
+      `${ruleNameScope}/${name}`,
+      rule.meta.docs.recommendedSeverity,
+    ]),
+) satisfies FlatConfig.Config["rules"];
