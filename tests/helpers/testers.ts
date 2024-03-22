@@ -1,5 +1,3 @@
-import { type RuleModule } from "@typescript-eslint/utils/ts-eslint";
-
 import { type CustomRuleModule } from "#eslint-plugin-functional/utils/rule";
 
 import { getRuleTester } from "./RuleTester";
@@ -33,7 +31,7 @@ export function testRule<
         ({ valid, invalid }) => {
           const ruleTester = getRuleTester(config);
 
-          ruleTester.run(ruleName, rule as RuleModule<TMessageIds, TOptions>, {
+          ruleTester.run(ruleName, rule as any, {
             valid: processValidTestCase(valid),
             invalid: processInvalidTestCase(invalid),
           });
