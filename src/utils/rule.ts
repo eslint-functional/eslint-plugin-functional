@@ -25,10 +25,10 @@ import { type ESFunction } from "#eslint-plugin-functional/utils/node-types";
 /**
  * Any custom rule meta properties.
  */
-export type NamedCreateRuleCustomMeta<T extends string> = Omit<
-  NamedCreateRuleMeta<T>,
-  "docs"
-> & {
+export type NamedCreateRuleCustomMeta<
+  T extends string,
+  Options extends BaseOptions,
+> = Omit<NamedCreateRuleMeta<T, Options>, "docs"> & {
   docs: {
     /**
      * Used for creating category configs and splitting the README rules list into sub-lists.
@@ -43,7 +43,7 @@ export type NamedCreateRuleCustomMeta<T extends string> = Omit<
 
     recommended: "recommended" | "strict" | false;
     recommendedSeverity: "error" | "warn";
-  } & Omit<NamedCreateRuleMeta<T>["docs"], "recommended">;
+  } & Omit<NamedCreateRuleMeta<T, Options>["docs"], "recommended">;
 };
 
 /**
@@ -55,7 +55,7 @@ export type CustomRuleModule<
   MessageIds extends string,
   Options extends BaseOptions,
 > = Omit<RuleModule<MessageIds, Options>, "meta"> & {
-  readonly meta: NamedCreateRuleCustomMeta<MessageIds>;
+  readonly meta: NamedCreateRuleCustomMeta<MessageIds, Options>;
 };
 
 /**
@@ -124,7 +124,7 @@ export function createRule<
   Options extends BaseOptions,
 >(
   name: string,
-  meta: NamedCreateRuleCustomMeta<MessageIds>,
+  meta: NamedCreateRuleCustomMeta<MessageIds, Options>,
   defaultOptions: Options,
   ruleFunctionsMap: RuleFunctionsMap<any, MessageIds, Options>,
 ) {
@@ -144,7 +144,7 @@ export function createRuleUsingFunction<
   Options extends BaseOptions,
 >(
   name: string,
-  meta: NamedCreateRuleCustomMeta<MessageIds>,
+  meta: NamedCreateRuleCustomMeta<MessageIds, Options>,
   defaultOptions: Options,
   createFunction: (
     context: Readonly<RuleContext<MessageIds, Options>>,
@@ -174,7 +174,7 @@ export function createRuleUsingFunction<
         ]),
       );
     },
-  }) as CustomRuleModule<MessageIds, Options>;
+  }) as unknown as CustomRuleModule<MessageIds, Options>;
 }
 
 /**

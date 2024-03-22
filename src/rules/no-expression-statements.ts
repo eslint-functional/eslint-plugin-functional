@@ -15,8 +15,8 @@ import {
   type IgnoreCodePatternOption,
 } from "#eslint-plugin-functional/options";
 import {
-  ruleNameScope,
   isDirectivePrologue,
+  ruleNameScope,
 } from "#eslint-plugin-functional/utils/misc";
 import {
   createRule,
@@ -87,7 +87,7 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages, Options> = {
   type: "suggestion",
   docs: {
     category: "No Statements",
