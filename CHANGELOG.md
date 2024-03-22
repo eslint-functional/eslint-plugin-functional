@@ -1,6 +1,18 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+# [6.2.0](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.1.1...v6.2.0) (2024-03-22)
+
+
+### Bug Fixes
+
+* **type-declaration-immutability:** some (hopefully all) maximum call stack size exceeded errors ([61c561c](https://github.com/eslint-functional/eslint-plugin-functional/commit/61c561c2cfd113046aa745894996054f53f171bd)), closes [#767](https://github.com/eslint-functional/eslint-plugin-functional/issues/767)
+
+
+### Features
+
+* add support for flat configs ([#789](https://github.com/eslint-functional/eslint-plugin-functional/issues/789)) ([5fa7c2c](https://github.com/eslint-functional/eslint-plugin-functional/commit/5fa7c2c2caebbdbc2fb295f72bb20c3a078cd913))
+
 # [6.2.0-next.3](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.2.0-next.2...v6.2.0-next.3) (2024-03-14)
 
 
