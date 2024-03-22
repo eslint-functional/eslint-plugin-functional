@@ -45,6 +45,7 @@ jobs:
       - lint_knip_prod
       - lint_markdown
       - lint_spelling
+      - lint_packages
       - lint_prettier
       - test
       - type_check
