@@ -5,7 +5,6 @@ import {
 } from "@typescript-eslint/utils/json-schema";
 import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import { deepmerge } from "deepmerge-ts";
-import { isThisKeyword } from "ts-api-utils";
 
 import tsApiUtils from "#eslint-plugin-functional/conditional-imports/ts-api-utils";
 import typescript from "#eslint-plugin-functional/conditional-imports/typescript";
@@ -169,7 +168,7 @@ function checkExpressionStatement(
             returnStatements.every(
               (statement) =>
                 statement.expression !== undefined &&
-                isThisKeyword(statement.expression),
+                tsApiUtils.isThisKeyword(statement.expression),
             )
           ) {
             return {
