@@ -11,7 +11,7 @@ import { type NamedCreateRuleMeta } from "@typescript-eslint/utils/eslint-utils"
 
 import {
   createRuleUsingFunction,
-  type CustomRuleModule,
+  type RuleDefinition,
   type RuleFunctionsMap,
 } from "#eslint-plugin-functional/utils/rule";
 
@@ -87,7 +87,7 @@ export function createDummyRule(
   create: (
     context: Readonly<TSESLint.RuleContext<"generic", any>>,
   ) => RuleFunctionsMap<any, "generic", any>,
-): CustomRuleModule<string, [boolean, ...unknown[]]> {
+): RuleDefinition<string, [boolean, ...unknown[]]> {
   const meta: NamedCreateRuleMeta<"generic", []> = {
     type: "suggestion",
     docs: {
@@ -142,13 +142,8 @@ export function addFilename<
   };
 }
 
-export type MessagesOf<
-  T extends CustomRuleModule<string, ReadonlyArray<unknown>>,
-> =
-  T extends CustomRuleModule<infer Messages, ReadonlyArray<unknown>>
-    ? Messages
-    : never;
+export type MessagesOf<T extends RuleDefinition<string, any>> =
+  T extends RuleDefinition<infer Messages, any> ? Messages : never;
 
-export type OptionsOf<
-  T extends CustomRuleModule<string, ReadonlyArray<unknown>>,
-> = T extends CustomRuleModule<string, infer Options> ? Options : never;
+export type OptionsOf<T extends RuleDefinition<string, any>> =
+  T extends RuleDefinition<string, infer Options> ? Options : never;

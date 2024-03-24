@@ -40,7 +40,7 @@
       "#eslint-plugin-functional/settings": ["src/settings"],
       "#eslint-plugin-functional/utils/*": ["src/utils/*"],
       "#eslint-plugin-functional/conditional-imports/*": [
-        "src/utils/conditional-imports/*"
+        "src/utils/conditional-imports/cjs/*"
       ],
       "#eslint-plugin-functional/tests/*": ["tests/*"]
     }

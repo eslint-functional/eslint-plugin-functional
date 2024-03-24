@@ -1,6 +1,15 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+## [6.2.1](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.2.0...v6.2.1) (2024-03-24)
+
+
+### Bug Fixes
+
+* esm conditional imports ([a31b512](https://github.com/eslint-functional/eslint-plugin-functional/commit/a31b5127c655423b08eaf574b565e06456cba85b)), closes [#791](https://github.com/eslint-functional/eslint-plugin-functional/issues/791)
+* improve typing exposed for flat configs ([6a65ac1](https://github.com/eslint-functional/eslint-plugin-functional/commit/6a65ac14537a205d084977a5551f459056f48611))
+* type errors ([b73bcd2](https://github.com/eslint-functional/eslint-plugin-functional/commit/b73bcd211cc56d631097a2c7e29f7daad3657400))
+
 # [6.2.0](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.1.1...v6.2.0) (2024-03-22)
 
 
