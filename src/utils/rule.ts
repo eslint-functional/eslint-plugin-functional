@@ -8,7 +8,6 @@ import {
   type ReportDescriptor,
   type RuleContext,
   type RuleListener,
-  type RuleModule,
 } from "@typescript-eslint/utils/ts-eslint";
 import {
   Immutability,
@@ -51,11 +50,15 @@ export type NamedCreateRuleCustomMeta<
  */
 export type BaseOptions = ReadonlyArray<unknown>;
 
-export type CustomRuleModule<
+// eslint-disable-next-line functional/no-mixed-types
+export type RuleDefinition<
   MessageIds extends string,
   Options extends BaseOptions,
-> = Omit<RuleModule<MessageIds, Options>, "meta"> & {
+> = {
   readonly meta: NamedCreateRuleCustomMeta<MessageIds, Options>;
+  readonly create: (
+    context: RuleDefinition<MessageIds, Options>,
+  ) => RuleListener;
 };
 
 /**
@@ -174,7 +177,7 @@ export function createRuleUsingFunction<
         ]),
       );
     },
-  }) as unknown as CustomRuleModule<MessageIds, Options>;
+  }) as unknown as RuleDefinition<MessageIds, Options>;
 }
 
 /**

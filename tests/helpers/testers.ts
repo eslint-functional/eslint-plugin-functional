@@ -1,4 +1,4 @@
-import { type CustomRuleModule } from "#eslint-plugin-functional/utils/rule";
+import { type RuleDefinition } from "#eslint-plugin-functional/utils/rule";
 
 import { getRuleTester } from "./RuleTester";
 import { configs } from "./configs";
@@ -20,7 +20,7 @@ type TestFunction<
 export function testRule<
   TMessageIds extends string,
   TOptions extends Readonly<unknown[]>,
->(ruleName: string, rule: CustomRuleModule<TMessageIds, TOptions>) {
+>(ruleName: string, rule: RuleDefinition<TMessageIds, TOptions>) {
   return Object.fromEntries(
     [...Object.entries(configs)].map(
       ([configName, config]): [
