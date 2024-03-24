@@ -7,6 +7,6 @@
     "cz-adapter/index.js",
   ],
   "project": ["src/**/*.ts!", "tests/**/*.ts", "cz-adapter/**/*.{js,ts}"],
-  "ignore": ["tests/fixture/file.ts"],
+  "ignore": ["tests/fixture/file.ts", "src/utils/conditional-imports/esm/**/*"],
   "ignoreDependencies": ["@types/eslint", "@vitest/coverage-istanbul"],
 }
