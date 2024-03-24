@@ -168,7 +168,7 @@ function checkExpressionStatement(
             returnStatements.every(
               (statement) =>
                 statement.expression !== undefined &&
-                tsApiUtils.isThisKeyword(statement.expression),
+                tsApiUtils?.isThisKeyword(statement.expression),
             )
           ) {
             return {

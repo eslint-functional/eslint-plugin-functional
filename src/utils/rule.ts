@@ -55,9 +55,10 @@ export type RuleDefinition<
   MessageIds extends string,
   Options extends BaseOptions,
 > = {
+  readonly defaultOptions: Options;
   readonly meta: NamedCreateRuleCustomMeta<MessageIds, Options>;
   readonly create: (
-    context: RuleDefinition<MessageIds, Options>,
+    context: Readonly<RuleContext<MessageIds, Options>>,
   ) => RuleListener;
 };
 

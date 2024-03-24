@@ -142,13 +142,8 @@ export function addFilename<
   };
 }
 
-export type MessagesOf<
-  T extends RuleDefinition<string, ReadonlyArray<unknown>>,
-> =
-  T extends RuleDefinition<infer Messages, ReadonlyArray<unknown>>
-    ? Messages
-    : never;
+export type MessagesOf<T extends RuleDefinition<string, any>> =
+  T extends RuleDefinition<infer Messages, any> ? Messages : never;
 
-export type OptionsOf<
-  T extends RuleDefinition<string, ReadonlyArray<unknown>>,
-> = T extends RuleDefinition<string, infer Options> ? Options : never;
+export type OptionsOf<T extends RuleDefinition<string, any>> =
+  T extends RuleDefinition<string, infer Options> ? Options : never;
