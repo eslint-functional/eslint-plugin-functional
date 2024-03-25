@@ -40,6 +40,7 @@ import {
   isMemberExpression,
   isNewExpression,
   isObjectConstructorType,
+  isTSAsExpression,
 } from "#eslint-plugin-functional/utils/type-guards";
 
 /**
@@ -60,7 +61,11 @@ type Options = [
     IgnoreClassesOption &
     IgnoreIdentifierPatternOption & {
       ignoreImmediateMutation: boolean;
-      ignoreNonConstDeclarations: boolean;
+      ignoreNonConstDeclarations:
+        | boolean
+        | {
+            treatParametersAsConst: boolean;
+          };
     },
 ];
 
@@ -79,7 +84,20 @@ const schema: JSONSchema4[] = [
           type: "boolean",
         },
         ignoreNonConstDeclarations: {
-          type: "boolean",
+          oneOf: [
+            {
+              type: "boolean",
+            },
+            {
+              type: "object",
+              properties: {
+                treatParametersAsConst: {
+                  type: "boolean",
+                },
+              },
+              additionalProperties: false,
+            },
+          ],
         },
       } satisfies JSONSchema4ObjectSchema["properties"],
     ),
@@ -229,11 +247,23 @@ function checkAssignmentExpression(
     };
   }
 
-  if (ignoreNonConstDeclarations) {
+  if (ignoreNonConstDeclarations !== false) {
     const rootIdentifier = findRootIdentifier(node.left.object);
     if (
       rootIdentifier !== undefined &&
-      isDefinedByMutableVariable(rootIdentifier, context)
+      isDefinedByMutableVariable(
+        rootIdentifier,
+        context,
+        (variableNode) =>
+          ignoreNonConstDeclarations === true ||
+          !ignoreNonConstDeclarations.treatParametersAsConst ||
+          shouldIgnorePattern(
+            variableNode,
+            context,
+            ignoreIdentifierPattern,
+            ignoreAccessorPattern,
+          ),
+      )
     ) {
       return {
         context,
@@ -282,11 +312,23 @@ function checkUnaryExpression(
     };
   }
 
-  if (ignoreNonConstDeclarations) {
+  if (ignoreNonConstDeclarations !== false) {
     const rootIdentifier = findRootIdentifier(node.argument.object);
     if (
       rootIdentifier !== undefined &&
-      isDefinedByMutableVariable(rootIdentifier, context)
+      isDefinedByMutableVariable(
+        rootIdentifier,
+        context,
+        (variableNode) =>
+          ignoreNonConstDeclarations === true ||
+          !ignoreNonConstDeclarations.treatParametersAsConst ||
+          shouldIgnorePattern(
+            variableNode,
+            context,
+            ignoreIdentifierPattern,
+            ignoreAccessorPattern,
+          ),
+      )
     ) {
       return {
         context,
@@ -334,11 +376,23 @@ function checkUpdateExpression(
     };
   }
 
-  if (ignoreNonConstDeclarations) {
+  if (ignoreNonConstDeclarations !== false) {
     const rootIdentifier = findRootIdentifier(node.argument.object);
     if (
       rootIdentifier !== undefined &&
-      isDefinedByMutableVariable(rootIdentifier, context)
+      isDefinedByMutableVariable(
+        rootIdentifier,
+        context,
+        (variableNode) =>
+          ignoreNonConstDeclarations === true ||
+          !ignoreNonConstDeclarations.treatParametersAsConst ||
+          shouldIgnorePattern(
+            variableNode,
+            context,
+            ignoreIdentifierPattern,
+            ignoreAccessorPattern,
+          ),
+      )
     ) {
       return {
         context,
@@ -361,42 +415,46 @@ function checkUpdateExpression(
  * a mutator method call.
  */
 function isInChainCallAndFollowsNew(
-  node: TSESTree.MemberExpression,
+  node: TSESTree.Expression,
   context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
 ): boolean {
+  if (isMemberExpression(node)) {
+    return isInChainCallAndFollowsNew(node.object, context);
+  }
+
+  if (isTSAsExpression(node)) {
+    return isInChainCallAndFollowsNew(node.expression, context);
+  }
+
   // Check for: [0, 1, 2]
-  if (isArrayExpression(node.object)) {
+  if (isArrayExpression(node)) {
     return true;
   }
 
   // Check for: new Array()
   if (
-    isNewExpression(node.object) &&
-    isArrayConstructorType(getTypeOfNode(node.object.callee, context))
+    isNewExpression(node) &&
+    isArrayConstructorType(getTypeOfNode(node.callee, context))
   ) {
     return true;
   }
 
   if (
-    isCallExpression(node.object) &&
-    isMemberExpression(node.object.callee) &&
-    isIdentifier(node.object.callee.property)
+    isCallExpression(node) &&
+    isMemberExpression(node.callee) &&
+    isIdentifier(node.callee.property)
   ) {
     // Check for: Array.from(iterable)
     if (
-      arrayConstructorFunctions.some(
-        isExpected(node.object.callee.property.name),
-      ) &&
-      isArrayConstructorType(getTypeOfNode(node.object.callee.object, context))
+      arrayConstructorFunctions.some(isExpected(node.callee.property.name)) &&
+      isArrayConstructorType(getTypeOfNode(node.callee.object, context))
     ) {
       return true;
     }
 
     // Check for: array.slice(0)
     if (
-      arrayNewObjectReturningMethods.some(
-        isExpected(node.object.callee.property.name),
-      )
+      arrayNewObjectReturningMethods.some(isExpected(node.callee.property.name))
     ) {
       return true;
     }
@@ -404,9 +462,9 @@ function isInChainCallAndFollowsNew(
     // Check for: Object.entries(object)
     if (
       objectConstructorNewObjectReturningMethods.some(
-        isExpected(node.object.callee.property.name),
+        isExpected(node.callee.property.name),
       ) &&
-      isObjectConstructorType(getTypeOfNode(node.object.callee.object, context))
+      isObjectConstructorType(getTypeOfNode(node.callee.object, context))
     ) {
       return true;
     }
@@ -414,9 +472,9 @@ function isInChainCallAndFollowsNew(
     // Check for: "".split("")
     if (
       stringConstructorNewObjectReturningMethods.some(
-        isExpected(node.object.callee.property.name),
+        isExpected(node.callee.property.name),
       ) &&
-      getTypeOfNode(node.object.callee.object, context).isStringLiteral()
+      getTypeOfNode(node.callee.object, context).isStringLiteral()
     ) {
       return true;
     }
@@ -468,18 +526,29 @@ function checkCallExpression(
       !isInChainCallAndFollowsNew(node.callee, context)) &&
     isArrayType(getTypeOfNode(node.callee.object, context))
   ) {
-    if (ignoreNonConstDeclarations) {
-      const rootIdentifier = findRootIdentifier(node.callee.object);
-      if (
-        rootIdentifier === undefined ||
-        !isDefinedByMutableVariable(rootIdentifier, context)
-      ) {
-        return {
-          context,
-          descriptors: [{ node, messageId: "array" }],
-        };
-      }
-    } else {
+    if (ignoreNonConstDeclarations === false) {
+      return {
+        context,
+        descriptors: [{ node, messageId: "array" }],
+      };
+    }
+    const rootIdentifier = findRootIdentifier(node.callee.object);
+    if (
+      rootIdentifier === undefined ||
+      !isDefinedByMutableVariable(
+        rootIdentifier,
+        context,
+        (variableNode) =>
+          ignoreNonConstDeclarations === true ||
+          !ignoreNonConstDeclarations.treatParametersAsConst ||
+          shouldIgnorePattern(
+            variableNode,
+            context,
+            ignoreIdentifierPattern,
+            ignoreAccessorPattern,
+          ),
+      )
+    ) {
       return {
         context,
         descriptors: [{ node, messageId: "array" }],
@@ -502,18 +571,29 @@ function checkCallExpression(
     ) &&
     isObjectConstructorType(getTypeOfNode(node.callee.object, context))
   ) {
-    if (ignoreNonConstDeclarations) {
-      const rootIdentifier = findRootIdentifier(node.callee.object);
-      if (
-        rootIdentifier === undefined ||
-        !isDefinedByMutableVariable(rootIdentifier, context)
-      ) {
-        return {
-          context,
-          descriptors: [{ node, messageId: "object" }],
-        };
-      }
-    } else {
+    if (ignoreNonConstDeclarations === false) {
+      return {
+        context,
+        descriptors: [{ node, messageId: "object" }],
+      };
+    }
+    const rootIdentifier = findRootIdentifier(node.callee.object);
+    if (
+      rootIdentifier === undefined ||
+      !isDefinedByMutableVariable(
+        rootIdentifier,
+        context,
+        (variableNode) =>
+          ignoreNonConstDeclarations === true ||
+          !ignoreNonConstDeclarations.treatParametersAsConst ||
+          shouldIgnorePattern(
+            variableNode,
+            context,
+            ignoreIdentifierPattern,
+            ignoreAccessorPattern,
+          ),
+      )
+    ) {
       return {
         context,
         descriptors: [{ node, messageId: "object" }],

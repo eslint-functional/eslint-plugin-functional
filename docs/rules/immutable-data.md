@@ -63,7 +63,11 @@ This rule accepts an options object of the following type:
 type Options = {
   ignoreClasses: boolean | "fieldsOnly";
   ignoreImmediateMutation: boolean;
-  ignoreNonConstDeclarations: boolean;
+  ignoreNonConstDeclarations:
+    | boolean
+    | {
+        treatParametersAsConst: boolean;
+      };
   ignoreIdentifierPattern?: string[] | string;
   ignoreAccessorPattern?: string[] | string;
 };
@@ -109,6 +113,10 @@ This allow for more easily using mutable data by simply using the `let` keyword 
 Note: If a value is referenced by both a `let` and a `const` variable, the `let`
 reference can be modified while the `const` one can't. The may lead to value of
 the `const` variable unexpectedly changing when the `let` one is modified elsewhere.
+
+#### `treatParametersAsConst`
+
+If true, parameters won't be ignored, while other non-const variables will be.
 
 ### `ignoreClasses`
 

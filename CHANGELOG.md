@@ -1,6 +1,20 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+## [6.2.3](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.2.2...v6.2.3) (2024-03-25)
+
+
+### Bug Fixes
+
+* **no-mixed-types:** handle more than just property signatures, check the type of type references ([#793](https://github.com/eslint-functional/eslint-plugin-functional/issues/793)) ([55bd794](https://github.com/eslint-functional/eslint-plugin-functional/commit/55bd79424bb4b2eb012b60a4b33fdef67d86390e)), closes [#734](https://github.com/eslint-functional/eslint-plugin-functional/issues/734)
+
+## [6.2.2](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.2.1...v6.2.2) (2024-03-25)
+
+
+### Bug Fixes
+
+* **immutable-data:** ignore casting when evaluating the expressions ([#792](https://github.com/eslint-functional/eslint-plugin-functional/issues/792)) ([50e789a](https://github.com/eslint-functional/eslint-plugin-functional/commit/50e789a14bf7c776abbe91d4b22d13e50ddf4b01)), closes [#790](https://github.com/eslint-functional/eslint-plugin-functional/issues/790)
+
 ## [6.2.1](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.2.0...v6.2.1) (2024-03-24)
 
 

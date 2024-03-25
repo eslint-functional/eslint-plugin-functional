@@ -237,6 +237,12 @@ export function isTSArrayType(
   return node.type === AST_NODE_TYPES.TSArrayType;
 }
 
+export function isTSAsExpression(
+  node: TSESTree.Node,
+): node is TSESTree.TSAsExpression {
+  return node.type === AST_NODE_TYPES.TSAsExpression;
+}
+
 export function isTSFunctionType(
   node: TSESTree.Node,
 ): node is TSESTree.TSFunctionType {
@@ -247,6 +253,24 @@ export function isTSIndexSignature(
   node: TSESTree.Node,
 ): node is TSESTree.TSIndexSignature {
   return node.type === AST_NODE_TYPES.TSIndexSignature;
+}
+
+export function isTSMethodSignature(
+  node: TSESTree.Node,
+): node is TSESTree.TSMethodSignature {
+  return node.type === AST_NODE_TYPES.TSMethodSignature;
+}
+
+export function isTSCallSignatureDeclaration(
+  node: TSESTree.Node,
+): node is TSESTree.TSCallSignatureDeclaration {
+  return node.type === AST_NODE_TYPES.TSCallSignatureDeclaration;
+}
+
+export function isTSConstructSignatureDeclaration(
+  node: TSESTree.Node,
+): node is TSESTree.TSConstructSignatureDeclaration {
+  return node.type === AST_NODE_TYPES.TSConstructSignatureDeclaration;
 }
 
 export function isTSInterfaceBody(
@@ -405,4 +429,8 @@ export function isObjectConstructorType(type: Type | null): boolean {
       type.symbol.name === "ObjectConstructor") ||
       (isUnionType(type) && type.types.some(isObjectConstructorType)))
   );
+}
+
+export function isFunctionLikeType(type: Type | null): boolean {
+  return type !== null && type.getCallSignatures().length > 0;
 }
