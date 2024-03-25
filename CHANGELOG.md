@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+# [6.3.0](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.2.3...v6.3.0) (2024-03-25)
+
+
+### Features
+
+* **immutable-data:** add option for `ignoreNonConstDeclarations` to `treatParametersAsConst` ([#794](https://github.com/eslint-functional/eslint-plugin-functional/issues/794)) ([059591a](https://github.com/eslint-functional/eslint-plugin-functional/commit/059591af0507162092a36630b57619686b513f70)), closes [#724](https://github.com/eslint-functional/eslint-plugin-functional/issues/724)
+
 ## [6.2.3](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.2.2...v6.2.3) (2024-03-25)
 
 
