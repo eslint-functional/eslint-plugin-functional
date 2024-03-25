@@ -16,12 +16,12 @@ import {
 /**
  * The name of this rule.
  */
-export const name = "no-promise-reject" as const;
+export const name = "no-promise-reject";
 
 /**
  * The full name of this rule.
  */
-export const fullName = `${ruleNameScope}/${name}` as const;
+export const fullName = `${ruleNameScope}/${name}`;
 
 /**
  * The options this rule can take.

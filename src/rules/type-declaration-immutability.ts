@@ -28,12 +28,12 @@ import { isTSInterfaceDeclaration } from "#eslint-plugin-functional/utils/type-g
 /**
  * The name of this rule.
  */
-export const name = "type-declaration-immutability" as const;
+export const name = "type-declaration-immutability";
 
 /**
  * The full name of this rule.
  */
-export const fullName = `${ruleNameScope}/${name}` as const;
+export const fullName = `${ruleNameScope}/${name}`;
 
 /**
  * How the actual immutability should be compared to the given immutability.

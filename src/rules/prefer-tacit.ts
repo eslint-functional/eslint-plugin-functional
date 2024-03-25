@@ -34,12 +34,12 @@ import {
 /**
  * The name of this rule.
  */
-export const name = "prefer-tacit" as const;
+export const name = "prefer-tacit";
 
 /**
  * The full name of this rule.
  */
-export const fullName = `${ruleNameScope}/${name}` as const;
+export const fullName = `${ruleNameScope}/${name}`;
 
 /**
  * The options this rule can take.

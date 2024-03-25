@@ -24,12 +24,12 @@ import {
 /**
  * The name of this rule.
  */
-export const name = "readonly-type" as const;
+export const name = "readonly-type";
 
 /**
  * The full name of this rule.
  */
-export const fullName = `${ruleNameScope}/${name}` as const;
+export const fullName = `${ruleNameScope}/${name}`;
 
 /**
  * The options this rule can take.

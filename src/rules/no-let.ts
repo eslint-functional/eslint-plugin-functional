@@ -23,12 +23,12 @@ import { isInForLoopInitializer } from "#eslint-plugin-functional/utils/tree";
 /**
  * The name of this rule.
  */
-export const name = "no-let" as const;
+export const name = "no-let";
 
 /**
  * The full name of this rule.
  */
-export const fullName = `${ruleNameScope}/${name}` as const;
+export const fullName = `${ruleNameScope}/${name}`;
 
 /**
  * The options this rule can take.

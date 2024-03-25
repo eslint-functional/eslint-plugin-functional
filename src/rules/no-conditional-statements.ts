@@ -25,12 +25,12 @@ import {
 /**
  * The name of this rule.
  */
-export const name = "no-conditional-statements" as const;
+export const name = "no-conditional-statements";
 
 /**
  * The full name of this rule.
  */
-export const fullName = `${ruleNameScope}/${name}` as const;
+export const fullName = `${ruleNameScope}/${name}`;
 
 /**
  * The options this rule can take.

@@ -33,12 +33,12 @@ import { isRestElement } from "#eslint-plugin-functional/utils/type-guards";
 /**
  * The name of this rule.
  */
-export const name = "functional-parameters" as const;
+export const name = "functional-parameters";
 
 /**
  * The full name of this rule.
  */
-export const fullName = `${ruleNameScope}/${name}` as const;
+export const fullName = `${ruleNameScope}/${name}`;
 
 /**
  * The parameter count options this rule can take.

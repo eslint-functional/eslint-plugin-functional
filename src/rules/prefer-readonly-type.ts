@@ -41,12 +41,12 @@ import {
 /**
  * The name of this rule.
  */
-export const name = "prefer-readonly-type" as const;
+export const name = "prefer-readonly-type";
 
 /**
  * The full name of this rule.
  */
-export const fullName = `${ruleNameScope}/${name}` as const;
+export const fullName = `${ruleNameScope}/${name}`;
 
 /**
  * The options this rule can take.
