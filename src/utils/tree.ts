@@ -214,6 +214,18 @@ export function isArgument(node: TSESTree.Node): boolean {
 }
 
 /**
+ * Is the given node a parameter?
+ */
+export function isParameter(node: TSESTree.Node): boolean {
+  return (
+    node.parent !== undefined &&
+    isFunctionLike(node.parent) &&
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    node.parent.params.includes(node as any)
+  );
+}
+
+/**
  * Is the given node a getter function?
  */
 export function isGetter(node: TSESTree.Node): boolean {
@@ -273,14 +285,27 @@ export function getKeyOfValueInObjectExpression(
  */
 export function isDefinedByMutableVariable<
   Context extends RuleContext<string, BaseOptions>,
->(node: TSESTree.Identifier, context: Context) {
+>(
+  node: TSESTree.Identifier,
+  context: Context,
+  treatParametersAsMutable: (node: TSESTree.Node) => boolean,
+): boolean {
   const services = getParserServices(context);
   const symbol = services.getSymbolAtLocation(node);
   const variableDeclaration = symbol?.valueDeclaration;
+
+  if (variableDeclaration === undefined) {
+    return true;
+  }
+  const variableDeclarationNode =
+    services.tsNodeToESTreeNodeMap.get(variableDeclaration);
   if (
-    variableDeclaration === undefined ||
-    !typescript!.isVariableDeclaration(variableDeclaration)
+    variableDeclarationNode !== undefined &&
+    isParameter(variableDeclarationNode)
   ) {
+    return treatParametersAsMutable(variableDeclarationNode);
+  }
+  if (!typescript!.isVariableDeclaration(variableDeclaration)) {
     return true;
   }
 

@@ -61,7 +61,11 @@ type Options = [
     IgnoreClassesOption &
     IgnoreIdentifierPatternOption & {
       ignoreImmediateMutation: boolean;
-      ignoreNonConstDeclarations: boolean;
+      ignoreNonConstDeclarations:
+        | boolean
+        | {
+            treatParametersAsConst: boolean;
+          };
     },
 ];
 
@@ -80,7 +84,20 @@ const schema: JSONSchema4[] = [
           type: "boolean",
         },
         ignoreNonConstDeclarations: {
-          type: "boolean",
+          oneOf: [
+            {
+              type: "boolean",
+            },
+            {
+              type: "object",
+              properties: {
+                treatParametersAsConst: {
+                  type: "boolean",
+                },
+              },
+              additionalProperties: false,
+            },
+          ],
         },
       } satisfies JSONSchema4ObjectSchema["properties"],
     ),
@@ -230,11 +247,23 @@ function checkAssignmentExpression(
     };
   }
 
-  if (ignoreNonConstDeclarations) {
+  if (ignoreNonConstDeclarations !== false) {
     const rootIdentifier = findRootIdentifier(node.left.object);
     if (
       rootIdentifier !== undefined &&
-      isDefinedByMutableVariable(rootIdentifier, context)
+      isDefinedByMutableVariable(
+        rootIdentifier,
+        context,
+        (variableNode) =>
+          ignoreNonConstDeclarations === true ||
+          !ignoreNonConstDeclarations.treatParametersAsConst ||
+          shouldIgnorePattern(
+            variableNode,
+            context,
+            ignoreIdentifierPattern,
+            ignoreAccessorPattern,
+          ),
+      )
     ) {
       return {
         context,
@@ -283,11 +312,23 @@ function checkUnaryExpression(
     };
   }
 
-  if (ignoreNonConstDeclarations) {
+  if (ignoreNonConstDeclarations !== false) {
     const rootIdentifier = findRootIdentifier(node.argument.object);
     if (
       rootIdentifier !== undefined &&
-      isDefinedByMutableVariable(rootIdentifier, context)
+      isDefinedByMutableVariable(
+        rootIdentifier,
+        context,
+        (variableNode) =>
+          ignoreNonConstDeclarations === true ||
+          !ignoreNonConstDeclarations.treatParametersAsConst ||
+          shouldIgnorePattern(
+            variableNode,
+            context,
+            ignoreIdentifierPattern,
+            ignoreAccessorPattern,
+          ),
+      )
     ) {
       return {
         context,
@@ -335,11 +376,23 @@ function checkUpdateExpression(
     };
   }
 
-  if (ignoreNonConstDeclarations) {
+  if (ignoreNonConstDeclarations !== false) {
     const rootIdentifier = findRootIdentifier(node.argument.object);
     if (
       rootIdentifier !== undefined &&
-      isDefinedByMutableVariable(rootIdentifier, context)
+      isDefinedByMutableVariable(
+        rootIdentifier,
+        context,
+        (variableNode) =>
+          ignoreNonConstDeclarations === true ||
+          !ignoreNonConstDeclarations.treatParametersAsConst ||
+          shouldIgnorePattern(
+            variableNode,
+            context,
+            ignoreIdentifierPattern,
+            ignoreAccessorPattern,
+          ),
+      )
     ) {
       return {
         context,
@@ -473,18 +526,29 @@ function checkCallExpression(
       !isInChainCallAndFollowsNew(node.callee, context)) &&
     isArrayType(getTypeOfNode(node.callee.object, context))
   ) {
-    if (ignoreNonConstDeclarations) {
-      const rootIdentifier = findRootIdentifier(node.callee.object);
-      if (
-        rootIdentifier === undefined ||
-        !isDefinedByMutableVariable(rootIdentifier, context)
-      ) {
-        return {
-          context,
-          descriptors: [{ node, messageId: "array" }],
-        };
-      }
-    } else {
+    if (ignoreNonConstDeclarations === false) {
+      return {
+        context,
+        descriptors: [{ node, messageId: "array" }],
+      };
+    }
+    const rootIdentifier = findRootIdentifier(node.callee.object);
+    if (
+      rootIdentifier === undefined ||
+      !isDefinedByMutableVariable(
+        rootIdentifier,
+        context,
+        (variableNode) =>
+          ignoreNonConstDeclarations === true ||
+          !ignoreNonConstDeclarations.treatParametersAsConst ||
+          shouldIgnorePattern(
+            variableNode,
+            context,
+            ignoreIdentifierPattern,
+            ignoreAccessorPattern,
+          ),
+      )
+    ) {
       return {
         context,
         descriptors: [{ node, messageId: "array" }],
@@ -507,18 +571,29 @@ function checkCallExpression(
     ) &&
     isObjectConstructorType(getTypeOfNode(node.callee.object, context))
   ) {
-    if (ignoreNonConstDeclarations) {
-      const rootIdentifier = findRootIdentifier(node.callee.object);
-      if (
-        rootIdentifier === undefined ||
-        !isDefinedByMutableVariable(rootIdentifier, context)
-      ) {
-        return {
-          context,
-          descriptors: [{ node, messageId: "object" }],
-        };
-      }
-    } else {
+    if (ignoreNonConstDeclarations === false) {
+      return {
+        context,
+        descriptors: [{ node, messageId: "object" }],
+      };
+    }
+    const rootIdentifier = findRootIdentifier(node.callee.object);
+    if (
+      rootIdentifier === undefined ||
+      !isDefinedByMutableVariable(
+        rootIdentifier,
+        context,
+        (variableNode) =>
+          ignoreNonConstDeclarations === true ||
+          !ignoreNonConstDeclarations.treatParametersAsConst ||
+          shouldIgnorePattern(
+            variableNode,
+            context,
+            ignoreIdentifierPattern,
+            ignoreAccessorPattern,
+          ),
+      )
+    ) {
       return {
         context,
         descriptors: [{ node, messageId: "object" }],

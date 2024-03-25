@@ -513,6 +513,176 @@ const tests: Array<
   },
   {
     code: dedent`
+      function y(x: {a: 1, b: object}) {
+        x.foo = "bar";
+        x["foo"] = "bar";
+        x.a += 1;
+        x.a -= 1;
+        x.a *= 1;
+        x.a /= 1;
+        x.a %= 1;
+        x.a <<= 1;
+        x.a >>= 1;
+        x.a >>>= 1;
+        x.a &= 1;
+        x.a |= 1;
+        x.a ^= 1;
+        x.a **= 1;
+        delete x.a;
+        delete x["a"];
+        x.a++;
+        x.a--;
+        ++x.a;
+        --x.a;
+        if (x.a = 2) {}
+        if (x.a++) {}
+        Object.assign(x, { c: "world" });
+        Object.assign(x.b, { c: "world" });
+        Object.defineProperties(x, { d: { value: 2, writable: false }});
+        Object.defineProperty(x, "e", { value: 3, writable: false });
+        Object.setPrototypeOf(x, null);
+      }
+    `,
+    optionsSet: [
+      [{ ignoreNonConstDeclarations: { treatParametersAsConst: true } }],
+    ],
+    errors: [
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.AssignmentExpression,
+        line: 2,
+        column: 3,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.AssignmentExpression,
+        line: 3,
+        column: 3,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.AssignmentExpression,
+        line: 4,
+        column: 3,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.AssignmentExpression,
+        line: 5,
+        column: 3,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.AssignmentExpression,
+        line: 6,
+        column: 3,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.AssignmentExpression,
+        line: 7,
+        column: 3,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.AssignmentExpression,
+        line: 8,
+        column: 3,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.AssignmentExpression,
+        line: 9,
+        column: 3,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.AssignmentExpression,
+        line: 10,
+        column: 3,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.AssignmentExpression,
+        line: 11,
+        column: 3,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.AssignmentExpression,
+        line: 12,
+        column: 3,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.AssignmentExpression,
+        line: 13,
+        column: 3,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.AssignmentExpression,
+        line: 14,
+        column: 3,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.AssignmentExpression,
+        line: 15,
+        column: 3,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.UnaryExpression,
+        line: 16,
+        column: 3,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.UnaryExpression,
+        line: 17,
+        column: 3,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.UpdateExpression,
+        line: 18,
+        column: 3,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.UpdateExpression,
+        line: 19,
+        column: 3,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.UpdateExpression,
+        line: 20,
+        column: 3,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.UpdateExpression,
+        line: 21,
+        column: 3,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.AssignmentExpression,
+        line: 22,
+        column: 7,
+      },
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.UpdateExpression,
+        line: 23,
+        column: 7,
+      },
+    ],
+  },
+  {
+    code: dedent`
       (mutable_foo as Bar).baz = "hello world";
     `,
     optionsSet: [[]],
