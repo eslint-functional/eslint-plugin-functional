@@ -33,26 +33,25 @@
   "contributors": [
     "Jonas Kello"
   ],
+  "type": "module",
   "exports": {
     ".": {
-      "types": {
-        "import": "./lib/classic.d.mts",
-        "require": "./lib/classic.d.cts"
-      },
-      "import": "./lib/classic.mjs",
-      "require": "./lib/classic.cjs"
-    },
-    "./flat": {
       "types": {
         "import": "./lib/flat.d.mts",
         "require": "./lib/flat.d.cts"
       },
       "import": "./lib/flat.mjs",
       "require": "./lib/flat.cjs"
+    },
+    "./classic": {
+      "types": {
+        "import": "./lib/classic.d.mts",
+        "require": "./lib/classic.d.cts"
+      },
+      "import": "./lib/classic.mjs",
+      "require": "./lib/classic.cjs"
     }
   },
-  "main": "lib/classic.cjs",
-  "types": "lib/classic.d.cts",
   "files": [
     "lib/",
     "package.json",
@@ -125,7 +124,7 @@
     "cspell": "8.6.0",
     "deassert": "1.0.2",
     "dedent": "1.5.1",
-    "eslint": "8.57.0",
+    "eslint": "9.0.0-rc.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-doc-generator": "1.7.0",
     "eslint-import-resolver-typescript": "3.6.1",
@@ -160,12 +159,13 @@
     "tsc-files": "1.1.4",
     "tsconfig-paths": "4.2.0",
     "typescript": "5.4.2",
+    "typescript-eslint": "7.3.1",
     "vite-tsconfig-paths": "4.3.1",
     "vitest": "1.4.0",
     "word-wrap": "1.2.5"
   },
   "peerDependencies": {
-    "eslint": "^8.0.0",
+    "eslint": "9.0.0-rc.0 || ^9.0.0",
     "typescript": ">=4.3.5"
   },
   "peerDependenciesMeta": {
@@ -175,6 +175,6 @@
   },
   "packageManager": "pnpm@8.15.4",
   "engines": {
-    "node": ">=16.10.0"
+    "node": ">=v18.18.0"
   }
 }
