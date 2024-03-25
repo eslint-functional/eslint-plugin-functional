@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+## [6.2.2](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.2.1...v6.2.2) (2024-03-25)
+
+
+### Bug Fixes
+
+* **immutable-data:** ignore casting when evaluating the expressions ([#792](https://github.com/eslint-functional/eslint-plugin-functional/issues/792)) ([50e789a](https://github.com/eslint-functional/eslint-plugin-functional/commit/50e789a14bf7c776abbe91d4b22d13e50ddf4b01)), closes [#790](https://github.com/eslint-functional/eslint-plugin-functional/issues/790)
+
 ## [6.2.1](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.2.0...v6.2.1) (2024-03-24)
 
 
