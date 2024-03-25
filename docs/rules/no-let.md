@@ -1,6 +1,6 @@
 # Disallow mutable variables (`functional/no-let`)
 
-💼 This rule is enabled in the following configs: ☑️ `lite`, `no-mutations`, ✅ `recommended`, 🔒 `strict`.
+💼 This rule is enabled in the following configs: ☑️ `lite`, `noMutations`, ✅ `recommended`, 🔒 `strict`.
 
 <!-- end auto-generated rule header -->
 

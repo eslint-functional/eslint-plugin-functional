@@ -1,6 +1,6 @@
 # Enforce treating data as immutable (`functional/immutable-data`)
 
-💼 This rule is enabled in the following configs: ☑️ `lite`, `no-mutations`, ✅ `recommended`, 🔒 `strict`.
+💼🚫 This rule is enabled in the following configs: ☑️ `lite`, `noMutations`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the `disableTypeChecked` config.
 
 💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 

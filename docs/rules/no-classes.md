@@ -1,6 +1,6 @@
 # Disallow classes (`functional/no-classes`)
 
-💼 This rule is enabled in the following configs: ☑️ `lite`, `no-other-paradigms`, ✅ `recommended`, 🔒 `strict`.
+💼 This rule is enabled in the following configs: ☑️ `lite`, `noOtherParadigms`, ✅ `recommended`, 🔒 `strict`.
 
 <!-- end auto-generated rule header -->
 

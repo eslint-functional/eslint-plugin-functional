@@ -37,50 +37,50 @@ The following rulesets are made available by this plugin.
 
 Presets:
 
-- **Strict** (`plugin:functional/strict`)\
+- **Strict** (`configs.strict`)\
   Enforce recommended rules designed to strictly enforce functional programming.
 
-- **Recommended** (`plugin:functional/recommended`)\
+- **Recommended** (`configs.recommended`)\
   Has the same goal as the `strict` preset but a little more lenient, allowing for functional-like coding styles and nicer integration with non-functional 3rd-party libraries.
 
-- **Lite** (`plugin:functional/lite`)\
+- **Lite** (`configs.lite`)\
   Good if you're new to functional programming or are converting a large codebase.
 
 Categorized:
 
-- **Currying** (`plugin:functional/currying`)\
+- **Currying** (`configs.currying`)\
   JavaScript functions support syntax that is not compatible with curried functions. To enforce currying, this syntax should be prevented.
 
-- **No Exceptions** (`plugin:functional/no-exceptions`)\
+- **No Exceptions** (`configs.noExceptions`)\
   Functional programming style does not use run-time exceptions. Instead expressions produces values to indicate errors.
 
-- **No Mutations** (`plugin:functional/no-mutations`)\
+- **No Mutations** (`configs.noMutations`)\
   Prevent mutating any data as that's not functional
 
-- **No Other Paradigms** (`plugin:functional/no-other-paradigms`)\
+- **No Other Paradigms** (`configs.noOtherParadigms`)\
   JavaScript is multi-paradigm, allowing not only functional, but object-oriented as well as other programming styles. To promote a functional style, prevent the use of other paradigm styles.
 
-- **No Statements** (`plugin:functional/no-statements`)\
+- **No Statements** (`configs.noStatements`)\
   In functional programming everything is an expression that produces a value. JavaScript has a lot of syntax that is just statements that does not produce a value. That syntax has to be prevented to promote a functional style.
 
-- **Stylistic** (`plugin:functional/stylistic`)\
+- **Stylistic** (`configs.stylistic`)\
   Enforce code styles that can be considered to be more functional.
 
 Other:
 
-- **All** (`plugin:functional/all`)\
+- **All** (`configs.all`)\
   Enables all rules defined in this plugin.
 
-- **Off** (`plugin:functional/off`)\
+- **Off** (`configs.off`)\
   Disable all rules defined in this plugin.
 
-- **Disable Type Checked** (`plugin:functional/disable-type-checked`)\
+- **Disable Type Checked** (`configs.disableTypeChecked`)\
   Disable all rules that require type information.
 
-- **External Vanilla Recommended** (`plugin:functional/external-vanilla-recommended`)\
+- **External Vanilla Recommended** (`configs.externalVanillaRecommended`)\
   Configures recommended [vanilla ESLint](https://www.npmjs.com/package/eslint) rules.
 
-- **External Typescript Recommended** (`plugin:functional/external-typescript-recommended`)\
+- **External Typescript Recommended** (`configs.externalTypescriptRecommended`)\
   Configures recommended [TypeScript ESLint](https://www.npmjs.com/package/@typescript-eslint/eslint-plugin) rules.
   Enabling this ruleset will also enable the vanilla one.
 
@@ -88,7 +88,6 @@ The [below section](#rules) gives details on which rules are enabled by each rul
 
 ## Rules
 
-<!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
 <!-- begin auto-generated rules list -->
 
@@ -106,62 +105,57 @@ The [below section](#rules) gives details on which rules are enabled by each rul
 
 ### Currying
 
-| Name                                                         | Description                    | 💼                          | ⚠️ | 🚫 | 🔧 | 💡 | 💭 | ❌  |
-| :----------------------------------------------------------- | :----------------------------- | :-------------------------- | :- | :- | :- | :- | :- | :- |
-| [functional-parameters](docs/rules/functional-parameters.md) | Enforce functional parameters. | ☑️ ✅ 🔒 ![badge-currying][] |    |    |    |    |    |    |
+| Name                                                         | Description                    | 💼                           | ⚠️  | 🚫  | 🔧  | 💡  | 💭  | ❌  |
+| :----------------------------------------------------------- | :----------------------------- | :--------------------------- | :-- | :-- | :-- | :-- | :-- | :-- |
+| [functional-parameters](docs/rules/functional-parameters.md) | Enforce functional parameters. | ☑️ ✅ 🔒 ![badge-currying][] |     |     |     |     |     |     |
 
 ### No Exceptions
 
-| Name                                                     | Description                                            | 💼                               | ⚠️ | 🚫   | 🔧 | 💡 | 💭 | ❌  |
-| :------------------------------------------------------- | :----------------------------------------------------- | :------------------------------- | :- | :--- | :- | :- | :- | :- |
-| [no-promise-reject](docs/rules/no-promise-reject.md)     | Disallow rejecting promises.                           |                                  |    |      |    |    |    |    |
-| [no-throw-statements](docs/rules/no-throw-statements.md) | Disallow throwing exceptions.                          | ☑️ ✅ 🔒 ![badge-no-exceptions][] |    |      |    |    |    |    |
-| [no-try-statements](docs/rules/no-try-statements.md)     | Disallow try-catch[-finally] and try-finally patterns. | 🔒 ![badge-no-exceptions][]      |    | ☑️ ✅ |    |    |    |    |
+| Name                                                     | Description                                            | 💼                               | ⚠️  | 🚫    | 🔧  | 💡  | 💭  | ❌  |
+| :------------------------------------------------------- | :----------------------------------------------------- | :------------------------------- | :-- | :---- | :-- | :-- | :-- | :-- |
+| [no-promise-reject](docs/rules/no-promise-reject.md)     | Disallow rejecting promises.                           |                                  |     |       |     |     |     |     |
+| [no-throw-statements](docs/rules/no-throw-statements.md) | Disallow throwing exceptions.                          | ☑️ ✅ 🔒 ![badge-noExceptions][] |     |       |     |     |     |     |
+| [no-try-statements](docs/rules/no-try-statements.md)     | Disallow try-catch[-finally] and try-finally patterns. | 🔒 ![badge-noExceptions][]       |     | ☑️ ✅ |     |     |     |     |
 
 ### No Mutations
 
-| Name                                                                         | Description                                                     | 💼                              | ⚠️ | 🚫 | 🔧 | 💡 | 💭 | ❌  |
-| :--------------------------------------------------------------------------- | :-------------------------------------------------------------- | :------------------------------ | :- | :- | :- | :- | :- | :- |
-| [immutable-data](docs/rules/immutable-data.md)                               | Enforce treating data as immutable.                             | ☑️ ✅ 🔒 ![badge-no-mutations][] |    |    |    |    | 💭 |    |
-| [no-let](docs/rules/no-let.md)                                               | Disallow mutable variables.                                     | ☑️ ✅ 🔒 ![badge-no-mutations][] |    |    |    |    |    |    |
-| [prefer-immutable-types](docs/rules/prefer-immutable-types.md)               | Require function parameters to be typed as certain immutability | ☑️ ✅ 🔒 ![badge-no-mutations][] |    |    | 🔧 | 💡 | 💭 |    |
-| [prefer-readonly-type](docs/rules/prefer-readonly-type.md)                   | Prefer readonly types over mutable types.                       |                                 |    |    | 🔧 |    | 💭 | ❌  |
-| [type-declaration-immutability](docs/rules/type-declaration-immutability.md) | Enforce the immutability of types based on patterns.            | ☑️ ✅ 🔒 ![badge-no-mutations][] |    |    | 🔧 | 💡 | 💭 |    |
+| Name                                                                         | Description                                                     | 💼                              | ⚠️  | 🚫                            | 🔧  | 💡  | 💭  | ❌  |
+| :--------------------------------------------------------------------------- | :-------------------------------------------------------------- | :------------------------------ | :-- | :---------------------------- | :-- | :-- | :-- | :-- |
+| [immutable-data](docs/rules/immutable-data.md)                               | Enforce treating data as immutable.                             | ☑️ ✅ 🔒 ![badge-noMutations][] |     | ![badge-disableTypeChecked][] |     |     | 💭  |     |
+| [no-let](docs/rules/no-let.md)                                               | Disallow mutable variables.                                     | ☑️ ✅ 🔒 ![badge-noMutations][] |     |                               |     |     |     |     |
+| [prefer-immutable-types](docs/rules/prefer-immutable-types.md)               | Require function parameters to be typed as certain immutability | ☑️ ✅ 🔒 ![badge-noMutations][] |     | ![badge-disableTypeChecked][] | 🔧  | 💡  | 💭  |     |
+| [prefer-readonly-type](docs/rules/prefer-readonly-type.md)                   | Prefer readonly types over mutable types.                       |                                 |     | ![badge-disableTypeChecked][] | 🔧  |     | 💭  | ❌  |
+| [type-declaration-immutability](docs/rules/type-declaration-immutability.md) | Enforce the immutability of types based on patterns.            | ☑️ ✅ 🔒 ![badge-noMutations][] |     | ![badge-disableTypeChecked][] | 🔧  | 💡  | 💭  |     |
 
 ### No Other Paradigms
 
-| Name                                                     | Description                                                               | 💼                                    | ⚠️ | 🚫   | 🔧 | 💡 | 💭 | ❌  |
-| :------------------------------------------------------- | :------------------------------------------------------------------------ | :------------------------------------ | :- | :--- | :- | :- | :- | :- |
-| [no-classes](docs/rules/no-classes.md)                   | Disallow classes.                                                         | ☑️ ✅ 🔒 ![badge-no-other-paradigms][] |    |      |    |    |    |    |
-| [no-mixed-types](docs/rules/no-mixed-types.md)           | Restrict types so that only members of the same kind are allowed in them. | ☑️ ✅ 🔒 ![badge-no-other-paradigms][] |    |      |    |    | 💭 |    |
-| [no-this-expressions](docs/rules/no-this-expressions.md) | Disallow this access.                                                     | 🔒 ![badge-no-other-paradigms][]      |    | ☑️ ✅ |    |    |    |    |
+| Name                                                     | Description                                                               | 💼                                   | ⚠️  | 🚫                            | 🔧  | 💡  | 💭  | ❌  |
+| :------------------------------------------------------- | :------------------------------------------------------------------------ | :----------------------------------- | :-- | :---------------------------- | :-- | :-- | :-- | :-- |
+| [no-classes](docs/rules/no-classes.md)                   | Disallow classes.                                                         | ☑️ ✅ 🔒 ![badge-noOtherParadigms][] |     |                               |     |     |     |     |
+| [no-mixed-types](docs/rules/no-mixed-types.md)           | Restrict types so that only members of the same kind are allowed in them. | ☑️ ✅ 🔒 ![badge-noOtherParadigms][] |     | ![badge-disableTypeChecked][] |     |     | 💭  |     |
+| [no-this-expressions](docs/rules/no-this-expressions.md) | Disallow this access.                                                     | 🔒 ![badge-noOtherParadigms][]       |     | ☑️ ✅                         |     |     |     |     |
 
 ### No Statements
 
-| Name                                                                 | Description                                    | 💼                               | ⚠️ | 🚫 | 🔧 | 💡 | 💭 | ❌  |
-| :------------------------------------------------------------------- | :--------------------------------------------- | :------------------------------- | :- | :- | :- | :- | :- | :- |
-| [no-conditional-statements](docs/rules/no-conditional-statements.md) | Disallow conditional statements.               | ✅ 🔒 ![badge-no-statements][]    |    | ☑️ |    |    | 💭 |    |
-| [no-expression-statements](docs/rules/no-expression-statements.md)   | Disallow expression statements.                | ✅ 🔒 ![badge-no-statements][]    |    | ☑️ |    |    | 💭 |    |
-| [no-loop-statements](docs/rules/no-loop-statements.md)               | Disallow imperative loops.                     | ☑️ ✅ 🔒 ![badge-no-statements][] |    |    |    |    |    |    |
-| [no-return-void](docs/rules/no-return-void.md)                       | Disallow functions that don't return anything. | ☑️ ✅ 🔒 ![badge-no-statements][] |    |    |    |    | 💭 |    |
+| Name                                                                 | Description                                    | 💼                               | ⚠️  | 🚫                               | 🔧  | 💡  | 💭  | ❌  |
+| :------------------------------------------------------------------- | :--------------------------------------------- | :------------------------------- | :-- | :------------------------------- | :-- | :-- | :-- | :-- |
+| [no-conditional-statements](docs/rules/no-conditional-statements.md) | Disallow conditional statements.               | ✅ 🔒 ![badge-noStatements][]    |     | ☑️ ![badge-disableTypeChecked][] |     |     | 💭  |     |
+| [no-expression-statements](docs/rules/no-expression-statements.md)   | Disallow expression statements.                | ✅ 🔒 ![badge-noStatements][]    |     | ☑️ ![badge-disableTypeChecked][] |     |     | 💭  |     |
+| [no-loop-statements](docs/rules/no-loop-statements.md)               | Disallow imperative loops.                     | ☑️ ✅ 🔒 ![badge-noStatements][] |     |                                  |     |     |     |     |
+| [no-return-void](docs/rules/no-return-void.md)                       | Disallow functions that don't return anything. | ☑️ ✅ 🔒 ![badge-noStatements][] |     | ![badge-disableTypeChecked][]    |     |     | 💭  |     |
 
 ### Stylistic
 
-| Name                                                                   | Description                                                            | 💼 | ⚠️ | 🚫 | 🔧 | 💡 | 💭 | ❌  |
-| :--------------------------------------------------------------------- | :--------------------------------------------------------------------- | :- | :- | :- | :- | :- | :- | :- |
-| [prefer-property-signatures](docs/rules/prefer-property-signatures.md) | Prefer property signatures over method signatures.                     | 🎨 |    |    |    |    | 💭 |    |
-| [prefer-tacit](docs/rules/prefer-tacit.md)                             | Replaces `x => f(x)` with just `f`.                                    |    | 🎨 |    |    | 💡 | 💭 |    |
-| [readonly-type](docs/rules/readonly-type.md)                           | Require consistently using either `readonly` keywords or `Readonly<T>` | 🎨 |    |    | 🔧 |    | 💭 |    |
+| Name                                                                   | Description                                                            | 💼  | ⚠️  | 🚫                            | 🔧  | 💡  | 💭  | ❌  |
+| :--------------------------------------------------------------------- | :--------------------------------------------------------------------- | :-- | :-- | :---------------------------- | :-- | :-- | :-- | :-- |
+| [prefer-property-signatures](docs/rules/prefer-property-signatures.md) | Prefer property signatures over method signatures.                     | 🎨  |     | ![badge-disableTypeChecked][] |     |     | 💭  |     |
+| [prefer-tacit](docs/rules/prefer-tacit.md)                             | Replaces `x => f(x)` with just `f`.                                    |     | 🎨  | ![badge-disableTypeChecked][] |     | 💡  | 💭  |     |
+| [readonly-type](docs/rules/readonly-type.md)                           | Require consistently using either `readonly` keywords or `Readonly<T>` | 🎨  |     | ![badge-disableTypeChecked][] | 🔧  |     | 💭  |     |
 
 <!-- end auto-generated rules list -->
 <!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
 
 [badge-currying]: https://img.shields.io/badge/-currying-red.svg
-[badge-no-exceptions]: https://img.shields.io/badge/-no--exceptions-blue.svg
-[badge-no-mutations]: https://img.shields.io/badge/-no--mutations-orange.svg
-[badge-no-other-paradigms]: https://img.shields.io/badge/-no--other--paradigms-yellow.svg
-[badge-no-statements]: https://img.shields.io/badge/-no--statements-purple.svg
 
 ## External Recommended Rules
 

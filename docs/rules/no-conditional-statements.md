@@ -1,6 +1,6 @@
 # Disallow conditional statements (`functional/no-conditional-statements`)
 
-💼🚫 This rule is enabled in the following configs: `no-statements`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the ☑️ `lite` config.
+💼🚫 This rule is enabled in the following configs: `noStatements`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the following configs: `disableTypeChecked`, ☑️ `lite`.
 
 💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 

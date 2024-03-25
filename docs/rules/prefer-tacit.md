@@ -1,6 +1,6 @@
 # Replaces `x => f(x)` with just `f` (`functional/prefer-tacit`)
 
-⚠️ This rule _warns_ in the 🎨 `stylistic` config.
+⚠️🚫 This rule _warns_ in the 🎨 `stylistic` config. This rule is _disabled_ in the `disableTypeChecked` config.
 
 💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 
