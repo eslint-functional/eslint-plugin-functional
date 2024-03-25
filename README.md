@@ -106,52 +106,52 @@ The [below section](#rules) gives details on which rules are enabled by each rul
 
 ### Currying
 
-| Name                                                         | Description                    | 💼                         | ⚠️    | 🚫    | 🔧    | 💡    | 💭    | ❌    |
-| :----------------------------------------------------------- | :----------------------------- | :------------------------ | :--- | :--- | :--- | :--- | :--- | :--- |
-| [functional-parameters](docs/rules/functional-parameters.md) | Enforce functional parameters. | ☑️ ✅ 🔒 ![badge-currying][] |      |      |      |      |      |      |
+| Name                                                         | Description                    | 💼                          | ⚠️ | 🚫 | 🔧 | 💡 | 💭 | ❌  |
+| :----------------------------------------------------------- | :----------------------------- | :-------------------------- | :- | :- | :- | :- | :- | :- |
+| [functional-parameters](docs/rules/functional-parameters.md) | Enforce functional parameters. | ☑️ ✅ 🔒 ![badge-currying][] |    |    |    |    |    |    |
 
 ### No Exceptions
 
-| Name                                                     | Description                                            | 💼                              | ⚠️    | 🚫    | 🔧    | 💡    | 💭    | ❌    |
-| :------------------------------------------------------- | :----------------------------------------------------- | :----------------------------- | :--- | :--- | :--- | :--- | :--- | :--- |
-| [no-promise-reject](docs/rules/no-promise-reject.md)     | Disallow rejecting promises.                           |                                |      |      |      |      |      |      |
-| [no-throw-statements](docs/rules/no-throw-statements.md) | Disallow throwing exceptions.                          | ☑️ ✅ 🔒 ![badge-no-exceptions][] |      |      |      |      |      |      |
-| [no-try-statements](docs/rules/no-try-statements.md)     | Disallow try-catch[-finally] and try-finally patterns. | 🔒 ![badge-no-exceptions][]     |      | ☑️ ✅  |      |      |      |      |
+| Name                                                     | Description                                            | 💼                               | ⚠️ | 🚫   | 🔧 | 💡 | 💭 | ❌  |
+| :------------------------------------------------------- | :----------------------------------------------------- | :------------------------------- | :- | :--- | :- | :- | :- | :- |
+| [no-promise-reject](docs/rules/no-promise-reject.md)     | Disallow rejecting promises.                           |                                  |    |      |    |    |    |    |
+| [no-throw-statements](docs/rules/no-throw-statements.md) | Disallow throwing exceptions.                          | ☑️ ✅ 🔒 ![badge-no-exceptions][] |    |      |    |    |    |    |
+| [no-try-statements](docs/rules/no-try-statements.md)     | Disallow try-catch[-finally] and try-finally patterns. | 🔒 ![badge-no-exceptions][]      |    | ☑️ ✅ |    |    |    |    |
 
 ### No Mutations
 
-| Name                                                                         | Description                                                     | 💼                             | ⚠️    | 🚫    | 🔧    | 💡    | 💭    | ❌    |
-| :--------------------------------------------------------------------------- | :-------------------------------------------------------------- | :---------------------------- | :--- | :--- | :--- | :--- | :--- | :--- |
-| [immutable-data](docs/rules/immutable-data.md)                               | Enforce treating data as immutable.                             | ☑️ ✅ 🔒 ![badge-no-mutations][] |      |      |      |      | 💭    |      |
-| [no-let](docs/rules/no-let.md)                                               | Disallow mutable variables.                                     | ☑️ ✅ 🔒 ![badge-no-mutations][] |      |      |      |      |      |      |
-| [prefer-immutable-types](docs/rules/prefer-immutable-types.md)               | Require function parameters to be typed as certain immutability | ☑️ ✅ 🔒 ![badge-no-mutations][] |      |      | 🔧    | 💡    | 💭    |      |
-| [prefer-readonly-type](docs/rules/prefer-readonly-type.md)                   | Prefer readonly types over mutable types.                       |                               |      |      | 🔧    |      | 💭    | ❌    |
-| [type-declaration-immutability](docs/rules/type-declaration-immutability.md) | Enforce the immutability of types based on patterns.            | ☑️ ✅ 🔒 ![badge-no-mutations][] |      |      | 🔧    |      | 💭    |      |
+| Name                                                                         | Description                                                     | 💼                              | ⚠️ | 🚫 | 🔧 | 💡 | 💭 | ❌  |
+| :--------------------------------------------------------------------------- | :-------------------------------------------------------------- | :------------------------------ | :- | :- | :- | :- | :- | :- |
+| [immutable-data](docs/rules/immutable-data.md)                               | Enforce treating data as immutable.                             | ☑️ ✅ 🔒 ![badge-no-mutations][] |    |    |    |    | 💭 |    |
+| [no-let](docs/rules/no-let.md)                                               | Disallow mutable variables.                                     | ☑️ ✅ 🔒 ![badge-no-mutations][] |    |    |    |    |    |    |
+| [prefer-immutable-types](docs/rules/prefer-immutable-types.md)               | Require function parameters to be typed as certain immutability | ☑️ ✅ 🔒 ![badge-no-mutations][] |    |    | 🔧 | 💡 | 💭 |    |
+| [prefer-readonly-type](docs/rules/prefer-readonly-type.md)                   | Prefer readonly types over mutable types.                       |                                 |    |    | 🔧 |    | 💭 | ❌  |
+| [type-declaration-immutability](docs/rules/type-declaration-immutability.md) | Enforce the immutability of types based on patterns.            | ☑️ ✅ 🔒 ![badge-no-mutations][] |    |    | 🔧 |    | 💭 |    |
 
 ### No Other Paradigms
 
-| Name                                                     | Description                                                               | 💼                                   | ⚠️    | 🚫    | 🔧    | 💡    | 💭    | ❌    |
-| :------------------------------------------------------- | :------------------------------------------------------------------------ | :---------------------------------- | :--- | :--- | :--- | :--- | :--- | :--- |
-| [no-classes](docs/rules/no-classes.md)                   | Disallow classes.                                                         | ☑️ ✅ 🔒 ![badge-no-other-paradigms][] |      |      |      |      |      |      |
-| [no-mixed-types](docs/rules/no-mixed-types.md)           | Restrict types so that only members of the same kind are allowed in them. | ☑️ ✅ 🔒 ![badge-no-other-paradigms][] |      |      |      |      | 💭    |      |
-| [no-this-expressions](docs/rules/no-this-expressions.md) | Disallow this access.                                                     | 🔒 ![badge-no-other-paradigms][]     |      | ☑️ ✅  |      |      |      |      |
+| Name                                                     | Description                                                               | 💼                                    | ⚠️ | 🚫   | 🔧 | 💡 | 💭 | ❌  |
+| :------------------------------------------------------- | :------------------------------------------------------------------------ | :------------------------------------ | :- | :--- | :- | :- | :- | :- |
+| [no-classes](docs/rules/no-classes.md)                   | Disallow classes.                                                         | ☑️ ✅ 🔒 ![badge-no-other-paradigms][] |    |      |    |    |    |    |
+| [no-mixed-types](docs/rules/no-mixed-types.md)           | Restrict types so that only members of the same kind are allowed in them. | ☑️ ✅ 🔒 ![badge-no-other-paradigms][] |    |      |    |    | 💭 |    |
+| [no-this-expressions](docs/rules/no-this-expressions.md) | Disallow this access.                                                     | 🔒 ![badge-no-other-paradigms][]      |    | ☑️ ✅ |    |    |    |    |
 
 ### No Statements
 
-| Name                                                                 | Description                                    | 💼                              | ⚠️    | 🚫    | 🔧    | 💡    | 💭    | ❌    |
-| :------------------------------------------------------------------- | :--------------------------------------------- | :----------------------------- | :--- | :--- | :--- | :--- | :--- | :--- |
-| [no-conditional-statements](docs/rules/no-conditional-statements.md) | Disallow conditional statements.               | ✅ 🔒 ![badge-no-statements][]   |      | ☑️    |      |      | 💭    |      |
-| [no-expression-statements](docs/rules/no-expression-statements.md)   | Disallow expression statements.                | ✅ 🔒 ![badge-no-statements][]   |      | ☑️    |      |      | 💭    |      |
-| [no-loop-statements](docs/rules/no-loop-statements.md)               | Disallow imperative loops.                     | ☑️ ✅ 🔒 ![badge-no-statements][] |      |      |      |      |      |      |
-| [no-return-void](docs/rules/no-return-void.md)                       | Disallow functions that don't return anything. | ☑️ ✅ 🔒 ![badge-no-statements][] |      |      |      |      | 💭    |      |
+| Name                                                                 | Description                                    | 💼                               | ⚠️ | 🚫 | 🔧 | 💡 | 💭 | ❌  |
+| :------------------------------------------------------------------- | :--------------------------------------------- | :------------------------------- | :- | :- | :- | :- | :- | :- |
+| [no-conditional-statements](docs/rules/no-conditional-statements.md) | Disallow conditional statements.               | ✅ 🔒 ![badge-no-statements][]    |    | ☑️ |    |    | 💭 |    |
+| [no-expression-statements](docs/rules/no-expression-statements.md)   | Disallow expression statements.                | ✅ 🔒 ![badge-no-statements][]    |    | ☑️ |    |    | 💭 |    |
+| [no-loop-statements](docs/rules/no-loop-statements.md)               | Disallow imperative loops.                     | ☑️ ✅ 🔒 ![badge-no-statements][] |    |    |    |    |    |    |
+| [no-return-void](docs/rules/no-return-void.md)                       | Disallow functions that don't return anything. | ☑️ ✅ 🔒 ![badge-no-statements][] |    |    |    |    | 💭 |    |
 
 ### Stylistic
 
-| Name                                                                   | Description                                                            | 💼    | ⚠️    | 🚫    | 🔧    | 💡    | 💭    | ❌    |
-| :--------------------------------------------------------------------- | :--------------------------------------------------------------------- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| [prefer-property-signatures](docs/rules/prefer-property-signatures.md) | Prefer property signatures over method signatures.                     | 🎨    |      |      |      |      | 💭    |      |
-| [prefer-tacit](docs/rules/prefer-tacit.md)                             | Replaces `x => f(x)` with just `f`.                                    |      | 🎨    |      |      | 💡    | 💭    |      |
-| [readonly-type](docs/rules/readonly-type.md)                           | Require consistently using either `readonly` keywords or `Readonly<T>` | 🎨    |      |      | 🔧    |      | 💭    |      |
+| Name                                                                   | Description                                                            | 💼 | ⚠️ | 🚫 | 🔧 | 💡 | 💭 | ❌  |
+| :--------------------------------------------------------------------- | :--------------------------------------------------------------------- | :- | :- | :- | :- | :- | :- | :- |
+| [prefer-property-signatures](docs/rules/prefer-property-signatures.md) | Prefer property signatures over method signatures.                     | 🎨 |    |    |    |    | 💭 |    |
+| [prefer-tacit](docs/rules/prefer-tacit.md)                             | Replaces `x => f(x)` with just `f`.                                    |    | 🎨 |    |    | 💡 | 💭 |    |
+| [readonly-type](docs/rules/readonly-type.md)                           | Require consistently using either `readonly` keywords or `Readonly<T>` | 🎨 |    |    | 🔧 |    | 💭 |    |
 
 <!-- end auto-generated rules list -->
 <!-- markdownlint-restore -->
