@@ -12,7 +12,6 @@
   - prettier --ignore-unknown --write
   - markdownlint --config=.markdownlint.json --ignore-path=.markdownlintignore
   - cspell lint --no-progress --show-suggestions --show-context --no-must-find-files --dot
-  - "pnpm run lint:eslint-docs-fix && :"
 
 "pnpm-lock.yaml":
   - "pnpm dedupe && :"
