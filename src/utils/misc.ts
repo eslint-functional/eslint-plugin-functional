@@ -12,6 +12,7 @@ import {
   isMemberExpression,
   isPrivateIdentifier,
   isThisExpression,
+  isTSAsExpression,
   isTSTypeAnnotation,
   isUnaryExpression,
   isVariableDeclaration,
@@ -72,7 +73,9 @@ function getNodeIdentifierText(
                     ? context.sourceCode
                         .getText(node.typeAnnotation as TSESTree.Node)
                         .replaceAll(/\s+/gmu, "")
-                    : null;
+                    : isTSAsExpression(node)
+                      ? getNodeIdentifierText(node.expression, context)
+                      : null;
 
   if (identifierText !== null) {
     return identifierText;

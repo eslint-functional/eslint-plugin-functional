@@ -511,6 +511,20 @@ const tests: Array<
       },
     ],
   },
+  {
+    code: dedent`
+      (mutable_foo as Bar).baz = "hello world";
+    `,
+    optionsSet: [[]],
+    errors: [
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.AssignmentExpression,
+        line: 1,
+        column: 1,
+      },
+    ],
+  },
 ];
 
 export default tests;

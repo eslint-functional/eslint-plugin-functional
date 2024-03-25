@@ -795,6 +795,20 @@ const tests: Array<
       },
     ],
   },
+  {
+    code: dedent`
+      (mutable_foo as string[]).sort();
+    `,
+    optionsSet: [[]],
+    errors: [
+      {
+        messageId: "array",
+        type: AST_NODE_TYPES.CallExpression,
+        line: 1,
+        column: 1,
+      },
+    ],
+  },
 ];
 
 export default tests;
