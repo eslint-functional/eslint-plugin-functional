@@ -1,15 +1,22 @@
-import { AST_NODE_TYPES, type TSESTree } from "@typescript-eslint/utils";
+import { type TSESTree } from "@typescript-eslint/utils";
 import { type JSONSchema4 } from "@typescript-eslint/utils/json-schema";
 import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
 import { ruleNameScope } from "#eslint-plugin-functional/utils/misc";
 import {
   createRuleUsingFunction,
+  getTypeOfNode,
   type NamedCreateRuleCustomMeta,
   type RuleResult,
 } from "#eslint-plugin-functional/utils/rule";
 import {
+  isFunctionLikeType,
   isIdentifier,
+  isTSCallSignatureDeclaration,
+  isTSConstructSignatureDeclaration,
+  isTSFunctionType,
+  isTSIndexSignature,
+  isTSMethodSignature,
   isTSPropertySignature,
   isTSTypeLiteral,
   isTSTypeReference,
@@ -92,42 +99,21 @@ const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages, Options> = {
  */
 function hasTypeElementViolations(
   typeElements: TSESTree.TypeElement[],
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
 ): boolean {
-  type CarryType = {
-    readonly prevMemberType: AST_NODE_TYPES | undefined;
-    readonly prevMemberTypeAnnotation: AST_NODE_TYPES | undefined;
-    readonly violations: boolean;
-  };
-
-  const typeElementsTypeInfo = typeElements.map((member) => ({
-    type: member.type,
-    typeAnnotation:
-      isTSPropertySignature(member) && member.typeAnnotation !== undefined
-        ? member.typeAnnotation.typeAnnotation.type
-        : undefined,
-  }));
-
-  return typeElementsTypeInfo.reduce<CarryType>(
-    (carry, member) => ({
-      prevMemberType: member.type,
-      prevMemberTypeAnnotation: member.typeAnnotation,
-      violations:
-        // Not the first property in the interface.
-        carry.prevMemberType !== undefined &&
-        // And different property type to previous property.
-        (carry.prevMemberType !== member.type ||
-          // Or annotated with a different type annotation.
-          (carry.prevMemberTypeAnnotation !== member.typeAnnotation &&
-            // Where one of the properties is a annotated as a function.
-            (carry.prevMemberTypeAnnotation === AST_NODE_TYPES.TSFunctionType ||
-              member.typeAnnotation === AST_NODE_TYPES.TSFunctionType))),
-    }),
-    {
-      prevMemberType: undefined,
-      prevMemberTypeAnnotation: undefined,
-      violations: false,
-    },
-  ).violations;
+  return !typeElements
+    .map((member) => {
+      return (
+        isTSMethodSignature(member) ||
+        isTSCallSignatureDeclaration(member) ||
+        isTSConstructSignatureDeclaration(member) ||
+        ((isTSPropertySignature(member) || isTSIndexSignature(member)) &&
+          member.typeAnnotation !== undefined &&
+          (isTSFunctionType(member.typeAnnotation.typeAnnotation) ||
+            isFunctionLikeType(getTypeOfNode(member, context))))
+      );
+    })
+    .every((isFunction, _, array) => array[0] === isFunction);
 }
 
 /**
@@ -140,7 +126,7 @@ function checkTSInterfaceDeclaration(
 ): RuleResult<keyof typeof errorMessages, Options> {
   return {
     context,
-    descriptors: hasTypeElementViolations(node.body.body)
+    descriptors: hasTypeElementViolations(node.body.body, context)
       ? [{ node, messageId: "generic" }]
       : [],
   };
@@ -159,15 +145,16 @@ function checkTSTypeAliasDeclaration(
     descriptors:
       // TypeLiteral.
       (isTSTypeLiteral(node.typeAnnotation) &&
-        hasTypeElementViolations(node.typeAnnotation.members)) ||
+        hasTypeElementViolations(node.typeAnnotation.members, context)) ||
       // TypeLiteral inside `Readonly<>`.
       (isTSTypeReference(node.typeAnnotation) &&
         isIdentifier(node.typeAnnotation.typeName) &&
-        node.typeAnnotation.typeParameters !== undefined &&
-        node.typeAnnotation.typeParameters.params.length === 1 &&
-        isTSTypeLiteral(node.typeAnnotation.typeParameters.params[0]!) &&
+        node.typeAnnotation.typeArguments !== undefined &&
+        node.typeAnnotation.typeArguments.params.length === 1 &&
+        isTSTypeLiteral(node.typeAnnotation.typeArguments.params[0]!) &&
         hasTypeElementViolations(
-          node.typeAnnotation.typeParameters.params[0].members,
+          node.typeAnnotation.typeArguments.params[0].members,
+          context,
         ))
         ? [{ node, messageId: "generic" }]
         : [],
