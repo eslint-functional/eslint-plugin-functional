@@ -237,6 +237,12 @@ export function isTSArrayType(
   return node.type === AST_NODE_TYPES.TSArrayType;
 }
 
+export function isTSAsExpression(
+  node: TSESTree.Node,
+): node is TSESTree.TSAsExpression {
+  return node.type === AST_NODE_TYPES.TSAsExpression;
+}
+
 export function isTSFunctionType(
   node: TSESTree.Node,
 ): node is TSESTree.TSFunctionType {

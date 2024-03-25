@@ -338,6 +338,18 @@ const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
     `,
     optionsSet: [[{ ignoreImmediateMutation: true }]],
   },
+  {
+    code: dedent`
+      (mutable_foo as string[]).sort();
+    `,
+    optionsSet: [[{ ignoreAccessorPattern: "mutable*" }]],
+  },
+  {
+    code: dedent`
+      ([a, b, c] as string[]).sort();
+    `,
+    optionsSet: [[{ ignoreImmediateMutation: true }]],
+  },
 ];
 
 export default tests;

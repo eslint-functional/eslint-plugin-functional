@@ -40,6 +40,7 @@ import {
   isMemberExpression,
   isNewExpression,
   isObjectConstructorType,
+  isTSAsExpression,
 } from "#eslint-plugin-functional/utils/type-guards";
 
 /**
@@ -361,42 +362,46 @@ function checkUpdateExpression(
  * a mutator method call.
  */
 function isInChainCallAndFollowsNew(
-  node: TSESTree.MemberExpression,
+  node: TSESTree.Expression,
   context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
 ): boolean {
+  if (isMemberExpression(node)) {
+    return isInChainCallAndFollowsNew(node.object, context);
+  }
+
+  if (isTSAsExpression(node)) {
+    return isInChainCallAndFollowsNew(node.expression, context);
+  }
+
   // Check for: [0, 1, 2]
-  if (isArrayExpression(node.object)) {
+  if (isArrayExpression(node)) {
     return true;
   }
 
   // Check for: new Array()
   if (
-    isNewExpression(node.object) &&
-    isArrayConstructorType(getTypeOfNode(node.object.callee, context))
+    isNewExpression(node) &&
+    isArrayConstructorType(getTypeOfNode(node.callee, context))
   ) {
     return true;
   }
 
   if (
-    isCallExpression(node.object) &&
-    isMemberExpression(node.object.callee) &&
-    isIdentifier(node.object.callee.property)
+    isCallExpression(node) &&
+    isMemberExpression(node.callee) &&
+    isIdentifier(node.callee.property)
   ) {
     // Check for: Array.from(iterable)
     if (
-      arrayConstructorFunctions.some(
-        isExpected(node.object.callee.property.name),
-      ) &&
-      isArrayConstructorType(getTypeOfNode(node.object.callee.object, context))
+      arrayConstructorFunctions.some(isExpected(node.callee.property.name)) &&
+      isArrayConstructorType(getTypeOfNode(node.callee.object, context))
     ) {
       return true;
     }
 
     // Check for: array.slice(0)
     if (
-      arrayNewObjectReturningMethods.some(
-        isExpected(node.object.callee.property.name),
-      )
+      arrayNewObjectReturningMethods.some(isExpected(node.callee.property.name))
     ) {
       return true;
     }
@@ -404,9 +409,9 @@ function isInChainCallAndFollowsNew(
     // Check for: Object.entries(object)
     if (
       objectConstructorNewObjectReturningMethods.some(
-        isExpected(node.object.callee.property.name),
+        isExpected(node.callee.property.name),
       ) &&
-      isObjectConstructorType(getTypeOfNode(node.object.callee.object, context))
+      isObjectConstructorType(getTypeOfNode(node.callee.object, context))
     ) {
       return true;
     }
@@ -414,9 +419,9 @@ function isInChainCallAndFollowsNew(
     // Check for: "".split("")
     if (
       stringConstructorNewObjectReturningMethods.some(
-        isExpected(node.object.callee.property.name),
+        isExpected(node.callee.property.name),
       ) &&
-      getTypeOfNode(node.object.callee.object, context).isStringLiteral()
+      getTypeOfNode(node.callee.object, context).isStringLiteral()
     ) {
       return true;
     }
