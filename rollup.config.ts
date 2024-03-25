@@ -17,7 +17,7 @@ const classicCJS = {
 
   output: [
     {
-      file: pkg.exports["."].require,
+      file: pkg.exports["./classic"].require,
       format: "cjs",
       sourcemap: false,
     },
@@ -53,7 +53,7 @@ const classicESM = {
 
   output: [
     {
-      file: pkg.exports["."].import,
+      file: pkg.exports["./classic"].import,
       format: "esm",
       sourcemap: false,
     },
@@ -89,7 +89,7 @@ const flatCJS = {
 
   output: [
     {
-      file: pkg.exports["./flat"].require,
+      file: pkg.exports["."].require,
       format: "cjs",
       sourcemap: false,
     },
@@ -125,7 +125,7 @@ const flatESM = {
 
   output: [
     {
-      file: pkg.exports["./flat"].import,
+      file: pkg.exports["."].import,
       format: "esm",
       sourcemap: false,
     },
