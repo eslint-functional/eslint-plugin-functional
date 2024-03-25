@@ -45,12 +45,12 @@ import {
 /**
  * The name of this rule.
  */
-export const name = "prefer-immutable-types" as const;
+export const name = "prefer-immutable-types";
 
 /**
  * The full name of this rule.
  */
-export const fullName = `${ruleNameScope}/${name}` as const;
+export const fullName = `${ruleNameScope}/${name}`;
 
 type RawEnforcement =
   | Exclude<Immutability | keyof typeof Immutability, "Unknown" | "Mutable">

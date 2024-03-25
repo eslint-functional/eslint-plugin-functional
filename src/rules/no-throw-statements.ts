@@ -13,12 +13,12 @@ import { isInFunctionBody } from "#eslint-plugin-functional/utils/tree";
 /**
  * The name of this rule.
  */
-export const name = "no-throw-statements" as const;
+export const name = "no-throw-statements";
 
 /**
  * The full name of this rule.
  */
-export const fullName = `${ruleNameScope}/${name}` as const;
+export const fullName = `${ruleNameScope}/${name}`;
 
 /**
  * The options this rule can take.

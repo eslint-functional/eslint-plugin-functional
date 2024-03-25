@@ -13,12 +13,12 @@ import { isInReadonly } from "#eslint-plugin-functional/utils/tree";
 /**
  * The name of this rule.
  */
-export const name = "prefer-property-signatures" as const;
+export const name = "prefer-property-signatures";
 
 /**
  * The full name of this rule.
  */
-export const fullName = `${ruleNameScope}/${name}` as const;
+export const fullName = `${ruleNameScope}/${name}`;
 
 /**
  * The options this rule can take.
