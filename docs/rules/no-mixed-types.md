@@ -27,6 +27,8 @@ type Foo = {
 
 ### ✅ Correct
 
+<!-- eslint-skip -->
+
 ```ts
 /* eslint functional/no-mixed-types: "error" */
 
@@ -36,12 +38,14 @@ type Foo = {
 };
 ```
 
+<!-- eslint-skip -->
+
 ```ts
 /* eslint functional/no-mixed-types: "error" */
 
 type Foo = {
   prop1: () => string;
-  prop2: () => () => number;
+  prop2(): number;
 };
 ```
 

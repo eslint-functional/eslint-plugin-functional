@@ -255,6 +255,24 @@ export function isTSIndexSignature(
   return node.type === AST_NODE_TYPES.TSIndexSignature;
 }
 
+export function isTSMethodSignature(
+  node: TSESTree.Node,
+): node is TSESTree.TSMethodSignature {
+  return node.type === AST_NODE_TYPES.TSMethodSignature;
+}
+
+export function isTSCallSignatureDeclaration(
+  node: TSESTree.Node,
+): node is TSESTree.TSCallSignatureDeclaration {
+  return node.type === AST_NODE_TYPES.TSCallSignatureDeclaration;
+}
+
+export function isTSConstructSignatureDeclaration(
+  node: TSESTree.Node,
+): node is TSESTree.TSConstructSignatureDeclaration {
+  return node.type === AST_NODE_TYPES.TSConstructSignatureDeclaration;
+}
+
 export function isTSInterfaceBody(
   node: TSESTree.Node,
 ): node is TSESTree.TSInterfaceBody {
@@ -411,4 +429,8 @@ export function isObjectConstructorType(type: Type | null): boolean {
       type.symbol.name === "ObjectConstructor") ||
       (isUnionType(type) && type.types.some(isObjectConstructorType)))
   );
+}
+
+export function isFunctionLikeType(type: Type | null): boolean {
+  return type !== null && type.getCallSignatures().length > 0;
 }
