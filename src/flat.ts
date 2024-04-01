@@ -17,13 +17,15 @@ import stylistic from "#eslint-plugin-functional/configs/stylistic";
 import { rules } from "#eslint-plugin-functional/rules";
 import { __VERSION__ } from "#eslint-plugin-functional/utils/constants";
 
-const functional = {
-  meta: {
-    name: "eslint-plugin-functional",
-    version: __VERSION__,
-  } as const,
+const meta = {
+  name: "eslint-plugin-functional",
+  version: __VERSION__,
+} as const;
+
+const functional: FlatConfig.Plugin = {
+  meta,
   rules,
-} satisfies Omit<FlatConfig.Plugin, "configs">;
+};
 
 const configs = {
   all: { plugins: { functional }, rules: all },
@@ -54,7 +56,11 @@ const configs = {
   stylistic: { plugins: { functional }, rules: stylistic },
 } satisfies Record<string, FlatConfig.Config>;
 
-export default {
-  ...functional,
-  configs,
-} as const;
+// eslint-disable-next-line functional/immutable-data, functional/no-expression-statements
+functional.configs = configs;
+
+export default functional as FlatConfig.Plugin & {
+  meta: typeof meta;
+  rules: typeof rules;
+  configs: typeof configs;
+};
