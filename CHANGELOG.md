@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+## [6.3.2](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.3.1...v6.3.2) (2024-04-01)
+
+
+### Bug Fixes
+
+* **readonly-type:** empty object types should not trigger reports ([fc6a394](https://github.com/eslint-functional/eslint-plugin-functional/commit/fc6a394ab9d6ab800fc5ae0559fba5858b0936d8)), closes [#796](https://github.com/eslint-functional/eslint-plugin-functional/issues/796)
+
 ## [6.3.1](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.3.0...v6.3.1) (2024-04-01)
 
 
