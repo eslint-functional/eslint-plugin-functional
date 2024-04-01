@@ -15,13 +15,11 @@ const treeshake = {
 const classicCJS = {
   input: "src/classic.ts",
 
-  output: [
-    {
-      file: pkg.exports["."].require,
-      format: "cjs",
-      sourcemap: false,
-    },
-  ],
+  output: {
+    file: pkg.exports["."].require,
+    format: "cjs",
+    sourcemap: false,
+  },
 
   plugins: [
     rollupPluginAutoExternal(),
@@ -51,13 +49,11 @@ const classicCJS = {
 const classicESM = {
   input: "src/classic.ts",
 
-  output: [
-    {
-      file: pkg.exports["."].import,
-      format: "esm",
-      sourcemap: false,
-    },
-  ],
+  output: {
+    file: pkg.exports["."].import,
+    format: "esm",
+    sourcemap: false,
+  },
 
   plugins: [
     rollupPluginAutoExternal(),
@@ -87,13 +83,11 @@ const classicESM = {
 const flatCJS = {
   input: "src/flat.ts",
 
-  output: [
-    {
-      file: pkg.exports["./flat"].require,
-      format: "cjs",
-      sourcemap: false,
-    },
-  ],
+  output: {
+    file: pkg.exports["./flat"].require,
+    format: "cjs",
+    sourcemap: false,
+  },
 
   plugins: [
     rollupPluginAutoExternal(),
@@ -123,13 +117,11 @@ const flatCJS = {
 const flatESM = {
   input: "src/flat.ts",
 
-  output: [
-    {
-      file: pkg.exports["./flat"].import,
-      format: "esm",
-      sourcemap: false,
-    },
-  ],
+  output: {
+    file: pkg.exports["./flat"].import,
+    format: "esm",
+    sourcemap: false,
+  },
 
   plugins: [
     rollupPluginAutoExternal(),
