@@ -73,6 +73,13 @@ const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
     `,
     optionsSet: [["keyword"]],
   },
+  // Empty should not cause issues
+  {
+    code: dedent`
+      type Foo = {};
+    `,
+    optionsSet: [["keyword"], ["generic"]],
+  },
 ];
 
 export default tests;

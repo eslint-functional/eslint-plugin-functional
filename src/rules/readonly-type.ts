@@ -178,14 +178,16 @@ function checkTypeLiteral(
   }
 
   if (mode === "generic") {
-    const needsWrapping = node.members.every(
-      (member) =>
-        (isPropertyDefinition(member) ||
-          isTSIndexSignature(member) ||
-          isTSParameterProperty(member) ||
-          isTSPropertySignature(member)) &&
-        member.readonly,
-    );
+    const needsWrapping =
+      node.members.length > 0 &&
+      node.members.every(
+        (member) =>
+          (isPropertyDefinition(member) ||
+            isTSIndexSignature(member) ||
+            isTSParameterProperty(member) ||
+            isTSPropertySignature(member)) &&
+          member.readonly,
+      );
 
     if (needsWrapping) {
       return {
