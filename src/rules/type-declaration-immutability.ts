@@ -56,6 +56,8 @@ type FixerConfig = {
   replace: string;
 };
 
+type SuggestionsConfig = FixerConfig[];
+
 /**
  * The options this rule can take.
  */
@@ -71,6 +73,7 @@ type Options = [
         | RuleEnforcementComparator
         | keyof typeof RuleEnforcementComparator;
       fixer?: FixerConfigRaw | FixerConfigRaw[] | false;
+      suggestions?: FixerConfigRaw[] | false;
     }>;
     ignoreInterfaces: boolean;
   },
@@ -92,6 +95,26 @@ const fixerSchema: JSONSchema4 = {
         replace: { type: "string" },
       },
       additionalProperties: false,
+    },
+    {
+      type: "array",
+      items: {
+        type: "object",
+        properties: {
+          pattern: { type: "string" },
+          replace: { type: "string" },
+        },
+        additionalProperties: false,
+      },
+    },
+  ],
+};
+
+const suggestionsSchema: JSONSchema4 = {
+  oneOf: [
+    {
+      type: "boolean",
+      enum: [false],
     },
     {
       type: "array",
@@ -138,6 +161,7 @@ const schema: JSONSchema4[] = [
               enum: Object.values(RuleEnforcementComparator),
             },
             fixer: fixerSchema,
+            suggestions: suggestionsSchema,
           },
           required: ["identifiers", "immutability"],
           additionalProperties: false,
@@ -195,6 +219,7 @@ const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages, Options> = {
   },
   messages: errorMessages,
   fixable: "code",
+  hasSuggestions: true,
   schema,
 };
 
@@ -206,6 +231,7 @@ export type ImmutabilityRule = {
   immutability: Immutability;
   comparator: RuleEnforcementComparator;
   fixers: FixerConfig[] | false;
+  suggestions: SuggestionsConfig | false;
 };
 
 type Descriptor = RuleResult<
@@ -245,11 +271,20 @@ function getRules(options: Readonly<Options>): ImmutabilityRule[] {
             pattern: new RegExp(r.pattern, "us"),
           }));
 
+    const suggestions =
+      rule.suggestions === undefined || rule.suggestions === false
+        ? false
+        : rule.suggestions.map((r) => ({
+            ...r,
+            pattern: new RegExp(r.pattern, "us"),
+          }));
+
     return {
       identifiers,
       immutability,
       comparator,
       fixers,
+      suggestions,
     };
   });
 }
@@ -298,6 +333,27 @@ function getConfiguredFixer<T extends TSESTree.Node>(
 }
 
 /**
+ * Get the suggestions that uses the user config.
+ */
+function getConfiguredSuggestions<T extends TSESTree.Node>(
+  node: T,
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  configs: FixerConfig[],
+  messageId: keyof typeof errorMessages,
+): NonNullable<Descriptor["suggest"]> | null {
+  const text = context.sourceCode.getText(node);
+  const matchingConfig = configs.filter((c) => c.pattern.test(text));
+  if (matchingConfig.length === 0) {
+    return null;
+  }
+  return matchingConfig.map((config) => ({
+    fix: (fixer) =>
+      fixer.replaceText(node, text.replace(config.pattern, config.replace)),
+    messageId,
+  }));
+}
+
+/**
  * Compare the actual immutability to the expected immutability.
  */
 function compareImmutability(rule: ImmutabilityRule, actual: Immutability) {
@@ -337,24 +393,37 @@ function getResults(
     };
   }
 
+  const messageId = RuleEnforcementComparator[
+    rule.comparator
+  ] as keyof typeof RuleEnforcementComparator;
+
   const fix =
     rule.fixers === false || isTSInterfaceDeclaration(node)
       ? null
       : getConfiguredFixer(node.typeAnnotation, context, rule.fixers);
+
+  const suggest =
+    rule.suggestions === false || isTSInterfaceDeclaration(node)
+      ? null
+      : getConfiguredSuggestions(
+          node.typeAnnotation,
+          context,
+          rule.suggestions,
+          messageId,
+        );
 
   return {
     context,
     descriptors: [
       {
         node: node.id,
-        messageId: RuleEnforcementComparator[
-          rule.comparator
-        ] as keyof typeof RuleEnforcementComparator,
+        messageId,
         data: {
           actual: Immutability[immutability],
           expected: Immutability[rule.immutability],
         },
         fix,
+        suggest,
       },
     ],
   };

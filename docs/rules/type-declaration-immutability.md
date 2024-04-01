@@ -2,7 +2,7 @@
 
 💼 This rule is enabled in the following configs: ☑️ `lite`, `no-mutations`, ✅ `recommended`, 🔒 `strict`.
 
-🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 
 💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 
@@ -86,6 +86,7 @@ type Options = {
       | { pattern: string; replace: string }
       | Array<{ pattern: string; replace: string }>
       | false;
+    suggestions?: Array<{ pattern: string; replace: string }> | false;
   }>;
   ignoreInterfaces: boolean;
   ignoreIdentifierPattern: string[] | string;
@@ -102,6 +103,7 @@ const defaults = {
       immutability: "Immutable",
       comparator: "AtLeast",
       fixer: false,
+      suggestions: false,
     },
   ],
   ignoreInterfaces: false,
@@ -185,6 +187,10 @@ immutability. This can be thought of as `<`, `<=`, `==`, `>=` or `>`.
 
 Configure the fixer for this rule to work with your setup.
 If not set, or set to `false`, the fixer will be disabled.
+
+#### `suggestions`
+
+Configure any suggestions for this rule to work with your setup.
 
 ### `ignoreInterfaces`
 

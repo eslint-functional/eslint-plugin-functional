@@ -126,7 +126,7 @@ The [below section](#rules) gives details on which rules are enabled by each rul
 | [no-let](docs/rules/no-let.md)                                               | Disallow mutable variables.                                     | ☑️ ✅ 🔒 ![badge-no-mutations][] |    |    |    |    |    |    |
 | [prefer-immutable-types](docs/rules/prefer-immutable-types.md)               | Require function parameters to be typed as certain immutability | ☑️ ✅ 🔒 ![badge-no-mutations][] |    |    | 🔧 | 💡 | 💭 |    |
 | [prefer-readonly-type](docs/rules/prefer-readonly-type.md)                   | Prefer readonly types over mutable types.                       |                                 |    |    | 🔧 |    | 💭 | ❌  |
-| [type-declaration-immutability](docs/rules/type-declaration-immutability.md) | Enforce the immutability of types based on patterns.            | ☑️ ✅ 🔒 ![badge-no-mutations][] |    |    | 🔧 |    | 💭 |    |
+| [type-declaration-immutability](docs/rules/type-declaration-immutability.md) | Enforce the immutability of types based on patterns.            | ☑️ ✅ 🔒 ![badge-no-mutations][] |    |    | 🔧 | 💡 | 💭 |    |
 
 ### No Other Paradigms
 
