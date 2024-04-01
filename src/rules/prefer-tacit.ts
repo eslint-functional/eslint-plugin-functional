@@ -14,11 +14,11 @@ import ts from "#eslint-plugin-functional/conditional-imports/typescript";
 import { ruleNameScope } from "#eslint-plugin-functional/utils/misc";
 import { type ESFunction } from "#eslint-plugin-functional/utils/node-types";
 import {
+  type NamedCreateRuleCustomMeta,
+  type RuleResult,
   createRule,
   getESTreeNode,
   getTypeOfNode,
-  type NamedCreateRuleCustomMeta,
-  type RuleResult,
 } from "#eslint-plugin-functional/utils/rule";
 import { isNested } from "#eslint-plugin-functional/utils/tree";
 import {

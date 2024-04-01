@@ -3,10 +3,10 @@ import { type RuleDefinition } from "#eslint-plugin-functional/utils/rule";
 import { getRuleTester } from "./RuleTester";
 import { configs } from "./configs";
 import {
-  processInvalidTestCase,
-  processValidTestCase,
   type InvalidTestCaseSet,
   type ValidTestCaseSet,
+  processInvalidTestCase,
+  processValidTestCase,
 } from "./util";
 
 type TestFunction<

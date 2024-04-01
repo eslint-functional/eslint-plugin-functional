@@ -11,9 +11,9 @@ import {
   isIdentifier,
   isMemberExpression,
   isPrivateIdentifier,
-  isThisExpression,
   isTSAsExpression,
   isTSTypeAnnotation,
+  isThisExpression,
   isUnaryExpression,
   isVariableDeclaration,
 } from "#eslint-plugin-functional/utils/type-guards";
@@ -72,7 +72,7 @@ function getNodeIdentifierText(
                   : isTSTypeAnnotation(node)
                     ? context.sourceCode
                         .getText(node.typeAnnotation as TSESTree.Node)
-                        .replaceAll(/\s+/gmu, "")
+                        .replaceAll(/\s+/gu, "")
                     : isTSAsExpression(node)
                       ? getNodeIdentifierText(node.expression, context)
                       : null;

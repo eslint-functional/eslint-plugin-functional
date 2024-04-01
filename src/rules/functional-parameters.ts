@@ -7,18 +7,18 @@ import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import { deepmerge } from "deepmerge-ts";
 
 import {
+  type IgnoreIdentifierPatternOption,
+  type IgnorePrefixSelectorOption,
   ignoreIdentifierPatternOptionSchema,
   ignorePrefixSelectorOptionSchema,
   shouldIgnorePattern,
-  type IgnoreIdentifierPatternOption,
-  type IgnorePrefixSelectorOption,
 } from "#eslint-plugin-functional/options";
 import { ruleNameScope } from "#eslint-plugin-functional/utils/misc";
 import { type ESFunction } from "#eslint-plugin-functional/utils/node-types";
 import {
-  createRuleUsingFunction,
   type NamedCreateRuleCustomMeta,
   type RuleResult,
+  createRuleUsingFunction,
 } from "#eslint-plugin-functional/utils/rule";
 import {
   isArgument,

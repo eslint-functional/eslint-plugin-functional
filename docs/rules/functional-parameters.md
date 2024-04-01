@@ -137,7 +137,7 @@ Any function that takes multiple parameter can be rewritten as a higher-order fu
 
 Example:
 
-<!-- eslint-disable @typescript-eslint/no-redeclare -->
+<!-- eslint-disable ts/no-redeclare -->
 
 ```js
 // This function

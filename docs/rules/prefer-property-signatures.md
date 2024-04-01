@@ -29,7 +29,7 @@ type Foo = {
 
 ### ✅ Correct
 
-<!-- eslint-disable @typescript-eslint/no-redeclare -->
+<!-- eslint-disable ts/no-redeclare -->
 
 ```ts
 /* eslint functional/prefer-property-signatures: "error" */

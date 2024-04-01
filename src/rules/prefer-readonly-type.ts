@@ -3,20 +3,20 @@ import { type JSONSchema4 } from "@typescript-eslint/utils/json-schema";
 import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
 import {
+  type IgnoreAccessorPatternOption,
+  type IgnoreCodePatternOption,
   shouldIgnoreClasses,
   shouldIgnoreInFunction,
   shouldIgnorePattern,
-  type IgnoreAccessorPatternOption,
-  type IgnoreCodePatternOption,
 } from "#eslint-plugin-functional/options";
 import { ruleNameScope } from "#eslint-plugin-functional/utils/misc";
 import { type ESArrayTupleType } from "#eslint-plugin-functional/utils/node-types";
 import {
-  createRule,
-  getTypeOfNode,
   type BaseOptions,
   type NamedCreateRuleCustomMeta,
   type RuleResult,
+  createRule,
+  getTypeOfNode,
 } from "#eslint-plugin-functional/utils/rule";
 import {
   isInInterface,

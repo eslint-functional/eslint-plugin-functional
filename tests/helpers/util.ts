@@ -10,9 +10,9 @@ import {
 import { type NamedCreateRuleMeta } from "@typescript-eslint/utils/eslint-utils";
 
 import {
-  createRuleUsingFunction,
   type RuleDefinition,
   type RuleFunctionsMap,
+  createRuleUsingFunction,
 } from "#eslint-plugin-functional/utils/rule";
 
 import { filename as dummyFilename } from "./configs";

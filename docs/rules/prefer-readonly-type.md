@@ -67,7 +67,7 @@ This is just as effective as using `Object.freeze()` to prevent mutations. Howev
 
 The `readonly` modifier also works on indexers:
 
-<!-- eslint-disable @typescript-eslint/consistent-indexed-object-style -->
+<!-- eslint-disable ts/consistent-indexed-object-style -->
 
 ```ts
 const foo: { readonly [key: string]: number } = { a: 1, b: 2 };

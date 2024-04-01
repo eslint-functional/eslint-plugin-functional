@@ -56,7 +56,6 @@ const configs = {
   stylistic: { plugins: { functional }, rules: stylistic },
 } satisfies Record<string, FlatConfig.Config>;
 
-// eslint-disable-next-line functional/immutable-data, functional/no-expression-statements
 functional.configs = configs;
 
 export default functional as FlatConfig.Plugin & {

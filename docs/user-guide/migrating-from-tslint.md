@@ -22,17 +22,13 @@ In order for the parser to have access to type information, it needs access to y
   "parserOptions": {
     "ecmaVersion": 10,
     "project": "./tsconfig.json",
-    "sourceType": "module"
+    "sourceType": "module",
   },
-  "plugins": [
-    "functional"
-  ],
+  "plugins": ["functional"],
   "env": {
-    "es6": true
+    "es6": true,
   },
-  "extends": [
-    "plugin:functional/recommended"
-  ],
+  "extends": ["plugin:functional/recommended"],
   "rules": {
     // These rules will be applied to all linted file.
   },
@@ -41,9 +37,9 @@ In order for the parser to have access to type information, it needs access to y
       "files": ["*.ts", "*.tsx"],
       "rules": {
         // These rules will only be applied to ts file.
-      }
-    }
-  ]
+      },
+    },
+  ],
 }
 ```
 

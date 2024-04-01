@@ -7,9 +7,9 @@ import {
 
 import { ruleNameScope } from "#eslint-plugin-functional/utils/misc";
 import {
-  createRule,
   type NamedCreateRuleCustomMeta,
   type RuleResult,
+  createRule,
 } from "#eslint-plugin-functional/utils/rule";
 import { getReadonly } from "#eslint-plugin-functional/utils/tree";
 import {
@@ -136,9 +136,7 @@ function checkTypeLiteral(
             const text = sourceCode.getText(readonlyWrapper);
 
             const wrapperStartPattern = /^Readonly\s*</gu;
-            const wrapperEndPattern = /\s*>$/gu;
-
-            // eslint-disable-next-line functional/no-expression-statements -- Sets `wrapperStartPattern.lastIndex`.
+            const wrapperEndPattern = /\s*>$/u;
             wrapperStartPattern.exec(text);
             const end = wrapperEndPattern.exec(text);
 

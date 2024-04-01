@@ -5,10 +5,10 @@ import {
 import dedent from "dedent";
 
 import {
-  shouldIgnorePattern,
   type IgnoreAccessorPatternOption,
   type IgnoreCodePatternOption,
   type IgnoreIdentifierPatternOption,
+  shouldIgnorePattern,
 } from "#eslint-plugin-functional/options";
 import { getRuleTester } from "#eslint-plugin-functional/tests/helpers/RuleTester";
 import {
@@ -27,21 +27,19 @@ function createDummyRuleFor(nodeType: string) {
   return createDummyRule((context) => {
     const [allowed, options] = context.options;
     return {
-      [nodeType]: (node) => {
-        return {
-          context,
-          descriptors:
-            shouldIgnorePattern(
-              node,
-              context,
-              options.ignoreIdentifierPattern,
-              options.ignoreAccessorPattern,
-              options.ignoreCodePattern,
-            ) === allowed
-              ? []
-              : [{ node, messageId: "generic" }],
-        };
-      },
+      [nodeType]: (node) => ({
+        context,
+        descriptors:
+          shouldIgnorePattern(
+            node,
+            context,
+            options.ignoreIdentifierPattern,
+            options.ignoreAccessorPattern,
+            options.ignoreCodePattern,
+          ) === allowed
+            ? []
+            : [{ node, messageId: "generic" }],
+      }),
     };
   });
 }

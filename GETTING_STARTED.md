@@ -45,13 +45,13 @@ export default [
   ...functional.configs.externalVanillaRecommended,
   ...functional.configs.recommended,
   ...functional.configs.stylistic,
-  ...functional.configs.disableTypeChecked
+  ...functional.configs.disableTypeChecked,
   // your other plugin configs here
   {
-  rules: {
-    // any rule configs here
+    rules: {
+      // any rule configs here
+    },
   },
-}
 ];
 ```
 
@@ -61,8 +61,8 @@ In your `eslint.config.js` file, import `typescript-eslint` and `eslint-plugin-f
 
 ```js
 // eslint.config.js
-import tseslint from 'typescript-eslint';
 import functional from "eslint-plugin-functional";
+import tseslint from "typescript-eslint";
 
 export default tseslint.config({
   files: ["**/*.ts"],

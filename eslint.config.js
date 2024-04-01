@@ -25,7 +25,11 @@ export default rsEslint(
 
       // Some types say they have nonnullable properties, but they don't always.
       "ts/no-unnecessary-condition": "off",
-
+    },
+  },
+  {
+    files: ["src/**/*"],
+    rules: {
       "eslint/fixer-return": "error",
       "eslint/meta-property-ordering": "error",
       "eslint/no-deprecated-context-methods": "error",
@@ -56,7 +60,7 @@ export default rsEslint(
     },
   },
   {
-    files: ["src/configs/", "src/index.ts"],
+    files: ["src/configs/**/*", "src/index.ts"],
     rules: {
       "ts/naming-convention": "off",
     },
@@ -68,7 +72,7 @@ export default rsEslint(
     },
   },
   {
-    files: ["src/utils/conditional-imports/"],
+    files: ["src/utils/conditional-imports/**/*"],
     rules: {
       "@typescript-eslint/no-var-requires": "off",
       "functional/functional-parameters": "off",
@@ -83,14 +87,14 @@ export default rsEslint(
     },
   },
   {
-    files: ["tests/"],
+    files: ["tests/**/*"],
     rules: {
       "functional/no-return-void": "off",
       "jsdoc/require-jsdoc": "off",
     },
   },
   {
-    files: ["cz-adapter/"],
+    files: ["cz-adapter/**/*"],
     rules: {
       "no-console": "off",
 

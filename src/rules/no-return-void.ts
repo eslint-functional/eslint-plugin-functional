@@ -5,10 +5,10 @@ import tsApiUtils from "#eslint-plugin-functional/conditional-imports/ts-api-uti
 import { ruleNameScope } from "#eslint-plugin-functional/utils/misc";
 import { type ESFunctionType } from "#eslint-plugin-functional/utils/node-types";
 import {
-  createRule,
-  getTypeOfNode,
   type NamedCreateRuleCustomMeta,
   type RuleResult,
+  createRule,
+  getTypeOfNode,
 } from "#eslint-plugin-functional/utils/rule";
 import {
   isFunctionLike,

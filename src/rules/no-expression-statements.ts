@@ -9,19 +9,19 @@ import { deepmerge } from "deepmerge-ts";
 import tsApiUtils from "#eslint-plugin-functional/conditional-imports/ts-api-utils";
 import typescript from "#eslint-plugin-functional/conditional-imports/typescript";
 import {
+  type IgnoreCodePatternOption,
   ignoreCodePatternOptionSchema,
   shouldIgnorePattern,
-  type IgnoreCodePatternOption,
 } from "#eslint-plugin-functional/options";
 import {
   isDirectivePrologue,
   ruleNameScope,
 } from "#eslint-plugin-functional/utils/misc";
 import {
-  createRule,
-  getTypeOfNode,
   type NamedCreateRuleCustomMeta,
   type RuleResult,
+  createRule,
+  getTypeOfNode,
 } from "#eslint-plugin-functional/utils/rule";
 import {
   isCallExpression,

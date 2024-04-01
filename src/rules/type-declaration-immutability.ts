@@ -8,9 +8,9 @@ import { deepmerge } from "deepmerge-ts";
 import { Immutability } from "is-immutable-type";
 
 import {
+  type IgnoreIdentifierPatternOption,
   ignoreIdentifierPatternOptionSchema,
   shouldIgnorePattern,
-  type IgnoreIdentifierPatternOption,
 } from "#eslint-plugin-functional/options";
 import {
   getNodeIdentifierTexts,
@@ -18,10 +18,10 @@ import {
 } from "#eslint-plugin-functional/utils/misc";
 import { type ESTypeDeclaration } from "#eslint-plugin-functional/utils/node-types";
 import {
-  createRule,
-  getTypeImmutabilityOfNode,
   type NamedCreateRuleCustomMeta,
   type RuleResult,
+  createRule,
+  getTypeImmutabilityOfNode,
 } from "#eslint-plugin-functional/utils/rule";
 import { isTSInterfaceDeclaration } from "#eslint-plugin-functional/utils/type-guards";
 
@@ -268,7 +268,7 @@ function getRules(options: Readonly<Options>): ImmutabilityRule[] {
         ? false
         : (Array.isArray(rule.fixer) ? rule.fixer : [rule.fixer]).map((r) => ({
             ...r,
-            pattern: new RegExp(r.pattern, "us"),
+            pattern: new RegExp(r.pattern, "su"),
           }));
 
     const suggestions =
@@ -276,7 +276,7 @@ function getRules(options: Readonly<Options>): ImmutabilityRule[] {
         ? false
         : rule.suggestions.map((r) => ({
             ...r,
-            pattern: new RegExp(r.pattern, "us"),
+            pattern: new RegExp(r.pattern, "su"),
           }));
 
     return {

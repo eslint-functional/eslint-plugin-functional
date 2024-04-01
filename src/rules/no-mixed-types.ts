@@ -4,10 +4,10 @@ import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
 import { ruleNameScope } from "#eslint-plugin-functional/utils/misc";
 import {
-  createRuleUsingFunction,
-  getTypeOfNode,
   type NamedCreateRuleCustomMeta,
   type RuleResult,
+  createRuleUsingFunction,
+  getTypeOfNode,
 } from "#eslint-plugin-functional/utils/rule";
 import {
   isFunctionLikeType,
@@ -102,17 +102,16 @@ function hasTypeElementViolations(
   context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
 ): boolean {
   return !typeElements
-    .map((member) => {
-      return (
+    .map(
+      (member) =>
         isTSMethodSignature(member) ||
         isTSCallSignatureDeclaration(member) ||
         isTSConstructSignatureDeclaration(member) ||
         ((isTSPropertySignature(member) || isTSIndexSignature(member)) &&
           member.typeAnnotation !== undefined &&
           (isTSFunctionType(member.typeAnnotation.typeAnnotation) ||
-            isFunctionLikeType(getTypeOfNode(member, context))))
-      );
-    })
+            isFunctionLikeType(getTypeOfNode(member, context)))),
+    )
     .every((isFunction, _, array) => array[0] === isFunction);
 }
 

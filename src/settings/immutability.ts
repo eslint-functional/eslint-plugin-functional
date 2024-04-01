@@ -13,7 +13,7 @@ declare module "@typescript-eslint/utils" {
     from?: Immutability | keyof typeof Immutability;
   };
 
-  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions, @typescript-eslint/no-shadow
+  // eslint-disable-next-line ts/consistent-type-definitions, ts/no-shadow
   interface SharedConfigurationSettings {
     immutability?: {
       overrides?:
@@ -46,7 +46,6 @@ export function getImmutabilityOverrides({
   if (!cachedSettings.has(immutability)) {
     const overrides = loadImmutabilityOverrides(immutability);
 
-    // eslint-disable-next-line functional/no-expression-statements
     cachedSettings.set(immutability, overrides);
     return overrides;
   }

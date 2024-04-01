@@ -4,9 +4,9 @@ import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
 import { ruleNameScope } from "#eslint-plugin-functional/utils/misc";
 import {
-  createRule,
   type NamedCreateRuleCustomMeta,
   type RuleResult,
+  createRule,
 } from "#eslint-plugin-functional/utils/rule";
 import { isInReadonly } from "#eslint-plugin-functional/utils/tree";
 

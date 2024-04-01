@@ -21,13 +21,13 @@ type CZ = any;
 /**
  * The engine.
  */
-export default (
-  options: Options,
-): { prompter: (cz: CZ, commit: (msg: string) => unknown) => void } => {
-  return {
+export default {
+  create: (
+    options: Options,
+  ): { prompter: (cz: CZ, commit: (msg: string) => unknown) => void } => ({
     prompter: (cz, commit) =>
       promptUser(cz, options).then(doCommit(commit, options)),
-  };
+  }),
 };
 
 /**
@@ -86,9 +86,7 @@ function promptUser(cz: CZ, options: Options) {
       name: "scope",
       message: "What is the scope of this change: (press enter to skip)",
       default: defaultScope,
-      when: (answers: Answers) => {
-        return !scopeRulesType.has(answers.type);
-      },
+      when: (answers: Answers) => !scopeRulesType.has(answers.type),
       filter: filterScope(options),
     },
     {
@@ -97,9 +95,7 @@ function promptUser(cz: CZ, options: Options) {
       message: "Which rule does this change apply to:",
       choices: getRulesChoices(),
       default: defaultScope,
-      when: (answers: Answers) => {
-        return scopeRulesType.has(answers.type);
-      },
+      when: (answers: Answers) => scopeRulesType.has(answers.type),
       filter: filterScope(options),
     },
     {
@@ -107,9 +103,7 @@ function promptUser(cz: CZ, options: Options) {
       name: "isBreaking",
       message: "Are there any breaking changes?",
       default: false,
-      when: (answers: Answers) => {
-        return possibleBreakingRulesType.has(answers.type);
-      },
+      when: (answers: Answers) => possibleBreakingRulesType.has(answers.type),
     },
     {
       type: "input",
@@ -161,9 +155,7 @@ function promptUser(cz: CZ, options: Options) {
       type: "input",
       name: "issues",
       message: 'Add issue references (e.g. "fix #123", "re #123".):\n',
-      when: (answers: Answers) => {
-        return answers.isIssueAffected;
-      },
+      when: (answers: Answers) => answers.isIssueAffected,
       default: defaultIssues,
     },
   ]);
@@ -266,11 +258,8 @@ function maxSummaryLength(options: Options, answers: Answers) {
  * Get a function to auto-process the scope.
  */
 function filterScope(options: Options) {
-  return (value: string) => {
-    return options.disableScopeLowerCase
-      ? value.trim()
-      : value.trim().toLowerCase();
-  };
+  return (value: string) =>
+    options.disableScopeLowerCase ? value.trim() : value.trim().toLowerCase();
 }
 
 /**

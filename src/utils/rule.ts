@@ -50,16 +50,17 @@ export type NamedCreateRuleCustomMeta<
  */
 export type BaseOptions = ReadonlyArray<unknown>;
 
+/**
+ * The definition of a rule.
+ */
 export type RuleDefinition<
   MessageIds extends string,
   Options extends BaseOptions,
-> = {
-  readonly defaultOptions: Options;
-  readonly meta: NamedCreateRuleCustomMeta<MessageIds, Options>;
-  readonly create: (
-    context: Readonly<RuleContext<MessageIds, Options>>,
-  ) => RuleListener;
-};
+> = Readonly<{
+  defaultOptions: Options;
+  meta: NamedCreateRuleCustomMeta<MessageIds, Options>;
+  create: (context: Readonly<RuleContext<MessageIds, Options>>) => RuleListener;
+}>;
 
 /**
  * The result all rules return.
@@ -89,7 +90,7 @@ export type RuleFunctionsMap<
 
 // This function can't be functional as it needs to interact with 3rd-party
 // libraries that aren't functional.
-/* eslint-disable functional/no-return-void, functional/no-expression-statements */
+/* eslint-disable functional/no-return-void */
 /**
  * Create a function that processes common options and then runs the given
  * check.
@@ -117,7 +118,7 @@ function checkNode<
     }
   };
 }
-/* eslint-enable functional/no-return-void, functional/no-expression-statements */
+/* eslint-enable functional/no-return-void */
 
 /**
  * Create a rule.
