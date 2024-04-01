@@ -55,7 +55,7 @@
     "build:node": "rimraf lib && rollup -c rollup.config.ts --configPlugin rollup-plugin-ts",
     "cz": "git-cz",
     "lint": "pnpm run build:node && pnpm run lint:js && pnpm run lint:md && pnpm lint:eslint-docs && pnpm run lint:knip && pnpm run lint:spelling && pnpm run lint:packages",
-    "lint-fix": "pnpm run build:node && pnpm run lint:js-fix && pnpm lint:eslint-docs-fix && pnpm run lint:packages-fix",
+    "lint-fix": "pnpm run build:node && pnpm lint:eslint-docs-fix && pnpm run lint:js-fix && pnpm run lint:packages-fix",
     "lint:eslint-docs": "eslint-doc-generator --check",
     "lint:eslint-docs-fix": "pnpm build:docs",
     "lint:js": "eslint .",
