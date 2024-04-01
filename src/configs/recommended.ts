@@ -86,7 +86,7 @@ const overrides = {
           identifiers: ["^I?Readonly.+"],
           immutability: Immutability.ReadonlyShallow,
           comparator: RuleEnforcementComparator.AtLeast,
-          fixer: [
+          suggestions: [
             {
               pattern: "^(Array|Map|Set)<(.+)>$",
               replace: "Readonly$1<$2>",
@@ -101,7 +101,7 @@ const overrides = {
           identifiers: ["^I?Mutable.+"],
           immutability: Immutability.Mutable,
           comparator: RuleEnforcementComparator.AtMost,
-          fixer: [
+          suggestions: [
             {
               pattern: "^Readonly(Array|Map|Set)<(.+)>$",
               replace: "$1<$2>",
