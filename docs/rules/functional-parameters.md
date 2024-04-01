@@ -183,7 +183,7 @@ With the following config:
 {
   "enforceParameterCount": "exactlyOne",
   "ignorePrefixSelector": "CallExpression[callee.property.name='reduce']"
-},
+}
 ```
 
 The following inline callback won't be flagged:
