@@ -1,5 +1,5 @@
 import { rollupPlugin as rollupPluginDeassert } from "deassert";
-import { type RollupOptions } from "rollup";
+import { type OutputOptions, type RollupOptions } from "rollup";
 import rollupPluginAutoExternal from "rollup-plugin-auto-external";
 import rollupPluginTs from "rollup-plugin-ts";
 
@@ -12,16 +12,15 @@ const treeshake = {
   unknownGlobalSideEffects: false,
 } satisfies RollupOptions["treeshake"];
 
-const classicCJS = {
-  input: "src/classic.ts",
-
-  output: {
-    file: pkg.exports["."].require,
-    format: "cjs",
-    sourcemap: false,
+const output = {
+  sourcemap: false,
+  generatedCode: {
+    preset: "es2015",
   },
+} satisfies Omit<OutputOptions, "file">;
 
-  plugins: [
+function getPlugins(format: "esm" | "cjs"): RollupOptions["plugins"] {
+  return [
     rollupPluginAutoExternal(),
     rollupPluginTs({
       transpileOnly: true,
@@ -32,7 +31,7 @@ const classicCJS = {
           paths: {
             ...resolvedConfig.paths,
             "#eslint-plugin-functional/conditional-imports/*": [
-              "src/utils/conditional-imports/cjs/*",
+              `src/utils/conditional-imports/${format}/*`,
             ],
           },
         }),
@@ -41,111 +40,35 @@ const classicCJS = {
     rollupPluginDeassert({
       include: ["**/*.{js,ts}"],
     }),
-  ],
+  ];
+}
 
-  treeshake,
-} satisfies RollupOptions;
-
-const classicESM = {
-  input: "src/classic.ts",
+const esm = {
+  input: "src/index.ts",
 
   output: {
-    file: pkg.exports["."].import,
+    ...output,
+    file: pkg.exports.import,
     format: "esm",
-    sourcemap: false,
   },
 
-  plugins: [
-    rollupPluginAutoExternal(),
-    rollupPluginTs({
-      transpileOnly: true,
-      tsconfig: {
-        fileName: "tsconfig.build.json",
-        hook: (resolvedConfig) => ({
-          ...resolvedConfig,
-          paths: {
-            ...resolvedConfig.paths,
-            "#eslint-plugin-functional/conditional-imports/*": [
-              "src/utils/conditional-imports/esm/*",
-            ],
-          },
-        }),
-      },
-    }),
-    rollupPluginDeassert({
-      include: ["**/*.{js,ts}"],
-    }),
-  ],
+  plugins: getPlugins("esm"),
 
   treeshake,
 } satisfies RollupOptions;
 
-const flatCJS = {
-  input: "src/flat.ts",
+const cjs = {
+  input: "src/index.ts",
 
   output: {
-    file: pkg.exports["./flat"].require,
+    ...output,
+    file: pkg.exports.require,
     format: "cjs",
-    sourcemap: false,
   },
 
-  plugins: [
-    rollupPluginAutoExternal(),
-    rollupPluginTs({
-      transpileOnly: true,
-      tsconfig: {
-        fileName: "tsconfig.build.json",
-        hook: (resolvedConfig) => ({
-          ...resolvedConfig,
-          paths: {
-            ...resolvedConfig.paths,
-            "#eslint-plugin-functional/conditional-imports/*": [
-              "src/utils/conditional-imports/cjs/*",
-            ],
-          },
-        }),
-      },
-    }),
-    rollupPluginDeassert({
-      include: ["**/*.{js,ts}"],
-    }),
-  ],
+  plugins: getPlugins("cjs"),
 
   treeshake,
 } satisfies RollupOptions;
 
-const flatESM = {
-  input: "src/flat.ts",
-
-  output: {
-    file: pkg.exports["./flat"].import,
-    format: "esm",
-    sourcemap: false,
-  },
-
-  plugins: [
-    rollupPluginAutoExternal(),
-    rollupPluginTs({
-      transpileOnly: true,
-      tsconfig: {
-        fileName: "tsconfig.build.json",
-        hook: (resolvedConfig) => ({
-          ...resolvedConfig,
-          paths: {
-            ...resolvedConfig.paths,
-            "#eslint-plugin-functional/conditional-imports/*": [
-              "src/utils/conditional-imports/esm/*",
-            ],
-          },
-        }),
-      },
-    }),
-    rollupPluginDeassert({
-      include: ["**/*.{js,ts}"],
-    }),
-  ],
-
-  treeshake,
-} satisfies RollupOptions;
-
-export default [classicCJS, classicESM, flatCJS, flatESM];
+export default [cjs, esm];

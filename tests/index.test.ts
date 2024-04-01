@@ -6,20 +6,21 @@ import { readdirSync } from "node:fs";
 
 import { describe, expect, it } from "vitest";
 
-import classic from "#eslint-plugin-functional/classic";
-import flat from "#eslint-plugin-functional/flat";
+import functional from "#eslint-plugin-functional";
 
-describe("Flat", () => {
+describe("index", () => {
   it("should have all the rules", () => {
     const ruleFiles: string[] = readdirSync("./src/rules").filter(
       (file) => file !== "index.ts" && file.endsWith(".ts"),
     );
 
     expect(
-      Object.hasOwn(flat, "rules"),
+      Object.hasOwn(functional, "rules"),
       'The plugin\'s config object should have a "rules" property.',
     );
-    expect(ruleFiles.length).to.equal(Object.keys(flat.rules ?? {}).length);
+    expect(ruleFiles.length).to.equal(
+      Object.keys(functional.rules ?? {}).length,
+    );
   });
 
   it("should have all the configs", () => {
@@ -28,40 +29,11 @@ describe("Flat", () => {
     );
 
     expect(
-      Object.hasOwn(flat, "configs"),
+      Object.hasOwn(functional, "configs"),
       'The plugin\'s config object should have a "configs" property.',
     );
     expect(configFiles.length).to.equal(
-      Object.keys(flat.configs ?? {}).length,
-      "should have all the configs except deprecated",
-    );
-  });
-});
-
-describe("Classic", () => {
-  it("should have all the rules", () => {
-    const ruleFiles: string[] = readdirSync("./src/rules").filter(
-      (file) => file !== "index.ts" && file.endsWith(".ts"),
-    );
-
-    expect(
-      Object.hasOwn(classic, "rules"),
-      'The plugin\'s config object should have a "rules" property.',
-    );
-    expect(ruleFiles.length).to.equal(Object.keys(classic.rules ?? {}).length);
-  });
-
-  it("should have all the configs", () => {
-    const configFiles: string[] = readdirSync("./src/configs").filter(
-      (file) => file !== "index.ts" && file.endsWith(".ts"),
-    );
-
-    expect(
-      Object.hasOwn(classic, "configs"),
-      'The plugin\'s config object should have a "configs" property.',
-    );
-    expect(configFiles.length).to.equal(
-      Object.keys(classic.configs ?? {}).length,
+      Object.keys(functional.configs ?? {}).length,
       "should have all the configs except deprecated",
     );
   });
