@@ -175,6 +175,9 @@ devDependencies:
   prettier:
     specifier: 3.2.5
     version: 3.2.5
+  prettier-plugin-multiline-arrays:
+    specifier: 3.0.4
+    version: 3.0.4(prettier@3.2.5)
   prettier-plugin-packagejson:
     specifier: 2.4.14
     version: 2.4.14(prettier@3.2.5)
@@ -233,6 +236,22 @@ packages:
     dependencies:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
+    dev: true
+
+  /@augment-vir/common@23.4.0:
+    resolution: {integrity: sha512-QIrJ1doD00TNbOzeVrk9KgPTzRlIjayxERnhtbQjK/AFPj5yElcB03GbnGdQZPzws/R+5gfMM5cZiH7QyBP+Kg==}
+    dependencies:
+      browser-or-node: 2.1.1
+      run-time-assertions: 1.2.0
+      type-fest: 4.13.1
+    dev: true
+
+  /@augment-vir/common@26.2.1:
+    resolution: {integrity: sha512-NoVW3K3MB6ndMspsxbdFiQZ3Fc6mapXphyOUZKlQbWTMNGF7RaVEcnP1m8Un1fXTUBblBcdUZWwP95Z51mg/RQ==}
+    dependencies:
+      browser-or-node: 2.1.1
+      run-time-assertions: 1.2.0
+      type-fest: 4.13.1
     dev: true
 
   /@babel/code-frame@7.24.2:
@@ -2746,6 +2765,10 @@ packages:
     dependencies:
       fill-range: 7.0.1
 
+  /browser-or-node@2.1.1:
+    resolution: {integrity: sha512-8CVjaLJGuSKMVTxJ2DpBl5XnlNDiT4cQFeuCJJrvJmts9YrTZDizTX7PjC2s6W4x+MBGZeEY6dGMrF04/6Hgqg==}
+    dev: true
+
   /browserslist-generator@2.1.0:
     resolution: {integrity: sha512-ZFz4mAOgqm0cbwKaZsfJbYDbTXGoPANlte7qRsRJOfjB9KmmISQrXJxAVrnXG8C8v/QHNzXyeJt0Cfcks6zZvQ==}
     engines: {node: '>=16.15.1', npm: '>=7.0.0', pnpm: '>=3.2.0', yarn: '>=1.13'}
@@ -4378,6 +4401,10 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       homedir-polyfill: 1.0.3
+    dev: true
+
+  /expect-type@0.15.0:
+    resolution: {integrity: sha512-yWnriYB4e8G54M5/fAFj7rCIBiKs1HAACaY13kCz6Ku0dezjS9aMcfcdVK2X8Tv2tEV1BPz/wKfQ7WA4S/d8aA==}
     dev: true
 
   /external-editor@3.1.0:
@@ -6869,6 +6896,16 @@ packages:
       fast-diff: 1.3.0
     dev: true
 
+  /prettier-plugin-multiline-arrays@3.0.4(prettier@3.2.5):
+    resolution: {integrity: sha512-Oj9ZfEisLOF0did1CGXXQLTA0WEChT2pfI06pNA1PbvWqbys9a5xoys6DoZlDL+Uio0uW1XwKZkeKMAkG1EEfQ==}
+    peerDependencies:
+      prettier: '>=3.0.0'
+    dependencies:
+      '@augment-vir/common': 23.4.0
+      prettier: 3.2.5
+      proxy-vir: 1.0.0
+    dev: true
+
   /prettier-plugin-packagejson@2.4.14(prettier@3.2.5):
     resolution: {integrity: sha512-sli+gV5tW7uxvzDZQscaBtSfbyAW2ToL6n/HGt51PipwX9vI7M54vefG0mKSfklVkT29TNGO6Mo6g8c6Z79gmw==}
     peerDependencies:
@@ -6932,6 +6969,12 @@ packages:
 
   /proto-list@1.2.4:
     resolution: {integrity: sha512-vtK/94akxsTMhe0/cbfpR+syPuszcuwhqVjJq26CuNDgFGj682oRBXOP5MJpv2r7JtE8MsiepGIqvvOTBwn2vA==}
+    dev: true
+
+  /proxy-vir@1.0.0:
+    resolution: {integrity: sha512-WV1gkBxUOwLSz0Bn09tisIqLK7leAqtFm/474t3L0hQKJw7/gdrkGcWw0/OT1PhSy+TDS6swfq7Niuoq3XJhkQ==}
+    dependencies:
+      '@augment-vir/common': 23.4.0
     dev: true
 
   /punycode.js@2.3.1:
@@ -7290,6 +7333,14 @@ packages:
     resolution: {integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==}
     dependencies:
       queue-microtask: 1.2.3
+
+  /run-time-assertions@1.2.0:
+    resolution: {integrity: sha512-cQwqdopGyGpJytXHPYJoCHzt2rr+VzZyW3/bXD8kuKujqDuTtOc0Y6DrlLU6a//wnQogznA7n2LFEIar2Pa2cA==}
+    dependencies:
+      '@augment-vir/common': 26.2.1
+      expect-type: 0.15.0
+      type-fest: 4.13.1
+    dev: true
 
   /rxjs@7.8.1:
     resolution: {integrity: sha512-AA3TVj+0A2iuIoQkWEK/tqFjBq2j+6PO6Y0zJcvzLAFhEFIO3HL0vls9hWLncZbAAbK0mar7oZ4V079I/qPMxg==}

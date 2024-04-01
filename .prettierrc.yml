@@ -2,6 +2,7 @@
 
 plugins:
   - prettier-plugin-packagejson
+  - prettier-plugin-multiline-arrays
 
 trailingComma: "all"
 

@@ -148,6 +148,7 @@
     "markdownlint": "0.34.0",
     "markdownlint-cli": "0.39.0",
     "prettier": "3.2.5",
+    "prettier-plugin-multiline-arrays": "3.0.4",
     "prettier-plugin-packagejson": "2.4.14",
     "rimraf": "5.0.5",
     "rollup": "4.13.2",
