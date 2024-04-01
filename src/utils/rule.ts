@@ -50,7 +50,6 @@ export type NamedCreateRuleCustomMeta<
  */
 export type BaseOptions = ReadonlyArray<unknown>;
 
-// eslint-disable-next-line functional/no-mixed-types
 export type RuleDefinition<
   MessageIds extends string,
   Options extends BaseOptions,
@@ -169,6 +168,7 @@ export function createRuleUsingFunction<
       return Object.fromEntries(
         Object.entries(ruleFunctionsMap).map(([nodeSelector, ruleFunction]) => [
           nodeSelector,
+          // prettier-ignore
           checkNode<
             MessageIds,
             Readonly<RuleContext<MessageIds, Options>>,

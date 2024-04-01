@@ -258,7 +258,7 @@ function isExhaustiveTypeSwitchViolation(
   context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
 ): boolean {
   const discriminantType = getTypeOfNode(node.discriminant, context);
-  if (discriminantType === null || !discriminantType.isUnion()) {
+  if (!discriminantType?.isUnion()) {
     return true;
   }
 
