@@ -1,6 +1,18 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+# [6.4.0](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.3.2...v6.4.0) (2024-04-01)
+
+
+### Bug Fixes
+
+* **type-declaration-immutability:** replace fixer with suggestions for recommended and lite configs ([ae62abb](https://github.com/eslint-functional/eslint-plugin-functional/commit/ae62abb0bef53ecebfcebb1563876b81ea728bab))
+
+
+### Features
+
+* **type-declaration-immutability:** add support for in-editor suggestions ([7a0a790](https://github.com/eslint-functional/eslint-plugin-functional/commit/7a0a79078382768eec6a467b6be81854469b8dbd)), closes [#797](https://github.com/eslint-functional/eslint-plugin-functional/issues/797)
+
 ## [6.3.2](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.3.1...v6.3.2) (2024-04-01)
 
 
