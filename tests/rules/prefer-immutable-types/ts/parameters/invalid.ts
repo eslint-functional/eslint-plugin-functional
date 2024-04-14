@@ -612,6 +612,37 @@ const tests: Array<
       },
     ],
   },
+  {
+    code: dedent`
+      type Foo<T> = readonly T[];
+      function foo(arg: Foo<{ bar: string; }>) { }
+    `,
+    errors: [
+      {
+        messageId: "parameter",
+        type: AST_NODE_TYPES.Identifier,
+        line: 2,
+        column: 14,
+      },
+    ],
+    optionsSet: [
+      [
+        {
+          parameters: "ReadonlyShallow",
+          overrides: [
+            {
+              specifiers: {
+                from: "file",
+              },
+              options: {
+                parameters: "ReadonlyDeep",
+              },
+            },
+          ],
+        },
+      ],
+    ],
+  },
 ];
 
 export default tests;

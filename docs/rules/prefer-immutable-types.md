@@ -244,6 +244,24 @@ type Options = {
     ReadonlyDeep?: Array<Array<{ pattern: string; replace: string }>>;
     Immutable?: Array<Array<{ pattern: string; replace: string }>>;
   };
+
+  overrides?: Array<{
+    match:
+      | {
+          from: "file";
+          path?: string;
+        }
+      | {
+          from: "lib";
+        }
+      | {
+          from: "package";
+          package?: string;
+        }
+      | TypeDeclarationSpecifier[];
+    options: Omit<Options, "overrides">;
+    disable: boolean;
+  }>;
 };
 ```
 
@@ -475,3 +493,22 @@ It allows for the ability to ignore violations based on the identifier (name) of
 
 This option takes a `RegExp` string or an array of `RegExp` strings.
 It allows for the ability to ignore violations based on the type (as written, with whitespace removed) of the node in question.
+
+### `overrides`
+
+Allows for applying overrides to the options based on where the type is defined.
+This can be used to override the settings for types coming from 3rd party libraries.
+
+Note: Only the first matching override will be used.
+
+#### `overrides[n].specifiers`
+
+A specifier, or an array of specifiers to match the function type against.
+
+#### `overrides[n].options`
+
+The options to use when a specifiers matches.
+
+#### `overrides[n].disable`
+
+If true, when a specifier matches, this rule will not be applied to the matching node.

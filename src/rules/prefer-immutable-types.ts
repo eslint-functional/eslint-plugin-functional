@@ -11,12 +11,15 @@ import { deepmerge } from "deepmerge-ts";
 import { Immutability } from "is-immutable-type";
 
 import {
+  getCoreOptions,
   ignoreClassesOptionSchema,
   shouldIgnoreClasses,
   shouldIgnoreInFunction,
   shouldIgnorePattern,
   type IgnoreClassesOption,
+  type OverridableOptions,
 } from "#eslint-plugin-functional/options";
+import { typeSpecifiersSchema } from "#eslint-plugin-functional/utils/common-schemas";
 import { ruleNameScope } from "#eslint-plugin-functional/utils/misc";
 import { type ESFunctionType } from "#eslint-plugin-functional/utils/node-types";
 import {
@@ -55,13 +58,28 @@ export const fullName = `${ruleNameScope}/${name}`;
 type RawEnforcement =
   | Exclude<Immutability | keyof typeof Immutability, "Unknown" | "Mutable">
   | "None"
-  | false;
+  | false
+  | undefined;
 
 type Option = IgnoreClassesOption & {
   enforcement: RawEnforcement;
   ignoreInferredTypes: boolean;
   ignoreNamePattern?: string[] | string;
   ignoreTypePattern?: string[] | string;
+};
+
+type CoreOptions = Option & {
+  parameters?: Partial<Option> | RawEnforcement;
+  returnTypes?: Partial<Option> | RawEnforcement;
+  variables?:
+    | Partial<
+        Option & {
+          ignoreInFunctions?: boolean;
+        }
+      >
+    | RawEnforcement;
+  fixer?: FixerConfigRawMap;
+  suggestions?: SuggestionConfigRawMap;
 };
 
 type FixerConfigRaw = {
@@ -93,21 +111,7 @@ type SuggestionsConfig = FixerConfig[];
 /**
  * The options this rule can take.
  */
-type Options = [
-  Option & {
-    parameters?: Partial<Option> | RawEnforcement;
-    returnTypes?: Partial<Option> | RawEnforcement;
-    variables?:
-      | Partial<
-          Option & {
-            ignoreInFunctions?: boolean;
-          }
-        >
-      | RawEnforcement;
-    fixer?: FixerConfigRawMap;
-    suggestions?: SuggestionConfigRawMap;
-  },
-];
+type Options = [OverridableOptions<CoreOptions>];
 
 /**
  * The enum options for the level of enforcement.
@@ -211,51 +215,75 @@ const suggestionsSchema: JSONSchema4 = {
   },
 };
 
+const coreOptionsPropertiesSchema: JSONSchema4ObjectSchema["properties"] = {
+  parameters: optionSchema,
+  returnTypes: optionSchema,
+  variables: {
+    oneOf: [
+      {
+        type: "object",
+        properties: deepmerge(optionExpandedSchema, {
+          ignoreInFunctions: {
+            type: "boolean",
+          },
+        }),
+        additionalProperties: false,
+      },
+      {
+        type: ["string", "number", "boolean"],
+        enum: enforcementEnumOptions,
+      },
+    ],
+  },
+  fixer: {
+    type: "object",
+    properties: {
+      ReadonlyShallow: fixerSchema,
+      ReadonlyDeep: fixerSchema,
+      Immutable: fixerSchema,
+    },
+    additionalProperties: false,
+  },
+  suggestions: {
+    type: "object",
+    properties: {
+      ReadonlyShallow: suggestionsSchema,
+      ReadonlyDeep: suggestionsSchema,
+      Immutable: suggestionsSchema,
+    },
+    additionalProperties: false,
+  },
+};
+
 /**
  * The schema for the rule options.
  */
 const schema: JSONSchema4[] = [
   {
     type: "object",
-    properties: deepmerge(optionExpandedSchema, {
-      parameters: optionSchema,
-      returnTypes: optionSchema,
-      variables: {
-        oneOf: [
-          {
-            type: "object",
-            properties: deepmerge(optionExpandedSchema, {
-              ignoreInFunctions: {
-                type: "boolean",
-              },
-            }),
-            additionalProperties: false,
+    properties: deepmerge(optionExpandedSchema, coreOptionsPropertiesSchema, {
+      overrides: {
+        type: "array",
+        items: {
+          type: "object",
+          properties: {
+            specifiers: typeSpecifiersSchema,
+            options: {
+              type: "object",
+              properties: deepmerge(
+                optionExpandedSchema,
+                coreOptionsPropertiesSchema,
+              ),
+              additionalProperties: false,
+            },
+            disable: {
+              type: "boolean",
+            },
           },
-          {
-            type: ["string", "number", "boolean"],
-            enum: enforcementEnumOptions,
-          },
-        ],
-      },
-      fixer: {
-        type: "object",
-        properties: {
-          ReadonlyShallow: fixerSchema,
-          ReadonlyDeep: fixerSchema,
-          Immutable: fixerSchema,
+          additionalProperties: false,
         },
-        additionalProperties: false,
       },
-      suggestions: {
-        type: "object",
-        properties: {
-          ReadonlyShallow: suggestionsSchema,
-          ReadonlyDeep: suggestionsSchema,
-          Immutable: suggestionsSchema,
-        },
-        additionalProperties: false,
-      },
-    }),
+    } satisfies JSONSchema4ObjectSchema["properties"]),
     additionalProperties: false,
   },
 ];
@@ -398,7 +426,7 @@ function getConfiguredSuggestionFixers(
  * Get the level of enforcement from the raw value given.
  */
 function parseEnforcement(rawEnforcement: RawEnforcement) {
-  return rawEnforcement === "None"
+  return rawEnforcement === "None" || rawEnforcement === undefined
     ? false
     : typeof rawEnforcement === "string"
       ? Immutability[rawEnforcement]
@@ -454,14 +482,13 @@ function parseSuggestionsConfigs(
 function getParameterTypeViolations(
   node: ESFunctionType,
   context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-  options: Readonly<Options>,
+  options: Readonly<CoreOptions>,
 ): Descriptor[] {
-  const [optionsObject] = options;
   const {
     parameters: rawOption,
     fixer: rawFixerConfig,
     suggestions: rawSuggestionsConfigs,
-  } = optionsObject;
+  } = options;
   const {
     enforcement: rawEnforcement,
     ignoreInferredTypes,
@@ -469,10 +496,10 @@ function getParameterTypeViolations(
     ignoreNamePattern,
     ignoreTypePattern,
   } = {
-    ignoreInferredTypes: optionsObject.ignoreInferredTypes,
-    ignoreClasses: optionsObject.ignoreClasses,
-    ignoreNamePattern: optionsObject.ignoreNamePattern,
-    ignoreTypePattern: optionsObject.ignoreTypePattern,
+    ignoreInferredTypes: options.ignoreInferredTypes,
+    ignoreClasses: options.ignoreClasses,
+    ignoreNamePattern: options.ignoreNamePattern,
+    ignoreTypePattern: options.ignoreTypePattern,
     ...(typeof rawOption === "object"
       ? rawOption
       : {
@@ -480,9 +507,7 @@ function getParameterTypeViolations(
         }),
   };
 
-  const enforcement = parseEnforcement(
-    rawEnforcement ?? optionsObject.enforcement,
-  );
+  const enforcement = parseEnforcement(rawEnforcement ?? options.enforcement);
   if (
     enforcement === false ||
     shouldIgnoreClasses(node, context, ignoreClasses)
@@ -592,14 +617,13 @@ function getParameterTypeViolations(
 function getReturnTypeViolations(
   node: ESFunctionType,
   context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-  options: Readonly<Options>,
+  options: Readonly<CoreOptions>,
 ): Descriptor[] {
-  const [optionsObject] = options;
   const {
     returnTypes: rawOption,
     fixer: rawFixerConfig,
     suggestions: rawSuggestionsConfigs,
-  } = optionsObject;
+  } = options;
   const {
     enforcement: rawEnforcement,
     ignoreInferredTypes,
@@ -607,16 +631,14 @@ function getReturnTypeViolations(
     ignoreNamePattern,
     ignoreTypePattern,
   } = {
-    ignoreInferredTypes: optionsObject.ignoreInferredTypes,
-    ignoreClasses: optionsObject.ignoreClasses,
-    ignoreNamePattern: optionsObject.ignoreNamePattern,
-    ignoreTypePattern: optionsObject.ignoreTypePattern,
+    ignoreInferredTypes: options.ignoreInferredTypes,
+    ignoreClasses: options.ignoreClasses,
+    ignoreNamePattern: options.ignoreNamePattern,
+    ignoreTypePattern: options.ignoreTypePattern,
     ...(typeof rawOption === "object" ? rawOption : { enforcement: rawOption }),
   };
 
-  const enforcement = parseEnforcement(
-    rawEnforcement ?? optionsObject.enforcement,
-  );
+  const enforcement = parseEnforcement(rawEnforcement ?? options.enforcement);
 
   if (
     enforcement === false ||
@@ -743,10 +765,19 @@ function checkFunction(
   context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
   options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
-  const descriptors = [
-    ...getParameterTypeViolations(node, context, options),
-    ...getReturnTypeViolations(node, context, options),
-  ];
+  const optionsToUse = getCoreOptions<CoreOptions, Options>(
+    node,
+    context,
+    options,
+  );
+
+  const descriptors =
+    optionsToUse === null
+      ? []
+      : [
+          ...getParameterTypeViolations(node, context, optionsToUse),
+          ...getReturnTypeViolations(node, context, optionsToUse),
+        ];
 
   return {
     context,
@@ -762,13 +793,24 @@ function checkVariable(
   context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
   options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
-  const [optionsObject] = options;
+  const optionsToUse = getCoreOptions<CoreOptions, Options>(
+    node,
+    context,
+    options,
+  );
+
+  if (optionsToUse === null) {
+    return {
+      context,
+      descriptors: [],
+    };
+  }
 
   const {
     variables: rawOption,
     fixer: rawFixerConfig,
     suggestions: rawSuggestionsConfigs,
-  } = optionsObject;
+  } = optionsToUse;
   const {
     enforcement: rawEnforcement,
     ignoreInferredTypes,
@@ -777,16 +819,16 @@ function checkVariable(
     ignoreTypePattern,
     ignoreInFunctions,
   } = {
-    ignoreInferredTypes: optionsObject.ignoreInferredTypes,
-    ignoreClasses: optionsObject.ignoreClasses,
-    ignoreNamePattern: optionsObject.ignoreNamePattern,
-    ignoreTypePattern: optionsObject.ignoreTypePattern,
+    ignoreInferredTypes: optionsToUse.ignoreInferredTypes,
+    ignoreClasses: optionsToUse.ignoreClasses,
+    ignoreNamePattern: optionsToUse.ignoreNamePattern,
+    ignoreTypePattern: optionsToUse.ignoreTypePattern,
     ignoreInFunctions: false,
     ...(typeof rawOption === "object" ? rawOption : { enforcement: rawOption }),
   };
 
   const enforcement = parseEnforcement(
-    rawEnforcement ?? optionsObject.enforcement,
+    rawEnforcement ?? optionsToUse.enforcement,
   );
 
   if (

@@ -264,6 +264,42 @@ const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
     `,
     optionsSet: [[{ ignoreTypePattern: "^Readonly<.+>$" }]],
   },
+  {
+    code: dedent`
+      type Foo<T> = readonly T[];
+      function foo(arg: Foo<{ bar: string; }>) { }
+    `,
+    optionsSet: [
+      [
+        {
+          parameters: "ReadonlyDeep",
+          overrides: [
+            {
+              specifiers: {
+                from: "file",
+              },
+              disable: true,
+            },
+          ],
+        },
+      ],
+      [
+        {
+          parameters: "ReadonlyDeep",
+          overrides: [
+            {
+              specifiers: {
+                from: "file",
+              },
+              options: {
+                parameters: "ReadonlyShallow",
+              },
+            },
+          ],
+        },
+      ],
+    ],
+  },
 ];
 
 export default tests;
