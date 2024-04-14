@@ -15,8 +15,8 @@ import { ruleNameScope } from "#eslint-plugin-functional/utils/misc";
 import { type ESFunction } from "#eslint-plugin-functional/utils/node-types";
 import {
   createRule,
-  getESTreeNode,
   getTypeOfNode,
+  getTypeOfTSNode,
   type NamedCreateRuleCustomMeta,
   type RuleResult,
 } from "#eslint-plugin-functional/utils/rule";
@@ -24,11 +24,8 @@ import { isNested } from "#eslint-plugin-functional/utils/tree";
 import {
   isBlockStatement,
   isCallExpression,
-  isDefined,
-  isFunctionLike,
   isIdentifier,
   isReturnStatement,
-  isTSFunctionType,
 } from "#eslint-plugin-functional/utils/type-guards";
 
 /**
@@ -106,13 +103,12 @@ function isCallerViolation(
   if (tsDeclaration === undefined) {
     return false;
   }
-  const declaration = getESTreeNode(tsDeclaration, context);
 
-  return (
-    isDefined(declaration) &&
-    (isFunctionLike(declaration) || isTSFunctionType(declaration)) &&
-    declaration.params.length === caller.arguments.length
-  );
+  return getTypeOfTSNode(tsDeclaration, context)
+    .getCallSignatures()
+    .some(
+      (signature) => signature.parameters.length === caller.arguments.length,
+    );
 }
 
 /**

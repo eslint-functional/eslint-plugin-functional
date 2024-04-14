@@ -188,12 +188,22 @@ export function getTypeOfNode<Context extends RuleContext<string, BaseOptions>>(
   node: TSESTree.Node,
   context: Context,
 ): Type {
-  const parserServices = getParserServices(context);
+  const { esTreeNodeToTSNodeMap } = getParserServices(context);
 
-  const checker = parserServices.program.getTypeChecker();
-  const { esTreeNodeToTSNodeMap } = parserServices;
+  const tsNode = esTreeNodeToTSNodeMap.get(node);
+  return getTypeOfTSNode(tsNode, context);
+}
 
-  const nodeType = checker.getTypeAtLocation(esTreeNodeToTSNodeMap.get(node));
+/**
+ * Get the type of the the given ts node.
+ */
+export function getTypeOfTSNode<
+  Context extends RuleContext<string, BaseOptions>,
+>(node: TSNode, context: Context): Type {
+  const { program } = getParserServices(context);
+  const checker = program.getTypeChecker();
+
+  const nodeType = checker.getTypeAtLocation(node);
   const constrained = checker.getBaseConstraintOfType(nodeType);
   return constrained ?? nodeType;
 }
