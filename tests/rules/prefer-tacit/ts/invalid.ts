@@ -237,6 +237,29 @@ const tests: Array<
       },
     ],
   },
+  // Boolean constructor
+  {
+    code: dedent`
+      const foo = [1, 2, 3].map(x => Boolean(x));
+    `,
+    optionsSet: [[]],
+    errors: [
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.ArrowFunctionExpression,
+        line: 1,
+        column: 27,
+        suggestions: [
+          {
+            messageId: "generic",
+            output: dedent`
+            const foo = [1, 2, 3].map(Boolean);
+          `,
+          },
+        ],
+      },
+    ],
+  },
   // Instantiation Expression not supported.
   {
     code: dedent`
