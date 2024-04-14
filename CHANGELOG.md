@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+## [6.4.1](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.4.0...v6.4.1) (2024-04-14)
+
+
+### Bug Fixes
+
+* **prefer-tacit:** handling functions that don't map to directly to an eslint node ([#802](https://github.com/eslint-functional/eslint-plugin-functional/issues/802)) ([423e249](https://github.com/eslint-functional/eslint-plugin-functional/commit/423e249d9f419be3110105a242627cbd28db184a))
+
 # [6.4.0](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.3.2...v6.4.0) (2024-04-01)
 
 
