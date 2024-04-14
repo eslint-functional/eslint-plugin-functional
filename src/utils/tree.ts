@@ -52,7 +52,21 @@ export function isInFunctionBody(
   node: TSESTree.Node,
   async?: boolean,
 ): boolean {
-  const functionNode = getAncestorOfType(
+  const functionNode = getEnclosingFunction(node);
+
+  return (
+    functionNode !== null &&
+    (async === undefined || functionNode.async === async)
+  );
+}
+
+/**
+ * Get the function the given node is in.
+ *
+ * Will return null if not in a function.
+ */
+export function getEnclosingFunction(node: TSESTree.Node) {
+  return getAncestorOfType(
     (
       n,
       c,
@@ -61,11 +75,6 @@ export function isInFunctionBody(
       | TSESTree.FunctionDeclaration
       | TSESTree.FunctionExpression => isFunctionLike(n) && n.body === c,
     node,
-  );
-
-  return (
-    functionNode !== null &&
-    (async === undefined || functionNode.async === async)
   );
 }
 

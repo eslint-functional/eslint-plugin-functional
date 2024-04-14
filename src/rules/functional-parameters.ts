@@ -5,6 +5,9 @@ import {
 } from "@typescript-eslint/utils/json-schema";
 import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import { deepmerge } from "deepmerge-ts";
+import typeMatchesSpecifier, {
+  type TypeDeclarationSpecifier,
+} from "ts-declaration-location";
 
 import {
   ignoreIdentifierPatternOptionSchema,
@@ -13,14 +16,17 @@ import {
   type IgnoreIdentifierPatternOption,
   type IgnorePrefixSelectorOption,
 } from "#eslint-plugin-functional/options";
+import { typeSpecifiersSchema } from "#eslint-plugin-functional/utils/common-schemas";
 import { ruleNameScope } from "#eslint-plugin-functional/utils/misc";
 import { type ESFunction } from "#eslint-plugin-functional/utils/node-types";
 import {
   createRuleUsingFunction,
+  getTypeOfNode,
   type NamedCreateRuleCustomMeta,
   type RuleResult,
 } from "#eslint-plugin-functional/utils/rule";
 import {
+  getEnclosingFunction,
   isArgument,
   isGetter,
   isIIFE,
@@ -45,25 +51,81 @@ export const fullName = `${ruleNameScope}/${name}`;
  */
 type ParameterCountOptions = "atLeastOne" | "exactlyOne";
 
+type CoreOptions = IgnoreIdentifierPatternOption &
+  IgnorePrefixSelectorOption & {
+    allowRestParameter: boolean;
+    allowArgumentsKeyword: boolean;
+    enforceParameterCount:
+      | ParameterCountOptions
+      | false
+      | {
+          count: ParameterCountOptions;
+          ignoreLambdaExpression: boolean;
+          ignoreIIFE: boolean;
+          ignoreGettersAndSetters: boolean;
+        };
+  };
+
 /**
  * The options this rule can take.
  */
 type Options = [
-  IgnoreIdentifierPatternOption &
-    IgnorePrefixSelectorOption & {
-      allowRestParameter: boolean;
-      allowArgumentsKeyword: boolean;
-      enforceParameterCount:
-        | ParameterCountOptions
-        | false
+  CoreOptions & {
+    overrides?: Array<
+      {
+        specifiers: TypeDeclarationSpecifier | TypeDeclarationSpecifier[];
+      } & (
         | {
-            count: ParameterCountOptions;
-            ignoreLambdaExpression: boolean;
-            ignoreIIFE: boolean;
-            ignoreGettersAndSetters: boolean;
-          };
-    },
+            options: CoreOptions;
+            disable?: false;
+          }
+        | {
+            disable: true;
+          }
+      )
+    >;
+  },
 ];
+
+const coreOptionsPropertiesSchema: JSONSchema4ObjectSchema["properties"] = {
+  allowRestParameter: {
+    type: "boolean",
+  },
+  allowArgumentsKeyword: {
+    type: "boolean",
+  },
+  enforceParameterCount: {
+    oneOf: [
+      {
+        type: "boolean",
+        enum: [false],
+      },
+      {
+        type: "string",
+        enum: ["atLeastOne", "exactlyOne"],
+      },
+      {
+        type: "object",
+        properties: {
+          count: {
+            type: "string",
+            enum: ["atLeastOne", "exactlyOne"],
+          },
+          ignoreGettersAndSetters: {
+            type: "boolean",
+          },
+          ignoreLambdaExpression: {
+            type: "boolean",
+          },
+          ignoreIIFE: {
+            type: "boolean",
+          },
+        },
+        additionalProperties: false,
+      },
+    ],
+  },
+};
 
 /**
  * The schema for the rule options.
@@ -74,43 +136,25 @@ const schema: JSONSchema4[] = [
     properties: deepmerge(
       ignoreIdentifierPatternOptionSchema,
       ignorePrefixSelectorOptionSchema,
+      coreOptionsPropertiesSchema,
       {
-        allowRestParameter: {
-          type: "boolean",
-        },
-        allowArgumentsKeyword: {
-          type: "boolean",
-        },
-        enforceParameterCount: {
-          oneOf: [
-            {
-              type: "boolean",
-              enum: [false],
-            },
-            {
-              type: "string",
-              enum: ["atLeastOne", "exactlyOne"],
-            },
-            {
-              type: "object",
-              properties: {
-                count: {
-                  type: "string",
-                  enum: ["atLeastOne", "exactlyOne"],
-                },
-                ignoreGettersAndSetters: {
-                  type: "boolean",
-                },
-                ignoreLambdaExpression: {
-                  type: "boolean",
-                },
-                ignoreIIFE: {
-                  type: "boolean",
-                },
+        overrides: {
+          type: "array",
+          items: {
+            type: "object",
+            properties: {
+              specifiers: typeSpecifiersSchema,
+              options: {
+                type: "object",
+                properties: coreOptionsPropertiesSchema,
+                additionalProperties: false,
               },
-              additionalProperties: false,
+              disable: {
+                type: "boolean",
+              },
             },
-          ],
+            additionalProperties: false,
+          },
         },
       } satisfies JSONSchema4ObjectSchema["properties"],
     ),
@@ -156,16 +200,50 @@ const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages, Options> = {
     description: "Enforce functional parameters.",
     recommended: "recommended",
     recommendedSeverity: "error",
+    requiresTypeChecking: true,
   },
   messages: errorMessages,
   schema,
 };
 
 /**
+ * Get the core options to use, taking into account overrides.
+ */
+function getCoreOptions(
+  node: TSESTree.Node,
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Readonly<Options>,
+): CoreOptions | null {
+  const [optionsObject] = options;
+
+  const program = context.sourceCode.parserServices?.program ?? undefined;
+  if (program === undefined) {
+    return optionsObject;
+  }
+
+  const type = getTypeOfNode(node, context);
+  const found = optionsObject.overrides?.find((override) =>
+    (Array.isArray(override.specifiers)
+      ? override.specifiers
+      : [override.specifiers]
+    ).some((specifier) => typeMatchesSpecifier(program, specifier, type)),
+  );
+
+  if (found !== undefined) {
+    if (found.disable === true) {
+      return null;
+    }
+    return found.options;
+  }
+
+  return optionsObject;
+}
+
+/**
  * Get the rest parameter violations.
  */
 function getRestParamViolations(
-  [{ allowRestParameter }]: Readonly<Options>,
+  { allowRestParameter }: Readonly<CoreOptions>,
   node: ESFunction,
 ): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
   return !allowRestParameter &&
@@ -184,7 +262,7 @@ function getRestParamViolations(
  * Get the parameter count violations.
  */
 function getParamCountViolations(
-  [{ enforceParameterCount }]: Readonly<Options>,
+  { enforceParameterCount }: Readonly<CoreOptions>,
   node: ESFunction,
 ): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
   if (
@@ -235,8 +313,16 @@ function checkFunction(
   context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
   options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
-  const [optionsObject] = options;
-  const { ignoreIdentifierPattern } = optionsObject;
+  const optionsToUse = getCoreOptions(node, context, options);
+
+  if (optionsToUse === null) {
+    return {
+      context,
+      descriptors: [],
+    };
+  }
+
+  const { ignoreIdentifierPattern } = optionsToUse;
 
   if (shouldIgnorePattern(node, context, ignoreIdentifierPattern)) {
     return {
@@ -248,8 +334,8 @@ function checkFunction(
   return {
     context,
     descriptors: [
-      ...getRestParamViolations(options, node),
-      ...getParamCountViolations(options, node),
+      ...getRestParamViolations(optionsToUse, node),
+      ...getParamCountViolations(optionsToUse, node),
     ],
   };
 }
@@ -262,8 +348,27 @@ function checkIdentifier(
   context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
   options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
-  const [optionsObject] = options;
-  const { ignoreIdentifierPattern } = optionsObject;
+  if (node.name !== "arguments") {
+    return {
+      context,
+      descriptors: [],
+    };
+  }
+
+  const functionNode = getEnclosingFunction(node);
+  const optionsToUse =
+    functionNode === null
+      ? options[0]
+      : getCoreOptions(functionNode, context, options);
+
+  if (optionsToUse === null) {
+    return {
+      context,
+      descriptors: [],
+    };
+  }
+
+  const { ignoreIdentifierPattern } = optionsToUse;
 
   if (shouldIgnorePattern(node, context, ignoreIdentifierPattern)) {
     return {
@@ -272,15 +377,12 @@ function checkIdentifier(
     };
   }
 
-  const { allowArgumentsKeyword } = optionsObject;
+  const { allowArgumentsKeyword } = optionsToUse;
 
   return {
     context,
     descriptors:
-      !allowArgumentsKeyword &&
-      node.name === "arguments" &&
-      !isPropertyName(node) &&
-      !isPropertyAccess(node)
+      !allowArgumentsKeyword && !isPropertyName(node) && !isPropertyAccess(node)
         ? [
             {
               node,

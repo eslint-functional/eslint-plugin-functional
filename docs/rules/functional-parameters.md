@@ -2,9 +2,13 @@
 
 💼 This rule is enabled in the following configs: `currying`, ☑️ `lite`, ✅ `recommended`, 🔒 `strict`.
 
+💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
+
 <!-- end auto-generated rule header -->
 
 Disallow use of rest parameters, the `arguments` keyword and enforces that functions take at least 1 parameter.
+
+Note: type information is only required when using the [overrides](#overrides) option.
 
 ## Rule Details
 
@@ -67,6 +71,23 @@ type Options = {
       };
   ignoreIdentifierPattern?: string[] | string;
   ignorePrefixSelector?: string[] | string;
+  overrides?: Array<{
+    match:
+      | {
+          from: "file";
+          path?: string;
+        }
+      | {
+          from: "lib";
+        }
+      | {
+          from: "package";
+          package?: string;
+        }
+      | TypeDeclarationSpecifier[];
+    options: Omit<Options, "overrides">;
+    disable: boolean;
+  }>;
 };
 ```
 
@@ -196,3 +217,24 @@ const sum = [1, 2, 3].reduce((carry, current) => current, 0);
 
 This option takes a RegExp string or an array of RegExp strings.
 It allows for the ability to ignore violations based on a function's name.
+
+### `overrides`
+
+_Using this option requires type infomation._
+
+Allows for applying overrides to the options based on where the function's type is defined.
+This can be used to override the settings for types coming from 3rd party libraries.
+
+Note: Only the first matching override will be used.
+
+#### `overrides[n].specifiers`
+
+A specifier, or an array of specifiers to match the function type against.
+
+#### `overrides[n].options`
+
+The options to use when a specifiers matches.
+
+#### `overrides[n].disable`
+
+If true, when a specifier matches, this rule will not be applied to the matching node.

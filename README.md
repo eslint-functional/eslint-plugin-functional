@@ -108,7 +108,7 @@ The [below section](#rules) gives details on which rules are enabled by each rul
 
 | Name                                                         | Description                    | 💼                          | ⚠️ | 🚫 | 🔧 | 💡 | 💭 | ❌  |
 | :----------------------------------------------------------- | :----------------------------- | :-------------------------- | :- | :- | :- | :- | :- | :- |
-| [functional-parameters](docs/rules/functional-parameters.md) | Enforce functional parameters. | ☑️ ✅ 🔒 ![badge-currying][] |    |    |    |    |    |    |
+| [functional-parameters](docs/rules/functional-parameters.md) | Enforce functional parameters. | ☑️ ✅ 🔒 ![badge-currying][] |    |    |    |    | 💭 |    |
 
 ### No Exceptions
 
