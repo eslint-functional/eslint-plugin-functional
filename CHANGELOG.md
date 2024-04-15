@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+# [6.5.0](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.4.1...v6.5.0) (2024-04-15)
+
+
+### Features
+
+* update is-immutable-type to v3.1.0 ([#806](https://github.com/eslint-functional/eslint-plugin-functional/issues/806)) ([40435b7](https://github.com/eslint-functional/eslint-plugin-functional/commit/40435b7316402b8492e267fff1ec3e133ac2c27a))
+
 ## [6.4.1](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.4.0...v6.4.1) (2024-04-14)
 
 
