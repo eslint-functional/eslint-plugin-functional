@@ -1,4 +1,6 @@
 {
+  "$schema": "node_modules/markdownlint-cli2/schema/markdownlint-config-schema.json",
+
   "default": false,
   "extends": "markdownlint/style/prettier",
 
@@ -62,9 +64,9 @@
   // MD013/line-length : Line length : https://github.com/DavidAnson/markdownlint/blob/v0.33.0/doc/md013.md
   "MD013": {
     // Number of characters
-    "line_length": 160,
+    "line_length": 120,
     // Number of characters for headings
-    "heading_line_length": 160,
+    "heading_line_length": 120,
     // Number of characters for code blocks
     "code_block_line_length": 120,
     // Include code blocks

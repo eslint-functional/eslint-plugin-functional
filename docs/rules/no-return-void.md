@@ -1,10 +1,15 @@
+<!-- markdownlint-disable -->
+<!-- begin auto-generated rule header -->
+
 # Disallow functions that don't return anything (`functional/no-return-void`)
 
-💼 This rule is enabled in the following configs: ☑️ `lite`, `no-statements`, ✅ `recommended`, 🔒 `strict`.
+💼🚫 This rule is enabled in the following configs: ☑️ `lite`, `noStatements`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the `disableTypeChecked` config.
 
 💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 
 <!-- end auto-generated rule header -->
+<!-- markdownlint-restore -->
+<!-- markdownlint-restore -->
 
 Disallow functions that are declared as returning nothing.
 
@@ -15,7 +20,9 @@ In functional programming functions must return something, they cannot return no
 By default, this rule allows function to return `undefined` and `null`.
 
 Note: For performance reasons, this rule does not check implicit return types.
-We recommend using the rule [@typescript-eslint/explicit-function-return-type](https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/explicit-function-return-type.md) in conjunction with this rule.
+We recommend using the rule
+[@typescript-eslint/explicit-function-return-type](https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/explicit-function-return-type.md)
+in conjunction with this rule.
 
 ### ❌ Incorrect
 

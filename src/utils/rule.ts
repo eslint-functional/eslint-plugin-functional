@@ -1,8 +1,8 @@
 import { type TSESTree } from "@typescript-eslint/utils";
 import {
+  type NamedCreateRuleMeta,
   RuleCreator,
   getParserServices,
-  type NamedCreateRuleMeta,
 } from "@typescript-eslint/utils/eslint-utils";
 import {
   type ReportDescriptor,
@@ -11,8 +11,8 @@ import {
 } from "@typescript-eslint/utils/ts-eslint";
 import {
   Immutability,
-  getTypeImmutability,
   type ImmutabilityOverrides,
+  getTypeImmutability,
 } from "is-immutable-type";
 import { type Node as TSNode, type Type, type TypeNode } from "typescript";
 
@@ -24,11 +24,9 @@ import { type ESFunction } from "#/utils/node-types";
 /**
  * Any custom rule meta properties.
  */
-export type NamedCreateRuleCustomMeta<
-  T extends string,
-  Options extends BaseOptions,
-> = Omit<NamedCreateRuleMeta<T, Options>, "docs"> & {
-  docs: {
+export type NamedCreateRuleCustomMeta<T extends string> = NamedCreateRuleMeta<
+  T,
+  {
     /**
      * Used for creating category configs and splitting the README rules list into sub-lists.
      */
@@ -42,24 +40,29 @@ export type NamedCreateRuleCustomMeta<
 
     recommended: "recommended" | "strict" | false;
     recommendedSeverity: "error" | "warn";
-  } & Omit<NamedCreateRuleMeta<T, Options>["docs"], "recommended">;
-};
+
+    requiresTypeChecking: boolean;
+
+    url?: never;
+  }
+>;
 
 /**
  * All options must extends this type.
  */
 export type BaseOptions = ReadonlyArray<unknown>;
 
+/**
+ * The definition of a rule.
+ */
 export type RuleDefinition<
   MessageIds extends string,
   Options extends BaseOptions,
-> = {
-  readonly defaultOptions: Options;
-  readonly meta: NamedCreateRuleCustomMeta<MessageIds, Options>;
-  readonly create: (
-    context: Readonly<RuleContext<MessageIds, Options>>,
-  ) => RuleListener;
-};
+> = Readonly<{
+  defaultOptions: Options;
+  meta: NamedCreateRuleCustomMeta<MessageIds>;
+  create: (context: Readonly<RuleContext<MessageIds, Options>>) => RuleListener;
+}>;
 
 /**
  * The result all rules return.
@@ -87,9 +90,6 @@ export type RuleFunctionsMap<
   ) => RuleResult<MessageIds, Options>;
 }>;
 
-// This function can't be functional as it needs to interact with 3rd-party
-// libraries that aren't functional.
-/* eslint-disable functional/no-return-void, functional/no-expression-statements */
 /**
  * Create a function that processes common options and then runs the given
  * check.
@@ -117,7 +117,6 @@ function checkNode<
     }
   };
 }
-/* eslint-enable functional/no-return-void, functional/no-expression-statements */
 
 /**
  * Create a rule.
@@ -127,7 +126,7 @@ export function createRule<
   Options extends BaseOptions,
 >(
   name: string,
-  meta: NamedCreateRuleCustomMeta<MessageIds, Options>,
+  meta: Readonly<NamedCreateRuleCustomMeta<MessageIds>>,
   defaultOptions: Options,
   ruleFunctionsMap: RuleFunctionsMap<any, MessageIds, Options>,
 ) {
@@ -147,7 +146,7 @@ export function createRuleUsingFunction<
   Options extends BaseOptions,
 >(
   name: string,
-  meta: NamedCreateRuleCustomMeta<MessageIds, Options>,
+  meta: Readonly<NamedCreateRuleCustomMeta<MessageIds>>,
   defaultOptions: Options,
   createFunction: (
     context: Readonly<RuleContext<MessageIds, Options>>,
@@ -168,7 +167,6 @@ export function createRuleUsingFunction<
       return Object.fromEntries(
         Object.entries(ruleFunctionsMap).map(([nodeSelector, ruleFunction]) => [
           nodeSelector,
-          // prettier-ignore
           checkNode<
             MessageIds,
             Readonly<RuleContext<MessageIds, Options>>,

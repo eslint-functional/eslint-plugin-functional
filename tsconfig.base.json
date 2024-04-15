@@ -31,8 +31,7 @@
     "types": ["vitest/importMeta"],
     "baseUrl": ".",
     "paths": {
-      "#/flat": ["src/flat.ts"],
-      "#/classic": ["src/classic.ts"],
+      "#": ["src/index.ts"],
       "#/configs/*": ["src/configs/*"],
       "#/options": ["src/options"],
       "#/rules": ["src/rules"],
@@ -45,5 +44,6 @@
       "#/tests/*": ["tests/*"]
     }
   },
+  "include": [".", ".*"],
   "exclude": ["dist/"]
 }

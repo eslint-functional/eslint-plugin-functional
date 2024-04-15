@@ -10,9 +10,9 @@ import {
 import { type NamedCreateRuleMeta } from "@typescript-eslint/utils/eslint-utils";
 
 import {
-  createRuleUsingFunction,
   type RuleDefinition,
   type RuleFunctionsMap,
+  createRuleUsingFunction,
 } from "#/utils/rule";
 
 import { filename as dummyFilename } from "./configs";
@@ -88,7 +88,7 @@ export function createDummyRule(
     context: Readonly<TSESLint.RuleContext<"generic", any>>,
   ) => RuleFunctionsMap<any, "generic", any>,
 ): RuleDefinition<string, [boolean, ...unknown[]]> {
-  const meta: NamedCreateRuleMeta<"generic", []> = {
+  const meta: NamedCreateRuleMeta<"generic", {}> = {
     type: "suggestion",
     docs: {
       description: "rule used in testing",

@@ -1,19 +1,27 @@
+<!-- markdownlint-disable -->
+<!-- begin auto-generated rule header -->
+
 # Disallow conditional statements (`functional/no-conditional-statements`)
 
-💼🚫 This rule is enabled in the following configs: `no-statements`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the ☑️ `lite` config.
+💼🚫 This rule is enabled in the following configs: `noStatements`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the following configs: `disableTypeChecked`, ☑️ `lite`.
 
 💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 
 <!-- end auto-generated rule header -->
+<!-- markdownlint-restore -->
+<!-- markdownlint-restore -->
 
 This rule disallows conditional statements such as `if` and `switch`.
 
 ## Rule Details
 
-Conditional statements are not a good fit for functional style programming as they are not expressions and do not return a value.
-Instead consider using the [ternary operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator) which is an expression that returns a value:
+Conditional statements are not a good fit for functional style programming as they are not expressions and do not return
+a value. Instead consider using the
+[ternary operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator)
+which is an expression that returns a value:
 
-For more background see this [blog post](https://hackernoon.com/rethinking-javascript-the-if-statement-b158a61cd6cb) and discussion in [tslint-immutable #54](https://github.com/jonaskello/tslint-immutable/issues/54).
+For more background see this [blog post](https://hackernoon.com/rethinking-javascript-the-if-statement-b158a61cd6cb)
+and discussion in [tslint-immutable #54](https://github.com/jonaskello/tslint-immutable/issues/54).
 
 ### ❌ Incorrect
 
@@ -97,8 +105,8 @@ function foo(error, data) {
 
 #### `"ifExhaustive"`
 
-This will only allow conditional statements to exist if every case is taken into account and each has a return statement or other terminal.
-In other words, every `if` must have an `else` and every `switch` must have a default case.
+This will only allow conditional statements to exist if every case is taken into account and each has a return statement
+or other terminal. In other words, every `if` must have an `else` and every `switch` must have a default case.
 This allows conditional statements to be used like [do expressions](https://github.com/tc39/proposal-do-expressions).
 
 ```js
@@ -114,4 +122,5 @@ const x = (() => {
 })();
 ```
 
-Note: Currently this option is not useable with the [no-else-return](https://eslint.org/docs/rules/no-else-return) rule; `else` statements must contain a return statement.
+Note: Currently this option is not useable with the [no-else-return](https://eslint.org/docs/rules/no-else-return) rule;
+`else` statements must contain a return statement.

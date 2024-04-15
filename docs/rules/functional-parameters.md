@@ -1,15 +1,22 @@
+<!-- markdownlint-disable -->
+<!-- begin auto-generated rule header -->
+
 # Enforce functional parameters (`functional/functional-parameters`)
 
 💼 This rule is enabled in the following configs: `currying`, ☑️ `lite`, ✅ `recommended`, 🔒 `strict`.
 
 <!-- end auto-generated rule header -->
+<!-- markdownlint-restore -->
+<!-- markdownlint-restore -->
 
 Disallow use of rest parameters, the `arguments` keyword and enforces that functions take at least 1 parameter.
 
 ## Rule Details
 
 In functions, `arguments` is a special variable that is implicitly available.
-This variable is an array containing the arguments passed to the function call and is often used to allow for any number of parameters to be passed to a function. Rest parameters are another way any number of parameters can be passed to a function.
+This variable is an array containing the arguments passed to the function call and is often used to allow for any number
+of parameters to be passed to a function. Rest parameters are another way any number of parameters can be passed to a
+function.
 
 When it comes to functional programming, known and explicit parameters must be used.
 
@@ -137,7 +144,7 @@ Any function that takes multiple parameter can be rewritten as a higher-order fu
 
 Example:
 
-<!-- eslint-disable @typescript-eslint/no-redeclare -->
+<!-- eslint-disable ts/no-redeclare -->
 
 ```js
 // This function
@@ -151,7 +158,8 @@ function add(x) {
 }
 ```
 
-See [Currying](https://en.wikipedia.org/wiki/Currying) and [Higher-order function](https://en.wikipedia.org/wiki/Higher-order_function) on Wikipedia for more information.
+See [Currying](https://en.wikipedia.org/wiki/Currying) and
+[Higher-order function](https://en.wikipedia.org/wiki/Higher-order_function) on Wikipedia for more information.
 
 #### `enforceParameterCount.count`
 
@@ -160,19 +168,23 @@ See [enforceParameterCount](#enforceparametercount).
 #### `enforceParameterCount.ignoreLambdaExpression`
 
 If true, this option allows for the use of lambda function expressions that do not have any parameters.
-Here, a lambda function expression refers to any function being defined in place as passed directly as an argument to another function.
+Here, a lambda function expression refers to any function being defined in place as passed directly as an argument to
+another function.
 
 #### `enforceParameterCount.ignoreIIFE`
 
-If true, this option allows for the use of [IIFEs](https://developer.mozilla.org/en-US/docs/Glossary/IIFE) that do not have any parameters.
+If true, this option allows for the use of [IIFEs](https://developer.mozilla.org/en-US/docs/Glossary/IIFE) that do not
+have any parameters.
 
 #### `enforceParameterCount.ignoreGettersAndSetters`
 
-Getters should always take zero parameters, and setter one. If for some reason you want to treat these function like any other function, then you can set this option to `false`.
+Getters should always take zero parameters, and setter one. If for some reason you want to treat these function like any
+other function, then you can set this option to `false`.
 
 ### `ignorePrefixSelector`
 
-This allows for ignore functions where one of the given selectors matches the parent node in the AST of the function node.\
+This allows for ignore functions where one of the given selectors matches the parent node in the AST of the function
+node.\
 For more information see [ESLint Selectors](https://eslint.org/docs/developer-guide/selectors).
 
 Example:

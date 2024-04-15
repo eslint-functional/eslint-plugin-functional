@@ -4,10 +4,10 @@ import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
 import { ruleNameScope } from "#/utils/misc";
 import {
-  createRuleUsingFunction,
-  getTypeOfNode,
   type NamedCreateRuleCustomMeta,
   type RuleResult,
+  createRuleUsingFunction,
+  getTypeOfNode,
 } from "#/utils/rule";
 import {
   isFunctionLikeType,
@@ -80,15 +80,15 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages, Options> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     category: "No Other Paradigms",
     description:
       "Restrict types so that only members of the same kind are allowed in them.",
-    requiresTypeChecking: true,
     recommended: "recommended",
     recommendedSeverity: "error",
+    requiresTypeChecking: true,
   },
   messages: errorMessages,
   schema,
@@ -98,21 +98,20 @@ const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages, Options> = {
  * Does the given type elements violate the rule.
  */
 function hasTypeElementViolations(
-  typeElements: TSESTree.TypeElement[],
+  typeElements: ReadonlyArray<TSESTree.TypeElement>,
   context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
 ): boolean {
   return !typeElements
-    .map((member) => {
-      return (
+    .map(
+      (member) =>
         isTSMethodSignature(member) ||
         isTSCallSignatureDeclaration(member) ||
         isTSConstructSignatureDeclaration(member) ||
         ((isTSPropertySignature(member) || isTSIndexSignature(member)) &&
           member.typeAnnotation !== undefined &&
           (isTSFunctionType(member.typeAnnotation.typeAnnotation) ||
-            isFunctionLikeType(getTypeOfNode(member, context))))
-      );
-    })
+            isFunctionLikeType(getTypeOfNode(member, context)))),
+    )
     .every((isFunction, _, array) => array[0] === isFunction);
 }
 

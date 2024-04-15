@@ -1,16 +1,22 @@
+<!-- markdownlint-disable -->
+<!-- begin auto-generated rule header -->
+
 # Prefer property signatures over method signatures (`functional/prefer-property-signatures`)
 
-💼 This rule is enabled in the 🎨 `stylistic` config.
+💼🚫 This rule is enabled in the 🎨 `stylistic` config. This rule is _disabled_ in the `disableTypeChecked` config.
 
 💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 
 <!-- end auto-generated rule header -->
+<!-- markdownlint-restore -->
+<!-- markdownlint-restore -->
 
 ## Rule Details
 
 There are two ways function members can be declared in interfaces and type aliases; `MethodSignature` and `PropertySignature`.
 
-The `MethodSignature` and the `PropertySignature` forms seem equivalent, but only the `PropertySignature` form can have a `readonly` modifier.
+The `MethodSignature` and the `PropertySignature` forms seem equivalent, but only the `PropertySignature` form can have
+a `readonly` modifier.
 Because of this any `MethodSignature` will be mutable unless wrapped in the `Readonly` type.
 
 It should be noted however that the `PropertySignature` form does not support overloading.
@@ -29,7 +35,7 @@ type Foo = {
 
 ### ✅ Correct
 
-<!-- eslint-disable @typescript-eslint/no-redeclare -->
+<!-- eslint-disable ts/no-redeclare -->
 
 ```ts
 /* eslint functional/prefer-property-signatures: "error" */

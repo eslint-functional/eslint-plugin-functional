@@ -1,10 +1,15 @@
+<!-- markdownlint-disable -->
+<!-- begin auto-generated rule header -->
+
 # Enforce treating data as immutable (`functional/immutable-data`)
 
-💼 This rule is enabled in the following configs: ☑️ `lite`, `no-mutations`, ✅ `recommended`, 🔒 `strict`.
+💼🚫 This rule is enabled in the following configs: ☑️ `lite`, `noMutations`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the `disableTypeChecked` config.
 
 💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 
 <!-- end auto-generated rule header -->
+<!-- markdownlint-restore -->
+<!-- markdownlint-restore -->
 
 This rule prohibits syntax that mutates existing objects and arrays via assignment to or deletion of their properties/elements.
 
@@ -133,7 +138,8 @@ It allows for the ability to ignore violations based on a variable's name.
 
 This option takes a match string or an array of match strings (not a RegExp pattern).
 
-The match string allows you to specify dot separated `.` object paths and has support for "glob" `*` and "globstar" `**` matching.
+The match string allows you to specify dot separated `.` object paths and has support for "glob" `*` and "globstar" `**`
+matching.
 
 For example:
 
@@ -171,4 +177,5 @@ For example:
 The following wildcards can be used when specifying a pattern:
 
 `**` - Match any depth (including zero). Can only be used as a full accessor.\
-`*` - When used as a full accessor, match the next accessor (there must be one). When used as part of an accessor, match any characters.
+`*` - When used as a full accessor, match the next accessor (there must be one). When used as part of an accessor, match
+any characters.

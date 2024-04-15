@@ -5,14 +5,20 @@ import {
 import dedent from "dedent";
 
 import {
-  shouldIgnorePattern,
   type IgnoreAccessorPatternOption,
   type IgnoreCodePatternOption,
   type IgnoreIdentifierPatternOption,
+  shouldIgnorePattern,
 } from "#/options";
 import { getRuleTester } from "#/tests/helpers/RuleTester";
-import { configs, filename } from "#/tests/helpers/configs";
-import { addFilename, createDummyRule } from "#/tests/helpers/util";
+import {
+  configs,
+  filename,
+} from "#/tests/helpers/configs";
+import {
+  addFilename,
+  createDummyRule,
+} from "#/tests/helpers/util";
 
 /**
  * Create a dummy rule that operates on AssignmentExpression nodes.
@@ -21,21 +27,19 @@ function createDummyRuleFor(nodeType: string) {
   return createDummyRule((context) => {
     const [allowed, options] = context.options;
     return {
-      [nodeType]: (node) => {
-        return {
-          context,
-          descriptors:
-            shouldIgnorePattern(
-              node,
-              context,
-              options.ignoreIdentifierPattern,
-              options.ignoreAccessorPattern,
-              options.ignoreCodePattern,
-            ) === allowed
-              ? []
-              : [{ node, messageId: "generic" }],
-        };
-      },
+      [nodeType]: (node) => ({
+        context,
+        descriptors:
+          shouldIgnorePattern(
+            node,
+            context,
+            options.ignoreIdentifierPattern,
+            options.ignoreAccessorPattern,
+            options.ignoreCodePattern,
+          ) === allowed
+            ? []
+            : [{ node, messageId: "generic" }],
+      }),
     };
   });
 }

@@ -7,18 +7,18 @@ import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import { deepmerge } from "deepmerge-ts";
 
 import {
+  type IgnoreIdentifierPatternOption,
+  type IgnorePrefixSelectorOption,
   ignoreIdentifierPatternOptionSchema,
   ignorePrefixSelectorOptionSchema,
   shouldIgnorePattern,
-  type IgnoreIdentifierPatternOption,
-  type IgnorePrefixSelectorOption,
 } from "#/options";
 import { ruleNameScope } from "#/utils/misc";
 import { type ESFunction } from "#/utils/node-types";
 import {
-  createRuleUsingFunction,
   type NamedCreateRuleCustomMeta,
   type RuleResult,
+  createRuleUsingFunction,
 } from "#/utils/rule";
 import {
   isArgument,
@@ -149,13 +149,14 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages, Options> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     category: "Currying",
     description: "Enforce functional parameters.",
     recommended: "recommended",
     recommendedSeverity: "error",
+    requiresTypeChecking: false,
   },
   messages: errorMessages,
   schema,

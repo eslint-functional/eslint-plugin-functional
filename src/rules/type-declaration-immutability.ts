@@ -8,17 +8,20 @@ import { deepmerge } from "deepmerge-ts";
 import { Immutability } from "is-immutable-type";
 
 import {
+  type IgnoreIdentifierPatternOption,
   ignoreIdentifierPatternOptionSchema,
   shouldIgnorePattern,
-  type IgnoreIdentifierPatternOption,
 } from "#/options";
-import { getNodeIdentifierTexts, ruleNameScope } from "#/utils/misc";
+import {
+  getNodeIdentifierTexts,
+  ruleNameScope,
+} from "#/utils/misc";
 import { type ESTypeDeclaration } from "#/utils/node-types";
 import {
-  createRule,
-  getTypeImmutabilityOfNode,
   type NamedCreateRuleCustomMeta,
   type RuleResult,
+  createRule,
+  getTypeImmutabilityOfNode,
 } from "#/utils/rule";
 import { isTSInterfaceDeclaration } from "#/utils/type-guards";
 
@@ -205,7 +208,7 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages, Options> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     category: "No Mutations",
@@ -265,7 +268,7 @@ function getRules(options: Readonly<Options>): ImmutabilityRule[] {
         ? false
         : (Array.isArray(rule.fixer) ? rule.fixer : [rule.fixer]).map((r) => ({
             ...r,
-            pattern: new RegExp(r.pattern, "us"),
+            pattern: new RegExp(r.pattern, "su"),
           }));
 
     const suggestions =
@@ -273,7 +276,7 @@ function getRules(options: Readonly<Options>): ImmutabilityRule[] {
         ? false
         : rule.suggestions.map((r) => ({
             ...r,
-            pattern: new RegExp(r.pattern, "us"),
+            pattern: new RegExp(r.pattern, "su"),
           }));
 
     return {
@@ -318,7 +321,7 @@ function getRuleToApply(
 function getConfiguredFixer<T extends TSESTree.Node>(
   node: T,
   context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-  configs: FixerConfig[],
+  configs: ReadonlyArray<FixerConfig>,
 ): NonNullable<Descriptor["fix"]> | null {
   const text = context.sourceCode.getText(node);
   const config = configs.find((c) => c.pattern.test(text));
@@ -335,7 +338,7 @@ function getConfiguredFixer<T extends TSESTree.Node>(
 function getConfiguredSuggestions<T extends TSESTree.Node>(
   node: T,
   context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-  configs: FixerConfig[],
+  configs: ReadonlyArray<FixerConfig>,
   messageId: keyof typeof errorMessages,
 ): NonNullable<Descriptor["suggest"]> | null {
   const text = context.sourceCode.getText(node);
@@ -353,7 +356,10 @@ function getConfiguredSuggestions<T extends TSESTree.Node>(
 /**
  * Compare the actual immutability to the expected immutability.
  */
-function compareImmutability(rule: ImmutabilityRule, actual: Immutability) {
+function compareImmutability(
+  rule: Readonly<ImmutabilityRule>,
+  actual: Immutability,
+) {
   switch (rule.comparator) {
     case RuleEnforcementComparator.Less: {
       return actual < rule.immutability;
@@ -379,7 +385,7 @@ function compareImmutability(rule: ImmutabilityRule, actual: Immutability) {
 function getResults(
   node: ESTypeDeclaration,
   context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-  rule: ImmutabilityRule,
+  rule: Readonly<ImmutabilityRule>,
   immutability: Immutability,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const valid = compareImmutability(rule, immutability);

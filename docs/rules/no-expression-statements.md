@@ -1,12 +1,18 @@
+<!-- markdownlint-disable -->
+<!-- begin auto-generated rule header -->
+
 # Disallow expression statements (`functional/no-expression-statements`)
 
-💼🚫 This rule is enabled in the following configs: `no-statements`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the ☑️ `lite` config.
+💼🚫 This rule is enabled in the following configs: `noStatements`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the following configs: `disableTypeChecked`, ☑️ `lite`.
 
 💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 
 <!-- end auto-generated rule header -->
+<!-- markdownlint-restore -->
+<!-- markdownlint-restore -->
 
-This rule checks that the value of an expression is assigned to a variable and thus helps promote side-effect free (pure) functions.
+This rule checks that the value of an expression is assigned to a variable and thus helps promote side-effect free
+(pure) functions.
 
 ## Rule Details
 
@@ -83,7 +89,8 @@ When enabled, expression of type void are not flagged as violations. This option
 
 Like `ignoreVoid` but instead does not flag function calls that always only return `this`.
 
-Limitation: The function declaration must explicitly use `return this`; equivalents (such as assign this to a variable first, that is then returned) won't be considered valid.
+Limitation: The function declaration must explicitly use `return this`; equivalents
+(such as assign this to a variable first, that is then returned) won't be considered valid.
 
 ### `ignoreCodePattern`
 

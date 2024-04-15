@@ -7,21 +7,24 @@ import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import { deepmerge } from "deepmerge-ts";
 
 import {
+  type IgnoreAccessorPatternOption,
+  type IgnoreClassesOption,
+  type IgnoreIdentifierPatternOption,
   ignoreAccessorPatternOptionSchema,
   ignoreClassesOptionSchema,
   ignoreIdentifierPatternOptionSchema,
   shouldIgnoreClasses,
   shouldIgnorePattern,
-  type IgnoreAccessorPatternOption,
-  type IgnoreClassesOption,
-  type IgnoreIdentifierPatternOption,
 } from "#/options";
-import { isExpected, ruleNameScope } from "#/utils/misc";
 import {
-  createRule,
-  getTypeOfNode,
+  isExpected,
+  ruleNameScope,
+} from "#/utils/misc";
+import {
   type NamedCreateRuleCustomMeta,
   type RuleResult,
+  createRule,
+  getTypeOfNode,
 } from "#/utils/rule";
 import {
   findRootIdentifier,
@@ -125,7 +128,7 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages, Options> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     category: "No Mutations",

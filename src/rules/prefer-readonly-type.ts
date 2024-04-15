@@ -3,22 +3,25 @@ import { type JSONSchema4 } from "@typescript-eslint/utils/json-schema";
 import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
 import {
+  type IgnoreAccessorPatternOption,
+  type IgnoreCodePatternOption,
   shouldIgnoreClasses,
   shouldIgnoreInFunction,
   shouldIgnorePattern,
-  type IgnoreAccessorPatternOption,
-  type IgnoreCodePatternOption,
 } from "#/options";
 import { ruleNameScope } from "#/utils/misc";
 import { type ESArrayTupleType } from "#/utils/node-types";
 import {
-  createRule,
-  getTypeOfNode,
   type BaseOptions,
   type NamedCreateRuleCustomMeta,
   type RuleResult,
+  createRule,
+  getTypeOfNode,
 } from "#/utils/rule";
-import { isInInterface, isInReturnType } from "#/utils/tree";
+import {
+  isInInterface,
+  isInReturnType,
+} from "#/utils/tree";
 import {
   isArrayType,
   isAssignmentPattern,
@@ -132,7 +135,7 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages, Options> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
   deprecated: true,
   replacedBy: [
     "functional/prefer-immutable-types",

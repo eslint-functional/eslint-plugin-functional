@@ -4,9 +4,9 @@ import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
 import { ruleNameScope } from "#/utils/misc";
 import {
-  createRule,
   type NamedCreateRuleCustomMeta,
   type RuleResult,
+  createRule,
 } from "#/utils/rule";
 import { isInReadonly } from "#/utils/tree";
 
@@ -64,7 +64,7 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages, Options> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     category: "Stylistic",

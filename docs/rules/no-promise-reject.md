@@ -1,6 +1,11 @@
+<!-- markdownlint-disable -->
+<!-- begin auto-generated rule header -->
+
 # Disallow rejecting promises (`functional/no-promise-reject`)
 
 <!-- end auto-generated rule header -->
+<!-- markdownlint-restore -->
+<!-- markdownlint-restore -->
 
 This rule disallows use of `Promise.reject()`.
 

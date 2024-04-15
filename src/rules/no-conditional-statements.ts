@@ -6,10 +6,10 @@ import { type Type } from "typescript";
 import tsApiUtils from "#/conditional-imports/ts-api-utils";
 import { ruleNameScope } from "#/utils/misc";
 import {
-  createRule,
-  getTypeOfNode,
   type NamedCreateRuleCustomMeta,
   type RuleResult,
+  createRule,
+  getTypeOfNode,
 } from "#/utils/rule";
 import {
   isBlockStatement,
@@ -88,7 +88,7 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages, Options> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     category: "No Statements",

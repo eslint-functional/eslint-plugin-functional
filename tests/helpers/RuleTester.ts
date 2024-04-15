@@ -4,7 +4,7 @@ import {
 } from "@typescript-eslint/rule-tester";
 import { afterAll, beforeAll, describe, it } from "vitest";
 
-/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable ts/naming-convention */
 class VitestRuleTester extends RuleTester {
   public static afterAll = afterAll;
   public static beforeAll = beforeAll;
@@ -15,7 +15,7 @@ class VitestRuleTester extends RuleTester {
   public static describeOnly = describe.only;
   public static describeSkip = describe.skip;
 }
-/* eslint-enable @typescript-eslint/naming-convention */
+/* eslint-enable ts/naming-convention */
 
 export function getRuleTester(config: RuleTesterConfig) {
   return new VitestRuleTester(config);

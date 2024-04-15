@@ -1,12 +1,17 @@
+<!-- markdownlint-disable -->
+<!-- begin auto-generated rule header -->
+
 # Enforce the immutability of types based on patterns (`functional/type-declaration-immutability`)
 
-💼 This rule is enabled in the following configs: ☑️ `lite`, `no-mutations`, ✅ `recommended`, 🔒 `strict`.
+💼🚫 This rule is enabled in the following configs: ☑️ `lite`, `noMutations`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the `disableTypeChecked` config.
 
 🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 
 💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 
 <!-- end auto-generated rule header -->
+<!-- markdownlint-restore -->
+<!-- markdownlint-restore -->
 
 Require type alias declarations and interfaces that imply some level of
 immutability to comply to it.

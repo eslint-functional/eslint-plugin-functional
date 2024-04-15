@@ -11,22 +11,22 @@ import { deepmerge } from "deepmerge-ts";
 import { Immutability } from "is-immutable-type";
 
 import {
+  type IgnoreClassesOption,
   ignoreClassesOptionSchema,
   shouldIgnoreClasses,
   shouldIgnoreInFunction,
   shouldIgnorePattern,
-  type IgnoreClassesOption,
 } from "#/options";
 import { ruleNameScope } from "#/utils/misc";
 import { type ESFunctionType } from "#/utils/node-types";
 import {
+  type NamedCreateRuleCustomMeta,
+  type RuleResult,
   createRule,
   getReturnTypesOfFunction,
   getTypeImmutabilityOfNode,
   getTypeImmutabilityOfType,
   isImplementationOfOverload,
-  type NamedCreateRuleCustomMeta,
-  type RuleResult,
 } from "#/utils/rule";
 import {
   hasID,
@@ -228,7 +228,7 @@ const schema: JSONSchema4[] = [
               ignoreInFunctions: {
                 type: "boolean",
               },
-            }),
+            } satisfies JSONSchema4ObjectSchema["properties"]),
             additionalProperties: false,
           },
           {
@@ -255,7 +255,7 @@ const schema: JSONSchema4[] = [
         },
         additionalProperties: false,
       },
-    }),
+    } satisfies JSONSchema4ObjectSchema["properties"]),
     additionalProperties: false,
   },
 ];
@@ -308,7 +308,7 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages, Options> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     category: "No Mutations",
@@ -343,7 +343,7 @@ function getAllFixers(
   fixerConfigs: FixerConfig[] | false,
   suggestionsConfigs: SuggestionsConfig[] | false,
 ): AllFixers {
-  const nodeText = context.sourceCode.getText(node).replaceAll(/\s+/gmu, " ");
+  const nodeText = context.sourceCode.getText(node).replaceAll(/\s+/gu, " ");
 
   const fix =
     fixerConfigs === false
@@ -364,7 +364,7 @@ function getAllFixers(
 function getConfiguredFixer(
   node: TSESTree.Node,
   text: string,
-  configs: FixerConfig[],
+  configs: ReadonlyArray<FixerConfig>,
 ): NonNullable<Descriptor["fix"]> | null {
   const config = configs.find((c) => c.pattern.test(text));
   if (config === undefined) {
@@ -380,7 +380,7 @@ function getConfiguredFixer(
 function getConfiguredSuggestionFixers(
   node: TSESTree.Node,
   text: string,
-  suggestionsConfigs: SuggestionsConfig[],
+  suggestionsConfigs: ReadonlyArray<SuggestionsConfig>,
 ) {
   return suggestionsConfigs
     .map((configs): NonNullable<Descriptor["fix"]> | null => {

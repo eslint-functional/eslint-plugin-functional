@@ -9,18 +9,24 @@ import { deepmerge } from "deepmerge-ts";
 import tsApiUtils from "#/conditional-imports/ts-api-utils";
 import typescript from "#/conditional-imports/typescript";
 import {
+  type IgnoreCodePatternOption,
   ignoreCodePatternOptionSchema,
   shouldIgnorePattern,
-  type IgnoreCodePatternOption,
 } from "#/options";
-import { isDirectivePrologue, ruleNameScope } from "#/utils/misc";
 import {
-  createRule,
-  getTypeOfNode,
+  isDirectivePrologue,
+  ruleNameScope,
+} from "#/utils/misc";
+import {
   type NamedCreateRuleCustomMeta,
   type RuleResult,
+  createRule,
+  getTypeOfNode,
 } from "#/utils/rule";
-import { isCallExpression, isYieldExpression } from "#/utils/type-guards";
+import {
+  isCallExpression,
+  isYieldExpression,
+} from "#/utils/type-guards";
 
 /**
  * The name of this rule.
@@ -80,7 +86,7 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages, Options> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     category: "No Statements",

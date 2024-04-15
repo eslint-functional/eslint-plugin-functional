@@ -5,6 +5,6 @@ import { ruleNameScope } from "#/utils/misc";
 
 export default Object.fromEntries(
   Object.entries(rules)
-    .filter(([, rule]) => rule.meta.docs?.requiresTypeChecking === true)
+    .filter(([, rule]) => rule.meta.docs.requiresTypeChecking)
     .map(([name]) => [`${ruleNameScope}/${name}`, "off"]),
 ) satisfies FlatConfig.Config["rules"];

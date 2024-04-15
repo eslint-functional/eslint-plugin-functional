@@ -1,7 +1,10 @@
 import dedent from "dedent";
 
 import { type rule } from "#/rules/functional-parameters";
-import { type ValidTestCaseSet, type OptionsOf } from "#/tests/helpers/util";
+import {
+  type OptionsOf,
+  type ValidTestCaseSet,
+} from "#/tests/helpers/util";
 
 const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
   {
