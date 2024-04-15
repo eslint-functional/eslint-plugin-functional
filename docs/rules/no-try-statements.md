@@ -1,8 +1,13 @@
+<!-- markdownlint-disable -->
+<!-- begin auto-generated rule header -->
+
 # Disallow try-catch[-finally] and try-finally patterns (`functional/no-try-statements`)
 
-💼🚫 This rule is enabled in the following configs: `no-exceptions`, 🔒 `strict`. This rule is _disabled_ in the following configs: ☑️ `lite`, ✅ `recommended`.
+💼🚫 This rule is enabled in the following configs: `noExceptions`, 🔒 `strict`. This rule is _disabled_ in the following configs: ☑️ `lite`, ✅ `recommended`.
 
 <!-- end auto-generated rule header -->
+<!-- markdownlint-restore -->
+<!-- markdownlint-restore -->
 
 This rule disallows the `try` keyword.
 

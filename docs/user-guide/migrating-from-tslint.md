@@ -8,10 +8,12 @@ This guide is intended to help those who are using tslint-immutable to migrate t
 The ESLint version of `tslint.json` (the configuration file) is `.eslintrc`.
 See [ESLint's docs](https://eslint.org/docs/user-guide/configuring) for more information on this file.
 
-Out of the box, ESLint does not understand TypeScript. To get ESLint to understand it we need to change the default parser to one that understands it.
-This is where [@typescript-eslint](https://github.com/typescript-eslint/typescript-eslint) comes in.
-In the config file, we can specify the parser to be used with the "parser" key. Any extra parser configuration can then be specified under the "parserOptions" key.
-In order for the parser to have access to type information, it needs access to your `tsconfig.json`; you'll need to specify this under "parserOptions" -> "project".
+Out of the box, ESLint does not understand TypeScript. To get ESLint to understand it we need to change the default
+parser to one that understands it. This is where
+[@typescript-eslint](https://github.com/typescript-eslint/typescript-eslint) comes in. In the config file, we can
+specify the parser to be used with the "parser" key. Any extra parser configuration can then be specified under the
+"parserOptions" key. In order for the parser to have access to type information, it needs access to your
+`tsconfig.json`; you'll need to specify this under "parserOptions" -> "project".
 
 ### Example config
 
@@ -22,17 +24,13 @@ In order for the parser to have access to type information, it needs access to y
   "parserOptions": {
     "ecmaVersion": 10,
     "project": "./tsconfig.json",
-    "sourceType": "module"
+    "sourceType": "module",
   },
-  "plugins": [
-    "functional"
-  ],
+  "plugins": ["functional"],
   "env": {
-    "es6": true
+    "es6": true,
   },
-  "extends": [
-    "plugin:functional/recommended"
-  ],
+  "extends": ["plugin:functional/recommended"],
   "rules": {
     // These rules will be applied to all linted file.
   },
@@ -41,9 +39,9 @@ In order for the parser to have access to type information, it needs access to y
       "files": ["*.ts", "*.tsx"],
       "rules": {
         // These rules will only be applied to ts file.
-      }
-    }
-  ]
+      },
+    },
+  ],
 }
 ```
 

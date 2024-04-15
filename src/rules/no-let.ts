@@ -7,16 +7,16 @@ import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import { deepmerge } from "deepmerge-ts";
 
 import {
+  type IgnoreIdentifierPatternOption,
   ignoreIdentifierPatternOptionSchema,
   shouldIgnoreInFunction,
   shouldIgnorePattern,
-  type IgnoreIdentifierPatternOption,
 } from "#/options";
 import { ruleNameScope } from "#/utils/misc";
 import {
-  createRule,
   type NamedCreateRuleCustomMeta,
   type RuleResult,
+  createRule,
 } from "#/utils/rule";
 import { isInForLoopInitializer } from "#/utils/tree";
 
@@ -78,13 +78,14 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages, Options> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     category: "No Mutations",
     description: "Disallow mutable variables.",
     recommended: "recommended",
     recommendedSeverity: "error",
+    requiresTypeChecking: false,
   },
   messages: errorMessages,
   schema,
