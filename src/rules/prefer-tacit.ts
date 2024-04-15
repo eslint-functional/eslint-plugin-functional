@@ -8,6 +8,7 @@ import {
   type RuleFixer,
 } from "@typescript-eslint/utils/ts-eslint";
 import * as semver from "semver";
+import { type TypeDeclarationSpecifier } from "ts-declaration-location";
 import { type Type } from "typescript";
 
 import ts from "#eslint-plugin-functional/conditional-imports/typescript";
@@ -17,6 +18,7 @@ import {
   createRule,
   getTypeOfNode,
   getTypeOfTSNode,
+  nodeNameMatchesSpecifier,
   type NamedCreateRuleCustomMeta,
   type RuleResult,
 } from "#eslint-plugin-functional/utils/rule";
@@ -25,6 +27,7 @@ import {
   isBlockStatement,
   isCallExpression,
   isIdentifier,
+  isMemberExpression,
   isReturnStatement,
 } from "#eslint-plugin-functional/utils/type-guards";
 
@@ -41,7 +44,13 @@ export const fullName = `${ruleNameScope}/${name}`;
 /**
  * The options this rule can take.
  */
-type Options = [];
+type Options = [
+  {
+    requiresBind: Array<TypeDeclarationSpecifier & { name: string }>;
+    reportWhenBindIsRequired: boolean;
+    alwaysSuggestBind: boolean;
+  },
+];
 
 /**
  * The schema for the rule options.
@@ -51,7 +60,18 @@ const schema: JSONSchema4[] = [];
 /**
  * The default options for the rule.
  */
-const defaultOptions: Options = [];
+const defaultOptions: Options = [
+  {
+    requiresBind: [
+      {
+        from: "lib",
+        name: "RegExp",
+      },
+    ],
+    reportWhenBindIsRequired: true,
+    alwaysSuggestBind: true,
+  },
+];
 
 /**
  * The possible error messages.
@@ -119,6 +139,7 @@ function fixFunctionCallToReference(
   fixer: RuleFixer,
   node: ESFunction,
   caller: TSESTree.CallExpression,
+  useBind: boolean,
 ): RuleFix[] | null {
   // Fix to Instantiation Expression.
   if (
@@ -134,11 +155,26 @@ function fixFunctionCallToReference(
   }
 
   return [
-    fixer.replaceText(
-      node as TSESTree.Node,
-      context.sourceCode.getText(caller.callee as TSESTree.Node),
-    ),
+    fixer.replaceText(node, context.sourceCode.getText(caller.callee)),
+    ...(useBind
+      ? [
+          fixer.insertTextAfter(
+            node,
+            `.bind(${context.sourceCode.getText(caller.callee)})`,
+          ),
+        ]
+      : []),
   ];
+}
+
+function bindRequired(
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  typesThatRequireBind: Options[0]["requiresBind"],
+  node: ESFunction,
+): boolean {
+  return typesThatRequireBind.some((specifier) =>
+    nodeNameMatchesSpecifier(context, node, specifier),
+  );
 }
 
 /**
@@ -146,45 +182,61 @@ function fixFunctionCallToReference(
  */
 function buildSuggestions(
   context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Options,
   node: ESFunction,
   caller: TSESTree.CallExpression,
 ): ReportSuggestionArray<keyof typeof errorMessages> {
-  return [
-    {
-      messageId: "generic",
-      fix: (fixer) => {
-        const functionCallToReference = fixFunctionCallToReference(
-          context,
-          fixer,
-          node,
-          caller,
-        );
-        if (functionCallToReference === null) {
+  const [{ alwaysSuggestBind, requiresBind: typesThatRequireBind }] = options;
+
+  const mightNeedBind = isMemberExpression(caller.callee);
+  const requiresBind =
+    mightNeedBind && bindRequired(context, typesThatRequireBind, node);
+  const createBindSuggestion =
+    requiresBind || (mightNeedBind && alwaysSuggestBind);
+  const createNonBindSuggestion = !requiresBind;
+  const settings = createBindSuggestion
+    ? createNonBindSuggestion
+      ? [true, false]
+      : [true]
+    : createNonBindSuggestion
+      ? [false]
+      : [];
+
+  return settings.map((useBind) => ({
+    messageId: "generic",
+    fix: (fixer) => {
+      const functionCallToReference = fixFunctionCallToReference(
+        context,
+        fixer,
+        node,
+        caller,
+        useBind,
+      );
+      if (functionCallToReference === null) {
+        return null;
+      }
+
+      if (
+        node.type === TSESTree.AST_NODE_TYPES.FunctionDeclaration &&
+        !isNested(node)
+      ) {
+        if (node.id === null) {
           return null;
         }
 
-        if (
-          node.type === TSESTree.AST_NODE_TYPES.FunctionDeclaration &&
-          !isNested(node)
-        ) {
-          if (node.id === null) {
-            return null;
-          }
+        return [
+          fixer.insertTextBefore(
+            node as TSESTree.Node,
+            `const ${node.id.name} = `,
+          ),
+          fixer.insertTextAfter(node as TSESTree.Node, `;`),
+          ...functionCallToReference,
+        ];
+      }
 
-          return [
-            fixer.insertTextBefore(
-              node as TSESTree.Node,
-              `const ${node.id.name} = `,
-            ),
-            fixer.insertTextAfter(node as TSESTree.Node, `;`),
-            ...functionCallToReference,
-          ];
-        }
-
-        return functionCallToReference;
-      },
+      return functionCallToReference;
     },
-  ];
+  }));
 }
 
 /**
@@ -214,7 +266,7 @@ function getCallDescriptors(
         {
           node,
           messageId: "generic",
-          suggest: buildSuggestions(context, node, caller),
+          suggest: buildSuggestions(context, options, node, caller),
         },
       ];
     }

@@ -11,9 +11,9 @@ import {
   isIdentifier,
   isMemberExpression,
   isPrivateIdentifier,
-  isThisExpression,
   isTSAsExpression,
   isTSTypeAnnotation,
+  isThisExpression,
   isUnaryExpression,
   isVariableDeclaration,
 } from "#eslint-plugin-functional/utils/type-guards";

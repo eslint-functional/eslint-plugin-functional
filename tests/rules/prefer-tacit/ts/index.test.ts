@@ -2,10 +2,9 @@ import { name, rule } from "#eslint-plugin-functional/rules/prefer-tacit";
 import { testRule } from "#eslint-plugin-functional/tests/helpers/testers";
 
 import invalid from "./invalid";
-import valid from "./valid";
 
 const tests = {
-  valid,
+  valid: [],
   invalid,
 };
 

@@ -1,3 +1,5 @@
+import assert from "node:assert/strict";
+
 import { type TSESTree } from "@typescript-eslint/utils";
 import {
   RuleCreator,
@@ -14,7 +16,15 @@ import {
   getTypeImmutability,
   type ImmutabilityOverrides,
 } from "is-immutable-type";
-import { type Node as TSNode, type Type, type TypeNode } from "typescript";
+import typeMatchesSpecifier, {
+  type TypeDeclarationSpecifier,
+} from "ts-declaration-location";
+import {
+  type Program,
+  type Node as TSNode,
+  type Type,
+  type TypeNode,
+} from "typescript";
 
 import ts from "#eslint-plugin-functional/conditional-imports/typescript";
 import { getImmutabilityOverrides } from "#eslint-plugin-functional/settings";
@@ -301,6 +311,7 @@ export function getTypeImmutabilityOfType<
     // Don't use the global cache in testing environments as it may cause errors when switching between different config options.
     process.env["NODE_ENV"] !== "test",
     maxImmutability,
+    typeMatchesPatternSpecifier,
   );
 }
 
@@ -312,4 +323,186 @@ export function getESTreeNode<
 >(node: TSNode, context: Context): TSESTree.Node | null {
   const parserServices = getParserServices(context);
   return parserServices.tsNodeToESTreeNodeMap.get(node) ?? null;
+}
+
+type TypeData = {
+  type: Type;
+  typeNode: TypeNode | null;
+};
+
+export function nodeNameMatchesSpecifier<
+  Context extends Readonly<RuleContext<string, BaseOptions>>,
+>(
+  context: Context,
+  node: TSESTree.Node,
+  specifier: TypeDeclarationSpecifier & { name: string },
+) {
+  const parserServices = context.sourceCode.parserServices;
+  assert(parserServices !== undefined);
+
+  const typeData = getTypeDataOfNode(context, node);
+
+  const { program } = parserServices;
+  assert(program !== null && program !== undefined);
+
+  return (
+    typeMatchesPatternSpecifier(program, typeData, [specifier.name], []) &&
+    typeMatchesSpecifier(program, specifier, typeData.type)
+  );
+}
+
+function getTypeDataOfNode<
+  Context extends Readonly<RuleContext<string, BaseOptions>>,
+>(context: Context, node: TSESTree.Node) {
+  assert(ts !== undefined);
+  const parserServices = context.sourceCode.parserServices;
+  assert(parserServices !== undefined);
+  const { program, esTreeNodeToTSNodeMap, tsNodeToESTreeNodeMap } =
+    parserServices;
+  assert(program !== null && program !== undefined);
+  assert(esTreeNodeToTSNodeMap !== undefined);
+  assert(tsNodeToESTreeNodeMap !== undefined);
+
+  const tsNode = esTreeNodeToTSNodeMap.get(node);
+  const typedNode = ts.isIdentifier(tsNode) ? tsNode.parent : tsNode;
+
+  return {
+    typeNode: (typedNode as { type?: TypeNode }).type ?? null,
+    type: getTypeOfNode(tsNodeToESTreeNodeMap.get(typedNode), context),
+  };
+}
+
+function nodeMatchesPatternSpecifier<
+  Context extends Readonly<RuleContext<string, BaseOptions>>,
+>(
+  context: Context,
+  node: TSESTree.Node,
+  names: ReadonlyArray<string>,
+  patterns: ReadonlyArray<RegExp>,
+) {
+  const parserServices = context.sourceCode.parserServices;
+  assert(parserServices !== undefined);
+
+  const typeData = getTypeDataOfNode(context, node);
+
+  const { program } = parserServices;
+  assert(program !== null && program !== undefined);
+
+  return typeMatchesPatternSpecifier(program, typeData, names, patterns);
+}
+
+function typeMatchesPatternSpecifier(
+  program: Program,
+  typeData: Readonly<TypeData>,
+  names: ReadonlyArray<string>,
+  patterns: ReadonlyArray<RegExp>,
+) {
+  assert(ts !== undefined);
+
+  const typeNameAlias = getTypeAliasName(typeData);
+  if (typeNameAlias !== null) {
+    if (names.includes(typeNameAlias)) {
+      return true;
+    }
+
+    if (patterns.some((pattern) => pattern.test(typeNameAlias))) {
+      return true;
+    }
+  }
+
+  const typeValue = getTypeAsString(program, typeData);
+  if (names.includes(typeValue)) {
+    return true;
+  }
+  if (patterns.some((pattern) => pattern.test(typeValue))) {
+    return true;
+  }
+
+  const typeNameName = extractTypeName(typeValue);
+  if (typeNameName !== null) {
+    if (names.includes(typeNameName)) {
+      return true;
+    }
+
+    if (patterns.some((pattern) => pattern.test(typeNameName))) {
+      return true;
+    }
+  }
+
+  // Special handling for arrays not written in generic syntax.
+  if (
+    program.getTypeChecker().isArrayType(typeData.type) &&
+    typeData.typeNode !== null
+  ) {
+    if (
+      (ts.isTypeOperatorNode(typeData.typeNode) &&
+        typeData.typeNode.operator === ts.SyntaxKind.ReadonlyKeyword) ||
+      (ts.isTypeOperatorNode(typeData.typeNode.parent) &&
+        typeData.typeNode.parent.operator === ts.SyntaxKind.ReadonlyKeyword)
+    ) {
+      if (names.includes("ReadonlyArray")) {
+        return true;
+      }
+    } else if (names.includes("Array")) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+/**
+ * Get the type alias name from the given type data.
+ *
+ * Null will be returned if the type is not a type alias.
+ */
+function getTypeAliasName(typeData: Readonly<TypeData>) {
+  assert(ts !== undefined);
+
+  if (typeData.typeNode === null) {
+    const t =
+      "target" in typeData.type
+        ? (typeData.type.target as Type)
+        : typeData.type;
+    return t.aliasSymbol?.getName() ?? null;
+  }
+
+  return ts.isTypeAliasDeclaration(typeData.typeNode.parent)
+    ? typeData.typeNode.parent.name.getText()
+    : null;
+}
+
+/**
+ * Get the type as a string.
+ */
+function getTypeAsString(program: Program, typeData: Readonly<TypeData>) {
+  assert(ts !== undefined);
+
+  return typeData.typeNode === null
+    ? program
+        .getTypeChecker()
+        .typeToString(
+          typeData.type,
+          undefined,
+          ts.TypeFormatFlags.AddUndefined |
+            ts.TypeFormatFlags.NoTruncation |
+            ts.TypeFormatFlags.OmitParameterModifiers |
+            ts.TypeFormatFlags.UseFullyQualifiedType |
+            ts.TypeFormatFlags.WriteArrayAsGenericType |
+            ts.TypeFormatFlags.WriteArrowStyleSignature |
+            ts.TypeFormatFlags.WriteTypeArgumentsOfSignature,
+        )
+    : typeData.typeNode.getText();
+}
+
+/**
+ * Get the type name extracted from the the type's string.
+ *
+ * This only work if the type is a type reference.
+ */
+function extractTypeName(typeValue: string) {
+  assert(ts !== undefined);
+
+  const match = /^([^<]+)<.+>$/u.exec(typeValue);
+  return match?.[1] ?? null;
 }
