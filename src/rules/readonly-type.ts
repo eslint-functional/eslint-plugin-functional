@@ -7,9 +7,9 @@ import {
 
 import { ruleNameScope } from "#/utils/misc";
 import {
-  createRule,
   type NamedCreateRuleCustomMeta,
   type RuleResult,
+  createRule,
 } from "#/utils/rule";
 import { getReadonly } from "#/utils/tree";
 import {
@@ -64,7 +64,7 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages, Options> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     category: "Stylistic",
@@ -136,9 +136,7 @@ function checkTypeLiteral(
             const text = sourceCode.getText(readonlyWrapper);
 
             const wrapperStartPattern = /^Readonly\s*</gu;
-            const wrapperEndPattern = /\s*>$/gu;
-
-            // eslint-disable-next-line functional/no-expression-statements -- Sets `wrapperStartPattern.lastIndex`.
+            const wrapperEndPattern = /\s*>$/u;
             wrapperStartPattern.exec(text);
             const end = wrapperEndPattern.exec(text);
 

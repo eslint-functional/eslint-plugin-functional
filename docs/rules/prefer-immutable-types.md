@@ -1,12 +1,16 @@
+<!-- markdownlint-disable -->
+<!-- begin auto-generated rule header -->
+
 # Require function parameters to be typed as certain immutability (`functional/prefer-immutable-types`)
 
-💼 This rule is enabled in the following configs: ☑️ `lite`, `no-mutations`, ✅ `recommended`, 🔒 `strict`.
+💼🚫 This rule is enabled in the following configs: ☑️ `lite`, `noMutations`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the `disableTypeChecked` config.
 
 🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 
 💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 
 <!-- end auto-generated rule header -->
+<!-- markdownlint-restore -->
 
 ## Rule Details
 
@@ -456,8 +460,11 @@ If set to `false`, the no suggestions will be enabled.
 
 Configure how the suggestion should fix issue of each of the different enforcement levels.
 
-By default we only configure the suggestions to correct shallow readonly violations as TypeScript itself provides a utility type for this.
-If you have access to other utility types (such as [type-fest's `ReadonlyDeep`](https://github.com/sindresorhus/type-fest#:~:text=set%20to%20optional.-,ReadonlyDeep,-%2D%20Create%20a%20deeply)), you can configure the fixer to use them with this option.
+By default we only configure the suggestions to correct shallow readonly violations as TypeScript itself provides a
+utility type for this.
+If you have access to other utility types (such as
+[type-fest's `ReadonlyDeep`](https://github.com/sindresorhus/type-fest#:~:text=set%20to%20optional.-,ReadonlyDeep,-%2D%20Create%20a%20deeply)
+), you can configure the fixer to use them with this option.
 
 Example using `ReadonlyDeep` instead of `Readonly`:
 

@@ -14,14 +14,13 @@ jobs:
         os:
           - "ubuntu-latest"
         node_version:
-          - "16"
-          - "18"
+          - "18.18"
           - "20"
           - "latest"
         ts_version:
           - "next"
           - "latest"
-          - "4.3.5"
+          - "4.7.4"
           # - "JS"
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.ts_version == 'next' }}

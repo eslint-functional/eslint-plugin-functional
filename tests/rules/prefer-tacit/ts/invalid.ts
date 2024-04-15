@@ -253,8 +253,8 @@ const tests: Array<
           {
             messageId: "generic",
             output: dedent`
-            const foo = [1, 2, 3].map(Boolean);
-          `,
+              const foo = [1, 2, 3].map(Boolean);
+            `,
           },
         ],
       },

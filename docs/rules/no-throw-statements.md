@@ -1,8 +1,13 @@
+<!-- markdownlint-disable -->
+<!-- begin auto-generated rule header -->
+
 # Disallow throwing exceptions (`functional/no-throw-statements`)
 
-💼 This rule is enabled in the following configs: ☑️ `lite`, `no-exceptions`, ✅ `recommended`, 🔒 `strict`.
+💼 This rule is enabled in the following configs: ☑️ `lite`, `noExceptions`, ✅ `recommended`, 🔒 `strict`.
 
 <!-- end auto-generated rule header -->
+<!-- markdownlint-restore -->
+<!-- markdownlint-restore -->
 
 This rule disallows the `throw` keyword.
 

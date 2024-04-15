@@ -16,5 +16,6 @@ noreply
 rebeccastevens
 ruleset
 rulesets
+sonarjs
 treeshake
 TSES
