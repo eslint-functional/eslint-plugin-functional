@@ -41,4 +41,60 @@ function f(x) {
 }
 
 const foo = [1, 2, 3].map(f);
+
+const bar = { f };
+const baz = [1, 2, 3].map((x) => bar.f(x)); // Allowed unless using `checkMemberExpressions`
+```
+
+## Options
+
+This rule accepts an options object of the following type:
+
+```ts
+type Options = {
+  checkMemberExpressions: boolean;
+};
+```
+
+### Default Options
+
+```ts
+type Options = {
+  checkMemberExpressions: false;
+};
+```
+
+### `checkMemberExpressions`
+
+If `true`, calls of member expressions are checked as well.
+If `false`, only calls of identifiers are checked.
+
+#### ❌ Incorrect
+
+<!-- eslint-skip -->
+
+```ts
+/* eslint functional/prefer-tacit: ["error", { "checkMemberExpressions": true }] */
+
+const bar = {
+  f(x) {
+    return x + 1;
+  }
+}
+
+const foo = [1, 2, 3].map((x) => bar.f(x));
+```
+
+#### ✅ Correct
+
+```ts
+/* eslint functional/prefer-tacit: ["error", { "checkMemberExpressions": true }] */
+
+const bar = {
+  f(x) {
+    return x + 1;
+  }
+}
+
+const foo = [1, 2, 3].map(bar.f.bind(bar));
 ```

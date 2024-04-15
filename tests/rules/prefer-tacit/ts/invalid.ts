@@ -293,6 +293,53 @@ const tests: Array<
       },
     ],
   },
+  // Member Call Expression
+  {
+    code: dedent`
+      [''].filter(str => /a/.test(str));
+    `,
+    optionsSet: [[{ checkMemberExpressions: true }]],
+    errors: [
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.ArrowFunctionExpression,
+        line: 1,
+        column: 13,
+        suggestions: [
+          {
+            messageId: "generic",
+            output: dedent`
+              [''].filter(/a/.test.bind(/a/));
+            `,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    code: dedent`
+      declare const a: { b(arg: string): string; };
+      function foo(x) { return a.b(x); }
+    `,
+    optionsSet: [[{ checkMemberExpressions: true }]],
+    errors: [
+      {
+        messageId: "generic",
+        type: AST_NODE_TYPES.FunctionDeclaration,
+        line: 2,
+        column: 1,
+        suggestions: [
+          {
+            messageId: "generic",
+            output: dedent`
+              declare const a: { b(arg: string): string; };
+              const foo = a.b.bind(a);
+            `,
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 export default tests;
