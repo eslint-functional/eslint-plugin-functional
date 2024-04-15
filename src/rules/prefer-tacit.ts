@@ -25,6 +25,7 @@ import {
   isBlockStatement,
   isCallExpression,
   isIdentifier,
+  isMemberExpression,
   isReturnStatement,
 } from "#eslint-plugin-functional/utils/type-guards";
 
@@ -41,17 +42,35 @@ export const fullName = `${ruleNameScope}/${name}`;
 /**
  * The options this rule can take.
  */
-type Options = [];
+type Options = [
+  {
+    checkMemberExpressions: boolean;
+  },
+];
 
 /**
  * The schema for the rule options.
  */
-const schema: JSONSchema4[] = [];
+const schema: JSONSchema4[] = [
+  {
+    type: "object",
+    properties: {
+      checkMemberExpressions: {
+        type: "boolean",
+      },
+    },
+    additionalProperties: false,
+  },
+];
 
 /**
  * The default options for the rule.
  */
-const defaultOptions: Options = [];
+const defaultOptions: Options = [
+  {
+    checkMemberExpressions: false,
+  },
+];
 
 /**
  * The possible error messages.
@@ -135,8 +154,12 @@ function fixFunctionCallToReference(
 
   return [
     fixer.replaceText(
-      node as TSESTree.Node,
-      context.sourceCode.getText(caller.callee as TSESTree.Node),
+      node,
+      isMemberExpression(caller.callee)
+        ? `${context.sourceCode.getText(
+            caller.callee,
+          )}.bind(${context.sourceCode.getText(caller.callee.object)})`
+        : context.sourceCode.getText(caller.callee),
     ),
   ];
 }
@@ -196,6 +219,15 @@ function getCallDescriptors(
   options: Options,
   caller: TSESTree.CallExpression,
 ): Array<ReportDescriptor<keyof typeof errorMessages>> {
+  const [{ checkMemberExpressions }] = options;
+
+  if (
+    !isIdentifier(caller.callee) &&
+    !(checkMemberExpressions && isMemberExpression(caller.callee))
+  ) {
+    return [];
+  }
+
   if (
     node.params.length === caller.arguments.length &&
     node.params.every((param, index) => {

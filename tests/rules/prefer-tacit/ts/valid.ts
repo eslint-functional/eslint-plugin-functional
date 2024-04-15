@@ -86,6 +86,20 @@ const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
     dependencyConstraints: { typescript: "4.7.0" },
     optionsSet: [[]],
   },
+  // Member Call Expression
+  {
+    code: dedent`
+      [''].filter(str => /a/.test(str))
+    `,
+    optionsSet: [[{ checkMemberExpressions: false }]],
+  },
+  {
+    code: dedent`
+      declare const a: { b(arg: string): string; };
+      function foo(x) { return a.b(x); }
+    `,
+    optionsSet: [[{ checkMemberExpressions: false }]],
+  },
 ];
 
 export default tests;
