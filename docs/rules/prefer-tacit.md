@@ -79,8 +79,8 @@ If `false`, only calls of identifiers are checked.
 const bar = {
   f(x) {
     return x + 1;
-  }
-}
+  },
+};
 
 const foo = [1, 2, 3].map((x) => bar.f(x));
 ```
@@ -93,8 +93,8 @@ const foo = [1, 2, 3].map((x) => bar.f(x));
 const bar = {
   f(x) {
     return x + 1;
-  }
-}
+  },
+};
 
 const foo = [1, 2, 3].map(bar.f.bind(bar));
 ```
