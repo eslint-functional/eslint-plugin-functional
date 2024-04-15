@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+## [6.5.1](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.5.0...v6.5.1) (2024-04-15)
+
+
+### Bug Fixes
+
+* **prefer-tacit:** don't check member functions by default ([#808](https://github.com/eslint-functional/eslint-plugin-functional/issues/808)) ([4e6c3a9](https://github.com/eslint-functional/eslint-plugin-functional/commit/4e6c3a9d5c9124b1e9bc08b6315d0ad6246fc025)), closes [#805](https://github.com/eslint-functional/eslint-plugin-functional/issues/805)
+
 # [6.5.0](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.4.1...v6.5.0) (2024-04-15)
 
 
