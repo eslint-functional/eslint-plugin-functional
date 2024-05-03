@@ -14,6 +14,7 @@ import {
   type ImmutabilityOverrides,
   getTypeImmutability,
 } from "is-immutable-type";
+import { isIntrinsicErrorType } from "ts-api-utils";
 import { type Node as TSNode, type Type, type TypeNode } from "typescript";
 
 import ts from "#/conditional-imports/typescript";
@@ -262,14 +263,19 @@ export function getTypeImmutabilityOfNode<
   const overrides =
     explicitOverrides ?? getImmutabilityOverrides(context.settings);
   const tsNode = parserServices.esTreeNodeToTSNodeMap.get(node);
-  const typedNode = ts.isIdentifier(tsNode) ? tsNode.parent : tsNode;
-  const typeLike =
-    (typedNode as { type?: TypeNode }).type ??
-    getTypeOfNode(parserServices.tsNodeToESTreeNodeMap.get(typedNode), context);
+  let m_typeLike: Type | TypeNode | undefined = (tsNode as { type?: TypeNode })
+    .type;
+
+  if (m_typeLike === undefined) {
+    m_typeLike = getTypeOfTSNode(tsNode, context);
+    if (isIntrinsicErrorType(m_typeLike)) {
+      return Immutability.Unknown;
+    }
+  }
 
   return getTypeImmutability(
     parserServices.program,
-    typeLike,
+    m_typeLike,
     overrides,
     // Don't use the global cache in testing environments as it may cause errors when switching between different config options.
     process.env["NODE_ENV"] !== "test",
