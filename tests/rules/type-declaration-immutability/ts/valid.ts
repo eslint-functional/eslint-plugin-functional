@@ -1,11 +1,8 @@
 import dedent from "dedent";
 import { Immutability } from "is-immutable-type";
 
-import { type rule } from "#eslint-plugin-functional/rules/type-declaration-immutability";
-import {
-  type OptionsOf,
-  type ValidTestCaseSet,
-} from "#eslint-plugin-functional/tests/helpers/util";
+import { type rule } from "#/rules/type-declaration-immutability";
+import { type OptionsOf, type ValidTestCaseSet } from "#/tests/helpers/util";
 
 const recommended = {
   rules: [

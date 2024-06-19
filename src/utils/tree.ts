@@ -2,7 +2,7 @@ import { type TSESTree } from "@typescript-eslint/utils";
 import { getParserServices } from "@typescript-eslint/utils/eslint-utils";
 import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
-import typescript from "#eslint-plugin-functional/conditional-imports/typescript";
+import typescript from "#/conditional-imports/typescript";
 
 import { type BaseOptions } from "./rule";
 import {

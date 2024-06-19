@@ -1,21 +1,21 @@
 import { type JSONSchema4 } from "@typescript-eslint/utils/json-schema";
 import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
-import tsApiUtils from "#eslint-plugin-functional/conditional-imports/ts-api-utils";
-import { ruleNameScope } from "#eslint-plugin-functional/utils/misc";
-import { type ESFunctionType } from "#eslint-plugin-functional/utils/node-types";
+import tsApiUtils from "#/conditional-imports/ts-api-utils";
+import { ruleNameScope } from "#/utils/misc";
+import { type ESFunctionType } from "#/utils/node-types";
 import {
   createRule,
   getTypeOfNode,
   type NamedCreateRuleCustomMeta,
   type RuleResult,
-} from "#eslint-plugin-functional/utils/rule";
+} from "#/utils/rule";
 import {
   isFunctionLike,
   isTSNullKeyword,
   isTSUndefinedKeyword,
   isTSVoidKeyword,
-} from "#eslint-plugin-functional/utils/type-guards";
+} from "#/utils/type-guards";
 
 /**
  * The name of this rule.

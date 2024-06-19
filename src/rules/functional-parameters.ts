@@ -12,14 +12,14 @@ import {
   shouldIgnorePattern,
   type IgnoreIdentifierPatternOption,
   type IgnorePrefixSelectorOption,
-} from "#eslint-plugin-functional/options";
-import { ruleNameScope } from "#eslint-plugin-functional/utils/misc";
-import { type ESFunction } from "#eslint-plugin-functional/utils/node-types";
+} from "#/options";
+import { ruleNameScope } from "#/utils/misc";
+import { type ESFunction } from "#/utils/node-types";
 import {
   createRuleUsingFunction,
   type NamedCreateRuleCustomMeta,
   type RuleResult,
-} from "#eslint-plugin-functional/utils/rule";
+} from "#/utils/rule";
 import {
   isArgument,
   isGetter,
@@ -27,8 +27,8 @@ import {
   isPropertyAccess,
   isPropertyName,
   isSetter,
-} from "#eslint-plugin-functional/utils/tree";
-import { isRestElement } from "#eslint-plugin-functional/utils/type-guards";
+} from "#/utils/tree";
+import { isRestElement } from "#/utils/type-guards";
 
 /**
  * The name of this rule.

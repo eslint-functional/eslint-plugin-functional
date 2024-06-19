@@ -2,7 +2,7 @@ import * as fs from "node:fs";
 
 import { describe, expect, it } from "vitest";
 
-import { rules } from "#eslint-plugin-functional/rules";
+import { rules } from "#/rules";
 
 describe("rules index", () => {
   it("to import all rule files", () => {

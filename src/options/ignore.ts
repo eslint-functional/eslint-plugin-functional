@@ -3,22 +3,16 @@ import { type JSONSchema4ObjectSchema } from "@typescript-eslint/utils/json-sche
 import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import escapeRegExp from "escape-string-regexp";
 
-import {
-  getNodeCode,
-  getNodeIdentifierTexts,
-} from "#eslint-plugin-functional/utils/misc";
-import { type BaseOptions } from "#eslint-plugin-functional/utils/rule";
-import {
-  isInClass,
-  isInFunctionBody,
-} from "#eslint-plugin-functional/utils/tree";
+import { getNodeCode, getNodeIdentifierTexts } from "#/utils/misc";
+import { type BaseOptions } from "#/utils/rule";
+import { isInClass, isInFunctionBody } from "#/utils/tree";
 import {
   isAssignmentExpression,
   isClassLike,
   isMemberExpression,
   isPropertyDefinition,
   isThisExpression,
-} from "#eslint-plugin-functional/utils/type-guards";
+} from "#/utils/type-guards";
 
 /**
  * The option to ignore patterns.

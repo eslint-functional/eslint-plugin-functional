@@ -1,4 +1,4 @@
-import { type RuleDefinition } from "#eslint-plugin-functional/utils/rule";
+import { type RuleDefinition } from "#/utils/rule";
 
 import { getRuleTester } from "./RuleTester";
 import { configs } from "./configs";

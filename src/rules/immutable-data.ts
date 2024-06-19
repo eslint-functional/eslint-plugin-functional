@@ -15,22 +15,19 @@ import {
   type IgnoreAccessorPatternOption,
   type IgnoreClassesOption,
   type IgnoreIdentifierPatternOption,
-} from "#eslint-plugin-functional/options";
-import {
-  isExpected,
-  ruleNameScope,
-} from "#eslint-plugin-functional/utils/misc";
+} from "#/options";
+import { isExpected, ruleNameScope } from "#/utils/misc";
 import {
   createRule,
   getTypeOfNode,
   type NamedCreateRuleCustomMeta,
   type RuleResult,
-} from "#eslint-plugin-functional/utils/rule";
+} from "#/utils/rule";
 import {
   findRootIdentifier,
   isDefinedByMutableVariable,
   isInConstructor,
-} from "#eslint-plugin-functional/utils/tree";
+} from "#/utils/tree";
 import {
   isArrayConstructorType,
   isArrayExpression,
@@ -41,7 +38,7 @@ import {
   isNewExpression,
   isObjectConstructorType,
   isTSAsExpression,
-} from "#eslint-plugin-functional/utils/type-guards";
+} from "#/utils/type-guards";
 
 /**
  * The name of this rule.

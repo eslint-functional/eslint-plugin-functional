@@ -16,10 +16,10 @@ import {
 } from "is-immutable-type";
 import { type Node as TSNode, type Type, type TypeNode } from "typescript";
 
-import ts from "#eslint-plugin-functional/conditional-imports/typescript";
-import { getImmutabilityOverrides } from "#eslint-plugin-functional/settings";
-import { __VERSION__ } from "#eslint-plugin-functional/utils/constants";
-import { type ESFunction } from "#eslint-plugin-functional/utils/node-types";
+import ts from "#/conditional-imports/typescript";
+import { getImmutabilityOverrides } from "#/settings";
+import { __VERSION__ } from "#/utils/constants";
+import { type ESFunction } from "#/utils/node-types";
 
 /**
  * Any custom rule meta properties.

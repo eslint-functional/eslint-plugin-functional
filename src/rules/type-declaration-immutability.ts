@@ -11,19 +11,16 @@ import {
   ignoreIdentifierPatternOptionSchema,
   shouldIgnorePattern,
   type IgnoreIdentifierPatternOption,
-} from "#eslint-plugin-functional/options";
-import {
-  getNodeIdentifierTexts,
-  ruleNameScope,
-} from "#eslint-plugin-functional/utils/misc";
-import { type ESTypeDeclaration } from "#eslint-plugin-functional/utils/node-types";
+} from "#/options";
+import { getNodeIdentifierTexts, ruleNameScope } from "#/utils/misc";
+import { type ESTypeDeclaration } from "#/utils/node-types";
 import {
   createRule,
   getTypeImmutabilityOfNode,
   type NamedCreateRuleCustomMeta,
   type RuleResult,
-} from "#eslint-plugin-functional/utils/rule";
-import { isTSInterfaceDeclaration } from "#eslint-plugin-functional/utils/type-guards";
+} from "#/utils/rule";
+import { isTSInterfaceDeclaration } from "#/utils/type-guards";
 
 /**
  * The name of this rule.

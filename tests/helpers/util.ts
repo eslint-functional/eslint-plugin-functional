@@ -13,7 +13,7 @@ import {
   createRuleUsingFunction,
   type RuleDefinition,
   type RuleFunctionsMap,
-} from "#eslint-plugin-functional/utils/rule";
+} from "#/utils/rule";
 
 import { filename as dummyFilename } from "./configs";
 

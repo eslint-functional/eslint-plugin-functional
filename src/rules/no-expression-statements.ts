@@ -6,27 +6,21 @@ import {
 import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import { deepmerge } from "deepmerge-ts";
 
-import tsApiUtils from "#eslint-plugin-functional/conditional-imports/ts-api-utils";
-import typescript from "#eslint-plugin-functional/conditional-imports/typescript";
+import tsApiUtils from "#/conditional-imports/ts-api-utils";
+import typescript from "#/conditional-imports/typescript";
 import {
   ignoreCodePatternOptionSchema,
   shouldIgnorePattern,
   type IgnoreCodePatternOption,
-} from "#eslint-plugin-functional/options";
-import {
-  isDirectivePrologue,
-  ruleNameScope,
-} from "#eslint-plugin-functional/utils/misc";
+} from "#/options";
+import { isDirectivePrologue, ruleNameScope } from "#/utils/misc";
 import {
   createRule,
   getTypeOfNode,
   type NamedCreateRuleCustomMeta,
   type RuleResult,
-} from "#eslint-plugin-functional/utils/rule";
-import {
-  isCallExpression,
-  isYieldExpression,
-} from "#eslint-plugin-functional/utils/type-guards";
+} from "#/utils/rule";
+import { isCallExpression, isYieldExpression } from "#/utils/type-guards";
 
 /**
  * The name of this rule.

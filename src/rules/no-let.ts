@@ -11,14 +11,14 @@ import {
   shouldIgnoreInFunction,
   shouldIgnorePattern,
   type IgnoreIdentifierPatternOption,
-} from "#eslint-plugin-functional/options";
-import { ruleNameScope } from "#eslint-plugin-functional/utils/misc";
+} from "#/options";
+import { ruleNameScope } from "#/utils/misc";
 import {
   createRule,
   type NamedCreateRuleCustomMeta,
   type RuleResult,
-} from "#eslint-plugin-functional/utils/rule";
-import { isInForLoopInitializer } from "#eslint-plugin-functional/utils/tree";
+} from "#/utils/rule";
+import { isInForLoopInitializer } from "#/utils/tree";
 
 /**
  * The name of this rule.

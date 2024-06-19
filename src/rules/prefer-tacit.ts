@@ -10,24 +10,24 @@ import {
 import * as semver from "semver";
 import { type Type } from "typescript";
 
-import ts from "#eslint-plugin-functional/conditional-imports/typescript";
-import { ruleNameScope } from "#eslint-plugin-functional/utils/misc";
-import { type ESFunction } from "#eslint-plugin-functional/utils/node-types";
+import ts from "#/conditional-imports/typescript";
+import { ruleNameScope } from "#/utils/misc";
+import { type ESFunction } from "#/utils/node-types";
 import {
   createRule,
   getTypeOfNode,
   getTypeOfTSNode,
   type NamedCreateRuleCustomMeta,
   type RuleResult,
-} from "#eslint-plugin-functional/utils/rule";
-import { isNested } from "#eslint-plugin-functional/utils/tree";
+} from "#/utils/rule";
+import { isNested } from "#/utils/tree";
 import {
   isBlockStatement,
   isCallExpression,
   isIdentifier,
   isMemberExpression,
   isReturnStatement,
-} from "#eslint-plugin-functional/utils/type-guards";
+} from "#/utils/type-guards";
 
 /**
  * The name of this rule.

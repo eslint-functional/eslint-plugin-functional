@@ -6,8 +6,8 @@ import { readdirSync } from "node:fs";
 
 import { describe, expect, it } from "vitest";
 
-import classic from "#eslint-plugin-functional/classic";
-import flat from "#eslint-plugin-functional/flat";
+import classic from "#/classic";
+import flat from "#/flat";
 
 describe("Flat", () => {
   it("should have all the rules", () => {

@@ -31,18 +31,18 @@
     "types": ["vitest/importMeta"],
     "baseUrl": ".",
     "paths": {
-      "#eslint-plugin-functional/flat": ["src/flat.ts"],
-      "#eslint-plugin-functional/classic": ["src/classic.ts"],
-      "#eslint-plugin-functional/configs/*": ["src/configs/*"],
-      "#eslint-plugin-functional/options": ["src/options"],
-      "#eslint-plugin-functional/rules": ["src/rules"],
-      "#eslint-plugin-functional/rules/*": ["src/rules/*"],
-      "#eslint-plugin-functional/settings": ["src/settings"],
-      "#eslint-plugin-functional/utils/*": ["src/utils/*"],
-      "#eslint-plugin-functional/conditional-imports/*": [
+      "#/flat": ["src/flat.ts"],
+      "#/classic": ["src/classic.ts"],
+      "#/configs/*": ["src/configs/*"],
+      "#/options": ["src/options"],
+      "#/rules": ["src/rules"],
+      "#/rules/*": ["src/rules/*"],
+      "#/settings": ["src/settings"],
+      "#/utils/*": ["src/utils/*"],
+      "#/conditional-imports/*": [
         "src/utils/conditional-imports/cjs/*"
       ],
-      "#eslint-plugin-functional/tests/*": ["tests/*"]
+      "#/tests/*": ["tests/*"]
     }
   },
   "exclude": ["dist/"]

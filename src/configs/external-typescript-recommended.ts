@@ -1,6 +1,6 @@
 import { type FlatConfig } from "@typescript-eslint/utils/ts-eslint";
 
-import externalVanillaRecommended from "#eslint-plugin-functional/configs/external-vanilla-recommended";
+import externalVanillaRecommended from "#/configs/external-vanilla-recommended";
 
 const tsConfig = {
   "@typescript-eslint/prefer-readonly": "error",

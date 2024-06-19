@@ -1,9 +1,9 @@
-import { type rule } from "#eslint-plugin-functional/rules/no-mixed-types";
+import { type rule } from "#/rules/no-mixed-types";
 import {
   type InvalidTestCaseSet,
   type MessagesOf,
   type OptionsOf,
-} from "#eslint-plugin-functional/tests/helpers/util";
+} from "#/tests/helpers/util";
 
 const tests: Array<
   InvalidTestCaseSet<MessagesOf<typeof rule>, OptionsOf<typeof rule>>

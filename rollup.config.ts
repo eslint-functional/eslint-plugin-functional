@@ -31,7 +31,7 @@ const classicCJS = {
           ...resolvedConfig,
           paths: {
             ...resolvedConfig.paths,
-            "#eslint-plugin-functional/conditional-imports/*": [
+            "#/conditional-imports/*": [
               "src/utils/conditional-imports/cjs/*",
             ],
           },
@@ -65,7 +65,7 @@ const classicESM = {
           ...resolvedConfig,
           paths: {
             ...resolvedConfig.paths,
-            "#eslint-plugin-functional/conditional-imports/*": [
+            "#/conditional-imports/*": [
               "src/utils/conditional-imports/esm/*",
             ],
           },
@@ -99,7 +99,7 @@ const flatCJS = {
           ...resolvedConfig,
           paths: {
             ...resolvedConfig.paths,
-            "#eslint-plugin-functional/conditional-imports/*": [
+            "#/conditional-imports/*": [
               "src/utils/conditional-imports/cjs/*",
             ],
           },
@@ -133,7 +133,7 @@ const flatESM = {
           ...resolvedConfig,
           paths: {
             ...resolvedConfig.paths,
-            "#eslint-plugin-functional/conditional-imports/*": [
+            "#/conditional-imports/*": [
               "src/utils/conditional-imports/esm/*",
             ],
           },

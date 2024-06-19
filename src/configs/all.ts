@@ -1,7 +1,7 @@
 import { type FlatConfig } from "@typescript-eslint/utils/ts-eslint";
 
-import { rules } from "#eslint-plugin-functional/rules";
-import { ruleNameScope } from "#eslint-plugin-functional/utils/misc";
+import { rules } from "#/rules";
+import { ruleNameScope } from "#/utils/misc";
 
 export default {
   ...Object.fromEntries(

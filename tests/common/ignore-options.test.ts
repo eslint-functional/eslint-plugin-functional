@@ -9,16 +9,10 @@ import {
   type IgnoreAccessorPatternOption,
   type IgnoreCodePatternOption,
   type IgnoreIdentifierPatternOption,
-} from "#eslint-plugin-functional/options";
-import { getRuleTester } from "#eslint-plugin-functional/tests/helpers/RuleTester";
-import {
-  configs,
-  filename,
-} from "#eslint-plugin-functional/tests/helpers/configs";
-import {
-  addFilename,
-  createDummyRule,
-} from "#eslint-plugin-functional/tests/helpers/util";
+} from "#/options";
+import { getRuleTester } from "#/tests/helpers/RuleTester";
+import { configs, filename } from "#/tests/helpers/configs";
+import { addFilename, createDummyRule } from "#/tests/helpers/util";
 
 /**
  * Create a dummy rule that operates on AssignmentExpression nodes.

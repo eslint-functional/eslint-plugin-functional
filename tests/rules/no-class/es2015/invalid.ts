@@ -1,11 +1,11 @@
 import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 
-import { type rule } from "#eslint-plugin-functional/rules/no-classes";
+import { type rule } from "#/rules/no-classes";
 import {
   type InvalidTestCaseSet,
   type MessagesOf,
   type OptionsOf,
-} from "#eslint-plugin-functional/tests/helpers/util";
+} from "#/tests/helpers/util";
 
 const tests: Array<
   InvalidTestCaseSet<MessagesOf<typeof rule>, OptionsOf<typeof rule>>

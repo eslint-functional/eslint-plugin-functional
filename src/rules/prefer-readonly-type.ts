@@ -8,20 +8,17 @@ import {
   shouldIgnorePattern,
   type IgnoreAccessorPatternOption,
   type IgnoreCodePatternOption,
-} from "#eslint-plugin-functional/options";
-import { ruleNameScope } from "#eslint-plugin-functional/utils/misc";
-import { type ESArrayTupleType } from "#eslint-plugin-functional/utils/node-types";
+} from "#/options";
+import { ruleNameScope } from "#/utils/misc";
+import { type ESArrayTupleType } from "#/utils/node-types";
 import {
   createRule,
   getTypeOfNode,
   type BaseOptions,
   type NamedCreateRuleCustomMeta,
   type RuleResult,
-} from "#eslint-plugin-functional/utils/rule";
-import {
-  isInInterface,
-  isInReturnType,
-} from "#eslint-plugin-functional/utils/tree";
+} from "#/utils/rule";
+import { isInInterface, isInReturnType } from "#/utils/tree";
 import {
   isArrayType,
   isAssignmentPattern,
@@ -36,7 +33,7 @@ import {
   isTSTypeLiteral,
   isTSTypeOperator,
   isTSTypeReference,
-} from "#eslint-plugin-functional/utils/type-guards";
+} from "#/utils/type-guards";
 
 /**
  * The name of this rule.

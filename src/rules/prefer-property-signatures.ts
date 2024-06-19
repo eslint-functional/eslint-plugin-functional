@@ -2,13 +2,13 @@ import { type TSESTree } from "@typescript-eslint/utils";
 import { type JSONSchema4 } from "@typescript-eslint/utils/json-schema";
 import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
-import { ruleNameScope } from "#eslint-plugin-functional/utils/misc";
+import { ruleNameScope } from "#/utils/misc";
 import {
   createRule,
   type NamedCreateRuleCustomMeta,
   type RuleResult,
-} from "#eslint-plugin-functional/utils/rule";
-import { isInReadonly } from "#eslint-plugin-functional/utils/tree";
+} from "#/utils/rule";
+import { isInReadonly } from "#/utils/tree";
 
 /**
  * The name of this rule.

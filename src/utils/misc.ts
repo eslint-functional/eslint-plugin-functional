@@ -1,8 +1,8 @@
 import { AST_NODE_TYPES, type TSESTree } from "@typescript-eslint/utils";
 import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
-import { type BaseOptions } from "#eslint-plugin-functional/utils/rule";
-import { getKeyOfValueInObjectExpression } from "#eslint-plugin-functional/utils/tree";
+import { type BaseOptions } from "#/utils/rule";
+import { getKeyOfValueInObjectExpression } from "#/utils/tree";
 import {
   hasID,
   hasKey,
@@ -16,7 +16,7 @@ import {
   isTSTypeAnnotation,
   isUnaryExpression,
   isVariableDeclaration,
-} from "#eslint-plugin-functional/utils/type-guards";
+} from "#/utils/type-guards";
 
 export const ruleNameScope = "functional";
 

@@ -1,10 +1,7 @@
 import dedent from "dedent";
 
-import { type rule } from "#eslint-plugin-functional/rules/immutable-data";
-import {
-  type OptionsOf,
-  type ValidTestCaseSet,
-} from "#eslint-plugin-functional/tests/helpers/util";
+import { type rule } from "#/rules/immutable-data";
+import { type OptionsOf, type ValidTestCaseSet } from "#/tests/helpers/util";
 
 const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
   // Allowed non-array mutation patterns.

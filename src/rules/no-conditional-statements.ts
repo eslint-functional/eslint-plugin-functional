@@ -3,14 +3,14 @@ import { type JSONSchema4 } from "@typescript-eslint/utils/json-schema";
 import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import { type Type } from "typescript";
 
-import tsApiUtils from "#eslint-plugin-functional/conditional-imports/ts-api-utils";
-import { ruleNameScope } from "#eslint-plugin-functional/utils/misc";
+import tsApiUtils from "#/conditional-imports/ts-api-utils";
+import { ruleNameScope } from "#/utils/misc";
 import {
   createRule,
   getTypeOfNode,
   type NamedCreateRuleCustomMeta,
   type RuleResult,
-} from "#eslint-plugin-functional/utils/rule";
+} from "#/utils/rule";
 import {
   isBlockStatement,
   isBreakStatement,
@@ -20,7 +20,7 @@ import {
   isReturnStatement,
   isSwitchStatement,
   isThrowStatement,
-} from "#eslint-plugin-functional/utils/type-guards";
+} from "#/utils/type-guards";
 
 /**
  * The name of this rule.

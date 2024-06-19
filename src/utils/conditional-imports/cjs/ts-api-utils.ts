@@ -1,6 +1,6 @@
 import type tsApiUtils from "ts-api-utils";
 
-import ts from "#eslint-plugin-functional/conditional-imports/typescript";
+import ts from "#/conditional-imports/typescript";
 
 export default (() => {
   if (ts !== undefined) {

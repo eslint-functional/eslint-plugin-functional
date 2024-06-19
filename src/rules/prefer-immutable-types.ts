@@ -16,9 +16,9 @@ import {
   shouldIgnoreInFunction,
   shouldIgnorePattern,
   type IgnoreClassesOption,
-} from "#eslint-plugin-functional/options";
-import { ruleNameScope } from "#eslint-plugin-functional/utils/misc";
-import { type ESFunctionType } from "#eslint-plugin-functional/utils/node-types";
+} from "#/options";
+import { ruleNameScope } from "#/utils/misc";
+import { type ESFunctionType } from "#/utils/node-types";
 import {
   createRule,
   getReturnTypesOfFunction,
@@ -27,7 +27,7 @@ import {
   isImplementationOfOverload,
   type NamedCreateRuleCustomMeta,
   type RuleResult,
-} from "#eslint-plugin-functional/utils/rule";
+} from "#/utils/rule";
 import {
   hasID,
   isArrayPattern,
@@ -40,7 +40,7 @@ import {
   isPropertyDefinition,
   isTSParameterProperty,
   isTSTypePredicate,
-} from "#eslint-plugin-functional/utils/type-guards";
+} from "#/utils/type-guards";
 
 /**
  * The name of this rule.

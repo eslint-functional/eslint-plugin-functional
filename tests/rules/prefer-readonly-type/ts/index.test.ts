@@ -1,8 +1,5 @@
-import {
-  name,
-  rule,
-} from "#eslint-plugin-functional/rules/prefer-readonly-type";
-import { testRule } from "#eslint-plugin-functional/tests/helpers/testers";
+import { name, rule } from "#/rules/prefer-readonly-type";
+import { testRule } from "#/tests/helpers/testers";
 
 import invalid from "./invalid";
 import valid from "./valid";

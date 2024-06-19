@@ -1,17 +1,17 @@
 import { type FlatConfig } from "@typescript-eslint/utils/ts-eslint";
 import { Immutability } from "is-immutable-type";
 
-import { rules } from "#eslint-plugin-functional/rules";
-import * as functionalParameters from "#eslint-plugin-functional/rules/functional-parameters";
-import * as noConditionalStatements from "#eslint-plugin-functional/rules/no-conditional-statements";
-import * as noLet from "#eslint-plugin-functional/rules/no-let";
-import * as noThisExpressions from "#eslint-plugin-functional/rules/no-this-expressions";
-import * as noThrowStatements from "#eslint-plugin-functional/rules/no-throw-statements";
-import * as noTryStatements from "#eslint-plugin-functional/rules/no-try-statements";
-import * as preferImmutableTypes from "#eslint-plugin-functional/rules/prefer-immutable-types";
-import * as typeDeclarationImmutability from "#eslint-plugin-functional/rules/type-declaration-immutability";
-import { RuleEnforcementComparator } from "#eslint-plugin-functional/rules/type-declaration-immutability";
-import { ruleNameScope } from "#eslint-plugin-functional/utils/misc";
+import { rules } from "#/rules";
+import * as functionalParameters from "#/rules/functional-parameters";
+import * as noConditionalStatements from "#/rules/no-conditional-statements";
+import * as noLet from "#/rules/no-let";
+import * as noThisExpressions from "#/rules/no-this-expressions";
+import * as noThrowStatements from "#/rules/no-throw-statements";
+import * as noTryStatements from "#/rules/no-try-statements";
+import * as preferImmutableTypes from "#/rules/prefer-immutable-types";
+import * as typeDeclarationImmutability from "#/rules/type-declaration-immutability";
+import { RuleEnforcementComparator } from "#/rules/type-declaration-immutability";
+import { ruleNameScope } from "#/utils/misc";
 
 const recommended = Object.fromEntries(
   Object.entries(rules)

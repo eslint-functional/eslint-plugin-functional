@@ -1,13 +1,13 @@
 import { type JSONSchema4 } from "@typescript-eslint/utils/json-schema";
 import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
-import { ruleNameScope } from "#eslint-plugin-functional/utils/misc";
-import { type ESClass } from "#eslint-plugin-functional/utils/node-types";
+import { ruleNameScope } from "#/utils/misc";
+import { type ESClass } from "#/utils/node-types";
 import {
   createRule,
   type NamedCreateRuleCustomMeta,
   type RuleResult,
-} from "#eslint-plugin-functional/utils/rule";
+} from "#/utils/rule";
 
 /**
  * The name of this rule.
