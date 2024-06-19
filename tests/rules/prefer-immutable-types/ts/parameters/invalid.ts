@@ -312,7 +312,7 @@ const tests: Array<
             ReadonlyDeep: [
               [
                 {
-                  pattern: "^Readonly<(.+)>|(.+)$",
+                  pattern: "^(?!ReadonlyDeep)(?:Readonly<(.+)>|(.+))$",
                   replace: "ReadonlyDeep<$1$2>",
                 },
               ],
@@ -455,7 +455,7 @@ const tests: Array<
           fixer: {
             ReadonlyDeep: [
               {
-                pattern: "^Readonly<(.+)>|(.+)$",
+                pattern: "^(?!ReadonlyDeep)(?:Readonly<(.+)>|(.+))$",
                 replace: "ReadonlyDeep<$1$2>",
               },
             ],
