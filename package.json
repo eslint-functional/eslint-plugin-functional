@@ -117,8 +117,8 @@
     "@typescript-eslint/eslint-plugin": "7.4.0",
     "@typescript-eslint/parser": "7.4.0",
     "@typescript-eslint/rule-tester": "7.4.0",
-    "@vitest/coverage-istanbul": "1.4.0",
-    "@vitest/coverage-v8": "1.4.0",
+    "@vitest/coverage-istanbul": "1.6.0",
+    "@vitest/coverage-v8": "1.6.0",
     "chalk": "4.1.2",
     "commitizen": "4.3.0",
     "conventional-commit-types": "3.0.0",
@@ -162,7 +162,7 @@
     "tsconfig-paths": "4.2.0",
     "typescript": "5.4.3",
     "vite-tsconfig-paths": "4.3.2",
-    "vitest": "1.4.0",
+    "vitest": "1.6.0",
     "word-wrap": "1.2.5"
   },
   "peerDependencies": {
