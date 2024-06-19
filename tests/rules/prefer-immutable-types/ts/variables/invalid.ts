@@ -65,7 +65,10 @@ const tests: Array<
         column: 7,
         suggestions: [
           {
-            messageId: "variable",
+            messageId: "userDefined",
+            data: {
+              message: "Surround with Readonly.",
+            },
             output: dedent`
               const foo: Readonly<{ foo: string }> = {} as any,
                     bar: Readonly<{ foo: number }> = {} as any;
@@ -168,7 +171,7 @@ const tests: Array<
         column: 3,
         suggestions: [
           {
-            messageId: "propertyModifier",
+            messageId: "propertyModifierSuggestion",
             output: dedent`
               class Klass {
                 readonly foo: number;
@@ -187,7 +190,7 @@ const tests: Array<
         column: 3,
         suggestions: [
           {
-            messageId: "propertyModifier",
+            messageId: "propertyModifierSuggestion",
             output: dedent`
               class Klass {
                 foo: number;
@@ -206,7 +209,7 @@ const tests: Array<
         column: 3,
         suggestions: [
           {
-            messageId: "propertyModifier",
+            messageId: "propertyModifierSuggestion",
             output: dedent`
               class Klass {
                 foo: number;
@@ -225,7 +228,7 @@ const tests: Array<
         column: 3,
         suggestions: [
           {
-            messageId: "propertyModifier",
+            messageId: "propertyModifierSuggestion",
             output: dedent`
               class Klass {
                 foo: number;

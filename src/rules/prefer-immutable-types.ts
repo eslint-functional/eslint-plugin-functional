@@ -69,6 +69,8 @@ type FixerConfigRaw = {
   replace: string;
 };
 
+type SuggestionsConfigRaw = Array<FixerConfigRaw & { message?: string }>;
+
 type FixerConfigRawMap = Partial<
   Record<
     "ReadonlyShallow" | "ReadonlyDeep" | "Immutable",
@@ -79,7 +81,7 @@ type FixerConfigRawMap = Partial<
 type SuggestionConfigRawMap = Partial<
   Record<
     "ReadonlyShallow" | "ReadonlyDeep" | "Immutable",
-    FixerConfigRaw[][] | undefined
+    SuggestionsConfigRaw[] | undefined
   >
 >;
 
@@ -88,7 +90,7 @@ type FixerConfig = {
   replace: string;
 };
 
-type SuggestionsConfig = FixerConfig[];
+type SuggestionsConfig = Array<FixerConfig & { message?: string }>;
 
 /**
  * The options this rule can take.
@@ -205,6 +207,7 @@ const suggestionsSchema: JSONSchema4 = {
       properties: {
         pattern: { type: "string" },
         replace: { type: "string" },
+        message: { type: "string" },
       },
       additionalProperties: false,
     },
@@ -275,14 +278,19 @@ const defaultOptions: Options = [
             pattern:
               "^([_$a-zA-Z\\xA0-\\uFFFF][_$a-zA-Z0-9\\xA0-\\uFFFF]*\\[\\])$",
             replace: "readonly $1",
+            message: "Prepend with readonly.",
           },
           {
             pattern: "^(Array|Map|Set)<(.+)>$",
             replace: "Readonly$1<$2>",
+            message: "Use Readonly$1 instead of $1.",
           },
+        ],
+        [
           {
             pattern: "^(.+)$",
             replace: "Readonly<$1>",
+            message: "Surround with Readonly.",
           },
         ],
       ],
@@ -303,6 +311,8 @@ const errorMessages = {
   propertyImmutability:
     'Property should have an immutability of at least "{{ expected }}" (actual: "{{ actual }}").',
   propertyModifier: "Property should have a readonly modifier.",
+  propertyModifierSuggestion: "Add readonly modifier.",
+  userDefined: "{{ message }}",
 } as const;
 
 /**
@@ -331,7 +341,7 @@ type Descriptor = RuleResult<
 
 type AllFixers = {
   fix: ReportFixFunction | null;
-  suggestionFixers: ReportFixFunction[] | null;
+  suggestionFixers: Array<{ fix: ReportFixFunction; message: string }> | null;
 };
 
 /**
@@ -383,14 +393,27 @@ function getConfiguredSuggestionFixers(
   suggestionsConfigs: SuggestionsConfig[],
 ) {
   return suggestionsConfigs
-    .map((configs): NonNullable<Descriptor["fix"]> | null => {
-      const config = configs.find((c) => c.pattern.test(text));
-      if (config === undefined) {
-        return null;
-      }
-      return (fixer) =>
-        fixer.replaceText(node, text.replace(config.pattern, config.replace));
-    })
+    .map(
+      (
+        configs,
+      ): { fix: NonNullable<Descriptor["fix"]>; message: string } | null => {
+        const config = configs.find((c) => c.pattern.test(text));
+        if (config === undefined) {
+          return null;
+        }
+        return {
+          fix: (fixer) =>
+            fixer.replaceText(
+              node,
+              text.replace(config.pattern, config.replace),
+            ),
+          message:
+            config.message === undefined
+              ? `Replace with: ${text.replace(config.pattern, config.replace)}`
+              : text.replace(config.pattern, config.message),
+        };
+      },
+    )
     .filter(isDefined);
 }
 
@@ -504,17 +527,16 @@ function getParameterTypeViolations(
 
       const parameterProperty = isTSParameterProperty(param);
       if (parameterProperty && !param.readonly) {
-        const messageId = "propertyModifier";
         const fix: NonNullable<Descriptor["fix"]> | null = (fixer) =>
           fixer.insertTextBefore(param.parameter, "readonly ");
 
         return {
           node: param,
-          messageId,
+          messageId: "propertyModifier",
           fix: fixerConfigs === false ? null : fix,
           suggest: [
             {
-              messageId,
+              messageId: "propertyModifierSuggestion",
               fix,
             },
           ],
@@ -564,21 +586,20 @@ function getParameterTypeViolations(
               suggestionsConfigs,
             );
 
-      const messageId = "parameter";
-      const data = {
-        actual: Immutability[immutability],
-        expected: Immutability[enforcement],
-      };
-
       return {
         node: actualParam,
-        messageId,
-        data,
+        messageId: "parameter",
+        data: {
+          actual: Immutability[immutability],
+          expected: Immutability[enforcement],
+        },
         fix,
         suggest:
-          suggestionFixers?.map((fix) => ({
-            messageId,
-            data,
+          suggestionFixers?.map(({ fix, message }) => ({
+            messageId: "userDefined",
+            data: {
+              message,
+            },
             fix,
           })) ?? null,
       };
@@ -658,22 +679,21 @@ function getReturnTypeViolations(
       suggestionsConfigs,
     );
 
-    const messageId = "returnType";
-    const data = {
-      actual: Immutability[immutability],
-      expected: Immutability[enforcement],
-    };
-
     return [
       {
         node: node.returnType,
-        messageId,
-        data,
+        messageId: "returnType",
+        data: {
+          actual: Immutability[immutability],
+          expected: Immutability[enforcement],
+        },
         fix,
         suggest:
-          suggestionFixers?.map((fix) => ({
-            messageId,
-            data,
+          suggestionFixers?.map(({ fix, message }) => ({
+            messageId: "userDefined",
+            data: {
+              message,
+            },
             fix,
           })) ?? null,
       },
@@ -713,22 +733,21 @@ function getReturnTypeViolations(
           suggestionsConfigs,
         );
 
-  const messageId = "returnType";
-  const data = {
-    actual: Immutability[immutability],
-    expected: Immutability[enforcement],
-  };
-
   return [
     {
       node: hasID(node) && node.id !== null ? node.id : node,
-      messageId,
-      data,
+      messageId: "returnType",
+      data: {
+        actual: Immutability[immutability],
+        expected: Immutability[enforcement],
+      },
       fix,
       suggest:
-        suggestionFixers?.map((fix) => ({
-          messageId,
-          data,
+        suggestionFixers?.map(({ fix, message }) => ({
+          messageId: "userDefined",
+          data: {
+            message,
+          },
           fix,
         })) ?? null,
     },
@@ -807,17 +826,16 @@ function checkVariable(
     const fix: NonNullable<Descriptor["fix"]> | null = (fixer) =>
       fixer.insertTextBefore(node.key, "readonly ");
 
-    const messageId = "propertyModifier";
     return {
       context,
       descriptors: [
         {
           node,
-          messageId,
+          messageId: "propertyModifier",
           fix: rawFixerConfig === undefined ? null : fix,
           suggest: [
             {
-              messageId,
+              messageId: "propertyModifierSuggestion",
               fix,
             },
           ],
@@ -912,9 +930,11 @@ function checkVariable(
           data,
           fix,
           suggest:
-            suggestionFixers?.map((fix) => ({
-              messageId,
-              data,
+            suggestionFixers?.map(({ fix, message }) => ({
+              messageId: "userDefined",
+              data: {
+                message,
+              },
               fix,
             })) ?? null,
         };

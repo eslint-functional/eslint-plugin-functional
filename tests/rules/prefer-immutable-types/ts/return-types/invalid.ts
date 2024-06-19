@@ -68,7 +68,10 @@ const tests: Array<
         column: 26,
         suggestions: [
           {
-            messageId: "returnType",
+            messageId: "userDefined",
+            data: {
+              message: "Surround with Readonly.",
+            },
             output: dedent`
               function foo(arg: number): Readonly<{ foo: string }>;
               function foo(arg: string): Readonly<{ foo: number }>;
@@ -85,7 +88,10 @@ const tests: Array<
         column: 27,
         suggestions: [
           {
-            messageId: "returnType",
+            messageId: "userDefined",
+            data: {
+              message: "Surround with Readonly.",
+            },
             output: dedent`
               function foo(arg: number): { foo: string };
               function foo(arg: string): Readonly<{ foo: number }>;

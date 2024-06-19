@@ -46,7 +46,8 @@ const tests: Array<
         column: 14,
         suggestions: [
           {
-            messageId: "parameter",
+            messageId: "userDefined",
+            data: { message: "Surround with Readonly." },
             output:
               "function foo(arg1: Readonly<{ foo: string }>, arg2: { foo: number }) {}",
           },
@@ -59,7 +60,8 @@ const tests: Array<
         column: 37,
         suggestions: [
           {
-            messageId: "parameter",
+            messageId: "userDefined",
+            data: { message: "Surround with Readonly." },
             output:
               "function foo(arg1: { foo: string }, arg2: Readonly<{ foo: number }>) {}",
           },
@@ -179,7 +181,7 @@ const tests: Array<
         column: 5,
         suggestions: [
           {
-            messageId: "propertyModifier",
+            messageId: "propertyModifierSuggestion",
             output: dedent`
               class Klass {
                 constructor (
@@ -199,7 +201,7 @@ const tests: Array<
         column: 5,
         suggestions: [
           {
-            messageId: "propertyModifier",
+            messageId: "propertyModifierSuggestion",
             output: dedent`
               class Klass {
                 constructor (
@@ -219,7 +221,7 @@ const tests: Array<
         column: 5,
         suggestions: [
           {
-            messageId: "propertyModifier",
+            messageId: "propertyModifierSuggestion",
             output: dedent`
               class Klass {
                 constructor (
@@ -245,7 +247,8 @@ const tests: Array<
         column: 46,
         suggestions: [
           {
-            messageId: "parameter",
+            messageId: "userDefined",
+            data: { message: "Surround with Readonly." },
             output:
               "function foo(arg0: { foo: string | number }, arg1: Readonly<{ foo: string | number }>): arg0 is { foo: number } {}",
           },
@@ -295,7 +298,8 @@ const tests: Array<
         column: 14,
         suggestions: [
           {
-            messageId: "parameter",
+            messageId: "userDefined",
+            data: { message: "Replace with: ReadonlyDeep<{ foo: string }>" },
             output: "function foo(arg1: ReadonlyDeep<{ foo: string }>) {}",
           },
         ],
@@ -329,7 +333,10 @@ const tests: Array<
         column: 14,
         suggestions: [
           {
-            messageId: "parameter",
+            messageId: "userDefined",
+            data: {
+              message: "Replace with: ReadonlyDeep<{ foo: { bar: string } }>",
+            },
             output:
               "function foo(arg1: ReadonlyDeep<{ foo: { bar: string } }>) {}",
           },
@@ -357,9 +364,28 @@ const tests: Array<
         column: 14,
         suggestions: [
           {
-            messageId: "parameter",
+            messageId: "userDefined",
+            data: {
+              message: "Use ReadonlyArray instead of Array.",
+            },
             output: dedent`
               function foo(arg: ReadonlyArray<string>) {}
+              function foo(arg: string[]) {}
+              function foo(arg: Set<string>) {}
+              function foo(arg: Map<string, string>) {}
+              function foo(arg: ReadonlyArray<string>) {}
+              function foo(arg: readonly string[]) {}
+              function foo(arg: ReadonlySet<string>) {}
+              function foo(arg: ReadonlyMap<string, string>) {}
+            `,
+          },
+          {
+            messageId: "userDefined",
+            data: {
+              message: "Surround with Readonly.",
+            },
+            output: dedent`
+              function foo(arg: Readonly<Array<string>>) {}
               function foo(arg: string[]) {}
               function foo(arg: Set<string>) {}
               function foo(arg: Map<string, string>) {}
@@ -378,10 +404,29 @@ const tests: Array<
         column: 14,
         suggestions: [
           {
-            messageId: "parameter",
+            messageId: "userDefined",
+            data: {
+              message: "Prepend with readonly.",
+            },
             output: dedent`
               function foo(arg: Array<string>) {}
               function foo(arg: readonly string[]) {}
+              function foo(arg: Set<string>) {}
+              function foo(arg: Map<string, string>) {}
+              function foo(arg: ReadonlyArray<string>) {}
+              function foo(arg: readonly string[]) {}
+              function foo(arg: ReadonlySet<string>) {}
+              function foo(arg: ReadonlyMap<string, string>) {}
+            `,
+          },
+          {
+            messageId: "userDefined",
+            data: {
+              message: "Surround with Readonly.",
+            },
+            output: dedent`
+              function foo(arg: Array<string>) {}
+              function foo(arg: Readonly<string[]>) {}
               function foo(arg: Set<string>) {}
               function foo(arg: Map<string, string>) {}
               function foo(arg: ReadonlyArray<string>) {}
@@ -399,11 +444,30 @@ const tests: Array<
         column: 14,
         suggestions: [
           {
-            messageId: "parameter",
+            messageId: "userDefined",
+            data: {
+              message: "Use ReadonlySet instead of Set.",
+            },
             output: dedent`
               function foo(arg: Array<string>) {}
               function foo(arg: string[]) {}
               function foo(arg: ReadonlySet<string>) {}
+              function foo(arg: Map<string, string>) {}
+              function foo(arg: ReadonlyArray<string>) {}
+              function foo(arg: readonly string[]) {}
+              function foo(arg: ReadonlySet<string>) {}
+              function foo(arg: ReadonlyMap<string, string>) {}
+            `,
+          },
+          {
+            messageId: "userDefined",
+            data: {
+              message: "Surround with Readonly.",
+            },
+            output: dedent`
+              function foo(arg: Array<string>) {}
+              function foo(arg: string[]) {}
+              function foo(arg: Readonly<Set<string>>) {}
               function foo(arg: Map<string, string>) {}
               function foo(arg: ReadonlyArray<string>) {}
               function foo(arg: readonly string[]) {}
@@ -420,12 +484,31 @@ const tests: Array<
         column: 14,
         suggestions: [
           {
-            messageId: "parameter",
+            messageId: "userDefined",
+            data: {
+              message: "Use ReadonlyMap instead of Map.",
+            },
             output: dedent`
               function foo(arg: Array<string>) {}
               function foo(arg: string[]) {}
               function foo(arg: Set<string>) {}
               function foo(arg: ReadonlyMap<string, string>) {}
+              function foo(arg: ReadonlyArray<string>) {}
+              function foo(arg: readonly string[]) {}
+              function foo(arg: ReadonlySet<string>) {}
+              function foo(arg: ReadonlyMap<string, string>) {}
+            `,
+          },
+          {
+            messageId: "userDefined",
+            data: {
+              message: "Surround with Readonly.",
+            },
+            output: dedent`
+              function foo(arg: Array<string>) {}
+              function foo(arg: string[]) {}
+              function foo(arg: Set<string>) {}
+              function foo(arg: Readonly<Map<string, string>>) {}
               function foo(arg: ReadonlyArray<string>) {}
               function foo(arg: readonly string[]) {}
               function foo(arg: ReadonlySet<string>) {}

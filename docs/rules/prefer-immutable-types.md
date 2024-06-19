@@ -240,9 +240,15 @@ type Options = {
   };
 
   suggestions?: {
-    ReadonlyShallow?: Array<Array<{ pattern: string; replace: string }>>;
-    ReadonlyDeep?: Array<Array<{ pattern: string; replace: string }>>;
-    Immutable?: Array<Array<{ pattern: string; replace: string }>>;
+    ReadonlyShallow?: Array<
+      Array<{ pattern: string; replace: string; message?: string }>
+    >;
+    ReadonlyDeep?: Array<
+      Array<{ pattern: string; replace: string; message?: string }>
+    >;
+    Immutable?: Array<
+      Array<{ pattern: string; replace: string; message?: string }>
+    >;
   };
 };
 ```
@@ -262,14 +268,19 @@ const defaults = {
           pattern:
             "^([_$a-zA-Z\\xA0-\\uFFFF][_$a-zA-Z0-9\\xA0-\\uFFFF]*\\[\\])$",
           replace: "readonly $1",
+          message: "Prepend with readonly.",
         },
         {
           pattern: "^(Array|Map|Set)<(.+)>$",
           replace: "Readonly$1<$2>",
+          message: "Use Readonly$1 instead of $1.",
         },
+      ],
+      [
         {
           pattern: "^(.+)$",
           replace: "Readonly<$1>",
+          message: "Surround with Readonly.",
         },
       ],
     ],
