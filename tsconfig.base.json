@@ -31,19 +31,17 @@
     "types": ["vitest/importMeta"],
     "baseUrl": ".",
     "paths": {
-      "#/flat": ["src/flat.ts"],
-      "#/classic": ["src/classic.ts"],
+      "#": ["src/index.ts"],
       "#/configs/*": ["src/configs/*"],
       "#/options": ["src/options"],
       "#/rules": ["src/rules"],
       "#/rules/*": ["src/rules/*"],
       "#/settings": ["src/settings"],
       "#/utils/*": ["src/utils/*"],
-      "#/conditional-imports/*": [
-        "src/utils/conditional-imports/cjs/*"
-      ],
+      "#/conditional-imports/*": ["src/utils/conditional-imports/cjs/*"],
       "#/tests/*": ["tests/*"]
     }
   },
+  "include": [".", ".*"],
   "exclude": ["dist/"]
 }

@@ -1,9 +1,9 @@
 import { type SharedConfigurationSettings } from "@typescript-eslint/utils";
 import {
   Immutability,
-  getDefaultOverrides as getDefaultImmutabilityOverrides,
   type ImmutabilityOverrides,
   type TypeSpecifier,
+  getDefaultOverrides as getDefaultImmutabilityOverrides,
 } from "is-immutable-type";
 
 declare module "@typescript-eslint/utils" {
@@ -13,7 +13,7 @@ declare module "@typescript-eslint/utils" {
     from?: Immutability | keyof typeof Immutability;
   };
 
-  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions, @typescript-eslint/no-shadow
+  // eslint-disable-next-line ts/consistent-type-definitions, ts/no-shadow
   interface SharedConfigurationSettings {
     immutability?: {
       overrides?:
@@ -39,14 +39,13 @@ const cachedSettings = new WeakMap<
  */
 export function getImmutabilityOverrides({
   immutability,
-}: SharedConfigurationSettings): ImmutabilityOverrides | undefined {
+}: Readonly<SharedConfigurationSettings>): ImmutabilityOverrides | undefined {
   if (immutability === undefined) {
     return undefined;
   }
   if (!cachedSettings.has(immutability)) {
     const overrides = loadImmutabilityOverrides(immutability);
 
-    // eslint-disable-next-line functional/no-expression-statements
     cachedSettings.set(immutability, overrides);
     return overrides;
   }
@@ -82,7 +81,6 @@ function loadImmutabilityOverrides(
             : from,
     } as ImmutabilityOverrides[number];
 
-    /* c8 ignore start */
     if (value.type === undefined) {
       // eslint-disable-next-line functional/no-throw-statements
       throw new Error(
@@ -108,7 +106,6 @@ function loadImmutabilityOverrides(
         )}". Value: "${JSON.stringify(rawValue)}"`,
       );
     }
-    /* c8 ignore stop */
 
     return value;
   });

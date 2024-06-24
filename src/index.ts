@@ -22,45 +22,49 @@ const meta = {
   version: __VERSION__,
 } as const;
 
-const functional: FlatConfig.Plugin = {
+const functional = {
   meta,
   rules,
-};
+} satisfies FlatConfig.Plugin;
+
+const plugins = { functional };
 
 const configs = {
-  all: { plugins: { functional }, rules: all },
-  lite: { plugins: { functional }, rules: lite },
-  recommended: { plugins: { functional }, rules: recommended },
-  strict: { plugins: { functional }, rules: strict },
-  off: { plugins: { functional }, rules: off },
+  all: { plugins, rules: all },
+  lite: { plugins, rules: lite },
+  recommended: { plugins, rules: recommended },
+  strict: { plugins, rules: strict },
+  off: { plugins, rules: off },
   disableTypeChecked: {
-    plugins: { functional },
+    plugins,
     rules: disableTypeChecked,
   },
   externalVanillaRecommended: {
-    plugins: { functional },
+    plugins,
     rules: externalVanillaRecommended,
   },
-  externalTypescriptRecommended: {
-    plugins: { functional },
+  externalTypeScriptRecommended: {
+    plugins,
     rules: externalTypeScriptRecommended,
   },
-  currying: { plugins: { functional }, rules: currying },
-  noExceptions: { plugins: { functional }, rules: noExceptions },
-  noMutations: { plugins: { functional }, rules: noMutations },
+  currying: { plugins, rules: currying },
+  noExceptions: { plugins, rules: noExceptions },
+  noMutations: { plugins, rules: noMutations },
   noOtherParadigms: {
-    plugins: { functional },
+    plugins,
     rules: noOtherParadigms,
   },
-  noStatements: { plugins: { functional }, rules: noStatements },
-  stylistic: { plugins: { functional }, rules: stylistic },
+  noStatements: { plugins, rules: noStatements },
+  stylistic: { plugins, rules: stylistic },
 } satisfies Record<string, FlatConfig.Config>;
 
-// eslint-disable-next-line functional/immutable-data, functional/no-expression-statements
-functional.configs = configs;
-
-export default functional as FlatConfig.Plugin & {
+type EslintPluginFunctional = FlatConfig.Plugin & {
   meta: typeof meta;
   rules: typeof rules;
   configs: typeof configs;
 };
+
+// eslint-disable-next-line functional/immutable-data
+(functional as EslintPluginFunctional).configs = configs;
+
+export default functional as EslintPluginFunctional;

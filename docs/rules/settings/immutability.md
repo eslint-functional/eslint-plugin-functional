@@ -32,13 +32,13 @@ readonly, then no override will be applied.
             "name": "ReadonlyArray",
           },
           "to": "Immutable",
-          "from": "ReadonlyDeep"
-        }
-      ]
-    }
+          "from": "ReadonlyDeep",
+        },
+      ],
+    },
   },
   "rules": {
     // ...
-  }
+  },
 }
 ```

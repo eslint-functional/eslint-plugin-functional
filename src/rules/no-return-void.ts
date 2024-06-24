@@ -5,10 +5,10 @@ import tsApiUtils from "#/conditional-imports/ts-api-utils";
 import { ruleNameScope } from "#/utils/misc";
 import { type ESFunctionType } from "#/utils/node-types";
 import {
-  createRule,
-  getTypeOfNode,
   type NamedCreateRuleCustomMeta,
   type RuleResult,
+  createRule,
+  getTypeOfNode,
 } from "#/utils/rule";
 import {
   isFunctionLike,
@@ -80,14 +80,14 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages, Options> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     category: "No Statements",
     description: "Disallow functions that don't return anything.",
-    requiresTypeChecking: true,
     recommended: "recommended",
     recommendedSeverity: "error",
+    requiresTypeChecking: true,
   },
   messages: errorMessages,
   schema,
