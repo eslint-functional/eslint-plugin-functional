@@ -434,3 +434,12 @@ export function isObjectConstructorType(type: Type | null): boolean {
 export function isFunctionLikeType(type: Type | null): boolean {
   return type !== null && type.getCallSignatures().length > 0;
 }
+
+export function isPromiseType(type: Type | null): boolean {
+  return (
+    type !== null &&
+    (((type.symbol as unknown) !== undefined &&
+      type.symbol.name === "Promise") ||
+      (isUnionType(type) && type.types.some(isPromiseType)))
+  );
+}

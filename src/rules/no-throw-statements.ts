@@ -8,7 +8,7 @@ import {
   type RuleResult,
   createRule,
 } from "#/utils/rule";
-import { isInFunctionBody } from "#/utils/tree";
+import { isInFunctionBody, isInPromiseCatchFunction } from "#/utils/tree";
 
 /**
  * The name of this rule.
@@ -25,7 +25,7 @@ export const fullName = `${ruleNameScope}/${name}`;
  */
 type Options = [
   {
-    allowInAsyncFunctions: boolean;
+    allowToRejectPromises: boolean;
   },
 ];
 
@@ -36,7 +36,7 @@ const schema: JSONSchema4[] = [
   {
     type: "object",
     properties: {
-      allowInAsyncFunctions: {
+      allowToRejectPromises: {
         type: "boolean",
       },
     },
@@ -49,7 +49,7 @@ const schema: JSONSchema4[] = [
  */
 const defaultOptions: Options = [
   {
-    allowInAsyncFunctions: false,
+    allowToRejectPromises: false,
   },
 ];
 
@@ -84,9 +84,12 @@ function checkThrowStatement(
   context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
   options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
-  const [{ allowInAsyncFunctions }] = options;
+  const [{ allowToRejectPromises }] = options;
 
-  if (!allowInAsyncFunctions || !isInFunctionBody(node, true)) {
+  if (
+    !allowToRejectPromises ||
+    !(isInFunctionBody(node, true) || isInPromiseCatchFunction(node, context))
+  ) {
     return { context, descriptors: [{ node, messageId: "generic" }] };
   }
 

@@ -54,7 +54,7 @@ This rule accepts an options object of the following type:
 
 ```ts
 type Options = {
-  allowInAsyncFunctions: boolean;
+  allowToRejectPromises: boolean;
 };
 ```
 
@@ -62,7 +62,7 @@ type Options = {
 
 ```ts
 const defaults = {
-  allowInAsyncFunctions: false,
+  allowToRejectPromises: false,
 };
 ```
 
@@ -72,19 +72,19 @@ const defaults = {
 
 ```ts
 const recommendedAndLiteOptions = {
-  allowInAsyncFunctions: true,
+  allowToRejectPromises: true,
 };
 ```
 
-### `allowInAsyncFunctions`
+### `allowToRejectPromises`
 
-If true, throw statements will be allowed within async functions.\
+If true, throw statements will be allowed when they are used to reject a promise, such when in an async function.\
 This essentially allows throw statements to be used as return statements for errors.
 
 #### ✅ Correct
 
 ```js
-/* eslint functional/no-throw-statements: ["error", { "allowInAsyncFunctions": true }] */
+/* eslint functional/no-throw-statements: ["error", { "allowToRejectPromises": true }] */
 
 async function divide(x, y) {
   const [xv, yv] = await Promise.all([x, y]);
