@@ -4,7 +4,7 @@ import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
 import typescript from "#/conditional-imports/typescript";
 
-import { type BaseOptions } from "./rule";
+import { type BaseOptions, getTypeOfNode } from "./rule";
 import {
   isBlockStatement,
   isCallExpression,
@@ -18,6 +18,7 @@ import {
   isMethodDefinition,
   isObjectExpression,
   isProgram,
+  isPromiseType,
   isProperty,
   isTSInterfaceBody,
   isTSInterfaceHeritage,
@@ -102,6 +103,51 @@ export function isInForLoopInitializer(node: TSESTree.Node): boolean {
  */
 export function isInReadonly(node: TSESTree.Node): boolean {
   return getReadonly(node) !== null;
+}
+
+/**
+ * Test if the given node is in a catch function callback of a promise.
+ */
+export function isInPromiseCatchFunction<
+  Context extends RuleContext<string, BaseOptions>,
+>(node: TSESTree.Node, context: Context): boolean {
+  const functionNode = getAncestorOfType(
+    (n, c): n is TSESTree.FunctionLike => isFunctionLike(n) && n.body === c,
+    node,
+  );
+
+  if (
+    functionNode === null ||
+    !isCallExpression(functionNode.parent) ||
+    !isMemberExpression(functionNode.parent.callee) ||
+    !isIdentifier(functionNode.parent.callee.property)
+  ) {
+    return false;
+  }
+
+  const { object, property } = functionNode.parent.callee;
+  switch (property.name) {
+    case "then": {
+      if (functionNode.parent.arguments[1] !== functionNode) {
+        return false;
+      }
+      break;
+    }
+
+    case "catch": {
+      if (functionNode.parent.arguments[0] !== functionNode) {
+        return false;
+      }
+      break;
+    }
+
+    default: {
+      return false;
+    }
+  }
+
+  const objectType = getTypeOfNode(object, context);
+  return isPromiseType(objectType);
 }
 
 /**

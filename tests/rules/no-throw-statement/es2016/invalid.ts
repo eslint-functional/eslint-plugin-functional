@@ -20,7 +20,7 @@ const tests: Array<
     optionsSet: [
       [
         {
-          allowInAsyncFunctions: false,
+          allowToRejectPromises: false,
         },
       ],
     ],
