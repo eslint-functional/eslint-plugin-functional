@@ -74,10 +74,35 @@ const overrides = {
     "error",
     {
       enforcement: "None",
-      ignoreInferredTypes: true,
-      parameters: {
-        enforcement: "ReadonlyDeep",
-      },
+      overrides: [
+        {
+          specifiers: [
+            {
+              from: "lib",
+            },
+            {
+              from: "package",
+            },
+          ],
+          options: {
+            ignoreInferredTypes: true,
+            parameters: {
+              enforcement: "ReadonlyShallow",
+            },
+          },
+        },
+        {
+          specifiers: {
+            from: "file",
+          },
+          options: {
+            ignoreInferredTypes: true,
+            parameters: {
+              enforcement: "ReadonlyDeep",
+            },
+          },
+        },
+      ],
     },
   ],
   [typeDeclarationImmutability.fullName]: [

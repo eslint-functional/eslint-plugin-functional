@@ -22,10 +22,19 @@ const overrides = {
     "error",
     {
       enforcement: "None",
-      ignoreInferredTypes: true,
-      parameters: {
-        enforcement: "ReadonlyShallow",
-      },
+      overrides: [
+        {
+          specifiers: {
+            from: "file",
+          },
+          options: {
+            ignoreInferredTypes: true,
+            parameters: {
+              enforcement: "ReadonlyShallow",
+            },
+          },
+        },
+      ],
     },
   ],
 } satisfies FlatConfig.Config["rules"];
