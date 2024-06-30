@@ -23,9 +23,6 @@ export default rsEslint(
     rules: {
       // Some types say they have nonnullable properties, but they don't always.
       "ts/no-unnecessary-condition": "off",
-
-      // Temp
-      "functional/prefer-immutable-types": "off",
     },
   },
   {
