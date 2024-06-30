@@ -31,11 +31,23 @@ const overrides = {
   [functionalParameters.fullName]: [
     "error",
     {
-      enforceParameterCount: {
-        ignoreLambdaExpression: true,
-        ignoreIIFE: true,
-        ignoreGettersAndSetters: true,
-      },
+      enforceParameterCount: false,
+      overrides: [
+        {
+          specifiers: [
+            {
+              from: "file",
+            },
+          ],
+          options: {
+            enforceParameterCount: {
+              ignoreLambdaExpression: true,
+              ignoreIIFE: true,
+              ignoreGettersAndSetters: true,
+            },
+          },
+        },
+      ],
     },
   ],
   [noConditionalStatements.fullName]: [
