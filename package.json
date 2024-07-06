@@ -122,7 +122,7 @@
     "chalk": "4.1.2",
     "commitizen": "4.3.0",
     "conventional-commit-types": "3.0.0",
-    "cspell": "8.6.1",
+    "cspell": "8.10.4",
     "deassert": "1.0.2",
     "dedent": "1.5.1",
     "eslint": "8.57.0",
