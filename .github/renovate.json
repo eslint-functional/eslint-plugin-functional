@@ -58,6 +58,10 @@
     {
       "allowedVersions": "<5",
       "matchPackageNames": ["chalk"]
+    },
+    {
+      "allowedVersions": "<9",
+      "matchPackageNames": ["eslint"]
     }
   ],
   "postUpdateOptions": ["pnpmDedupe"]
