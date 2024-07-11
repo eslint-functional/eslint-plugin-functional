@@ -53,36 +53,41 @@ function getNodeIdentifierText(
     return undefined;
   }
 
-  const identifierText =
-    isIdentifier(node) || isPrivateIdentifier(node)
-      ? node.name
-      : hasID(node) && isDefined(node.id)
-        ? getNodeIdentifierText(node.id, context)
-        : hasKey(node) && isDefined(node.key)
-          ? getNodeIdentifierText(node.key, context)
-          : isAssignmentExpression(node)
-            ? getNodeIdentifierText(node.left, context)
-            : isMemberExpression(node)
-              ? `${getNodeIdentifierText(node.object, context)}.${getNodeIdentifierText(
-                  node.property,
-                  context,
-                )}`
-              : isThisExpression(node)
-                ? "this"
-                : isUnaryExpression(node)
-                  ? getNodeIdentifierText(node.argument, context)
-                  : isTSTypeAnnotation(node)
-                    ? context.sourceCode
-                        .getText(node.typeAnnotation as TSESTree.Node)
-                        .replaceAll(/\s+/gmu, "")
-                    : isTSAsExpression(node) ||
-                        isTSNonNullExpression(node) ||
-                        isChainExpression(node)
-                      ? getNodeIdentifierText(node.expression, context)
-                      : null;
+  let m_identifierText: string | undefined | null = null;
 
-  if (identifierText !== null) {
-    return identifierText;
+  /* eslint-disable functional/no-conditional-statements, functional/no-expression-statements */
+  if (isIdentifier(node) || isPrivateIdentifier(node)) {
+    m_identifierText = node.name;
+  } else if (hasID(node) && isDefined(node.id)) {
+    m_identifierText = getNodeIdentifierText(node.id, context);
+  } else if (hasKey(node) && isDefined(node.key)) {
+    m_identifierText = getNodeIdentifierText(node.key, context);
+  } else if (isAssignmentExpression(node)) {
+    m_identifierText = getNodeIdentifierText(node.left, context);
+  } else if (isMemberExpression(node)) {
+    m_identifierText = `${getNodeIdentifierText(node.object, context)}.${getNodeIdentifierText(
+      node.property,
+      context,
+    )}`;
+  } else if (isThisExpression(node)) {
+    m_identifierText = "this";
+  } else if (isUnaryExpression(node)) {
+    m_identifierText = getNodeIdentifierText(node.argument, context);
+  } else if (isTSTypeAnnotation(node)) {
+    m_identifierText = context.sourceCode
+      .getText(node.typeAnnotation as TSESTree.Node)
+      .replaceAll(/\s+/gmu, "");
+  } else if (
+    isTSAsExpression(node) ||
+    isTSNonNullExpression(node) ||
+    isChainExpression(node)
+  ) {
+    m_identifierText = getNodeIdentifierText(node.expression, context);
+  }
+  /* eslint-enable functional/no-conditional-statements, functional/no-expression-statements */
+
+  if (m_identifierText !== null) {
+    return m_identifierText;
   }
 
   const keyInObjectExpression = getKeyOfValueInObjectExpression(node);
