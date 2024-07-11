@@ -282,6 +282,12 @@ const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
     `,
     optionsSet: [[{ ignoreAccessorPattern: "mutable*.*" }]],
   },
+  {
+    code: dedent`
+      mutable_foo!.baz = "hello world";
+    `,
+    optionsSet: [[{ ignoreAccessorPattern: "mutable*.*" }]],
+  },
 ];
 
 export default tests;

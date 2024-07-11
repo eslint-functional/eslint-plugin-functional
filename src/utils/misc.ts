@@ -7,13 +7,15 @@ import {
   hasID,
   hasKey,
   isAssignmentExpression,
+  isChainExpression,
   isDefined,
   isIdentifier,
   isMemberExpression,
   isPrivateIdentifier,
-  isThisExpression,
   isTSAsExpression,
+  isTSNonNullExpression,
   isTSTypeAnnotation,
+  isThisExpression,
   isUnaryExpression,
   isVariableDeclaration,
 } from "#/utils/type-guards";
@@ -73,7 +75,9 @@ function getNodeIdentifierText(
                     ? context.sourceCode
                         .getText(node.typeAnnotation as TSESTree.Node)
                         .replaceAll(/\s+/gmu, "")
-                    : isTSAsExpression(node)
+                    : isTSAsExpression(node) ||
+                        isTSNonNullExpression(node) ||
+                        isChainExpression(node)
                       ? getNodeIdentifierText(node.expression, context)
                       : null;
 

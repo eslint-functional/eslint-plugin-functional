@@ -75,6 +75,12 @@ export function isCallExpression(
   return node.type === AST_NODE_TYPES.CallExpression;
 }
 
+export function isChainExpression(
+  node: TSESTree.Node,
+): node is TSESTree.ChainExpression {
+  return node.type === AST_NODE_TYPES.ChainExpression;
+}
+
 export function isPropertyDefinition(
   node: TSESTree.Node,
 ): node is TSESTree.PropertyDefinition {
@@ -301,6 +307,12 @@ export function isTSInterfaceHeritage(
   node: TSESTree.Node,
 ): node is TSESTree.TSInterfaceHeritage {
   return node.type === AST_NODE_TYPES.TSInterfaceHeritage;
+}
+
+export function isTSNonNullExpression(
+  node: TSESTree.Node,
+): node is TSESTree.TSNonNullExpression {
+  return node.type === AST_NODE_TYPES.TSNonNullExpression;
 }
 
 export function isTSNullKeyword(
