@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+## [6.6.3](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.6.2...v6.6.3) (2024-07-11)
+
+
+### Bug Fixes
+
+* **immutable-data:** ignoreAccessorPattern can now handle NonNullExpressions and ChainExpressions ([#849](https://github.com/eslint-functional/eslint-plugin-functional/issues/849)) ([f6ff69b](https://github.com/eslint-functional/eslint-plugin-functional/commit/f6ff69b0a4bcb0b170b30cbc0605201f2b3ba271)), closes [#840](https://github.com/eslint-functional/eslint-plugin-functional/issues/840)
+
 ## [6.6.2](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.6.1...v6.6.2) (2024-07-11)
 
 
