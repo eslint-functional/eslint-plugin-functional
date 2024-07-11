@@ -1,6 +1,15 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+## [6.6.2](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.6.1...v6.6.2) (2024-07-11)
+
+
+### Bug Fixes
+
+* **no-conditional-statements:** allow continue and break statements with labels to be considered "returning" ([#846](https://github.com/eslint-functional/eslint-plugin-functional/issues/846)) ([969b77b](https://github.com/eslint-functional/eslint-plugin-functional/commit/969b77b53d488a7bd4381beac55256bb8b2cceda))
+* **no-expression-statements:** arrow functions cannot be self returning ([#847](https://github.com/eslint-functional/eslint-plugin-functional/issues/847)) ([7217fa4](https://github.com/eslint-functional/eslint-plugin-functional/commit/7217fa4130c7375de46cc261d404acf783bcba03))
+* **no-promise-reject:** new Promises and throw statements are now also checked ([#848](https://github.com/eslint-functional/eslint-plugin-functional/issues/848)) ([fbe27ad](https://github.com/eslint-functional/eslint-plugin-functional/commit/fbe27ad932dee5fd08a091cfa308f077aad25556))
+
 ## [6.6.1](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.6.0...v6.6.1) (2024-07-06)
 
 # [6.6.0](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.5.2...v6.6.0) (2024-06-19)
