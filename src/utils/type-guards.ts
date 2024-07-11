@@ -157,6 +157,12 @@ export function isIfStatement(
   return node.type === AST_NODE_TYPES.IfStatement;
 }
 
+export function isLabeledStatement(
+  node: TSESTree.Node,
+): node is TSESTree.LabeledStatement {
+  return node.type === AST_NODE_TYPES.LabeledStatement;
+}
+
 export function isMemberExpression(
   node: TSESTree.Node,
 ): node is TSESTree.MemberExpression {

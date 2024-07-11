@@ -17,6 +17,7 @@ import {
   isContinueStatement,
   isExpressionStatement,
   isIfStatement,
+  isLabeledStatement,
   isReturnStatement,
   isSwitchStatement,
   isThrowStatement,
@@ -196,18 +197,6 @@ function getIfBranchViolations(
 }
 
 /**
- * Is the given statement, when inside a switch statement, a returning branch?
- */
-function isSwitchReturningBranch(statement: TSESTree.Statement) {
-  return (
-    // Another instance of this rule will check nested switch statements.
-    isSwitchStatement(statement) ||
-    isReturnStatement(statement) ||
-    isThrowStatement(statement)
-  );
-}
-
-/**
  * Get all of the violations in the given switch statement assuming switch
  * statements are allowed.
  */
@@ -216,6 +205,8 @@ function getSwitchViolations(
   context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
 ): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
   const isNeverExpressions = getIsNeverExpressions(context);
+
+  const label = isLabeledStatement(node.parent) ? node.parent.label.name : null;
 
   const violations = node.cases.filter((branch) => {
     if (branch.consequent.length === 0) {
@@ -241,6 +232,22 @@ function getSwitchViolations(
   });
 
   return violations.flatMap(incompleteBranchViolation);
+
+  /**
+   * Is the given statement, when inside a switch statement, a returning branch?
+   */
+  function isSwitchReturningBranch(statement: TSESTree.Statement) {
+    return (
+      // Another instance of this rule will check nested switch statements.
+      isSwitchStatement(statement) ||
+      isReturnStatement(statement) ||
+      isThrowStatement(statement) ||
+      (isBreakStatement(statement) &&
+        statement.label !== null &&
+        statement.label.name !== label) ||
+      isContinueStatement(statement)
+    );
+  }
 }
 
 /**
