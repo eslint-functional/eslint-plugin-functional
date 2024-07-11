@@ -2,14 +2,12 @@
 
 <!-- end auto-generated rule header -->
 
-This rule disallows use of `Promise.reject()`.
+This rule disallows rejecting promises.
 
 ## Rule Details
 
 It is useful when using an `Option` type (something like `{ value: T } | { error: Error }`)
 for handling errors. In this case a promise should always resolve with an `Option` and never reject.
-
-This rule should be used in conjunction with [`no-throw-statements`](./no-throw-statements.md).
 
 ### ❌ Incorrect
 

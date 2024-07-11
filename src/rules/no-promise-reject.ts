@@ -8,7 +8,12 @@ import {
   type NamedCreateRuleCustomMeta,
   type RuleResult,
 } from "#/utils/rule";
-import { isIdentifier, isMemberExpression } from "#/utils/type-guards";
+import { getEnclosingFunction, getEnclosingTryStatement } from "#/utils/tree";
+import {
+  isFunctionLike,
+  isIdentifier,
+  isMemberExpression,
+} from "#/utils/type-guards";
 
 /**
  * The name of this rule.
@@ -39,7 +44,7 @@ const defaultOptions: Options = [{}];
  * The possible error messages.
  */
 const errorMessages = {
-  generic: "Unexpected reject, return an error instead.",
+  generic: "Unexpected rejection, resolve an error instead.",
 } as const;
 
 /**
@@ -67,6 +72,7 @@ function checkCallExpression(
   return {
     context,
     descriptors:
+      // TODO: Better Promise type detection.
       isMemberExpression(node.callee) &&
       isIdentifier(node.callee.object) &&
       isIdentifier(node.callee.property) &&
@@ -77,6 +83,57 @@ function checkCallExpression(
   };
 }
 
+/**
+ * Check if the given NewExpression is for a Promise and it has a callback that rejects.
+ */
+function checkNewExpression(
+  node: TSESTree.NewExpression,
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+): RuleResult<keyof typeof errorMessages, Options> {
+  return {
+    context,
+    descriptors:
+      // TODO: Better Promise type detection.
+      isIdentifier(node.callee) &&
+      node.callee.name === "Promise" &&
+      node.arguments[0] !== undefined &&
+      isFunctionLike(node.arguments[0]) &&
+      node.arguments[0].params.length === 2
+        ? [{ node: node.arguments[0].params[1]!, messageId: "generic" }]
+        : [],
+  };
+}
+
+/**
+ * Check if the given ThrowStatement violates this rule.
+ */
+function checkThrowStatement(
+  node: TSESTree.ThrowStatement,
+  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+): RuleResult<keyof typeof errorMessages, Options> {
+  const enclosingFunction = getEnclosingFunction(node);
+  if (enclosingFunction?.async !== true) {
+    return { context, descriptors: [] };
+  }
+
+  const enclosingTryStatement = getEnclosingTryStatement(node);
+  if (
+    enclosingTryStatement === null ||
+    getEnclosingFunction(enclosingTryStatement) !== enclosingFunction ||
+    enclosingTryStatement.handler === null
+  ) {
+    return {
+      context,
+      descriptors: [{ node, messageId: "generic" }],
+    };
+  }
+
+  return {
+    context,
+    descriptors: [],
+  };
+}
+
 // Create the rule.
 export const rule = createRule<keyof typeof errorMessages, Options>(
   name,
@@ -84,5 +141,7 @@ export const rule = createRule<keyof typeof errorMessages, Options>(
   defaultOptions,
   {
     CallExpression: checkCallExpression,
+    NewExpression: checkNewExpression,
+    ThrowStatement: checkThrowStatement,
   },
 );

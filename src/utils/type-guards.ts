@@ -237,6 +237,12 @@ export function isThrowStatement(
   return node.type === AST_NODE_TYPES.ThrowStatement;
 }
 
+export function isTryStatement(
+  node: TSESTree.Node,
+): node is TSESTree.TryStatement {
+  return node.type === AST_NODE_TYPES.TryStatement;
+}
+
 export function isTSArrayType(
   node: TSESTree.Node,
 ): node is TSESTree.TSArrayType {
@@ -439,4 +445,13 @@ export function isObjectConstructorType(type: Type | null): boolean {
 
 export function isFunctionLikeType(type: Type | null): boolean {
   return type !== null && type.getCallSignatures().length > 0;
+}
+
+export function isPromiseType(type: Type | null): boolean {
+  return (
+    type !== null &&
+    (((type.symbol as unknown) !== undefined &&
+      type.symbol.name === "Promise") ||
+      (isUnionType(type) && type.types.some(isPromiseType)))
+  );
 }
