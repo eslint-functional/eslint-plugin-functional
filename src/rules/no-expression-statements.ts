@@ -150,6 +150,7 @@ function checkExpressionStatement(
           typescript !== undefined &&
           declaration !== undefined &&
           typescript.isFunctionLike(declaration) &&
+          !typescript.isArrowFunction(declaration) &&
           "body" in declaration &&
           declaration.body !== undefined &&
           typescript.isBlock(declaration.body)
