@@ -1,5 +1,8 @@
 name: "Semantic PR"
 
+permissions:
+  pull-requests: write
+
 on:
   pull_request_target:
     types:
@@ -15,3 +18,46 @@ jobs:
       - uses: amannn/action-semantic-pull-request@v5.4.0
         env:
           GITHUB_TOKEN: ${{ github.token }}
+        with:
+          types: |
+            feat
+            fix
+            perf
+            refactor
+            style
+            docs
+            test
+            build
+            ci
+            chore
+            part
+          scopes: |
+            functional-parameters
+            immutable-data
+            no-classes
+            no-conditional-statements
+            no-expression-statements
+            no-let
+            no-loop-statements
+            no-mixed-types
+            no-promise-reject
+            no-return-void
+            no-this-expressions
+            no-throw-statements
+            no-try-statements
+            prefer-immutable-types
+            prefer-property-signatures
+            prefer-readonly-types
+            prefer-tacit
+            readonly-type
+            type-declaration-immutability
+          requireScope: false
+          subjectPattern: ^(?![A-Z]).+$ # Don't start with an uppercase character.
+          subjectPatternError: |
+            The subject "{subject}" should not start with an uppercase character.
+          ignoreLabels: |
+            bot
+            ignore-semantic-pull-request
+          headerPattern: '^(\w*)(?:\(([\w$.\-*/ ]*)\))?!?: (.*)$'
+          headerPatternCorrespondence: type, scope, subject
+          wip: true

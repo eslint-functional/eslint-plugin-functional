@@ -56,10 +56,6 @@
       "matchPackageNames": ["escape-string-regexp"]
     },
     {
-      "allowedVersions": "<5",
-      "matchPackageNames": ["chalk"]
-    },
-    {
       "allowedVersions": "<9",
       "matchPackageNames": ["eslint"]
     }
