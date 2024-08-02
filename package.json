@@ -110,7 +110,7 @@
     "@semantic-release/npm": "12.0.1",
     "@semantic-release/release-notes-generator": "14.0.1",
     "@types/dedent": "0.7.2",
-    "@types/eslint": "8.56.6",
+    "@types/eslint": "9.6.0",
     "@types/node": "16.18.93",
     "@types/rollup-plugin-auto-external": "2.0.5",
     "@types/semver": "7.5.8",
