@@ -50,8 +50,8 @@ devDependencies:
     specifier: 10.0.1
     version: 10.0.1(semantic-release@24.0.0)
   '@semantic-release/github':
-    specifier: 10.0.7
-    version: 10.0.7(semantic-release@24.0.0)
+    specifier: 10.1.3
+    version: 10.1.3(semantic-release@24.0.0)
   '@semantic-release/npm':
     specifier: 12.0.1
     version: 12.0.1(semantic-release@24.0.0)
@@ -1930,8 +1930,8 @@ packages:
       - supports-color
     dev: true
 
-  /@semantic-release/github@10.0.7(semantic-release@24.0.0):
-    resolution: {integrity: sha512-J7JiFvOu/8QKqFF5FDTk/k19Z/Jku4LdDof/+LsjaGgLOISJR7TL66q89c2YXV6Dh5Jw5VmiT4uK4q6SSfbQGA==}
+  /@semantic-release/github@10.1.3(semantic-release@24.0.0):
+    resolution: {integrity: sha512-QVw7YT3J4VqyVjOnlRsFA3OCERAJHER4QbSPupbav3ER0fawrs2BAWbQFjsr24OAD4KTTKMZsVzF+GYFWCDtaQ==}
     engines: {node: '>=20.8.1'}
     peerDependencies:
       semantic-release: '>=20.1.0'
@@ -7519,7 +7519,7 @@ packages:
     dependencies:
       '@semantic-release/commit-analyzer': 13.0.0(semantic-release@24.0.0)
       '@semantic-release/error': 4.0.0
-      '@semantic-release/github': 10.0.7(semantic-release@24.0.0)
+      '@semantic-release/github': 10.1.3(semantic-release@24.0.0)
       '@semantic-release/npm': 12.0.1(semantic-release@24.0.0)
       '@semantic-release/release-notes-generator': 14.0.1(semantic-release@24.0.0)
       aggregate-error: 5.0.0
