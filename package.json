@@ -89,7 +89,7 @@
     "verify": "pnpm run lint && pnpm run type-check && pnpm run build-tests && pnpm run test-compiled"
   },
   "dependencies": {
-    "@typescript-eslint/utils": "^7.3.1",
+    "@typescript-eslint/utils": "^8.0.0",
     "deepmerge-ts": "^5.1.0",
     "escape-string-regexp": "^4.0.0",
     "is-immutable-type": "^4.0.0",
@@ -111,9 +111,9 @@
     "@types/node": "16.18.93",
     "@types/rollup-plugin-auto-external": "2.0.5",
     "@types/semver": "7.5.8",
-    "@typescript-eslint/eslint-plugin": "7.4.0",
-    "@typescript-eslint/parser": "7.4.0",
-    "@typescript-eslint/rule-tester": "7.4.0",
+    "@typescript-eslint/eslint-plugin": "8.0.0",
+    "@typescript-eslint/parser": "8.0.0",
+    "@typescript-eslint/rule-tester": "8.0.0",
     "@vitest/coverage-istanbul": "2.0.5",
     "@vitest/coverage-v8": "2.0.5",
     "commitizen": "4.3.0",
