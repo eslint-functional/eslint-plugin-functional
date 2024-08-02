@@ -90,7 +90,7 @@
   },
   "dependencies": {
     "@typescript-eslint/utils": "^7.3.1",
-    "deepmerge-ts": "^5.1.0",
+    "deepmerge-ts": "^7.0.0",
     "escape-string-regexp": "^4.0.0",
     "is-immutable-type": "^4.0.0",
     "semver": "^7.6.0",
