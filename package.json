@@ -64,7 +64,6 @@
     "build-tests": "rimraf tests-compiled && tsc -p tsconfig.tests-compiled.json && tsc-alias -p tsconfig.tests-compiled.json",
     "build:docs": "eslint-doc-generator",
     "build:node": "rimraf lib && rollup -c rollup.config.ts --configPlugin rollup-plugin-ts",
-    "cz": "git-cz",
     "lint": "pnpm run build:node && pnpm run lint:js && pnpm run lint:md && pnpm lint:eslint-docs && pnpm run lint:prettier && pnpm run lint:knip && pnpm run lint:spelling && pnpm run lint:packages",
     "lint-fix": "pnpm run build:node && pnpm run lint:js-fix && pnpm lint:eslint-docs-fix && pnpm run lint:prettier-fix && pnpm run lint:packages-fix",
     "lint:eslint-docs": "eslint-doc-generator --check",
@@ -99,8 +98,6 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "7.25.1",
-    "@commitlint/cli": "19.3.0",
-    "@commitlint/config-conventional": "19.2.2",
     "@cspell/dict-cryptocurrencies": "5.0.0",
     "@rebeccastevens/eslint-config": "2.0.11",
     "@semantic-release/changelog": "6.0.3",
@@ -119,7 +116,6 @@
     "@typescript-eslint/rule-tester": "7.4.0",
     "@vitest/coverage-istanbul": "2.0.5",
     "@vitest/coverage-v8": "2.0.5",
-    "chalk": "4.1.2",
     "commitizen": "4.3.0",
     "conventional-commit-types": "3.0.0",
     "cspell": "8.13.0",
@@ -156,14 +152,11 @@
     "rollup-plugin-ts": "3.4.5",
     "semantic-release": "24.0.0",
     "semantic-release-replace-plugin": "1.2.7",
-    "ts-node": "10.9.2",
-    "tsc-alias": "1.8.8",
     "tsc-files": "1.1.4",
     "tsconfig-paths": "4.2.0",
     "typescript": "5.4.3",
     "vite-tsconfig-paths": "4.3.2",
-    "vitest": "2.0.5",
-    "word-wrap": "1.2.5"
+    "vitest": "2.0.5"
   },
   "peerDependencies": {
     "eslint": "^8.0.0 || ^9.0.0",

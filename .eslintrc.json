@@ -20,7 +20,6 @@
     "/lib/",
     "/node_modules/",
     "/tests-compiled/",
-    "/cz-adapter/**/*.js",
     "/pnpm-lock.yaml"
   ],
   "rules": {
@@ -41,27 +40,6 @@
       "files": ["./src/utils/type-guards.ts", "./src/utils/node-types.ts"],
       "rules": {
         "jsdoc/require-jsdoc": "off"
-      }
-    },
-    {
-      "files": ["./cz-adapter/**/*"],
-      "extends": ["@rebeccastevens/eslint-config/script"],
-      "rules": {
-        "@typescript-eslint/no-unsafe-argument": "off",
-        "@typescript-eslint/no-unsafe-assignment": "off",
-        "@typescript-eslint/no-unsafe-call": "off",
-        "@typescript-eslint/no-unsafe-member-access": "off",
-        "@typescript-eslint/no-unsafe-return": "off",
-        "import/no-extraneous-dependencies": [
-          "error",
-          {
-            "devDependencies": true,
-            "peerDependencies": true
-          }
-        ],
-        "functional/immutable-data": "off",
-        "jsdoc/require-jsdoc": "off",
-        "unicorn/prefer-module": "off"
       }
     },
     {
