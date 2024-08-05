@@ -39,7 +39,6 @@
   "files": ["lib/", "package.json", "LICENSE", "README.md"],
   "scripts": {
     "build": "pnpm run build:node && pnpm run build:docs",
-    "build-tests": "rimraf tests-compiled && tsc -p tsconfig.tests-compiled.json && tsc-alias -p tsconfig.tests-compiled.json",
     "build:docs": "eslint-doc-generator",
     "build:node": "rimraf lib && rollup -c rollup.config.ts --configPlugin rollup-plugin-ts",
     "lint": "eslint && pnpm run lint:md && pnpm lint:eslint-docs && pnpm run lint:spelling && pnpm run lint:knip && pnpm run lint:packages",
@@ -63,11 +62,11 @@
     "prepare": "husky",
     "release": "semantic-release",
     "test": "pnpm run test:js",
-    "test-compiled": "USE_COMPILED_TESTS=1 vitest run --coverage",
     "test-work": "vitest",
     "test:js": "vitest --coverage",
+    "test:js-run": "vitest run --coverage",
     "typecheck": "tsc -p tsconfig.build.json --noEmit",
-    "verify": "pnpm run lint && pnpm run typecheck && pnpm run build-tests && pnpm run test-compiled"
+    "verify": "pnpm run lint && pnpm run typecheck && pnpm run test:js-run"
   },
   "overrides": {
     "eslint-plugin-functional": "link:."
@@ -92,12 +91,9 @@
     "@semantic-release/release-notes-generator": "14.0.1",
     "@stylistic/eslint-plugin": "2.6.1",
     "@types/dedent": "0.7.2",
-    "@types/espree": "10.1.0",
     "@types/node": "18.18.0",
     "@typescript-eslint/eslint-plugin": "8.0.0",
     "@typescript-eslint/parser": "8.0.0",
-    "@typescript-eslint/rule-tester": "8.0.0",
-    "@vitest/coverage-istanbul": "2.0.5",
     "@vitest/coverage-v8": "2.0.5",
     "cspell": "8.13.1",
     "deassert": "1.0.2",
@@ -125,7 +121,7 @@
     "eslint-plugin-unicorn": "55.0.0",
     "eslint-plugin-vitest": "0.5.4",
     "eslint-plugin-yml": "1.14.0",
-    "espree": "10.1.0",
+    "eslint-vitest-rule-tester": "0.3.3",
     "fast-glob": "3.3.2",
     "husky": "9.1.4",
     "jsonc-eslint-parser": "2.4.0",
@@ -139,7 +135,6 @@
     "rollup-plugin-ts": "3.4.5",
     "semantic-release": "24.0.0",
     "semantic-release-replace-plugin": "1.2.7",
-    "tsc-alias": "1.8.10",
     "tsc-files": "1.1.4",
     "tsx": "4.16.5",
     "typescript": "5.5.4",
@@ -159,5 +154,10 @@
   "packageManager": "pnpm@9.6.0",
   "engines": {
     "node": ">=v18.18.0"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "eslint-vitest-rule-tester@0.3.3": "patches/eslint-vitest-rule-tester@0.3.3.patch"
+    }
   }
 }

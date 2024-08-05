@@ -1,0 +1,97 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`no-loop-statements > javascript - es latest > reports do while loop statements 1`] = `
+[
+  {
+    "column": 1,
+    "endColumn": 16,
+    "endLine": 3,
+    "line": 1,
+    "message": "Unexpected loop, use map or reduce instead.",
+    "messageId": "generic",
+    "nodeType": "DoWhileStatement",
+    "ruleId": "no-loop-statements",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`no-loop-statements > javascript - es latest > reports for await loop statements 1`] = `
+[
+  {
+    "column": 1,
+    "endColumn": 2,
+    "endLine": 3,
+    "line": 1,
+    "message": "Unexpected loop, use map or reduce instead.",
+    "messageId": "generic",
+    "nodeType": "ForOfStatement",
+    "ruleId": "no-loop-statements",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`no-loop-statements > javascript - es latest > reports for in loop statements 1`] = `
+[
+  {
+    "column": 1,
+    "endColumn": 2,
+    "endLine": 3,
+    "line": 1,
+    "message": "Unexpected loop, use map or reduce instead.",
+    "messageId": "generic",
+    "nodeType": "ForInStatement",
+    "ruleId": "no-loop-statements",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`no-loop-statements > javascript - es latest > reports for loop statements 1`] = `
+[
+  {
+    "column": 1,
+    "endColumn": 2,
+    "endLine": 3,
+    "line": 1,
+    "message": "Unexpected loop, use map or reduce instead.",
+    "messageId": "generic",
+    "nodeType": "ForStatement",
+    "ruleId": "no-loop-statements",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`no-loop-statements > javascript - es latest > reports for of loop statements 1`] = `
+[
+  {
+    "column": 1,
+    "endColumn": 2,
+    "endLine": 3,
+    "line": 1,
+    "message": "Unexpected loop, use map or reduce instead.",
+    "messageId": "generic",
+    "nodeType": "ForOfStatement",
+    "ruleId": "no-loop-statements",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`no-loop-statements > javascript - es latest > reports while loop statements 1`] = `
+[
+  {
+    "column": 1,
+    "endColumn": 2,
+    "endLine": 3,
+    "line": 1,
+    "message": "Unexpected loop, use map or reduce instead.",
+    "messageId": "generic",
+    "nodeType": "WhileStatement",
+    "ruleId": "no-loop-statements",
+    "severity": 2,
+  },
+]
+`;

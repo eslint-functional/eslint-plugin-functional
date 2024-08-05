@@ -5,7 +5,6 @@
   "ignore": ["lib/**", "tests/fixture/file.ts"],
   "ignoreDependencies": [
     // Unknown reason for issue.
-    "@vitest/coverage-istanbul",
     "@vitest/coverage-v8",
 
     // Lint staged

@@ -1,0 +1,33 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`prefer-property-signatures > typescript > reports method signatures in interfaces 1`] = `
+[
+  {
+    "column": 3,
+    "endColumn": 37,
+    "endLine": 2,
+    "line": 2,
+    "message": "Use a property signature instead of a method signature",
+    "messageId": "generic",
+    "nodeType": "TSMethodSignature",
+    "ruleId": "prefer-property-signatures",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`prefer-property-signatures > typescript > reports method signatures in type literals 1`] = `
+[
+  {
+    "column": 3,
+    "endColumn": 37,
+    "endLine": 2,
+    "line": 2,
+    "message": "Use a property signature instead of a method signature",
+    "messageId": "generic",
+    "nodeType": "TSMethodSignature",
+    "ruleId": "prefer-property-signatures",
+    "severity": 2,
+  },
+]
+`;

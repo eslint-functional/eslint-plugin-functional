@@ -1,0 +1,129 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`functional-parameters > javascript - es latest > options > enforceParameterCount > atLeastOne 1`] = `
+[
+  {
+    "column": 1,
+    "endColumn": 2,
+    "endLine": 3,
+    "line": 1,
+    "message": "Functions must have at least one parameter.",
+    "messageId": "paramCountAtLeastOne",
+    "nodeType": "FunctionDeclaration",
+    "ruleId": "functional-parameters",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`functional-parameters > javascript - es latest > options > enforceParameterCount > exactlyOne 1`] = `
+[
+  {
+    "column": 1,
+    "endColumn": 2,
+    "endLine": 3,
+    "line": 1,
+    "message": "Functions must have exactly one parameter.",
+    "messageId": "paramCountExactlyOne",
+    "nodeType": "FunctionDeclaration",
+    "ruleId": "functional-parameters",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`functional-parameters > javascript - es latest > options > enforceParameterCount > exactlyOne 2`] = `
+[
+  {
+    "column": 1,
+    "endColumn": 2,
+    "endLine": 3,
+    "line": 1,
+    "message": "Functions must have exactly one parameter.",
+    "messageId": "paramCountExactlyOne",
+    "nodeType": "FunctionDeclaration",
+    "ruleId": "functional-parameters",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`functional-parameters > javascript - es latest > options > enforceParameterCount > ignoreIIFE 1`] = `
+[
+  {
+    "column": 2,
+    "endColumn": 2,
+    "endLine": 3,
+    "line": 1,
+    "message": "Functions must have at least one parameter.",
+    "messageId": "paramCountAtLeastOne",
+    "nodeType": "ArrowFunctionExpression",
+    "ruleId": "functional-parameters",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`functional-parameters > javascript - es latest > options > enforceParameterCount > ignoreLambdaExpression 1`] = `
+[
+  {
+    "column": 1,
+    "endColumn": 18,
+    "endLine": 1,
+    "line": 1,
+    "message": "Functions must have at least one parameter.",
+    "messageId": "paramCountAtLeastOne",
+    "nodeType": "FunctionDeclaration",
+    "ruleId": "functional-parameters",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`functional-parameters > javascript - es latest > options > ignoreIdentifierPattern 1`] = `
+[
+  {
+    "column": 14,
+    "endColumn": 20,
+    "endLine": 1,
+    "line": 1,
+    "message": "Unexpected rest parameter. Use a regular parameter of type array instead.",
+    "messageId": "restParam",
+    "nodeType": "RestElement",
+    "ruleId": "functional-parameters",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`functional-parameters > javascript - es latest > reports arguments keyword violations 1`] = `
+[
+  {
+    "column": 15,
+    "endColumn": 24,
+    "endLine": 2,
+    "line": 2,
+    "message": "Unexpected use of \`arguments\`. Use regular function arguments instead.",
+    "messageId": "arguments",
+    "nodeType": "Identifier",
+    "ruleId": "functional-parameters",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`functional-parameters > javascript - es latest > reports rest parameter violations 1`] = `
+[
+  {
+    "column": 14,
+    "endColumn": 20,
+    "endLine": 1,
+    "line": 1,
+    "message": "Unexpected rest parameter. Use a regular parameter of type array instead.",
+    "messageId": "restParam",
+    "nodeType": "RestElement",
+    "ruleId": "functional-parameters",
+    "severity": 2,
+  },
+]
+`;

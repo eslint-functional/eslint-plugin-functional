@@ -1,0 +1,273 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`type-declaration-immutability > typescript > reports invalid deep arrays 1`] = `
+[
+  {
+    "column": 6,
+    "endColumn": 25,
+    "endLine": 1,
+    "line": 1,
+    "message": "This type is declare to have an immutability of at least "ReadonlyDeep" (actual: "ReadonlyShallow").",
+    "messageId": "AtLeast",
+    "nodeType": "Identifier",
+    "ruleId": "type-declaration-immutability",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`type-declaration-immutability > typescript > reports invalid deep maps 1`] = `
+[
+  {
+    "column": 6,
+    "endColumn": 23,
+    "endLine": 1,
+    "line": 1,
+    "message": "This type is declare to have an immutability of at least "ReadonlyDeep" (actual: "ReadonlyShallow").",
+    "messageId": "AtLeast",
+    "nodeType": "Identifier",
+    "ruleId": "type-declaration-immutability",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`type-declaration-immutability > typescript > reports invalid deep sets 1`] = `
+[
+  {
+    "column": 6,
+    "endColumn": 23,
+    "endLine": 1,
+    "line": 1,
+    "message": "This type is declare to have an immutability of at least "ReadonlyDeep" (actual: "ReadonlyShallow").",
+    "messageId": "AtLeast",
+    "nodeType": "Identifier",
+    "ruleId": "type-declaration-immutability",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`type-declaration-immutability > typescript > reports invalid immutable arrays 1`] = `
+[
+  {
+    "column": 6,
+    "endColumn": 22,
+    "endLine": 1,
+    "line": 1,
+    "message": "This type is declare to have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
+    "messageId": "AtLeast",
+    "nodeType": "Identifier",
+    "ruleId": "type-declaration-immutability",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`type-declaration-immutability > typescript > reports invalid immutable maps 1`] = `
+[
+  {
+    "column": 6,
+    "endColumn": 20,
+    "endLine": 1,
+    "line": 1,
+    "message": "This type is declare to have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
+    "messageId": "AtLeast",
+    "nodeType": "Identifier",
+    "ruleId": "type-declaration-immutability",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`type-declaration-immutability > typescript > reports invalid immutable sets 1`] = `
+[
+  {
+    "column": 6,
+    "endColumn": 20,
+    "endLine": 1,
+    "line": 1,
+    "message": "This type is declare to have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
+    "messageId": "AtLeast",
+    "nodeType": "Identifier",
+    "ruleId": "type-declaration-immutability",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`type-declaration-immutability > typescript > reports invalid immutable/deep records 1`] = `
+[
+  {
+    "column": 6,
+    "endColumn": 21,
+    "endLine": 1,
+    "line": 1,
+    "message": "This type is declare to have an immutability of at least "ReadonlyDeep" (actual: "ReadonlyShallow").",
+    "messageId": "AtLeast",
+    "nodeType": "Identifier",
+    "ruleId": "type-declaration-immutability",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`type-declaration-immutability > typescript > reports invalid immutable/deep records 2`] = `
+[
+  {
+    "column": 6,
+    "endColumn": 18,
+    "endLine": 1,
+    "line": 1,
+    "message": "This type is declare to have an immutability of at least "Immutable" (actual: "ReadonlyShallow").",
+    "messageId": "AtLeast",
+    "nodeType": "Identifier",
+    "ruleId": "type-declaration-immutability",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`type-declaration-immutability > typescript > reports invalid shallow arrays 1`] = `
+[
+  {
+    "column": 6,
+    "endColumn": 21,
+    "endLine": 1,
+    "line": 1,
+    "message": "This type is declare to have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
+    "messageId": "AtLeast",
+    "nodeType": "Identifier",
+    "ruleId": "type-declaration-immutability",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`type-declaration-immutability > typescript > reports invalid shallow maps 1`] = `
+[
+  {
+    "column": 6,
+    "endColumn": 19,
+    "endLine": 1,
+    "line": 1,
+    "message": "This type is declare to have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
+    "messageId": "AtLeast",
+    "nodeType": "Identifier",
+    "ruleId": "type-declaration-immutability",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`type-declaration-immutability > typescript > reports invalid shallow records 1`] = `
+[
+  {
+    "column": 6,
+    "endColumn": 17,
+    "endLine": 1,
+    "line": 1,
+    "message": "This type is declare to have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
+    "messageId": "AtLeast",
+    "nodeType": "Identifier",
+    "ruleId": "type-declaration-immutability",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`type-declaration-immutability > typescript > reports invalid shallow records 2`] = `
+[
+  {
+    "column": 6,
+    "endColumn": 17,
+    "endLine": 1,
+    "line": 1,
+    "message": "This type is declare to have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
+    "messageId": "AtLeast",
+    "nodeType": "Identifier",
+    "ruleId": "type-declaration-immutability",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`type-declaration-immutability > typescript > reports invalid shallow sets 1`] = `
+[
+  {
+    "column": 6,
+    "endColumn": 19,
+    "endLine": 1,
+    "line": 1,
+    "message": "This type is declare to have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
+    "messageId": "AtLeast",
+    "nodeType": "Identifier",
+    "ruleId": "type-declaration-immutability",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`type-declaration-immutability > typescript > reports non-mutable primitives 1`] = `
+[
+  {
+    "column": 6,
+    "endColumn": 19,
+    "endLine": 1,
+    "line": 1,
+    "message": "This type is declare to have an immutability of at most "Mutable" (actual: "Immutable").",
+    "messageId": "AtMost",
+    "nodeType": "Identifier",
+    "ruleId": "type-declaration-immutability",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`type-declaration-immutability > typescript > reports non-mutable records 1`] = `
+[
+  {
+    "column": 6,
+    "endColumn": 16,
+    "endLine": 1,
+    "line": 1,
+    "message": "This type is declare to have an immutability of at most "Mutable" (actual: "Immutable").",
+    "messageId": "AtMost",
+    "nodeType": "Identifier",
+    "ruleId": "type-declaration-immutability",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`type-declaration-immutability > typescript > reports non-mutable records 2`] = `
+[
+  {
+    "column": 6,
+    "endColumn": 16,
+    "endLine": 1,
+    "line": 1,
+    "message": "This type is declare to have an immutability of at most "Mutable" (actual: "Immutable").",
+    "messageId": "AtMost",
+    "nodeType": "Identifier",
+    "ruleId": "type-declaration-immutability",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`type-declaration-immutability > typescript > respects override settings 1`] = `
+[
+  {
+    "column": 6,
+    "endColumn": 16,
+    "endLine": 1,
+    "line": 1,
+    "message": "This type is declare to have an immutability of at most "Mutable" (actual: "Immutable").",
+    "messageId": "AtMost",
+    "nodeType": "Identifier",
+    "ruleId": "type-declaration-immutability",
+    "severity": 2,
+  },
+]
+`;

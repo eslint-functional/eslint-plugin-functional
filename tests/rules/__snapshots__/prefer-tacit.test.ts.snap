@@ -1,0 +1,146 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`prefer-tacit > typescript > options > checkMemberExpressions > report member expressions when enabled 1`] = `
+[
+  {
+    "column": 1,
+    "endColumn": 35,
+    "endLine": 2,
+    "line": 2,
+    "message": "Potentially unnecessary function wrapper.",
+    "messageId": "generic",
+    "nodeType": "FunctionDeclaration",
+    "ruleId": "prefer-tacit",
+    "severity": 2,
+    "suggestions": [
+      {
+        "desc": "Potentially unnecessary function wrapper.",
+        "fix": {
+          "range": [
+            46,
+            80,
+          ],
+          "text": "const foo = a.b.bind(a);",
+        },
+        "messageId": "generic",
+      },
+    ],
+  },
+]
+`;
+
+exports[`prefer-tacit > typescript > options > checkMemberExpressions > report member expressions when enabled 2`] = `
+[
+  {
+    "column": 13,
+    "endColumn": 33,
+    "endLine": 1,
+    "line": 1,
+    "message": "Potentially unnecessary function wrapper.",
+    "messageId": "generic",
+    "nodeType": "ArrowFunctionExpression",
+    "ruleId": "prefer-tacit",
+    "severity": 2,
+    "suggestions": [
+      {
+        "desc": "Potentially unnecessary function wrapper.",
+        "fix": {
+          "range": [
+            12,
+            32,
+          ],
+          "text": "/a/.test.bind(/a/)",
+        },
+        "messageId": "generic",
+      },
+    ],
+  },
+]
+`;
+
+exports[`prefer-tacit > typescript > reports functions that are just instantiations 1`] = `
+[
+  {
+    "column": 1,
+    "endColumn": 41,
+    "endLine": 2,
+    "line": 2,
+    "message": "Potentially unnecessary function wrapper.",
+    "messageId": "generic",
+    "nodeType": "FunctionDeclaration",
+    "ruleId": "prefer-tacit",
+    "severity": 2,
+    "suggestions": [
+      {
+        "desc": "Potentially unnecessary function wrapper.",
+        "fix": {
+          "range": [
+            26,
+            66,
+          ],
+          "text": "const foo = f<number>;",
+        },
+        "messageId": "generic",
+      },
+    ],
+  },
+]
+`;
+
+exports[`prefer-tacit > typescript > reports functions that can "safely" be changed 1`] = `
+[
+  {
+    "column": 13,
+    "endColumn": 22,
+    "endLine": 2,
+    "line": 2,
+    "message": "Potentially unnecessary function wrapper.",
+    "messageId": "generic",
+    "nodeType": "ArrowFunctionExpression",
+    "ruleId": "prefer-tacit",
+    "severity": 2,
+    "suggestions": [
+      {
+        "desc": "Potentially unnecessary function wrapper.",
+        "fix": {
+          "range": [
+            29,
+            38,
+          ],
+          "text": "f",
+        },
+        "messageId": "generic",
+      },
+    ],
+  },
+]
+`;
+
+exports[`prefer-tacit > typescript > reports functions that can "safely" be changed 2`] = `
+[
+  {
+    "column": 27,
+    "endColumn": 42,
+    "endLine": 1,
+    "line": 1,
+    "message": "Potentially unnecessary function wrapper.",
+    "messageId": "generic",
+    "nodeType": "ArrowFunctionExpression",
+    "ruleId": "prefer-tacit",
+    "severity": 2,
+    "suggestions": [
+      {
+        "desc": "Potentially unnecessary function wrapper.",
+        "fix": {
+          "range": [
+            26,
+            41,
+          ],
+          "text": "Boolean",
+        },
+        "messageId": "generic",
+      },
+    ],
+  },
+]
+`;

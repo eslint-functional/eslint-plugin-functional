@@ -1,0 +1,65 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`no-mixed-types > typescript > options > checkInterfaces > should report mixed types in interfaces when enabled 1`] = `
+[
+  {
+    "column": 1,
+    "endColumn": 46,
+    "endLine": 1,
+    "line": 1,
+    "message": "Only the same kind of members allowed in types.",
+    "messageId": "generic",
+    "nodeType": "TSInterfaceDeclaration",
+    "ruleId": "no-mixed-types",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`no-mixed-types > typescript > options > checkTypeLiterals > should report mixed types in type literals when enabled 1`] = `
+[
+  {
+    "column": 1,
+    "endColumn": 3,
+    "endLine": 4,
+    "line": 1,
+    "message": "Only the same kind of members allowed in types.",
+    "messageId": "generic",
+    "nodeType": "TSTypeAliasDeclaration",
+    "ruleId": "no-mixed-types",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`no-mixed-types > typescript > reports mixed types in interfaces 1`] = `
+[
+  {
+    "column": 1,
+    "endColumn": 2,
+    "endLine": 4,
+    "line": 1,
+    "message": "Only the same kind of members allowed in types.",
+    "messageId": "generic",
+    "nodeType": "TSInterfaceDeclaration",
+    "ruleId": "no-mixed-types",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`no-mixed-types > typescript > reports mixed types in type literals 1`] = `
+[
+  {
+    "column": 1,
+    "endColumn": 3,
+    "endLine": 4,
+    "line": 1,
+    "message": "Only the same kind of members allowed in types.",
+    "messageId": "generic",
+    "nodeType": "TSTypeAliasDeclaration",
+    "ruleId": "no-mixed-types",
+    "severity": 2,
+  },
+]
+`;

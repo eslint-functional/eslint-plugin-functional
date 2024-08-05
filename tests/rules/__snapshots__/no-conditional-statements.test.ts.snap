@@ -1,0 +1,65 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`no-conditional-statements > typescript > if statements > options > allowReturningBranches > ifExhaustive > else required 1`] = `
+[
+  {
+    "column": 3,
+    "endColumn": 4,
+    "endLine": 4,
+    "line": 2,
+    "message": "Incomplete if, it must have an else statement and every branch must contain a return statement.",
+    "messageId": "incompleteIf",
+    "nodeType": "IfStatement",
+    "ruleId": "no-conditional-statements",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`no-conditional-statements > typescript > if statements > reports if statements 1`] = `
+[
+  {
+    "column": 1,
+    "endColumn": 2,
+    "endLine": 3,
+    "line": 1,
+    "message": "Unexpected if, use a conditional expression (ternary operator) instead.",
+    "messageId": "unexpectedIf",
+    "nodeType": "IfStatement",
+    "ruleId": "no-conditional-statements",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`no-conditional-statements > typescript > switch statements > options > allowReturningBranches > ifExhaustive > requires default case 1`] = `
+[
+  {
+    "column": 3,
+    "endColumn": 4,
+    "endLine": 7,
+    "line": 2,
+    "message": "Incomplete switch, it must be exhaustive or have an default case and every case must contain a return statement.",
+    "messageId": "incompleteSwitch",
+    "nodeType": "SwitchStatement",
+    "ruleId": "no-conditional-statements",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`no-conditional-statements > typescript > switch statements > reports switch statements 1`] = `
+[
+  {
+    "column": 1,
+    "endColumn": 2,
+    "endLine": 7,
+    "line": 1,
+    "message": "Unexpected switch, use a conditional expression (ternary operator) instead.",
+    "messageId": "unexpectedSwitch",
+    "nodeType": "SwitchStatement",
+    "ruleId": "no-conditional-statements",
+    "severity": 2,
+  },
+]
+`;

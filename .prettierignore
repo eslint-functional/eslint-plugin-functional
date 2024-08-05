@@ -1,7 +1,6 @@
 /build/
 /coverage*/
 /lib/
-/tests-compiled/
 /node_modules/
 /CHANGELOG.md
 /pnpm-lock.yaml

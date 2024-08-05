@@ -3,7 +3,6 @@ deassert
 declarator
 declarators
 deepmerge
-espree
 IIFE
 jonaskello
 Kello
@@ -19,3 +18,4 @@ rulesets
 sonarjs
 treeshake
 TSES
+uncompiled

@@ -1,0 +1,81 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`no-throw-statements > javascript - es latest > options > allowToRejectPromises > reports throw statements in functions nested in async functions 1`] = `
+[
+  {
+    "column": 5,
+    "endColumn": 23,
+    "endLine": 3,
+    "line": 3,
+    "message": "Unexpected throw, throwing exceptions is not functional.",
+    "messageId": "generic",
+    "nodeType": "ThrowStatement",
+    "ruleId": "no-throw-statements",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`no-throw-statements > javascript - es latest > options > allowToRejectPromises > reports throw statements in try with catch in async functions 1`] = `
+[
+  {
+    "column": 5,
+    "endColumn": 36,
+    "endLine": 3,
+    "line": 3,
+    "message": "Unexpected throw, throwing exceptions is not functional.",
+    "messageId": "generic",
+    "nodeType": "ThrowStatement",
+    "ruleId": "no-throw-statements",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`no-throw-statements > javascript - es latest > reports throw statements in async functions 1`] = `
+[
+  {
+    "column": 3,
+    "endColumn": 21,
+    "endLine": 2,
+    "line": 2,
+    "message": "Unexpected throw, throwing exceptions is not functional.",
+    "messageId": "generic",
+    "nodeType": "ThrowStatement",
+    "ruleId": "no-throw-statements",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`no-throw-statements > javascript - es latest > reports throw statements of Errors 1`] = `
+[
+  {
+    "column": 3,
+    "endColumn": 21,
+    "endLine": 2,
+    "line": 2,
+    "message": "Unexpected throw, throwing exceptions is not functional.",
+    "messageId": "generic",
+    "nodeType": "ThrowStatement",
+    "ruleId": "no-throw-statements",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`no-throw-statements > javascript - es latest > reports throw statements of strings 1`] = `
+[
+  {
+    "column": 3,
+    "endColumn": 17,
+    "endLine": 2,
+    "line": 2,
+    "message": "Unexpected throw, throwing exceptions is not functional.",
+    "messageId": "generic",
+    "nodeType": "ThrowStatement",
+    "ruleId": "no-throw-statements",
+    "severity": 2,
+  },
+]
+`;

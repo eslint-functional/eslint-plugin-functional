@@ -22,11 +22,7 @@ export default rsEslint(
           allowDefaultProject: glob
             .sync("./**/*.md", {
               cwd: import.meta.dirname,
-              ignore: [
-                "**/node_modules/**",
-                "**/coverage/**",
-                "**/tests-compiled/**",
-              ],
+              ignore: ["**/node_modules/**", "**/coverage/**"],
             })
             .map((file) => `${file}/*`),
           maximumDefaultProjectFileMatchCount_THIS_WILL_SLOW_DOWN_LINTING: 1000,

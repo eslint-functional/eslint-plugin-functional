@@ -1,9 +1,0 @@
-{
-  "extends": "./tsconfig.base.json",
-  "compilerOptions": {
-    "sourceMap": true,
-    "outDir": "tests-compiled",
-    "skipLibCheck": true
-  },
-  "include": ["src", "tests", "typings"]
-}

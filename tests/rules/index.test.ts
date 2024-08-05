@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import { rules } from "#/rules";
 
 describe("rules index", () => {
-  it("to import all rule files", () => {
+  it("import all the rule files", () => {
     const rulesNames: string[] = Object.keys(rules);
     const files: string[] = fs
       .readdirSync("./src/rules")

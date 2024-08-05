@@ -1,0 +1,97 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`no-return-void > typescript > options > allowNull > reports null returning functions when disallowed 1`] = `
+[
+  {
+    "column": 26,
+    "endColumn": 32,
+    "endLine": 1,
+    "line": 1,
+    "message": "Function must return a value.",
+    "messageId": "generic",
+    "nodeType": "TSTypeAnnotation",
+    "ruleId": "no-return-void",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`no-return-void > typescript > options > allowNull > reports null returning functions with inferred return type when disallowed 1`] = `
+[
+  {
+    "column": 1,
+    "endColumn": 2,
+    "endLine": 3,
+    "line": 1,
+    "message": "Function must return a value.",
+    "messageId": "generic",
+    "nodeType": "FunctionDeclaration",
+    "ruleId": "no-return-void",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`no-return-void > typescript > options > allowUndefined > reports undefined returning functions when disallowed 1`] = `
+[
+  {
+    "column": 26,
+    "endColumn": 37,
+    "endLine": 1,
+    "line": 1,
+    "message": "Function must return a value.",
+    "messageId": "generic",
+    "nodeType": "TSTypeAnnotation",
+    "ruleId": "no-return-void",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`no-return-void > typescript > options > allowUndefined > reports undefined returning functions with inferred return type when disallowed 1`] = `
+[
+  {
+    "column": 1,
+    "endColumn": 2,
+    "endLine": 3,
+    "line": 1,
+    "message": "Function must return a value.",
+    "messageId": "generic",
+    "nodeType": "FunctionDeclaration",
+    "ruleId": "no-return-void",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`no-return-void > typescript > reports void returning functions 1`] = `
+[
+  {
+    "column": 26,
+    "endColumn": 32,
+    "endLine": 1,
+    "line": 1,
+    "message": "Function must return a value.",
+    "messageId": "generic",
+    "nodeType": "TSTypeAnnotation",
+    "ruleId": "no-return-void",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`no-return-void > typescript > reports void returning functions with inferred return type 1`] = `
+[
+  {
+    "column": 1,
+    "endColumn": 2,
+    "endLine": 3,
+    "line": 1,
+    "message": "Function must return a value.",
+    "messageId": "generic",
+    "nodeType": "FunctionDeclaration",
+    "ruleId": "no-return-void",
+    "severity": 2,
+  },
+]
+`;

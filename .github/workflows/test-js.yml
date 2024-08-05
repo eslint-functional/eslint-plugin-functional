@@ -18,42 +18,29 @@ jobs:
           - "20"
           - "latest"
         ts_version:
-          - "next"
+          # - "next"
           - "latest"
-          - "4.7.4"
+          # - "4.7.4"
           # - "JS"
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.ts_version == 'next' }}
-    env:
-      REPORT_COVERAGE: ${{ fromJSON('["false", "true"]')[matrix.node_version == 'latest' && matrix.os == 'ubuntu-latest'] }}
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/prepare
-
-      - name: Build
-        run: pnpm run build:node
-
-      - name: Compile Tests
-        run: pnpm run build-tests
 
       - name: Setup NodeJs ${{ matrix.node_version }} for testing
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node_version }}
 
-      - name: Remove Dev TypeScript
-        run: pnpm remove typescript
-
-      - name: Add TypeScript "${{ matrix.ts_version }}"
-        if: matrix.ts_version != 'JS'
-        run: pnpm add -D typescript@"${{ matrix.ts_version }}"
+      # - name: Add TypeScript "${{ matrix.ts_version }}" for testing
+      #   run: pnpm add -D typescript@"${{ matrix.ts_version }}"
 
       - name: Run Tests
-        run: pnpm test-compiled
+        run: pnpm test:js-run
 
       - name: Report coverage
         uses: codecov/codecov-action@v4.1.1
-        if: env.REPORT_COVERAGE == 'true'
         with:
           file: coverage/lcov.info
           flags: ${{ matrix.ts_version }}

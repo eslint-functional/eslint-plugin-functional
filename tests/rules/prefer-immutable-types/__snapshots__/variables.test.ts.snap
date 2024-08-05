@@ -1,0 +1,452 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`prefer-immutable-types > typescript > allows for user fixes 1`] = `
+[
+  {
+    "column": 7,
+    "endColumn": 25,
+    "endLine": 1,
+    "line": 1,
+    "message": "Variable should have an immutability of at least "Immutable" (actual: "Mutable").",
+    "messageId": "variable",
+    "nodeType": "Identifier",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+  },
+  {
+    "column": 7,
+    "endColumn": 20,
+    "endLine": 2,
+    "line": 2,
+    "message": "Variable should have an immutability of at least "Immutable" (actual: "Mutable").",
+    "messageId": "variable",
+    "nodeType": "Identifier",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+  },
+  {
+    "column": 7,
+    "endColumn": 23,
+    "endLine": 3,
+    "fix": {
+      "range": [
+        82,
+        93,
+      ],
+      "text": "Readonly<ReadonlySet<string>>",
+    },
+    "line": 3,
+    "message": "Variable should have an immutability of at least "Immutable" (actual: "Mutable").",
+    "messageId": "variable",
+    "nodeType": "Identifier",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+  },
+  {
+    "column": 7,
+    "endColumn": 31,
+    "endLine": 4,
+    "fix": {
+      "range": [
+        118,
+        137,
+      ],
+      "text": "Readonly<ReadonlyMap<string, string>>",
+    },
+    "line": 4,
+    "message": "Variable should have an immutability of at least "Immutable" (actual: "Mutable").",
+    "messageId": "variable",
+    "nodeType": "Identifier",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+  },
+  {
+    "column": 7,
+    "endColumn": 33,
+    "endLine": 5,
+    "line": 5,
+    "message": "Variable should have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
+    "messageId": "variable",
+    "nodeType": "Identifier",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+  },
+  {
+    "column": 7,
+    "endColumn": 29,
+    "endLine": 6,
+    "line": 6,
+    "message": "Variable should have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
+    "messageId": "variable",
+    "nodeType": "Identifier",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+  },
+  {
+    "column": 7,
+    "endColumn": 31,
+    "endLine": 7,
+    "fix": {
+      "range": [
+        250,
+        269,
+      ],
+      "text": "Readonly<ReadonlySet<string>>",
+    },
+    "line": 7,
+    "message": "Variable should have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
+    "messageId": "variable",
+    "nodeType": "Identifier",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+  },
+  {
+    "column": 7,
+    "endColumn": 39,
+    "endLine": 8,
+    "fix": {
+      "range": [
+        294,
+        321,
+      ],
+      "text": "Readonly<ReadonlyMap<string, string>>",
+    },
+    "line": 8,
+    "message": "Variable should have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
+    "messageId": "variable",
+    "nodeType": "Identifier",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`prefer-immutable-types > typescript > allows for user suggestions 1`] = `
+[
+  {
+    "column": 7,
+    "endColumn": 27,
+    "endLine": 1,
+    "line": 1,
+    "message": "Variable should have an immutability of at least "ReadonlyDeep" (actual: "Mutable").",
+    "messageId": "variable",
+    "nodeType": "Identifier",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+    "suggestions": [
+      {
+        "data": {
+          "message": "Replace with: ReadonlyDeep<{ foo: string }>",
+        },
+        "desc": "Replace with: ReadonlyDeep<{ foo: string }>",
+        "fix": {
+          "range": [
+            11,
+            26,
+          ],
+          "text": "ReadonlyDeep<{ foo: string }>",
+        },
+        "messageId": "userDefined",
+      },
+    ],
+  },
+]
+`;
+
+exports[`prefer-immutable-types > typescript > reports mutable class parameter properties 1`] = `
+[
+  {
+    "column": 3,
+    "endColumn": 33,
+    "endLine": 2,
+    "line": 2,
+    "message": "Property should have an immutability of at least "Immutable" (actual: "Mutable").",
+    "messageId": "propertyImmutability",
+    "nodeType": "PropertyDefinition",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+  },
+  {
+    "column": 3,
+    "endColumn": 41,
+    "endLine": 3,
+    "line": 3,
+    "message": "Property should have an immutability of at least "Immutable" (actual: "Mutable").",
+    "messageId": "propertyImmutability",
+    "nodeType": "PropertyDefinition",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+  },
+  {
+    "column": 3,
+    "endColumn": 40,
+    "endLine": 4,
+    "line": 4,
+    "message": "Property should have an immutability of at least "Immutable" (actual: "Mutable").",
+    "messageId": "propertyImmutability",
+    "nodeType": "PropertyDefinition",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+  },
+  {
+    "column": 3,
+    "endColumn": 48,
+    "endLine": 5,
+    "line": 5,
+    "message": "Property should have an immutability of at least "Immutable" (actual: "Mutable").",
+    "messageId": "propertyImmutability",
+    "nodeType": "PropertyDefinition",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`prefer-immutable-types > typescript > reports mutable records variables 1`] = `
+[
+  {
+    "column": 7,
+    "endColumn": 27,
+    "endLine": 1,
+    "line": 1,
+    "message": "Variable should have an immutability of at least "Immutable" (actual: "Mutable").",
+    "messageId": "variable",
+    "nodeType": "Identifier",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`prefer-immutable-types > typescript > reports mutable records variables and suggests a fix for ReadonlyShallow 1`] = `
+[
+  {
+    "column": 7,
+    "endColumn": 27,
+    "endLine": 1,
+    "line": 1,
+    "message": "Variable should have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
+    "messageId": "variable",
+    "nodeType": "Identifier",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+    "suggestions": [
+      {
+        "data": {
+          "message": "Surround with Readonly.",
+        },
+        "desc": "Surround with Readonly.",
+        "fix": {
+          "range": [
+            11,
+            26,
+          ],
+          "text": "Readonly<{ foo: string }>",
+        },
+        "messageId": "userDefined",
+      },
+    ],
+  },
+]
+`;
+
+exports[`prefer-immutable-types > typescript > reports non-immutable map variables 1`] = `
+[
+  {
+    "column": 7,
+    "endColumn": 39,
+    "endLine": 1,
+    "line": 1,
+    "message": "Variable should have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
+    "messageId": "variable",
+    "nodeType": "Identifier",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`prefer-immutable-types > typescript > reports non-immutable set variables 1`] = `
+[
+  {
+    "column": 7,
+    "endColumn": 31,
+    "endLine": 1,
+    "line": 1,
+    "message": "Variable should have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
+    "messageId": "variable",
+    "nodeType": "Identifier",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`prefer-immutable-types > typescript > suggest multiple fixes for collections for ReadonlyShallow 1`] = `
+[
+  {
+    "column": 7,
+    "endColumn": 25,
+    "endLine": 1,
+    "line": 1,
+    "message": "Variable should have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
+    "messageId": "variable",
+    "nodeType": "Identifier",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+    "suggestions": [
+      {
+        "data": {
+          "message": "Use ReadonlyArray instead of Array.",
+        },
+        "desc": "Use ReadonlyArray instead of Array.",
+        "fix": {
+          "range": [
+            11,
+            24,
+          ],
+          "text": "ReadonlyArray<string>",
+        },
+        "messageId": "userDefined",
+      },
+      {
+        "data": {
+          "message": "Surround with Readonly.",
+        },
+        "desc": "Surround with Readonly.",
+        "fix": {
+          "range": [
+            11,
+            24,
+          ],
+          "text": "Readonly<Array<string>>",
+        },
+        "messageId": "userDefined",
+      },
+    ],
+  },
+  {
+    "column": 7,
+    "endColumn": 20,
+    "endLine": 2,
+    "line": 2,
+    "message": "Variable should have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
+    "messageId": "variable",
+    "nodeType": "Identifier",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+    "suggestions": [
+      {
+        "data": {
+          "message": "Prepend with readonly.",
+        },
+        "desc": "Prepend with readonly.",
+        "fix": {
+          "range": [
+            49,
+            57,
+          ],
+          "text": "readonly string[]",
+        },
+        "messageId": "userDefined",
+      },
+      {
+        "data": {
+          "message": "Surround with Readonly.",
+        },
+        "desc": "Surround with Readonly.",
+        "fix": {
+          "range": [
+            49,
+            57,
+          ],
+          "text": "Readonly<string[]>",
+        },
+        "messageId": "userDefined",
+      },
+    ],
+  },
+  {
+    "column": 7,
+    "endColumn": 23,
+    "endLine": 3,
+    "line": 3,
+    "message": "Variable should have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
+    "messageId": "variable",
+    "nodeType": "Identifier",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+    "suggestions": [
+      {
+        "data": {
+          "message": "Use ReadonlySet instead of Set.",
+        },
+        "desc": "Use ReadonlySet instead of Set.",
+        "fix": {
+          "range": [
+            82,
+            93,
+          ],
+          "text": "ReadonlySet<string>",
+        },
+        "messageId": "userDefined",
+      },
+      {
+        "data": {
+          "message": "Surround with Readonly.",
+        },
+        "desc": "Surround with Readonly.",
+        "fix": {
+          "range": [
+            82,
+            93,
+          ],
+          "text": "Readonly<Set<string>>",
+        },
+        "messageId": "userDefined",
+      },
+    ],
+  },
+  {
+    "column": 7,
+    "endColumn": 31,
+    "endLine": 4,
+    "line": 4,
+    "message": "Variable should have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
+    "messageId": "variable",
+    "nodeType": "Identifier",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+    "suggestions": [
+      {
+        "data": {
+          "message": "Use ReadonlyMap instead of Map.",
+        },
+        "desc": "Use ReadonlyMap instead of Map.",
+        "fix": {
+          "range": [
+            118,
+            137,
+          ],
+          "text": "ReadonlyMap<string, string>",
+        },
+        "messageId": "userDefined",
+      },
+      {
+        "data": {
+          "message": "Surround with Readonly.",
+        },
+        "desc": "Surround with Readonly.",
+        "fix": {
+          "range": [
+            118,
+            137,
+          ],
+          "text": "Readonly<Map<string, string>>",
+        },
+        "messageId": "userDefined",
+      },
+    ],
+  },
+]
+`;

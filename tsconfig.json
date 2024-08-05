@@ -6,6 +6,5 @@
     "rootDir": ".",
     "isolatedDeclarations": false
   },
-  "include": [".", ".*", "**/*", "**/.*"],
-  "exclude": ["tests-compiled"]
+  "include": [".", ".*", "**/*", "**/.*"]
 }

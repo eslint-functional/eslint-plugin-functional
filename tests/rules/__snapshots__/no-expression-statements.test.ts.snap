@@ -1,0 +1,49 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`no-expression-statements > javascript - es latest > options > ignoreCodePattern 1`] = `
+[
+  {
+    "column": 1,
+    "endColumn": 17,
+    "endLine": 1,
+    "line": 1,
+    "message": "Using expressions to cause side-effects not allowed.",
+    "messageId": "generic",
+    "nodeType": "ExpressionStatement",
+    "ruleId": "no-expression-statements",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`no-expression-statements > javascript - es latest > reports expression statements 1`] = `
+[
+  {
+    "column": 1,
+    "endColumn": 11,
+    "endLine": 2,
+    "line": 2,
+    "message": "Using expressions to cause side-effects not allowed.",
+    "messageId": "generic",
+    "nodeType": "ExpressionStatement",
+    "ruleId": "no-expression-statements",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`no-expression-statements > typescript > options > ignoreSelfReturning 1`] = `
+[
+  {
+    "column": 1,
+    "endColumn": 7,
+    "endLine": 2,
+    "line": 2,
+    "message": "Using expressions to cause side-effects not allowed.",
+    "messageId": "generic",
+    "nodeType": "ExpressionStatement",
+    "ruleId": "no-expression-statements",
+    "severity": 2,
+  },
+]
+`;

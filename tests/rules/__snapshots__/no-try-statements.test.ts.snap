@@ -1,0 +1,49 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`no-try-statements > javascript - es latest > options > allowCatch > reports try statements with catch and finally 1`] = `
+[
+  {
+    "column": 1,
+    "endColumn": 2,
+    "endLine": 7,
+    "line": 1,
+    "message": "Unexpected try-finally, this pattern is not functional.",
+    "messageId": "finally",
+    "nodeType": "TryStatement",
+    "ruleId": "no-try-statements",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`no-try-statements > javascript - es latest > options > allowFinally > reports try statements with catch and finally 1`] = `
+[
+  {
+    "column": 1,
+    "endColumn": 2,
+    "endLine": 7,
+    "line": 1,
+    "message": "Unexpected try-catch, this pattern is not functional.",
+    "messageId": "catch",
+    "nodeType": "TryStatement",
+    "ruleId": "no-try-statements",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`no-try-statements > javascript - es latest > reports try statements 1`] = `
+[
+  {
+    "column": 1,
+    "endColumn": 2,
+    "endLine": 5,
+    "line": 1,
+    "message": "Unexpected try-catch, this pattern is not functional.",
+    "messageId": "catch",
+    "nodeType": "TryStatement",
+    "ruleId": "no-try-statements",
+    "severity": 2,
+  },
+]
+`;

@@ -1,0 +1,33 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`no-classes > javascript - es latest > reports class declarations 1`] = `
+[
+  {
+    "column": 1,
+    "endColumn": 13,
+    "endLine": 1,
+    "line": 1,
+    "message": "Unexpected class, use functions not classes.",
+    "messageId": "generic",
+    "nodeType": "ClassDeclaration",
+    "ruleId": "no-classes",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`no-classes > javascript - es latest > reports class declarations 2`] = `
+[
+  {
+    "column": 15,
+    "endColumn": 23,
+    "endLine": 1,
+    "line": 1,
+    "message": "Unexpected class, use functions not classes.",
+    "messageId": "generic",
+    "nodeType": "ClassExpression",
+    "ruleId": "no-classes",
+    "severity": 2,
+  },
+]
+`;

@@ -1,0 +1,44 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`no-this-expressions > javascript - es latest > reports this expressions 1`] = `
+{
+  "fixed": false,
+  "messages": [
+    {
+      "column": 3,
+      "endColumn": 7,
+      "endLine": 2,
+      "line": 2,
+      "message": "Unexpected this, use functions not classes.",
+      "messageId": "generic",
+      "nodeType": "ThisExpression",
+      "ruleId": "no-this-expressions",
+      "severity": 2,
+    },
+  ],
+  "output": "function foo() {
+  this.bar();
+}",
+  "steps": [
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 3,
+          "endColumn": 7,
+          "endLine": 2,
+          "line": 2,
+          "message": "Unexpected this, use functions not classes.",
+          "messageId": "generic",
+          "nodeType": "ThisExpression",
+          "ruleId": "rule-to-test/no-this-expressions",
+          "severity": 2,
+        },
+      ],
+      "output": "function foo() {
+  this.bar();
+}",
+    },
+  ],
+}
+`;

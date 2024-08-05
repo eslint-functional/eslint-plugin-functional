@@ -1,0 +1,668 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`prefer-readonly-type > typescript > options > ignoreClass > reports non-field issues in classes - fieldsOnly 1`] = `
+[
+  {
+    "column": 7,
+    "endColumn": 19,
+    "endLine": 9,
+    "fix": {
+      "range": [
+        136,
+        136,
+      ],
+      "text": "readonly ",
+    },
+    "line": 9,
+    "message": "A readonly modifier is required.",
+    "messageId": "property",
+    "nodeType": "TSPropertySignature",
+    "ruleId": "prefer-readonly-type",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`prefer-readonly-type > typescript > reports issue inside interfaces 1`] = `
+[
+  {
+    "column": 17,
+    "endColumn": 30,
+    "endLine": 2,
+    "fix": {
+      "range": [
+        32,
+        37,
+      ],
+      "text": "ReadonlyArray",
+    },
+    "line": 2,
+    "message": "Only readonly types allowed.",
+    "messageId": "type",
+    "nodeType": "TSTypeReference",
+    "ruleId": "prefer-readonly-type",
+    "severity": 2,
+  },
+  {
+    "column": 25,
+    "endColumn": 38,
+    "endLine": 3,
+    "fix": {
+      "range": [
+        71,
+        76,
+      ],
+      "text": "ReadonlyArray",
+    },
+    "line": 3,
+    "message": "Only readonly types allowed.",
+    "messageId": "type",
+    "nodeType": "TSTypeReference",
+    "ruleId": "prefer-readonly-type",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`prefer-readonly-type > typescript > reports issues with index signatures 1`] = `
+[
+  {
+    "column": 17,
+    "endColumn": 30,
+    "endLine": 3,
+    "fix": {
+      "range": [
+        60,
+        65,
+      ],
+      "text": "ReadonlyArray",
+    },
+    "line": 3,
+    "message": "Only readonly types allowed.",
+    "messageId": "type",
+    "nodeType": "TSTypeReference",
+    "ruleId": "prefer-readonly-type",
+    "severity": 2,
+  },
+  {
+    "column": 25,
+    "endColumn": 38,
+    "endLine": 4,
+    "fix": {
+      "range": [
+        99,
+        104,
+      ],
+      "text": "ReadonlyArray",
+    },
+    "line": 4,
+    "message": "Only readonly types allowed.",
+    "messageId": "type",
+    "nodeType": "TSTypeReference",
+    "ruleId": "prefer-readonly-type",
+    "severity": 2,
+  },
+  {
+    "column": 3,
+    "endColumn": 24,
+    "endLine": 8,
+    "fix": {
+      "range": [
+        140,
+        140,
+      ],
+      "text": "readonly ",
+    },
+    "line": 8,
+    "message": "A readonly modifier is required.",
+    "messageId": "property",
+    "nodeType": "TSIndexSignature",
+    "ruleId": "prefer-readonly-type",
+    "severity": 2,
+  },
+  {
+    "column": 3,
+    "endColumn": 34,
+    "endLine": 11,
+    "fix": {
+      "range": [
+        182,
+        182,
+      ],
+      "text": "readonly ",
+    },
+    "line": 11,
+    "message": "A readonly modifier is required.",
+    "messageId": "property",
+    "nodeType": "TSIndexSignature",
+    "ruleId": "prefer-readonly-type",
+    "severity": 2,
+  },
+  {
+    "column": 20,
+    "endColumn": 32,
+    "endLine": 11,
+    "fix": {
+      "range": [
+        199,
+        199,
+      ],
+      "text": "readonly ",
+    },
+    "line": 11,
+    "message": "A readonly modifier is required.",
+    "messageId": "property",
+    "nodeType": "TSPropertySignature",
+    "ruleId": "prefer-readonly-type",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`prefer-readonly-type > typescript > reports issues with mapped types 1`] = `
+[
+  {
+    "column": 18,
+    "endColumn": 45,
+    "endLine": 1,
+    "fix": {
+      "range": [
+        18,
+        18,
+      ],
+      "text": " readonly",
+    },
+    "line": 1,
+    "message": "A readonly modifier is required.",
+    "messageId": "property",
+    "nodeType": "TSMappedType",
+    "ruleId": "prefer-readonly-type",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`prefer-readonly-type > typescript > reports literals without readonly modifiers 1`] = `
+[
+  {
+    "column": 3,
+    "endColumn": 13,
+    "endLine": 2,
+    "fix": {
+      "range": [
+        13,
+        13,
+      ],
+      "text": "readonly ",
+    },
+    "line": 2,
+    "message": "A readonly modifier is required.",
+    "messageId": "property",
+    "nodeType": "TSPropertySignature",
+    "ruleId": "prefer-readonly-type",
+    "severity": 2,
+  },
+  {
+    "column": 3,
+    "endColumn": 28,
+    "endLine": 3,
+    "fix": {
+      "range": [
+        26,
+        26,
+      ],
+      "text": "readonly ",
+    },
+    "line": 3,
+    "message": "A readonly modifier is required.",
+    "messageId": "property",
+    "nodeType": "TSPropertySignature",
+    "ruleId": "prefer-readonly-type",
+    "severity": 2,
+  },
+  {
+    "column": 3,
+    "endColumn": 19,
+    "endLine": 4,
+    "fix": {
+      "range": [
+        54,
+        54,
+      ],
+      "text": "readonly ",
+    },
+    "line": 4,
+    "message": "A readonly modifier is required.",
+    "messageId": "property",
+    "nodeType": "TSPropertySignature",
+    "ruleId": "prefer-readonly-type",
+    "severity": 2,
+  },
+  {
+    "column": 3,
+    "endColumn": 41,
+    "endLine": 5,
+    "fix": {
+      "range": [
+        73,
+        73,
+      ],
+      "text": "readonly ",
+    },
+    "line": 5,
+    "message": "A readonly modifier is required.",
+    "messageId": "property",
+    "nodeType": "TSPropertySignature",
+    "ruleId": "prefer-readonly-type",
+    "severity": 2,
+  },
+  {
+    "column": 3,
+    "endColumn": 25,
+    "endLine": 6,
+    "fix": {
+      "range": [
+        114,
+        114,
+      ],
+      "text": "readonly ",
+    },
+    "line": 6,
+    "message": "A readonly modifier is required.",
+    "messageId": "property",
+    "nodeType": "TSIndexSignature",
+    "ruleId": "prefer-readonly-type",
+    "severity": 2,
+  },
+  {
+    "column": 5,
+    "endColumn": 15,
+    "endLine": 8,
+    "fix": {
+      "range": [
+        157,
+        157,
+      ],
+      "text": "readonly ",
+    },
+    "line": 8,
+    "message": "A readonly modifier is required.",
+    "messageId": "property",
+    "nodeType": "TSPropertySignature",
+    "ruleId": "prefer-readonly-type",
+    "severity": 2,
+  },
+  {
+    "column": 5,
+    "endColumn": 30,
+    "endLine": 9,
+    "fix": {
+      "range": [
+        172,
+        172,
+      ],
+      "text": "readonly ",
+    },
+    "line": 9,
+    "message": "A readonly modifier is required.",
+    "messageId": "property",
+    "nodeType": "TSPropertySignature",
+    "ruleId": "prefer-readonly-type",
+    "severity": 2,
+  },
+  {
+    "column": 5,
+    "endColumn": 21,
+    "endLine": 10,
+    "fix": {
+      "range": [
+        202,
+        202,
+      ],
+      "text": "readonly ",
+    },
+    "line": 10,
+    "message": "A readonly modifier is required.",
+    "messageId": "property",
+    "nodeType": "TSPropertySignature",
+    "ruleId": "prefer-readonly-type",
+    "severity": 2,
+  },
+  {
+    "column": 5,
+    "endColumn": 43,
+    "endLine": 11,
+    "fix": {
+      "range": [
+        223,
+        223,
+      ],
+      "text": "readonly ",
+    },
+    "line": 11,
+    "message": "A readonly modifier is required.",
+    "messageId": "property",
+    "nodeType": "TSPropertySignature",
+    "ruleId": "prefer-readonly-type",
+    "severity": 2,
+  },
+  {
+    "column": 5,
+    "endColumn": 27,
+    "endLine": 12,
+    "fix": {
+      "range": [
+        266,
+        266,
+      ],
+      "text": "readonly ",
+    },
+    "line": 12,
+    "message": "A readonly modifier is required.",
+    "messageId": "property",
+    "nodeType": "TSIndexSignature",
+    "ruleId": "prefer-readonly-type",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`prefer-readonly-type > typescript > reports mutable array (non-generic) 1`] = `
+[
+  {
+    "column": 17,
+    "endColumn": 25,
+    "endLine": 1,
+    "fix": {
+      "range": [
+        16,
+        16,
+      ],
+      "text": "readonly ",
+    },
+    "line": 1,
+    "message": "Only readonly arrays allowed.",
+    "messageId": "array",
+    "nodeType": "TSArrayType",
+    "ruleId": "prefer-readonly-type",
+    "severity": 2,
+  },
+  {
+    "column": 38,
+    "endColumn": 46,
+    "endLine": 1,
+    "fix": {
+      "range": [
+        37,
+        37,
+      ],
+      "text": "readonly ",
+    },
+    "line": 1,
+    "message": "Only readonly arrays allowed.",
+    "messageId": "array",
+    "nodeType": "TSArrayType",
+    "ruleId": "prefer-readonly-type",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`prefer-readonly-type > typescript > reports mutable arrays (generic) 1`] = `
+[
+  {
+    "column": 17,
+    "endColumn": 30,
+    "endLine": 1,
+    "fix": {
+      "range": [
+        16,
+        21,
+      ],
+      "text": "ReadonlyArray",
+    },
+    "line": 1,
+    "message": "Only readonly types allowed.",
+    "messageId": "type",
+    "nodeType": "TSTypeReference",
+    "ruleId": "prefer-readonly-type",
+    "severity": 2,
+  },
+  {
+    "column": 43,
+    "endColumn": 56,
+    "endLine": 1,
+    "fix": {
+      "range": [
+        42,
+        47,
+      ],
+      "text": "ReadonlyArray",
+    },
+    "line": 1,
+    "message": "Only readonly types allowed.",
+    "messageId": "type",
+    "nodeType": "TSTypeReference",
+    "ruleId": "prefer-readonly-type",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`prefer-readonly-type > typescript > reports mutable maps 1`] = `
+[
+  {
+    "column": 17,
+    "endColumn": 28,
+    "endLine": 1,
+    "fix": {
+      "range": [
+        16,
+        19,
+      ],
+      "text": "ReadonlyMap",
+    },
+    "line": 1,
+    "message": "Only readonly types allowed.",
+    "messageId": "type",
+    "nodeType": "TSTypeReference",
+    "ruleId": "prefer-readonly-type",
+    "severity": 2,
+  },
+  {
+    "column": 41,
+    "endColumn": 52,
+    "endLine": 1,
+    "fix": {
+      "range": [
+        40,
+        43,
+      ],
+      "text": "ReadonlyMap",
+    },
+    "line": 1,
+    "message": "Only readonly types allowed.",
+    "messageId": "type",
+    "nodeType": "TSTypeReference",
+    "ruleId": "prefer-readonly-type",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`prefer-readonly-type > typescript > reports mutable sets 1`] = `
+[
+  {
+    "column": 17,
+    "endColumn": 28,
+    "endLine": 1,
+    "fix": {
+      "range": [
+        16,
+        19,
+      ],
+      "text": "ReadonlySet",
+    },
+    "line": 1,
+    "message": "Only readonly types allowed.",
+    "messageId": "type",
+    "nodeType": "TSTypeReference",
+    "ruleId": "prefer-readonly-type",
+    "severity": 2,
+  },
+  {
+    "column": 41,
+    "endColumn": 52,
+    "endLine": 1,
+    "fix": {
+      "range": [
+        40,
+        43,
+      ],
+      "text": "ReadonlySet",
+    },
+    "line": 1,
+    "message": "Only readonly types allowed.",
+    "messageId": "type",
+    "nodeType": "TSTypeReference",
+    "ruleId": "prefer-readonly-type",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`prefer-readonly-type > typescript > reports non-readonly class parameter properties 1`] = `
+[
+  {
+    "column": 5,
+    "endColumn": 30,
+    "endLine": 3,
+    "fix": {
+      "range": [
+        41,
+        41,
+      ],
+      "text": "readonly ",
+    },
+    "line": 3,
+    "message": "A readonly modifier is required.",
+    "messageId": "property",
+    "nodeType": "TSParameterProperty",
+    "ruleId": "prefer-readonly-type",
+    "severity": 2,
+  },
+  {
+    "column": 5,
+    "endColumn": 36,
+    "endLine": 4,
+    "fix": {
+      "range": [
+        75,
+        75,
+      ],
+      "text": "readonly ",
+    },
+    "line": 4,
+    "message": "A readonly modifier is required.",
+    "messageId": "property",
+    "nodeType": "TSParameterProperty",
+    "ruleId": "prefer-readonly-type",
+    "severity": 2,
+  },
+  {
+    "column": 5,
+    "endColumn": 32,
+    "endLine": 5,
+    "fix": {
+      "range": [
+        110,
+        110,
+      ],
+      "text": "readonly ",
+    },
+    "line": 5,
+    "message": "A readonly modifier is required.",
+    "messageId": "property",
+    "nodeType": "TSParameterProperty",
+    "ruleId": "prefer-readonly-type",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`prefer-readonly-type > typescript > reports non-readonly class properties 1`] = `
+[
+  {
+    "column": 3,
+    "endColumn": 15,
+    "endLine": 2,
+    "fix": {
+      "range": [
+        16,
+        16,
+      ],
+      "text": "readonly ",
+    },
+    "line": 2,
+    "message": "A readonly modifier is required.",
+    "messageId": "property",
+    "nodeType": "PropertyDefinition",
+    "ruleId": "prefer-readonly-type",
+    "severity": 2,
+  },
+  {
+    "column": 3,
+    "endColumn": 23,
+    "endLine": 3,
+    "fix": {
+      "range": [
+        39,
+        39,
+      ],
+      "text": "readonly ",
+    },
+    "line": 3,
+    "message": "A readonly modifier is required.",
+    "messageId": "property",
+    "nodeType": "PropertyDefinition",
+    "ruleId": "prefer-readonly-type",
+    "severity": 2,
+  },
+  {
+    "column": 3,
+    "endColumn": 22,
+    "endLine": 4,
+    "fix": {
+      "range": [
+        61,
+        61,
+      ],
+      "text": "readonly ",
+    },
+    "line": 4,
+    "message": "A readonly modifier is required.",
+    "messageId": "property",
+    "nodeType": "PropertyDefinition",
+    "ruleId": "prefer-readonly-type",
+    "severity": 2,
+  },
+  {
+    "column": 3,
+    "endColumn": 30,
+    "endLine": 5,
+    "fix": {
+      "range": [
+        91,
+        91,
+      ],
+      "text": "readonly ",
+    },
+    "line": 5,
+    "message": "A readonly modifier is required.",
+    "messageId": "property",
+    "nodeType": "PropertyDefinition",
+    "ruleId": "prefer-readonly-type",
+    "severity": 2,
+  },
+]
+`;

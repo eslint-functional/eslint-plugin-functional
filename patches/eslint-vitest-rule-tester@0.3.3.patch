@@ -1,0 +1,209 @@
+diff --git a/dist/index.d.mts b/dist/index.d.mts
+index f982c4d7c06d00d8f1e9f7515951582be0cc1f59..7245940c64de19f60428239bcccca0658bb64a7b 100644
+--- a/dist/index.d.mts
++++ b/dist/index.d.mts
+@@ -93,6 +93,12 @@ interface RuleTesterBehaviorOptions {
+      */
+     verifyFixChanges?: boolean;
+ }
++interface DefaultFilenames {
++    js: string;
++    jsx: string;
++    ts: string;
++    tsx: string;
++}
+ interface RuleTesterInitOptions extends CompatConfigOptions, RuleTesterBehaviorOptions {
+     /**
+      * The rule to test
+@@ -106,6 +112,11 @@ interface RuleTesterInitOptions extends CompatConfigOptions, RuleTesterBehaviorO
+      * Additional flat configs to be merged with the rule config
+      */
+     configs?: Linter.FlatConfig | Linter.FlatConfig[];
++    /**
++     * The default filenames to use for type-aware tests.
++     * @default { js: 'file.js', jsx: 'react.jsx', ts: 'file.ts', tsx: 'react.tsx' }
++     */
++    defaultFilenames?: Partial<DefaultFilenames>;
+ }
+ interface TestCasesOptions {
+     valid?: (ValidTestCase | string)[];
+@@ -116,8 +127,10 @@ interface TestCasesOptions {
+     onResult?: (_case: NormalizedTestCase, result: Linter.FixReport) => void | Promise<void>;
+ }
+ 
+-declare function normalizeTestCase(c: TestCase, type?: 'valid' | 'invalid'): NormalizedTestCase;
++declare function normalizeTestCase(c: TestCase, languageOptions: Linter.FlatConfig['languageOptions'], defaultFilenames: DefaultFilenames, type?: 'valid' | 'invalid'): NormalizedTestCase;
+ declare function normalizeCaseError(error: TestCaseError | string, rule?: RuleModule): Partial<Linter.LintMessage>;
++declare function isUsingTypeScriptParser(languageOptions: Linter.FlatConfig['languageOptions']): boolean;
++declare function isUsingTypeScriptTypings(languageOptions: Linter.FlatConfig['languageOptions']): any;
+ 
+ declare function createRuleTester(options: RuleTesterInitOptions): RuleTester;
+ 
+@@ -132,4 +145,4 @@ declare function runClassic(ruleName: string, rule: RuleModule, cases: TestCases
+ 
+ declare function pickFlatConfigFromOptions(options: CompatConfigOptions): Linter.FlatConfig | undefined;
+ 
+-export { type CompatConfigOptions, type InvalidTestCase, type InvalidTestCaseBase, type NormalizedTestCase, type RuleModule, type RuleTester, type RuleTesterBehaviorOptions, type RuleTesterInitOptions, type TestCase, type TestCaseError, type TestCasesOptions, type TestExecutionResult, type ValidTestCase, type ValidTestCaseBase, createRuleTester, normalizeCaseError, normalizeTestCase, pickFlatConfigFromOptions, run, runClassic };
++export { type CompatConfigOptions, type DefaultFilenames, type InvalidTestCase, type InvalidTestCaseBase, type NormalizedTestCase, type RuleModule, type RuleTester, type RuleTesterBehaviorOptions, type RuleTesterInitOptions, type TestCase, type TestCaseError, type TestCasesOptions, type TestExecutionResult, type ValidTestCase, type ValidTestCaseBase, createRuleTester, isUsingTypeScriptParser, isUsingTypeScriptTypings, normalizeCaseError, normalizeTestCase, pickFlatConfigFromOptions, run, runClassic };
+diff --git a/dist/index.d.ts b/dist/index.d.ts
+index f982c4d7c06d00d8f1e9f7515951582be0cc1f59..7245940c64de19f60428239bcccca0658bb64a7b 100644
+--- a/dist/index.d.ts
++++ b/dist/index.d.ts
+@@ -93,6 +93,12 @@ interface RuleTesterBehaviorOptions {
+      */
+     verifyFixChanges?: boolean;
+ }
++interface DefaultFilenames {
++    js: string;
++    jsx: string;
++    ts: string;
++    tsx: string;
++}
+ interface RuleTesterInitOptions extends CompatConfigOptions, RuleTesterBehaviorOptions {
+     /**
+      * The rule to test
+@@ -106,6 +112,11 @@ interface RuleTesterInitOptions extends CompatConfigOptions, RuleTesterBehaviorO
+      * Additional flat configs to be merged with the rule config
+      */
+     configs?: Linter.FlatConfig | Linter.FlatConfig[];
++    /**
++     * The default filenames to use for type-aware tests.
++     * @default { js: 'file.js', jsx: 'react.jsx', ts: 'file.ts', tsx: 'react.tsx' }
++     */
++    defaultFilenames?: Partial<DefaultFilenames>;
+ }
+ interface TestCasesOptions {
+     valid?: (ValidTestCase | string)[];
+@@ -116,8 +127,10 @@ interface TestCasesOptions {
+     onResult?: (_case: NormalizedTestCase, result: Linter.FixReport) => void | Promise<void>;
+ }
+ 
+-declare function normalizeTestCase(c: TestCase, type?: 'valid' | 'invalid'): NormalizedTestCase;
++declare function normalizeTestCase(c: TestCase, languageOptions: Linter.FlatConfig['languageOptions'], defaultFilenames: DefaultFilenames, type?: 'valid' | 'invalid'): NormalizedTestCase;
+ declare function normalizeCaseError(error: TestCaseError | string, rule?: RuleModule): Partial<Linter.LintMessage>;
++declare function isUsingTypeScriptParser(languageOptions: Linter.FlatConfig['languageOptions']): boolean;
++declare function isUsingTypeScriptTypings(languageOptions: Linter.FlatConfig['languageOptions']): any;
+ 
+ declare function createRuleTester(options: RuleTesterInitOptions): RuleTester;
+ 
+@@ -132,4 +145,4 @@ declare function runClassic(ruleName: string, rule: RuleModule, cases: TestCases
+ 
+ declare function pickFlatConfigFromOptions(options: CompatConfigOptions): Linter.FlatConfig | undefined;
+ 
+-export { type CompatConfigOptions, type InvalidTestCase, type InvalidTestCaseBase, type NormalizedTestCase, type RuleModule, type RuleTester, type RuleTesterBehaviorOptions, type RuleTesterInitOptions, type TestCase, type TestCaseError, type TestCasesOptions, type TestExecutionResult, type ValidTestCase, type ValidTestCaseBase, createRuleTester, normalizeCaseError, normalizeTestCase, pickFlatConfigFromOptions, run, runClassic };
++export { type CompatConfigOptions, type DefaultFilenames, type InvalidTestCase, type InvalidTestCaseBase, type NormalizedTestCase, type RuleModule, type RuleTester, type RuleTesterBehaviorOptions, type RuleTesterInitOptions, type TestCase, type TestCaseError, type TestCasesOptions, type TestExecutionResult, type ValidTestCase, type ValidTestCaseBase, createRuleTester, isUsingTypeScriptParser, isUsingTypeScriptTypings, normalizeCaseError, normalizeTestCase, pickFlatConfigFromOptions, run, runClassic };
+diff --git a/dist/index.mjs b/dist/index.mjs
+index b10c991352ad54b17a05f8e41fe6d4b5e1f77ea1..b426a2540622b4bfd31d70598f971a280fe53ec5 100644
+--- a/dist/index.mjs
++++ b/dist/index.mjs
+@@ -1,4 +1,6 @@
+-import { objectPick, toArray } from '@antfu/utils';
++import path from 'node:path';
++import process from 'node:process';
++import { objectPick, deepMerge, toArray } from '@antfu/utils';
+ export { unindent as $, unindent } from '@antfu/utils';
+ import { Linter } from 'eslint';
+ import { expect, describe, it } from 'vitest';
+@@ -17,10 +19,21 @@ function interpolate(text, data) {
+   );
+ }
+ 
+-function normalizeTestCase(c, type) {
++function normalizeTestCase(c, languageOptions, defaultFilenames, type) {
+   const obj = typeof c === "string" ? { code: c } : { ...c };
+   const normalized = obj;
+   normalized.type || (normalized.type = type || ("errors" in obj || "output" in obj ? "invalid" : "valid"));
++  if (isUsingTypeScriptParser(languageOptions)) {
++    normalized.filename || (normalized.filename = getDefaultTypeScriptFilename(languageOptions, defaultFilenames));
++    normalized.parserOptions = {
++      ecmaVersion: "latest",
++      sourceType: "module",
++      disallowAutomaticSingleRunInference: true,
++      ...normalized.parserOptions
++    };
++  } else {
++    normalized.filename || (normalized.filename = getDefaultJavaScriptFilename(languageOptions, defaultFilenames));
++  }
+   return normalized;
+ }
+ function normalizeCaseError(error, rule) {
+@@ -46,6 +59,20 @@ function normalizeCaseError(error, rule) {
+   }
+   return clone;
+ }
++function getDefaultJavaScriptFilename(languageOptions, defaultFilenames) {
++  return languageOptions?.parserOptions?.ecmaFeatures?.jsx ? defaultFilenames.jsx : defaultFilenames.js;
++}
++function getDefaultTypeScriptFilename(languageOptions, defaultFilenames) {
++  const rootPath = (isUsingTypeScriptTypings(languageOptions) ? languageOptions?.parserOptions?.tsconfigRootDir : void 0) ?? process.cwd();
++  const filename = languageOptions?.parserOptions?.ecmaFeatures?.jsx ? defaultFilenames.tsx : defaultFilenames.ts;
++  return path.join(rootPath, filename);
++}
++function isUsingTypeScriptParser(languageOptions) {
++  return languageOptions?.parser?.meta?.name === "typescript-eslint/parser";
++}
++function isUsingTypeScriptTypings(languageOptions) {
++  return languageOptions?.parserOptions?.program || languageOptions?.parserOptions?.project || languageOptions?.parserOptions?.projectService;
++}
+ 
+ const BOM = "\uFEFF";
+ function compareMessagesByFixRange(a, b) {
+@@ -139,15 +166,32 @@ function pickFlatConfigFromOptions(options) {
+ }
+ 
+ function createRuleTester(options) {
+-  const linter = new Linter({ configType: "flat" });
++  const languageOptions = deepMerge(
++    options.languageOptions ?? {
++      parser: options.parser,
++      parserOptions: options.parserOptions
++    },
++    ...toArray(options.configs).map((c) => c.languageOptions).filter((c) => c !== void 0)
++  );
++  const linter = new Linter({
++    configType: "flat",
++    cwd: isUsingTypeScriptParser(options) ? languageOptions?.parserOptions?.tsconfigRootDir : void 0
++  });
+   const defaultConfigs = toArray(options.configs);
+   {
+     const inlineConfig = pickFlatConfigFromOptions(options);
+     if (inlineConfig)
+       defaultConfigs.unshift(inlineConfig);
+   }
++  const defaultFilenames = {
++    js: "file.js",
++    ts: "file.ts",
++    jsx: "react.jsx",
++    tsx: "react.tsx",
++    ...options.defaultFilenames
++  };
+   function each(c) {
+-    const testcase = normalizeTestCase(c);
++    const testcase = normalizeTestCase(c, languageOptions, defaultFilenames);
+     const {
+       recursive = 10,
+       verifyAfterFix = true,
+@@ -260,7 +304,7 @@ ${result.output}
+       if (cases.valid?.length) {
+         describe("valid", () => {
+           for (const c of cases.valid) {
+-            const _case = normalizeTestCase(c, "valid");
++            const _case = normalizeTestCase(c, languageOptions, defaultFilenames, "valid");
+             let run2 = it;
+             if (_case.only)
+               run2 = it.only;
+@@ -276,7 +320,7 @@ ${result.output}
+       if (cases.invalid?.length) {
+         describe("invalid", () => {
+           for (const c of cases.invalid) {
+-            const _case = normalizeTestCase(c, "invalid");
++            const _case = normalizeTestCase(c, languageOptions, defaultFilenames, "invalid");
+             let run2 = it;
+             if (_case.only)
+               run2 = it.only;
+@@ -312,4 +356,4 @@ function runClassic(ruleName, rule, cases, options) {
+   return tester.run(cases);
+ }
+ 
+-export { createRuleTester, normalizeCaseError, normalizeTestCase, pickFlatConfigFromOptions, run, runClassic };
++export { createRuleTester, isUsingTypeScriptParser, isUsingTypeScriptTypings, normalizeCaseError, normalizeTestCase, pickFlatConfigFromOptions, run, runClassic };

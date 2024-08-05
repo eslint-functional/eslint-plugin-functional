@@ -1,0 +1,627 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`prefer-immutable-types > typescript > allows for user fixes 1`] = `
+[
+  {
+    "column": 14,
+    "endColumn": 32,
+    "endLine": 1,
+    "line": 1,
+    "message": "Parameter should have an immutability of at least "Immutable" (actual: "Mutable").",
+    "messageId": "parameter",
+    "nodeType": "Identifier",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+  },
+  {
+    "column": 14,
+    "endColumn": 27,
+    "endLine": 2,
+    "line": 2,
+    "message": "Parameter should have an immutability of at least "Immutable" (actual: "Mutable").",
+    "messageId": "parameter",
+    "nodeType": "Identifier",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+  },
+  {
+    "column": 14,
+    "endColumn": 30,
+    "endLine": 3,
+    "fix": {
+      "range": [
+        85,
+        96,
+      ],
+      "text": "Readonly<ReadonlySet<string>>",
+    },
+    "line": 3,
+    "message": "Parameter should have an immutability of at least "Immutable" (actual: "Mutable").",
+    "messageId": "parameter",
+    "nodeType": "Identifier",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+  },
+  {
+    "column": 14,
+    "endColumn": 38,
+    "endLine": 4,
+    "fix": {
+      "range": [
+        119,
+        138,
+      ],
+      "text": "Readonly<ReadonlyMap<string, string>>",
+    },
+    "line": 4,
+    "message": "Parameter should have an immutability of at least "Immutable" (actual: "Mutable").",
+    "messageId": "parameter",
+    "nodeType": "Identifier",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+  },
+  {
+    "column": 14,
+    "endColumn": 40,
+    "endLine": 5,
+    "line": 5,
+    "message": "Parameter should have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
+    "messageId": "parameter",
+    "nodeType": "Identifier",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+  },
+  {
+    "column": 14,
+    "endColumn": 36,
+    "endLine": 6,
+    "line": 6,
+    "message": "Parameter should have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
+    "messageId": "parameter",
+    "nodeType": "Identifier",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+  },
+  {
+    "column": 14,
+    "endColumn": 38,
+    "endLine": 7,
+    "fix": {
+      "range": [
+        245,
+        264,
+      ],
+      "text": "Readonly<ReadonlySet<string>>",
+    },
+    "line": 7,
+    "message": "Parameter should have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
+    "messageId": "parameter",
+    "nodeType": "Identifier",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+  },
+  {
+    "column": 14,
+    "endColumn": 46,
+    "endLine": 8,
+    "fix": {
+      "range": [
+        287,
+        314,
+      ],
+      "text": "Readonly<ReadonlyMap<string, string>>",
+    },
+    "line": 8,
+    "message": "Parameter should have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
+    "messageId": "parameter",
+    "nodeType": "Identifier",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`prefer-immutable-types > typescript > allows for user suggestions 1`] = `
+[
+  {
+    "column": 14,
+    "endColumn": 35,
+    "endLine": 1,
+    "line": 1,
+    "message": "Parameter should have an immutability of at least "ReadonlyDeep" (actual: "Mutable").",
+    "messageId": "parameter",
+    "nodeType": "Identifier",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+    "suggestions": [
+      {
+        "data": {
+          "message": "Replace with: ReadonlyDeep<{ foo: string }>",
+        },
+        "desc": "Replace with: ReadonlyDeep<{ foo: string }>",
+        "fix": {
+          "range": [
+            19,
+            34,
+          ],
+          "text": "ReadonlyDeep<{ foo: string }>",
+        },
+        "messageId": "userDefined",
+      },
+    ],
+  },
+]
+`;
+
+exports[`prefer-immutable-types > typescript > doesn't report type assertion parameters 1`] = `
+[
+  {
+    "column": 46,
+    "endColumn": 76,
+    "endLine": 1,
+    "line": 1,
+    "message": "Parameter should have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
+    "messageId": "parameter",
+    "nodeType": "Identifier",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+    "suggestions": [
+      {
+        "data": {
+          "message": "Surround with Readonly.",
+        },
+        "desc": "Surround with Readonly.",
+        "fix": {
+          "range": [
+            51,
+            75,
+          ],
+          "text": "Readonly<{ foo: string | number }>",
+        },
+        "messageId": "userDefined",
+      },
+    ],
+  },
+]
+`;
+
+exports[`prefer-immutable-types > typescript > reports mutable class parameter properties 1`] = `
+[
+  {
+    "column": 5,
+    "endColumn": 30,
+    "endLine": 3,
+    "line": 3,
+    "message": "Property should have a readonly modifier.",
+    "messageId": "propertyModifier",
+    "nodeType": "TSParameterProperty",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+    "suggestions": [
+      {
+        "desc": "Add readonly modifier.",
+        "fix": {
+          "range": [
+            41,
+            41,
+          ],
+          "text": "readonly ",
+        },
+        "messageId": "propertyModifierSuggestion",
+      },
+    ],
+  },
+  {
+    "column": 5,
+    "endColumn": 36,
+    "endLine": 4,
+    "line": 4,
+    "message": "Property should have a readonly modifier.",
+    "messageId": "propertyModifier",
+    "nodeType": "TSParameterProperty",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+    "suggestions": [
+      {
+        "desc": "Add readonly modifier.",
+        "fix": {
+          "range": [
+            75,
+            75,
+          ],
+          "text": "readonly ",
+        },
+        "messageId": "propertyModifierSuggestion",
+      },
+    ],
+  },
+  {
+    "column": 5,
+    "endColumn": 32,
+    "endLine": 5,
+    "line": 5,
+    "message": "Property should have a readonly modifier.",
+    "messageId": "propertyModifier",
+    "nodeType": "TSParameterProperty",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+    "suggestions": [
+      {
+        "desc": "Add readonly modifier.",
+        "fix": {
+          "range": [
+            110,
+            110,
+          ],
+          "text": "readonly ",
+        },
+        "messageId": "propertyModifierSuggestion",
+      },
+    ],
+  },
+]
+`;
+
+exports[`prefer-immutable-types > typescript > reports mutable class parameter properties and suggests a fix for ReadonlyShallow 1`] = `
+[
+  {
+    "column": 5,
+    "endColumn": 30,
+    "endLine": 3,
+    "line": 3,
+    "message": "Property should have a readonly modifier.",
+    "messageId": "propertyModifier",
+    "nodeType": "TSParameterProperty",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+    "suggestions": [
+      {
+        "desc": "Add readonly modifier.",
+        "fix": {
+          "range": [
+            41,
+            41,
+          ],
+          "text": "readonly ",
+        },
+        "messageId": "propertyModifierSuggestion",
+      },
+    ],
+  },
+  {
+    "column": 5,
+    "endColumn": 36,
+    "endLine": 4,
+    "line": 4,
+    "message": "Property should have a readonly modifier.",
+    "messageId": "propertyModifier",
+    "nodeType": "TSParameterProperty",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+    "suggestions": [
+      {
+        "desc": "Add readonly modifier.",
+        "fix": {
+          "range": [
+            75,
+            75,
+          ],
+          "text": "readonly ",
+        },
+        "messageId": "propertyModifierSuggestion",
+      },
+    ],
+  },
+  {
+    "column": 5,
+    "endColumn": 32,
+    "endLine": 5,
+    "line": 5,
+    "message": "Property should have a readonly modifier.",
+    "messageId": "propertyModifier",
+    "nodeType": "TSParameterProperty",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+    "suggestions": [
+      {
+        "desc": "Add readonly modifier.",
+        "fix": {
+          "range": [
+            110,
+            110,
+          ],
+          "text": "readonly ",
+        },
+        "messageId": "propertyModifierSuggestion",
+      },
+    ],
+  },
+]
+`;
+
+exports[`prefer-immutable-types > typescript > reports mutable records parameters 1`] = `
+[
+  {
+    "column": 14,
+    "endColumn": 35,
+    "endLine": 1,
+    "line": 1,
+    "message": "Parameter should have an immutability of at least "Immutable" (actual: "Mutable").",
+    "messageId": "parameter",
+    "nodeType": "Identifier",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+  },
+  {
+    "column": 37,
+    "endColumn": 58,
+    "endLine": 1,
+    "line": 1,
+    "message": "Parameter should have an immutability of at least "Immutable" (actual: "Mutable").",
+    "messageId": "parameter",
+    "nodeType": "Identifier",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`prefer-immutable-types > typescript > reports mutable records parameters and suggests a fix for ReadonlyShallow 1`] = `
+[
+  {
+    "column": 14,
+    "endColumn": 35,
+    "endLine": 1,
+    "line": 1,
+    "message": "Parameter should have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
+    "messageId": "parameter",
+    "nodeType": "Identifier",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+    "suggestions": [
+      {
+        "data": {
+          "message": "Surround with Readonly.",
+        },
+        "desc": "Surround with Readonly.",
+        "fix": {
+          "range": [
+            19,
+            34,
+          ],
+          "text": "Readonly<{ foo: string }>",
+        },
+        "messageId": "userDefined",
+      },
+    ],
+  },
+  {
+    "column": 37,
+    "endColumn": 58,
+    "endLine": 1,
+    "line": 1,
+    "message": "Parameter should have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
+    "messageId": "parameter",
+    "nodeType": "Identifier",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+    "suggestions": [
+      {
+        "data": {
+          "message": "Surround with Readonly.",
+        },
+        "desc": "Surround with Readonly.",
+        "fix": {
+          "range": [
+            42,
+            57,
+          ],
+          "text": "Readonly<{ foo: number }>",
+        },
+        "messageId": "userDefined",
+      },
+    ],
+  },
+]
+`;
+
+exports[`prefer-immutable-types > typescript > reports non-immutable map parameters 1`] = `
+[
+  {
+    "column": 14,
+    "endColumn": 46,
+    "endLine": 1,
+    "line": 1,
+    "message": "Parameter should have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
+    "messageId": "parameter",
+    "nodeType": "Identifier",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`prefer-immutable-types > typescript > reports non-immutable set parameters 1`] = `
+[
+  {
+    "column": 14,
+    "endColumn": 38,
+    "endLine": 1,
+    "line": 1,
+    "message": "Parameter should have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
+    "messageId": "parameter",
+    "nodeType": "Identifier",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`prefer-immutable-types > typescript > suggest multiple fixes for collections for ReadonlyShallow 1`] = `
+[
+  {
+    "column": 14,
+    "endColumn": 32,
+    "endLine": 1,
+    "line": 1,
+    "message": "Parameter should have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
+    "messageId": "parameter",
+    "nodeType": "Identifier",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+    "suggestions": [
+      {
+        "data": {
+          "message": "Use ReadonlyArray instead of Array.",
+        },
+        "desc": "Use ReadonlyArray instead of Array.",
+        "fix": {
+          "range": [
+            18,
+            31,
+          ],
+          "text": "ReadonlyArray<string>",
+        },
+        "messageId": "userDefined",
+      },
+      {
+        "data": {
+          "message": "Surround with Readonly.",
+        },
+        "desc": "Surround with Readonly.",
+        "fix": {
+          "range": [
+            18,
+            31,
+          ],
+          "text": "Readonly<Array<string>>",
+        },
+        "messageId": "userDefined",
+      },
+    ],
+  },
+  {
+    "column": 14,
+    "endColumn": 27,
+    "endLine": 2,
+    "line": 2,
+    "message": "Parameter should have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
+    "messageId": "parameter",
+    "nodeType": "Identifier",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+    "suggestions": [
+      {
+        "data": {
+          "message": "Prepend with readonly.",
+        },
+        "desc": "Prepend with readonly.",
+        "fix": {
+          "range": [
+            54,
+            62,
+          ],
+          "text": "readonly string[]",
+        },
+        "messageId": "userDefined",
+      },
+      {
+        "data": {
+          "message": "Surround with Readonly.",
+        },
+        "desc": "Surround with Readonly.",
+        "fix": {
+          "range": [
+            54,
+            62,
+          ],
+          "text": "Readonly<string[]>",
+        },
+        "messageId": "userDefined",
+      },
+    ],
+  },
+  {
+    "column": 14,
+    "endColumn": 30,
+    "endLine": 3,
+    "line": 3,
+    "message": "Parameter should have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
+    "messageId": "parameter",
+    "nodeType": "Identifier",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+    "suggestions": [
+      {
+        "data": {
+          "message": "Use ReadonlySet instead of Set.",
+        },
+        "desc": "Use ReadonlySet instead of Set.",
+        "fix": {
+          "range": [
+            85,
+            96,
+          ],
+          "text": "ReadonlySet<string>",
+        },
+        "messageId": "userDefined",
+      },
+      {
+        "data": {
+          "message": "Surround with Readonly.",
+        },
+        "desc": "Surround with Readonly.",
+        "fix": {
+          "range": [
+            85,
+            96,
+          ],
+          "text": "Readonly<Set<string>>",
+        },
+        "messageId": "userDefined",
+      },
+    ],
+  },
+  {
+    "column": 14,
+    "endColumn": 38,
+    "endLine": 4,
+    "line": 4,
+    "message": "Parameter should have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
+    "messageId": "parameter",
+    "nodeType": "Identifier",
+    "ruleId": "prefer-immutable-types",
+    "severity": 2,
+    "suggestions": [
+      {
+        "data": {
+          "message": "Use ReadonlyMap instead of Map.",
+        },
+        "desc": "Use ReadonlyMap instead of Map.",
+        "fix": {
+          "range": [
+            119,
+            138,
+          ],
+          "text": "ReadonlyMap<string, string>",
+        },
+        "messageId": "userDefined",
+      },
+      {
+        "data": {
+          "message": "Surround with Readonly.",
+        },
+        "desc": "Surround with Readonly.",
+        "fix": {
+          "range": [
+            119,
+            138,
+          ],
+          "text": "Readonly<Map<string, string>>",
+        },
+        "messageId": "userDefined",
+      },
+    ],
+  },
+]
+`;

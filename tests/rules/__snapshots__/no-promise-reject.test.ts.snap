@@ -1,0 +1,65 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`no-promise-reject > javascript - es latest > reports Promise.reject 1`] = `
+[
+  {
+    "column": 10,
+    "endColumn": 39,
+    "endLine": 2,
+    "line": 2,
+    "message": "Unexpected rejection, resolve an error instead.",
+    "messageId": "generic",
+    "nodeType": "CallExpression",
+    "ruleId": "no-promise-reject",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`no-promise-reject > javascript - es latest > reports new Promise(reject) 1`] = `
+[
+  {
+    "column": 32,
+    "endColumn": 38,
+    "endLine": 2,
+    "line": 2,
+    "message": "Unexpected rejection, resolve an error instead.",
+    "messageId": "generic",
+    "nodeType": "Identifier",
+    "ruleId": "no-promise-reject",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`no-promise-reject > javascript - es latest > reports throw in async functions 1`] = `
+[
+  {
+    "column": 3,
+    "endColumn": 34,
+    "endLine": 2,
+    "line": 2,
+    "message": "Unexpected rejection, resolve an error instead.",
+    "messageId": "generic",
+    "nodeType": "ThrowStatement",
+    "ruleId": "no-promise-reject",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`no-promise-reject > javascript - es latest > reports throw in try without catch in async functions 1`] = `
+[
+  {
+    "column": 5,
+    "endColumn": 30,
+    "endLine": 3,
+    "line": 3,
+    "message": "Unexpected rejection, resolve an error instead.",
+    "messageId": "generic",
+    "nodeType": "ThrowStatement",
+    "ruleId": "no-promise-reject",
+    "severity": 2,
+  },
+]
+`;
