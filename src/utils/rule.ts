@@ -1,3 +1,5 @@
+import assert from "node:assert/strict";
+
 import type { TSESTree } from "@typescript-eslint/utils";
 import {
   type NamedCreateRuleMeta,
@@ -22,6 +24,8 @@ import typescript from "#/conditional-imports/typescript";
 import { getImmutabilityOverrides } from "#/settings";
 import { __VERSION__ } from "#/utils/constants";
 import type { ESFunction } from "#/utils/node-types";
+
+import { typeMatchesPattern } from "./type-specifier";
 
 type Docs = {
   /**
@@ -188,10 +192,44 @@ export function getTypeOfNode<Context extends RuleContext<string, BaseOptions>>(
   node: TSESTree.Node,
   context: Context,
 ): Type {
+  assert(typescript !== undefined);
+
   const { esTreeNodeToTSNodeMap } = getParserServices(context);
 
   const tsNode = esTreeNodeToTSNodeMap.get(node);
   return getTypeOfTSNode(tsNode, context);
+}
+
+/**
+ * Get the type of the the given node.
+ */
+export function getTypeNodeOfNode<
+  Context extends RuleContext<string, BaseOptions>,
+>(node: TSESTree.Node, context: Context): TypeNode | null {
+  assert(typescript !== undefined);
+
+  const { esTreeNodeToTSNodeMap } = getParserServices(context);
+
+  const tsNode = esTreeNodeToTSNodeMap.get(node) as TSNode & {
+    type?: TypeNode;
+  };
+  return tsNode.type ?? null;
+}
+
+/**
+ * Get the type of the the given node.
+ */
+export function getTypeDataOfNode<
+  Context extends RuleContext<string, BaseOptions>,
+>(node: TSESTree.Node, context: Context): [Type, TypeNode | null] {
+  assert(typescript !== undefined);
+
+  const { esTreeNodeToTSNodeMap } = getParserServices(context);
+
+  const tsNode = esTreeNodeToTSNodeMap.get(node) as TSNode & {
+    type?: TypeNode;
+  };
+  return [getTypeOfTSNode(tsNode, context), tsNode.type ?? null];
 }
 
 /**
@@ -284,6 +322,7 @@ export function getTypeImmutabilityOfNode<
     // Don't use the global cache in testing environments as it may cause errors when switching between different config options.
     process.env["NODE_ENV"] !== "test",
     maxImmutability,
+    typeMatchesPattern,
   );
 }
 

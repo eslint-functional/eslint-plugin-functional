@@ -2,7 +2,7 @@
   "$schema": "node_modules/knip/schema-jsonc.json",
   "entry": ["src/index.ts!", "tests/**/*.test.ts"],
   "project": ["src/**/*.ts!", "tests/**/*.{js,ts}"],
-  "ignore": ["lib/**", "tests/fixture/file.ts"],
+  "ignore": ["lib/**", "tests/fixture/file.ts", "src/utils/schemas.ts"],
   "ignoreDependencies": [
     // Unknown reason for issue.
     "@vitest/coverage-v8",
