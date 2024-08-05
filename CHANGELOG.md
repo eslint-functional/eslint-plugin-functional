@@ -23,6 +23,9 @@ All notable changes to this project will be documented in this file. Dates are d
 
 ### BREAKING CHANGES
 
+* The minimum supported Node version is now 18.18.0 (#809)
+* The minimum supported TypeScript version is now 4.7.4 (#809)
+* The minimum supported Eslint version is now 9.0.0 (#809)
 * **no-throw-statements:** replace option `allowInAsyncFunctions` with `allowToRejectPromises` (#839)
 
 ## [6.6.3](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.6.2...v6.6.3) (2024-07-11)
