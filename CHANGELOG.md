@@ -1,6 +1,30 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+# [7.0.0](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.6.3...v7.0.0) (2024-08-05)
+
+
+### Bug Fixes
+
+* checking of types from ts's lib are now more strict ([#862](https://github.com/eslint-functional/eslint-plugin-functional/issues/862)) ([39beb25](https://github.com/eslint-functional/eslint-plugin-functional/commit/39beb25a5c1805047abd76055e6d5aaeecc961e0))
+
+
+### Features
+
+* eslint 9 migration ([#809](https://github.com/eslint-functional/eslint-plugin-functional/issues/809)) ([de4e3ea](https://github.com/eslint-functional/eslint-plugin-functional/commit/de4e3ea3370663c29cba8d8f773445a17885a59e))
+* **functional-parameters:** allow overriding options based on where the function type is declared ([#803](https://github.com/eslint-functional/eslint-plugin-functional/issues/803)) ([21396d5](https://github.com/eslint-functional/eslint-plugin-functional/commit/21396d598cb4b8ca403b8b04f15b295a7f2580e0)), closes [#575](https://github.com/eslint-functional/eslint-plugin-functional/issues/575)
+* **functional-parameters:** change options in recommended and lite configs ([#811](https://github.com/eslint-functional/eslint-plugin-functional/issues/811)) ([b3cb8d9](https://github.com/eslint-functional/eslint-plugin-functional/commit/b3cb8d95de88cca7706f73175aa928ea83380788))
+* **immutable-data:** allows for applying overrides to the options based on the root object's type ([#826](https://github.com/eslint-functional/eslint-plugin-functional/issues/826)) ([c04e425](https://github.com/eslint-functional/eslint-plugin-functional/commit/c04e4253953a2353706ed0feb963249dcb35fd4c))
+* **no-classes:** add options ignoreIdentifierPattern and ignoreCodePattern ([#863](https://github.com/eslint-functional/eslint-plugin-functional/issues/863)) ([18aede1](https://github.com/eslint-functional/eslint-plugin-functional/commit/18aede1e4ea68385f06fb4b52468ee49eec1f620)), closes [#851](https://github.com/eslint-functional/eslint-plugin-functional/issues/851)
+* **no-throw-statements:** replace option `allowInAsyncFunctions` with `allowToRejectPromises` ([#839](https://github.com/eslint-functional/eslint-plugin-functional/issues/839)) ([c2c589c](https://github.com/eslint-functional/eslint-plugin-functional/commit/c2c589cd8fd4af9bd55cd148c7826a15e90c6d81)), closes [#838](https://github.com/eslint-functional/eslint-plugin-functional/issues/838)
+* **prefer-immutable-types:** allow overriding options based on where the type is declared ([#804](https://github.com/eslint-functional/eslint-plugin-functional/issues/804)) ([86fa76a](https://github.com/eslint-functional/eslint-plugin-functional/commit/86fa76a5dc66958b8fba96fcc0be5c665fd4ac40)), closes [#800](https://github.com/eslint-functional/eslint-plugin-functional/issues/800)
+* **prefer-immutable-types:** change the options in recommeneded and lite configs ([#810](https://github.com/eslint-functional/eslint-plugin-functional/issues/810)) ([defd713](https://github.com/eslint-functional/eslint-plugin-functional/commit/defd7136dbbd687c6ad176fb9f1b5660363cac38))
+
+
+### BREAKING CHANGES
+
+* **no-throw-statements:** replace option `allowInAsyncFunctions` with `allowToRejectPromises` (#839)
+
 ## [6.6.3](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.6.2...v6.6.3) (2024-07-11)
 
 
