@@ -75,6 +75,36 @@ type Options = {
       };
   ignoreIdentifierPattern?: string[] | string;
   ignoreAccessorPattern?: string[] | string;
+  overrides?: Array<{
+    match: Array<
+      | {
+          from: "file";
+          path?: string;
+          name?: string | string[];
+          pattern?: RegExp | RegExp[];
+          ignoreName?: string | string[];
+          ignorePattern?: RegExp | RegExp[];
+        }
+      | {
+          from: "lib";
+          name?: string | string[];
+          pattern?: RegExp | RegExp[];
+          ignoreName?: string | string[];
+          ignorePattern?: RegExp | RegExp[];
+        }
+      | {
+          from: "package";
+          package?: string;
+          name?: string | string[];
+          pattern?: RegExp | RegExp[];
+          ignoreName?: string | string[];
+          ignorePattern?: RegExp | RegExp[];
+        }
+    >;
+    options: Omit<Options, "overrides">;
+    inherit?: boolean;
+    disable: boolean;
+  }>;
 };
 ```
 
@@ -179,3 +209,28 @@ The following wildcards can be used when specifying a pattern:
 `**` - Match any depth (including zero). Can only be used as a full accessor.\
 `*` - When used as a full accessor, match the next accessor (there must be one). When used as part of an accessor, match
 any characters.
+
+### `overrides`
+
+Allows for applying overrides to the options based on the root object's type.
+
+Note: Only the first matching override will be used.
+
+#### `overrides[n].specifiers`
+
+A specifier, or an array of specifiers to match the function type against.
+
+In the case of reference types, both the type and its generics will be recursively checked.
+If any of them match, the specifier will be considered a match.
+
+#### `overrides[n].options`
+
+The options to use when a specifiers matches.
+
+#### `overrides[n].inherit`
+
+Inherit the root options? Default is `true`.
+
+#### `overrides[n].disable`
+
+If true, when a specifier matches, this rule will not be applied to the matching node.

@@ -10,11 +10,15 @@ import {
   type IgnoreAccessorPatternOption,
   type IgnoreClassesOption,
   type IgnoreIdentifierPatternOption,
+  type OverridableOptions,
+  type RawOverridableOptions,
+  getCoreOptions,
   ignoreAccessorPatternOptionSchema,
   ignoreClassesOptionSchema,
   ignoreIdentifierPatternOptionSchema,
   shouldIgnoreClasses,
   shouldIgnorePattern,
+  upgradeRawOverridableOptions,
 } from "#/options";
 import { isExpected, ruleNameScope } from "#/utils/misc";
 import {
@@ -24,6 +28,7 @@ import {
   createRule,
   getTypeOfNode,
 } from "#/utils/rule";
+import { overridableOptionsSchema } from "#/utils/schemas";
 import {
   findRootIdentifier,
   isDefinedByMutableVariable,
@@ -51,62 +56,61 @@ export const name = "immutable-data";
  */
 export const fullName: `${typeof ruleNameScope}/${typeof name}` = `${ruleNameScope}/${name}`;
 
+type CoreOptions = IgnoreAccessorPatternOption &
+  IgnoreClassesOption &
+  IgnoreIdentifierPatternOption & {
+    ignoreImmediateMutation: boolean;
+    ignoreNonConstDeclarations:
+      | boolean
+      | {
+          treatParametersAsConst: boolean;
+        };
+  };
+
 /**
  * The options this rule can take.
  */
-type Options = [
-  IgnoreAccessorPatternOption &
-    IgnoreClassesOption &
-    IgnoreIdentifierPatternOption & {
-      ignoreImmediateMutation: boolean;
-      ignoreNonConstDeclarations:
-        | boolean
-        | {
-            treatParametersAsConst: boolean;
-          };
+type RawOptions = [RawOverridableOptions<CoreOptions>];
+type Options = OverridableOptions<CoreOptions>;
+
+const coreOptionsPropertiesSchema = deepmerge(
+  ignoreIdentifierPatternOptionSchema,
+  ignoreAccessorPatternOptionSchema,
+  ignoreClassesOptionSchema,
+  {
+    ignoreImmediateMutation: {
+      type: "boolean",
     },
-];
+    ignoreNonConstDeclarations: {
+      oneOf: [
+        {
+          type: "boolean",
+        },
+        {
+          type: "object",
+          properties: {
+            treatParametersAsConst: {
+              type: "boolean",
+            },
+          },
+          additionalProperties: false,
+        },
+      ],
+    },
+  },
+) as NonNullable<JSONSchema4ObjectSchema["properties"]>;
 
 /**
  * The schema for the rule options.
  */
 const schema: JSONSchema4[] = [
-  {
-    type: "object",
-    properties: deepmerge(
-      ignoreIdentifierPatternOptionSchema,
-      ignoreAccessorPatternOptionSchema,
-      ignoreClassesOptionSchema,
-      {
-        ignoreImmediateMutation: {
-          type: "boolean",
-        },
-        ignoreNonConstDeclarations: {
-          oneOf: [
-            {
-              type: "boolean",
-            },
-            {
-              type: "object",
-              properties: {
-                treatParametersAsConst: {
-                  type: "boolean",
-                },
-              },
-              additionalProperties: false,
-            },
-          ],
-        },
-      } satisfies JSONSchema4ObjectSchema["properties"],
-    ),
-    additionalProperties: false,
-  },
+  overridableOptionsSchema(coreOptionsPropertiesSchema),
 ];
 
 /**
  * The default options for the rule.
  */
-const defaultOptions: Options = [
+const defaultOptions: RawOptions = [
   {
     ignoreClasses: false,
     ignoreImmediateMutation: true,
@@ -218,16 +222,30 @@ const stringConstructorNewObjectReturningMethods = ["split"];
  */
 function checkAssignmentExpression(
   node: TSESTree.AssignmentExpression,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-  options: Readonly<Options>,
-): RuleResult<keyof typeof errorMessages, Options> {
-  const [optionsObject] = options;
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
+  rawOptions: Readonly<RawOptions>,
+): RuleResult<keyof typeof errorMessages, RawOptions> {
+  const options = upgradeRawOverridableOptions(rawOptions[0]);
+  const rootNode = findRootIdentifier(node.left) ?? node.left;
+  const optionsToUse = getCoreOptions<CoreOptions, Options>(
+    rootNode,
+    context,
+    options,
+  );
+
+  if (optionsToUse === null) {
+    return {
+      context,
+      descriptors: [],
+    };
+  }
+
   const {
     ignoreIdentifierPattern,
     ignoreAccessorPattern,
     ignoreNonConstDeclarations,
     ignoreClasses,
-  } = optionsObject;
+  } = optionsToUse;
 
   if (
     !isMemberExpression(node.left) ||
@@ -283,16 +301,30 @@ function checkAssignmentExpression(
  */
 function checkUnaryExpression(
   node: TSESTree.UnaryExpression,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-  options: Readonly<Options>,
-): RuleResult<keyof typeof errorMessages, Options> {
-  const [optionsObject] = options;
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
+  rawOptions: Readonly<RawOptions>,
+): RuleResult<keyof typeof errorMessages, RawOptions> {
+  const options = upgradeRawOverridableOptions(rawOptions[0]);
+  const rootNode = findRootIdentifier(node.argument) ?? node.argument;
+  const optionsToUse = getCoreOptions<CoreOptions, Options>(
+    rootNode,
+    context,
+    options,
+  );
+
+  if (optionsToUse === null) {
+    return {
+      context,
+      descriptors: [],
+    };
+  }
+
   const {
     ignoreIdentifierPattern,
     ignoreAccessorPattern,
     ignoreNonConstDeclarations,
     ignoreClasses,
-  } = optionsObject;
+  } = optionsToUse;
 
   if (
     !isMemberExpression(node.argument) ||
@@ -347,16 +379,30 @@ function checkUnaryExpression(
  */
 function checkUpdateExpression(
   node: TSESTree.UpdateExpression,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-  options: Readonly<Options>,
-): RuleResult<keyof typeof errorMessages, Options> {
-  const [optionsObject] = options;
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
+  rawOptions: Readonly<RawOptions>,
+): RuleResult<keyof typeof errorMessages, RawOptions> {
+  const options = upgradeRawOverridableOptions(rawOptions[0]);
+  const rootNode = findRootIdentifier(node.argument) ?? node.argument;
+  const optionsToUse = getCoreOptions<CoreOptions, Options>(
+    rootNode,
+    context,
+    options,
+  );
+
+  if (optionsToUse === null) {
+    return {
+      context,
+      descriptors: [],
+    };
+  }
+
   const {
     ignoreIdentifierPattern,
     ignoreAccessorPattern,
     ignoreNonConstDeclarations,
     ignoreClasses,
-  } = optionsObject;
+  } = optionsToUse;
 
   if (
     !isMemberExpression(node.argument) ||
@@ -414,7 +460,7 @@ function checkUpdateExpression(
  */
 function isInChainCallAndFollowsNew(
   node: TSESTree.Expression,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
 ): boolean {
   if (isMemberExpression(node)) {
     return isInChainCallAndFollowsNew(node.object, context);
@@ -486,16 +532,30 @@ function isInChainCallAndFollowsNew(
  */
 function checkCallExpression(
   node: TSESTree.CallExpression,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-  options: Readonly<Options>,
-): RuleResult<keyof typeof errorMessages, Options> {
-  const [optionsObject] = options;
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
+  rawOptions: Readonly<RawOptions>,
+): RuleResult<keyof typeof errorMessages, RawOptions> {
+  const options = upgradeRawOverridableOptions(rawOptions[0]);
+  const rootNode = findRootIdentifier(node.callee) ?? node.callee;
+  const optionsToUse = getCoreOptions<CoreOptions, Options>(
+    rootNode,
+    context,
+    options,
+  );
+
+  if (optionsToUse === null) {
+    return {
+      context,
+      descriptors: [],
+    };
+  }
+
   const {
     ignoreIdentifierPattern,
     ignoreAccessorPattern,
     ignoreNonConstDeclarations,
     ignoreClasses,
-  } = optionsObject;
+  } = optionsToUse;
 
   // Not potential object mutation?
   if (
@@ -515,7 +575,7 @@ function checkCallExpression(
     };
   }
 
-  const { ignoreImmediateMutation } = optionsObject;
+  const { ignoreImmediateMutation } = optionsToUse;
 
   // Array mutation?
   if (
@@ -606,9 +666,9 @@ function checkCallExpression(
 }
 
 // Create the rule.
-export const rule: Rule<keyof typeof errorMessages, Options> = createRule<
+export const rule: Rule<keyof typeof errorMessages, RawOptions> = createRule<
   keyof typeof errorMessages,
-  Options
+  RawOptions
 >(name, meta, defaultOptions, {
   AssignmentExpression: checkAssignmentExpression,
   UnaryExpression: checkUnaryExpression,
