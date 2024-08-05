@@ -111,9 +111,9 @@ The [below section](#rules) gives details on which rules are enabled by each rul
 
 ### Currying
 
-| Name                                                         | Description                    | 💼                           | ⚠️  | 🚫  | 🔧  | 💡  | 💭  | ❌  |
-| :----------------------------------------------------------- | :----------------------------- | :--------------------------- | :-- | :-- | :-- | :-- | :-- | :-- |
-| [functional-parameters](docs/rules/functional-parameters.md) | Enforce functional parameters. | ☑️ ✅ 🔒 ![badge-currying][] |     |     |     |     |     |     |
+| Name                                                         | Description                    | 💼                           | ⚠️  | 🚫                            | 🔧  | 💡  | 💭  | ❌  |
+| :----------------------------------------------------------- | :----------------------------- | :--------------------------- | :-- | :---------------------------- | :-- | :-- | :-- | :-- |
+| [functional-parameters](docs/rules/functional-parameters.md) | Enforce functional parameters. | ☑️ ✅ 🔒 ![badge-currying][] |     | ![badge-disableTypeChecked][] |     |     | 💭  |     |
 
 ### No Exceptions
 

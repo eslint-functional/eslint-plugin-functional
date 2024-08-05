@@ -3,13 +3,17 @@
 
 # Enforce functional parameters (`functional/functional-parameters`)
 
-💼 This rule is enabled in the following configs: `currying`, ☑️ `lite`, ✅ `recommended`, 🔒 `strict`.
+💼🚫 This rule is enabled in the following configs: `currying`, ☑️ `lite`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the `disableTypeChecked` config.
+
+💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 
 <!-- end auto-generated rule header -->
 <!-- markdownlint-restore -->
 <!-- markdownlint-restore -->
 
 Disallow use of rest parameters, the `arguments` keyword and enforces that functions take at least 1 parameter.
+
+Note: type information is only required when using the [overrides](#overrides) option.
 
 ## Rule Details
 
@@ -74,6 +78,36 @@ type Options = {
       };
   ignoreIdentifierPattern?: string[] | string;
   ignorePrefixSelector?: string[] | string;
+  overrides?: Array<{
+    match: Array<
+      | {
+          from: "file";
+          path?: string;
+          name?: string | string[];
+          pattern?: RegExp | RegExp[];
+          ignoreName?: string | string[];
+          ignorePattern?: RegExp | RegExp[];
+        }
+      | {
+          from: "lib";
+          name?: string | string[];
+          pattern?: RegExp | RegExp[];
+          ignoreName?: string | string[];
+          ignorePattern?: RegExp | RegExp[];
+        }
+      | {
+          from: "package";
+          package?: string;
+          name?: string | string[];
+          pattern?: RegExp | RegExp[];
+          ignoreName?: string | string[];
+          ignorePattern?: RegExp | RegExp[];
+        }
+    >;
+    options: Omit<Options, "overrides">;
+    inherit?: boolean;
+    disable: boolean;
+  }>;
 };
 ```
 
@@ -208,3 +242,31 @@ const sum = [1, 2, 3].reduce((carry, current) => current, 0);
 
 This option takes a RegExp string or an array of RegExp strings.
 It allows for the ability to ignore violations based on a function's name.
+
+### `overrides`
+
+_Using this option requires type infomation._
+
+Allows for applying overrides to the options based on the function's type.
+This can be used to override the settings for types coming from 3rd party libraries.
+
+Note: Only the first matching override will be used.
+
+#### `overrides[n].specifiers`
+
+A specifier, or an array of specifiers to match the function type against.
+
+In the case of reference types, both the type and its generics will be recursively checked.
+If any of them match, the specifier will be considered a match.
+
+#### `overrides[n].options`
+
+The options to use when a specifiers matches.
+
+#### `overrides[n].inherit`
+
+Inherit the root options? Default is `true`.
+
+#### `overrides[n].disable`
+
+If true, when a specifier matches, this rule will not be applied to the matching node.

@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 
 import { name, rule } from "#/rules/functional-parameters";
 
-import { esLatestConfig } from "../utils/configs";
+import { esLatestConfig, typescriptConfig } from "../utils/configs";
 
 describe(name, () => {
   describe("javascript - es latest", () => {
@@ -431,6 +431,112 @@ describe(name, () => {
               ],
             },
           ],
+        });
+      });
+    });
+  });
+
+  describe("typescript", () => {
+    const { valid, invalid } = createRuleTester({
+      name,
+      rule,
+      configs: typescriptConfig,
+    });
+
+    describe("overrides", () => {
+      it('override value works - "allowRestParameter"', () => {
+        const code = dedent`
+          function foo(...bar: string[]) {
+            console.log(bar);
+          }
+        `;
+
+        valid({
+          code,
+          options: {
+            allowRestParameter: false,
+            overrides: [
+              {
+                specifiers: {
+                  from: "file",
+                },
+                options: {
+                  allowRestParameter: true,
+                },
+              },
+            ],
+          },
+        });
+      });
+
+      it('override value works - "allowArgumentsKeyword"', () => {
+        const code = dedent`
+          function foo(bar: string[]) {
+            console.log(arguments);
+          }
+        `;
+
+        valid({
+          code,
+          options: {
+            allowArgumentsKeyword: false,
+            overrides: [
+              {
+                specifiers: {
+                  from: "file",
+                },
+                options: {
+                  allowArgumentsKeyword: true,
+                },
+              },
+            ],
+          },
+        });
+      });
+
+      it('disbale override works - "allowRestParameter"', () => {
+        const code = dedent`
+          function foo(...bar: string[]) {
+            console.log(bar);
+          }
+        `;
+
+        valid({
+          code,
+          options: {
+            allowRestParameter: false,
+            overrides: [
+              {
+                specifiers: {
+                  from: "file",
+                },
+                disable: true,
+              },
+            ],
+          },
+        });
+      });
+
+      it('disbale override works - "allowArgumentsKeyword"', () => {
+        const code = dedent`
+          function foo(bar: string[]) {
+            console.log(arguments);
+          }
+        `;
+
+        valid({
+          code,
+          options: {
+            allowArgumentsKeyword: false,
+            overrides: [
+              {
+                specifiers: {
+                  from: "file",
+                },
+                disable: true,
+              },
+            ],
+          },
         });
       });
     });
