@@ -6,7 +6,7 @@ import type { RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
 import typescript from "#/conditional-imports/typescript";
 
-import type { BaseOptions } from "./rule";
+import { type BaseOptions, getTypeOfNode } from "./rule";
 import {
   isBlockStatement,
   isCallExpression,
@@ -20,6 +20,7 @@ import {
   isMethodDefinition,
   isObjectExpression,
   isProgram,
+  isPromiseType,
   isProperty,
   isTSInterfaceBody,
   isTSInterfaceHeritage,
@@ -125,6 +126,30 @@ export function isInForLoopInitializer(node: TSESTree.Node): boolean {
  */
 export function isInReadonly(node: TSESTree.Node): boolean {
   return getReadonly(node) !== null;
+}
+
+/**
+ * Test if the given node is in a handler function callback of a promise.
+ */
+export function isInPromiseHandlerFunction<
+  Context extends RuleContext<string, BaseOptions>,
+>(node: TSESTree.Node, context: Context): boolean {
+  const functionNode = getAncestorOfType(
+    (n, c): n is TSESTree.FunctionLike => isFunctionLike(n) && n.body === c,
+    node,
+  );
+
+  if (
+    functionNode === null ||
+    !isCallExpression(functionNode.parent) ||
+    !isMemberExpression(functionNode.parent.callee) ||
+    !isIdentifier(functionNode.parent.callee.property)
+  ) {
+    return false;
+  }
+
+  const objectType = getTypeOfNode(functionNode.parent.callee.object, context);
+  return isPromiseType(objectType);
 }
 
 /**

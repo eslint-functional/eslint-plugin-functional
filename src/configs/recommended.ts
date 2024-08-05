@@ -66,7 +66,7 @@ const overrides = {
   [noThrowStatements.fullName]: [
     "error",
     {
-      allowInAsyncFunctions: true,
+      allowToRejectPromises: true,
     },
   ],
   [noTryStatements.fullName]: "off",

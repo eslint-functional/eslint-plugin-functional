@@ -30,7 +30,12 @@ export default rsEslint(
       },
     },
     formatters: true,
-    functional: "lite",
+    functional: {
+      functionalEnforcement: "lite",
+      overrides: {
+        "functional/no-throw-statements": "off",
+      },
+    },
     jsonc: true,
     markdown: {
       enableTypeRequiredRules: true,
@@ -50,9 +55,6 @@ export default rsEslint(
     rules: {
       // Some types say they have nonnullable properties, but they don't always.
       "ts/no-unnecessary-condition": "off",
-
-      // Temp
-      "functional/no-throw-statements": "off",
     },
   },
   {

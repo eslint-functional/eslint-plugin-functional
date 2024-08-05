@@ -9,7 +9,11 @@ import {
   type RuleResult,
   createRule,
 } from "#/utils/rule";
-import { isInFunctionBody } from "#/utils/tree";
+import {
+  getEnclosingFunction,
+  getEnclosingTryStatement,
+  isInPromiseHandlerFunction,
+} from "#/utils/tree";
 
 /**
  * The name of this rule.
@@ -26,7 +30,7 @@ export const fullName: `${typeof ruleNameScope}/${typeof name}` = `${ruleNameSco
  */
 type Options = [
   {
-    allowInAsyncFunctions: boolean;
+    allowToRejectPromises: boolean;
   },
 ];
 
@@ -37,7 +41,7 @@ const schema: JSONSchema4[] = [
   {
     type: "object",
     properties: {
-      allowInAsyncFunctions: {
+      allowToRejectPromises: {
         type: "boolean",
       },
     },
@@ -50,7 +54,7 @@ const schema: JSONSchema4[] = [
  */
 const defaultOptions: Options = [
   {
-    allowInAsyncFunctions: false,
+    allowToRejectPromises: false,
   },
 ];
 
@@ -85,9 +89,29 @@ function checkThrowStatement(
   context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
   options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
-  const [{ allowInAsyncFunctions }] = options;
+  const [{ allowToRejectPromises }] = options;
 
-  if (!allowInAsyncFunctions || !isInFunctionBody(node, true)) {
+  if (!allowToRejectPromises) {
+    return { context, descriptors: [{ node, messageId: "generic" }] };
+  }
+
+  if (isInPromiseHandlerFunction(node, context)) {
+    return { context, descriptors: [] };
+  }
+
+  const enclosingFunction = getEnclosingFunction(node);
+  if (enclosingFunction?.async !== true) {
+    return { context, descriptors: [{ node, messageId: "generic" }] };
+  }
+
+  const enclosingTryStatement = getEnclosingTryStatement(node);
+  if (
+    !(
+      enclosingTryStatement === null ||
+      getEnclosingFunction(enclosingTryStatement) !== enclosingFunction ||
+      enclosingTryStatement.handler === null
+    )
+  ) {
     return { context, descriptors: [{ node, messageId: "generic" }] };
   }
 

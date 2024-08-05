@@ -425,7 +425,7 @@ acceptsCallback((options: CallbackOptions) => {});
 
 ```ts
 export interface CallbackOptions {
-  prop: string;
+  readonly prop: string;
 }
 type Callback = (options: CallbackOptions) => void;
 type AcceptsCallback = (callback: Callback) => void;
