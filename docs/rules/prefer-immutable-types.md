@@ -255,6 +255,37 @@ type Options = {
       Array<{ pattern: string; replace: string; message?: string }>
     >;
   };
+
+  overrides?: Array<{
+    match: Array<
+      | {
+          from: "file";
+          path?: string;
+          name?: string | string[];
+          pattern?: RegExp | RegExp[];
+          ignoreName?: string | string[];
+          ignorePattern?: RegExp | RegExp[];
+        }
+      | {
+          from: "lib";
+          name?: string | string[];
+          pattern?: RegExp | RegExp[];
+          ignoreName?: string | string[];
+          ignorePattern?: RegExp | RegExp[];
+        }
+      | {
+          from: "package";
+          package?: string;
+          name?: string | string[];
+          pattern?: RegExp | RegExp[];
+          ignoreName?: string | string[];
+          ignorePattern?: RegExp | RegExp[];
+        }
+    >;
+    options: Omit<Options, "overrides">;
+    inherit?: boolean;
+    disable: boolean;
+  }>;
 };
 ```
 
@@ -488,3 +519,29 @@ It allows for the ability to ignore violations based on the identifier (name) of
 
 This option takes a `RegExp` string or an array of `RegExp` strings.
 It allows for the ability to ignore violations based on the type (as written, with whitespace removed) of the node in question.
+
+### `overrides`
+
+Allows for applying overrides to the options based on the type's declaration.
+This can be used to override the settings for types coming from 3rd party libraries.
+
+Note: Only the first matching override will be used.
+
+#### `overrides[n].specifiers`
+
+A specifier, or an array of specifiers to match the function type against.
+
+In the case of reference types, both the type and its generics will be recursively checked.
+If any of them match, the specifier will be considered a match.
+
+#### `overrides[n].options`
+
+The options to use when a specifiers matches.
+
+#### `overrides[n].inherit`
+
+Inherit the root options? Default is `true`.
+
+#### `overrides[n].disable`
+
+If true, when a specifier matches, this rule will not be applied to the matching node.

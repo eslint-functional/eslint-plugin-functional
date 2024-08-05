@@ -52,7 +52,6 @@ export default rsEslint(
       "ts/no-unnecessary-condition": "off",
 
       // Temp
-      "functional/prefer-immutable-types": "off",
       "functional/no-throw-statements": "off",
     },
   },

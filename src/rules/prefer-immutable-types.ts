@@ -9,13 +9,19 @@ import type {
 } from "@typescript-eslint/utils/ts-eslint";
 import { deepmerge } from "deepmerge-ts";
 import { Immutability } from "is-immutable-type";
+import type { Type, TypeNode } from "typescript";
 
 import {
   type IgnoreClassesOption,
+  type OverridableOptions,
+  type RawOverridableOptions,
+  getCoreOptions,
+  getCoreOptionsForType,
   ignoreClassesOptionSchema,
   shouldIgnoreClasses,
   shouldIgnoreInFunction,
   shouldIgnorePattern,
+  upgradeRawOverridableOptions,
 } from "#/options";
 import { ruleNameScope } from "#/utils/misc";
 import type { ESFunctionType } from "#/utils/node-types";
@@ -25,6 +31,7 @@ import {
   type RuleResult,
   createRule,
   getReturnTypesOfFunction,
+  getTypeDataOfNode,
   getTypeImmutabilityOfNode,
   getTypeImmutabilityOfType,
   isImplementationOfOverload,
@@ -43,6 +50,8 @@ import {
   isTSTypePredicate,
 } from "#/utils/type-guards";
 
+import { overridableOptionsSchema } from "../utils/schemas";
+
 /**
  * The name of this rule.
  */
@@ -56,13 +65,28 @@ export const fullName: `${typeof ruleNameScope}/${typeof name}` = `${ruleNameSco
 type RawEnforcement =
   | Exclude<Immutability | keyof typeof Immutability, "Unknown" | "Mutable">
   | "None"
-  | false;
+  | false
+  | undefined;
 
 type Option = IgnoreClassesOption & {
   enforcement: RawEnforcement;
   ignoreInferredTypes: boolean;
   ignoreNamePattern?: string[] | string;
   ignoreTypePattern?: string[] | string;
+};
+
+type CoreOptions = Option & {
+  parameters?: Partial<Option> | RawEnforcement;
+  returnTypes?: Partial<Option> | RawEnforcement;
+  variables?:
+    | Partial<
+        Option & {
+          ignoreInFunctions?: boolean;
+        }
+      >
+    | RawEnforcement;
+  fixer?: FixerConfigRawMap;
+  suggestions?: SuggestionConfigRawMap;
 };
 
 type FixerConfigRaw = {
@@ -96,21 +120,8 @@ type SuggestionsConfig = Array<FixerConfig & { message?: string }>;
 /**
  * The options this rule can take.
  */
-type Options = [
-  Option & {
-    parameters?: Partial<Option> | RawEnforcement;
-    returnTypes?: Partial<Option> | RawEnforcement;
-    variables?:
-      | Partial<
-          Option & {
-            ignoreInFunctions?: boolean;
-          }
-        >
-      | RawEnforcement;
-    fixer?: FixerConfigRawMap;
-    suggestions?: SuggestionConfigRawMap;
-  },
-];
+type RawOptions = [RawOverridableOptions<CoreOptions>];
+type Options = OverridableOptions<CoreOptions>;
 
 /**
  * The enum options for the level of enforcement.
@@ -215,59 +226,59 @@ const suggestionsSchema: JSONSchema4 = {
   },
 };
 
+const coreOptionsPropertiesSchema: NonNullable<
+  JSONSchema4ObjectSchema["properties"]
+> = deepmerge(optionExpandedSchema, {
+  parameters: optionSchema,
+  returnTypes: optionSchema,
+  variables: {
+    oneOf: [
+      {
+        type: "object",
+        properties: deepmerge(optionExpandedSchema, {
+          ignoreInFunctions: {
+            type: "boolean",
+          },
+        } satisfies JSONSchema4ObjectSchema["properties"]),
+        additionalProperties: false,
+      },
+      {
+        type: ["string", "number", "boolean"],
+        enum: enforcementEnumOptions,
+      },
+    ],
+  },
+  fixer: {
+    type: "object",
+    properties: {
+      ReadonlyShallow: fixerSchema,
+      ReadonlyDeep: fixerSchema,
+      Immutable: fixerSchema,
+    },
+    additionalProperties: false,
+  },
+  suggestions: {
+    type: "object",
+    properties: {
+      ReadonlyShallow: suggestionsSchema,
+      ReadonlyDeep: suggestionsSchema,
+      Immutable: suggestionsSchema,
+    },
+    additionalProperties: false,
+  },
+} satisfies JSONSchema4ObjectSchema["properties"]);
+
 /**
  * The schema for the rule options.
  */
 const schema: JSONSchema4[] = [
-  {
-    type: "object",
-    properties: deepmerge(optionExpandedSchema, {
-      parameters: optionSchema,
-      returnTypes: optionSchema,
-      variables: {
-        oneOf: [
-          {
-            type: "object",
-            properties: deepmerge(optionExpandedSchema, {
-              ignoreInFunctions: {
-                type: "boolean",
-              },
-            } satisfies JSONSchema4ObjectSchema["properties"]),
-            additionalProperties: false,
-          },
-          {
-            type: ["string", "number", "boolean"],
-            enum: enforcementEnumOptions,
-          },
-        ],
-      },
-      fixer: {
-        type: "object",
-        properties: {
-          ReadonlyShallow: fixerSchema,
-          ReadonlyDeep: fixerSchema,
-          Immutable: fixerSchema,
-        },
-        additionalProperties: false,
-      },
-      suggestions: {
-        type: "object",
-        properties: {
-          ReadonlyShallow: suggestionsSchema,
-          ReadonlyDeep: suggestionsSchema,
-          Immutable: suggestionsSchema,
-        },
-        additionalProperties: false,
-      },
-    } satisfies JSONSchema4ObjectSchema["properties"]),
-    additionalProperties: false,
-  },
+  overridableOptionsSchema(coreOptionsPropertiesSchema),
 ];
 
 /**
  * The default options for the rule.
  */
-const defaultOptions: Options = [
+const defaultOptions: RawOptions = [
   {
     enforcement: Immutability.Immutable,
     ignoreInferredTypes: false,
@@ -337,7 +348,7 @@ const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
 
 type Descriptor = RuleResult<
   keyof typeof errorMessages,
-  Options
+  RawOptions
 >["descriptors"][number];
 
 type AllFixers = {
@@ -350,7 +361,7 @@ type AllFixers = {
  */
 function getAllFixers(
   node: TSESTree.Node,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
   fixerConfigs: FixerConfig[] | false,
   suggestionsConfigs: SuggestionsConfig[] | false,
 ): AllFixers {
@@ -422,7 +433,7 @@ function getConfiguredSuggestionFixers(
  * Get the level of enforcement from the raw value given.
  */
 function parseEnforcement(rawEnforcement: RawEnforcement) {
-  return rawEnforcement === "None"
+  return rawEnforcement === "None" || rawEnforcement === undefined
     ? false
     : typeof rawEnforcement === "string"
       ? Immutability[rawEnforcement]
@@ -433,7 +444,7 @@ function parseEnforcement(rawEnforcement: RawEnforcement) {
  * Get the fixer config for the the given enforcement level from the raw config given.
  */
 function parseFixerConfigs(
-  allRawConfigs: Options[0]["fixer"],
+  allRawConfigs: RawOptions[0]["fixer"],
   enforcement: Immutability,
 ): FixerConfig[] | false {
   const key = Immutability[enforcement] as keyof NonNullable<
@@ -454,7 +465,7 @@ function parseFixerConfigs(
  * Get the suggestions config for the the given enforcement level from the raw config given.
  */
 function parseSuggestionsConfigs(
-  rawSuggestions: Options[0]["suggestions"],
+  rawSuggestions: RawOptions[0]["suggestions"],
   enforcement: Immutability,
 ): SuggestionsConfig[] | false {
   const key = Immutability[enforcement] as keyof NonNullable<
@@ -477,56 +488,67 @@ function parseSuggestionsConfigs(
  */
 function getParameterTypeViolations(
   node: ESFunctionType,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
   options: Readonly<Options>,
 ): Descriptor[] {
-  const [optionsObject] = options;
-  const {
-    parameters: rawOption,
-    fixer: rawFixerConfig,
-    suggestions: rawSuggestionsConfigs,
-  } = optionsObject;
-  const {
-    enforcement: rawEnforcement,
-    ignoreInferredTypes,
-    ignoreClasses,
-    ignoreNamePattern,
-    ignoreTypePattern,
-  } = {
-    ignoreInferredTypes: optionsObject.ignoreInferredTypes,
-    ignoreClasses: optionsObject.ignoreClasses,
-    ignoreNamePattern: optionsObject.ignoreNamePattern,
-    ignoreTypePattern: optionsObject.ignoreTypePattern,
-    ...(typeof rawOption === "object"
-      ? rawOption
-      : {
-          enforcement: rawOption,
-        }),
-  };
-
-  const enforcement = parseEnforcement(
-    rawEnforcement ?? optionsObject.enforcement,
-  );
-  if (
-    enforcement === false ||
-    shouldIgnoreClasses(node, context, ignoreClasses)
-  ) {
-    return [];
-  }
-
-  const fixerConfigs = parseFixerConfigs(rawFixerConfig, enforcement);
-  const suggestionsConfigs = parseSuggestionsConfigs(
-    rawSuggestionsConfigs,
-    enforcement,
-  );
-
   return node.params
     .map((param): Descriptor | undefined => {
+      const parameterProperty = isTSParameterProperty(param);
+      const actualParam = parameterProperty ? param.parameter : param;
+
+      const optionsToUse = getCoreOptions<CoreOptions, Options>(
+        param,
+        context,
+        options,
+      );
+
+      if (optionsToUse === null) {
+        return undefined;
+      }
+
+      const {
+        parameters: rawOption,
+        fixer: rawFixerConfig,
+        suggestions: rawSuggestionsConfigs,
+      } = optionsToUse;
+      const {
+        enforcement: rawEnforcement,
+        ignoreInferredTypes,
+        ignoreClasses,
+        ignoreNamePattern,
+        ignoreTypePattern,
+      } = {
+        ignoreInferredTypes: optionsToUse.ignoreInferredTypes,
+        ignoreClasses: optionsToUse.ignoreClasses,
+        ignoreNamePattern: optionsToUse.ignoreNamePattern,
+        ignoreTypePattern: optionsToUse.ignoreTypePattern,
+        ...(typeof rawOption === "object"
+          ? rawOption
+          : {
+              enforcement: rawOption,
+            }),
+      };
+
+      const enforcement = parseEnforcement(
+        rawEnforcement ?? optionsToUse.enforcement,
+      );
+      if (
+        enforcement === false ||
+        shouldIgnoreClasses(node, context, ignoreClasses)
+      ) {
+        return undefined;
+      }
+
+      const fixerConfigs = parseFixerConfigs(rawFixerConfig, enforcement);
+      const suggestionsConfigs = parseSuggestionsConfigs(
+        rawSuggestionsConfigs,
+        enforcement,
+      );
+
       if (shouldIgnorePattern(param, context, ignoreNamePattern)) {
         return undefined;
       }
 
-      const parameterProperty = isTSParameterProperty(param);
       if (parameterProperty && !param.readonly) {
         const fix: NonNullable<Descriptor["fix"]> | null = (fixer) =>
           fixer.insertTextBefore(param.parameter, "readonly ");
@@ -543,8 +565,6 @@ function getParameterTypeViolations(
           ],
         };
       }
-
-      const actualParam = parameterProperty ? param.parameter : param;
 
       if (
         // inferred types
@@ -613,92 +633,124 @@ function getParameterTypeViolations(
  */
 function getReturnTypeViolations(
   node: ESFunctionType,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
   options: Readonly<Options>,
 ): Descriptor[] {
-  const [optionsObject] = options;
-  const {
-    returnTypes: rawOption,
-    fixer: rawFixerConfig,
-    suggestions: rawSuggestionsConfigs,
-  } = optionsObject;
-  const {
-    enforcement: rawEnforcement,
-    ignoreInferredTypes,
-    ignoreClasses,
-    ignoreNamePattern,
-    ignoreTypePattern,
-  } = {
-    ignoreInferredTypes: optionsObject.ignoreInferredTypes,
-    ignoreClasses: optionsObject.ignoreClasses,
-    ignoreNamePattern: optionsObject.ignoreNamePattern,
-    ignoreTypePattern: optionsObject.ignoreTypePattern,
-    ...(typeof rawOption === "object" ? rawOption : { enforcement: rawOption }),
-  };
+  function getOptions(type: Type, typeNode: TypeNode | null) {
+    const optionsToUse = getCoreOptionsForType<CoreOptions, Options>(
+      type,
+      typeNode,
+      context,
+      options,
+    );
 
-  const enforcement = parseEnforcement(
-    rawEnforcement ?? optionsObject.enforcement,
-  );
-
-  if (
-    enforcement === false ||
-    (ignoreInferredTypes && node.returnType?.typeAnnotation === undefined) ||
-    shouldIgnoreClasses(node, context, ignoreClasses) ||
-    shouldIgnorePattern(node, context, ignoreNamePattern)
-  ) {
-    return [];
-  }
-
-  const fixerConfigs = parseFixerConfigs(rawFixerConfig, enforcement);
-  const suggestionsConfigs = parseSuggestionsConfigs(
-    rawSuggestionsConfigs,
-    enforcement,
-  );
-
-  if (
-    node.returnType?.typeAnnotation !== undefined &&
-    !isTSTypePredicate(node.returnType.typeAnnotation)
-  ) {
-    if (shouldIgnorePattern(node.returnType, context, ignoreTypePattern)) {
-      return [];
+    if (optionsToUse === null) {
+      return null;
     }
 
-    const immutability = getTypeImmutabilityOfNode(
-      node.returnType.typeAnnotation,
-      context,
+    const {
+      returnTypes: rawOption,
+      fixer: rawFixerConfig,
+      suggestions: rawSuggestionsConfigs,
+    } = optionsToUse;
+    const {
+      enforcement: rawEnforcement,
+      ignoreClasses,
+      ignoreNamePattern,
+      ignoreTypePattern,
+      ignoreInferredTypes,
+    } = {
+      ignoreClasses: optionsToUse.ignoreClasses,
+      ignoreNamePattern: optionsToUse.ignoreNamePattern,
+      ignoreTypePattern: optionsToUse.ignoreTypePattern,
+      ignoreInferredTypes: optionsToUse.ignoreInferredTypes,
+      ...(typeof rawOption === "object"
+        ? rawOption
+        : { enforcement: rawOption }),
+    };
+
+    const enforcement = parseEnforcement(
+      rawEnforcement ?? optionsToUse.enforcement,
+    );
+
+    if (
+      enforcement === false ||
+      shouldIgnoreClasses(node, context, ignoreClasses) ||
+      shouldIgnorePattern(node, context, ignoreNamePattern)
+    ) {
+      return null;
+    }
+
+    const fixerConfigs = parseFixerConfigs(rawFixerConfig, enforcement);
+    const suggestionsConfigs = parseSuggestionsConfigs(
+      rawSuggestionsConfigs,
       enforcement,
     );
 
-    if (immutability >= enforcement) {
+    return {
+      ignoreTypePattern,
+      ignoreInferredTypes,
+      enforcement,
+      fixerConfigs,
+      suggestionsConfigs,
+    };
+  }
+
+  if (node.returnType?.typeAnnotation !== undefined) {
+    const [type, typeNode] = getTypeDataOfNode(node, context);
+    const optionsToUse = getOptions(type, typeNode);
+    if (optionsToUse === null) {
       return [];
     }
 
-    const { fix, suggestionFixers } = getAllFixers(
-      node.returnType.typeAnnotation,
-      context,
-      fixerConfigs,
-      suggestionsConfigs,
-    );
+    const { ignoreTypePattern, enforcement, fixerConfigs, suggestionsConfigs } =
+      optionsToUse;
 
-    return [
-      {
-        node: node.returnType,
-        messageId: "returnType",
-        data: {
-          actual: Immutability[immutability],
-          expected: Immutability[enforcement],
+    if (
+      node.returnType?.typeAnnotation !== undefined &&
+      !isTSTypePredicate(node.returnType.typeAnnotation)
+    ) {
+      if (shouldIgnorePattern(node.returnType, context, ignoreTypePattern)) {
+        return [];
+      }
+
+      const immutability = getTypeImmutabilityOfNode(
+        node.returnType.typeAnnotation,
+        context,
+        enforcement,
+      );
+
+      if (immutability >= enforcement) {
+        return [];
+      }
+
+      const { fix, suggestionFixers } = getAllFixers(
+        node.returnType.typeAnnotation,
+        context,
+        fixerConfigs,
+        suggestionsConfigs,
+      );
+
+      return [
+        {
+          node: node.returnType,
+          messageId: "returnType",
+          data: {
+            actual: Immutability[immutability],
+            expected: Immutability[enforcement],
+          },
+          fix,
+          suggest:
+            suggestionFixers?.map(({ fix, message }) => ({
+              messageId: "userDefined",
+              data: {
+                message,
+              },
+              fix,
+            })) ?? null,
         },
-        fix,
-        suggest:
-          suggestionFixers?.map(({ fix, message }) => ({
-            messageId: "userDefined",
-            data: {
-              message,
-            },
-            fix,
-          })) ?? null,
-      },
-    ];
+      ];
+    }
   }
 
   if (!isFunctionLike(node)) {
@@ -714,8 +766,25 @@ function getReturnTypeViolations(
     return [];
   }
 
+  const returnType = returnTypes[0]!;
+
+  const optionsToUse = getOptions(
+    returnType,
+    (returnType as Type & { node: TypeNode }).node ?? null,
+  );
+  if (optionsToUse === null) {
+    return [];
+  }
+
+  const { ignoreInferredTypes, enforcement, fixerConfigs, suggestionsConfigs } =
+    optionsToUse;
+
+  if (ignoreInferredTypes) {
+    return [];
+  }
+
   const immutability = getTypeImmutabilityOfType(
-    returnTypes[0]!,
+    returnType,
     context,
     enforcement,
   );
@@ -760,9 +829,11 @@ function getReturnTypeViolations(
  */
 function checkFunction(
   node: ESFunctionType,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-  options: Readonly<Options>,
-): RuleResult<keyof typeof errorMessages, Options> {
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
+  rawOptions: Readonly<RawOptions>,
+): RuleResult<keyof typeof errorMessages, RawOptions> {
+  const options = upgradeRawOverridableOptions(rawOptions[0]);
+
   const descriptors = [
     ...getParameterTypeViolations(node, context, options),
     ...getReturnTypeViolations(node, context, options),
@@ -779,16 +850,28 @@ function checkFunction(
  */
 function checkVariable(
   node: TSESTree.VariableDeclarator | TSESTree.PropertyDefinition,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-  options: Readonly<Options>,
-): RuleResult<keyof typeof errorMessages, Options> {
-  const [optionsObject] = options;
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
+  rawOptions: Readonly<RawOptions>,
+): RuleResult<keyof typeof errorMessages, RawOptions> {
+  const options = upgradeRawOverridableOptions(rawOptions[0]);
+  const optionsToUse = getCoreOptions<CoreOptions, Options>(
+    node,
+    context,
+    options,
+  );
+
+  if (optionsToUse === null) {
+    return {
+      context,
+      descriptors: [],
+    };
+  }
 
   const {
     variables: rawOption,
     fixer: rawFixerConfig,
     suggestions: rawSuggestionsConfigs,
-  } = optionsObject;
+  } = optionsToUse;
   const {
     enforcement: rawEnforcement,
     ignoreInferredTypes,
@@ -797,16 +880,16 @@ function checkVariable(
     ignoreTypePattern,
     ignoreInFunctions,
   } = {
-    ignoreInferredTypes: optionsObject.ignoreInferredTypes,
-    ignoreClasses: optionsObject.ignoreClasses,
-    ignoreNamePattern: optionsObject.ignoreNamePattern,
-    ignoreTypePattern: optionsObject.ignoreTypePattern,
+    ignoreInferredTypes: optionsToUse.ignoreInferredTypes,
+    ignoreClasses: optionsToUse.ignoreClasses,
+    ignoreNamePattern: optionsToUse.ignoreNamePattern,
+    ignoreTypePattern: optionsToUse.ignoreTypePattern,
     ignoreInFunctions: false,
     ...(typeof rawOption === "object" ? rawOption : { enforcement: rawOption }),
   };
 
   const enforcement = parseEnforcement(
-    rawEnforcement ?? optionsObject.enforcement,
+    rawEnforcement ?? optionsToUse.enforcement,
   );
 
   if (
@@ -944,9 +1027,9 @@ function checkVariable(
 }
 
 // Create the rule.
-export const rule: Rule<keyof typeof errorMessages, Options> = createRule<
+export const rule: Rule<keyof typeof errorMessages, RawOptions> = createRule<
   keyof typeof errorMessages,
-  Options
+  RawOptions
 >(name, meta, defaultOptions, {
   ArrowFunctionExpression: checkFunction,
   FunctionDeclaration: checkFunction,
