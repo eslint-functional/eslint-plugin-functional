@@ -495,7 +495,7 @@ function checkImplicitType(
       isIdentifier(declarator.id) &&
       declarator.id.typeAnnotation === undefined &&
       declarator.init !== null &&
-      isArrayType(getTypeOfNode(declarator.init, context)) &&
+      isArrayType(context, getTypeOfNode(declarator.init, context)) &&
       !ignoreCollections
         ? [
             {

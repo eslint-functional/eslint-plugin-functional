@@ -478,7 +478,7 @@ function isInChainCallAndFollowsNew(
   // Check for: new Array()
   if (
     isNewExpression(node) &&
-    isArrayConstructorType(getTypeOfNode(node.callee, context))
+    isArrayConstructorType(context, getTypeOfNode(node.callee, context))
   ) {
     return true;
   }
@@ -491,7 +491,10 @@ function isInChainCallAndFollowsNew(
     // Check for: Array.from(iterable)
     if (
       arrayConstructorFunctions.some(isExpected(node.callee.property.name)) &&
-      isArrayConstructorType(getTypeOfNode(node.callee.object, context))
+      isArrayConstructorType(
+        context,
+        getTypeOfNode(node.callee.object, context),
+      )
     ) {
       return true;
     }
@@ -508,7 +511,10 @@ function isInChainCallAndFollowsNew(
       objectConstructorNewObjectReturningMethods.some(
         isExpected(node.callee.property.name),
       ) &&
-      isObjectConstructorType(getTypeOfNode(node.callee.object, context))
+      isObjectConstructorType(
+        context,
+        getTypeOfNode(node.callee.object, context),
+      )
     ) {
       return true;
     }
@@ -582,7 +588,7 @@ function checkCallExpression(
     arrayMutatorMethods.has(node.callee.property.name) &&
     (!ignoreImmediateMutation ||
       !isInChainCallAndFollowsNew(node.callee, context)) &&
-    isArrayType(getTypeOfNode(node.callee.object, context))
+    isArrayType(context, getTypeOfNode(node.callee.object, context))
   ) {
     if (ignoreNonConstDeclarations === false) {
       return {
@@ -627,7 +633,7 @@ function checkCallExpression(
       ignoreIdentifierPattern,
       ignoreAccessorPattern,
     ) &&
-    isObjectConstructorType(getTypeOfNode(node.callee.object, context))
+    isObjectConstructorType(context, getTypeOfNode(node.callee.object, context))
   ) {
     if (ignoreNonConstDeclarations === false) {
       return {

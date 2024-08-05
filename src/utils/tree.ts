@@ -149,7 +149,7 @@ export function isInPromiseHandlerFunction<
   }
 
   const objectType = getTypeOfNode(functionNode.parent.callee.object, context);
-  return isPromiseType(objectType);
+  return isPromiseType(context, objectType);
 }
 
 /**

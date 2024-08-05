@@ -3,9 +3,17 @@
  */
 
 import { AST_NODE_TYPES, type TSESTree } from "@typescript-eslint/utils";
-import type { Type, UnionType } from "typescript";
+import type { RuleContext } from "@typescript-eslint/utils/ts-eslint";
+import typeMatchesSpecifier, {
+  type TypeDeclarationSpecifier,
+} from "ts-declaration-location";
+import type { Program, Type, UnionType } from "typescript";
 
 import typescript from "#/conditional-imports/typescript";
+
+const libSpecifier = {
+  from: "lib",
+} satisfies TypeDeclarationSpecifier;
 
 /*
  * TS Types.
@@ -429,41 +437,63 @@ export function isUnionType(type: Type): type is UnionType {
   return typescript !== undefined && type.flags === typescript.TypeFlags.Union;
 }
 
-export function isArrayType(type: Type | null): boolean {
-  return (
-    type !== null &&
-    (((type.symbol as unknown) !== undefined && type.symbol.name === "Array") ||
-      (isUnionType(type) && type.types.some(isArrayType)))
-  );
-}
-
-export function isArrayConstructorType(type: Type | null): boolean {
-  return (
-    type !== null &&
-    (((type.symbol as unknown) !== undefined &&
-      type.symbol.name === "ArrayConstructor") ||
-      (isUnionType(type) && type.types.some(isArrayConstructorType)))
-  );
-}
-
-export function isObjectConstructorType(type: Type | null): boolean {
-  return (
-    type !== null &&
-    (((type.symbol as unknown) !== undefined &&
-      type.symbol.name === "ObjectConstructor") ||
-      (isUnionType(type) && type.types.some(isObjectConstructorType)))
-  );
-}
-
 export function isFunctionLikeType(type: Type | null): boolean {
   return type !== null && type.getCallSignatures().length > 0;
 }
 
-export function isPromiseType(type: Type | null): boolean {
-  return (
-    type !== null &&
-    (((type.symbol as unknown) !== undefined &&
-      type.symbol.name === "Promise") ||
-      (isUnionType(type) && type.types.some(isPromiseType)))
-  );
+export function isArrayType(
+  context: RuleContext<string, ReadonlyArray<unknown>>,
+  type: Type | null,
+): boolean {
+  return typeMatches(context, "Array", type);
+}
+
+export function isArrayConstructorType(
+  context: RuleContext<string, ReadonlyArray<unknown>>,
+  type: Type | null,
+): boolean {
+  return typeMatches(context, "ArrayConstructor", type);
+}
+
+export function isObjectConstructorType(
+  context: RuleContext<string, ReadonlyArray<unknown>>,
+  type: Type | null,
+): boolean {
+  return typeMatches(context, "ObjectConstructor", type);
+}
+
+export function isPromiseType(
+  context: RuleContext<string, ReadonlyArray<unknown>>,
+  type: Type | null,
+): boolean {
+  return typeMatches(context, "Promise", type);
+}
+
+function typeMatches(
+  context: RuleContext<string, ReadonlyArray<unknown>>,
+  typeName: string,
+  type: Type | null,
+): boolean {
+  if (type === null) {
+    return false;
+  }
+  const program = context.sourceCode.parserServices?.program ?? undefined;
+  if (program === undefined) {
+    return false;
+  }
+  return typeMatchesHelper(program, typeName)(type);
+}
+
+function typeMatchesHelper(
+  program: Program,
+  typeName: string,
+): (type: Type) => boolean {
+  return function test(type: Type) {
+    return (
+      ((type.symbol as unknown) !== undefined &&
+        type.symbol.name === typeName &&
+        typeMatchesSpecifier(program, libSpecifier, type)) ||
+      (isUnionType(type) && type.types.some(test))
+    );
+  };
 }
