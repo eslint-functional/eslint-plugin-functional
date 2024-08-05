@@ -1,6 +1,14 @@
 import type { JSONSchema4 } from "@typescript-eslint/utils/json-schema";
 import type { RuleContext } from "@typescript-eslint/utils/ts-eslint";
+import { deepmerge } from "deepmerge-ts";
 
+import {
+  type IgnoreCodePatternOption,
+  type IgnoreIdentifierPatternOption,
+  ignoreCodePatternOptionSchema,
+  ignoreIdentifierPatternOptionSchema,
+  shouldIgnorePattern,
+} from "#/options";
 import { ruleNameScope } from "#/utils/misc";
 import type { ESClass } from "#/utils/node-types";
 import {
@@ -23,12 +31,21 @@ export const fullName: `${typeof ruleNameScope}/${typeof name}` = `${ruleNameSco
 /**
  * The options this rule can take.
  */
-type Options = [{}];
+type Options = [IgnoreIdentifierPatternOption & IgnoreCodePatternOption];
 
 /**
  * The schema for the rule options.
  */
-const schema: JSONSchema4[] = [];
+const schema: JSONSchema4[] = [
+  {
+    type: "object",
+    properties: deepmerge(
+      ignoreIdentifierPatternOptionSchema,
+      ignoreCodePatternOptionSchema,
+    ),
+    additionalProperties: false,
+  },
+];
 
 /**
  * The default options for the rule.
@@ -64,8 +81,26 @@ const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
 function checkClass(
   node: ESClass,
   context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
-  // All class nodes violate this rule.
+  const [optionsObject] = options;
+  const { ignoreIdentifierPattern, ignoreCodePattern } = optionsObject;
+
+  if (
+    shouldIgnorePattern(
+      node,
+      context,
+      ignoreIdentifierPattern,
+      undefined,
+      ignoreCodePattern,
+    )
+  ) {
+    return {
+      context,
+      descriptors: [],
+    };
+  }
+
   return { context, descriptors: [{ node, messageId: "generic" }] };
 }
 
