@@ -48,6 +48,12 @@ jobs:
             prefer-tacit
             readonly-type
             type-declaration-immutability
+            deps
+            dev-deps
+            peer-deps
+            release-patch
+            release-minor
+            release-major
           requireScope: false
           subjectPattern: ^(?![A-Z]).+$ # Don't start with an uppercase character.
           subjectPatternError: |
