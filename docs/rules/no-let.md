@@ -1,8 +1,13 @@
+<!-- markdownlint-disable -->
+<!-- begin auto-generated rule header -->
+
 # Disallow mutable variables (`functional/no-let`)
 
-💼 This rule is enabled in the following configs: ☑️ `lite`, `no-mutations`, ✅ `recommended`, 🔒 `strict`.
+💼 This rule is enabled in the following configs: ☑️ `lite`, `noMutations`, ✅ `recommended`, 🔒 `strict`.
 
 <!-- end auto-generated rule header -->
+<!-- markdownlint-restore -->
+<!-- markdownlint-restore -->
 
 This rule should be combined with ESLint's built-in `no-var` rule to enforce that all variables are declared as `const`.
 
@@ -82,24 +87,15 @@ const recommendedAndLiteOptions = {
 
 ### `allowInForLoopInit`
 
-If set, `let`s inside of for a loop initializer are allowed. This does not include for...of or for...in loops as they should use `const` instead.
-
-#### ✅ Correct
-
-<!-- eslint-disable @typescript-eslint/prefer-for-of -->
-
-```js
-/* eslint functional/no-let: ["error", { "allowInForLoopInit": true } ] */
-
-for (let i = 0; i < array.length; i++) {}
-```
+If set, `let`s inside of for a loop initializer are allowed. This does not include for...of or for...in loops as they
+should use `const` instead.
 
 #### ❌ Incorrect
 
 <!-- eslint-skip -->
 
 ```js
-/* eslint functional/no-let: "error" */
+/* eslint functional/no-let: ["error", { "allowInForLoopInit": true } ] */
 
 for (let element of array) {
 }
@@ -108,10 +104,20 @@ for (let element of array) {
 <!-- eslint-skip -->
 
 ```js
-/* eslint functional/no-let: "error" */
+/* eslint functional/no-let: ["error", { "allowInForLoopInit": true } ] */
 
 for (let [index, element] of array.entries()) {
 }
+```
+
+#### ✅ Correct
+
+<!-- eslint-disable ts/prefer-for-of -->
+
+```js
+/* eslint functional/no-let: ["error", { "allowInForLoopInit": true } ] */
+
+for (let i = 0; i < array.length; i++) {}
 ```
 
 ### `allowInFunctions`

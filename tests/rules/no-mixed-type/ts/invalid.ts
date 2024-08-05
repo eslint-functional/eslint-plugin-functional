@@ -1,8 +1,8 @@
-import { type rule } from "#/rules/no-mixed-types";
-import {
-  type InvalidTestCaseSet,
-  type MessagesOf,
-  type OptionsOf,
+import type { rule } from "#/rules/no-mixed-types";
+import type {
+  InvalidTestCaseSet,
+  MessagesOf,
+  OptionsOf,
 } from "#/tests/helpers/util";
 
 const tests: Array<

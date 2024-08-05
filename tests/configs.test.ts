@@ -13,12 +13,12 @@ import strict from "#/configs/strict";
 import stylistic from "#/configs/stylistic";
 import { rules } from "#/rules";
 
-describe("Configs", () => {
+describe("configs", () => {
   const allRules = Object.values(rules);
-  const allConfigRules = Object.keys(all ?? {});
-  const offConfigRules = Object.entries(off ?? {});
+  const allConfigRules = Object.keys(all);
+  const offConfigRules = Object.entries(off);
   const allNonDeprecatedRules = allRules.filter(
-    (rule) => rule.meta === undefined || rule.meta.deprecated !== true,
+    (rule) => rule.meta.deprecated !== true,
   );
 
   it('"All" - should have the right number of rules', () => {
@@ -71,10 +71,10 @@ describe("Configs", () => {
   describe.each(configs)(
     '"%s" Config rules are in the "All" Config',
     (name, config) => {
-      const ruleNames = Object.keys(config ?? {});
+      const ruleNames = Object.keys(config);
 
       it.each(ruleNames)(`%s`, (rule) => {
-        expect(all?.[rule]).toBeDefined();
+        expect(all[rule]).toBeDefined();
       });
     },
   );

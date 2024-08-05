@@ -1,65 +1,70 @@
-import { type TSESTree } from "@typescript-eslint/utils";
+import type { TSESTree } from "@typescript-eslint/utils";
 import {
+  type NamedCreateRuleMeta,
   RuleCreator,
   getParserServices,
-  type NamedCreateRuleMeta,
 } from "@typescript-eslint/utils/eslint-utils";
-import {
-  type ReportDescriptor,
-  type RuleContext,
-  type RuleListener,
+import type {
+  ReportDescriptor,
+  RuleContext,
+  RuleListener,
+  RuleModule,
 } from "@typescript-eslint/utils/ts-eslint";
 import {
   Immutability,
-  getTypeImmutability,
   type ImmutabilityOverrides,
+  getTypeImmutability,
 } from "is-immutable-type";
-import { type Node as TSNode, type Type, type TypeNode } from "typescript";
+import { isIntrinsicErrorType } from "ts-api-utils";
+import type { Node as TSNode, Type, TypeNode } from "typescript";
 
-import ts from "#/conditional-imports/typescript";
+import typescript from "#/conditional-imports/typescript";
 import { getImmutabilityOverrides } from "#/settings";
 import { __VERSION__ } from "#/utils/constants";
-import { type ESFunction } from "#/utils/node-types";
+import type { ESFunction } from "#/utils/node-types";
+
+type Docs = {
+  /**
+   * Used for creating category configs and splitting the README rules list into sub-lists.
+   */
+  category:
+    | "Currying"
+    | "No Exceptions"
+    | "No Mutations"
+    | "No Other Paradigms"
+    | "No Statements"
+    | "Stylistic";
+
+  recommended: "recommended" | "strict" | false;
+  recommendedSeverity: "error" | "warn";
+
+  requiresTypeChecking: boolean;
+
+  url?: never;
+};
 
 /**
  * Any custom rule meta properties.
  */
-export type NamedCreateRuleCustomMeta<
-  T extends string,
-  Options extends BaseOptions,
-> = Omit<NamedCreateRuleMeta<T, Options>, "docs"> & {
-  docs: {
-    /**
-     * Used for creating category configs and splitting the README rules list into sub-lists.
-     */
-    category:
-      | "Currying"
-      | "No Exceptions"
-      | "No Mutations"
-      | "No Other Paradigms"
-      | "No Statements"
-      | "Stylistic";
+export type NamedCreateRuleCustomMeta<T extends string> = NamedCreateRuleMeta<
+  T,
+  Docs
+>;
 
-    recommended: "recommended" | "strict" | false;
-    recommendedSeverity: "error" | "warn";
-  } & Omit<NamedCreateRuleMeta<T, Options>["docs"], "recommended">;
+/**
+ * The definition of a rule.
+ */
+export type Rule<
+  MessageIds extends string,
+  Options extends ReadonlyArray<unknown>,
+> = RuleModule<MessageIds, Options, Docs> & {
+  meta: NamedCreateRuleCustomMeta<MessageIds>;
 };
 
 /**
  * All options must extends this type.
  */
 export type BaseOptions = ReadonlyArray<unknown>;
-
-export type RuleDefinition<
-  MessageIds extends string,
-  Options extends BaseOptions,
-> = {
-  readonly defaultOptions: Options;
-  readonly meta: NamedCreateRuleCustomMeta<MessageIds, Options>;
-  readonly create: (
-    context: Readonly<RuleContext<MessageIds, Options>>,
-  ) => RuleListener;
-};
 
 /**
  * The result all rules return.
@@ -87,9 +92,6 @@ export type RuleFunctionsMap<
   ) => RuleResult<MessageIds, Options>;
 }>;
 
-// This function can't be functional as it needs to interact with 3rd-party
-// libraries that aren't functional.
-/* eslint-disable functional/no-return-void, functional/no-expression-statements */
 /**
  * Create a function that processes common options and then runs the given
  * check.
@@ -117,7 +119,6 @@ function checkNode<
     }
   };
 }
-/* eslint-enable functional/no-return-void, functional/no-expression-statements */
 
 /**
  * Create a rule.
@@ -127,10 +128,10 @@ export function createRule<
   Options extends BaseOptions,
 >(
   name: string,
-  meta: NamedCreateRuleCustomMeta<MessageIds, Options>,
+  meta: Readonly<NamedCreateRuleCustomMeta<MessageIds>>,
   defaultOptions: Options,
   ruleFunctionsMap: RuleFunctionsMap<any, MessageIds, Options>,
-) {
+): Rule<MessageIds, Options> {
   return createRuleUsingFunction(
     name,
     meta,
@@ -147,28 +148,27 @@ export function createRuleUsingFunction<
   Options extends BaseOptions,
 >(
   name: string,
-  meta: NamedCreateRuleCustomMeta<MessageIds, Options>,
+  meta: Readonly<NamedCreateRuleCustomMeta<MessageIds>>,
   defaultOptions: Options,
   createFunction: (
     context: Readonly<RuleContext<MessageIds, Options>>,
     options: Readonly<Options>,
   ) => RuleFunctionsMap<any, MessageIds, Options>,
-) {
-  const ruleCreator = RuleCreator(
+): Rule<MessageIds, Options> {
+  const ruleCreator = RuleCreator<Docs>(
     (ruleName) =>
       `https://github.com/eslint-functional/eslint-plugin-functional/blob/v${__VERSION__}/docs/rules/${ruleName}.md`,
   );
 
   return ruleCreator<Options, MessageIds>({
     name,
-    meta: meta as any,
+    meta,
     defaultOptions,
     create: (context, options) => {
       const ruleFunctionsMap = createFunction(context, options);
       return Object.fromEntries(
         Object.entries(ruleFunctionsMap).map(([nodeSelector, ruleFunction]) => [
           nodeSelector,
-          // prettier-ignore
           checkNode<
             MessageIds,
             Readonly<RuleContext<MessageIds, Options>>,
@@ -178,7 +178,7 @@ export function createRuleUsingFunction<
         ]),
       );
     },
-  }) as unknown as RuleDefinition<MessageIds, Options>;
+  }) as Rule<MessageIds, Options>;
 }
 
 /**
@@ -213,8 +213,8 @@ export function getTypeOfTSNode<
  */
 export function getReturnTypesOfFunction<
   Context extends RuleContext<string, BaseOptions>,
->(node: TSESTree.Node, context: Context) {
-  if (ts === undefined) {
+>(node: TSESTree.Node, context: Context): Type[] | null {
+  if (typescript === undefined) {
     return null;
   }
 
@@ -222,7 +222,10 @@ export function getReturnTypesOfFunction<
   const checker = parserServices.program.getTypeChecker();
   const type = getTypeOfNode(node, context);
 
-  const signatures = checker.getSignaturesOfType(type, ts.SignatureKind.Call);
+  const signatures = checker.getSignaturesOfType(
+    type,
+    typescript.SignatureKind.Call,
+  );
   return signatures.map((signature) =>
     checker.getReturnTypeOfSignature(signature),
   );
@@ -233,8 +236,8 @@ export function getReturnTypesOfFunction<
  */
 export function isImplementationOfOverload<
   Context extends RuleContext<string, BaseOptions>,
->(func: ESFunction, context: Context) {
-  if (ts === undefined) {
+>(func: ESFunction, context: Context): boolean {
+  if (typescript === undefined) {
     return false;
   }
 
@@ -256,7 +259,7 @@ export function getTypeImmutabilityOfNode<
   maxImmutability?: Immutability,
   explicitOverrides?: ImmutabilityOverrides,
 ): Immutability {
-  if (ts === undefined) {
+  if (typescript === undefined) {
     return Immutability.Unknown;
   }
 
@@ -264,14 +267,19 @@ export function getTypeImmutabilityOfNode<
   const overrides =
     explicitOverrides ?? getImmutabilityOverrides(context.settings);
   const tsNode = parserServices.esTreeNodeToTSNodeMap.get(node);
-  const typedNode = ts.isIdentifier(tsNode) ? tsNode.parent : tsNode;
-  const typeLike =
-    (typedNode as { type?: TypeNode }).type ??
-    getTypeOfNode(parserServices.tsNodeToESTreeNodeMap.get(typedNode), context);
+  let m_typeLike: Type | TypeNode | undefined = (tsNode as { type?: TypeNode })
+    .type;
+
+  if (m_typeLike === undefined) {
+    m_typeLike = getTypeOfTSNode(tsNode, context);
+    if (isIntrinsicErrorType(m_typeLike)) {
+      return Immutability.Unknown;
+    }
+  }
 
   return getTypeImmutability(
     parserServices.program,
-    typeLike,
+    m_typeLike,
     overrides,
     // Don't use the global cache in testing environments as it may cause errors when switching between different config options.
     process.env["NODE_ENV"] !== "test",

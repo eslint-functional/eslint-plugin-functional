@@ -52,8 +52,5 @@ jobs:
           subjectPattern: ^(?![A-Z]).+$ # Don't start with an uppercase character.
           subjectPatternError: |
             The subject "{subject}" should not start with an uppercase character.
-          ignoreLabels: |
-            bot
-            ignore-semantic-pull-request
           headerPattern: '^(\w*)(?:\(([\w$.\-*/ ]*)\))?!?: (.*)$'
           headerPatternCorrespondence: type, scope, subject

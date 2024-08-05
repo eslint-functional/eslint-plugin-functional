@@ -1,13 +1,14 @@
-import { type TSESTree } from "@typescript-eslint/utils";
-import { type JSONSchema4 } from "@typescript-eslint/utils/json-schema";
-import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
+import type { TSESTree } from "@typescript-eslint/utils";
+import type { JSONSchema4 } from "@typescript-eslint/utils/json-schema";
+import type { RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
 import { ruleNameScope } from "#/utils/misc";
 import {
+  type NamedCreateRuleCustomMeta,
+  type Rule,
+  type RuleResult,
   createRuleUsingFunction,
   getTypeOfNode,
-  type NamedCreateRuleCustomMeta,
-  type RuleResult,
 } from "#/utils/rule";
 import {
   isFunctionLikeType,
@@ -30,7 +31,7 @@ export const name = "no-mixed-types";
 /**
  * The full name of this rule.
  */
-export const fullName = `${ruleNameScope}/${name}`;
+export const fullName: `${typeof ruleNameScope}/${typeof name}` = `${ruleNameScope}/${name}`;
 
 /**
  * The options this rule can take.
@@ -80,15 +81,15 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages, Options> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     category: "No Other Paradigms",
     description:
       "Restrict types so that only members of the same kind are allowed in them.",
-    requiresTypeChecking: true,
     recommended: "recommended",
     recommendedSeverity: "error",
+    requiresTypeChecking: true,
   },
   messages: errorMessages,
   schema,
@@ -98,21 +99,20 @@ const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages, Options> = {
  * Does the given type elements violate the rule.
  */
 function hasTypeElementViolations(
-  typeElements: TSESTree.TypeElement[],
+  typeElements: ReadonlyArray<TSESTree.TypeElement>,
   context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
 ): boolean {
   return !typeElements
-    .map((member) => {
-      return (
+    .map(
+      (member) =>
         isTSMethodSignature(member) ||
         isTSCallSignatureDeclaration(member) ||
         isTSConstructSignatureDeclaration(member) ||
         ((isTSPropertySignature(member) || isTSIndexSignature(member)) &&
           member.typeAnnotation !== undefined &&
           (isTSFunctionType(member.typeAnnotation.typeAnnotation) ||
-            isFunctionLikeType(getTypeOfNode(member, context))))
-      );
-    })
+            isFunctionLikeType(getTypeOfNode(member, context)))),
+    )
     .every((isFunction, _, array) => array[0] === isFunction);
 }
 
@@ -162,24 +162,27 @@ function checkTSTypeAliasDeclaration(
 }
 
 // Create the rule.
-export const rule = createRuleUsingFunction<
-  keyof typeof errorMessages,
-  Options
->(name, meta, defaultOptions, (context, options) => {
-  const [{ checkInterfaces, checkTypeLiterals }] = options;
+export const rule: Rule<keyof typeof errorMessages, Options> =
+  createRuleUsingFunction<keyof typeof errorMessages, Options>(
+    name,
+    meta,
+    defaultOptions,
+    (context, options) => {
+      const [{ checkInterfaces, checkTypeLiterals }] = options;
 
-  return Object.fromEntries(
-    (
-      [
-        [
-          "TSInterfaceDeclaration",
-          checkInterfaces ? checkTSInterfaceDeclaration : undefined,
-        ],
-        [
-          "TSTypeAliasDeclaration",
-          checkTypeLiterals ? checkTSTypeAliasDeclaration : undefined,
-        ],
-      ] as const
-    ).filter(([sel, fn]) => fn !== undefined),
-  ) as Record<string, any>;
-});
+      return Object.fromEntries(
+        (
+          [
+            [
+              "TSInterfaceDeclaration",
+              checkInterfaces ? checkTSInterfaceDeclaration : undefined,
+            ],
+            [
+              "TSTypeAliasDeclaration",
+              checkTypeLiterals ? checkTSTypeAliasDeclaration : undefined,
+            ],
+          ] as const
+        ).filter(([sel, fn]) => fn !== undefined),
+      ) as Record<string, any>;
+    },
+  );

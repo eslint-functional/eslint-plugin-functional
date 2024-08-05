@@ -1,24 +1,23 @@
 import { TSESTree } from "@typescript-eslint/utils";
-import { type JSONSchema4 } from "@typescript-eslint/utils/json-schema";
-import {
-  type ReportDescriptor,
-  type ReportSuggestionArray,
-  type RuleContext,
-  type RuleFix,
-  type RuleFixer,
+import type { JSONSchema4 } from "@typescript-eslint/utils/json-schema";
+import type {
+  ReportDescriptor,
+  ReportSuggestionArray,
+  RuleContext,
+  RuleFix,
+  RuleFixer,
 } from "@typescript-eslint/utils/ts-eslint";
-import * as semver from "semver";
-import { type Type } from "typescript";
+import type { Type } from "typescript";
 
-import ts from "#/conditional-imports/typescript";
 import { ruleNameScope } from "#/utils/misc";
-import { type ESFunction } from "#/utils/node-types";
+import type { ESFunction } from "#/utils/node-types";
 import {
+  type NamedCreateRuleCustomMeta,
+  type Rule,
+  type RuleResult,
   createRule,
   getTypeOfNode,
   getTypeOfTSNode,
-  type NamedCreateRuleCustomMeta,
-  type RuleResult,
 } from "#/utils/rule";
 import { isNested } from "#/utils/tree";
 import {
@@ -37,7 +36,7 @@ export const name = "prefer-tacit";
 /**
  * The full name of this rule.
  */
-export const fullName = `${ruleNameScope}/${name}`;
+export const fullName: `${typeof ruleNameScope}/${typeof name}` = `${ruleNameScope}/${name}`;
 
 /**
  * The options this rule can take.
@@ -82,7 +81,7 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages, Options> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     category: "Stylistic",
@@ -95,15 +94,6 @@ const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages, Options> = {
   hasSuggestions: true,
   schema,
 };
-
-/**
- * Is the version of TypeScript being used 4.7 or newer?
- */
-const isTS4dot7 =
-  ts !== undefined &&
-  semver.satisfies(ts.version, `>= 4.7.0 || >= 4.7.1-rc || >= 4.7.0-beta`, {
-    includePrerelease: true,
-  });
 
 /**
  * From the callee's type, does it follow that the caller violates this rule.
@@ -141,15 +131,13 @@ function fixFunctionCallToReference(
 ): RuleFix[] | null {
   // Fix to Instantiation Expression.
   if (
-    caller.typeParameters !== undefined &&
-    caller.typeParameters.params.length > 0
+    caller.typeArguments !== undefined &&
+    caller.typeArguments.params.length > 0
   ) {
-    return isTS4dot7
-      ? [
-          fixer.removeRange([node.range[0], caller.callee.range[0]]),
-          fixer.removeRange([caller.typeParameters.range[1], node.range[1]]),
-        ]
-      : null;
+    return [
+      fixer.removeRange([node.range[0], caller.callee.range[0]]),
+      fixer.removeRange([caller.typeArguments.range[1], node.range[1]]),
+    ];
   }
 
   return [
@@ -312,13 +300,11 @@ function checkFunction(
 }
 
 // Create the rule.
-export const rule = createRule<keyof typeof errorMessages, Options>(
-  name,
-  meta,
-  defaultOptions,
-  {
-    FunctionDeclaration: checkFunction,
-    FunctionExpression: checkFunction,
-    ArrowFunctionExpression: checkFunction,
-  },
-);
+export const rule: Rule<keyof typeof errorMessages, Options> = createRule<
+  keyof typeof errorMessages,
+  Options
+>(name, meta, defaultOptions, {
+  FunctionDeclaration: checkFunction,
+  FunctionExpression: checkFunction,
+  ArrowFunctionExpression: checkFunction,
+});

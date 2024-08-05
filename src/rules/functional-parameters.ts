@@ -1,24 +1,25 @@
-import { type TSESTree } from "@typescript-eslint/utils";
-import {
-  type JSONSchema4,
-  type JSONSchema4ObjectSchema,
+import type { TSESTree } from "@typescript-eslint/utils";
+import type {
+  JSONSchema4,
+  JSONSchema4ObjectSchema,
 } from "@typescript-eslint/utils/json-schema";
-import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
+import type { RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import { deepmerge } from "deepmerge-ts";
 
 import {
+  type IgnoreIdentifierPatternOption,
+  type IgnorePrefixSelectorOption,
   ignoreIdentifierPatternOptionSchema,
   ignorePrefixSelectorOptionSchema,
   shouldIgnorePattern,
-  type IgnoreIdentifierPatternOption,
-  type IgnorePrefixSelectorOption,
 } from "#/options";
 import { ruleNameScope } from "#/utils/misc";
-import { type ESFunction } from "#/utils/node-types";
+import type { ESFunction } from "#/utils/node-types";
 import {
-  createRuleUsingFunction,
   type NamedCreateRuleCustomMeta,
+  type Rule,
   type RuleResult,
+  createRuleUsingFunction,
 } from "#/utils/rule";
 import {
   isArgument,
@@ -38,7 +39,7 @@ export const name = "functional-parameters";
 /**
  * The full name of this rule.
  */
-export const fullName = `${ruleNameScope}/${name}`;
+export const fullName: `${typeof ruleNameScope}/${typeof name}` = `${ruleNameScope}/${name}`;
 
 /**
  * The parameter count options this rule can take.
@@ -149,13 +150,14 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages, Options> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     category: "Currying",
     description: "Enforce functional parameters.",
     recommended: "recommended",
     recommendedSeverity: "error",
+    requiresTypeChecking: false,
   },
   messages: errorMessages,
   schema,
@@ -292,36 +294,40 @@ function checkIdentifier(
 }
 
 // Create the rule.
-export const rule = createRuleUsingFunction<
-  keyof typeof errorMessages,
-  Options
->(name, meta, defaultOptions, (context, options) => {
-  const [optionsObject] = options;
-  const { ignorePrefixSelector } = optionsObject;
+export const rule: Rule<keyof typeof errorMessages, Options> =
+  createRuleUsingFunction<keyof typeof errorMessages, Options>(
+    name,
+    meta,
+    defaultOptions,
+    (context, options) => {
+      const [optionsObject] = options;
+      const { ignorePrefixSelector } = optionsObject;
 
-  const baseFunctionSelectors = [
-    "ArrowFunctionExpression",
-    "FunctionDeclaration",
-    "FunctionExpression",
-  ];
+      const baseFunctionSelectors = [
+        "ArrowFunctionExpression",
+        "FunctionDeclaration",
+        "FunctionExpression",
+      ];
 
-  const ignoreSelectors =
-    ignorePrefixSelector === undefined
-      ? undefined
-      : Array.isArray(ignorePrefixSelector)
-        ? ignorePrefixSelector
-        : [ignorePrefixSelector];
+      const ignoreSelectors =
+        ignorePrefixSelector === undefined
+          ? undefined
+          : Array.isArray(ignorePrefixSelector)
+            ? ignorePrefixSelector
+            : [ignorePrefixSelector];
 
-  const fullFunctionSelectors = baseFunctionSelectors.flatMap((baseSelector) =>
-    ignoreSelectors === undefined
-      ? [baseSelector]
-      : `:not(:matches(${ignoreSelectors.join(",")})) > ${baseSelector}`,
+      const fullFunctionSelectors = baseFunctionSelectors.flatMap(
+        (baseSelector) =>
+          ignoreSelectors === undefined
+            ? [baseSelector]
+            : `:not(:matches(${ignoreSelectors.join(",")})) > ${baseSelector}`,
+      );
+
+      return {
+        ...Object.fromEntries(
+          fullFunctionSelectors.map((selector) => [selector, checkFunction]),
+        ),
+        Identifier: checkIdentifier,
+      };
+    },
   );
-
-  return {
-    ...Object.fromEntries(
-      fullFunctionSelectors.map((selector) => [selector, checkFunction]),
-    ),
-    Identifier: checkIdentifier,
-  };
-});

@@ -1,4 +1,4 @@
-import { type FlatConfig } from "@typescript-eslint/utils/ts-eslint";
+import type { FlatConfig } from "@typescript-eslint/utils/ts-eslint";
 
 import { rules } from "#/rules";
 import { ruleNameScope } from "#/utils/misc";
@@ -15,4 +15,6 @@ export default Object.fromEntries(
       `${ruleNameScope}/${name}`,
       rule.meta.docs.recommendedSeverity,
     ]),
-) satisfies FlatConfig.Config["rules"];
+) satisfies FlatConfig.Config["rules"] as NonNullable<
+  FlatConfig.Config["rules"]
+>;

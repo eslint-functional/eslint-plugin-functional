@@ -1,4 +1,4 @@
-name: Prettier
+name: Type Check
 
 on:
   pull_request:
@@ -6,9 +6,9 @@ on:
   workflow_call:
 
 jobs:
-  lint_prettier:
+  typecheck:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/prepare
-      - run: pnpm run lint:prettier
+      - run: pnpm run typecheck

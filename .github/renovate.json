@@ -50,14 +50,6 @@
       "rangeStrategy": "replace",
       "semanticCommitScope": "dev-deps",
       "semanticCommitType": "ci"
-    },
-    {
-      "allowedVersions": "<5",
-      "matchPackageNames": ["escape-string-regexp"]
-    },
-    {
-      "allowedVersions": "<9",
-      "matchPackageNames": ["eslint"]
     }
   ],
   "postUpdateOptions": ["pnpmDedupe"]

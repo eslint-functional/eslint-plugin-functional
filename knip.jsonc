@@ -1,11 +1,17 @@
 {
   "$schema": "node_modules/knip/schema-jsonc.json",
-  "entry": [
-    "src/flat.ts!",
-    "src/classic.ts!",
-    "tests/**/*.test.ts",
+  "entry": ["src/index.ts!", "tests/**/*.test.ts"],
+  "project": ["src/**/*.ts!", "tests/**/*.{js,ts}"],
+  "ignore": ["lib/**", "tests/fixture/file.ts"],
+  "ignoreDependencies": [
+    // Unknown reason for issue.
+    "@vitest/coverage-istanbul",
+    "@vitest/coverage-v8",
+
+    // Lint staged
+    "tsc-files",
+
+    // Eslint
+    "@eslint/compat"
   ],
-  "project": ["src/**/*.ts!", "tests/**/*.ts"],
-  "ignore": ["tests/fixture/file.ts", "src/utils/conditional-imports/esm/**/*"],
-  "ignoreDependencies": ["@types/eslint", "@vitest/coverage-istanbul"],
 }

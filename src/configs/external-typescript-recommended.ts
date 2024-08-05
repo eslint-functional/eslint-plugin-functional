@@ -1,4 +1,4 @@
-import { type FlatConfig } from "@typescript-eslint/utils/ts-eslint";
+import type { FlatConfig } from "@typescript-eslint/utils/ts-eslint";
 
 import externalVanillaRecommended from "#/configs/external-vanilla-recommended";
 
@@ -10,4 +10,6 @@ const tsConfig = {
 export default {
   ...externalVanillaRecommended,
   ...tsConfig,
-} satisfies FlatConfig.Config["rules"];
+} satisfies FlatConfig.Config["rules"] as NonNullable<
+  FlatConfig.Config["rules"]
+>;

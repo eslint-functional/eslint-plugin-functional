@@ -1,14 +1,14 @@
-import {
-  type InvalidTestCase,
-  type ValidTestCase,
+import type {
+  InvalidTestCase,
+  ValidTestCase,
 } from "@typescript-eslint/rule-tester";
 import dedent from "dedent";
 
 import {
-  shouldIgnorePattern,
   type IgnoreAccessorPatternOption,
   type IgnoreCodePatternOption,
   type IgnoreIdentifierPatternOption,
+  shouldIgnorePattern,
 } from "#/options";
 import { getRuleTester } from "#/tests/helpers/RuleTester";
 import { configs, filename } from "#/tests/helpers/configs";
@@ -21,21 +21,19 @@ function createDummyRuleFor(nodeType: string) {
   return createDummyRule((context) => {
     const [allowed, options] = context.options;
     return {
-      [nodeType]: (node) => {
-        return {
-          context,
-          descriptors:
-            shouldIgnorePattern(
-              node,
-              context,
-              options.ignoreIdentifierPattern,
-              options.ignoreAccessorPattern,
-              options.ignoreCodePattern,
-            ) === allowed
-              ? []
-              : [{ node, messageId: "generic" }],
-        };
-      },
+      [nodeType]: (node) => ({
+        context,
+        descriptors:
+          shouldIgnorePattern(
+            node,
+            context,
+            options.ignoreIdentifierPattern,
+            options.ignoreAccessorPattern,
+            options.ignoreCodePattern,
+          ) === allowed
+            ? []
+            : [{ node, messageId: "generic" }],
+      }),
     };
   });
 }

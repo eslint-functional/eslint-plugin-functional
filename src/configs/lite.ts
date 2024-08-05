@@ -1,4 +1,4 @@
-import { type FlatConfig } from "@typescript-eslint/utils/ts-eslint";
+import type { FlatConfig } from "@typescript-eslint/utils/ts-eslint";
 
 import * as functionalParameters from "#/rules/functional-parameters";
 import * as immutableData from "#/rules/immutable-data";
@@ -33,4 +33,6 @@ const overrides = {
 export default {
   ...recommended,
   ...overrides,
-};
+} satisfies FlatConfig.Config["rules"] as NonNullable<
+  FlatConfig.Config["rules"]
+>;

@@ -1,7 +1,11 @@
 {
   "extends": "./tsconfig.build.json",
   "compilerOptions": {
-    "rootDir": "."
+    "allowJs": true,
+    "noEmit": true,
+    "rootDir": ".",
+    "isolatedDeclarations": false
   },
-  "include": [".", "src", "tests", "typings"]
+  "include": [".", ".*", "**/*", "**/.*"],
+  "exclude": ["tests-compiled"]
 }

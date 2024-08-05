@@ -1,32 +1,33 @@
-import { type TSESTree } from "@typescript-eslint/utils";
-import {
-  type JSONSchema4,
-  type JSONSchema4ObjectSchema,
+import type { TSESTree } from "@typescript-eslint/utils";
+import type {
+  JSONSchema4,
+  JSONSchema4ObjectSchema,
 } from "@typescript-eslint/utils/json-schema";
-import {
-  type ReportFixFunction,
-  type RuleContext,
+import type {
+  ReportFixFunction,
+  RuleContext,
 } from "@typescript-eslint/utils/ts-eslint";
 import { deepmerge } from "deepmerge-ts";
 import { Immutability } from "is-immutable-type";
 
 import {
+  type IgnoreClassesOption,
   ignoreClassesOptionSchema,
   shouldIgnoreClasses,
   shouldIgnoreInFunction,
   shouldIgnorePattern,
-  type IgnoreClassesOption,
 } from "#/options";
 import { ruleNameScope } from "#/utils/misc";
-import { type ESFunctionType } from "#/utils/node-types";
+import type { ESFunctionType } from "#/utils/node-types";
 import {
+  type NamedCreateRuleCustomMeta,
+  type Rule,
+  type RuleResult,
   createRule,
   getReturnTypesOfFunction,
   getTypeImmutabilityOfNode,
   getTypeImmutabilityOfType,
   isImplementationOfOverload,
-  type NamedCreateRuleCustomMeta,
-  type RuleResult,
 } from "#/utils/rule";
 import {
   hasID,
@@ -50,7 +51,7 @@ export const name = "prefer-immutable-types";
 /**
  * The full name of this rule.
  */
-export const fullName = `${ruleNameScope}/${name}`;
+export const fullName: `${typeof ruleNameScope}/${typeof name}` = `${ruleNameScope}/${name}`;
 
 type RawEnforcement =
   | Exclude<Immutability | keyof typeof Immutability, "Unknown" | "Mutable">
@@ -231,7 +232,7 @@ const schema: JSONSchema4[] = [
               ignoreInFunctions: {
                 type: "boolean",
               },
-            }),
+            } satisfies JSONSchema4ObjectSchema["properties"]),
             additionalProperties: false,
           },
           {
@@ -258,7 +259,7 @@ const schema: JSONSchema4[] = [
         },
         additionalProperties: false,
       },
-    }),
+    } satisfies JSONSchema4ObjectSchema["properties"]),
     additionalProperties: false,
   },
 ];
@@ -318,7 +319,7 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages, Options> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     category: "No Mutations",
@@ -353,7 +354,7 @@ function getAllFixers(
   fixerConfigs: FixerConfig[] | false,
   suggestionsConfigs: SuggestionsConfig[] | false,
 ): AllFixers {
-  const nodeText = context.sourceCode.getText(node).replaceAll(/\s+/gmu, " ");
+  const nodeText = context.sourceCode.getText(node).replaceAll(/\s+/gu, " ");
 
   const fix =
     fixerConfigs === false
@@ -374,7 +375,7 @@ function getAllFixers(
 function getConfiguredFixer(
   node: TSESTree.Node,
   text: string,
-  configs: FixerConfig[],
+  configs: ReadonlyArray<FixerConfig>,
 ): NonNullable<Descriptor["fix"]> | null {
   const config = configs.find((c) => c.pattern.test(text));
   if (config === undefined) {
@@ -390,7 +391,7 @@ function getConfiguredFixer(
 function getConfiguredSuggestionFixers(
   node: TSESTree.Node,
   text: string,
-  suggestionsConfigs: SuggestionsConfig[],
+  suggestionsConfigs: ReadonlyArray<SuggestionsConfig>,
 ) {
   return suggestionsConfigs
     .map(
@@ -943,21 +944,19 @@ function checkVariable(
 }
 
 // Create the rule.
-export const rule = createRule<keyof typeof errorMessages, Options>(
-  name,
-  meta,
-  defaultOptions,
-  {
-    ArrowFunctionExpression: checkFunction,
-    FunctionDeclaration: checkFunction,
-    FunctionExpression: checkFunction,
-    TSCallSignatureDeclaration: checkFunction,
-    TSConstructSignatureDeclaration: checkFunction,
-    TSDeclareFunction: checkFunction,
-    TSEmptyBodyFunctionExpression: checkFunction,
-    TSFunctionType: checkFunction,
-    TSMethodSignature: checkFunction,
-    PropertyDefinition: checkVariable,
-    VariableDeclarator: checkVariable,
-  },
-);
+export const rule: Rule<keyof typeof errorMessages, Options> = createRule<
+  keyof typeof errorMessages,
+  Options
+>(name, meta, defaultOptions, {
+  ArrowFunctionExpression: checkFunction,
+  FunctionDeclaration: checkFunction,
+  FunctionExpression: checkFunction,
+  TSCallSignatureDeclaration: checkFunction,
+  TSConstructSignatureDeclaration: checkFunction,
+  TSDeclareFunction: checkFunction,
+  TSEmptyBodyFunctionExpression: checkFunction,
+  TSFunctionType: checkFunction,
+  TSMethodSignature: checkFunction,
+  PropertyDefinition: checkVariable,
+  VariableDeclarator: checkVariable,
+});

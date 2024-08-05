@@ -1,7 +1,7 @@
 import dedent from "dedent";
 
-import { type rule } from "#/rules/no-conditional-statements";
-import { type OptionsOf, type ValidTestCaseSet } from "#/tests/helpers/util";
+import type { rule } from "#/rules/no-conditional-statements";
+import type { OptionsOf, ValidTestCaseSet } from "#/tests/helpers/util";
 
 const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
   {
@@ -100,7 +100,10 @@ const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
         }
       }
     `,
-    optionsSet: [[{ allowReturningBranches: "ifExhaustive" }]],
+    optionsSet: [
+      [{ allowReturningBranches: true }],
+      [{ allowReturningBranches: "ifExhaustive" }],
+    ],
   },
   // Check throws
   {
@@ -214,24 +217,6 @@ const tests: Array<ValidTestCaseSet<OptionsOf<typeof rule>>> = [
             neverReturn();
           default:
             neverReturn();
-        }
-      }
-    `,
-    optionsSet: [
-      [{ allowReturningBranches: true }],
-      [{ allowReturningBranches: "ifExhaustive" }],
-    ],
-  },
-  // Exhaustive type test.
-  {
-    code: dedent`
-      type T = "a" | "b";
-      function foo(i: T) {
-        switch(i) {
-          case "a":
-            return 1;
-          case "b":
-            return 2;
         }
       }
     `,

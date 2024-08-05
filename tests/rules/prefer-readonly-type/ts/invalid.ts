@@ -1,11 +1,11 @@
 import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import dedent from "dedent";
 
-import { type rule } from "#/rules/prefer-readonly-type";
-import {
-  type InvalidTestCaseSet,
-  type MessagesOf,
-  type OptionsOf,
+import type { rule } from "#/rules/prefer-readonly-type";
+import type {
+  InvalidTestCaseSet,
+  MessagesOf,
+  OptionsOf,
 } from "#/tests/helpers/util";
 
 const tests: Array<
@@ -419,26 +419,22 @@ const tests: Array<
   // Should fail on Array as type member.
   {
     code: dedent`
-      function foo() {
-        type Foo = {
-          readonly bar: Array<string>
-        }
+      type Foo = {
+        readonly bar: Array<string>
       }
     `,
     optionsSet: [[]],
     output: dedent`
-      function foo() {
-        type Foo = {
-          readonly bar: ReadonlyArray<string>
-        }
+      type Foo = {
+        readonly bar: ReadonlyArray<string>
       }
     `,
     errors: [
       {
         messageId: "type",
         type: AST_NODE_TYPES.TSTypeReference,
-        line: 3,
-        column: 19,
+        line: 2,
+        column: 17,
       },
     ],
   },

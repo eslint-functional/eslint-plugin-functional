@@ -4,11 +4,12 @@
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
     "alwaysStrict": true,
-    "declaration": false,
+    "declaration": true,
     "esModuleInterop": true,
     "exactOptionalPropertyTypes": true,
     "forceConsistentCasingInFileNames": true,
     "importHelpers": false,
+    "isolatedDeclarations": true,
     "lib": ["ESNext"],
     "module": "ESNext",
     "moduleResolution": "Bundler",
@@ -31,17 +32,14 @@
     "types": ["vitest/importMeta"],
     "baseUrl": ".",
     "paths": {
-      "#/flat": ["src/flat.ts"],
-      "#/classic": ["src/classic.ts"],
+      "#": ["src/index.ts"],
       "#/configs/*": ["src/configs/*"],
       "#/options": ["src/options"],
       "#/rules": ["src/rules"],
       "#/rules/*": ["src/rules/*"],
       "#/settings": ["src/settings"],
       "#/utils/*": ["src/utils/*"],
-      "#/conditional-imports/*": [
-        "src/utils/conditional-imports/cjs/*"
-      ],
+      "#/conditional-imports/*": ["src/utils/conditional-imports/*"],
       "#/tests/*": ["tests/*"]
     }
   },

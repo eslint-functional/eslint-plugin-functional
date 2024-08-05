@@ -1,24 +1,25 @@
-import { type TSESTree } from "@typescript-eslint/utils";
-import {
-  type JSONSchema4,
-  type JSONSchema4ObjectSchema,
+import type { TSESTree } from "@typescript-eslint/utils";
+import type {
+  JSONSchema4,
+  JSONSchema4ObjectSchema,
 } from "@typescript-eslint/utils/json-schema";
-import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
+import type { RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import { deepmerge } from "deepmerge-ts";
 import { Immutability } from "is-immutable-type";
 
 import {
+  type IgnoreIdentifierPatternOption,
   ignoreIdentifierPatternOptionSchema,
   shouldIgnorePattern,
-  type IgnoreIdentifierPatternOption,
 } from "#/options";
 import { getNodeIdentifierTexts, ruleNameScope } from "#/utils/misc";
-import { type ESTypeDeclaration } from "#/utils/node-types";
+import type { ESTypeDeclaration } from "#/utils/node-types";
 import {
+  type NamedCreateRuleCustomMeta,
+  type Rule,
+  type RuleResult,
   createRule,
   getTypeImmutabilityOfNode,
-  type NamedCreateRuleCustomMeta,
-  type RuleResult,
 } from "#/utils/rule";
 import { isTSInterfaceDeclaration } from "#/utils/type-guards";
 
@@ -30,7 +31,7 @@ export const name = "type-declaration-immutability";
 /**
  * The full name of this rule.
  */
-export const fullName = `${ruleNameScope}/${name}`;
+export const fullName: `${typeof ruleNameScope}/${typeof name}` = `${ruleNameScope}/${name}`;
 
 /**
  * How the actual immutability should be compared to the given immutability.
@@ -205,7 +206,7 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages, Options> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     category: "No Mutations",
@@ -265,7 +266,7 @@ function getRules(options: Readonly<Options>): ImmutabilityRule[] {
         ? false
         : (Array.isArray(rule.fixer) ? rule.fixer : [rule.fixer]).map((r) => ({
             ...r,
-            pattern: new RegExp(r.pattern, "us"),
+            pattern: new RegExp(r.pattern, "su"),
           }));
 
     const suggestions =
@@ -273,7 +274,7 @@ function getRules(options: Readonly<Options>): ImmutabilityRule[] {
         ? false
         : rule.suggestions.map((r) => ({
             ...r,
-            pattern: new RegExp(r.pattern, "us"),
+            pattern: new RegExp(r.pattern, "su"),
           }));
 
     return {
@@ -318,7 +319,7 @@ function getRuleToApply(
 function getConfiguredFixer<T extends TSESTree.Node>(
   node: T,
   context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-  configs: FixerConfig[],
+  configs: ReadonlyArray<FixerConfig>,
 ): NonNullable<Descriptor["fix"]> | null {
   const text = context.sourceCode.getText(node);
   const config = configs.find((c) => c.pattern.test(text));
@@ -335,7 +336,7 @@ function getConfiguredFixer<T extends TSESTree.Node>(
 function getConfiguredSuggestions<T extends TSESTree.Node>(
   node: T,
   context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-  configs: FixerConfig[],
+  configs: ReadonlyArray<FixerConfig>,
   messageId: keyof typeof errorMessages,
 ): NonNullable<Descriptor["suggest"]> | null {
   const text = context.sourceCode.getText(node);
@@ -353,7 +354,10 @@ function getConfiguredSuggestions<T extends TSESTree.Node>(
 /**
  * Compare the actual immutability to the expected immutability.
  */
-function compareImmutability(rule: ImmutabilityRule, actual: Immutability) {
+function compareImmutability(
+  rule: Readonly<ImmutabilityRule>,
+  actual: Immutability,
+) {
   switch (rule.comparator) {
     case RuleEnforcementComparator.Less: {
       return actual < rule.immutability;
@@ -379,7 +383,7 @@ function compareImmutability(rule: ImmutabilityRule, actual: Immutability) {
 function getResults(
   node: ESTypeDeclaration,
   context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-  rule: ImmutabilityRule,
+  rule: Readonly<ImmutabilityRule>,
   immutability: Immutability,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const valid = compareImmutability(rule, immutability);
@@ -471,12 +475,10 @@ function checkTypeDeclaration(
 }
 
 // Create the rule.
-export const rule = createRule<keyof typeof errorMessages, Options>(
-  name,
-  meta,
-  defaultOptions,
-  {
-    TSTypeAliasDeclaration: checkTypeDeclaration,
-    TSInterfaceDeclaration: checkTypeDeclaration,
-  },
-);
+export const rule: Rule<keyof typeof errorMessages, Options> = createRule<
+  keyof typeof errorMessages,
+  Options
+>(name, meta, defaultOptions, {
+  TSTypeAliasDeclaration: checkTypeDeclaration,
+  TSInterfaceDeclaration: checkTypeDeclaration,
+});

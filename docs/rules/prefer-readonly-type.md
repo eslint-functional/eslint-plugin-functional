@@ -1,12 +1,19 @@
+<!-- markdownlint-disable -->
+<!-- begin auto-generated rule header -->
+
 # Prefer readonly types over mutable types (`functional/prefer-readonly-type`)
 
 ❌ This rule is deprecated. It was replaced by [`functional/prefer-immutable-types`](prefer-immutable-types.md),[`functional/type-declaration-immutability`](type-declaration-immutability.md).
+
+🚫 This rule is _disabled_ in the `disableTypeChecked` config.
 
 🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 
 💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 
 <!-- end auto-generated rule header -->
+<!-- markdownlint-restore -->
+<!-- markdownlint-restore -->
 
 This rule has been replaced by
 [prefer-immutable-parameter-types](./prefer-immutable-parameter-types.md) and
@@ -61,11 +68,12 @@ const transformedPoint = { ...point, x: 99 };
 
 A variable declared as `const` can not be reassigned, however what's in the variable can be mutated.
 This is why the `readonly` modifier exists. It prevents you from assigning a value to the result of a member expression.
-This is just as effective as using `Object.freeze()` to prevent mutations. However the `readonly` modifier has **no run-time cost**, and is enforced at **compile time**.
+This is just as effective as using `Object.freeze()` to prevent mutations.
+However the `readonly` modifier has **no run-time cost**, and is enforced at **compile time**.
 
 The `readonly` modifier also works on indexers:
 
-<!-- eslint-disable @typescript-eslint/consistent-indexed-object-style -->
+<!-- eslint-disable ts/consistent-indexed-object-style -->
 
 ```ts
 const foo: { readonly [key: string]: number } = { a: 1, b: 2 };
@@ -142,7 +150,7 @@ Doesn't check the return type of functions.
 
 A boolean to specify if checking for `readonly` should apply to classes. `false` by default.
 
-Examples of **incorrect** code for the `{ "ignoreClass": false }` option:
+#### ❌ Incorrect
 
 <!-- eslint-skip -->
 
@@ -154,7 +162,7 @@ class {
 }
 ```
 
-Examples of **correct** code for the `{ "ignoreClass": true }` option:
+#### ✅ Correct
 
 ```ts
 /* eslint functional/prefer-readonly-type: ["error", { "ignoreClass": true }] */
@@ -168,7 +176,7 @@ class C {
 
 A boolean to specify if checking for `readonly` should apply to interfaces. `false` by default.
 
-Examples of **incorrect** code for the `{ "ignoreInterface": false }` option:
+#### ❌ Incorrect
 
 <!-- eslint-skip -->
 
@@ -180,7 +188,7 @@ interface I {
 }
 ```
 
-Examples of **correct** code for the `{ "ignoreInterface": true }` option:
+#### ✅ Correct
 
 ```ts
 /* eslint functional/prefer-readonly-type: ["error", { "ignoreInterface": true }] */
@@ -192,9 +200,10 @@ interface I {
 
 ### `ignoreCollections`
 
-A boolean to specify if checking for `readonly` should apply to mutable collections (Array, Tuple, Set, and Map). Helpful for migrating from tslint-immutable to this plugin. `false` by default.
+A boolean to specify if checking for `readonly` should apply to mutable collections (Array, Tuple, Set, and Map).
+Helpful for migrating from tslint-immutable to this plugin. `false` by default.
 
-Examples of **incorrect** code for the `{ "ignoreCollections": false }` option:
+#### ❌ Incorrect
 
 <!-- eslint-skip -->
 
@@ -207,7 +216,7 @@ const baz: Set<string, string> = new Set();
 const qux: Map<string, string> = new Map();
 ```
 
-Examples of **correct** code for the `{ "ignoreCollections": true }` option:
+#### ✅ Correct
 
 ```ts
 /* eslint functional/prefer-readonly-type: ["error", { "ignoreCollections": true }] */

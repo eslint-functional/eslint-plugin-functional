@@ -21,7 +21,27 @@ import * as typeDeclarationImmutability from "./type-declaration-immutability";
 /**
  * All of the custom rules.
  */
-export const rules = {
+export const rules: Readonly<{
+  [functionalParameters.name]: typeof functionalParameters.rule;
+  [immutableData.name]: typeof immutableData.rule;
+  [noClasses.name]: typeof noClasses.rule;
+  [noConditionalStatements.name]: typeof noConditionalStatements.rule;
+  [noExpressionStatements.name]: typeof noExpressionStatements.rule;
+  [noLet.name]: typeof noLet.rule;
+  [noLoopStatements.name]: typeof noLoopStatements.rule;
+  [noMixedTypes.name]: typeof noMixedTypes.rule;
+  [noPromiseReject.name]: typeof noPromiseReject.rule;
+  [noReturnVoid.name]: typeof noReturnVoid.rule;
+  [noThisExpressions.name]: typeof noThisExpressions.rule;
+  [noThrowStatements.name]: typeof noThrowStatements.rule;
+  [noTryStatements.name]: typeof noTryStatements.rule;
+  [preferImmutableTypes.name]: typeof preferImmutableTypes.rule;
+  [preferPropertySignatures.name]: typeof preferPropertySignatures.rule;
+  [preferReadonlyTypes.name]: typeof preferReadonlyTypes.rule;
+  [preferTacit.name]: typeof preferTacit.rule;
+  [readonlyType.name]: typeof readonlyType.rule;
+  [typeDeclarationImmutability.name]: typeof typeDeclarationImmutability.rule;
+}> = {
   [functionalParameters.name]: functionalParameters.rule,
   [immutableData.name]: immutableData.rule,
   [noClasses.name]: noClasses.rule,

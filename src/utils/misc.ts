@@ -1,7 +1,7 @@
 import { AST_NODE_TYPES, type TSESTree } from "@typescript-eslint/utils";
-import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
+import type { RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
-import { type BaseOptions } from "#/utils/rule";
+import type { BaseOptions } from "#/utils/rule";
 import { getKeyOfValueInObjectExpression } from "#/utils/tree";
 import {
   hasID,
@@ -55,7 +55,6 @@ function getNodeIdentifierText(
 
   let m_identifierText: string | undefined | null = null;
 
-  /* eslint-disable functional/no-conditional-statements, functional/no-expression-statements */
   if (isIdentifier(node) || isPrivateIdentifier(node)) {
     m_identifierText = node.name;
   } else if (hasID(node) && isDefined(node.id)) {
@@ -76,7 +75,7 @@ function getNodeIdentifierText(
   } else if (isTSTypeAnnotation(node)) {
     m_identifierText = context.sourceCode
       .getText(node.typeAnnotation as TSESTree.Node)
-      .replaceAll(/\s+/gmu, "");
+      .replaceAll(/\s+/gu, "");
   } else if (
     isTSAsExpression(node) ||
     isTSNonNullExpression(node) ||
@@ -84,7 +83,6 @@ function getNodeIdentifierText(
   ) {
     m_identifierText = getNodeIdentifierText(node.expression, context);
   }
-  /* eslint-enable functional/no-conditional-statements, functional/no-expression-statements */
 
   if (m_identifierText !== null) {
     return m_identifierText;

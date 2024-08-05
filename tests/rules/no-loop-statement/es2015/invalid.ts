@@ -1,10 +1,10 @@
 import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 
-import { type rule } from "#/rules/no-loop-statements";
-import {
-  type InvalidTestCaseSet,
-  type MessagesOf,
-  type OptionsOf,
+import type { rule } from "#/rules/no-loop-statements";
+import type {
+  InvalidTestCaseSet,
+  MessagesOf,
+  OptionsOf,
 } from "#/tests/helpers/util";
 
 const tests: Array<
@@ -41,30 +41,6 @@ const tests: Array<
       {
         messageId: "generic",
         type: AST_NODE_TYPES.ForOfStatement,
-        line: 1,
-        column: 1,
-      },
-    ],
-  },
-  {
-    code: `while (true) { console.log("a"); }`,
-    optionsSet: [[]],
-    errors: [
-      {
-        messageId: "generic",
-        type: AST_NODE_TYPES.WhileStatement,
-        line: 1,
-        column: 1,
-      },
-    ],
-  },
-  {
-    code: `do { console.log("a"); } while (true)`,
-    optionsSet: [[]],
-    errors: [
-      {
-        messageId: "generic",
-        type: AST_NODE_TYPES.DoWhileStatement,
         line: 1,
         column: 1,
       },

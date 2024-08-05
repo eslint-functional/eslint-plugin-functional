@@ -1,12 +1,12 @@
-import { type RuleDefinition } from "#/utils/rule";
+import type { Rule } from "#/utils/rule";
 
 import { getRuleTester } from "./RuleTester";
 import { configs } from "./configs";
 import {
-  processInvalidTestCase,
-  processValidTestCase,
   type InvalidTestCaseSet,
   type ValidTestCaseSet,
+  processInvalidTestCase,
+  processValidTestCase,
 } from "./util";
 
 type TestFunction<
@@ -20,7 +20,7 @@ type TestFunction<
 export function testRule<
   TMessageIds extends string,
   TOptions extends Readonly<unknown[]>,
->(ruleName: string, rule: RuleDefinition<TMessageIds, TOptions>) {
+>(ruleName: string, rule: Rule<TMessageIds, TOptions>) {
   return Object.fromEntries(
     [...Object.entries(configs)].map(
       ([configName, config]): [

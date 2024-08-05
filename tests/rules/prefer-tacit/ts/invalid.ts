@@ -1,11 +1,11 @@
 import { AST_NODE_TYPES } from "@typescript-eslint/utils";
 import dedent from "dedent";
 
-import { type rule } from "#/rules/prefer-tacit";
-import {
-  type InvalidTestCaseSet,
-  type MessagesOf,
-  type OptionsOf,
+import type { rule } from "#/rules/prefer-tacit";
+import type {
+  InvalidTestCaseSet,
+  MessagesOf,
+  OptionsOf,
 } from "#/tests/helpers/util";
 
 const tests: Array<
@@ -253,8 +253,8 @@ const tests: Array<
           {
             messageId: "generic",
             output: dedent`
-            const foo = [1, 2, 3].map(Boolean);
-          `,
+              const foo = [1, 2, 3].map(Boolean);
+            `,
           },
         ],
       },

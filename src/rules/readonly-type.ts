@@ -1,15 +1,16 @@
-import { type TSESTree } from "@typescript-eslint/utils";
-import { type JSONSchema4 } from "@typescript-eslint/utils/json-schema";
-import {
-  type ReportDescriptor,
-  type RuleContext,
+import type { TSESTree } from "@typescript-eslint/utils";
+import type { JSONSchema4 } from "@typescript-eslint/utils/json-schema";
+import type {
+  ReportDescriptor,
+  RuleContext,
 } from "@typescript-eslint/utils/ts-eslint";
 
 import { ruleNameScope } from "#/utils/misc";
 import {
-  createRule,
   type NamedCreateRuleCustomMeta,
+  type Rule,
   type RuleResult,
+  createRule,
 } from "#/utils/rule";
 import { getReadonly } from "#/utils/tree";
 import {
@@ -29,7 +30,7 @@ export const name = "readonly-type";
 /**
  * The full name of this rule.
  */
-export const fullName = `${ruleNameScope}/${name}`;
+export const fullName: `${typeof ruleNameScope}/${typeof name}` = `${ruleNameScope}/${name}`;
 
 /**
  * The options this rule can take.
@@ -64,7 +65,7 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages, Options> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     category: "Stylistic",
@@ -136,9 +137,7 @@ function checkTypeLiteral(
             const text = sourceCode.getText(readonlyWrapper);
 
             const wrapperStartPattern = /^Readonly\s*</gu;
-            const wrapperEndPattern = /\s*>$/gu;
-
-            // eslint-disable-next-line functional/no-expression-statements -- Sets `wrapperStartPattern.lastIndex`.
+            const wrapperEndPattern = /\s*>$/u;
             wrapperStartPattern.exec(text);
             const end = wrapperEndPattern.exec(text);
 
@@ -219,11 +218,9 @@ function checkTypeLiteral(
 }
 
 // Create the rule.
-export const rule = createRule<keyof typeof errorMessages, Options>(
-  name,
-  meta,
-  defaultOptions,
-  {
-    TSTypeLiteral: checkTypeLiteral,
-  },
-);
+export const rule: Rule<keyof typeof errorMessages, Options> = createRule<
+  keyof typeof errorMessages,
+  Options
+>(name, meta, defaultOptions, {
+  TSTypeLiteral: checkTypeLiteral,
+});

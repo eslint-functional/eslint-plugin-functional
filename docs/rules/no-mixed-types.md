@@ -1,12 +1,18 @@
+<!-- markdownlint-disable -->
+<!-- begin auto-generated rule header -->
+
 # Restrict types so that only members of the same kind are allowed in them (`functional/no-mixed-types`)
 
-💼 This rule is enabled in the following configs: ☑️ `lite`, `no-other-paradigms`, ✅ `recommended`, 🔒 `strict`.
+💼🚫 This rule is enabled in the following configs: ☑️ `lite`, `noOtherParadigms`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the `disableTypeChecked` config.
 
 💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 
 <!-- end auto-generated rule header -->
+<!-- markdownlint-restore -->
+<!-- markdownlint-restore -->
 
-This rule enforces that an aliased type literal or an interface only has one type of members, eg. only data properties or only functions.
+This rule enforces that an aliased type literal or an interface only has one type of members, eg. only data properties
+or only functions.
 
 ## Rule Details
 
@@ -27,8 +33,6 @@ type Foo = {
 
 ### ✅ Correct
 
-<!-- eslint-skip -->
-
 ```ts
 /* eslint functional/no-mixed-types: "error" */
 
@@ -38,7 +42,7 @@ type Foo = {
 };
 ```
 
-<!-- eslint-skip -->
+<!-- eslint-disable functional/prefer-property-signatures -->
 
 ```ts
 /* eslint functional/no-mixed-types: "error" */

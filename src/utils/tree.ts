@@ -1,10 +1,12 @@
-import { type TSESTree } from "@typescript-eslint/utils";
+import assert from "node:assert/strict";
+
+import type { TSESTree } from "@typescript-eslint/utils";
 import { getParserServices } from "@typescript-eslint/utils/eslint-utils";
-import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
+import type { RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
 import typescript from "#/conditional-imports/typescript";
 
-import { type BaseOptions } from "./rule";
+import type { BaseOptions } from "./rule";
 import {
   isBlockStatement,
   isCallExpression,
@@ -66,7 +68,13 @@ export function isInFunctionBody(
  *
  * Will return null if not in a function.
  */
-export function getEnclosingFunction(node: TSESTree.Node) {
+export function getEnclosingFunction(
+  node: TSESTree.Node,
+):
+  | TSESTree.ArrowFunctionExpression
+  | TSESTree.FunctionDeclaration
+  | TSESTree.FunctionExpression
+  | null {
   return getAncestorOfType(
     (
       n,
@@ -84,7 +92,9 @@ export function getEnclosingFunction(node: TSESTree.Node) {
  *
  * Will return null if not in a function.
  */
-export function getEnclosingTryStatement(node: TSESTree.Node) {
+export function getEnclosingTryStatement(
+  node: TSESTree.Node,
+): TSESTree.TryStatement | null {
   return getAncestorOfType(
     (n, c): n is TSESTree.TryStatement => isTryStatement(n) && n.block === c,
     node,
@@ -141,7 +151,7 @@ export function getReadonly(
   return expressionOrTypeName !== undefined &&
     isIdentifier(expressionOrTypeName) &&
     expressionOrTypeName.name === "Readonly"
-    ? typeRef ?? intHeritage
+    ? (typeRef ?? intHeritage)
     : null;
 }
 
@@ -230,7 +240,6 @@ export function isArgument(node: TSESTree.Node): boolean {
   return (
     node.parent !== undefined &&
     isCallExpression(node.parent) &&
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     node.parent.arguments.includes(node as any)
   );
 }
@@ -242,7 +251,6 @@ export function isParameter(node: TSESTree.Node): boolean {
   return (
     node.parent !== undefined &&
     isFunctionLike(node.parent) &&
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     node.parent.params.includes(node as any)
   );
 }
@@ -312,6 +320,8 @@ export function isDefinedByMutableVariable<
   context: Context,
   treatParametersAsMutable: (node: TSESTree.Node) => boolean,
 ): boolean {
+  assert(typescript !== undefined);
+
   const services = getParserServices(context);
   const symbol = services.getSymbolAtLocation(node);
   const variableDeclaration = symbol?.valueDeclaration;
@@ -327,12 +337,13 @@ export function isDefinedByMutableVariable<
   ) {
     return treatParametersAsMutable(variableDeclarationNode);
   }
-  if (!typescript!.isVariableDeclaration(variableDeclaration)) {
+  if (!typescript.isVariableDeclaration(variableDeclaration)) {
     return true;
   }
 
   const variableDeclarator =
-    context.parserServices?.tsNodeToESTreeNodeMap.get(variableDeclaration);
+    services.tsNodeToESTreeNodeMap.get(variableDeclaration);
+
   if (
     variableDeclarator?.parent === undefined ||
     !isVariableDeclaration(variableDeclarator.parent)
@@ -346,7 +357,9 @@ export function isDefinedByMutableVariable<
 /**
  * Get the root identifier of an expression.
  */
-export function findRootIdentifier(node: TSESTree.Expression) {
+export function findRootIdentifier(
+  node: TSESTree.Expression,
+): TSESTree.Identifier | undefined {
   if (isIdentifier(node)) {
     return node;
   }

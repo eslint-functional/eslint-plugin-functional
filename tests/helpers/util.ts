@@ -1,19 +1,18 @@
-import {
-  type InvalidTestCase,
-  type RunTests,
-  type ValidTestCase,
+import type {
+  InvalidTestCase,
+  RunTests,
+  ValidTestCase,
 } from "@typescript-eslint/rule-tester";
-import {
-  type SharedConfigurationSettings,
-  type TSESLint,
+import type {
+  SharedConfigurationSettings,
+  TSESLint,
 } from "@typescript-eslint/utils";
-import { type NamedCreateRuleMeta } from "@typescript-eslint/utils/eslint-utils";
+import type {
+  NamedCreateRuleMeta,
+  RuleModule,
+} from "@typescript-eslint/utils/eslint-utils";
 
-import {
-  createRuleUsingFunction,
-  type RuleDefinition,
-  type RuleFunctionsMap,
-} from "#/utils/rule";
+import { type RuleFunctionsMap, createRuleUsingFunction } from "#/utils/rule";
 
 import { filename as dummyFilename } from "./configs";
 
@@ -21,13 +20,13 @@ type OptionsSets = {
   /**
    * The set of options this test case should pass for.
    */
-  optionsSet: any[];
+  optionsSet: ReadonlyArray<any>;
 
   /**
    * The set of settings this test case should pass for.
    */
 
-  settingsSet?: SharedConfigurationSettings[];
+  settingsSet?: ReadonlyArray<Readonly<SharedConfigurationSettings>>;
 };
 
 export type ValidTestCaseSet<TOptions extends Readonly<unknown[]>> = Omit<
@@ -55,12 +54,11 @@ export function processInvalidTestCase<
     testCase.optionsSet.flatMap((options) => {
       const { optionsSet, settingsSet, ...eslintTestCase } = testCase;
 
-      return (settingsSet ?? [undefined]).map(
+      return (settingsSet ?? [{}]).map(
         (settings): InvalidTestCase<TMessageIds, TOptions> => ({
           filename: dummyFilename,
           ...eslintTestCase,
           options,
-          // @ts-expect-error -- upstream typing.
           settings,
         }),
       );
@@ -87,8 +85,8 @@ export function createDummyRule(
   create: (
     context: Readonly<TSESLint.RuleContext<"generic", any>>,
   ) => RuleFunctionsMap<any, "generic", any>,
-): RuleDefinition<string, [boolean, ...unknown[]]> {
-  const meta: NamedCreateRuleMeta<"generic", []> = {
+): RuleModule<string, [boolean, ...unknown[]]> {
+  const meta: NamedCreateRuleMeta<"generic", {}> = {
     type: "suggestion",
     docs: {
       description: "rule used in testing",
@@ -142,8 +140,10 @@ export function addFilename<
   };
 }
 
-export type MessagesOf<T extends RuleDefinition<string, any>> =
-  T extends RuleDefinition<infer Messages, any> ? Messages : never;
+export type MessagesOf<T extends RuleModule<string, ReadonlyArray<unknown>>> =
+  T extends RuleModule<infer Messages, ReadonlyArray<unknown>>
+    ? Messages
+    : never;
 
-export type OptionsOf<T extends RuleDefinition<string, any>> =
-  T extends RuleDefinition<string, infer Options> ? Options : never;
+export type OptionsOf<T extends RuleModule<string, ReadonlyArray<unknown>>> =
+  T extends RuleModule<string, infer Options> ? Options : never;

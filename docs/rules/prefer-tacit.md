@@ -1,12 +1,17 @@
+<!-- markdownlint-disable -->
+<!-- begin auto-generated rule header -->
+
 # Replaces `x => f(x)` with just `f` (`functional/prefer-tacit`)
 
-⚠️ This rule _warns_ in the 🎨 `stylistic` config.
+⚠️🚫 This rule _warns_ in the 🎨 `stylistic` config. This rule is _disabled_ in the `disableTypeChecked` config.
 
 💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 
 💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 
 <!-- end auto-generated rule header -->
+<!-- markdownlint-restore -->
+<!-- markdownlint-restore -->
 
 This rule enforces using functions directly if they can be without wrapping them.
 

@@ -3,9 +3,9 @@
  */
 
 import { AST_NODE_TYPES, type TSESTree } from "@typescript-eslint/utils";
-import { type Type, type UnionType } from "typescript";
+import type { Type, UnionType } from "typescript";
 
-import ts from "#/conditional-imports/typescript";
+import typescript from "#/conditional-imports/typescript";
 
 /*
  * TS Types.
@@ -426,7 +426,7 @@ export function isDefined<T>(value: T | null | undefined): value is T {
  */
 
 export function isUnionType(type: Type): type is UnionType {
-  return ts !== undefined && type.flags === ts.TypeFlags.Union;
+  return typescript !== undefined && type.flags === typescript.TypeFlags.Union;
 }
 
 export function isArrayType(type: Type | null): boolean {

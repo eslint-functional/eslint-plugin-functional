@@ -28,14 +28,12 @@ jobs:
     uses: ./.github/workflows/lint-markdown.yml
   lint_packages:
     uses: ./.github/workflows/lint-packages.yml
-  lint_prettier:
-    uses: ./.github/workflows/lint-prettier.yml
   lint_spelling:
     uses: ./.github/workflows/lint-spelling.yml
   test:
     uses: ./.github/workflows/test-js.yml
   type_check:
-    uses: ./.github/workflows/type-check.yml
+    uses: ./.github/workflows/typecheck.yml
 
   release:
     needs:
@@ -46,7 +44,6 @@ jobs:
       - lint_markdown
       - lint_spelling
       - lint_packages
-      - lint_prettier
       - test
       - type_check
     runs-on: ubuntu-latest

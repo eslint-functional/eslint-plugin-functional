@@ -47,39 +47,11 @@ plugins:
   - - "semantic-release-replace-plugin"
     - replacements:
         - files:
-            - "./lib/**/*"
-          from: "\\$\\{__VERSION__\\}"
+            - "./lib/index.js"
+          from: "0\\.0\\.0\\-development"
           to: "${nextRelease.version}"
           results:
-            - file: "./lib/classic.cjs"
-              hasChanged: true
-              numMatches: 1
-              numReplacements: 1
-            - file: "./lib/classic.d.cts"
-              hasChanged: false
-              numMatches: 0
-              numReplacements: 0
-            - file: "./lib/classic.d.mts"
-              hasChanged: false
-              numMatches: 0
-              numReplacements: 0
-            - file: "./lib/classic.mjs"
-              hasChanged: true
-              numMatches: 1
-              numReplacements: 1
-            - file: "./lib/flat.cjs"
-              hasChanged: true
-              numMatches: 1
-              numReplacements: 1
-            - file: "./lib/flat.d.cts"
-              hasChanged: false
-              numMatches: 0
-              numReplacements: 0
-            - file: "./lib/flat.d.mts"
-              hasChanged: false
-              numMatches: 0
-              numReplacements: 0
-            - file: "./lib/flat.mjs"
+            - file: "./lib/index.js"
               hasChanged: true
               numMatches: 1
               numReplacements: 1

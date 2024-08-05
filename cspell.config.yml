@@ -29,7 +29,6 @@ import:
   - "@cspell/dict-cryptocurrencies/cspell-ext.json"
 
 ignorePaths:
-  - .eslintrc.json
   - .git
   - .gitattributes
   - .gitignore

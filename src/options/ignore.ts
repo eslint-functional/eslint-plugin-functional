@@ -1,10 +1,10 @@
-import { type TSESTree } from "@typescript-eslint/utils";
-import { type JSONSchema4ObjectSchema } from "@typescript-eslint/utils/json-schema";
-import { type RuleContext } from "@typescript-eslint/utils/ts-eslint";
+import type { TSESTree } from "@typescript-eslint/utils";
+import type { JSONSchema4ObjectSchema } from "@typescript-eslint/utils/json-schema";
+import type { RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import escapeRegExp from "escape-string-regexp";
 
 import { getNodeCode, getNodeIdentifierTexts } from "#/utils/misc";
-import { type BaseOptions } from "#/utils/rule";
+import type { BaseOptions } from "#/utils/rule";
 import { isInClass, isInFunctionBody } from "#/utils/tree";
 import {
   isAssignmentExpression,

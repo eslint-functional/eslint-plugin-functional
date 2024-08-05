@@ -1,151 +1,52 @@
 import { rollupPlugin as rollupPluginDeassert } from "deassert";
-import { type RollupOptions } from "rollup";
-import rollupPluginAutoExternal from "rollup-plugin-auto-external";
+import type { RollupOptions } from "rollup";
 import rollupPluginTs from "rollup-plugin-ts";
 
 import pkg from "./package.json" assert { type: "json" };
 
-const treeshake = {
-  annotations: true,
-  moduleSideEffects: [],
-  propertyReadSideEffects: false,
-  unknownGlobalSideEffects: false,
-} satisfies RollupOptions["treeshake"];
+const externalDependencies = [
+  ...Object.keys(pkg.dependencies ?? {}),
+  ...Object.keys(pkg.peerDependencies ?? {}),
+];
 
-const classicCJS = {
-  input: "src/classic.ts",
+const esm = {
+  input: "src/index.ts",
 
   output: {
-    file: pkg.exports["."].require,
-    format: "cjs",
-    sourcemap: false,
-  },
-
-  plugins: [
-    rollupPluginAutoExternal(),
-    rollupPluginTs({
-      transpileOnly: true,
-      tsconfig: {
-        fileName: "tsconfig.build.json",
-        hook: (resolvedConfig) => ({
-          ...resolvedConfig,
-          paths: {
-            ...resolvedConfig.paths,
-            "#/conditional-imports/*": [
-              "src/utils/conditional-imports/cjs/*",
-            ],
-          },
-        }),
-      },
-    }),
-    rollupPluginDeassert({
-      include: ["**/*.{js,ts}"],
-    }),
-  ],
-
-  treeshake,
-} satisfies RollupOptions;
-
-const classicESM = {
-  input: "src/classic.ts",
-
-  output: {
-    file: pkg.exports["."].import,
+    file: pkg.exports.default,
     format: "esm",
     sourcemap: false,
+    generatedCode: {
+      preset: "es2015",
+    },
   },
 
   plugins: [
-    rollupPluginAutoExternal(),
     rollupPluginTs({
       transpileOnly: true,
-      tsconfig: {
-        fileName: "tsconfig.build.json",
-        hook: (resolvedConfig) => ({
-          ...resolvedConfig,
-          paths: {
-            ...resolvedConfig.paths,
-            "#/conditional-imports/*": [
-              "src/utils/conditional-imports/esm/*",
-            ],
-          },
-        }),
-      },
+      tsconfig: "tsconfig.build.json",
     }),
     rollupPluginDeassert({
       include: ["**/*.{js,ts}"],
     }),
   ],
 
-  treeshake,
-} satisfies RollupOptions;
-
-const flatCJS = {
-  input: "src/flat.ts",
-
-  output: {
-    file: pkg.exports["./flat"].require,
-    format: "cjs",
-    sourcemap: false,
+  treeshake: {
+    annotations: true,
+    moduleSideEffects: [],
+    propertyReadSideEffects: false,
+    unknownGlobalSideEffects: false,
   },
 
-  plugins: [
-    rollupPluginAutoExternal(),
-    rollupPluginTs({
-      transpileOnly: true,
-      tsconfig: {
-        fileName: "tsconfig.build.json",
-        hook: (resolvedConfig) => ({
-          ...resolvedConfig,
-          paths: {
-            ...resolvedConfig.paths,
-            "#/conditional-imports/*": [
-              "src/utils/conditional-imports/cjs/*",
-            ],
-          },
-        }),
-      },
-    }),
-    rollupPluginDeassert({
-      include: ["**/*.{js,ts}"],
-    }),
-  ],
-
-  treeshake,
-} satisfies RollupOptions;
-
-const flatESM = {
-  input: "src/flat.ts",
-
-  output: {
-    file: pkg.exports["./flat"].import,
-    format: "esm",
-    sourcemap: false,
+  external: (source) => {
+    if (
+      source.startsWith("node:") ||
+      externalDependencies.some((dep) => source.startsWith(dep))
+    ) {
+      return true;
+    }
+    return undefined;
   },
-
-  plugins: [
-    rollupPluginAutoExternal(),
-    rollupPluginTs({
-      transpileOnly: true,
-      tsconfig: {
-        fileName: "tsconfig.build.json",
-        hook: (resolvedConfig) => ({
-          ...resolvedConfig,
-          paths: {
-            ...resolvedConfig.paths,
-            "#/conditional-imports/*": [
-              "src/utils/conditional-imports/esm/*",
-            ],
-          },
-        }),
-      },
-    }),
-    rollupPluginDeassert({
-      include: ["**/*.{js,ts}"],
-    }),
-  ],
-
-  treeshake,
 } satisfies RollupOptions;
 
-export default [classicCJS, classicESM, flatCJS, flatESM];
+export default [esm] as RollupOptions[];
