@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+## [7.0.1](https://github.com/eslint-functional/eslint-plugin-functional/compare/v7.0.0...v7.0.1) (2024-08-07)
+
+
+### Bug Fixes
+
+* don't throw when typescript can't be resolved ([afb05bd](https://github.com/eslint-functional/eslint-plugin-functional/commit/afb05bdf934d8f63bde405f39c1c5233ad8be572))
+
 # [7.0.0](https://github.com/eslint-functional/eslint-plugin-functional/compare/v6.6.3...v7.0.0) (2024-08-05)
 
 
