@@ -4,7 +4,13 @@ import type typescript from "typescript";
 
 const require = createRequire(import.meta.url);
 
-export default require("typescript") as typeof typescript | undefined;
+export default (() => {
+  try {
+    return require("typescript");
+  } catch {
+    return undefined;
+  }
+})() as typeof typescript | undefined;
 
 // export default (await import("typescript")
 //   .then((r) => r.default)

@@ -8,7 +8,13 @@ const require = createRequire(import.meta.url);
 
 export default (typescript === undefined
   ? undefined
-  : require("ts-api-utils")) as typeof tsApiUtils | undefined;
+  : (() => {
+      try {
+        return require("ts-api-utils");
+      } catch {
+        return undefined;
+      }
+    })()) as typeof tsApiUtils | undefined;
 
 // export default (await (() => {
 //   if (ts !== undefined) {
