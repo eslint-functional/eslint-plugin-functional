@@ -9,7 +9,7 @@ const local = await tsImport("./src/index.ts", import.meta.url).then(
   (r) => r.default,
 );
 
-export default rsEslint(
+const configs = await rsEslint(
   {
     projectRoot: import.meta.dirname,
     mode: "library",
@@ -123,13 +123,14 @@ export default rsEslint(
       "jsdoc/require-jsdoc": "off",
     },
   },
-)
-  // Use our local version of the plugin.
-  .onResolved((configs) => {
-    // eslint-disable-next-line functional/no-loop-statements
-    for (const config of configs) {
-      if (config?.plugins?.["functional"] !== undefined) {
-        config.plugins["functional"] = local;
-      }
-    }
-  });
+);
+
+// Use our local version of the plugin.
+// eslint-disable-next-line functional/no-loop-statements
+for (const config of configs) {
+  if (config?.plugins?.["functional"] !== undefined) {
+    config.plugins["functional"] = local;
+  }
+}
+
+export default configs;

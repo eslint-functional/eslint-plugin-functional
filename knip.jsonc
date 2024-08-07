@@ -11,6 +11,6 @@
     "tsc-files",
 
     // Eslint
-    "@eslint/compat"
+    "@eslint/compat",
   ],
 }
