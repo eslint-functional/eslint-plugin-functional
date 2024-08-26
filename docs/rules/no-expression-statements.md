@@ -81,7 +81,8 @@ const defaults = {
 
 ### `ignoreVoid`
 
-When enabled, expression of type void are not flagged as violations. This options requires TypeScript in order to work.
+When enabled, expression of type `void` and `Promise<void>` are not flagged as violations.
+This options requires TypeScript in order to work.
 
 ### `ignoreSelfReturning`
 

@@ -5,6 +5,7 @@ import type {
 } from "@typescript-eslint/utils/json-schema";
 import type { RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import { deepmerge } from "deepmerge-ts";
+import type ts from "typescript";
 
 import tsApiUtils from "#/conditional-imports/ts-api-utils";
 import typescript from "#/conditional-imports/typescript";
@@ -21,7 +22,11 @@ import {
   createRule,
   getTypeOfNode,
 } from "#/utils/rule";
-import { isCallExpression, isYieldExpression } from "#/utils/type-guards";
+import {
+  isCallExpression,
+  isPromiseType,
+  isYieldExpression,
+} from "#/utils/type-guards";
 
 /**
  * The name of this rule.
@@ -136,7 +141,16 @@ function checkExpressionStatement(
       };
     }
 
-    if (ignoreVoid && tsApiUtils?.isIntrinsicVoidType(returnType) === true) {
+    if (
+      ignoreVoid &&
+      (tsApiUtils?.isIntrinsicVoidType(returnType) === true ||
+        ("typeArguments" in returnType &&
+          isPromiseType(context, returnType) &&
+          (returnType.typeArguments as ts.Type[]).length > 0 &&
+          tsApiUtils?.isIntrinsicVoidType(
+            (returnType.typeArguments as ts.Type[])[0]!,
+          ) === true))
+    ) {
       return {
         context,
         descriptors: [],

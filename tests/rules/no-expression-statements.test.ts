@@ -93,6 +93,14 @@ describe(name, () => {
           `,
           options: [{ ignoreVoid: true }],
         });
+
+        valid({
+          code: dedent`
+            function foo() { return Promise.resolve(); }
+            foo();
+          `,
+          options: [{ ignoreVoid: true }],
+        });
       });
 
       it("ignoreSelfReturning", () => {
