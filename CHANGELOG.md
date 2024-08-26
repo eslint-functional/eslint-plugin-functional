@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+## [7.0.2](https://github.com/eslint-functional/eslint-plugin-functional/compare/v7.0.1...v7.0.2) (2024-08-26)
+
+
+### Bug Fixes
+
+* **no-expression-statements:** ignore `Promise<void>` when `ignoreVoid` is set ([#866](https://github.com/eslint-functional/eslint-plugin-functional/issues/866)) ([2e1a992](https://github.com/eslint-functional/eslint-plugin-functional/commit/2e1a992365bdae6e89eaf744d6d8e61fc1e62b69))
+
 ## [7.0.1](https://github.com/eslint-functional/eslint-plugin-functional/compare/v7.0.0...v7.0.1) (2024-08-07)
 
 
