@@ -99,7 +99,7 @@
     "cspell": "8.14.2",
     "deassert": "1.0.2",
     "dedent": "1.5.3",
-    "eslint": "9.8.0",
+    "eslint": "9.9.1",
     "eslint-config-prettier": "9.1.0",
     "eslint-doc-generator": "1.7.1",
     "eslint-flat-config-utils": "0.3.0",
