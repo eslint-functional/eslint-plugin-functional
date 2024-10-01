@@ -96,7 +96,7 @@
     "@typescript-eslint/eslint-plugin": "8.3.0",
     "@typescript-eslint/parser": "8.3.0",
     "@vitest/coverage-v8": "2.0.5",
-    "cspell": "8.14.2",
+    "cspell": "8.14.4",
     "deassert": "1.0.2",
     "dedent": "1.5.3",
     "eslint": "9.9.1",
