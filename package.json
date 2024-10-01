@@ -120,7 +120,7 @@
     "eslint-plugin-regexp": "2.6.0",
     "eslint-plugin-sonarjs": "2.0.2",
     "eslint-plugin-unicorn": "55.0.0",
-    "eslint-plugin-vitest": "0.5.4",
+    "@vitest/eslint-plugin": "1.0.1",
     "eslint-plugin-yml": "1.14.0",
     "eslint-vitest-rule-tester": "0.3.3",
     "fast-glob": "3.3.2",
