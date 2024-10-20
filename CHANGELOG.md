@@ -1,6 +1,14 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+## [7.0.3](https://github.com/eslint-functional/eslint-plugin-functional/compare/v7.0.2...v7.0.3) (2024-10-20)
+
+
+### Bug Fixes
+
+* ensure default options are applied ([#889](https://github.com/eslint-functional/eslint-plugin-functional/issues/889)) ([5b57cd2](https://github.com/eslint-functional/eslint-plugin-functional/commit/5b57cd23a135a9c9a73cdb94c463e350ac2a84c9))
+* **functional-parameters:** default options not being applied to option overrides ([#888](https://github.com/eslint-functional/eslint-plugin-functional/issues/888)) ([06f2b80](https://github.com/eslint-functional/eslint-plugin-functional/commit/06f2b809ef7e29717662f9be006ec80cd3d07c91))
+
 ## [7.0.2](https://github.com/eslint-functional/eslint-plugin-functional/compare/v7.0.1...v7.0.2) (2024-08-26)
 
 
