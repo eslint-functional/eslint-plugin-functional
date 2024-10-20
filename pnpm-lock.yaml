@@ -80,6 +80,9 @@ importers:
       '@vitest/coverage-v8':
         specifier: 2.1.1
         version: 2.1.1(vitest@2.1.1(@types/node@18.19.43))
+      '@vitest/eslint-plugin':
+        specifier: 1.0.1
+        version: 1.0.1(@typescript-eslint/utils@8.8.0(eslint@9.11.1(jiti@1.21.6))(typescript@5.5.4))(eslint@9.11.1(jiti@1.21.6))(typescript@5.5.4)(vitest@2.1.1(@types/node@18.19.43))
       cspell:
         specifier: 8.14.4
         version: 8.14.4
@@ -152,9 +155,6 @@ importers:
       eslint-plugin-unicorn:
         specifier: 55.0.0
         version: 55.0.0(eslint@9.11.1(jiti@1.21.6))
-      eslint-plugin-vitest:
-        specifier: 0.5.4
-        version: 0.5.4(@typescript-eslint/eslint-plugin@8.8.0(@typescript-eslint/parser@8.8.0(eslint@9.11.1(jiti@1.21.6))(typescript@5.5.4))(eslint@9.11.1(jiti@1.21.6))(typescript@5.5.4))(eslint@9.11.1(jiti@1.21.6))(typescript@5.5.4)(vitest@2.1.1(@types/node@18.19.43))
       eslint-plugin-yml:
         specifier: 1.14.0
         version: 1.14.0(eslint@9.11.1(jiti@1.21.6))
@@ -1888,6 +1888,21 @@ packages:
       vitest: 2.1.1
     peerDependenciesMeta:
       '@vitest/browser':
+        optional: true
+
+  '@vitest/eslint-plugin@1.0.1':
+    resolution: {integrity: sha512-albpL56cL9XMwHJWCWZqjDxkuDkBXBF3WpPGOv6q2WA3cipCP41cKEwfSGktoRNGmPN77wuX452O8pM+z+ApNw==}
+    peerDependencies:
+      '@typescript-eslint/utils': '>= 8.0'
+      eslint: '>= 8.57.0'
+      typescript: '>= 5.0.0'
+      vitest: '*'
+    peerDependenciesMeta:
+      '@typescript-eslint/utils':
+        optional: true
+      typescript:
+        optional: true
+      vitest:
         optional: true
 
   '@vitest/expect@2.1.1':
@@ -4358,6 +4373,7 @@ packages:
   rollup-plugin-ts@3.4.5:
     resolution: {integrity: sha512-9iCstRJpEZXSRQuXitlSZAzcGlrqTbJg1pE4CMbEi6xYldxVncdPyzA2I+j6vnh73wBymZckerS+Q/iEE/M3Ow==}
     engines: {node: '>=16.15.1', npm: '>=7.0.0', pnpm: '>=3.2.0', yarn: '>=1.13'}
+    deprecated: please use @rollup/plugin-typescript and rollup-plugin-dts instead
     peerDependencies:
       '@babel/core': '>=7.x'
       '@babel/plugin-transform-runtime': '>=7.x'
@@ -6924,6 +6940,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@vitest/eslint-plugin@1.0.1(@typescript-eslint/utils@8.8.0(eslint@9.11.1(jiti@1.21.6))(typescript@5.5.4))(eslint@9.11.1(jiti@1.21.6))(typescript@5.5.4)(vitest@2.1.1(@types/node@18.19.43))':
+    dependencies:
+      eslint: 9.11.1(jiti@1.21.6)
+    optionalDependencies:
+      '@typescript-eslint/utils': 8.8.0(eslint@9.11.1(jiti@1.21.6))(typescript@5.5.4)
+      typescript: 5.5.4
+      vitest: 2.1.1(@types/node@18.19.43)
+
   '@vitest/expect@2.1.1':
     dependencies:
       '@vitest/spy': 2.1.1
@@ -8128,6 +8152,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
       - typescript
+    optional: true
 
   eslint-plugin-yml@1.14.0(eslint@9.11.1(jiti@1.21.6)):
     dependencies:
