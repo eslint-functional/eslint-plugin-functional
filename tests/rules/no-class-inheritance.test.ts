@@ -80,6 +80,12 @@ describe(name, () => {
       configs: typescriptConfig,
     });
 
+    it("doesn't report non-issues", () => {
+      valid("class Foo {}");
+      valid("class Foo implements Bar {}");
+      valid("interface Foo extends Bar {}");
+    });
+
     it("reports class inheritance", () => {
       const invalidResult1 = invalid({
         code: "abstract class Foo {}",
