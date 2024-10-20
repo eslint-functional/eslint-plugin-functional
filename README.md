@@ -86,7 +86,7 @@ Other:
 - **External Vanilla Recommended** (`configs.externalVanillaRecommended`)\
   Configures recommended [vanilla ESLint](https://www.npmjs.com/package/eslint) rules.
 
-- **External Typescript Recommended** (`configs.externalTypescriptRecommended`)\
+- **External TypeScript Recommended** (`configs.externalTypeScriptRecommended`)\
   Configures recommended [TypeScript ESLint](https://www.npmjs.com/package/@typescript-eslint/eslint-plugin) rules.
   Enabling this ruleset will also enable the vanilla one.
 
@@ -180,7 +180,7 @@ These rules are what are included in the _external recommended_ rulesets.
 - [prefer-const](https://eslint.org/docs/rules/prefer-const)\
   This rule provides a helpful fixer when converting from an imperative code style to a functional one.
 
-### Typescript Rules
+### TypeScript Rules
 
 - [@typescript-eslint/prefer-readonly](https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/prefer-readonly.md)\
   This rule is helpful when working with classes.

@@ -42,7 +42,7 @@ import tseslint from "typescript-eslint";
 export default tseslint.config({
   files: ["**/*.ts"],
   extends: [
-    functional.configs.externalTypescriptRecommended,
+    functional.configs.externalTypeScriptRecommended,
     functional.configs.recommended,
     functional.configs.stylistic,
     // your other plugin configs here
