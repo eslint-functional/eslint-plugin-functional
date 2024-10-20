@@ -2,6 +2,7 @@ import type { FlatConfig } from "@typescript-eslint/utils/ts-eslint";
 
 import * as functionalParameters from "#/rules/functional-parameters";
 import * as immutableData from "#/rules/immutable-data";
+import * as noClasses from "#/rules/no-classes";
 import * as noConditionalStatements from "#/rules/no-conditional-statements";
 import * as noExpressionStatements from "#/rules/no-expression-statements";
 import * as preferImmutableTypes from "#/rules/prefer-immutable-types";
@@ -16,6 +17,7 @@ const overrides = {
     },
   ],
   [immutableData.fullName]: ["error", { ignoreClasses: "fieldsOnly" }],
+  [noClasses.fullName]: "off",
   [noConditionalStatements.fullName]: "off",
   [noExpressionStatements.fullName]: "off",
   [preferImmutableTypes.fullName]: [

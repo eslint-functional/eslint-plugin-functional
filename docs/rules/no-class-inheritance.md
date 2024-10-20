@@ -1,15 +1,15 @@
 <!-- markdownlint-disable -->
 <!-- begin auto-generated rule header -->
 
-# Disallow classes (`functional/no-classes`)
+# Disallow inheritance in classes (`functional/no-class-inheritance`)
 
-💼🚫 This rule is enabled in the following configs: `noOtherParadigms`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the ☑️ `lite` config.
+💼 This rule is enabled in the following configs: ☑️ `lite`, `noOtherParadigms`, ✅ `recommended`, 🔒 `strict`.
 
 <!-- end auto-generated rule header -->
 <!-- markdownlint-restore -->
 <!-- markdownlint-restore -->
 
-Disallow use of the `class` keyword.
+Disallow use of inheritance for classes.
 
 ## Rule Details
 
@@ -18,12 +18,18 @@ Disallow use of the `class` keyword.
 <!-- eslint-skip -->
 
 ```js
-/* eslint functional/no-classes: "error" */
+/* eslint functional/no-class-inheritance: "error" */
 
-class Dog {
+abstract class Animal  {
   constructor(name, age) {
     this.name = name;
     this.age = age;
+  }
+}
+
+class Dog extends Animal {
+  constructor(name, age) {
+    super(name, age);
   }
 
   get ageInDogYears() {
@@ -39,16 +45,24 @@ console.log(`${dogA.name} is ${dogA.ageInDogYears} in dog years.`);
 ### ✅ Correct
 
 ```js
-/* eslint functional/no-classes: "error" */
+/* eslint functional/no-class-inheritance: "error" */
 
-function getAgeInDogYears(age) {
-  return 7 * age;
+class Animal {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
 }
 
-const dogA = {
-  name: "Jasper",
-  age: 2,
-};
+class Dog {
+  constructor(name, age) {
+    this.animal = new Animal(name, age);
+  }
+
+  get ageInDogYears() {
+    return 7 * this.animal.age;
+  }
+}
 
 console.log(`${dogA.name} is ${getAgeInDogYears(dogA.age)} in dog years.`);
 ```

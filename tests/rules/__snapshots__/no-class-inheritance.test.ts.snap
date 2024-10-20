@@ -1,0 +1,124 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`no-class-inheritance > javascript - es latest > ignoreCodePattern > should report class inheritance with non-matching identifiers 1`] = `
+[
+  {
+    "column": 11,
+    "endColumn": 22,
+    "endLine": 1,
+    "line": 1,
+    "message": "Unexpected inheritance, use composition instead.",
+    "messageId": "extends",
+    "nodeType": "ClassDeclaration",
+    "ruleId": "no-class-inheritance",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`no-class-inheritance > javascript - es latest > options > ignoreIdentifierPattern > should report class inheritance with non-matching identifiers 1`] = `
+[
+  {
+    "column": 11,
+    "endColumn": 22,
+    "endLine": 1,
+    "line": 1,
+    "message": "Unexpected inheritance, use composition instead.",
+    "messageId": "extends",
+    "nodeType": "ClassDeclaration",
+    "ruleId": "no-class-inheritance",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`no-class-inheritance > javascript - es latest > reports class inheritance 1`] = `
+[
+  {
+    "column": 11,
+    "endColumn": 22,
+    "endLine": 1,
+    "line": 1,
+    "message": "Unexpected inheritance, use composition instead.",
+    "messageId": "extends",
+    "nodeType": "ClassDeclaration",
+    "ruleId": "no-class-inheritance",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`no-class-inheritance > typescript > ignoreCodePattern > should report class inheritance with non-matching identifiers 1`] = `
+[
+  {
+    "column": 1,
+    "endColumn": 9,
+    "endLine": 1,
+    "line": 1,
+    "message": "Unexpected abstract class.",
+    "messageId": "abstract",
+    "nodeType": "ClassDeclaration",
+    "ruleId": "no-class-inheritance",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`no-class-inheritance > typescript > options > ignoreIdentifierPattern > should report class inheritance with non-matching identifiers 1`] = `
+[
+  {
+    "column": 1,
+    "endColumn": 9,
+    "endLine": 1,
+    "line": 1,
+    "message": "Unexpected abstract class.",
+    "messageId": "abstract",
+    "nodeType": "ClassDeclaration",
+    "ruleId": "no-class-inheritance",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`no-class-inheritance > typescript > reports class inheritance 1`] = `
+[
+  {
+    "column": 1,
+    "endColumn": 9,
+    "endLine": 1,
+    "line": 1,
+    "message": "Unexpected abstract class.",
+    "messageId": "abstract",
+    "nodeType": "ClassDeclaration",
+    "ruleId": "no-class-inheritance",
+    "severity": 2,
+  },
+]
+`;
+
+exports[`no-class-inheritance > typescript > reports class inheritance 2`] = `
+[
+  {
+    "column": 1,
+    "endColumn": 9,
+    "endLine": 1,
+    "line": 1,
+    "message": "Unexpected abstract class.",
+    "messageId": "abstract",
+    "nodeType": "ClassDeclaration",
+    "ruleId": "no-class-inheritance",
+    "severity": 2,
+  },
+  {
+    "column": 20,
+    "endColumn": 31,
+    "endLine": 1,
+    "line": 1,
+    "message": "Unexpected inheritance, use composition instead.",
+    "messageId": "extends",
+    "nodeType": "ClassDeclaration",
+    "ruleId": "no-class-inheritance",
+    "severity": 2,
+  },
+]
+`;

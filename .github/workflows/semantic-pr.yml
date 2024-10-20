@@ -32,6 +32,7 @@ jobs:
             functional-parameters
             immutable-data
             no-classes
+            no-class-inheritance
             no-conditional-statements
             no-expression-statements
             no-let

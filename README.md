@@ -135,11 +135,12 @@ The [below section](#rules) gives details on which rules are enabled by each rul
 
 ### No Other Paradigms
 
-| Name                                                     | Description                                                               | 💼                                   | ⚠️  | 🚫                            | 🔧  | 💡  | 💭  | ❌  |
-| :------------------------------------------------------- | :------------------------------------------------------------------------ | :----------------------------------- | :-- | :---------------------------- | :-- | :-- | :-- | :-- |
-| [no-classes](docs/rules/no-classes.md)                   | Disallow classes.                                                         | ☑️ ✅ 🔒 ![badge-noOtherParadigms][] |     |                               |     |     |     |     |
-| [no-mixed-types](docs/rules/no-mixed-types.md)           | Restrict types so that only members of the same kind are allowed in them. | ☑️ ✅ 🔒 ![badge-noOtherParadigms][] |     | ![badge-disableTypeChecked][] |     |     | 💭  |     |
-| [no-this-expressions](docs/rules/no-this-expressions.md) | Disallow this access.                                                     | 🔒 ![badge-noOtherParadigms][]       |     | ☑️ ✅                         |     |     |     |     |
+| Name                                                       | Description                                                               | 💼                                   | ⚠️  | 🚫                            | 🔧  | 💡  | 💭  | ❌  |
+| :--------------------------------------------------------- | :------------------------------------------------------------------------ | :----------------------------------- | :-- | :---------------------------- | :-- | :-- | :-- | :-- |
+| [no-class-inheritance](docs/rules/no-class-inheritance.md) | Disallow inheritance in classes.                                          | ☑️ ✅ 🔒 ![badge-noOtherParadigms][] |     |                               |     |     |     |     |
+| [no-classes](docs/rules/no-classes.md)                     | Disallow classes.                                                         | ✅ 🔒 ![badge-noOtherParadigms][]    |     | ☑️                            |     |     |     |     |
+| [no-mixed-types](docs/rules/no-mixed-types.md)             | Restrict types so that only members of the same kind are allowed in them. | ☑️ ✅ 🔒 ![badge-noOtherParadigms][] |     | ![badge-disableTypeChecked][] |     |     | 💭  |     |
+| [no-this-expressions](docs/rules/no-this-expressions.md)   | Disallow this access.                                                     | 🔒 ![badge-noOtherParadigms][]       |     | ☑️ ✅                         |     |     |     |     |
 
 ### No Statements
 

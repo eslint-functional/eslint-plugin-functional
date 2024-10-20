@@ -130,6 +130,8 @@ const configs = await rsEslint(
           embeddedLanguageFormatting: "off",
         },
       ],
+      "max-classes-per-file": "off",
+      "ts/no-extraneous-class": "off",
     },
   },
 );

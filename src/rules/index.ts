@@ -1,5 +1,6 @@
 import * as functionalParameters from "./functional-parameters";
 import * as immutableData from "./immutable-data";
+import * as noClassInheritance from "./no-class-inheritance";
 import * as noClasses from "./no-classes";
 import * as noConditionalStatements from "./no-conditional-statements";
 import * as noExpressionStatements from "./no-expression-statements";
@@ -25,6 +26,7 @@ export const rules: Readonly<{
   [functionalParameters.name]: typeof functionalParameters.rule;
   [immutableData.name]: typeof immutableData.rule;
   [noClasses.name]: typeof noClasses.rule;
+  [noClassInheritance.name]: typeof noClassInheritance.rule;
   [noConditionalStatements.name]: typeof noConditionalStatements.rule;
   [noExpressionStatements.name]: typeof noExpressionStatements.rule;
   [noLet.name]: typeof noLet.rule;
@@ -45,6 +47,7 @@ export const rules: Readonly<{
   [functionalParameters.name]: functionalParameters.rule,
   [immutableData.name]: immutableData.rule,
   [noClasses.name]: noClasses.rule,
+  [noClassInheritance.name]: noClassInheritance.rule,
   [noConditionalStatements.name]: noConditionalStatements.rule,
   [noExpressionStatements.name]: noExpressionStatements.rule,
   [noLet.name]: noLet.rule,
