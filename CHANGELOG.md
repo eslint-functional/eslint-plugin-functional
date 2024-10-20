@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+# [7.1.0](https://github.com/eslint-functional/eslint-plugin-functional/compare/v7.0.3...v7.1.0) (2024-10-20)
+
+
+### Features
+
+* new rule no-class-inheritance ([#890](https://github.com/eslint-functional/eslint-plugin-functional/issues/890)) ([53df2fd](https://github.com/eslint-functional/eslint-plugin-functional/commit/53df2fd0746ec11fe85ca61c1f795b1b29be355d)), closes [#886](https://github.com/eslint-functional/eslint-plugin-functional/issues/886)
+
 ## [7.0.3](https://github.com/eslint-functional/eslint-plugin-functional/compare/v7.0.2...v7.0.3) (2024-10-20)
 
 
