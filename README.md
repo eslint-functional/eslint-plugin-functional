@@ -163,6 +163,11 @@ The [below section](#rules) gives details on which rules are enabled by each rul
 <!-- markdownlint-restore -->
 
 [badge-currying]: https://img.shields.io/badge/-currying-red.svg
+[badge-noExceptions]: https://img.shields.io/badge/-noExceptions-blue.svg
+[badge-noMutations]: https://img.shields.io/badge/-noMutations-orange.svg
+[badge-noOtherParadigms]: https://img.shields.io/badge/-noOtherParadigms-yellow.svg
+[badge-noStatements]: https://img.shields.io/badge/-noStatements-purple.svg
+[badge-disableTypeChecked]: https://img.shields.io/badge/-disableTypeChecked-navy.svg
 
 ## External Recommended Rules
 
