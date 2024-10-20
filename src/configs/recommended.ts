@@ -41,6 +41,7 @@ const overrides = {
           ],
           options: {
             enforceParameterCount: {
+              count: "atLeastOne",
               ignoreLambdaExpression: true,
               ignoreIIFE: true,
               ignoreGettersAndSetters: true,

@@ -127,7 +127,7 @@ const schema: JSONSchema4[] = [
 /**
  * The default options for the rule.
  */
-const defaultOptions: RawOptions = [
+const defaultOptions = [
   {
     allowRestParameter: false,
     allowArgumentsKeyword: false,
@@ -138,7 +138,7 @@ const defaultOptions: RawOptions = [
       ignoreGettersAndSetters: true,
     },
   },
-];
+] satisfies RawOptions;
 
 /**
  * The possible error messages.
@@ -235,6 +235,31 @@ function getParamCountViolations(
 }
 
 /**
+ * Add the default options to the given options.
+ */
+function getOptionsWithDefaults(
+  options: Readonly<Options> | null,
+): Options | null {
+  if (options === null) {
+    return null;
+  }
+
+  const topLevel = {
+    ...defaultOptions[0],
+    ...options,
+  };
+  return typeof topLevel.enforceParameterCount === "object"
+    ? {
+        ...topLevel,
+        enforceParameterCount: {
+          ...defaultOptions[0].enforceParameterCount,
+          ...topLevel.enforceParameterCount,
+        },
+      }
+    : topLevel;
+}
+
+/**
  * Check if the given function node has a reset parameter this rule.
  */
 function checkFunction(
@@ -243,10 +268,8 @@ function checkFunction(
   rawOptions: Readonly<RawOptions>,
 ): RuleResult<keyof typeof errorMessages, RawOptions> {
   const options = upgradeRawOverridableOptions(rawOptions[0]);
-  const optionsToUse = getCoreOptions<CoreOptions, Options>(
-    node,
-    context,
-    options,
+  const optionsToUse = getOptionsWithDefaults(
+    getCoreOptions<CoreOptions, Options>(node, context, options),
   );
 
   if (optionsToUse === null) {
@@ -291,10 +314,11 @@ function checkIdentifier(
 
   const functionNode = getEnclosingFunction(node);
   const options = upgradeRawOverridableOptions(rawOptions[0]);
-  const optionsToUse =
+  const optionsToUse = getOptionsWithDefaults(
     functionNode === null
       ? options
-      : getCoreOptions<CoreOptions, Options>(functionNode, context, options);
+      : getCoreOptions<CoreOptions, Options>(functionNode, context, options),
+  );
 
   if (optionsToUse === null) {
     return {

@@ -132,11 +132,24 @@ const defaults = {
 
 ```ts
 const recommendedOptions = {
-  enforceParameterCount: {
-    ignoreLambdaExpression: true,
-    ignoreIIFE: true,
-    ignoreGettersAndSetters: true,
-  },
+  enforceParameterCount: false,
+  overrides: [
+    {
+      specifiers: [
+        {
+          from: "file",
+        },
+      ],
+      options: {
+        enforceParameterCount: {
+          count: "atLeastOne",
+          ignoreLambdaExpression: true,
+          ignoreIIFE: true,
+          ignoreGettersAndSetters: true,
+        },
+      },
+    },
+  ],
 };
 ```
 
