@@ -110,13 +110,13 @@ const schema: JSONSchema4[] = [
 /**
  * The default options for the rule.
  */
-const defaultOptions: RawOptions = [
+const defaultOptions = [
   {
     ignoreClasses: false,
     ignoreImmediateMutation: true,
     ignoreNonConstDeclarations: false,
   },
-];
+] satisfies RawOptions;
 
 /**
  * The possible error messages.
@@ -227,10 +227,8 @@ function checkAssignmentExpression(
 ): RuleResult<keyof typeof errorMessages, RawOptions> {
   const options = upgradeRawOverridableOptions(rawOptions[0]);
   const rootNode = findRootIdentifier(node.left) ?? node.left;
-  const optionsToUse = getCoreOptions<CoreOptions, Options>(
-    rootNode,
-    context,
-    options,
+  const optionsToUse = getOptionsWithDefaults(
+    getCoreOptions<CoreOptions, Options>(rootNode, context, options),
   );
 
   if (optionsToUse === null) {
@@ -306,10 +304,8 @@ function checkUnaryExpression(
 ): RuleResult<keyof typeof errorMessages, RawOptions> {
   const options = upgradeRawOverridableOptions(rawOptions[0]);
   const rootNode = findRootIdentifier(node.argument) ?? node.argument;
-  const optionsToUse = getCoreOptions<CoreOptions, Options>(
-    rootNode,
-    context,
-    options,
+  const optionsToUse = getOptionsWithDefaults(
+    getCoreOptions<CoreOptions, Options>(rootNode, context, options),
   );
 
   if (optionsToUse === null) {
@@ -384,10 +380,8 @@ function checkUpdateExpression(
 ): RuleResult<keyof typeof errorMessages, RawOptions> {
   const options = upgradeRawOverridableOptions(rawOptions[0]);
   const rootNode = findRootIdentifier(node.argument) ?? node.argument;
-  const optionsToUse = getCoreOptions<CoreOptions, Options>(
-    rootNode,
-    context,
-    options,
+  const optionsToUse = getOptionsWithDefaults(
+    getCoreOptions<CoreOptions, Options>(rootNode, context, options),
   );
 
   if (optionsToUse === null) {
@@ -534,6 +528,22 @@ function isInChainCallAndFollowsNew(
 }
 
 /**
+ * Add the default options to the given options.
+ */
+function getOptionsWithDefaults(
+  options: Readonly<Options> | null,
+): Options | null {
+  if (options === null) {
+    return null;
+  }
+
+  return {
+    ...defaultOptions[0],
+    ...options,
+  };
+}
+
+/**
  * Check if the given node violates this rule.
  */
 function checkCallExpression(
@@ -543,10 +553,8 @@ function checkCallExpression(
 ): RuleResult<keyof typeof errorMessages, RawOptions> {
   const options = upgradeRawOverridableOptions(rawOptions[0]);
   const rootNode = findRootIdentifier(node.callee) ?? node.callee;
-  const optionsToUse = getCoreOptions<CoreOptions, Options>(
-    rootNode,
-    context,
-    options,
+  const optionsToUse = getOptionsWithDefaults(
+    getCoreOptions<CoreOptions, Options>(rootNode, context, options),
   );
 
   if (optionsToUse === null) {

@@ -278,7 +278,7 @@ const schema: JSONSchema4[] = [
 /**
  * The default options for the rule.
  */
-const defaultOptions: RawOptions = [
+const defaultOptions = [
   {
     enforcement: Immutability.Immutable,
     ignoreInferredTypes: false,
@@ -308,7 +308,7 @@ const defaultOptions: RawOptions = [
       ],
     },
   },
-];
+] satisfies RawOptions;
 
 /**
  * The possible error messages.
@@ -496,10 +496,8 @@ function getParameterTypeViolations(
       const parameterProperty = isTSParameterProperty(param);
       const actualParam = parameterProperty ? param.parameter : param;
 
-      const optionsToUse = getCoreOptions<CoreOptions, Options>(
-        param,
-        context,
-        options,
+      const optionsToUse = getOptionsWithDefaults(
+        getCoreOptions<CoreOptions, Options>(param, context, options),
       );
 
       if (optionsToUse === null) {
@@ -637,11 +635,13 @@ function getReturnTypeViolations(
   options: Readonly<Options>,
 ): Descriptor[] {
   function getOptions(type: Type, typeNode: TypeNode | null) {
-    const optionsToUse = getCoreOptionsForType<CoreOptions, Options>(
-      type,
-      typeNode,
-      context,
-      options,
+    const optionsToUse = getOptionsWithDefaults(
+      getCoreOptionsForType<CoreOptions, Options>(
+        type,
+        typeNode,
+        context,
+        options,
+      ),
     );
 
     if (optionsToUse === null) {
@@ -825,6 +825,22 @@ function getReturnTypeViolations(
 }
 
 /**
+ * Add the default options to the given options.
+ */
+function getOptionsWithDefaults(
+  options: Readonly<Options> | null,
+): Options | null {
+  if (options === null) {
+    return null;
+  }
+
+  return {
+    ...defaultOptions[0],
+    ...options,
+  };
+}
+
+/**
  * Check if the given function node violates this rule.
  */
 function checkFunction(
@@ -854,10 +870,8 @@ function checkVariable(
   rawOptions: Readonly<RawOptions>,
 ): RuleResult<keyof typeof errorMessages, RawOptions> {
   const options = upgradeRawOverridableOptions(rawOptions[0]);
-  const optionsToUse = getCoreOptions<CoreOptions, Options>(
-    node,
-    context,
-    options,
+  const optionsToUse = getOptionsWithDefaults(
+    getCoreOptions<CoreOptions, Options>(node, context, options),
   );
 
   if (optionsToUse === null) {
