@@ -7,14 +7,7 @@ export default Object.fromEntries(
   Object.entries(rules)
     .filter(
       ([, rule]) =>
-        rule.meta.deprecated !== true &&
-        rule.meta.docs.category === "Currying" &&
-        rule.meta.docs.recommended !== false,
+        rule.meta.deprecated !== true && rule.meta.docs.category === "Currying" && rule.meta.docs.recommended !== false,
     )
-    .map(([name, rule]) => [
-      `${ruleNameScope}/${name}`,
-      rule.meta.docs.recommendedSeverity,
-    ]),
-) satisfies FlatConfig.Config["rules"] as NonNullable<
-  FlatConfig.Config["rules"]
->;
+    .map(([name, rule]) => [`${ruleNameScope}/${name}`, rule.meta.docs.recommendedSeverity]),
+) satisfies FlatConfig.Config["rules"] as NonNullable<FlatConfig.Config["rules"]>;

@@ -3,12 +3,7 @@ import type { JSONSchema4 } from "@typescript-eslint/utils/json-schema";
 import type { RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
 import { ruleNameScope } from "#/utils/misc";
-import {
-  type NamedCreateRuleCustomMeta,
-  type Rule,
-  type RuleResult,
-  createRule,
-} from "#/utils/rule";
+import { type NamedCreateRuleCustomMeta, type Rule, type RuleResult, createRule } from "#/utils/rule";
 import { isInReadonly } from "#/utils/tree";
 
 /**
@@ -97,9 +92,11 @@ function checkTSMethodSignature(
 }
 
 // Create the rule.
-export const rule: Rule<keyof typeof errorMessages, Options> = createRule<
-  keyof typeof errorMessages,
-  Options
->(name, meta, defaultOptions, {
-  TSMethodSignature: checkTSMethodSignature,
-});
+export const rule: Rule<keyof typeof errorMessages, Options> = createRule<keyof typeof errorMessages, Options>(
+  name,
+  meta,
+  defaultOptions,
+  {
+    TSMethodSignature: checkTSMethodSignature,
+  },
+);

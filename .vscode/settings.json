@@ -1,42 +1,47 @@
 {
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
-  },
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  // Disable the default formatter, use eslint instead
+  "prettier.enable": false,
   "editor.formatOnSave": false,
-  "editor.rulers": [80],
-  "eslint.probe": [
-    "html",
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit"
+  },
+  "files.trimTrailingWhitespace": true,
+
+  // Silent the stylistic rules in you IDE, but still auto fix them
+  "eslint.rules.customizations": [
+    { "rule": "style/*", "severity": "off" },
+    { "rule": "*-indent", "severity": "off" },
+    { "rule": "*-spacing", "severity": "off" },
+    { "rule": "*-spaces", "severity": "off" },
+    { "rule": "*-order", "severity": "off" },
+    { "rule": "*-dangle", "severity": "off" },
+    { "rule": "*-newline", "severity": "off" },
+    { "rule": "*quotes", "severity": "off" },
+    { "rule": "*semi", "severity": "off" }
+  ],
+
+  // Enable eslint for all supported languages
+  "eslint.validate": [
     "javascript",
     "javascriptreact",
-    "json",
-    "jsonc",
-    "markdown",
-    "toml",
     "typescript",
     "typescriptreact",
     "vue",
+    "html",
+    "markdown",
+    "json",
+    "jsonc",
     "yaml"
   ],
-  "files.associations": {
-    ".markdownlint.json": "jsonc",
-    ".markdownlintignore": "ignore"
-  },
-  "files.exclude": {
-    "coverage": true,
-    "cz-adapter/index.js": true
-  },
-  "files.trimTrailingWhitespace": true,
-  "search.exclude": {
-    "**/.git/": true,
-    "**/.nyc_output/": true,
-    ".vscode/": true,
-    "build/": true,
-    "lib/": true,
-    "pnpm-lock.yaml": true
-  },
-  "typescript.tsdk": "./node_modules/typescript/lib",
-  "[markdown]": {
-    "editor.rulers": [120]
-  }
+
+  "editor.rulers": [120],
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "json.schemas": [
+    {
+      "fileMatch": ["**/*.jsonc", "**/tsconfig.json", "**/tsconfig.*.json", ".vscode/*.json"],
+      "schema": {
+        "allowTrailingCommas": true
+      }
+    }
+  ]
 }

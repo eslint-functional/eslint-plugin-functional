@@ -5,13 +5,7 @@ import type { Type } from "typescript";
 
 import tsApiUtils from "#/conditional-imports/ts-api-utils";
 import { ruleNameScope } from "#/utils/misc";
-import {
-  type NamedCreateRuleCustomMeta,
-  type Rule,
-  type RuleResult,
-  createRule,
-  getTypeOfNode,
-} from "#/utils/rule";
+import { type NamedCreateRuleCustomMeta, type Rule, type RuleResult, createRule, getTypeOfNode } from "#/utils/rule";
 import {
   isBlockStatement,
   isBreakStatement,
@@ -75,16 +69,12 @@ const defaultOptions: Options = [{ allowReturningBranches: false }];
  * The possible error messages.
  */
 const errorMessages = {
-  incompleteBranch:
-    "Incomplete branch, every branch in a conditional statement must contain a return statement.",
-  incompleteIf:
-    "Incomplete if, it must have an else statement and every branch must contain a return statement.",
+  incompleteBranch: "Incomplete branch, every branch in a conditional statement must contain a return statement.",
+  incompleteIf: "Incomplete if, it must have an else statement and every branch must contain a return statement.",
   incompleteSwitch:
     "Incomplete switch, it must be exhaustive or have an default case and every case must contain a return statement.",
-  unexpectedIf:
-    "Unexpected if, use a conditional expression (ternary operator) instead.",
-  unexpectedSwitch:
-    "Unexpected switch, use a conditional expression (ternary operator) instead.",
+  unexpectedIf: "Unexpected if, use a conditional expression (ternary operator) instead.",
+  unexpectedSwitch: "Unexpected switch, use a conditional expression (ternary operator) instead.",
 } as const;
 
 /**
@@ -118,19 +108,11 @@ function incompleteBranchViolation(
 /**
  * Get a function that tests if the given statement is never returning.
  */
-function getIsNeverExpressions(
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-) {
+function getIsNeverExpressions(context: Readonly<RuleContext<keyof typeof errorMessages, Options>>) {
   return (statement: TSESTree.Statement) => {
     if (isExpressionStatement(statement)) {
-      const expressionStatementType = getTypeOfNode(
-        statement.expression,
-        context,
-      );
-      return (
-        expressionStatementType !== null &&
-        tsApiUtils?.isIntrinsicNeverType(expressionStatementType) === true
-      );
+      const expressionStatementType = getTypeOfNode(statement.expression, context);
+      return expressionStatementType !== null && tsApiUtils?.isIntrinsicNeverType(expressionStatementType) === true;
     }
     return false;
   };
@@ -166,15 +148,9 @@ function getIfBranchViolations(
       }
 
       if (isExpressionStatement(branch)) {
-        const expressionStatementType = getTypeOfNode(
-          branch.expression,
-          context,
-        );
+        const expressionStatementType = getTypeOfNode(branch.expression, context);
 
-        if (
-          expressionStatementType !== null &&
-          tsApiUtils?.isIntrinsicNeverType(expressionStatementType) === true
-        ) {
+        if (expressionStatementType !== null && tsApiUtils?.isIntrinsicNeverType(expressionStatementType) === true) {
           return false;
         }
       }
@@ -243,9 +219,7 @@ function getSwitchViolations(
       isSwitchStatement(statement) ||
       isReturnStatement(statement) ||
       isThrowStatement(statement) ||
-      (isBreakStatement(statement) &&
-        statement.label !== null &&
-        statement.label.name !== label) ||
+      (isBreakStatement(statement) && statement.label !== null && statement.label.name !== label) ||
       isContinueStatement(statement)
     );
   }
@@ -287,9 +261,7 @@ function isExhaustiveSwitchViolation(
 ): boolean {
   return (
     // No cases defined.
-    node.cases.every((c) => c.test !== null)
-      ? isExhaustiveTypeSwitchViolation(node, context)
-      : false
+    node.cases.every((c) => c.test !== null) ? isExhaustiveTypeSwitchViolation(node, context) : false
   );
 }
 
@@ -340,10 +312,12 @@ function checkSwitchStatement(
 }
 
 // Create the rule.
-export const rule: Rule<keyof typeof errorMessages, Options> = createRule<
-  keyof typeof errorMessages,
-  Options
->(name, meta, defaultOptions, {
-  IfStatement: checkIfStatement,
-  SwitchStatement: checkSwitchStatement,
-});
+export const rule: Rule<keyof typeof errorMessages, Options> = createRule<keyof typeof errorMessages, Options>(
+  name,
+  meta,
+  defaultOptions,
+  {
+    IfStatement: checkIfStatement,
+    SwitchStatement: checkSwitchStatement,
+  },
+);

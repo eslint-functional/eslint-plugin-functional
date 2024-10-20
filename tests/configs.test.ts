@@ -17,41 +17,27 @@ describe("configs", () => {
   const allRules = Object.values(rules);
   const allConfigRules = Object.keys(all);
   const offConfigRules = Object.entries(off);
-  const allNonDeprecatedRules = allRules.filter(
-    (rule) => rule.meta.deprecated !== true,
-  );
+  const allNonDeprecatedRules = allRules.filter((rule) => rule.meta.deprecated !== true);
 
   it('"All" - should have the right number of rules', () => {
     expect(allConfigRules.length).to.equal(allNonDeprecatedRules.length);
   });
 
-  it.each(allConfigRules)(
-    '"All" - should have not have deprecated rules',
-    (name) => {
-      expect(
-        rules[name.slice("functional/".length) as keyof typeof rules].meta
-          .deprecated,
-      ).to.not.equal(true, `All Config contains deprecated rule "${name}".`);
-    },
-  );
-
-  it('"Off" - should have the right number of rules', () => {
-    expect(offConfigRules.length).to.equal(
-      allRules.length,
-      "should have every rule",
+  it.each(allConfigRules)('"All" - should have not have deprecated rules', (name) => {
+    expect(rules[name.slice("functional/".length) as keyof typeof rules].meta.deprecated).to.not.equal(
+      true,
+      `All Config contains deprecated rule "${name}".`,
     );
   });
 
-  it.each(offConfigRules)(
-    '"Off" - should turn off all rules',
-    (name, value) => {
-      const severity = Array.isArray(value) ? value[0] : value;
-      expect(severity).to.equal(
-        "off",
-        `Rule "${name}" should be turned off in the off config.`,
-      );
-    },
-  );
+  it('"Off" - should have the right number of rules', () => {
+    expect(offConfigRules.length).to.equal(allRules.length, "should have every rule");
+  });
+
+  it.each(offConfigRules)('"Off" - should turn off all rules', (name, value) => {
+    const severity = Array.isArray(value) ? value[0] : value;
+    expect(severity).to.equal("off", `Rule "${name}" should be turned off in the off config.`);
+  });
 
   /**
    * A map of each config (except the special ones) to it's name.
@@ -68,14 +54,11 @@ describe("configs", () => {
     ["Stylistic", stylistic],
   ] as const;
 
-  describe.each(configs)(
-    '"%s" Config rules are in the "All" Config',
-    (name, config) => {
-      const ruleNames = Object.keys(config);
+  describe.each(configs)('"%s" Config rules are in the "All" Config', (name, config) => {
+    const ruleNames = Object.keys(config);
 
-      it.each(ruleNames)(`%s`, (rule) => {
-        expect(all[rule]).toBeDefined();
-      });
-    },
-  );
+    it.each(ruleNames)(`%s`, (rule) => {
+      expect(all[rule]).toBeDefined();
+    });
+  });
 });

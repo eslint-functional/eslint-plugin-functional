@@ -3,12 +3,7 @@ import type { RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
 import { ruleNameScope } from "#/utils/misc";
 import type { ESLoop } from "#/utils/node-types";
-import {
-  type NamedCreateRuleCustomMeta,
-  type Rule,
-  type RuleResult,
-  createRule,
-} from "#/utils/rule";
+import { type NamedCreateRuleCustomMeta, type Rule, type RuleResult, createRule } from "#/utils/rule";
 
 /**
  * The name of this rule.
@@ -70,13 +65,15 @@ function checkLoop(
 }
 
 // Create the rule.
-export const rule: Rule<keyof typeof errorMessages, Options> = createRule<
-  keyof typeof errorMessages,
-  Options
->(name, meta, defaultOptions, {
-  ForStatement: checkLoop,
-  ForInStatement: checkLoop,
-  ForOfStatement: checkLoop,
-  WhileStatement: checkLoop,
-  DoWhileStatement: checkLoop,
-});
+export const rule: Rule<keyof typeof errorMessages, Options> = createRule<keyof typeof errorMessages, Options>(
+  name,
+  meta,
+  defaultOptions,
+  {
+    ForStatement: checkLoop,
+    ForInStatement: checkLoop,
+    ForOfStatement: checkLoop,
+    WhileStatement: checkLoop,
+    DoWhileStatement: checkLoop,
+  },
+);

@@ -10,6 +10,4 @@ const tsConfig = {
 export default {
   ...externalVanillaRecommended,
   ...tsConfig,
-} satisfies FlatConfig.Config["rules"] as NonNullable<
-  FlatConfig.Config["rules"]
->;
+} satisfies FlatConfig.Config["rules"] as NonNullable<FlatConfig.Config["rules"]>;

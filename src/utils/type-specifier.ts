@@ -37,72 +37,62 @@ export function typeMatchesPattern(
     return false;
   }
 
-  let m_shouldInclude = false;
+  let mut_shouldInclude = false;
 
   const typeNameAlias = getTypeAliasName(type, typeNode);
   if (typeNameAlias !== null) {
     const testTypeNameAlias = (pattern: TypePattern) =>
-      typeof pattern === "string"
-        ? pattern === typeNameAlias
-        : pattern.test(typeNameAlias);
+      typeof pattern === "string" ? pattern === typeNameAlias : pattern.test(typeNameAlias);
 
     if (exclude.some(testTypeNameAlias)) {
       return false;
     }
-    m_shouldInclude ||= include.some(testTypeNameAlias);
+    mut_shouldInclude ||= include.some(testTypeNameAlias);
   }
 
   const typeValue = getTypeAsString(program, type, typeNode);
   const testTypeValue = (pattern: TypePattern) =>
-    typeof pattern === "string"
-      ? pattern === typeValue
-      : pattern.test(typeValue);
+    typeof pattern === "string" ? pattern === typeValue : pattern.test(typeValue);
 
   if (exclude.some(testTypeValue)) {
     return false;
   }
-  m_shouldInclude ||= include.some(testTypeValue);
+  mut_shouldInclude ||= include.some(testTypeValue);
 
   const typeNameName = extractTypeName(typeValue);
   if (typeNameName !== null) {
     const testTypeNameName = (pattern: TypePattern) =>
-      typeof pattern === "string"
-        ? pattern === typeNameName
-        : pattern.test(typeNameName);
+      typeof pattern === "string" ? pattern === typeNameName : pattern.test(typeNameName);
 
     if (exclude.some(testTypeNameName)) {
       return false;
     }
-    m_shouldInclude ||= include.some(testTypeNameName);
+    mut_shouldInclude ||= include.some(testTypeNameName);
   }
 
   // Special handling for arrays not written in generic syntax.
   if (program.getTypeChecker().isArrayType(type) && typeNode !== null) {
     if (
-      (ts.isTypeOperatorNode(typeNode) &&
-        typeNode.operator === ts.SyntaxKind.ReadonlyKeyword) ||
-      (ts.isTypeOperatorNode(typeNode.parent) &&
-        typeNode.parent.operator === ts.SyntaxKind.ReadonlyKeyword)
+      (ts.isTypeOperatorNode(typeNode) && typeNode.operator === ts.SyntaxKind.ReadonlyKeyword) ||
+      (ts.isTypeOperatorNode(typeNode.parent) && typeNode.parent.operator === ts.SyntaxKind.ReadonlyKeyword)
     ) {
-      const testIsReadonlyArray = (pattern: TypePattern) =>
-        typeof pattern === "string" && pattern === "ReadonlyArray";
+      const testIsReadonlyArray = (pattern: TypePattern) => typeof pattern === "string" && pattern === "ReadonlyArray";
 
       if (exclude.some(testIsReadonlyArray)) {
         return false;
       }
-      m_shouldInclude ||= include.some(testIsReadonlyArray);
+      mut_shouldInclude ||= include.some(testIsReadonlyArray);
     } else {
-      const testIsArray = (pattern: TypePattern) =>
-        typeof pattern === "string" && pattern === "Array";
+      const testIsArray = (pattern: TypePattern) => typeof pattern === "string" && pattern === "Array";
 
       if (exclude.some(testIsArray)) {
         return false;
       }
-      m_shouldInclude ||= include.some(testIsArray);
+      mut_shouldInclude ||= include.some(testIsArray);
     }
   }
 
-  return m_shouldInclude;
+  return mut_shouldInclude;
 }
 
 /**
@@ -118,19 +108,13 @@ function getTypeAliasName(type: Type, typeNode: TypeNode | null) {
     return t.aliasSymbol?.getName() ?? null;
   }
 
-  return ts.isTypeAliasDeclaration(typeNode.parent)
-    ? typeNode.parent.name.getText()
-    : null;
+  return ts.isTypeAliasDeclaration(typeNode.parent) ? typeNode.parent.name.getText() : null;
 }
 
 /**
  * Get the type as a string.
  */
-function getTypeAsString(
-  program: Program,
-  type: Type,
-  typeNode: TypeNode | null,
-) {
+function getTypeAsString(program: Program, type: Type, typeNode: TypeNode | null) {
   assert(ts !== undefined);
 
   return typeNode === null

@@ -1,5 +1,5 @@
 import type { GenerateOptions } from "eslint-doc-generator";
-import { format, resolveConfig } from "prettier";
+import { format } from "prettier";
 
 export default {
   configEmoji: [["lite", "☑️"]],
@@ -7,7 +7,7 @@ export default {
   ruleDocSectionInclude: ["Rule Details"],
   ruleListSplit: "meta.docs.category",
   postprocess: (doc) =>
-    resolveConfig(import.meta.url).then((options) =>
-      format(doc, { ...options, parser: "markdown" }),
-    ),
+    format(doc, {
+      parser: "markdown",
+    }),
 } satisfies GenerateOptions;

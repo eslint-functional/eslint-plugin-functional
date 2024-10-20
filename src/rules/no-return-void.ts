@@ -4,19 +4,8 @@ import type { RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import tsApiUtils from "#/conditional-imports/ts-api-utils";
 import { ruleNameScope } from "#/utils/misc";
 import type { ESFunctionType } from "#/utils/node-types";
-import {
-  type NamedCreateRuleCustomMeta,
-  type Rule,
-  type RuleResult,
-  createRule,
-  getTypeOfNode,
-} from "#/utils/rule";
-import {
-  isFunctionLike,
-  isTSNullKeyword,
-  isTSUndefinedKeyword,
-  isTSVoidKeyword,
-} from "#/utils/type-guards";
+import { type NamedCreateRuleCustomMeta, type Rule, type RuleResult, createRule, getTypeOfNode } from "#/utils/rule";
+import { isFunctionLike, isTSNullKeyword, isTSUndefinedKeyword, isTSVoidKeyword } from "#/utils/type-guards";
 
 /**
  * The name of this rule.
@@ -107,9 +96,7 @@ function checkFunction(
   if (node.returnType === undefined) {
     if (!ignoreInferredTypes && isFunctionLike(node)) {
       const functionType = getTypeOfNode(node, context);
-      const returnType = functionType
-        ?.getCallSignatures()?.[0]
-        ?.getReturnType();
+      const returnType = functionType?.getCallSignatures()?.[0]?.getReturnType();
 
       if (
         returnType !== undefined &&
@@ -142,17 +129,19 @@ function checkFunction(
 }
 
 // Create the rule.
-export const rule: Rule<keyof typeof errorMessages, Options> = createRule<
-  keyof typeof errorMessages,
-  Options
->(name, meta, defaultOptions, {
-  ArrowFunctionExpression: checkFunction,
-  FunctionDeclaration: checkFunction,
-  FunctionExpression: checkFunction,
-  TSCallSignatureDeclaration: checkFunction,
-  TSConstructSignatureDeclaration: checkFunction,
-  TSDeclareFunction: checkFunction,
-  TSEmptyBodyFunctionExpression: checkFunction,
-  TSFunctionType: checkFunction,
-  TSMethodSignature: checkFunction,
-});
+export const rule: Rule<keyof typeof errorMessages, Options> = createRule<keyof typeof errorMessages, Options>(
+  name,
+  meta,
+  defaultOptions,
+  {
+    ArrowFunctionExpression: checkFunction,
+    FunctionDeclaration: checkFunction,
+    FunctionExpression: checkFunction,
+    TSCallSignatureDeclaration: checkFunction,
+    TSConstructSignatureDeclaration: checkFunction,
+    TSDeclareFunction: checkFunction,
+    TSEmptyBodyFunctionExpression: checkFunction,
+    TSFunctionType: checkFunction,
+    TSMethodSignature: checkFunction,
+  },
+);

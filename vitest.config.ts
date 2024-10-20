@@ -8,8 +8,9 @@ export default defineConfig({
     include: ["./**/*.test.ts"],
     exclude: ["lib", "node_modules"],
     coverage: {
-      provider: "v8",
+      all: true,
       include: ["src"],
+      exclude: ["lib"],
       reporter: ["lcov", "text"],
       watermarks: {
         lines: [80, 95],

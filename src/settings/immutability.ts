@@ -64,53 +64,33 @@ function loadImmutabilityOverrides(
     return undefined;
   }
 
-  const raw = Array.isArray(overridesSetting)
-    ? overridesSetting
-    : (overridesSetting.values ?? []);
+  const raw = Array.isArray(overridesSetting) ? overridesSetting : (overridesSetting.values ?? []);
 
   const upgraded = raw.map((rawValue) => {
     const { type, to, from, ...rest } = rawValue;
     const value = {
       type,
       to: typeof to === "string" ? Immutability[to] : to,
-      from:
-        from === undefined
-          ? undefined
-          : typeof from === "string"
-            ? Immutability[from]
-            : from,
+      from: from === undefined ? undefined : typeof from === "string" ? Immutability[from] : from,
     } as ImmutabilityOverrides[number];
 
     if (value.type === undefined) {
-      throw new Error(
-        `Override is missing required "type" property. Value: "${JSON.stringify(
-          rawValue,
-        )}"`,
-      );
+      throw new Error(`Override is missing required "type" property. Value: "${JSON.stringify(rawValue)}"`);
     }
     if (value.to === undefined) {
-      throw new Error(
-        `Override is missing required "to" property. Value: "${JSON.stringify(
-          rawValue,
-        )}"`,
-      );
+      throw new Error(`Override is missing required "to" property. Value: "${JSON.stringify(rawValue)}"`);
     }
     const restKeys = Object.keys(rest);
     if (restKeys.length > 0) {
       throw new Error(
-        `Override is contains unknown property(s) "${restKeys.join(
-          ", ",
-        )}". Value: "${JSON.stringify(rawValue)}"`,
+        `Override is contains unknown property(s) "${restKeys.join(", ")}". Value: "${JSON.stringify(rawValue)}"`,
       );
     }
 
     return value;
   });
 
-  const keepDefault =
-    Array.isArray(overridesSetting) || overridesSetting.keepDefault !== false;
+  const keepDefault = Array.isArray(overridesSetting) || overridesSetting.keepDefault !== false;
 
-  return keepDefault
-    ? [...getDefaultImmutabilityOverrides(), ...upgraded]
-    : upgraded;
+  return keepDefault ? [...getDefaultImmutabilityOverrides(), ...upgraded] : upgraded;
 }

@@ -21,10 +21,7 @@ const recommended = Object.fromEntries(
         rule.meta.docs.recommended === "recommended" &&
         rule.meta.docs.category !== "Stylistic",
     )
-    .map(([name, rule]) => [
-      `${ruleNameScope}/${name}`,
-      rule.meta.docs.recommendedSeverity,
-    ]),
+    .map(([name, rule]) => [`${ruleNameScope}/${name}`, rule.meta.docs.recommendedSeverity]),
 ) satisfies FlatConfig.Config["rules"];
 
 const overrides = {
@@ -158,6 +155,4 @@ const overrides = {
 export default {
   ...recommended,
   ...overrides,
-} satisfies FlatConfig.Config["rules"] as NonNullable<
-  FlatConfig.Config["rules"]
->;
+} satisfies FlatConfig.Config["rules"] as NonNullable<FlatConfig.Config["rules"]>;

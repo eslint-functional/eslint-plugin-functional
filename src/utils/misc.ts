@@ -32,9 +32,7 @@ export function isExpected<T>(expected: T): (actual: T) => boolean {
 /**
  * Does the given ExpressionStatement specify directive prologues.
  */
-export function isDirectivePrologue(
-  node: TSESTree.ExpressionStatement,
-): boolean {
+export function isDirectivePrologue(node: TSESTree.ExpressionStatement): boolean {
   return (
     node.expression.type === AST_NODE_TYPES.Literal &&
     typeof node.expression.value === "string" &&
@@ -53,39 +51,33 @@ function getNodeIdentifierText(
     return undefined;
   }
 
-  let m_identifierText: string | undefined | null = null;
+  let mut_identifierText: string | undefined | null = null;
 
   if (isIdentifier(node) || isPrivateIdentifier(node)) {
-    m_identifierText = node.name;
+    mut_identifierText = node.name;
   } else if (hasID(node) && isDefined(node.id)) {
-    m_identifierText = getNodeIdentifierText(node.id, context);
+    mut_identifierText = getNodeIdentifierText(node.id, context);
   } else if (hasKey(node) && isDefined(node.key)) {
-    m_identifierText = getNodeIdentifierText(node.key, context);
+    mut_identifierText = getNodeIdentifierText(node.key, context);
   } else if (isAssignmentExpression(node)) {
-    m_identifierText = getNodeIdentifierText(node.left, context);
+    mut_identifierText = getNodeIdentifierText(node.left, context);
   } else if (isMemberExpression(node)) {
-    m_identifierText = `${getNodeIdentifierText(node.object, context)}.${getNodeIdentifierText(
+    mut_identifierText = `${getNodeIdentifierText(node.object, context)}.${getNodeIdentifierText(
       node.property,
       context,
     )}`;
   } else if (isThisExpression(node)) {
-    m_identifierText = "this";
+    mut_identifierText = "this";
   } else if (isUnaryExpression(node)) {
-    m_identifierText = getNodeIdentifierText(node.argument, context);
+    mut_identifierText = getNodeIdentifierText(node.argument, context);
   } else if (isTSTypeAnnotation(node)) {
-    m_identifierText = context.sourceCode
-      .getText(node.typeAnnotation as TSESTree.Node)
-      .replaceAll(/\s+/gu, "");
-  } else if (
-    isTSAsExpression(node) ||
-    isTSNonNullExpression(node) ||
-    isChainExpression(node)
-  ) {
-    m_identifierText = getNodeIdentifierText(node.expression, context);
+    mut_identifierText = context.sourceCode.getText(node.typeAnnotation as TSESTree.Node).replaceAll(/\s+/gu, "");
+  } else if (isTSAsExpression(node) || isTSNonNullExpression(node) || isChainExpression(node)) {
+    mut_identifierText = getNodeIdentifierText(node.expression, context);
   }
 
-  if (m_identifierText !== null) {
-    return m_identifierText;
+  if (mut_identifierText !== null) {
+    return mut_identifierText;
   }
 
   const keyInObjectExpression = getKeyOfValueInObjectExpression(node);
@@ -99,10 +91,7 @@ function getNodeIdentifierText(
 /**
  * Get the code of the given node.
  */
-export function getNodeCode(
-  node: TSESTree.Node,
-  context: Readonly<RuleContext<string, BaseOptions>>,
-): string {
+export function getNodeCode(node: TSESTree.Node, context: Readonly<RuleContext<string, BaseOptions>>): string {
   return context.sourceCode.getText(node);
 }
 
@@ -115,9 +104,7 @@ export function getNodeIdentifierTexts(
 ): string[] {
   return (
     isVariableDeclaration(node)
-      ? node.declarations.flatMap((declarator) =>
-          getNodeIdentifierText(declarator, context),
-        )
+      ? node.declarations.flatMap((declarator) => getNodeIdentifierText(declarator, context))
       : [getNodeIdentifierText(node, context)]
   ).filter<string>((text): text is string => text !== undefined);
 }

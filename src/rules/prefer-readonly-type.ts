@@ -135,10 +135,7 @@ const errorMessages = {
  */
 const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
   deprecated: true,
-  replacedBy: [
-    "functional/prefer-immutable-types",
-    "functional/type-declaration-immutability",
-  ],
+  replacedBy: ["functional/prefer-immutable-types", "functional/type-declaration-immutability"],
   type: "suggestion",
   docs: {
     category: "No Mutations",
@@ -157,10 +154,7 @@ const mutableToImmutableTypes = new Map<string, string>([
   ["Map", "ReadonlyMap"],
   ["Set", "ReadonlySet"],
 ]);
-const mutableTypeRegex = new RegExp(
-  `^${[...mutableToImmutableTypes.keys()].join("|")}$`,
-  "u",
-);
+const mutableTypeRegex = new RegExp(`^${[...mutableToImmutableTypes.keys()].join("|")}$`, "u");
 
 /**
  * For backwards compatibility.
@@ -180,20 +174,10 @@ function shouldIgnorePattern2(
     isTSTypeReference(node);
 
   if (isTypeNode) {
-    return shouldIgnorePattern2(
-      node.parent,
-      context,
-      ignorePattern,
-      ignoreAccessorPattern,
-    );
+    return shouldIgnorePattern2(node.parent, context, ignorePattern, ignoreAccessorPattern);
   }
 
-  return shouldIgnorePattern(
-    node,
-    context,
-    ignorePattern,
-    ignoreAccessorPattern,
-  );
+  return shouldIgnorePattern(node, context, ignorePattern, ignoreAccessorPattern);
 }
 
 /**
@@ -205,14 +189,8 @@ function checkArrayOrTupleType(
   options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
-  const {
-    allowLocalMutation,
-    allowMutableReturnType,
-    ignoreClass,
-    ignoreCollections,
-    ignoreInterface,
-    ignorePattern,
-  } = optionsObject;
+  const { allowLocalMutation, allowMutableReturnType, ignoreClass, ignoreCollections, ignoreInterface, ignorePattern } =
+    optionsObject;
 
   if (
     shouldIgnoreClasses(node, context, ignoreClass) ||
@@ -230,9 +208,7 @@ function checkArrayOrTupleType(
   return {
     context,
     descriptors:
-      (node.parent === undefined ||
-        !isTSTypeOperator(node.parent) ||
-        node.parent.operator !== "readonly") &&
+      (node.parent === undefined || !isTSTypeOperator(node.parent) || node.parent.operator !== "readonly") &&
       (!allowMutableReturnType || !isInReturnType(node))
         ? [
             {
@@ -241,17 +217,10 @@ function checkArrayOrTupleType(
               fix:
                 node.parent !== undefined && isTSArrayType(node.parent)
                   ? (fixer) => [
-                      fixer.insertTextBefore(
-                        node as TSESTree.Node,
-                        "(readonly ",
-                      ),
+                      fixer.insertTextBefore(node as TSESTree.Node, "(readonly "),
                       fixer.insertTextAfter(node as TSESTree.Node, ")"),
                     ]
-                  : (fixer) =>
-                      fixer.insertTextBefore(
-                        node as TSESTree.Node,
-                        "readonly ",
-                      ),
+                  : (fixer) => fixer.insertTextBefore(node as TSESTree.Node, "readonly "),
             },
           ]
         : [],
@@ -267,8 +236,7 @@ function checkMappedType(
   options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
-  const { allowLocalMutation, ignoreClass, ignoreInterface, ignorePattern } =
-    optionsObject;
+  const { allowLocalMutation, ignoreClass, ignoreInterface, ignorePattern } = optionsObject;
 
   if (
     shouldIgnoreClasses(node, context, ignoreClass) ||
@@ -291,11 +259,7 @@ function checkMappedType(
             {
               node,
               messageId: "property",
-              fix: (fixer) =>
-                fixer.insertTextBeforeRange(
-                  [node.range[0] + 1, node.range[1]],
-                  " readonly",
-                ),
+              fix: (fixer) => fixer.insertTextBeforeRange([node.range[0] + 1, node.range[1]], " readonly"),
             },
           ],
   };
@@ -310,14 +274,8 @@ function checkTypeReference(
   options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
-  const {
-    allowLocalMutation,
-    ignoreClass,
-    ignoreInterface,
-    ignorePattern,
-    allowMutableReturnType,
-    ignoreCollections,
-  } = optionsObject;
+  const { allowLocalMutation, ignoreClass, ignoreInterface, ignorePattern, allowMutableReturnType, ignoreCollections } =
+    optionsObject;
 
   if (
     shouldIgnoreClasses(node, context, ignoreClass) ||
@@ -342,18 +300,12 @@ function checkTypeReference(
     return {
       context,
       descriptors:
-        immutableType !== undefined &&
-        immutableType.length > 0 &&
-        (!allowMutableReturnType || !isInReturnType(node))
+        immutableType !== undefined && immutableType.length > 0 && (!allowMutableReturnType || !isInReturnType(node))
           ? [
               {
                 node,
                 messageId: "type",
-                fix: (fixer) =>
-                  fixer.replaceText(
-                    node.typeName as TSESTree.Node,
-                    immutableType,
-                  ),
+                fix: (fixer) => fixer.replaceText(node.typeName as TSESTree.Node, immutableType),
               },
             ]
           : [],
@@ -378,13 +330,7 @@ function checkProperty(
   options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
-  const {
-    allowLocalMutation,
-    ignoreClass,
-    ignoreInterface,
-    ignorePattern,
-    allowMutableReturnType,
-  } = optionsObject;
+  const { allowLocalMutation, ignoreClass, ignoreInterface, ignorePattern, allowMutableReturnType } = optionsObject;
 
   if (
     shouldIgnoreClasses(node, context, ignoreClass) ||
@@ -408,19 +354,10 @@ function checkProperty(
               messageId: "property",
               fix:
                 isTSIndexSignature(node) || isTSPropertySignature(node)
-                  ? (fixer) =>
-                      fixer.insertTextBefore(node as TSESTree.Node, "readonly ")
+                  ? (fixer) => fixer.insertTextBefore(node as TSESTree.Node, "readonly ")
                   : isTSParameterProperty(node)
-                    ? (fixer) =>
-                        fixer.insertTextBefore(
-                          node.parameter as TSESTree.Node,
-                          "readonly ",
-                        )
-                    : (fixer) =>
-                        fixer.insertTextBefore(
-                          node.key as TSESTree.Node,
-                          "readonly ",
-                        ),
+                    ? (fixer) => fixer.insertTextBefore(node.parameter as TSESTree.Node, "readonly ")
+                    : (fixer) => fixer.insertTextBefore(node.key as TSESTree.Node, "readonly "),
             },
           ]
         : [],
@@ -440,14 +377,8 @@ function checkImplicitType(
   options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
-  const {
-    allowLocalMutation,
-    ignoreClass,
-    ignoreInterface,
-    ignorePattern,
-    checkImplicit,
-    ignoreCollections,
-  } = optionsObject;
+  const { allowLocalMutation, ignoreClass, ignoreInterface, ignorePattern, checkImplicit, ignoreCollections } =
+    optionsObject;
 
   if (
     !checkImplicit ||
@@ -501,8 +432,7 @@ function checkImplicitType(
             {
               node: declarator.node,
               messageId: "implicit",
-              fix: (fixer) =>
-                fixer.insertTextAfter(declarator.id, ": readonly unknown[]"),
+              fix: (fixer) => fixer.insertTextAfter(declarator.id, ": readonly unknown[]"),
             },
           ]
         : [],
@@ -511,20 +441,22 @@ function checkImplicitType(
 }
 
 // Create the rule.
-export const rule: Rule<keyof typeof errorMessages, Options> = createRule<
-  keyof typeof errorMessages,
-  Options
->(name, meta, defaultOptions, {
-  ArrowFunctionExpression: checkImplicitType,
-  PropertyDefinition: checkProperty,
-  FunctionDeclaration: checkImplicitType,
-  FunctionExpression: checkImplicitType,
-  TSArrayType: checkArrayOrTupleType,
-  TSIndexSignature: checkProperty,
-  TSParameterProperty: checkProperty,
-  TSPropertySignature: checkProperty,
-  TSTupleType: checkArrayOrTupleType,
-  TSMappedType: checkMappedType,
-  TSTypeReference: checkTypeReference,
-  VariableDeclaration: checkImplicitType,
-});
+export const rule: Rule<keyof typeof errorMessages, Options> = createRule<keyof typeof errorMessages, Options>(
+  name,
+  meta,
+  defaultOptions,
+  {
+    ArrowFunctionExpression: checkImplicitType,
+    PropertyDefinition: checkProperty,
+    FunctionDeclaration: checkImplicitType,
+    FunctionExpression: checkImplicitType,
+    TSArrayType: checkArrayOrTupleType,
+    TSIndexSignature: checkProperty,
+    TSParameterProperty: checkProperty,
+    TSPropertySignature: checkProperty,
+    TSTupleType: checkArrayOrTupleType,
+    TSMappedType: checkMappedType,
+    TSTypeReference: checkTypeReference,
+    VariableDeclaration: checkImplicitType,
+  },
+);

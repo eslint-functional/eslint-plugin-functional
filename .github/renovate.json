@@ -17,6 +17,7 @@
     "workarounds:all"
   ],
   "labels": ["Type: Maintenance", ":blue_heart:"],
+  "rebaseWhen": "behind-base-branch",
   "packageRules": [
     {
       "major": {

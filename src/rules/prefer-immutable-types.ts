@@ -1,12 +1,6 @@
 import type { TSESTree } from "@typescript-eslint/utils";
-import type {
-  JSONSchema4,
-  JSONSchema4ObjectSchema,
-} from "@typescript-eslint/utils/json-schema";
-import type {
-  ReportFixFunction,
-  RuleContext,
-} from "@typescript-eslint/utils/ts-eslint";
+import type { JSONSchema4, JSONSchema4ObjectSchema } from "@typescript-eslint/utils/json-schema";
+import type { ReportFixFunction, RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import { deepmerge } from "deepmerge-ts";
 import { Immutability } from "is-immutable-type";
 import type { Type, TypeNode } from "typescript";
@@ -97,17 +91,11 @@ type FixerConfigRaw = {
 type SuggestionsConfigRaw = Array<FixerConfigRaw & { message?: string }>;
 
 type FixerConfigRawMap = Partial<
-  Record<
-    "ReadonlyShallow" | "ReadonlyDeep" | "Immutable",
-    FixerConfigRaw | FixerConfigRaw[] | undefined
-  >
+  Record<"ReadonlyShallow" | "ReadonlyDeep" | "Immutable", FixerConfigRaw | FixerConfigRaw[] | undefined>
 >;
 
 type SuggestionConfigRawMap = Partial<
-  Record<
-    "ReadonlyShallow" | "ReadonlyDeep" | "Immutable",
-    SuggestionsConfigRaw[] | undefined
-  >
+  Record<"ReadonlyShallow" | "ReadonlyDeep" | "Immutable", SuggestionsConfigRaw[] | undefined>
 >;
 
 type FixerConfig = {
@@ -141,30 +129,27 @@ const enforcementEnumOptions = [
 /**
  * The non-shorthand schema for each option.
  */
-const optionExpandedSchema: JSONSchema4ObjectSchema["properties"] = deepmerge(
-  ignoreClassesOptionSchema,
-  {
-    enforcement: {
-      type: ["string", "number", "boolean"],
-      enum: enforcementEnumOptions,
+const optionExpandedSchema: JSONSchema4ObjectSchema["properties"] = deepmerge(ignoreClassesOptionSchema, {
+  enforcement: {
+    type: ["string", "number", "boolean"],
+    enum: enforcementEnumOptions,
+  },
+  ignoreInferredTypes: {
+    type: "boolean",
+  },
+  ignoreNamePattern: {
+    type: ["string", "array"],
+    items: {
+      type: "string",
     },
-    ignoreInferredTypes: {
-      type: "boolean",
+  },
+  ignoreTypePattern: {
+    type: ["string", "array"],
+    items: {
+      type: "string",
     },
-    ignoreNamePattern: {
-      type: ["string", "array"],
-      items: {
-        type: "string",
-      },
-    },
-    ignoreTypePattern: {
-      type: ["string", "array"],
-      items: {
-        type: "string",
-      },
-    },
-  } satisfies JSONSchema4ObjectSchema["properties"],
-);
+  },
+} satisfies JSONSchema4ObjectSchema["properties"]);
 
 /**
  * The schema for each option.
@@ -226,54 +211,53 @@ const suggestionsSchema: JSONSchema4 = {
   },
 };
 
-const coreOptionsPropertiesSchema: NonNullable<
-  JSONSchema4ObjectSchema["properties"]
-> = deepmerge(optionExpandedSchema, {
-  parameters: optionSchema,
-  returnTypes: optionSchema,
-  variables: {
-    oneOf: [
-      {
-        type: "object",
-        properties: deepmerge(optionExpandedSchema, {
-          ignoreInFunctions: {
-            type: "boolean",
-          },
-        } satisfies JSONSchema4ObjectSchema["properties"]),
-        additionalProperties: false,
-      },
-      {
-        type: ["string", "number", "boolean"],
-        enum: enforcementEnumOptions,
-      },
-    ],
-  },
-  fixer: {
-    type: "object",
-    properties: {
-      ReadonlyShallow: fixerSchema,
-      ReadonlyDeep: fixerSchema,
-      Immutable: fixerSchema,
+const coreOptionsPropertiesSchema: NonNullable<JSONSchema4ObjectSchema["properties"]> = deepmerge(
+  optionExpandedSchema,
+  {
+    parameters: optionSchema,
+    returnTypes: optionSchema,
+    variables: {
+      oneOf: [
+        {
+          type: "object",
+          properties: deepmerge(optionExpandedSchema, {
+            ignoreInFunctions: {
+              type: "boolean",
+            },
+          } satisfies JSONSchema4ObjectSchema["properties"]),
+          additionalProperties: false,
+        },
+        {
+          type: ["string", "number", "boolean"],
+          enum: enforcementEnumOptions,
+        },
+      ],
     },
-    additionalProperties: false,
-  },
-  suggestions: {
-    type: "object",
-    properties: {
-      ReadonlyShallow: suggestionsSchema,
-      ReadonlyDeep: suggestionsSchema,
-      Immutable: suggestionsSchema,
+    fixer: {
+      type: "object",
+      properties: {
+        ReadonlyShallow: fixerSchema,
+        ReadonlyDeep: fixerSchema,
+        Immutable: fixerSchema,
+      },
+      additionalProperties: false,
     },
-    additionalProperties: false,
-  },
-} satisfies JSONSchema4ObjectSchema["properties"]);
+    suggestions: {
+      type: "object",
+      properties: {
+        ReadonlyShallow: suggestionsSchema,
+        ReadonlyDeep: suggestionsSchema,
+        Immutable: suggestionsSchema,
+      },
+      additionalProperties: false,
+    },
+  } satisfies JSONSchema4ObjectSchema["properties"],
+);
 
 /**
  * The schema for the rule options.
  */
-const schema: JSONSchema4[] = [
-  overridableOptionsSchema(coreOptionsPropertiesSchema),
-];
+const schema: JSONSchema4[] = [overridableOptionsSchema(coreOptionsPropertiesSchema)];
 
 /**
  * The default options for the rule.
@@ -287,8 +271,7 @@ const defaultOptions = [
       ReadonlyShallow: [
         [
           {
-            pattern:
-              "^([_$a-zA-Z\\xA0-\\uFFFF][_$a-zA-Z0-9\\xA0-\\uFFFF]*\\[\\])$",
+            pattern: "^([_$a-zA-Z\\xA0-\\uFFFF][_$a-zA-Z0-9\\xA0-\\uFFFF]*\\[\\])$",
             replace: "readonly $1",
             message: "Prepend with readonly.",
           },
@@ -314,14 +297,10 @@ const defaultOptions = [
  * The possible error messages.
  */
 const errorMessages = {
-  parameter:
-    'Parameter should have an immutability of at least "{{ expected }}" (actual: "{{ actual }}").',
-  returnType:
-    'Return type should have an immutability of at least "{{ expected }}" (actual: "{{ actual }}").',
-  variable:
-    'Variable should have an immutability of at least "{{ expected }}" (actual: "{{ actual }}").',
-  propertyImmutability:
-    'Property should have an immutability of at least "{{ expected }}" (actual: "{{ actual }}").',
+  parameter: 'Parameter should have an immutability of at least "{{ expected }}" (actual: "{{ actual }}").',
+  returnType: 'Return type should have an immutability of at least "{{ expected }}" (actual: "{{ actual }}").',
+  variable: 'Variable should have an immutability of at least "{{ expected }}" (actual: "{{ actual }}").',
+  propertyImmutability: 'Property should have an immutability of at least "{{ expected }}" (actual: "{{ actual }}").',
   propertyModifier: "Property should have a readonly modifier.",
   propertyModifierSuggestion: "Add readonly modifier.",
   userDefined: "{{ message }}",
@@ -334,8 +313,7 @@ const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     category: "No Mutations",
-    description:
-      "Require function parameters to be typed as certain immutability",
+    description: "Require function parameters to be typed as certain immutability",
     recommended: "recommended",
     recommendedSeverity: "error",
     requiresTypeChecking: true,
@@ -346,10 +324,7 @@ const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
   schema,
 };
 
-type Descriptor = RuleResult<
-  keyof typeof errorMessages,
-  RawOptions
->["descriptors"][number];
+type Descriptor = RuleResult<keyof typeof errorMessages, RawOptions>["descriptors"][number];
 
 type AllFixers = {
   fix: ReportFixFunction | null;
@@ -367,15 +342,10 @@ function getAllFixers(
 ): AllFixers {
   const nodeText = context.sourceCode.getText(node).replaceAll(/\s+/gu, " ");
 
-  const fix =
-    fixerConfigs === false
-      ? null
-      : getConfiguredFixer(node, nodeText, fixerConfigs);
+  const fix = fixerConfigs === false ? null : getConfiguredFixer(node, nodeText, fixerConfigs);
 
   const suggestionFixers =
-    suggestionsConfigs === false
-      ? null
-      : getConfiguredSuggestionFixers(node, nodeText, suggestionsConfigs);
+    suggestionsConfigs === false ? null : getConfiguredSuggestionFixers(node, nodeText, suggestionsConfigs);
 
   return { fix, suggestionFixers };
 }
@@ -392,8 +362,7 @@ function getConfiguredFixer(
   if (config === undefined) {
     return null;
   }
-  return (fixer) =>
-    fixer.replaceText(node, text.replace(config.pattern, config.replace));
+  return (fixer) => fixer.replaceText(node, text.replace(config.pattern, config.replace));
 }
 
 /**
@@ -405,27 +374,19 @@ function getConfiguredSuggestionFixers(
   suggestionsConfigs: ReadonlyArray<SuggestionsConfig>,
 ) {
   return suggestionsConfigs
-    .map(
-      (
-        configs,
-      ): { fix: NonNullable<Descriptor["fix"]>; message: string } | null => {
-        const config = configs.find((c) => c.pattern.test(text));
-        if (config === undefined) {
-          return null;
-        }
-        return {
-          fix: (fixer) =>
-            fixer.replaceText(
-              node,
-              text.replace(config.pattern, config.replace),
-            ),
-          message:
-            config.message === undefined
-              ? `Replace with: ${text.replace(config.pattern, config.replace)}`
-              : text.replace(config.pattern, config.message),
-        };
-      },
-    )
+    .map((configs): { fix: NonNullable<Descriptor["fix"]>; message: string } | null => {
+      const config = configs.find((c) => c.pattern.test(text));
+      if (config === undefined) {
+        return null;
+      }
+      return {
+        fix: (fixer) => fixer.replaceText(node, text.replace(config.pattern, config.replace)),
+        message:
+          config.message === undefined
+            ? `Replace with: ${text.replace(config.pattern, config.replace)}`
+            : text.replace(config.pattern, config.message),
+      };
+    })
     .filter(isDefined);
 }
 
@@ -443,13 +404,8 @@ function parseEnforcement(rawEnforcement: RawEnforcement) {
 /**
  * Get the fixer config for the the given enforcement level from the raw config given.
  */
-function parseFixerConfigs(
-  allRawConfigs: RawOptions[0]["fixer"],
-  enforcement: Immutability,
-): FixerConfig[] | false {
-  const key = Immutability[enforcement] as keyof NonNullable<
-    typeof allRawConfigs
-  >;
+function parseFixerConfigs(allRawConfigs: RawOptions[0]["fixer"], enforcement: Immutability): FixerConfig[] | false {
+  const key = Immutability[enforcement] as keyof NonNullable<typeof allRawConfigs>;
   const rawConfigs = allRawConfigs?.[key];
   if (rawConfigs === undefined) {
     return false;
@@ -468,9 +424,7 @@ function parseSuggestionsConfigs(
   rawSuggestions: RawOptions[0]["suggestions"],
   enforcement: Immutability,
 ): SuggestionsConfig[] | false {
-  const key = Immutability[enforcement] as keyof NonNullable<
-    typeof rawSuggestions
-  >;
+  const key = Immutability[enforcement] as keyof NonNullable<typeof rawSuggestions>;
   const rawConfigsSet = rawSuggestions?.[key];
   if (rawConfigsSet === undefined) {
     return false;
@@ -496,19 +450,13 @@ function getParameterTypeViolations(
       const parameterProperty = isTSParameterProperty(param);
       const actualParam = parameterProperty ? param.parameter : param;
 
-      const optionsToUse = getOptionsWithDefaults(
-        getCoreOptions<CoreOptions, Options>(param, context, options),
-      );
+      const optionsToUse = getOptionsWithDefaults(getCoreOptions<CoreOptions, Options>(param, context, options));
 
       if (optionsToUse === null) {
         return undefined;
       }
 
-      const {
-        parameters: rawOption,
-        fixer: rawFixerConfig,
-        suggestions: rawSuggestionsConfigs,
-      } = optionsToUse;
+      const { parameters: rawOption, fixer: rawFixerConfig, suggestions: rawSuggestionsConfigs } = optionsToUse;
       const {
         enforcement: rawEnforcement,
         ignoreInferredTypes,
@@ -527,21 +475,13 @@ function getParameterTypeViolations(
             }),
       };
 
-      const enforcement = parseEnforcement(
-        rawEnforcement ?? optionsToUse.enforcement,
-      );
-      if (
-        enforcement === false ||
-        shouldIgnoreClasses(node, context, ignoreClasses)
-      ) {
+      const enforcement = parseEnforcement(rawEnforcement ?? optionsToUse.enforcement);
+      if (enforcement === false || shouldIgnoreClasses(node, context, ignoreClasses)) {
         return undefined;
       }
 
       const fixerConfigs = parseFixerConfigs(rawFixerConfig, enforcement);
-      const suggestionsConfigs = parseSuggestionsConfigs(
-        rawSuggestionsConfigs,
-        enforcement,
-      );
+      const suggestionsConfigs = parseSuggestionsConfigs(rawSuggestionsConfigs, enforcement);
 
       if (shouldIgnorePattern(param, context, ignoreNamePattern)) {
         return undefined;
@@ -569,27 +509,18 @@ function getParameterTypeViolations(
         (ignoreInferredTypes && actualParam.typeAnnotation === undefined) ||
         // ignored
         (actualParam.typeAnnotation !== undefined &&
-          shouldIgnorePattern(
-            actualParam.typeAnnotation,
-            context,
-            ignoreTypePattern,
-          )) ||
+          shouldIgnorePattern(actualParam.typeAnnotation, context, ignoreTypePattern)) ||
         // type guard
         (node.returnType !== undefined &&
           isTSTypePredicate(node.returnType.typeAnnotation) &&
           isIdentifier(node.returnType.typeAnnotation.parameterName) &&
           isIdentifier(actualParam) &&
-          actualParam.name ===
-            node.returnType.typeAnnotation.parameterName.name)
+          actualParam.name === node.returnType.typeAnnotation.parameterName.name)
       ) {
         return undefined;
       }
 
-      const immutability = getTypeImmutabilityOfNode(
-        actualParam,
-        context,
-        enforcement,
-      );
+      const immutability = getTypeImmutabilityOfNode(actualParam, context, enforcement);
 
       if (immutability >= enforcement) {
         return undefined;
@@ -598,12 +529,7 @@ function getParameterTypeViolations(
       const { fix, suggestionFixers } =
         actualParam.typeAnnotation === undefined
           ? ({} as AllFixers)
-          : getAllFixers(
-              actualParam.typeAnnotation.typeAnnotation,
-              context,
-              fixerConfigs,
-              suggestionsConfigs,
-            );
+          : getAllFixers(actualParam.typeAnnotation.typeAnnotation, context, fixerConfigs, suggestionsConfigs);
 
       return {
         node: actualParam,
@@ -636,23 +562,14 @@ function getReturnTypeViolations(
 ): Descriptor[] {
   function getOptions(type: Type, typeNode: TypeNode | null) {
     const optionsToUse = getOptionsWithDefaults(
-      getCoreOptionsForType<CoreOptions, Options>(
-        type,
-        typeNode,
-        context,
-        options,
-      ),
+      getCoreOptionsForType<CoreOptions, Options>(type, typeNode, context, options),
     );
 
     if (optionsToUse === null) {
       return null;
     }
 
-    const {
-      returnTypes: rawOption,
-      fixer: rawFixerConfig,
-      suggestions: rawSuggestionsConfigs,
-    } = optionsToUse;
+    const { returnTypes: rawOption, fixer: rawFixerConfig, suggestions: rawSuggestionsConfigs } = optionsToUse;
     const {
       enforcement: rawEnforcement,
       ignoreClasses,
@@ -664,14 +581,10 @@ function getReturnTypeViolations(
       ignoreNamePattern: optionsToUse.ignoreNamePattern,
       ignoreTypePattern: optionsToUse.ignoreTypePattern,
       ignoreInferredTypes: optionsToUse.ignoreInferredTypes,
-      ...(typeof rawOption === "object"
-        ? rawOption
-        : { enforcement: rawOption }),
+      ...(typeof rawOption === "object" ? rawOption : { enforcement: rawOption }),
     };
 
-    const enforcement = parseEnforcement(
-      rawEnforcement ?? optionsToUse.enforcement,
-    );
+    const enforcement = parseEnforcement(rawEnforcement ?? optionsToUse.enforcement);
 
     if (
       enforcement === false ||
@@ -682,10 +595,7 @@ function getReturnTypeViolations(
     }
 
     const fixerConfigs = parseFixerConfigs(rawFixerConfig, enforcement);
-    const suggestionsConfigs = parseSuggestionsConfigs(
-      rawSuggestionsConfigs,
-      enforcement,
-    );
+    const suggestionsConfigs = parseSuggestionsConfigs(rawSuggestionsConfigs, enforcement);
 
     return {
       ignoreTypePattern,
@@ -703,22 +613,14 @@ function getReturnTypeViolations(
       return [];
     }
 
-    const { ignoreTypePattern, enforcement, fixerConfigs, suggestionsConfigs } =
-      optionsToUse;
+    const { ignoreTypePattern, enforcement, fixerConfigs, suggestionsConfigs } = optionsToUse;
 
-    if (
-      node.returnType?.typeAnnotation !== undefined &&
-      !isTSTypePredicate(node.returnType.typeAnnotation)
-    ) {
+    if (node.returnType?.typeAnnotation !== undefined && !isTSTypePredicate(node.returnType.typeAnnotation)) {
       if (shouldIgnorePattern(node.returnType, context, ignoreTypePattern)) {
         return [];
       }
 
-      const immutability = getTypeImmutabilityOfNode(
-        node.returnType.typeAnnotation,
-        context,
-        enforcement,
-      );
+      const immutability = getTypeImmutabilityOfNode(node.returnType.typeAnnotation, context, enforcement);
 
       if (immutability >= enforcement) {
         return [];
@@ -758,36 +660,24 @@ function getReturnTypeViolations(
   }
 
   const returnTypes = getReturnTypesOfFunction(node, context);
-  if (
-    returnTypes === null ||
-    returnTypes.length !== 1 ||
-    isImplementationOfOverload(node, context)
-  ) {
+  if (returnTypes === null || returnTypes.length !== 1 || isImplementationOfOverload(node, context)) {
     return [];
   }
 
   const returnType = returnTypes[0]!;
 
-  const optionsToUse = getOptions(
-    returnType,
-    (returnType as Type & { node: TypeNode }).node ?? null,
-  );
+  const optionsToUse = getOptions(returnType, (returnType as Type & { node: TypeNode }).node ?? null);
   if (optionsToUse === null) {
     return [];
   }
 
-  const { ignoreInferredTypes, enforcement, fixerConfigs, suggestionsConfigs } =
-    optionsToUse;
+  const { ignoreInferredTypes, enforcement, fixerConfigs, suggestionsConfigs } = optionsToUse;
 
   if (ignoreInferredTypes) {
     return [];
   }
 
-  const immutability = getTypeImmutabilityOfType(
-    returnType,
-    context,
-    enforcement,
-  );
+  const immutability = getTypeImmutabilityOfType(returnType, context, enforcement);
 
   if (immutability >= enforcement) {
     return [];
@@ -796,12 +686,7 @@ function getReturnTypeViolations(
   const { fix, suggestionFixers } =
     node.returnType?.typeAnnotation === undefined
       ? ({} as AllFixers)
-      : getAllFixers(
-          node.returnType.typeAnnotation,
-          context,
-          fixerConfigs,
-          suggestionsConfigs,
-        );
+      : getAllFixers(node.returnType.typeAnnotation, context, fixerConfigs, suggestionsConfigs);
 
   return [
     {
@@ -827,9 +712,7 @@ function getReturnTypeViolations(
 /**
  * Add the default options to the given options.
  */
-function getOptionsWithDefaults(
-  options: Readonly<Options> | null,
-): Options | null {
+function getOptionsWithDefaults(options: Readonly<Options> | null): Options | null {
   if (options === null) {
     return null;
   }
@@ -870,9 +753,7 @@ function checkVariable(
   rawOptions: Readonly<RawOptions>,
 ): RuleResult<keyof typeof errorMessages, RawOptions> {
   const options = upgradeRawOverridableOptions(rawOptions[0]);
-  const optionsToUse = getOptionsWithDefaults(
-    getCoreOptions<CoreOptions, Options>(node, context, options),
-  );
+  const optionsToUse = getOptionsWithDefaults(getCoreOptions<CoreOptions, Options>(node, context, options));
 
   if (optionsToUse === null) {
     return {
@@ -881,11 +762,7 @@ function checkVariable(
     };
   }
 
-  const {
-    variables: rawOption,
-    fixer: rawFixerConfig,
-    suggestions: rawSuggestionsConfigs,
-  } = optionsToUse;
+  const { variables: rawOption, fixer: rawFixerConfig, suggestions: rawSuggestionsConfigs } = optionsToUse;
   const {
     enforcement: rawEnforcement,
     ignoreInferredTypes,
@@ -902,9 +779,7 @@ function checkVariable(
     ...(typeof rawOption === "object" ? rawOption : { enforcement: rawOption }),
   };
 
-  const enforcement = parseEnforcement(
-    rawEnforcement ?? optionsToUse.enforcement,
-  );
+  const enforcement = parseEnforcement(rawEnforcement ?? optionsToUse.enforcement);
 
   if (
     enforcement === false ||
@@ -921,8 +796,7 @@ function checkVariable(
   const propertyDefinition = isPropertyDefinition(node);
 
   if (propertyDefinition && !node.readonly) {
-    const fix: NonNullable<Descriptor["fix"]> | null = (fixer) =>
-      fixer.insertTextBefore(node.key, "readonly ");
+    const fix: NonNullable<Descriptor["fix"]> | null = (fixer) => fixer.insertTextBefore(node.key, "readonly ");
 
     return {
       context,
@@ -944,10 +818,7 @@ function checkVariable(
 
   const nodeWithTypeAnnotation = propertyDefinition ? node : node.id;
 
-  if (
-    ignoreInferredTypes &&
-    nodeWithTypeAnnotation.typeAnnotation === undefined
-  ) {
+  if (ignoreInferredTypes && nodeWithTypeAnnotation.typeAnnotation === undefined) {
     return {
       context,
       descriptors: [],
@@ -956,11 +827,7 @@ function checkVariable(
 
   if (
     nodeWithTypeAnnotation.typeAnnotation !== undefined &&
-    shouldIgnorePattern(
-      nodeWithTypeAnnotation.typeAnnotation,
-      context,
-      ignoreTypePattern,
-    )
+    shouldIgnorePattern(nodeWithTypeAnnotation.typeAnnotation, context, ignoreTypePattern)
   ) {
     return {
       context,
@@ -979,33 +846,19 @@ function checkVariable(
       return null;
     }
 
-    const immutability = getTypeImmutabilityOfNode(
-      element,
-      context,
-      enforcement,
-    );
+    const immutability = getTypeImmutabilityOfNode(element, context, enforcement);
 
     if (immutability >= enforcement) {
       return null;
     }
 
     const fixerConfigs = parseFixerConfigs(rawFixerConfig, enforcement);
-    const suggestionsConfigs = parseSuggestionsConfigs(
-      rawSuggestionsConfigs,
-      enforcement,
-    );
+    const suggestionsConfigs = parseSuggestionsConfigs(rawSuggestionsConfigs, enforcement);
 
     const { fix, suggestionFixers } =
-      isMemberExpression(element) ||
-      isProperty(element) ||
-      element.typeAnnotation === undefined
+      isMemberExpression(element) || isProperty(element) || element.typeAnnotation === undefined
         ? ({} as AllFixers)
-        : getAllFixers(
-            element.typeAnnotation.typeAnnotation,
-            context,
-            fixerConfigs,
-            suggestionsConfigs,
-          );
+        : getAllFixers(element.typeAnnotation.typeAnnotation, context, fixerConfigs, suggestionsConfigs);
 
     return { element, immutability, fix, suggestionFixers };
   });
@@ -1014,46 +867,46 @@ function checkVariable(
 
   return {
     context,
-    descriptors: elementResults
-      .filter(isDefined)
-      .map(({ element, immutability, fix, suggestionFixers }) => {
-        const data = {
-          actual: Immutability[immutability],
-          expected: Immutability[enforcement],
-        };
+    descriptors: elementResults.filter(isDefined).map(({ element, immutability, fix, suggestionFixers }) => {
+      const data = {
+        actual: Immutability[immutability],
+        expected: Immutability[enforcement],
+      };
 
-        return {
-          node: element,
-          messageId,
-          data,
-          fix,
-          suggest:
-            suggestionFixers?.map(({ fix, message }) => ({
-              messageId: "userDefined",
-              data: {
-                message,
-              },
-              fix,
-            })) ?? null,
-        };
-      }),
+      return {
+        node: element,
+        messageId,
+        data,
+        fix,
+        suggest:
+          suggestionFixers?.map(({ fix, message }) => ({
+            messageId: "userDefined",
+            data: {
+              message,
+            },
+            fix,
+          })) ?? null,
+      };
+    }),
   };
 }
 
 // Create the rule.
-export const rule: Rule<keyof typeof errorMessages, RawOptions> = createRule<
-  keyof typeof errorMessages,
-  RawOptions
->(name, meta, defaultOptions, {
-  ArrowFunctionExpression: checkFunction,
-  FunctionDeclaration: checkFunction,
-  FunctionExpression: checkFunction,
-  TSCallSignatureDeclaration: checkFunction,
-  TSConstructSignatureDeclaration: checkFunction,
-  TSDeclareFunction: checkFunction,
-  TSEmptyBodyFunctionExpression: checkFunction,
-  TSFunctionType: checkFunction,
-  TSMethodSignature: checkFunction,
-  PropertyDefinition: checkVariable,
-  VariableDeclarator: checkVariable,
-});
+export const rule: Rule<keyof typeof errorMessages, RawOptions> = createRule<keyof typeof errorMessages, RawOptions>(
+  name,
+  meta,
+  defaultOptions,
+  {
+    ArrowFunctionExpression: checkFunction,
+    FunctionDeclaration: checkFunction,
+    FunctionExpression: checkFunction,
+    TSCallSignatureDeclaration: checkFunction,
+    TSConstructSignatureDeclaration: checkFunction,
+    TSDeclareFunction: checkFunction,
+    TSEmptyBodyFunctionExpression: checkFunction,
+    TSFunctionType: checkFunction,
+    TSMethodSignature: checkFunction,
+    PropertyDefinition: checkVariable,
+    VariableDeclarator: checkVariable,
+  },
+);

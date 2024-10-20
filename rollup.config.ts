@@ -1,15 +1,22 @@
-import { rollupPlugin as rollupPluginDeassert } from "deassert";
+import rollupPluginReplace from "@rollup/plugin-replace";
+import rollupPluginTypescript from "@rollup/plugin-typescript";
 import type { RollupOptions } from "rollup";
-import rollupPluginTs from "rollup-plugin-ts";
+import rollupPluginDeassert from "rollup-plugin-deassert";
+import { generateDtsBundle } from "rollup-plugin-dts-bundle-generator";
 
-import pkg from "./package.json" assert { type: "json" };
+import pkg from "./package.json" with { type: "json" };
+
+type PackageJSON = typeof pkg & {
+  dependencies?: Record<string, string>;
+  peerDependencies?: Record<string, string>;
+};
 
 const externalDependencies = [
-  ...Object.keys(pkg.dependencies ?? {}),
-  ...Object.keys(pkg.peerDependencies ?? {}),
+  ...Object.keys((pkg as PackageJSON).dependencies ?? {}),
+  ...Object.keys((pkg as PackageJSON).peerDependencies ?? {}),
 ];
 
-const esm = {
+export default {
   input: "src/index.ts",
 
   output: {
@@ -19,12 +26,25 @@ const esm = {
     generatedCode: {
       preset: "es2015",
     },
+    plugins: [
+      generateDtsBundle({
+        compilation: {
+          preferredConfigPath: "tsconfig.build.types.json",
+        },
+        outFile: pkg.exports.types,
+      }) as any,
+    ],
   },
 
   plugins: [
-    rollupPluginTs({
-      transpileOnly: true,
+    rollupPluginTypescript({
       tsconfig: "tsconfig.build.json",
+    }),
+    rollupPluginReplace({
+      values: {
+        "import.meta.vitest": "undefined",
+      },
+      preventAssignment: true,
     }),
     rollupPluginDeassert({
       include: ["**/*.{js,ts}"],
@@ -39,14 +59,9 @@ const esm = {
   },
 
   external: (source) => {
-    if (
-      source.startsWith("node:") ||
-      externalDependencies.some((dep) => source.startsWith(dep))
-    ) {
+    if (source.startsWith("node:") || externalDependencies.some((dep) => source.startsWith(dep))) {
       return true;
     }
     return undefined;
   },
 } satisfies RollupOptions;
-
-export default [esm] as RollupOptions[];

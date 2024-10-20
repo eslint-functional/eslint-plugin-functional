@@ -85,8 +85,7 @@ const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     category: "No Other Paradigms",
-    description:
-      "Restrict types so that only members of the same kind are allowed in them.",
+    description: "Restrict types so that only members of the same kind are allowed in them.",
     recommended: "recommended",
     recommendedSeverity: "error",
     requiresTypeChecking: true,
@@ -126,9 +125,7 @@ function checkTSInterfaceDeclaration(
 ): RuleResult<keyof typeof errorMessages, Options> {
   return {
     context,
-    descriptors: hasTypeElementViolations(node.body.body, context)
-      ? [{ node, messageId: "generic" }]
-      : [],
+    descriptors: hasTypeElementViolations(node.body.body, context) ? [{ node, messageId: "generic" }] : [],
   };
 }
 
@@ -144,45 +141,32 @@ function checkTSTypeAliasDeclaration(
     context,
     descriptors:
       // TypeLiteral.
-      (isTSTypeLiteral(node.typeAnnotation) &&
-        hasTypeElementViolations(node.typeAnnotation.members, context)) ||
+      (isTSTypeLiteral(node.typeAnnotation) && hasTypeElementViolations(node.typeAnnotation.members, context)) ||
       // TypeLiteral inside `Readonly<>`.
       (isTSTypeReference(node.typeAnnotation) &&
         isIdentifier(node.typeAnnotation.typeName) &&
         node.typeAnnotation.typeArguments !== undefined &&
         node.typeAnnotation.typeArguments.params.length === 1 &&
         isTSTypeLiteral(node.typeAnnotation.typeArguments.params[0]!) &&
-        hasTypeElementViolations(
-          node.typeAnnotation.typeArguments.params[0].members,
-          context,
-        ))
+        hasTypeElementViolations(node.typeAnnotation.typeArguments.params[0].members, context))
         ? [{ node, messageId: "generic" }]
         : [],
   };
 }
 
 // Create the rule.
-export const rule: Rule<keyof typeof errorMessages, Options> =
-  createRuleUsingFunction<keyof typeof errorMessages, Options>(
-    name,
-    meta,
-    defaultOptions,
-    (context, options) => {
-      const [{ checkInterfaces, checkTypeLiterals }] = options;
+export const rule: Rule<keyof typeof errorMessages, Options> = createRuleUsingFunction<
+  keyof typeof errorMessages,
+  Options
+>(name, meta, defaultOptions, (context, options) => {
+  const [{ checkInterfaces, checkTypeLiterals }] = options;
 
-      return Object.fromEntries(
-        (
-          [
-            [
-              "TSInterfaceDeclaration",
-              checkInterfaces ? checkTSInterfaceDeclaration : undefined,
-            ],
-            [
-              "TSTypeAliasDeclaration",
-              checkTypeLiterals ? checkTSTypeAliasDeclaration : undefined,
-            ],
-          ] as const
-        ).filter(([sel, fn]) => fn !== undefined),
-      ) as Record<string, any>;
-    },
-  );
+  return Object.fromEntries(
+    (
+      [
+        ["TSInterfaceDeclaration", checkInterfaces ? checkTSInterfaceDeclaration : undefined],
+        ["TSTypeAliasDeclaration", checkTypeLiterals ? checkTSTypeAliasDeclaration : undefined],
+      ] as const
+    ).filter(([sel, fn]) => fn !== undefined),
+  ) as Record<string, any>;
+});

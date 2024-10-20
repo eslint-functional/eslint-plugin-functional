@@ -11,12 +11,7 @@ import {
 } from "#/options";
 import { ruleNameScope } from "#/utils/misc";
 import type { ESClass } from "#/utils/node-types";
-import {
-  type NamedCreateRuleCustomMeta,
-  type Rule,
-  type RuleResult,
-  createRule,
-} from "#/utils/rule";
+import { type NamedCreateRuleCustomMeta, type Rule, type RuleResult, createRule } from "#/utils/rule";
 
 /**
  * The name of this rule.
@@ -39,10 +34,7 @@ type Options = [IgnoreIdentifierPatternOption & IgnoreCodePatternOption];
 const schema: JSONSchema4[] = [
   {
     type: "object",
-    properties: deepmerge(
-      ignoreIdentifierPatternOptionSchema,
-      ignoreCodePatternOptionSchema,
-    ),
+    properties: deepmerge(ignoreIdentifierPatternOptionSchema, ignoreCodePatternOptionSchema),
     additionalProperties: false,
   },
 ];
@@ -86,15 +78,7 @@ function checkClass(
   const [optionsObject] = options;
   const { ignoreIdentifierPattern, ignoreCodePattern } = optionsObject;
 
-  if (
-    shouldIgnorePattern(
-      node,
-      context,
-      ignoreIdentifierPattern,
-      undefined,
-      ignoreCodePattern,
-    )
-  ) {
+  if (shouldIgnorePattern(node, context, ignoreIdentifierPattern, undefined, ignoreCodePattern)) {
     return {
       context,
       descriptors: [],
@@ -105,10 +89,12 @@ function checkClass(
 }
 
 // Create the rule.
-export const rule: Rule<keyof typeof errorMessages, Options> = createRule<
-  keyof typeof errorMessages,
-  Options
->(name, meta, defaultOptions, {
-  ClassDeclaration: checkClass,
-  ClassExpression: checkClass,
-});
+export const rule: Rule<keyof typeof errorMessages, Options> = createRule<keyof typeof errorMessages, Options>(
+  name,
+  meta,
+  defaultOptions,
+  {
+    ClassDeclaration: checkClass,
+    ClassExpression: checkClass,
+  },
+);

@@ -1,10 +1,8 @@
 import path from "node:path";
 
-// @ts-expect-error - Not typed.
-import babelParser from "@babel/eslint-parser";
-import typescriptParser, {
-  type ParserOptions,
-} from "@typescript-eslint/parser";
+import * as babelParser from "@babel/eslint-parser";
+import * as typescriptParser from "@typescript-eslint/parser";
+import type { ParserOptions } from "@typescript-eslint/parser";
 import type { Linter } from "eslint";
 
 export const typescriptConfig = {
@@ -24,7 +22,7 @@ export const typescriptConfig = {
 
 export const esLatestConfig = {
   languageOptions: {
-    parser: babelParser,
+    parser: babelParser as NonNullable<Linter.Config["languageOptions"]>["parser"],
     parserOptions: {
       ecmaVersion: "latest",
       requireConfigFile: false,

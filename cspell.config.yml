@@ -60,6 +60,7 @@ overrides:
   - filename: "**/*.yml"
     ignoreRegExpList:
       - /^\s*(?:[a-z0-9]|-|_|\"|')+:/ui # ignore keys
+      - /@[a-z0-9-]+\/[a-z0-9-]+/u # scoped packages
 
   - filename: ".github/(actions|workflows)/*.yml"
     ignoreRegExpList:

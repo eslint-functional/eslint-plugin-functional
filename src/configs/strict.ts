@@ -11,10 +11,5 @@ export default Object.fromEntries(
         rule.meta.docs.recommended !== false &&
         rule.meta.docs.category !== "Stylistic",
     )
-    .map(([name, rule]) => [
-      `${ruleNameScope}/${name}`,
-      rule.meta.docs.recommendedSeverity,
-    ]),
-) satisfies FlatConfig.Config["rules"] as NonNullable<
-  FlatConfig.Config["rules"]
->;
+    .map(([name, rule]) => [`${ruleNameScope}/${name}`, rule.meta.docs.recommendedSeverity]),
+) satisfies FlatConfig.Config["rules"] as NonNullable<FlatConfig.Config["rules"]>;

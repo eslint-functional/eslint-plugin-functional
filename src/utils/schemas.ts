@@ -1,24 +1,20 @@
-import type {
-  JSONSchema4,
-  JSONSchema4ObjectSchema,
-} from "@typescript-eslint/utils/json-schema";
+import type { JSONSchema4, JSONSchema4ObjectSchema } from "@typescript-eslint/utils/json-schema";
 import { deepmerge } from "deepmerge-ts";
 
-const typeSpecifierPatternSchemaProperties: JSONSchema4ObjectSchema["properties"] =
-  {
-    name: schemaInstanceOrInstanceArray({
-      type: "string",
-    }),
-    pattern: schemaInstanceOrInstanceArray({
-      type: "string",
-    }),
-    ignoreName: schemaInstanceOrInstanceArray({
-      type: "string",
-    }),
-    ignorePattern: schemaInstanceOrInstanceArray({
-      type: "string",
-    }),
-  };
+const typeSpecifierPatternSchemaProperties: JSONSchema4ObjectSchema["properties"] = {
+  name: schemaInstanceOrInstanceArray({
+    type: "string",
+  }),
+  pattern: schemaInstanceOrInstanceArray({
+    type: "string",
+  }),
+  ignoreName: schemaInstanceOrInstanceArray({
+    type: "string",
+  }),
+  ignorePattern: schemaInstanceOrInstanceArray({
+    type: "string",
+  }),
+};
 
 const typeSpecifierSchema: JSONSchema4 = {
   oneOf: [
@@ -79,9 +75,7 @@ export function schemaInstanceOrInstanceArray(
 }
 
 export function overridableOptionsSchema(
-  coreOptionsPropertiesSchema: NonNullable<
-    JSONSchema4ObjectSchema["properties"]
-  >,
+  coreOptionsPropertiesSchema: NonNullable<JSONSchema4ObjectSchema["properties"]>,
 ): JSONSchema4 {
   return {
     type: "object",

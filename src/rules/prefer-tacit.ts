@@ -106,8 +106,7 @@ function isCallerViolation(
   if ((calleeType.symbol as unknown) === undefined) {
     return false;
   }
-  const tsDeclaration =
-    calleeType.symbol.valueDeclaration ?? calleeType.symbol.declarations?.[0];
+  const tsDeclaration = calleeType.symbol.valueDeclaration ?? calleeType.symbol.declarations?.[0];
 
   if (tsDeclaration === undefined) {
     return false;
@@ -115,9 +114,7 @@ function isCallerViolation(
 
   return getTypeOfTSNode(tsDeclaration, context)
     .getCallSignatures()
-    .some(
-      (signature) => signature.parameters.length === caller.arguments.length,
-    );
+    .some((signature) => signature.parameters.length === caller.arguments.length);
 }
 
 /**
@@ -130,10 +127,7 @@ function fixFunctionCallToReference(
   caller: TSESTree.CallExpression,
 ): RuleFix[] | null {
   // Fix to Instantiation Expression.
-  if (
-    caller.typeArguments !== undefined &&
-    caller.typeArguments.params.length > 0
-  ) {
+  if (caller.typeArguments !== undefined && caller.typeArguments.params.length > 0) {
     return [
       fixer.removeRange([node.range[0], caller.callee.range[0]]),
       fixer.removeRange([caller.typeArguments.range[1], node.range[1]]),
@@ -144,9 +138,7 @@ function fixFunctionCallToReference(
     fixer.replaceText(
       node,
       isMemberExpression(caller.callee)
-        ? `${context.sourceCode.getText(
-            caller.callee,
-          )}.bind(${context.sourceCode.getText(caller.callee.object)})`
+        ? `${context.sourceCode.getText(caller.callee)}.bind(${context.sourceCode.getText(caller.callee.object)})`
         : context.sourceCode.getText(caller.callee),
     ),
   ];
@@ -164,29 +156,18 @@ function buildSuggestions(
     {
       messageId: "generic",
       fix: (fixer) => {
-        const functionCallToReference = fixFunctionCallToReference(
-          context,
-          fixer,
-          node,
-          caller,
-        );
+        const functionCallToReference = fixFunctionCallToReference(context, fixer, node, caller);
         if (functionCallToReference === null) {
           return null;
         }
 
-        if (
-          node.type === TSESTree.AST_NODE_TYPES.FunctionDeclaration &&
-          !isNested(node)
-        ) {
+        if (node.type === TSESTree.AST_NODE_TYPES.FunctionDeclaration && !isNested(node)) {
           if (node.id === null) {
             return null;
           }
 
           return [
-            fixer.insertTextBefore(
-              node as TSESTree.Node,
-              `const ${node.id.name} = `,
-            ),
+            fixer.insertTextBefore(node as TSESTree.Node, `const ${node.id.name} = `),
             fixer.insertTextAfter(node as TSESTree.Node, `;`),
             ...functionCallToReference,
           ];
@@ -209,10 +190,7 @@ function getCallDescriptors(
 ): Array<ReportDescriptor<keyof typeof errorMessages>> {
   const [{ checkMemberExpressions }] = options;
 
-  if (
-    !isIdentifier(caller.callee) &&
-    !(checkMemberExpressions && isMemberExpression(caller.callee))
-  ) {
+  if (!isIdentifier(caller.callee) && !(checkMemberExpressions && isMemberExpression(caller.callee))) {
     return [];
   }
 
@@ -220,11 +198,7 @@ function getCallDescriptors(
     node.params.length === caller.arguments.length &&
     node.params.every((param, index) => {
       const callArg = caller.arguments[index]!;
-      return (
-        isIdentifier(callArg) &&
-        isIdentifier(param) &&
-        callArg.name === param.name
-      );
+      return isIdentifier(callArg) && isIdentifier(param) && callArg.name === param.name;
     })
   ) {
     const calleeType = getTypeOfNode(caller.callee, context);
@@ -272,12 +246,7 @@ function getNestedCallDescriptors(
     node.body.body[0].argument !== null &&
     isCallExpression(node.body.body[0].argument)
   ) {
-    return getCallDescriptors(
-      node,
-      context,
-      options,
-      node.body.body[0].argument,
-    );
+    return getCallDescriptors(node, context, options, node.body.body[0].argument);
   }
   return [];
 }
@@ -300,11 +269,13 @@ function checkFunction(
 }
 
 // Create the rule.
-export const rule: Rule<keyof typeof errorMessages, Options> = createRule<
-  keyof typeof errorMessages,
-  Options
->(name, meta, defaultOptions, {
-  FunctionDeclaration: checkFunction,
-  FunctionExpression: checkFunction,
-  ArrowFunctionExpression: checkFunction,
-});
+export const rule: Rule<keyof typeof errorMessages, Options> = createRule<keyof typeof errorMessages, Options>(
+  name,
+  meta,
+  defaultOptions,
+  {
+    FunctionDeclaration: checkFunction,
+    FunctionExpression: checkFunction,
+    ArrowFunctionExpression: checkFunction,
+  },
+);

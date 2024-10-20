@@ -39,11 +39,7 @@ function getAncestorOfType<T extends TSESTree.Node>(
   node: TSESTree.Node,
   child: TSESTree.Node | null = null,
 ): T | null {
-  return checker(node, child)
-    ? node
-    : isDefined(node.parent)
-      ? getAncestorOfType(checker, node.parent, node)
-      : null;
+  return checker(node, child) ? node : isDefined(node.parent) ? getAncestorOfType(checker, node.parent, node) : null;
 }
 
 /**
@@ -52,16 +48,10 @@ function getAncestorOfType<T extends TSESTree.Node>(
  * @param node - The node to test.
  * @param async - Whether the function must be async or sync. Use `undefined` for either.
  */
-export function isInFunctionBody(
-  node: TSESTree.Node,
-  async?: boolean,
-): boolean {
+export function isInFunctionBody(node: TSESTree.Node, async?: boolean): boolean {
   const functionNode = getEnclosingFunction(node);
 
-  return (
-    functionNode !== null &&
-    (async === undefined || functionNode.async === async)
-  );
+  return functionNode !== null && (async === undefined || functionNode.async === async);
 }
 
 /**
@@ -71,19 +61,10 @@ export function isInFunctionBody(
  */
 export function getEnclosingFunction(
   node: TSESTree.Node,
-):
-  | TSESTree.ArrowFunctionExpression
-  | TSESTree.FunctionDeclaration
-  | TSESTree.FunctionExpression
-  | null {
+): TSESTree.ArrowFunctionExpression | TSESTree.FunctionDeclaration | TSESTree.FunctionExpression | null {
   return getAncestorOfType(
-    (
-      n,
-      c,
-    ): n is
-      | TSESTree.ArrowFunctionExpression
-      | TSESTree.FunctionDeclaration
-      | TSESTree.FunctionExpression => isFunctionLike(n) && n.body === c,
+    (n, c): n is TSESTree.ArrowFunctionExpression | TSESTree.FunctionDeclaration | TSESTree.FunctionExpression =>
+      isFunctionLike(n) && n.body === c,
     node,
   );
 }
@@ -93,13 +74,8 @@ export function getEnclosingFunction(
  *
  * Will return null if not in a function.
  */
-export function getEnclosingTryStatement(
-  node: TSESTree.Node,
-): TSESTree.TryStatement | null {
-  return getAncestorOfType(
-    (n, c): n is TSESTree.TryStatement => isTryStatement(n) && n.block === c,
-    node,
-  );
+export function getEnclosingTryStatement(node: TSESTree.Node): TSESTree.TryStatement | null {
+  return getAncestorOfType((n, c): n is TSESTree.TryStatement => isTryStatement(n) && n.block === c, node);
 }
 
 /**
@@ -113,12 +89,7 @@ export function isInClass(node: TSESTree.Node): boolean {
  * Test if the given node is in a for loop initializer.
  */
 export function isInForLoopInitializer(node: TSESTree.Node): boolean {
-  return (
-    getAncestorOfType(
-      (n, c): n is TSESTree.ForStatement => isForStatement(n) && n.init === c,
-      node,
-    ) !== null
-  );
+  return getAncestorOfType((n, c): n is TSESTree.ForStatement => isForStatement(n) && n.init === c, node) !== null;
 }
 
 /**
@@ -131,13 +102,11 @@ export function isInReadonly(node: TSESTree.Node): boolean {
 /**
  * Test if the given node is in a handler function callback of a promise.
  */
-export function isInPromiseHandlerFunction<
-  Context extends RuleContext<string, BaseOptions>,
->(node: TSESTree.Node, context: Context): boolean {
-  const functionNode = getAncestorOfType(
-    (n, c): n is TSESTree.FunctionLike => isFunctionLike(n) && n.body === c,
-    node,
-  );
+export function isInPromiseHandlerFunction<Context extends RuleContext<string, BaseOptions>>(
+  node: TSESTree.Node,
+  context: Context,
+): boolean {
+  const functionNode = getAncestorOfType((n, c): n is TSESTree.FunctionLike => isFunctionLike(n) && n.body === c, node);
 
   if (
     functionNode === null ||
@@ -155,9 +124,7 @@ export function isInPromiseHandlerFunction<
 /**
  * Test if the given node is shallowly inside a `Readonly<{...}>`.
  */
-export function getReadonly(
-  node: TSESTree.Node,
-): TSESTree.TSTypeReference | TSESTree.TSInterfaceHeritage | null {
+export function getReadonly(node: TSESTree.Node): TSESTree.TSTypeReference | TSESTree.TSInterfaceHeritage | null {
   // For nested cases, we shouldn't look for any parent, but the immediate parent.
   if (
     isDefined(node.parent) &&
@@ -192,11 +159,7 @@ export function isInInterface(node: TSESTree.Node): boolean {
  */
 export function isInConstructor(node: TSESTree.Node): boolean {
   const methodDefinition = getAncestorOfType(isMethodDefinition, node);
-  return (
-    methodDefinition !== null &&
-    isIdentifier(methodDefinition.key) &&
-    methodDefinition.key.name === "constructor"
-  );
+  return methodDefinition !== null && isIdentifier(methodDefinition.key) && methodDefinition.key.name === "constructor";
 }
 
 /**
@@ -205,10 +168,7 @@ export function isInConstructor(node: TSESTree.Node): boolean {
 export function isInReturnType(node: TSESTree.Node): boolean {
   return (
     getAncestorOfType(
-      (n): n is TSESTree.Node =>
-        isDefined(n.parent) &&
-        isFunctionLike(n.parent) &&
-        n.parent.returnType === n,
+      (n): n is TSESTree.Node => isDefined(n.parent) && isFunctionLike(n.parent) && n.parent.returnType === n,
       node,
     ) !== null
   );
@@ -218,32 +178,21 @@ export function isInReturnType(node: TSESTree.Node): boolean {
  * Test if the given node is nested inside another statement.
  */
 export function isNested(node: TSESTree.Node): boolean {
-  return (
-    node.parent !== undefined &&
-    !(isProgram(node.parent) || isBlockStatement(node.parent))
-  );
+  return node.parent !== undefined && !(isProgram(node.parent) || isBlockStatement(node.parent));
 }
 
 /**
  * Is the given identifier a property of an object?
  */
 export function isPropertyAccess(node: TSESTree.Identifier): boolean {
-  return (
-    node.parent !== undefined &&
-    isMemberExpression(node.parent) &&
-    node.parent.property === node
-  );
+  return node.parent !== undefined && isMemberExpression(node.parent) && node.parent.property === node;
 }
 
 /**
  * Is the given identifier a property name?
  */
 export function isPropertyName(node: TSESTree.Identifier): boolean {
-  return (
-    node.parent !== undefined &&
-    isProperty(node.parent) &&
-    node.parent.key === node
-  );
+  return node.parent !== undefined && isProperty(node.parent) && node.parent.key === node;
 }
 
 /**
@@ -262,52 +211,34 @@ export function isIIFE(node: TSESTree.Node): boolean {
  * Is the given node being passed as an argument?
  */
 export function isArgument(node: TSESTree.Node): boolean {
-  return (
-    node.parent !== undefined &&
-    isCallExpression(node.parent) &&
-    node.parent.arguments.includes(node as any)
-  );
+  return node.parent !== undefined && isCallExpression(node.parent) && node.parent.arguments.includes(node as any);
 }
 
 /**
  * Is the given node a parameter?
  */
 export function isParameter(node: TSESTree.Node): boolean {
-  return (
-    node.parent !== undefined &&
-    isFunctionLike(node.parent) &&
-    node.parent.params.includes(node as any)
-  );
+  return node.parent !== undefined && isFunctionLike(node.parent) && node.parent.params.includes(node as any);
 }
 
 /**
  * Is the given node a getter function?
  */
 export function isGetter(node: TSESTree.Node): boolean {
-  return (
-    node.parent !== undefined &&
-    isProperty(node.parent) &&
-    node.parent.kind === "get"
-  );
+  return node.parent !== undefined && isProperty(node.parent) && node.parent.kind === "get";
 }
 
 /**
  * Is the given node a setter function?
  */
 export function isSetter(node: TSESTree.Node): boolean {
-  return (
-    node.parent !== undefined &&
-    isProperty(node.parent) &&
-    node.parent.kind === "set"
-  );
+  return node.parent !== undefined && isProperty(node.parent) && node.parent.kind === "set";
 }
 
 /**
  * Get the key the given node is assigned to in its parent ObjectExpression.
  */
-export function getKeyOfValueInObjectExpression(
-  node: TSESTree.Node,
-): string | null {
+export function getKeyOfValueInObjectExpression(node: TSESTree.Node): string | null {
   if (!isDefined(node.parent)) {
     return null;
   }
@@ -317,18 +248,13 @@ export function getKeyOfValueInObjectExpression(
     return null;
   }
 
-  const objectExpressionProps = objectExpression.properties.filter(
-    (prop) => isProperty(prop) && prop.value === node,
-  );
+  const objectExpressionProps = objectExpression.properties.filter((prop) => isProperty(prop) && prop.value === node);
   if (objectExpressionProps.length !== 1) {
     return null;
   }
 
   const objectExpressionProp = objectExpressionProps[0]!;
-  if (
-    !isProperty(objectExpressionProp) ||
-    !isIdentifier(objectExpressionProp.key)
-  ) {
+  if (!isProperty(objectExpressionProp) || !isIdentifier(objectExpressionProp.key)) {
     return null;
   }
 
@@ -338,9 +264,7 @@ export function getKeyOfValueInObjectExpression(
 /**
  * Is the given identifier defined by a mutable variable (let or var)?
  */
-export function isDefinedByMutableVariable<
-  Context extends RuleContext<string, BaseOptions>,
->(
+export function isDefinedByMutableVariable<Context extends RuleContext<string, BaseOptions>>(
   node: TSESTree.Identifier,
   context: Context,
   treatParametersAsMutable: (node: TSESTree.Node) => boolean,
@@ -354,25 +278,17 @@ export function isDefinedByMutableVariable<
   if (variableDeclaration === undefined) {
     return true;
   }
-  const variableDeclarationNode =
-    services.tsNodeToESTreeNodeMap.get(variableDeclaration);
-  if (
-    variableDeclarationNode !== undefined &&
-    isParameter(variableDeclarationNode)
-  ) {
+  const variableDeclarationNode = services.tsNodeToESTreeNodeMap.get(variableDeclaration);
+  if (variableDeclarationNode !== undefined && isParameter(variableDeclarationNode)) {
     return treatParametersAsMutable(variableDeclarationNode);
   }
   if (!typescript.isVariableDeclaration(variableDeclaration)) {
     return true;
   }
 
-  const variableDeclarator =
-    services.tsNodeToESTreeNodeMap.get(variableDeclaration);
+  const variableDeclarator = services.tsNodeToESTreeNodeMap.get(variableDeclaration);
 
-  if (
-    variableDeclarator?.parent === undefined ||
-    !isVariableDeclaration(variableDeclarator.parent)
-  ) {
+  if (variableDeclarator?.parent === undefined || !isVariableDeclaration(variableDeclarator.parent)) {
     return true;
   }
 
@@ -382,9 +298,7 @@ export function isDefinedByMutableVariable<
 /**
  * Get the root identifier of an expression.
  */
-export function findRootIdentifier(
-  node: TSESTree.Expression,
-): TSESTree.Identifier | undefined {
+export function findRootIdentifier(node: TSESTree.Expression): TSESTree.Identifier | undefined {
   if (isIdentifier(node)) {
     return node;
   }

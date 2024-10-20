@@ -42,6 +42,4 @@ const overrides = {
 export default {
   ...recommended,
   ...overrides,
-} satisfies FlatConfig.Config["rules"] as NonNullable<
-  FlatConfig.Config["rules"]
->;
+} satisfies FlatConfig.Config["rules"] as NonNullable<FlatConfig.Config["rules"]>;

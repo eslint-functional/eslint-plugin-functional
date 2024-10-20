@@ -5,9 +5,7 @@ import pluginEslint from "eslint-plugin-eslint-plugin";
 import glob from "fast-glob";
 import { tsImport } from "tsx/esm/api";
 
-const local = await tsImport("./src/index.ts", import.meta.url).then(
-  (r) => r.default,
-);
+const local = await tsImport("./src/index.ts", import.meta.url).then((r) => r.default);
 
 const configs = await rsEslint(
   {
@@ -121,6 +119,17 @@ const configs = await rsEslint(
     rules: {
       "functional/no-return-void": "off",
       "jsdoc/require-jsdoc": "off",
+    },
+  },
+  {
+    files: ["**/*.md", "**/*.md/*"],
+    rules: {
+      "format/prettier": [
+        "error",
+        {
+          embeddedLanguageFormatting: "off",
+        },
+      ],
     },
   },
 );

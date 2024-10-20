@@ -3,17 +3,11 @@ import assert from "node:assert/strict";
 import type { TSESTree } from "@typescript-eslint/utils";
 import type { RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import { deepmerge } from "deepmerge-ts";
-import typeMatchesSpecifier, {
-  type TypeDeclarationSpecifier,
-} from "ts-declaration-location";
+import typeMatchesSpecifier, { type TypeDeclarationSpecifier } from "ts-declaration-location";
 import type { Program, Type, TypeNode } from "typescript";
 
 import { getTypeDataOfNode } from "#/utils/rule";
-import {
-  type RawTypeSpecifier,
-  type TypeSpecifier,
-  typeMatchesPattern,
-} from "#/utils/type-specifier";
+import { type RawTypeSpecifier, type TypeSpecifier, typeMatchesPattern } from "#/utils/type-specifier";
 
 /**
  * Options that can be overridden.
@@ -67,23 +61,14 @@ function upgradeRawTypeSpecifier(raw: RawTypeSpecifier): TypeSpecifier {
 
   const names = name === undefined ? [] : Array.isArray(name) ? name : [name];
 
-  const patterns = (
-    pattern === undefined ? [] : Array.isArray(pattern) ? pattern : [pattern]
-  ).map((p) => new RegExp(p, "u"));
+  const patterns = (pattern === undefined ? [] : Array.isArray(pattern) ? pattern : [pattern]).map(
+    (p) => new RegExp(p, "u"),
+  );
 
-  const ignoreNames =
-    ignoreName === undefined
-      ? []
-      : Array.isArray(ignoreName)
-        ? ignoreName
-        : [ignoreName];
+  const ignoreNames = ignoreName === undefined ? [] : Array.isArray(ignoreName) ? ignoreName : [ignoreName];
 
   const ignorePatterns = (
-    ignorePattern === undefined
-      ? []
-      : Array.isArray(ignorePattern)
-        ? ignorePattern
-        : [ignorePattern]
+    ignorePattern === undefined ? [] : Array.isArray(ignorePattern) ? ignorePattern : [ignorePattern]
   ).map((p) => new RegExp(p, "u"));
 
   const include = [...names, ...patterns];
@@ -99,10 +84,7 @@ function upgradeRawTypeSpecifier(raw: RawTypeSpecifier): TypeSpecifier {
 /**
  * Get the core options to use, taking into account overrides.
  */
-export function getCoreOptions<
-  CoreOptions extends object,
-  Options extends Readonly<OverridableOptions<CoreOptions>>,
->(
+export function getCoreOptions<CoreOptions extends object, Options extends Readonly<OverridableOptions<CoreOptions>>>(
   node: TSESTree.Node,
   context: Readonly<RuleContext<string, unknown[]>>,
   options: Readonly<Options>,
@@ -131,21 +113,12 @@ export function getCoreOptionsForType<
   }
 
   const found = options.overrides?.find((override) =>
-    (Array.isArray(override.specifiers)
-      ? override.specifiers
-      : [override.specifiers]
-    ).some(
+    (Array.isArray(override.specifiers) ? override.specifiers : [override.specifiers]).some(
       (specifier) =>
         typeMatchesSpecifierDeep(program, specifier, type) &&
         (specifier.include === undefined ||
           specifier.include.length === 0 ||
-          typeMatchesPattern(
-            program,
-            type,
-            typeNode,
-            specifier.include,
-            specifier.exclude,
-          )),
+          typeMatchesPattern(program, type, typeNode, specifier.include, specifier.exclude)),
     ),
   );
 
@@ -162,22 +135,18 @@ export function getCoreOptionsForType<
   return options;
 }
 
-function typeMatchesSpecifierDeep(
-  program: Program,
-  specifier: TypeDeclarationSpecifier,
-  type: Type,
-) {
-  const m_stack = [type];
+function typeMatchesSpecifierDeep(program: Program, specifier: TypeDeclarationSpecifier, type: Type) {
+  const mut_stack = [type];
   // eslint-disable-next-line functional/no-loop-statements -- best to do this iteratively.
-  while (m_stack.length > 0) {
-    const t = m_stack.pop() ?? assert.fail();
+  while (mut_stack.length > 0) {
+    const t = mut_stack.pop() ?? assert.fail();
 
     if (typeMatchesSpecifier(program, specifier, t)) {
       return true;
     }
 
     if (t.aliasTypeArguments !== undefined) {
-      m_stack.push(...t.aliasTypeArguments);
+      mut_stack.push(...t.aliasTypeArguments);
     }
   }
 

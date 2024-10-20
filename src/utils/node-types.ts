@@ -1,9 +1,6 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
-export type ESFunction =
-  | TSESTree.ArrowFunctionExpression
-  | TSESTree.FunctionDeclaration
-  | TSESTree.FunctionExpression;
+export type ESFunction = TSESTree.ArrowFunctionExpression | TSESTree.FunctionDeclaration | TSESTree.FunctionExpression;
 
 export type ESFunctionType =
   | ESFunction
@@ -31,6 +28,4 @@ export type ESProperty =
   | TSESTree.TSParameterProperty
   | TSESTree.TSPropertySignature;
 
-export type ESTypeDeclaration =
-  | TSESTree.TSInterfaceDeclaration
-  | TSESTree.TSTypeAliasDeclaration;
+export type ESTypeDeclaration = TSESTree.TSInterfaceDeclaration | TSESTree.TSTypeAliasDeclaration;

@@ -1,8 +1,5 @@
 import type { TSESTree } from "@typescript-eslint/utils";
-import type {
-  JSONSchema4,
-  JSONSchema4ObjectSchema,
-} from "@typescript-eslint/utils/json-schema";
+import type { JSONSchema4, JSONSchema4ObjectSchema } from "@typescript-eslint/utils/json-schema";
 import type { RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import { deepmerge } from "deepmerge-ts";
 
@@ -19,12 +16,7 @@ import {
 } from "#/options";
 import { ruleNameScope } from "#/utils/misc";
 import type { ESFunction } from "#/utils/node-types";
-import {
-  type NamedCreateRuleCustomMeta,
-  type Rule,
-  type RuleResult,
-  createRuleUsingFunction,
-} from "#/utils/rule";
+import { type NamedCreateRuleCustomMeta, type Rule, type RuleResult, createRuleUsingFunction } from "#/utils/rule";
 import { overridableOptionsSchema } from "#/utils/schemas";
 import {
   getEnclosingFunction,
@@ -73,56 +65,50 @@ type CoreOptions = IgnoreIdentifierPatternOption &
 type RawOptions = [RawOverridableOptions<CoreOptions>];
 type Options = OverridableOptions<CoreOptions>;
 
-const coreOptionsPropertiesSchema = deepmerge(
-  ignoreIdentifierPatternOptionSchema,
-  ignorePrefixSelectorOptionSchema,
-  {
-    allowRestParameter: {
-      type: "boolean",
-    },
-    allowArgumentsKeyword: {
-      type: "boolean",
-    },
-    enforceParameterCount: {
-      oneOf: [
-        {
-          type: "boolean",
-          enum: [false],
-        },
-        {
-          type: "string",
-          enum: ["atLeastOne", "exactlyOne"],
-        },
-        {
-          type: "object",
-          properties: {
-            count: {
-              type: "string",
-              enum: ["atLeastOne", "exactlyOne"],
-            },
-            ignoreGettersAndSetters: {
-              type: "boolean",
-            },
-            ignoreLambdaExpression: {
-              type: "boolean",
-            },
-            ignoreIIFE: {
-              type: "boolean",
-            },
-          },
-          additionalProperties: false,
-        },
-      ],
-    },
+const coreOptionsPropertiesSchema = deepmerge(ignoreIdentifierPatternOptionSchema, ignorePrefixSelectorOptionSchema, {
+  allowRestParameter: {
+    type: "boolean",
   },
-) as NonNullable<JSONSchema4ObjectSchema["properties"]>;
+  allowArgumentsKeyword: {
+    type: "boolean",
+  },
+  enforceParameterCount: {
+    oneOf: [
+      {
+        type: "boolean",
+        enum: [false],
+      },
+      {
+        type: "string",
+        enum: ["atLeastOne", "exactlyOne"],
+      },
+      {
+        type: "object",
+        properties: {
+          count: {
+            type: "string",
+            enum: ["atLeastOne", "exactlyOne"],
+          },
+          ignoreGettersAndSetters: {
+            type: "boolean",
+          },
+          ignoreLambdaExpression: {
+            type: "boolean",
+          },
+          ignoreIIFE: {
+            type: "boolean",
+          },
+        },
+        additionalProperties: false,
+      },
+    ],
+  },
+}) as NonNullable<JSONSchema4ObjectSchema["properties"]>;
 
 /**
  * The schema for the rule options.
  */
-const schema: JSONSchema4[] = [
-  overridableOptionsSchema(coreOptionsPropertiesSchema),
-];
+const schema: JSONSchema4[] = [overridableOptionsSchema(coreOptionsPropertiesSchema)];
 
 /**
  * The default options for the rule.
@@ -144,10 +130,8 @@ const defaultOptions = [
  * The possible error messages.
  */
 const errorMessages = {
-  restParam:
-    "Unexpected rest parameter. Use a regular parameter of type array instead.",
-  arguments:
-    "Unexpected use of `arguments`. Use regular function arguments instead.",
+  restParam: "Unexpected rest parameter. Use a regular parameter of type array instead.",
+  arguments: "Unexpected use of `arguments`. Use regular function arguments instead.",
   paramCountAtLeastOne: "Functions must have at least one parameter.",
   paramCountExactlyOne: "Functions must have exactly one parameter.",
 } as const;
@@ -175,9 +159,7 @@ function getRestParamViolations(
   { allowRestParameter }: Readonly<CoreOptions>,
   node: ESFunction,
 ): RuleResult<keyof typeof errorMessages, RawOptions>["descriptors"] {
-  return !allowRestParameter &&
-    node.params.length > 0 &&
-    isRestElement(node.params.at(-1))
+  return !allowRestParameter && node.params.length > 0 && isRestElement(node.params.at(-1))
     ? [
         {
           node: node.params.at(-1),
@@ -200,16 +182,14 @@ function getParamCountViolations(
       typeof enforceParameterCount === "object" &&
       ((enforceParameterCount.ignoreIIFE && isIIFE(node)) ||
         (enforceParameterCount.ignoreLambdaExpression && isArgument(node)) ||
-        (enforceParameterCount.ignoreGettersAndSetters &&
-          (isGetter(node) || isSetter(node)))))
+        (enforceParameterCount.ignoreGettersAndSetters && (isGetter(node) || isSetter(node)))))
   ) {
     return [];
   }
   if (
     node.params.length === 0 &&
     (enforceParameterCount === "atLeastOne" ||
-      (typeof enforceParameterCount === "object" &&
-        enforceParameterCount.count === "atLeastOne"))
+      (typeof enforceParameterCount === "object" && enforceParameterCount.count === "atLeastOne"))
   ) {
     return [
       {
@@ -221,8 +201,7 @@ function getParamCountViolations(
   if (
     node.params.length !== 1 &&
     (enforceParameterCount === "exactlyOne" ||
-      (typeof enforceParameterCount === "object" &&
-        enforceParameterCount.count === "exactlyOne"))
+      (typeof enforceParameterCount === "object" && enforceParameterCount.count === "exactlyOne"))
   ) {
     return [
       {
@@ -237,9 +216,7 @@ function getParamCountViolations(
 /**
  * Add the default options to the given options.
  */
-function getOptionsWithDefaults(
-  options: Readonly<Options> | null,
-): Options | null {
+function getOptionsWithDefaults(options: Readonly<Options> | null): Options | null {
   if (options === null) {
     return null;
   }
@@ -268,9 +245,7 @@ function checkFunction(
   rawOptions: Readonly<RawOptions>,
 ): RuleResult<keyof typeof errorMessages, RawOptions> {
   const options = upgradeRawOverridableOptions(rawOptions[0]);
-  const optionsToUse = getOptionsWithDefaults(
-    getCoreOptions<CoreOptions, Options>(node, context, options),
-  );
+  const optionsToUse = getOptionsWithDefaults(getCoreOptions<CoreOptions, Options>(node, context, options));
 
   if (optionsToUse === null) {
     return {
@@ -290,10 +265,7 @@ function checkFunction(
 
   return {
     context,
-    descriptors: [
-      ...getRestParamViolations(optionsToUse, node),
-      ...getParamCountViolations(optionsToUse, node),
-    ],
+    descriptors: [...getRestParamViolations(optionsToUse, node), ...getParamCountViolations(optionsToUse, node)],
   };
 }
 
@@ -315,9 +287,7 @@ function checkIdentifier(
   const functionNode = getEnclosingFunction(node);
   const options = upgradeRawOverridableOptions(rawOptions[0]);
   const optionsToUse = getOptionsWithDefaults(
-    functionNode === null
-      ? options
-      : getCoreOptions<CoreOptions, Options>(functionNode, context, options),
+    functionNode === null ? options : getCoreOptions<CoreOptions, Options>(functionNode, context, options),
   );
 
   if (optionsToUse === null) {
@@ -353,40 +323,28 @@ function checkIdentifier(
 }
 
 // Create the rule.
-export const rule: Rule<keyof typeof errorMessages, RawOptions> =
-  createRuleUsingFunction<keyof typeof errorMessages, RawOptions>(
-    name,
-    meta,
-    defaultOptions,
-    (context, options) => {
-      const [optionsObject] = options;
-      const { ignorePrefixSelector } = optionsObject;
+export const rule: Rule<keyof typeof errorMessages, RawOptions> = createRuleUsingFunction<
+  keyof typeof errorMessages,
+  RawOptions
+>(name, meta, defaultOptions, (context, options) => {
+  const [optionsObject] = options;
+  const { ignorePrefixSelector } = optionsObject;
 
-      const baseFunctionSelectors = [
-        "ArrowFunctionExpression",
-        "FunctionDeclaration",
-        "FunctionExpression",
-      ];
+  const baseFunctionSelectors = ["ArrowFunctionExpression", "FunctionDeclaration", "FunctionExpression"];
 
-      const ignoreSelectors =
-        ignorePrefixSelector === undefined
-          ? undefined
-          : Array.isArray(ignorePrefixSelector)
-            ? ignorePrefixSelector
-            : [ignorePrefixSelector];
+  const ignoreSelectors =
+    ignorePrefixSelector === undefined
+      ? undefined
+      : Array.isArray(ignorePrefixSelector)
+        ? ignorePrefixSelector
+        : [ignorePrefixSelector];
 
-      const fullFunctionSelectors = baseFunctionSelectors.flatMap(
-        (baseSelector) =>
-          ignoreSelectors === undefined
-            ? [baseSelector]
-            : `:not(:matches(${ignoreSelectors.join(",")})) > ${baseSelector}`,
-      );
-
-      return {
-        ...Object.fromEntries(
-          fullFunctionSelectors.map((selector) => [selector, checkFunction]),
-        ),
-        Identifier: checkIdentifier,
-      };
-    },
+  const fullFunctionSelectors = baseFunctionSelectors.flatMap((baseSelector) =>
+    ignoreSelectors === undefined ? [baseSelector] : `:not(:matches(${ignoreSelectors.join(",")})) > ${baseSelector}`,
   );
+
+  return {
+    ...Object.fromEntries(fullFunctionSelectors.map((selector) => [selector, checkFunction])),
+    Identifier: checkIdentifier,
+  };
+});

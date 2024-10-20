@@ -1,6 +1,6 @@
 import { createRequire } from "node:module";
 
-import type tsApiUtils from "ts-api-utils";
+import type * as tsApiUtils from "ts-api-utils";
 
 import typescript from "#/conditional-imports/typescript";
 

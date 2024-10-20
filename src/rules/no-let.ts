@@ -1,8 +1,5 @@
 import type { TSESTree } from "@typescript-eslint/utils";
-import type {
-  JSONSchema4,
-  JSONSchema4ObjectSchema,
-} from "@typescript-eslint/utils/json-schema";
+import type { JSONSchema4, JSONSchema4ObjectSchema } from "@typescript-eslint/utils/json-schema";
 import type { RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import { deepmerge } from "deepmerge-ts";
 
@@ -13,12 +10,7 @@ import {
   shouldIgnorePattern,
 } from "#/options";
 import { ruleNameScope } from "#/utils/misc";
-import {
-  type NamedCreateRuleCustomMeta,
-  type Rule,
-  type RuleResult,
-  createRule,
-} from "#/utils/rule";
+import { type NamedCreateRuleCustomMeta, type Rule, type RuleResult, createRule } from "#/utils/rule";
 import { isInForLoopInitializer } from "#/utils/tree";
 
 /**
@@ -101,8 +93,7 @@ function checkVariableDeclaration(
   options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
   const [optionsObject] = options;
-  const { allowInForLoopInit, ignoreIdentifierPattern, allowInFunctions } =
-    optionsObject;
+  const { allowInForLoopInit, ignoreIdentifierPattern, allowInFunctions } = optionsObject;
 
   if (
     node.kind !== "let" ||
@@ -123,9 +114,11 @@ function checkVariableDeclaration(
 }
 
 // Create the rule.
-export const rule: Rule<keyof typeof errorMessages, Options> = createRule<
-  keyof typeof errorMessages,
-  Options
->(name, meta, defaultOptions, {
-  VariableDeclaration: checkVariableDeclaration,
-});
+export const rule: Rule<keyof typeof errorMessages, Options> = createRule<keyof typeof errorMessages, Options>(
+  name,
+  meta,
+  defaultOptions,
+  {
+    VariableDeclaration: checkVariableDeclaration,
+  },
+);

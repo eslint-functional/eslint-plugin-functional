@@ -1,8 +1,5 @@
 import type { TSESTree } from "@typescript-eslint/utils";
-import type {
-  JSONSchema4,
-  JSONSchema4ObjectSchema,
-} from "@typescript-eslint/utils/json-schema";
+import type { JSONSchema4, JSONSchema4ObjectSchema } from "@typescript-eslint/utils/json-schema";
 import type { RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import { deepmerge } from "deepmerge-ts";
 
@@ -21,19 +18,9 @@ import {
   upgradeRawOverridableOptions,
 } from "#/options";
 import { isExpected, ruleNameScope } from "#/utils/misc";
-import {
-  type NamedCreateRuleCustomMeta,
-  type Rule,
-  type RuleResult,
-  createRule,
-  getTypeOfNode,
-} from "#/utils/rule";
+import { type NamedCreateRuleCustomMeta, type Rule, type RuleResult, createRule, getTypeOfNode } from "#/utils/rule";
 import { overridableOptionsSchema } from "#/utils/schemas";
-import {
-  findRootIdentifier,
-  isDefinedByMutableVariable,
-  isInConstructor,
-} from "#/utils/tree";
+import { findRootIdentifier, isDefinedByMutableVariable, isInConstructor } from "#/utils/tree";
 import {
   isArrayConstructorType,
   isArrayExpression,
@@ -103,9 +90,7 @@ const coreOptionsPropertiesSchema = deepmerge(
 /**
  * The schema for the rule options.
  */
-const schema: JSONSchema4[] = [
-  overridableOptionsSchema(coreOptionsPropertiesSchema),
-];
+const schema: JSONSchema4[] = [overridableOptionsSchema(coreOptionsPropertiesSchema)];
 
 /**
  * The default options for the rule.
@@ -166,14 +151,7 @@ const arrayMutatorMethods = new Set([
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/prototype#Methods#Accessor_methods
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/prototype#Iteration_methods
  */
-const arrayNewObjectReturningMethods = [
-  "concat",
-  "slice",
-  "filter",
-  "map",
-  "reduce",
-  "reduceRight",
-];
+const arrayNewObjectReturningMethods = ["concat", "slice", "filter", "map", "reduce", "reduceRight"];
 
 /**
  * Array constructor functions that create a new array.
@@ -187,12 +165,7 @@ const arrayConstructorFunctions = ["from", "of"];
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object#Methods_of_the_Object_constructor
  */
-const objectConstructorMutatorFunctions = new Set([
-  "assign",
-  "defineProperties",
-  "defineProperty",
-  "setPrototypeOf",
-]);
+const objectConstructorMutatorFunctions = new Set(["assign", "defineProperties", "defineProperty", "setPrototypeOf"]);
 
 /**
  * Object constructor functions that return new objects.
@@ -227,9 +200,7 @@ function checkAssignmentExpression(
 ): RuleResult<keyof typeof errorMessages, RawOptions> {
   const options = upgradeRawOverridableOptions(rawOptions[0]);
   const rootNode = findRootIdentifier(node.left) ?? node.left;
-  const optionsToUse = getOptionsWithDefaults(
-    getCoreOptions<CoreOptions, Options>(rootNode, context, options),
-  );
+  const optionsToUse = getOptionsWithDefaults(getCoreOptions<CoreOptions, Options>(rootNode, context, options));
 
   if (optionsToUse === null) {
     return {
@@ -238,22 +209,12 @@ function checkAssignmentExpression(
     };
   }
 
-  const {
-    ignoreIdentifierPattern,
-    ignoreAccessorPattern,
-    ignoreNonConstDeclarations,
-    ignoreClasses,
-  } = optionsToUse;
+  const { ignoreIdentifierPattern, ignoreAccessorPattern, ignoreNonConstDeclarations, ignoreClasses } = optionsToUse;
 
   if (
     !isMemberExpression(node.left) ||
     shouldIgnoreClasses(node, context, ignoreClasses) ||
-    shouldIgnorePattern(
-      node,
-      context,
-      ignoreIdentifierPattern,
-      ignoreAccessorPattern,
-    )
+    shouldIgnorePattern(node, context, ignoreIdentifierPattern, ignoreAccessorPattern)
   ) {
     return {
       context,
@@ -271,12 +232,7 @@ function checkAssignmentExpression(
         (variableNode) =>
           ignoreNonConstDeclarations === true ||
           !ignoreNonConstDeclarations.treatParametersAsConst ||
-          shouldIgnorePattern(
-            variableNode,
-            context,
-            ignoreIdentifierPattern,
-            ignoreAccessorPattern,
-          ),
+          shouldIgnorePattern(variableNode, context, ignoreIdentifierPattern, ignoreAccessorPattern),
       )
     ) {
       return {
@@ -304,9 +260,7 @@ function checkUnaryExpression(
 ): RuleResult<keyof typeof errorMessages, RawOptions> {
   const options = upgradeRawOverridableOptions(rawOptions[0]);
   const rootNode = findRootIdentifier(node.argument) ?? node.argument;
-  const optionsToUse = getOptionsWithDefaults(
-    getCoreOptions<CoreOptions, Options>(rootNode, context, options),
-  );
+  const optionsToUse = getOptionsWithDefaults(getCoreOptions<CoreOptions, Options>(rootNode, context, options));
 
   if (optionsToUse === null) {
     return {
@@ -315,22 +269,12 @@ function checkUnaryExpression(
     };
   }
 
-  const {
-    ignoreIdentifierPattern,
-    ignoreAccessorPattern,
-    ignoreNonConstDeclarations,
-    ignoreClasses,
-  } = optionsToUse;
+  const { ignoreIdentifierPattern, ignoreAccessorPattern, ignoreNonConstDeclarations, ignoreClasses } = optionsToUse;
 
   if (
     !isMemberExpression(node.argument) ||
     shouldIgnoreClasses(node, context, ignoreClasses) ||
-    shouldIgnorePattern(
-      node,
-      context,
-      ignoreIdentifierPattern,
-      ignoreAccessorPattern,
-    )
+    shouldIgnorePattern(node, context, ignoreIdentifierPattern, ignoreAccessorPattern)
   ) {
     return {
       context,
@@ -348,12 +292,7 @@ function checkUnaryExpression(
         (variableNode) =>
           ignoreNonConstDeclarations === true ||
           !ignoreNonConstDeclarations.treatParametersAsConst ||
-          shouldIgnorePattern(
-            variableNode,
-            context,
-            ignoreIdentifierPattern,
-            ignoreAccessorPattern,
-          ),
+          shouldIgnorePattern(variableNode, context, ignoreIdentifierPattern, ignoreAccessorPattern),
       )
     ) {
       return {
@@ -365,8 +304,7 @@ function checkUnaryExpression(
 
   return {
     context,
-    descriptors:
-      node.operator === "delete" ? [{ node, messageId: "generic" }] : [],
+    descriptors: node.operator === "delete" ? [{ node, messageId: "generic" }] : [],
   };
 }
 
@@ -380,9 +318,7 @@ function checkUpdateExpression(
 ): RuleResult<keyof typeof errorMessages, RawOptions> {
   const options = upgradeRawOverridableOptions(rawOptions[0]);
   const rootNode = findRootIdentifier(node.argument) ?? node.argument;
-  const optionsToUse = getOptionsWithDefaults(
-    getCoreOptions<CoreOptions, Options>(rootNode, context, options),
-  );
+  const optionsToUse = getOptionsWithDefaults(getCoreOptions<CoreOptions, Options>(rootNode, context, options));
 
   if (optionsToUse === null) {
     return {
@@ -391,22 +327,12 @@ function checkUpdateExpression(
     };
   }
 
-  const {
-    ignoreIdentifierPattern,
-    ignoreAccessorPattern,
-    ignoreNonConstDeclarations,
-    ignoreClasses,
-  } = optionsToUse;
+  const { ignoreIdentifierPattern, ignoreAccessorPattern, ignoreNonConstDeclarations, ignoreClasses } = optionsToUse;
 
   if (
     !isMemberExpression(node.argument) ||
     shouldIgnoreClasses(node.argument, context, ignoreClasses) ||
-    shouldIgnorePattern(
-      node.argument,
-      context,
-      ignoreIdentifierPattern,
-      ignoreAccessorPattern,
-    )
+    shouldIgnorePattern(node.argument, context, ignoreIdentifierPattern, ignoreAccessorPattern)
   ) {
     return {
       context,
@@ -424,12 +350,7 @@ function checkUpdateExpression(
         (variableNode) =>
           ignoreNonConstDeclarations === true ||
           !ignoreNonConstDeclarations.treatParametersAsConst ||
-          shouldIgnorePattern(
-            variableNode,
-            context,
-            ignoreIdentifierPattern,
-            ignoreAccessorPattern,
-          ),
+          shouldIgnorePattern(variableNode, context, ignoreIdentifierPattern, ignoreAccessorPattern),
       )
     ) {
       return {
@@ -470,54 +391,35 @@ function isInChainCallAndFollowsNew(
   }
 
   // Check for: new Array()
-  if (
-    isNewExpression(node) &&
-    isArrayConstructorType(context, getTypeOfNode(node.callee, context))
-  ) {
+  if (isNewExpression(node) && isArrayConstructorType(context, getTypeOfNode(node.callee, context))) {
     return true;
   }
 
-  if (
-    isCallExpression(node) &&
-    isMemberExpression(node.callee) &&
-    isIdentifier(node.callee.property)
-  ) {
+  if (isCallExpression(node) && isMemberExpression(node.callee) && isIdentifier(node.callee.property)) {
     // Check for: Array.from(iterable)
     if (
       arrayConstructorFunctions.some(isExpected(node.callee.property.name)) &&
-      isArrayConstructorType(
-        context,
-        getTypeOfNode(node.callee.object, context),
-      )
+      isArrayConstructorType(context, getTypeOfNode(node.callee.object, context))
     ) {
       return true;
     }
 
     // Check for: array.slice(0)
-    if (
-      arrayNewObjectReturningMethods.some(isExpected(node.callee.property.name))
-    ) {
+    if (arrayNewObjectReturningMethods.some(isExpected(node.callee.property.name))) {
       return true;
     }
 
     // Check for: Object.entries(object)
     if (
-      objectConstructorNewObjectReturningMethods.some(
-        isExpected(node.callee.property.name),
-      ) &&
-      isObjectConstructorType(
-        context,
-        getTypeOfNode(node.callee.object, context),
-      )
+      objectConstructorNewObjectReturningMethods.some(isExpected(node.callee.property.name)) &&
+      isObjectConstructorType(context, getTypeOfNode(node.callee.object, context))
     ) {
       return true;
     }
 
     // Check for: "".split("")
     if (
-      stringConstructorNewObjectReturningMethods.some(
-        isExpected(node.callee.property.name),
-      ) &&
+      stringConstructorNewObjectReturningMethods.some(isExpected(node.callee.property.name)) &&
       getTypeOfNode(node.callee.object, context).isStringLiteral()
     ) {
       return true;
@@ -530,9 +432,7 @@ function isInChainCallAndFollowsNew(
 /**
  * Add the default options to the given options.
  */
-function getOptionsWithDefaults(
-  options: Readonly<Options> | null,
-): Options | null {
+function getOptionsWithDefaults(options: Readonly<Options> | null): Options | null {
   if (options === null) {
     return null;
   }
@@ -553,9 +453,7 @@ function checkCallExpression(
 ): RuleResult<keyof typeof errorMessages, RawOptions> {
   const options = upgradeRawOverridableOptions(rawOptions[0]);
   const rootNode = findRootIdentifier(node.callee) ?? node.callee;
-  const optionsToUse = getOptionsWithDefaults(
-    getCoreOptions<CoreOptions, Options>(rootNode, context, options),
-  );
+  const optionsToUse = getOptionsWithDefaults(getCoreOptions<CoreOptions, Options>(rootNode, context, options));
 
   if (optionsToUse === null) {
     return {
@@ -564,24 +462,14 @@ function checkCallExpression(
     };
   }
 
-  const {
-    ignoreIdentifierPattern,
-    ignoreAccessorPattern,
-    ignoreNonConstDeclarations,
-    ignoreClasses,
-  } = optionsToUse;
+  const { ignoreIdentifierPattern, ignoreAccessorPattern, ignoreNonConstDeclarations, ignoreClasses } = optionsToUse;
 
   // Not potential object mutation?
   if (
     !isMemberExpression(node.callee) ||
     !isIdentifier(node.callee.property) ||
     shouldIgnoreClasses(node.callee.object, context, ignoreClasses) ||
-    shouldIgnorePattern(
-      node.callee.object,
-      context,
-      ignoreIdentifierPattern,
-      ignoreAccessorPattern,
-    )
+    shouldIgnorePattern(node.callee.object, context, ignoreIdentifierPattern, ignoreAccessorPattern)
   ) {
     return {
       context,
@@ -594,8 +482,7 @@ function checkCallExpression(
   // Array mutation?
   if (
     arrayMutatorMethods.has(node.callee.property.name) &&
-    (!ignoreImmediateMutation ||
-      !isInChainCallAndFollowsNew(node.callee, context)) &&
+    (!ignoreImmediateMutation || !isInChainCallAndFollowsNew(node.callee, context)) &&
     isArrayType(context, getTypeOfNode(node.callee.object, context))
   ) {
     if (ignoreNonConstDeclarations === false) {
@@ -613,12 +500,7 @@ function checkCallExpression(
         (variableNode) =>
           ignoreNonConstDeclarations === true ||
           !ignoreNonConstDeclarations.treatParametersAsConst ||
-          shouldIgnorePattern(
-            variableNode,
-            context,
-            ignoreIdentifierPattern,
-            ignoreAccessorPattern,
-          ),
+          shouldIgnorePattern(variableNode, context, ignoreIdentifierPattern, ignoreAccessorPattern),
       )
     ) {
       return {
@@ -632,15 +514,9 @@ function checkCallExpression(
   if (
     objectConstructorMutatorFunctions.has(node.callee.property.name) &&
     node.arguments.length >= 2 &&
-    (isIdentifier(node.arguments[0]!) ||
-      isMemberExpression(node.arguments[0]!)) &&
+    (isIdentifier(node.arguments[0]!) || isMemberExpression(node.arguments[0]!)) &&
     !shouldIgnoreClasses(node.arguments[0], context, ignoreClasses) &&
-    !shouldIgnorePattern(
-      node.arguments[0],
-      context,
-      ignoreIdentifierPattern,
-      ignoreAccessorPattern,
-    ) &&
+    !shouldIgnorePattern(node.arguments[0], context, ignoreIdentifierPattern, ignoreAccessorPattern) &&
     isObjectConstructorType(context, getTypeOfNode(node.callee.object, context))
   ) {
     if (ignoreNonConstDeclarations === false) {
@@ -658,12 +534,7 @@ function checkCallExpression(
         (variableNode) =>
           ignoreNonConstDeclarations === true ||
           !ignoreNonConstDeclarations.treatParametersAsConst ||
-          shouldIgnorePattern(
-            variableNode,
-            context,
-            ignoreIdentifierPattern,
-            ignoreAccessorPattern,
-          ),
+          shouldIgnorePattern(variableNode, context, ignoreIdentifierPattern, ignoreAccessorPattern),
       )
     ) {
       return {
@@ -680,12 +551,14 @@ function checkCallExpression(
 }
 
 // Create the rule.
-export const rule: Rule<keyof typeof errorMessages, RawOptions> = createRule<
-  keyof typeof errorMessages,
-  RawOptions
->(name, meta, defaultOptions, {
-  AssignmentExpression: checkAssignmentExpression,
-  UnaryExpression: checkUnaryExpression,
-  UpdateExpression: checkUpdateExpression,
-  CallExpression: checkCallExpression,
-});
+export const rule: Rule<keyof typeof errorMessages, RawOptions> = createRule<keyof typeof errorMessages, RawOptions>(
+  name,
+  meta,
+  defaultOptions,
+  {
+    AssignmentExpression: checkAssignmentExpression,
+    UnaryExpression: checkUnaryExpression,
+    UpdateExpression: checkUpdateExpression,
+    CallExpression: checkCallExpression,
+  },
+);

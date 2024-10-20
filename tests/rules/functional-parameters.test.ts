@@ -215,9 +215,7 @@ describe(name, () => {
               function foo(param) {}
               foo(function () {});
             `,
-            options: [
-              { enforceParameterCount: { ignoreLambdaExpression: true } },
-            ],
+            options: [{ enforceParameterCount: { ignoreLambdaExpression: true } }],
           });
 
           valid({
@@ -225,9 +223,7 @@ describe(name, () => {
               function foo(param) {}
               foo(() => 1);
             `,
-            options: [
-              { enforceParameterCount: { ignoreLambdaExpression: true } },
-            ],
+            options: [{ enforceParameterCount: { ignoreLambdaExpression: true } }],
           });
 
           const invalidResult = invalid({
@@ -329,8 +325,7 @@ describe(name, () => {
           `,
           options: [
             {
-              ignorePrefixSelector:
-                "CallExpression[callee.property.name='reduce']",
+              ignorePrefixSelector: "CallExpression[callee.property.name='reduce']",
               enforceParameterCount: "exactlyOne",
             },
           ],
@@ -348,8 +343,7 @@ describe(name, () => {
           options: [
             {
               enforceParameterCount: "exactlyOne",
-              ignorePrefixSelector:
-                "CallExpression[callee.property.name='map']",
+              ignorePrefixSelector: "CallExpression[callee.property.name='map']",
             },
           ],
         });
@@ -390,8 +384,7 @@ describe(name, () => {
           options: [
             {
               enforceParameterCount: "exactlyOne",
-              ignorePrefixSelector:
-                "CallExpression[callee.property.name='reduce']",
+              ignorePrefixSelector: "CallExpression[callee.property.name='reduce']",
             },
           ],
         });
@@ -406,8 +399,7 @@ describe(name, () => {
           options: [
             {
               enforceParameterCount: "exactlyOne",
-              ignorePrefixSelector:
-                "CallExpression[callee.property.name='map']",
+              ignorePrefixSelector: "CallExpression[callee.property.name='map']",
             },
           ],
         });

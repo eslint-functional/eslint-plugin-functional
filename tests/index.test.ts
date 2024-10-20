@@ -14,13 +14,8 @@ describe("index", () => {
       (file) => file !== "index.ts" && file.endsWith(".ts"),
     );
 
-    expect(
-      Object.hasOwn(functional, "rules"),
-      'The plugin\'s config object should have a "rules" property.',
-    );
-    expect(ruleFiles.length).to.equal(
-      Object.keys(functional.rules ?? {}).length,
-    );
+    expect(Object.hasOwn(functional, "rules"), 'The plugin\'s config object should have a "rules" property.');
+    expect(ruleFiles.length).to.equal(Object.keys(functional.rules ?? {}).length);
   });
 
   it("should have all the configs", () => {
@@ -28,10 +23,7 @@ describe("index", () => {
       (file) => file !== "index.ts" && file.endsWith(".ts"),
     );
 
-    expect(
-      Object.hasOwn(functional, "configs"),
-      'The plugin\'s config object should have a "configs" property.',
-    );
+    expect(Object.hasOwn(functional, "configs"), 'The plugin\'s config object should have a "configs" property.');
     expect(configFiles.length).to.equal(
       Object.keys(functional.configs ?? {}).length,
       "should have all the configs except deprecated",

@@ -30,9 +30,11 @@ jobs:
     uses: ./.github/workflows/lint-packages.yml
   lint_spelling:
     uses: ./.github/workflows/lint-spelling.yml
-  test:
+  lint_yaml:
+    uses: ./.github/workflows/lint-yaml.yml
+  test_js:
     uses: ./.github/workflows/test-js.yml
-  type_check:
+  typecheck:
     uses: ./.github/workflows/typecheck.yml
 
   release:
@@ -42,10 +44,11 @@ jobs:
       - lint_knip_dev
       - lint_knip_prod
       - lint_markdown
-      - lint_spelling
       - lint_packages
-      - test
-      - type_check
+      - lint_spelling
+      - lint_yaml
+      - test_js
+      - typecheck
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

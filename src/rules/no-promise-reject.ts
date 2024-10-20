@@ -3,18 +3,9 @@ import type { JSONSchema4 } from "@typescript-eslint/utils/json-schema";
 import type { RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
 import { ruleNameScope } from "#/utils/misc";
-import {
-  type NamedCreateRuleCustomMeta,
-  type Rule,
-  type RuleResult,
-  createRule,
-} from "#/utils/rule";
+import { type NamedCreateRuleCustomMeta, type Rule, type RuleResult, createRule } from "#/utils/rule";
 import { getEnclosingFunction, getEnclosingTryStatement } from "#/utils/tree";
-import {
-  isFunctionLike,
-  isIdentifier,
-  isMemberExpression,
-} from "#/utils/type-guards";
+import { isFunctionLike, isIdentifier, isMemberExpression } from "#/utils/type-guards";
 
 /**
  * The name of this rule.
@@ -137,11 +128,13 @@ function checkThrowStatement(
 }
 
 // Create the rule.
-export const rule: Rule<keyof typeof errorMessages, Options> = createRule<
-  keyof typeof errorMessages,
-  Options
->(name, meta, defaultOptions, {
-  CallExpression: checkCallExpression,
-  NewExpression: checkNewExpression,
-  ThrowStatement: checkThrowStatement,
-});
+export const rule: Rule<keyof typeof errorMessages, Options> = createRule<keyof typeof errorMessages, Options>(
+  name,
+  meta,
+  defaultOptions,
+  {
+    CallExpression: checkCallExpression,
+    NewExpression: checkNewExpression,
+    ThrowStatement: checkThrowStatement,
+  },
+);

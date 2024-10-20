@@ -1,17 +1,9 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 import type { JSONSchema4 } from "@typescript-eslint/utils/json-schema";
-import type {
-  ReportDescriptor,
-  RuleContext,
-} from "@typescript-eslint/utils/ts-eslint";
+import type { ReportDescriptor, RuleContext } from "@typescript-eslint/utils/ts-eslint";
 
 import { ruleNameScope } from "#/utils/misc";
-import {
-  type NamedCreateRuleCustomMeta,
-  type Rule,
-  type RuleResult,
-  createRule,
-} from "#/utils/rule";
+import { type NamedCreateRuleCustomMeta, type Rule, type RuleResult, createRule } from "#/utils/rule";
 import { getReadonly } from "#/utils/tree";
 import {
   isDefined,
@@ -56,10 +48,8 @@ const defaultOptions: Options = ["generic"];
  * The possible error messages.
  */
 const errorMessages = {
-  generic:
-    "Readonly type using 'readonly' keyword is forbidden. Use 'Readonly<T>' instead.",
-  keyword:
-    "Readonly type using 'Readonly<T>' is forbidden. Use 'readonly' keyword instead.",
+  generic: "Readonly type using 'readonly' keyword is forbidden. Use 'Readonly<T>' instead.",
+  keyword: "Readonly type using 'Readonly<T>' is forbidden. Use 'readonly' keyword instead.",
 } as const;
 
 /**
@@ -69,8 +59,7 @@ const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
   type: "suggestion",
   docs: {
     category: "Stylistic",
-    description:
-      "Require consistently using either `readonly` keywords or `Readonly<T>`",
+    description: "Require consistently using either `readonly` keywords or `Readonly<T>`",
     recommended: "recommended",
     recommendedSeverity: "error",
     requiresTypeChecking: true,
@@ -97,30 +86,20 @@ function checkTypeLiteral(
       return {
         context,
         descriptors: node.members
-          .map(
-            (
-              member,
-            ): ReportDescriptor<keyof typeof errorMessages> | undefined => {
-              if (
-                (isPropertyDefinition(member) ||
-                  isTSParameterProperty(member) ||
-                  isTSPropertySignature(member)) &&
-                member.readonly
-              ) {
-                return {
-                  node: member.key,
-                  messageId: "generic",
-                  fix: (fixer) =>
-                    fixer.replaceText(
-                      member,
-                      sourceCode.getText(member).replace(/readonly /u, ""),
-                    ),
-                };
-              }
+          .map((member): ReportDescriptor<keyof typeof errorMessages> | undefined => {
+            if (
+              (isPropertyDefinition(member) || isTSParameterProperty(member) || isTSPropertySignature(member)) &&
+              member.readonly
+            ) {
+              return {
+                node: member.key,
+                messageId: "generic",
+                fix: (fixer) => fixer.replaceText(member, sourceCode.getText(member).replace(/readonly /u, "")),
+              };
+            }
 
-              return undefined;
-            },
-          )
+            return undefined;
+          })
           .filter(isDefined),
       };
     }
@@ -129,9 +108,7 @@ function checkTypeLiteral(
       context,
       descriptors: [
         {
-          node: isTSTypeReference(readonlyWrapper)
-            ? readonlyWrapper.typeName
-            : readonlyWrapper,
+          node: isTSTypeReference(readonlyWrapper) ? readonlyWrapper.typeName : readonlyWrapper,
           messageId: "keyword",
           fix: (fixer) => {
             const text = sourceCode.getText(readonlyWrapper);
@@ -145,14 +122,8 @@ function checkTypeLiteral(
             const endCutPoint = end!.index;
 
             return [
-              fixer.removeRange([
-                readonlyWrapper.range[0],
-                readonlyWrapper.range[0] + startCutPoint,
-              ]),
-              fixer.removeRange([
-                readonlyWrapper.range[1] - text.length + endCutPoint,
-                readonlyWrapper.range[1],
-              ]),
+              fixer.removeRange([readonlyWrapper.range[0], readonlyWrapper.range[0] + startCutPoint]),
+              fixer.removeRange([readonlyWrapper.range[1] - text.length + endCutPoint, readonlyWrapper.range[1]]),
               ...node.members
                 .map((member) => {
                   if (
@@ -199,10 +170,7 @@ function checkTypeLiteral(
               fixer.insertTextBefore(node, "Readonly<"),
               fixer.insertTextAfter(node, ">"),
               ...node.members.map((member) =>
-                fixer.replaceText(
-                  member,
-                  sourceCode.getText(member).replace(/readonly /u, ""),
-                ),
+                fixer.replaceText(member, sourceCode.getText(member).replace(/readonly /u, "")),
               ),
             ],
           },
@@ -218,9 +186,11 @@ function checkTypeLiteral(
 }
 
 // Create the rule.
-export const rule: Rule<keyof typeof errorMessages, Options> = createRule<
-  keyof typeof errorMessages,
-  Options
->(name, meta, defaultOptions, {
-  TSTypeLiteral: checkTypeLiteral,
-});
+export const rule: Rule<keyof typeof errorMessages, Options> = createRule<keyof typeof errorMessages, Options>(
+  name,
+  meta,
+  defaultOptions,
+  {
+    TSTypeLiteral: checkTypeLiteral,
+  },
+);

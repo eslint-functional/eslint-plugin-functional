@@ -93,12 +93,7 @@ describe(name, () => {
             private static readonly qux: { foo: number };
           }
         `,
-        errors: [
-          "propertyImmutability",
-          "propertyImmutability",
-          "propertyImmutability",
-          "propertyImmutability",
-        ],
+        errors: ["propertyImmutability", "propertyImmutability", "propertyImmutability", "propertyImmutability"],
       });
       expect(invalidResult.messages).toMatchSnapshot();
     });
@@ -154,120 +149,110 @@ describe(name, () => {
             },
           },
         ],
-        errors: [
-          "variable",
-          "variable",
-          "variable",
-          "variable",
-          "variable",
-          "variable",
-          "variable",
-          "variable",
-        ],
+        errors: ["variable", "variable", "variable", "variable", "variable", "variable", "variable", "variable"],
         verifyAfterFix: false, // "fix" doesn't fix arrays so they will still report.
       });
       expect(invalidResult.messages).toMatchSnapshot();
     });
 
-    it.each([
-      [[{ variables: "ReadonlyShallow" }]],
-      [[{ variables: "ReadonlyDeep" }]],
-      [[{ variables: "Immutable" }]],
-    ])("doesn't reports valid variables", (options) => {
-      valid({
-        code: "const foo: boolean = {} as any;",
-        options,
-      });
-      valid({
-        code: "const foo: true = {} as any;",
-        options,
-      });
-      valid({
-        code: "const foo: string = {} as any;",
-        options,
-      });
-      valid({
-        code: "const foo: 'bar' = {} as any;",
-        options,
-      });
-      valid({
-        code: "const foo: undefined = {} as any;",
-        options,
-      });
-      valid({
-        code: "const foo: readonly string[] = {} as any;",
-        options,
-        settings: {
-          immutability: {
-            overrides: [
-              {
-                type: { from: "lib", name: "ReadonlyArray" },
-                to: "Immutable",
-              },
-            ],
+    it.each([[[{ variables: "ReadonlyShallow" }]], [[{ variables: "ReadonlyDeep" }]], [[{ variables: "Immutable" }]]])(
+      "doesn't reports valid variables",
+      (options) => {
+        valid({
+          code: "const foo: boolean = {} as any;",
+          options,
+        });
+        valid({
+          code: "const foo: true = {} as any;",
+          options,
+        });
+        valid({
+          code: "const foo: string = {} as any;",
+          options,
+        });
+        valid({
+          code: "const foo: 'bar' = {} as any;",
+          options,
+        });
+        valid({
+          code: "const foo: undefined = {} as any;",
+          options,
+        });
+        valid({
+          code: "const foo: readonly string[] = {} as any;",
+          options,
+          settings: {
+            immutability: {
+              overrides: [
+                {
+                  type: { from: "lib", name: "ReadonlyArray" },
+                  to: "Immutable",
+                },
+              ],
+            },
           },
-        },
-      });
-      valid({
-        code: "const foo: { readonly foo: string } = {} as any;",
-        options,
-      });
-      valid({
-        code: "const foo: { readonly foo: { readonly bar: number } } = {} as any;",
-        options,
-      });
-      valid({
-        code: "const foo: Readonly<ReadonlySet<string>> = {} as any;",
-        options,
-      });
-      valid({
-        code: "const foo: Readonly<ReadonlyMap<string, string>> = {} as any;",
-        options,
-      });
-      valid({
-        code: "function foo(arg: { foo: string | number }): arg is { foo: number } {}",
-        options,
-      });
-      valid({
-        code: "const [a, b] = [1, 2];",
-        options,
-      });
-      valid({
-        code: "const { a, b } = { a: 1, b: 2 };",
-        options,
-      });
+        });
+        valid({
+          code: "const foo: { readonly foo: string } = {} as any;",
+          options,
+        });
+        valid({
+          code: "const foo: { readonly foo: { readonly bar: number } } = {} as any;",
+          options,
+        });
+        valid({
+          code: "const foo: Readonly<ReadonlySet<string>> = {} as any;",
+          options,
+        });
+        valid({
+          code: "const foo: Readonly<ReadonlyMap<string, string>> = {} as any;",
+          options,
+        });
+        valid({
+          code: "function foo(arg: { foo: string | number }): arg is { foo: number } {}",
+          options,
+        });
+        valid({
+          code: "const [a, b] = [1, 2];",
+          options,
+        });
+        valid({
+          code: "const { a, b } = { a: 1, b: 2 };",
+          options,
+        });
 
-      if (options[0]!.variables !== "Immutable") {
-        valid({
-          code: "const foo: { foo(): void } = {} as any;",
-          options,
-        });
-        valid({
-          code: "const foo: ReadonlyArray<string> = {} as any;",
-          options,
-        });
-        valid({
-          code: "const foo: readonly [string, number] = {} as any;",
-          options,
-        });
-        valid({
-          code: "const foo: Readonly<[string, number]> = {} as any;",
-          options,
-        });
-        valid({
-          code: "const foo: { foo: () => void } = {} as any;",
-          options,
-        });
-        valid({
-          code: "const foo: ReadonlySet<string> = {} as any;",
-          options,
-        });
-        valid({
-          code: "const foo: ReadonlyMap<string, string> = {} as any;",
-          options,
-        });
-      }
-    });
+        if (options[0]!.variables !== "Immutable") {
+          valid({
+            code: "const foo: { foo(): void } = {} as any;",
+            options,
+          });
+          valid({
+            code: "const foo: ReadonlyArray<string> = {} as any;",
+            options,
+          });
+          valid({
+            code: "const foo: readonly [string, number] = {} as any;",
+            options,
+          });
+          valid({
+            code: "const foo: Readonly<[string, number]> = {} as any;",
+            options,
+          });
+          valid({
+            code: "const foo: { foo: () => void } = {} as any;",
+            options,
+          });
+          valid({
+            code: "const foo: ReadonlySet<string> = {} as any;",
+            options,
+          });
+          valid({
+            code: "const foo: ReadonlyMap<string, string> = {} as any;",
+            options,
+          });
+        }
+      },
+    );
 
     describe("options", () => {
       describe("ignoreClasses", () => {

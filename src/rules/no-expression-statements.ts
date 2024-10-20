@@ -1,32 +1,15 @@
 import type { TSESTree } from "@typescript-eslint/utils";
-import type {
-  JSONSchema4,
-  JSONSchema4ObjectSchema,
-} from "@typescript-eslint/utils/json-schema";
+import type { JSONSchema4, JSONSchema4ObjectSchema } from "@typescript-eslint/utils/json-schema";
 import type { RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import { deepmerge } from "deepmerge-ts";
 import type ts from "typescript";
 
 import tsApiUtils from "#/conditional-imports/ts-api-utils";
 import typescript from "#/conditional-imports/typescript";
-import {
-  type IgnoreCodePatternOption,
-  ignoreCodePatternOptionSchema,
-  shouldIgnorePattern,
-} from "#/options";
+import { type IgnoreCodePatternOption, ignoreCodePatternOptionSchema, shouldIgnorePattern } from "#/options";
 import { isDirectivePrologue, ruleNameScope } from "#/utils/misc";
-import {
-  type NamedCreateRuleCustomMeta,
-  type Rule,
-  type RuleResult,
-  createRule,
-  getTypeOfNode,
-} from "#/utils/rule";
-import {
-  isCallExpression,
-  isPromiseType,
-  isYieldExpression,
-} from "#/utils/type-guards";
+import { type NamedCreateRuleCustomMeta, type Rule, type RuleResult, createRule, getTypeOfNode } from "#/utils/rule";
+import { isCallExpression, isPromiseType, isYieldExpression } from "#/utils/type-guards";
 
 /**
  * The name of this rule.
@@ -110,9 +93,7 @@ function checkExpressionStatement(
   const [optionsObject] = options;
   const { ignoreCodePattern } = optionsObject;
 
-  if (
-    shouldIgnorePattern(node, context, undefined, undefined, ignoreCodePattern)
-  ) {
+  if (shouldIgnorePattern(node, context, undefined, undefined, ignoreCodePattern)) {
     return {
       context,
       descriptors: [],
@@ -129,10 +110,7 @@ function checkExpressionStatement(
 
   const { ignoreVoid, ignoreSelfReturning } = optionsObject;
 
-  if (
-    (ignoreVoid || ignoreSelfReturning) &&
-    isCallExpression(node.expression)
-  ) {
+  if ((ignoreVoid || ignoreSelfReturning) && isCallExpression(node.expression)) {
     const returnType = getTypeOfNode(node.expression, context);
     if (returnType === null) {
       return {
@@ -147,9 +125,7 @@ function checkExpressionStatement(
         ("typeArguments" in returnType &&
           isPromiseType(context, returnType) &&
           (returnType.typeArguments as ts.Type[]).length > 0 &&
-          tsApiUtils?.isIntrinsicVoidType(
-            (returnType.typeArguments as ts.Type[])[0]!,
-          ) === true))
+          tsApiUtils?.isIntrinsicVoidType((returnType.typeArguments as ts.Type[])[0]!) === true))
     ) {
       return {
         context,
@@ -170,15 +146,11 @@ function checkExpressionStatement(
           declaration.body !== undefined &&
           typescript.isBlock(declaration.body)
         ) {
-          const returnStatements = declaration.body.statements.filter(
-            typescript.isReturnStatement,
-          );
+          const returnStatements = declaration.body.statements.filter(typescript.isReturnStatement);
 
           if (
             returnStatements.every(
-              (statement) =>
-                statement.expression !== undefined &&
-                tsApiUtils?.isThisKeyword(statement.expression),
+              (statement) => statement.expression !== undefined && tsApiUtils?.isThisKeyword(statement.expression),
             )
           ) {
             return {
@@ -198,9 +170,11 @@ function checkExpressionStatement(
 }
 
 // Create the rule.
-export const rule: Rule<keyof typeof errorMessages, Options> = createRule<
-  keyof typeof errorMessages,
-  Options
->(name, meta, defaultOptions, {
-  ExpressionStatement: checkExpressionStatement,
-});
+export const rule: Rule<keyof typeof errorMessages, Options> = createRule<keyof typeof errorMessages, Options>(
+  name,
+  meta,
+  defaultOptions,
+  {
+    ExpressionStatement: checkExpressionStatement,
+  },
+);
