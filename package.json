@@ -80,8 +80,7 @@
     "verify": "pnpm run lint && pnpm run typecheck && pnpm run test:js-run"
   },
   "resolutions": {
-    "dts-bundle-generator": "9.2.1",
-    "eslint-plugin-functional": "link:."
+    "dts-bundle-generator": "9.2.1"
   },
   "dependencies": {
     "@typescript-eslint/utils": "^8.10.0",
@@ -169,5 +168,8 @@
   "packageManager": "pnpm@9.12.2",
   "engines": {
     "node": ">=v18.18.0"
+  },
+  "overrides": {
+    "eslint-plugin-functional": "link:."
   }
 }
