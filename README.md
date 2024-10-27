@@ -188,10 +188,10 @@ These rules are what are included in the _external recommended_ rulesets.
 
 ### TypeScript Rules
 
-- [@typescript-eslint/prefer-readonly](https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/prefer-readonly.md)\
+- [@typescript-eslint/prefer-readonly](https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/prefer-readonly.mdx)\
   This rule is helpful when working with classes.
 
-- [@typescript-eslint/switch-exhaustiveness-check](https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/switch-exhaustiveness-check.md)\
+- [@typescript-eslint/switch-exhaustiveness-check]([https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/switch-exhaustiveness-check.md](https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/switch-exhaustiveness-check.mdx))\
   Although our [no-conditional-statements](./docs/rules/no-conditional-statements.md) rule also performs this check,
   this rule has a fixer that will implement the unimplemented cases which can be useful.
 
