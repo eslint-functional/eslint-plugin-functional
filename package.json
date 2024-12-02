@@ -112,7 +112,7 @@
     "@vitest/eslint-plugin": "1.1.13",
     "cspell": "8.16.1",
     "dedent": "1.5.3",
-    "eslint": "9.13.0",
+    "eslint": "9.16.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-doc-generator": "1.7.1",
     "eslint-flat-config-utils": "0.4.0",
