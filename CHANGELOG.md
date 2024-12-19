@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+# [7.2.0](https://github.com/eslint-functional/eslint-plugin-functional/compare/v7.1.0...v7.2.0) (2024-12-19)
+
+
+### Features
+
+* **no-conditional-statements:** add option `ignoreCodePattern` for ignoring if conditions ([#909](https://github.com/eslint-functional/eslint-plugin-functional/issues/909)) ([d3cf5d8](https://github.com/eslint-functional/eslint-plugin-functional/commit/d3cf5d8eaf5e9095e67a0743004e1f5e4effa5ed))
+
 # [7.1.0](https://github.com/eslint-functional/eslint-plugin-functional/compare/v7.0.3...v7.1.0) (2024-10-20)
 
 
