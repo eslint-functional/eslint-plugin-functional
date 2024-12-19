@@ -132,6 +132,19 @@ describe(name, () => {
             });
           });
         });
+
+        describe("ignoreCodePattern", () => {
+          it("ignores matching conditionals", () => {
+            valid({
+              code: dedent`
+                if (import.meta.vitest) {
+                  const { it, expect } = import.meta.vitest;
+                }
+              `,
+              options: [{ ignoreCodePattern: ["import\\.meta\\.vitest"] }],
+            });
+          });
+        });
       });
     });
 

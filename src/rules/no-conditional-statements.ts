@@ -1,9 +1,11 @@
 import type { TSESTree } from "@typescript-eslint/utils";
-import type { JSONSchema4 } from "@typescript-eslint/utils/json-schema";
+import type { JSONSchema4, JSONSchema4ObjectSchema } from "@typescript-eslint/utils/json-schema";
 import type { RuleContext } from "@typescript-eslint/utils/ts-eslint";
+import { deepmerge } from "deepmerge-ts";
 import type { Type } from "typescript";
 
 import tsApiUtils from "#/conditional-imports/ts-api-utils";
+import { type IgnoreCodePatternOption, ignoreCodePatternOptionSchema, shouldIgnorePattern } from "#/options";
 import { ruleNameScope } from "#/utils/misc";
 import { type NamedCreateRuleCustomMeta, type Rule, type RuleResult, createRule, getTypeOfNode } from "#/utils/rule";
 import {
@@ -32,7 +34,7 @@ export const fullName: `${typeof ruleNameScope}/${typeof name}` = `${ruleNameSco
  * The options this rule can take.
  */
 type Options = [
-  {
+  IgnoreCodePatternOption & {
     allowReturningBranches: boolean | "ifExhaustive";
   },
 ];
@@ -43,7 +45,7 @@ type Options = [
 const schema: JSONSchema4[] = [
   {
     type: "object",
-    properties: {
+    properties: deepmerge(ignoreCodePatternOptionSchema, {
       allowReturningBranches: {
         oneOf: [
           {
@@ -55,7 +57,7 @@ const schema: JSONSchema4[] = [
           },
         ],
       },
-    },
+    } satisfies JSONSchema4ObjectSchema["properties"]),
     additionalProperties: false,
   },
 ];
@@ -273,7 +275,14 @@ function checkIfStatement(
   context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
   options: Readonly<Options>,
 ): RuleResult<keyof typeof errorMessages, Options> {
-  const [{ allowReturningBranches }] = options;
+  const [{ allowReturningBranches, ignoreCodePattern }] = options;
+
+  if (shouldIgnorePattern(node.test, context, undefined, undefined, ignoreCodePattern)) {
+    return {
+      context,
+      descriptors: [],
+    };
+  }
 
   return {
     context,

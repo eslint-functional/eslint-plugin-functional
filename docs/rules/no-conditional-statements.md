@@ -65,6 +65,7 @@ This rule accepts an options object of the following type:
 ```ts
 type Options = {
   allowReturningBranches: boolean | "ifExhaustive";
+  ignoreCodePattern?: ReadonlyArray<string> | string;
 };
 ```
 
@@ -124,3 +125,11 @@ const x = (() => {
 
 Note: Currently this option is not useable with the [no-else-return](https://eslint.org/docs/rules/no-else-return) rule;
 `else` statements must contain a return statement.
+
+### `ignoreCodePattern`
+
+This option takes a RegExp string or an array of RegExp strings.
+It allows for the ability to ignore violations based on the test condition of the `if`
+statement.
+
+Note: This option has no effect on `switch` statements.
