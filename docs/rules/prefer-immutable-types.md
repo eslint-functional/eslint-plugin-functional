@@ -404,10 +404,6 @@ callback's parameters is undesirable.
 
 `false` by default.
 
-### `ignoreClasses`
-
-A boolean to specify if checking classes should be ignored. `false` by default.
-
 #### ❌ Incorrect
 
 <!-- eslint-skip -->
@@ -459,6 +455,10 @@ export const acceptsCallback: AcceptsCallback;
 ```
 
 </details>
+
+### `ignoreClasses`
+
+A boolean to specify if checking classes should be ignored. `false` by default.
 
 ### `parameters.*`, `returnTypes.*`, `variables.*`
 
