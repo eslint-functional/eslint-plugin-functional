@@ -1,6 +1,18 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+# [8.0.0](https://github.com/eslint-functional/eslint-plugin-functional/compare/v7.3.0...v8.0.0) (2025-01-14)
+
+
+### Bug Fixes
+
+* prefix PrivateIdentifier names with a # ([#921](https://github.com/eslint-functional/eslint-plugin-functional/issues/921)) ([09b6474](https://github.com/eslint-functional/eslint-plugin-functional/commit/09b64743bd32e1303728d637592317a89b842a23)), closes [#910](https://github.com/eslint-functional/eslint-plugin-functional/issues/910) [#911](https://github.com/eslint-functional/eslint-plugin-functional/issues/911)
+
+
+### BREAKING CHANGES
+
+* when using patterns to match against PrivateIdentifiers, their names are now prefixed with a #.
+
 # [7.3.0](https://github.com/eslint-functional/eslint-plugin-functional/compare/v7.2.2...v7.3.0) (2025-01-14)
 
 
