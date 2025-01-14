@@ -4,5 +4,6 @@
   "project": ["src/**/*.ts!", "tests/**/*.{js,ts}"],
   "ignore": ["lib/**", "tests/fixture/file.ts"],
   "ignoreDependencies": ["@eslint/compat", "tsc-files"],
+  "ignoreBinaries": ["lint-staged"],
   "exclude": ["exports", "nsExports", "types", "nsTypes"],
 }

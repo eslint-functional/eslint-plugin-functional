@@ -20,7 +20,7 @@ export const fullName: `${typeof ruleNameScope}/${typeof name}` = `${ruleNameSco
 /**
  * The options this rule can take.
  */
-type Options = [{}];
+type RawOptions = [{}];
 
 /**
  * The schema for the rule options.
@@ -30,7 +30,7 @@ const schema: JSONSchema4[] = [];
 /**
  * The default options for the rule.
  */
-const defaultOptions: Options = [{}];
+const defaultOptions: RawOptions = [{}];
 
 /**
  * The possible error messages.
@@ -42,7 +42,7 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages, RawOptions> = {
   type: "suggestion",
   docs: {
     category: "No Exceptions",
@@ -60,8 +60,8 @@ const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
  */
 function checkCallExpression(
   node: TSESTree.CallExpression,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-): RuleResult<keyof typeof errorMessages, Options> {
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
+): RuleResult<keyof typeof errorMessages, RawOptions> {
   return {
     context,
     descriptors:
@@ -81,8 +81,8 @@ function checkCallExpression(
  */
 function checkNewExpression(
   node: TSESTree.NewExpression,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-): RuleResult<keyof typeof errorMessages, Options> {
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
+): RuleResult<keyof typeof errorMessages, RawOptions> {
   return {
     context,
     descriptors:
@@ -102,8 +102,8 @@ function checkNewExpression(
  */
 function checkThrowStatement(
   node: TSESTree.ThrowStatement,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-): RuleResult<keyof typeof errorMessages, Options> {
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
+): RuleResult<keyof typeof errorMessages, RawOptions> {
   const enclosingFunction = getEnclosingFunction(node);
   if (enclosingFunction?.async !== true) {
     return { context, descriptors: [] };
@@ -128,7 +128,7 @@ function checkThrowStatement(
 }
 
 // Create the rule.
-export const rule: Rule<keyof typeof errorMessages, Options> = createRule<keyof typeof errorMessages, Options>(
+export const rule: Rule<keyof typeof errorMessages, RawOptions> = createRule<keyof typeof errorMessages, RawOptions>(
   name,
   meta,
   defaultOptions,

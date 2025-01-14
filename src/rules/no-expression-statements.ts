@@ -24,7 +24,7 @@ export const fullName: `${typeof ruleNameScope}/${typeof name}` = `${ruleNameSco
 /**
  * The options this rule can take.
  */
-type Options = [
+type RawOptions = [
   IgnoreCodePatternOption & {
     ignoreVoid: boolean;
     ignoreSelfReturning: boolean;
@@ -52,7 +52,7 @@ const schema: JSONSchema4[] = [
 /**
  * The default options for the rule.
  */
-const defaultOptions: Options = [
+const defaultOptions: RawOptions = [
   {
     ignoreVoid: false,
     ignoreSelfReturning: false,
@@ -69,7 +69,7 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages, RawOptions> = {
   type: "suggestion",
   docs: {
     category: "No Statements",
@@ -87,9 +87,9 @@ const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
  */
 function checkExpressionStatement(
   node: TSESTree.ExpressionStatement,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-  options: Readonly<Options>,
-): RuleResult<keyof typeof errorMessages, Options> {
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
+  options: Readonly<RawOptions>,
+): RuleResult<keyof typeof errorMessages, RawOptions> {
   const [optionsObject] = options;
   const { ignoreCodePattern } = optionsObject;
 
@@ -150,7 +150,8 @@ function checkExpressionStatement(
 
           if (
             returnStatements.every(
-              (statement) => statement.expression !== undefined && tsApiUtils?.isThisKeyword(statement.expression),
+              (statement) =>
+                statement.expression !== undefined && tsApiUtils?.isThisKeyword(statement.expression) === true,
             )
           ) {
             return {
@@ -170,7 +171,7 @@ function checkExpressionStatement(
 }
 
 // Create the rule.
-export const rule: Rule<keyof typeof errorMessages, Options> = createRule<keyof typeof errorMessages, Options>(
+export const rule: Rule<keyof typeof errorMessages, RawOptions> = createRule<keyof typeof errorMessages, RawOptions>(
   name,
   meta,
   defaultOptions,

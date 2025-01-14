@@ -56,7 +56,7 @@ type SuggestionsConfig = FixerConfig[];
 /**
  * The options this rule can take.
  */
-type Options = [
+type RawOptions = [
   IgnoreIdentifierPatternOption & {
     rules: Array<{
       identifiers: string | string[];
@@ -166,7 +166,7 @@ const schema: JSONSchema4[] = [
 /**
  * The default options for the rule.
  */
-const defaultOptions: Options = [
+const defaultOptions: RawOptions = [
   {
     rules: [
       {
@@ -193,7 +193,7 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages, RawOptions> = {
   type: "suggestion",
   docs: {
     category: "No Mutations",
@@ -219,12 +219,12 @@ export type ImmutabilityRule = {
   suggestions: SuggestionsConfig | false;
 };
 
-type Descriptor = RuleResult<keyof typeof errorMessages, Options>["descriptors"][number];
+type Descriptor = RuleResult<keyof typeof errorMessages, RawOptions>["descriptors"][number];
 
 /**
  * Get all the rules that were given and upgrade them.
  */
-function getRules(options: Readonly<Options>): ImmutabilityRule[] {
+function getRules(options: Readonly<RawOptions>): ImmutabilityRule[] {
   const [optionsObject] = options;
   const { rules: rulesOptions } = optionsObject;
 
@@ -273,8 +273,8 @@ function getRules(options: Readonly<Options>): ImmutabilityRule[] {
  */
 function getRuleToApply(
   node: TSESTree.Node,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-  options: Readonly<Options>,
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
+  options: Readonly<RawOptions>,
 ): ImmutabilityRule | undefined {
   const rules = getRules(options);
   if (rules.length === 0) {
@@ -295,7 +295,7 @@ function getRuleToApply(
  */
 function getConfiguredFixer<T extends TSESTree.Node>(
   node: T,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
   configs: ReadonlyArray<FixerConfig>,
 ): NonNullable<Descriptor["fix"]> | null {
   const text = context.sourceCode.getText(node);
@@ -311,7 +311,7 @@ function getConfiguredFixer<T extends TSESTree.Node>(
  */
 function getConfiguredSuggestions<T extends TSESTree.Node>(
   node: T,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
   configs: ReadonlyArray<FixerConfig>,
   messageId: keyof typeof errorMessages,
 ): NonNullable<Descriptor["suggest"]> | null {
@@ -354,10 +354,10 @@ function compareImmutability(rule: Readonly<ImmutabilityRule>, actual: Immutabil
  */
 function getResults(
   node: ESTypeDeclaration,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
   rule: Readonly<ImmutabilityRule>,
   immutability: Immutability,
-): RuleResult<keyof typeof errorMessages, Options> {
+): RuleResult<keyof typeof errorMessages, RawOptions> {
   const valid = compareImmutability(rule, immutability);
   if (valid) {
     return {
@@ -400,9 +400,9 @@ function getResults(
  */
 function checkTypeDeclaration(
   node: ESTypeDeclaration,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-  options: Readonly<Options>,
-): RuleResult<keyof typeof errorMessages, Options> {
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
+  options: Readonly<RawOptions>,
+): RuleResult<keyof typeof errorMessages, RawOptions> {
   const [optionsObject] = options;
   const { ignoreInterfaces, ignoreIdentifierPattern } = optionsObject;
   if (
@@ -436,7 +436,7 @@ function checkTypeDeclaration(
 }
 
 // Create the rule.
-export const rule: Rule<keyof typeof errorMessages, Options> = createRule<keyof typeof errorMessages, Options>(
+export const rule: Rule<keyof typeof errorMessages, RawOptions> = createRule<keyof typeof errorMessages, RawOptions>(
   name,
   meta,
   defaultOptions,

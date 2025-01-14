@@ -41,7 +41,7 @@ export const fullName: `${typeof ruleNameScope}/${typeof name}` = `${ruleNameSco
 /**
  * The options this rule can take.
  */
-type Options = [
+type RawOptions = [
   {
     checkMemberExpressions: boolean;
   },
@@ -65,7 +65,7 @@ const schema: JSONSchema4[] = [
 /**
  * The default options for the rule.
  */
-const defaultOptions: Options = [
+const defaultOptions: RawOptions = [
   {
     checkMemberExpressions: false,
   },
@@ -81,7 +81,7 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages, RawOptions> = {
   type: "suggestion",
   docs: {
     category: "Stylistic",
@@ -101,7 +101,7 @@ const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
 function isCallerViolation(
   caller: TSESTree.CallExpression,
   calleeType: Type,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
 ): boolean {
   if ((calleeType.symbol as unknown) === undefined) {
     return false;
@@ -121,7 +121,7 @@ function isCallerViolation(
  * Get the fixes for a call to a reference violation.
  */
 function fixFunctionCallToReference(
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
   fixer: RuleFixer,
   node: ESFunction,
   caller: TSESTree.CallExpression,
@@ -148,7 +148,7 @@ function fixFunctionCallToReference(
  * Creates the suggestions.
  */
 function buildSuggestions(
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
   node: ESFunction,
   caller: TSESTree.CallExpression,
 ): ReportSuggestionArray<keyof typeof errorMessages> {
@@ -184,8 +184,8 @@ function buildSuggestions(
  */
 function getCallDescriptors(
   node: ESFunction,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-  options: Options,
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
+  options: RawOptions,
   caller: TSESTree.CallExpression,
 ): Array<ReportDescriptor<keyof typeof errorMessages>> {
   const [{ checkMemberExpressions }] = options;
@@ -222,8 +222,8 @@ function getCallDescriptors(
  */
 function getDirectCallDescriptors(
   node: ESFunction,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-  options: Options,
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
+  options: RawOptions,
 ): Array<ReportDescriptor<keyof typeof errorMessages>> {
   if (isCallExpression(node.body)) {
     return getCallDescriptors(node, context, options, node.body);
@@ -236,8 +236,8 @@ function getDirectCallDescriptors(
  */
 function getNestedCallDescriptors(
   node: ESFunction,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-  options: Options,
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
+  options: RawOptions,
 ): Array<ReportDescriptor<keyof typeof errorMessages>> {
   if (
     isBlockStatement(node.body) &&
@@ -256,9 +256,9 @@ function getNestedCallDescriptors(
  */
 function checkFunction(
   node: ESFunction,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-  options: Options,
-): RuleResult<keyof typeof errorMessages, Options> {
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
+  options: RawOptions,
+): RuleResult<keyof typeof errorMessages, RawOptions> {
   return {
     context,
     descriptors: [
@@ -269,7 +269,7 @@ function checkFunction(
 }
 
 // Create the rule.
-export const rule: Rule<keyof typeof errorMessages, Options> = createRule<keyof typeof errorMessages, Options>(
+export const rule: Rule<keyof typeof errorMessages, RawOptions> = createRule<keyof typeof errorMessages, RawOptions>(
   name,
   meta,
   defaultOptions,

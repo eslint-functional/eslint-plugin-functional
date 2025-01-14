@@ -18,7 +18,7 @@ export const fullName: `${typeof ruleNameScope}/${typeof name}` = `${ruleNameSco
 /**
  * The options this rule can take.
  */
-type Options = [{}];
+type RawOptions = [{}];
 
 /**
  * The schema for the rule options.
@@ -28,7 +28,7 @@ const schema: JSONSchema4[] = [];
 /**
  * The default options for the rule.
  */
-const defaultOptions: Options = [{}];
+const defaultOptions: RawOptions = [{}];
 
 /**
  * The possible error messages.
@@ -40,7 +40,7 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages, RawOptions> = {
   type: "suggestion",
   docs: {
     category: "No Other Paradigms",
@@ -58,14 +58,14 @@ const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
  */
 function checkThisExpression(
   node: TSESTree.ThisExpression,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-): RuleResult<keyof typeof errorMessages, Options> {
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
+): RuleResult<keyof typeof errorMessages, RawOptions> {
   // All throw statements violate this rule.
   return { context, descriptors: [{ node, messageId: "generic" }] };
 }
 
 // Create the rule.
-export const rule: Rule<keyof typeof errorMessages, Options> = createRule<keyof typeof errorMessages, Options>(
+export const rule: Rule<keyof typeof errorMessages, RawOptions> = createRule<keyof typeof errorMessages, RawOptions>(
   name,
   meta,
   defaultOptions,

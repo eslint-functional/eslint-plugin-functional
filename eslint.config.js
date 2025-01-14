@@ -51,6 +51,8 @@ const configs = await rsEslint(
       eslint: pluginEslint,
     },
     rules: {
+      "import/extensions": "off",
+
       // Some types say they have nonnullable properties, but they don't always.
       "ts/no-unnecessary-condition": "off",
     },

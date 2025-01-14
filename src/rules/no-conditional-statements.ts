@@ -33,7 +33,7 @@ export const fullName: `${typeof ruleNameScope}/${typeof name}` = `${ruleNameSco
 /**
  * The options this rule can take.
  */
-type Options = [
+type RawOptions = [
   IgnoreCodePatternOption & {
     allowReturningBranches: boolean | "ifExhaustive";
   },
@@ -65,7 +65,7 @@ const schema: JSONSchema4[] = [
 /**
  * The default options for the rule.
  */
-const defaultOptions: Options = [{ allowReturningBranches: false }];
+const defaultOptions: RawOptions = [{ allowReturningBranches: false }];
 
 /**
  * The possible error messages.
@@ -82,7 +82,7 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages, RawOptions> = {
   type: "suggestion",
   docs: {
     category: "No Statements",
@@ -103,14 +103,14 @@ const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
  */
 function incompleteBranchViolation(
   node: TSESTree.Node,
-): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
+): RuleResult<keyof typeof errorMessages, RawOptions>["descriptors"] {
   return [{ node, messageId: "incompleteBranch" }];
 }
 
 /**
  * Get a function that tests if the given statement is never returning.
  */
-function getIsNeverExpressions(context: Readonly<RuleContext<keyof typeof errorMessages, Options>>) {
+function getIsNeverExpressions(context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>) {
   return (statement: TSESTree.Statement) => {
     if (isExpressionStatement(statement)) {
       const expressionStatementType = getTypeOfNode(statement.expression, context);
@@ -140,8 +140,8 @@ function isIfReturningBranch(statement: TSESTree.Statement) {
  */
 function getIfBranchViolations(
   node: TSESTree.IfStatement,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
+): RuleResult<keyof typeof errorMessages, RawOptions>["descriptors"] {
   const branches = [node.consequent, node.alternate];
   const violations = branches.filter<NonNullable<(typeof branches)[0]>>(
     (branch): branch is NonNullable<typeof branch> => {
@@ -181,8 +181,8 @@ function getIfBranchViolations(
  */
 function getSwitchViolations(
   node: TSESTree.SwitchStatement,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-): RuleResult<keyof typeof errorMessages, Options>["descriptors"] {
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
+): RuleResult<keyof typeof errorMessages, RawOptions>["descriptors"] {
   const isNeverExpressions = getIsNeverExpressions(context);
 
   const label = isLabeledStatement(node.parent) ? node.parent.label.name : null;
@@ -239,7 +239,7 @@ function isExhaustiveIfViolation(node: TSESTree.IfStatement): boolean {
  */
 function isExhaustiveTypeSwitchViolation(
   node: TSESTree.SwitchStatement,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
 ): boolean {
   const discriminantType = getTypeOfNode(node.discriminant, context);
   if (!discriminantType?.isUnion()) {
@@ -259,7 +259,7 @@ function isExhaustiveTypeSwitchViolation(
  */
 function isExhaustiveSwitchViolation(
   node: TSESTree.SwitchStatement,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
 ): boolean {
   return (
     // No cases defined.
@@ -272,9 +272,9 @@ function isExhaustiveSwitchViolation(
  */
 function checkIfStatement(
   node: TSESTree.IfStatement,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-  options: Readonly<Options>,
-): RuleResult<keyof typeof errorMessages, Options> {
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
+  options: Readonly<RawOptions>,
+): RuleResult<keyof typeof errorMessages, RawOptions> {
   const [{ allowReturningBranches, ignoreCodePattern }] = options;
 
   if (shouldIgnorePattern(node.test, context, undefined, undefined, ignoreCodePattern)) {
@@ -302,9 +302,9 @@ function checkIfStatement(
  */
 function checkSwitchStatement(
   node: TSESTree.SwitchStatement,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-  options: Readonly<Options>,
-): RuleResult<keyof typeof errorMessages, Options> {
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
+  options: Readonly<RawOptions>,
+): RuleResult<keyof typeof errorMessages, RawOptions> {
   const [{ allowReturningBranches }] = options;
 
   return {
@@ -321,7 +321,7 @@ function checkSwitchStatement(
 }
 
 // Create the rule.
-export const rule: Rule<keyof typeof errorMessages, Options> = createRule<keyof typeof errorMessages, Options>(
+export const rule: Rule<keyof typeof errorMessages, RawOptions> = createRule<keyof typeof errorMessages, RawOptions>(
   name,
   meta,
   defaultOptions,
