@@ -76,6 +76,7 @@ const defaultOptions: RawOptions = [
  */
 const errorMessages = {
   generic: "Potentially unnecessary function wrapper.",
+  genericSuggestion: "Remove unnecessary function wrapper.",
 } as const;
 
 /**
@@ -154,7 +155,7 @@ function buildSuggestions(
 ): ReportSuggestionArray<keyof typeof errorMessages> {
   return [
     {
-      messageId: "generic",
+      messageId: "genericSuggestion",
       fix: (fixer) => {
         const functionCallToReference = fixFunctionCallToReference(context, fixer, node, caller);
         if (functionCallToReference === null) {
