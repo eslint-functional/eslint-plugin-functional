@@ -14,7 +14,7 @@ exports[`prefer-tacit > typescript > options > checkMemberExpressions > report m
     "severity": 2,
     "suggestions": [
       {
-        "desc": "Potentially unnecessary function wrapper.",
+        "desc": "Remove unnecessary function wrapper.",
         "fix": {
           "range": [
             46,
@@ -22,7 +22,7 @@ exports[`prefer-tacit > typescript > options > checkMemberExpressions > report m
           ],
           "text": "const foo = a.b.bind(a);",
         },
-        "messageId": "generic",
+        "messageId": "genericSuggestion",
       },
     ],
   },
@@ -43,7 +43,7 @@ exports[`prefer-tacit > typescript > options > checkMemberExpressions > report m
     "severity": 2,
     "suggestions": [
       {
-        "desc": "Potentially unnecessary function wrapper.",
+        "desc": "Remove unnecessary function wrapper.",
         "fix": {
           "range": [
             12,
@@ -51,7 +51,7 @@ exports[`prefer-tacit > typescript > options > checkMemberExpressions > report m
           ],
           "text": "/a/.test.bind(/a/)",
         },
-        "messageId": "generic",
+        "messageId": "genericSuggestion",
       },
     ],
   },
@@ -72,7 +72,7 @@ exports[`prefer-tacit > typescript > reports functions that are just instantiati
     "severity": 2,
     "suggestions": [
       {
-        "desc": "Potentially unnecessary function wrapper.",
+        "desc": "Remove unnecessary function wrapper.",
         "fix": {
           "range": [
             26,
@@ -80,7 +80,7 @@ exports[`prefer-tacit > typescript > reports functions that are just instantiati
           ],
           "text": "const foo = f<number>;",
         },
-        "messageId": "generic",
+        "messageId": "genericSuggestion",
       },
     ],
   },
@@ -101,7 +101,7 @@ exports[`prefer-tacit > typescript > reports functions that can "safely" be chan
     "severity": 2,
     "suggestions": [
       {
-        "desc": "Potentially unnecessary function wrapper.",
+        "desc": "Remove unnecessary function wrapper.",
         "fix": {
           "range": [
             29,
@@ -109,7 +109,7 @@ exports[`prefer-tacit > typescript > reports functions that can "safely" be chan
           ],
           "text": "f",
         },
-        "messageId": "generic",
+        "messageId": "genericSuggestion",
       },
     ],
   },
@@ -130,7 +130,7 @@ exports[`prefer-tacit > typescript > reports functions that can "safely" be chan
     "severity": 2,
     "suggestions": [
       {
-        "desc": "Potentially unnecessary function wrapper.",
+        "desc": "Remove unnecessary function wrapper.",
         "fix": {
           "range": [
             26,
@@ -138,7 +138,7 @@ exports[`prefer-tacit > typescript > reports functions that can "safely" be chan
           ],
           "text": "Boolean",
         },
-        "messageId": "generic",
+        "messageId": "genericSuggestion",
       },
     ],
   },
