@@ -26,7 +26,7 @@ export const fullName: `${typeof ruleNameScope}/${typeof name}` = `${ruleNameSco
 /**
  * The options this rule can take.
  */
-type Options = [IgnoreIdentifierPatternOption & IgnoreCodePatternOption];
+type RawOptions = [IgnoreIdentifierPatternOption & IgnoreCodePatternOption];
 
 /**
  * The schema for the rule options.
@@ -42,7 +42,7 @@ const schema: JSONSchema4[] = [
 /**
  * The default options for the rule.
  */
-const defaultOptions: Options = [{}];
+const defaultOptions: RawOptions = [{}];
 
 /**
  * The possible error messages.
@@ -55,7 +55,7 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages, RawOptions> = {
   type: "suggestion",
   docs: {
     category: "No Other Paradigms",
@@ -73,13 +73,13 @@ const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
  */
 function checkClass(
   node: ESClass,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-  options: Readonly<Options>,
-): RuleResult<keyof typeof errorMessages, Options> {
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
+  options: Readonly<RawOptions>,
+): RuleResult<keyof typeof errorMessages, RawOptions> {
   const [optionsObject] = options;
   const { ignoreIdentifierPattern, ignoreCodePattern } = optionsObject;
 
-  const mut_descriptors: Array<RuleResult<keyof typeof errorMessages, Options>["descriptors"][number]> = [];
+  const mut_descriptors: Array<RuleResult<keyof typeof errorMessages, RawOptions>["descriptors"][number]> = [];
 
   if (!shouldIgnorePattern(node, context, ignoreIdentifierPattern, undefined, ignoreCodePattern)) {
     if (node.abstract) {
@@ -124,7 +124,7 @@ function checkClass(
 }
 
 // Create the rule.
-export const rule: Rule<keyof typeof errorMessages, Options> = createRule<keyof typeof errorMessages, Options>(
+export const rule: Rule<keyof typeof errorMessages, RawOptions> = createRule<keyof typeof errorMessages, RawOptions>(
   name,
   meta,
   defaultOptions,

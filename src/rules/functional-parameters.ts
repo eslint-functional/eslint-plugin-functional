@@ -139,7 +139,7 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages, RawOptions> = {
   type: "suggestion",
   docs: {
     category: "Currying",

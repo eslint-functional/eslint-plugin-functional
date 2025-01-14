@@ -31,7 +31,11 @@ type Docs = {
 /**
  * Any custom rule meta properties.
  */
-export type NamedCreateRuleCustomMeta<T extends string> = NamedCreateRuleMeta<T, Docs>;
+export type NamedCreateRuleCustomMeta<T extends string, Options extends ReadonlyArray<unknown>> = NamedCreateRuleMeta<
+  T,
+  Docs,
+  Options
+>;
 
 /**
  * The definition of a rule.
@@ -41,7 +45,7 @@ export type Rule<MessageIds extends string, Options extends ReadonlyArray<unknow
   Options,
   Docs
 > & {
-  meta: NamedCreateRuleCustomMeta<MessageIds>;
+  meta: NamedCreateRuleCustomMeta<MessageIds, Options>;
 };
 
 /**
@@ -101,7 +105,7 @@ function checkNode<
  */
 export function createRule<MessageIds extends string, Options extends BaseOptions>(
   name: string,
-  meta: Readonly<NamedCreateRuleCustomMeta<MessageIds>>,
+  meta: Readonly<NamedCreateRuleCustomMeta<MessageIds, Options>>,
   defaultOptions: Options,
   ruleFunctionsMap: RuleFunctionsMap<any, MessageIds, Options>,
 ): Rule<MessageIds, Options> {
@@ -113,7 +117,7 @@ export function createRule<MessageIds extends string, Options extends BaseOption
  */
 export function createRuleUsingFunction<MessageIds extends string, Options extends BaseOptions>(
   name: string,
-  meta: Readonly<NamedCreateRuleCustomMeta<MessageIds>>,
+  meta: Readonly<NamedCreateRuleCustomMeta<MessageIds, Options>>,
   defaultOptions: Options,
   createFunction: (
     context: Readonly<RuleContext<MessageIds, Options>>,

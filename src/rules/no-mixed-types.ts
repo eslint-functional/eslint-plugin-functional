@@ -36,7 +36,7 @@ export const fullName: `${typeof ruleNameScope}/${typeof name}` = `${ruleNameSco
 /**
  * The options this rule can take.
  */
-type Options = [
+type RawOptions = [
   {
     checkInterfaces: boolean;
     checkTypeLiterals: boolean;
@@ -64,7 +64,7 @@ const schema: JSONSchema4[] = [
 /**
  * The default options for the rule.
  */
-const defaultOptions: Options = [
+const defaultOptions: RawOptions = [
   {
     checkInterfaces: true,
     checkTypeLiterals: true,
@@ -81,7 +81,7 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages, RawOptions> = {
   type: "suggestion",
   docs: {
     category: "No Other Paradigms",
@@ -99,7 +99,7 @@ const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
  */
 function hasTypeElementViolations(
   typeElements: ReadonlyArray<TSESTree.TypeElement>,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
 ): boolean {
   return !typeElements
     .map(
@@ -120,9 +120,9 @@ function hasTypeElementViolations(
  */
 function checkTSInterfaceDeclaration(
   node: TSESTree.TSInterfaceDeclaration,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-  options: Readonly<Options>,
-): RuleResult<keyof typeof errorMessages, Options> {
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
+  options: Readonly<RawOptions>,
+): RuleResult<keyof typeof errorMessages, RawOptions> {
   return {
     context,
     descriptors: hasTypeElementViolations(node.body.body, context) ? [{ node, messageId: "generic" }] : [],
@@ -134,9 +134,9 @@ function checkTSInterfaceDeclaration(
  */
 function checkTSTypeAliasDeclaration(
   node: TSESTree.TSTypeAliasDeclaration,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-  options: Readonly<Options>,
-): RuleResult<keyof typeof errorMessages, Options> {
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
+  options: Readonly<RawOptions>,
+): RuleResult<keyof typeof errorMessages, RawOptions> {
   return {
     context,
     descriptors:
@@ -155,9 +155,9 @@ function checkTSTypeAliasDeclaration(
 }
 
 // Create the rule.
-export const rule: Rule<keyof typeof errorMessages, Options> = createRuleUsingFunction<
+export const rule: Rule<keyof typeof errorMessages, RawOptions> = createRuleUsingFunction<
   keyof typeof errorMessages,
-  Options
+  RawOptions
 >(name, meta, defaultOptions, (context, options) => {
   const [{ checkInterfaces, checkTypeLiterals }] = options;
 

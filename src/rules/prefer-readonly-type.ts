@@ -49,7 +49,7 @@ export const fullName: `${typeof ruleNameScope}/${typeof name}` = `${ruleNameSco
 /**
  * The options this rule can take.
  */
-type Options = [
+type RawOptions = [
   {
     allowLocalMutation: boolean;
     allowMutableReturnType: boolean;
@@ -108,7 +108,7 @@ const schema: JSONSchema4[] = [
 /**
  * The default options for the rule.
  */
-const defaultOptions: Options = [
+const defaultOptions: RawOptions = [
   {
     checkImplicit: false,
     ignoreClass: false,
@@ -133,7 +133,7 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages, RawOptions> = {
   deprecated: true,
   replacedBy: ["functional/prefer-immutable-types", "functional/type-declaration-immutability"],
   type: "suggestion",
@@ -185,9 +185,9 @@ function shouldIgnorePattern2(
  */
 function checkArrayOrTupleType(
   node: ESArrayTupleType,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-  options: Readonly<Options>,
-): RuleResult<keyof typeof errorMessages, Options> {
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
+  options: Readonly<RawOptions>,
+): RuleResult<keyof typeof errorMessages, RawOptions> {
   const [optionsObject] = options;
   const { allowLocalMutation, allowMutableReturnType, ignoreClass, ignoreCollections, ignoreInterface, ignorePattern } =
     optionsObject;
@@ -232,9 +232,9 @@ function checkArrayOrTupleType(
  */
 function checkMappedType(
   node: TSESTree.TSMappedType,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-  options: Readonly<Options>,
-): RuleResult<keyof typeof errorMessages, Options> {
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
+  options: Readonly<RawOptions>,
+): RuleResult<keyof typeof errorMessages, RawOptions> {
   const [optionsObject] = options;
   const { allowLocalMutation, ignoreClass, ignoreInterface, ignorePattern } = optionsObject;
 
@@ -270,9 +270,9 @@ function checkMappedType(
  */
 function checkTypeReference(
   node: TSESTree.TSTypeReference,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-  options: Readonly<Options>,
-): RuleResult<keyof typeof errorMessages, Options> {
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
+  options: Readonly<RawOptions>,
+): RuleResult<keyof typeof errorMessages, RawOptions> {
   const [optionsObject] = options;
   const { allowLocalMutation, ignoreClass, ignoreInterface, ignorePattern, allowMutableReturnType, ignoreCollections } =
     optionsObject;
@@ -326,9 +326,9 @@ function checkProperty(
     | TSESTree.TSIndexSignature
     | TSESTree.TSParameterProperty
     | TSESTree.TSPropertySignature,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-  options: Readonly<Options>,
-): RuleResult<keyof typeof errorMessages, Options> {
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
+  options: Readonly<RawOptions>,
+): RuleResult<keyof typeof errorMessages, RawOptions> {
   const [optionsObject] = options;
   const { allowLocalMutation, ignoreClass, ignoreInterface, ignorePattern, allowMutableReturnType } = optionsObject;
 
@@ -373,9 +373,9 @@ function checkImplicitType(
     | TSESTree.FunctionDeclaration
     | TSESTree.FunctionExpression
     | TSESTree.VariableDeclaration,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-  options: Readonly<Options>,
-): RuleResult<keyof typeof errorMessages, Options> {
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
+  options: Readonly<RawOptions>,
+): RuleResult<keyof typeof errorMessages, RawOptions> {
   const [optionsObject] = options;
   const { allowLocalMutation, ignoreClass, ignoreInterface, ignorePattern, checkImplicit, ignoreCollections } =
     optionsObject;
@@ -441,7 +441,7 @@ function checkImplicitType(
 }
 
 // Create the rule.
-export const rule: Rule<keyof typeof errorMessages, Options> = createRule<keyof typeof errorMessages, Options>(
+export const rule: Rule<keyof typeof errorMessages, RawOptions> = createRule<keyof typeof errorMessages, RawOptions>(
   name,
   meta,
   defaultOptions,

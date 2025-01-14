@@ -18,7 +18,7 @@ export const fullName: `${typeof ruleNameScope}/${typeof name}` = `${ruleNameSco
 /**
  * The options this rule can take.
  */
-type Options = [
+type RawOptions = [
   {
     allowCatch: boolean;
     allowFinally: boolean;
@@ -46,7 +46,7 @@ const schema: JSONSchema4[] = [
 /**
  * The default options for the rule.
  */
-const defaultOptions: Options = [
+const defaultOptions: RawOptions = [
   {
     allowCatch: false,
     allowFinally: false,
@@ -64,7 +64,7 @@ const errorMessages = {
 /**
  * The meta data for this rule.
  */
-const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
+const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages, RawOptions> = {
   type: "suggestion",
   docs: {
     category: "No Exceptions",
@@ -82,9 +82,9 @@ const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages> = {
  */
 function checkTryStatement(
   node: TSESTree.TryStatement,
-  context: Readonly<RuleContext<keyof typeof errorMessages, Options>>,
-  options: Readonly<Options>,
-): RuleResult<keyof typeof errorMessages, Options> {
+  context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
+  options: Readonly<RawOptions>,
+): RuleResult<keyof typeof errorMessages, RawOptions> {
   const [{ allowCatch, allowFinally }] = options;
 
   return {
@@ -99,7 +99,7 @@ function checkTryStatement(
 }
 
 // Create the rule.
-export const rule: Rule<keyof typeof errorMessages, Options> = createRule<keyof typeof errorMessages, Options>(
+export const rule: Rule<keyof typeof errorMessages, RawOptions> = createRule<keyof typeof errorMessages, RawOptions>(
   name,
   meta,
   defaultOptions,
