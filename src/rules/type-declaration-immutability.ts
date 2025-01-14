@@ -44,11 +44,13 @@ export enum RuleEnforcementComparator {
 type FixerConfigRaw = {
   pattern: string;
   replace: string;
+  message?: string;
 };
 
 type FixerConfig = {
   pattern: RegExp;
   replace: string;
+  message?: string;
 };
 
 type SuggestionsConfig = FixerConfig[];
@@ -188,6 +190,7 @@ const errorMessages = {
   Exactly: 'This type is declare to have an immutability of exactly "{{ expected }}" (actual: "{{ actual }}").',
   AtMost: 'This type is declare to have an immutability of at most "{{ expected }}" (actual: "{{ actual }}").',
   More: 'This type is declare to have an immutability more than "{{ expected }}" (actual: "{{ actual }}").',
+  userDefined: "{{ message }}",
 } as const;
 
 /**
@@ -313,7 +316,6 @@ function getConfiguredSuggestions<T extends TSESTree.Node>(
   node: T,
   context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
   configs: ReadonlyArray<FixerConfig>,
-  messageId: keyof typeof errorMessages,
 ): NonNullable<Descriptor["suggest"]> | null {
   const text = context.sourceCode.getText(node);
   const matchingConfig = configs.filter((c) => c.pattern.test(text));
@@ -322,7 +324,10 @@ function getConfiguredSuggestions<T extends TSESTree.Node>(
   }
   return matchingConfig.map((config) => ({
     fix: (fixer) => fixer.replaceText(node, text.replace(config.pattern, config.replace)),
-    messageId,
+    messageId: "userDefined",
+    data: {
+      message: config.message ?? `Replace with: ${text.replace(config.pattern, config.replace)}`,
+    },
   }));
 }
 
@@ -376,7 +381,7 @@ function getResults(
   const suggest =
     rule.suggestions === false || isTSInterfaceDeclaration(node)
       ? null
-      : getConfiguredSuggestions(node.typeAnnotation, context, rule.suggestions, messageId);
+      : getConfiguredSuggestions(node.typeAnnotation, context, rule.suggestions);
 
   return {
     context,
