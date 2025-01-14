@@ -53,8 +53,10 @@ function getNodeIdentifierText(
 
   let mut_identifierText: string | undefined | null = null;
 
-  if (isIdentifier(node) || isPrivateIdentifier(node)) {
+  if (isIdentifier(node)) {
     mut_identifierText = node.name;
+  } else if (isPrivateIdentifier(node)) {
+    mut_identifierText = `#${node.name}`;
   } else if (hasID(node) && isDefined(node.id)) {
     mut_identifierText = getNodeIdentifierText(node.id, context);
   } else if (hasKey(node) && isDefined(node.key)) {
