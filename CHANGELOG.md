@@ -1,6 +1,18 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+# [7.3.0](https://github.com/eslint-functional/eslint-plugin-functional/compare/v7.2.2...v7.3.0) (2025-01-14)
+
+
+### Bug Fixes
+
+* **prefer-tacit:** improve suggestion message ([59194b2](https://github.com/eslint-functional/eslint-plugin-functional/commit/59194b25291f8a9db54370540cc0a07f05633c75))
+
+
+### Features
+
+* **type-declaration-immutability:** allow defining custom suggestion messages ([037a3c7](https://github.com/eslint-functional/eslint-plugin-functional/commit/037a3c704628d4a16cb00b9b890a0055557906b4))
+
 ## [7.2.2](https://github.com/eslint-functional/eslint-plugin-functional/compare/v7.2.1...v7.2.2) (2025-01-14)
 
 ## [7.2.1](https://github.com/eslint-functional/eslint-plugin-functional/compare/v7.2.0...v7.2.1) (2025-01-06)
