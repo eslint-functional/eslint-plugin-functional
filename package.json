@@ -113,7 +113,7 @@
     "cspell": "8.17.3",
     "dedent": "1.5.3",
     "eslint": "9.19.0",
-    "eslint-config-prettier": "9.1.0",
+    "eslint-config-prettier": "10.0.1",
     "eslint-doc-generator": "2.0.2",
     "eslint-flat-config-utils": "0.4.0",
     "eslint-import-resolver-typescript": "3.7.0",
