@@ -117,7 +117,7 @@
     "eslint-doc-generator": "2.0.2",
     "eslint-flat-config-utils": "0.4.0",
     "eslint-import-resolver-typescript": "3.7.0",
-    "eslint-merge-processors": "0.1.0",
+    "eslint-merge-processors": "1.0.0",
     "eslint-plugin-eslint-comments": "3.2.0",
     "eslint-plugin-eslint-plugin": "6.4.0",
     "eslint-plugin-format": "0.1.3",
