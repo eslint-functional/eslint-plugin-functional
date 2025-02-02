@@ -41,7 +41,7 @@ importers:
         version: 1.2.5(eslint@9.19.0(jiti@2.4.2))
       '@rebeccastevens/eslint-config':
         specifier: 3.5.3
-        version: 3.5.3(bt3h4o7ghknlov4eoxz6ex7asi)
+        version: 3.5.3(gruyfs2xhrr6sfqlc6vezdr3my)
       '@rollup/plugin-replace':
         specifier: 6.0.2
         version: 6.0.2(rollup@4.30.1)
@@ -118,8 +118,8 @@ importers:
         specifier: 6.4.0
         version: 6.4.0(eslint@9.19.0(jiti@2.4.2))
       eslint-plugin-format:
-        specifier: 0.1.3
-        version: 0.1.3(eslint@9.19.0(jiti@2.4.2))
+        specifier: 1.0.1
+        version: 1.0.1(eslint@9.19.0(jiti@2.4.2))
       eslint-plugin-functional:
         specifier: link:.
         version: 'link:'
@@ -1038,8 +1038,8 @@ packages:
   '@dprint/markdown@0.17.8':
     resolution: {integrity: sha512-ukHFOg+RpG284aPdIg7iPrCYmMs3Dqy43S1ejybnwlJoFiW02b+6Bbr5cfZKFRYNP3dKGM86BqHEnMzBOyLvvA==}
 
-  '@dprint/toml@0.6.3':
-    resolution: {integrity: sha512-zQ42I53sb4WVHA+5yoY1t59Zk++Ot02AvUgtNKLzTT8mPyVqVChFcePa3on/xIoKEgH+RoepgPHzqfk9837YFw==}
+  '@dprint/toml@0.6.4':
+    resolution: {integrity: sha512-bZXIUjxr0LIuHWshZr/5mtUkOrnh0NKVZEF6ACojW5z7zkJu7s9sV2mMXm8XQDqN4cJzdHYUYzUyEGdfciaLJA==}
 
   '@es-joy/jsdoccomment@0.49.0':
     resolution: {integrity: sha512-xjZTSFgECpb9Ohuk5yMX5RhUEbfeQcuOp8IF60e+wyzWEF0M5xeSgqsfLtvPEX8BIyOX9saZqzuGPmZ8oWc+5Q==}
@@ -2772,8 +2772,8 @@ packages:
       eslint-import-resolver-webpack:
         optional: true
 
-  eslint-parser-plain@0.1.0:
-    resolution: {integrity: sha512-oOeA6FWU0UJT/Rxc3XF5Cq0nbIZbylm7j8+plqq0CZoE6m4u32OXJrR+9iy4srGMmF6v6pmgvP1zPxSRIGh3sg==}
+  eslint-parser-plain@0.1.1:
+    resolution: {integrity: sha512-KRgd6wuxH4U8kczqPp+Oyk4irThIhHWxgFgLDtpgjUGVIS3wGrJntvZW/p6hHq1T4FOwnOtCNkvAI4Kr+mQ/Hw==}
 
   eslint-plugin-es-x@7.8.0:
     resolution: {integrity: sha512-7Ds8+wAAoV3T+LAKeu39Y5BzXCrGKrcISfgKEqTS4BDN8SFEDQd0S43jiQ8vIa3wUKD07qitZdfzlenSi8/0qQ==}
@@ -2793,8 +2793,8 @@ packages:
     peerDependencies:
       eslint: '>=8.23.0'
 
-  eslint-plugin-format@0.1.3:
-    resolution: {integrity: sha512-vTmshuv1iMfmcM1HADnyhae5MBBGlJZBZyZ+ybtXCEzRe3nRhUvLX+6rAvsEfcdK6a2pqpLs/F530dXKvfQqYQ==}
+  eslint-plugin-format@1.0.1:
+    resolution: {integrity: sha512-Tdns+CDjS+m7QrM85wwRi2yLae88XiWVdIOXjp9mDII0pmTBQlczPCmjpKnjiUIY3yPZNLqb5Ms/A/JXcBF2Dw==}
     peerDependencies:
       eslint: ^8.40.0 || ^9.0.0
 
@@ -6218,7 +6218,7 @@ snapshots:
 
   '@dprint/markdown@0.17.8': {}
 
-  '@dprint/toml@0.6.3': {}
+  '@dprint/toml@0.6.4': {}
 
   '@es-joy/jsdoccomment@0.49.0':
     dependencies:
@@ -6565,7 +6565,7 @@ snapshots:
       '@pnpm/network.ca-file': 1.0.2
       config-chain: 1.1.13
 
-  '@rebeccastevens/eslint-config@3.5.3(bt3h4o7ghknlov4eoxz6ex7asi)':
+  '@rebeccastevens/eslint-config@3.5.3(gruyfs2xhrr6sfqlc6vezdr3my)':
     dependencies:
       '@antfu/install-pkg': 0.5.0
       '@clack/prompts': 0.9.1
@@ -6584,7 +6584,7 @@ snapshots:
       eslint-import-resolver-typescript: 3.7.0(eslint-plugin-import-x@4.6.1(eslint@9.19.0(jiti@2.4.2))(typescript@5.7.3))(eslint-plugin-import@2.30.0)(eslint@9.19.0(jiti@2.4.2))
       eslint-merge-processors: 1.0.0(eslint@9.19.0(jiti@2.4.2))
       eslint-plugin-eslint-comments: 3.2.0(eslint@9.19.0(jiti@2.4.2))
-      eslint-plugin-format: 0.1.3(eslint@9.19.0(jiti@2.4.2))
+      eslint-plugin-format: 1.0.1(eslint@9.19.0(jiti@2.4.2))
       eslint-plugin-functional: 'link:'
       eslint-plugin-import-x: 4.6.1(eslint@9.19.0(jiti@2.4.2))(typescript@5.7.3)
       eslint-plugin-jsdoc: 50.6.1(eslint@9.19.0(jiti@2.4.2))
@@ -7949,7 +7949,7 @@ snapshots:
       - supports-color
     optional: true
 
-  eslint-parser-plain@0.1.0: {}
+  eslint-parser-plain@0.1.1: {}
 
   eslint-plugin-es-x@7.8.0(eslint@9.19.0(jiti@2.4.2)):
     dependencies:
@@ -7970,14 +7970,14 @@ snapshots:
       eslint: 9.19.0(jiti@2.4.2)
       estraverse: 5.3.0
 
-  eslint-plugin-format@0.1.3(eslint@9.19.0(jiti@2.4.2)):
+  eslint-plugin-format@1.0.1(eslint@9.19.0(jiti@2.4.2)):
     dependencies:
       '@dprint/formatter': 0.3.0
       '@dprint/markdown': 0.17.8
-      '@dprint/toml': 0.6.3
+      '@dprint/toml': 0.6.4
       eslint: 9.19.0(jiti@2.4.2)
       eslint-formatting-reporter: 0.0.0(eslint@9.19.0(jiti@2.4.2))
-      eslint-parser-plain: 0.1.0
+      eslint-parser-plain: 0.1.1
       prettier: 3.4.2
       synckit: 0.9.2
 
