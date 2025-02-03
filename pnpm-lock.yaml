@@ -163,8 +163,8 @@ importers:
         specifier: 1.16.0
         version: 1.16.0(eslint@9.19.0(jiti@2.4.2))
       eslint-vitest-rule-tester:
-        specifier: 0.7.1
-        version: 0.7.1(eslint@9.19.0(jiti@2.4.2))(typescript@5.7.3)(vitest@2.1.8(@types/node@18.19.70))
+        specifier: 1.1.0
+        version: 1.1.0(eslint@9.19.0(jiti@2.4.2))(typescript@5.7.3)(vitest@2.1.8(@types/node@18.19.70))
       fast-glob:
         specifier: 3.3.3
         version: 3.3.3
@@ -232,8 +232,8 @@ packages:
   '@antfu/install-pkg@0.5.0':
     resolution: {integrity: sha512-dKnk2xlAyC7rvTkpkHmu+Qy/2Zc3Vm/l8PtNyIOGDBtXPY3kThfU4ORNEp3V7SXw5XSOb+tOJaUYpfquPzL/Tg==}
 
-  '@antfu/utils@0.7.10':
-    resolution: {integrity: sha512-+562v9k4aI80m1+VuMHehNJWLOFjBnXn3tdOitzD0il5b7smkSBal4+a3oKiQTbrwMmN/TBUMDvbdoWDehgOww==}
+  '@antfu/utils@8.1.0':
+    resolution: {integrity: sha512-XPR7Jfwp0FFl/dFYPX8ZjpmU4/1mIXTjnZ1ba48BLMyKOV62/tiRjdsFcPs2hsYcSud4tzk7w3a3LjX8Fu3huA==}
 
   '@babel/code-frame@7.26.2':
     resolution: {integrity: sha512-RJlIHRueQgwWitWgF8OdFYGZX328Ax5BCemNGlqHfplnRT9ESi8JkFlvaVYbS+UubVY6dpv87Fs2u5M29iNFVQ==}
@@ -2919,11 +2919,11 @@ packages:
     resolution: {integrity: sha512-UyLnSehNt62FFhSwjZlHmeokpRK59rcz29j+F1/aDgbkbRTk7wIc9XzdoasMUbRNKDM0qQt/+BJ4BrpFeABemw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  eslint-vitest-rule-tester@0.7.1:
-    resolution: {integrity: sha512-OiIOpJq6dQdjvWrC6LCEv1SMBDtGg4kNHYThy7nG4Yr9dSXsnlyU3DTUWI4a4LbDePpohxCopNcCyfS6oCi3rA==}
+  eslint-vitest-rule-tester@1.1.0:
+    resolution: {integrity: sha512-rilURDIBbHZKUDXdnlDnewJ3A5NdiK9HpYgdaeKY7rPpn+nI1KfvB/DyYMc0R8KgL9ziu5lbXVmWukgX0JPbAQ==}
     peerDependencies:
       eslint: ^9.0.0
-      vitest: ^1.0.0 || ^2.0.0
+      vitest: ^1.0.0 || ^2.0.0 || ^3.0.0
 
   eslint@9.19.0:
     resolution: {integrity: sha512-ug92j0LepKlbbEv6hD911THhoRHmbdXt2gX+VDABAW/Ir7D3nqKdv5Pf5vtlyY6HQMTEP2skXY43ueqTCWssEA==}
@@ -5252,7 +5252,7 @@ snapshots:
       package-manager-detector: 0.2.6
       tinyexec: 0.3.1
 
-  '@antfu/utils@0.7.10': {}
+  '@antfu/utils@8.1.0': {}
 
   '@babel/code-frame@7.26.2':
     dependencies:
@@ -8207,9 +8207,9 @@ snapshots:
 
   eslint-visitor-keys@4.2.0: {}
 
-  eslint-vitest-rule-tester@0.7.1(eslint@9.19.0(jiti@2.4.2))(typescript@5.7.3)(vitest@2.1.8(@types/node@18.19.70)):
+  eslint-vitest-rule-tester@1.1.0(eslint@9.19.0(jiti@2.4.2))(typescript@5.7.3)(vitest@2.1.8(@types/node@18.19.70)):
     dependencies:
-      '@antfu/utils': 0.7.10
+      '@antfu/utils': 8.1.0
       '@types/eslint': 9.6.1
       '@typescript-eslint/utils': 8.22.0(eslint@9.19.0(jiti@2.4.2))(typescript@5.7.3)
       eslint: 9.19.0(jiti@2.4.2)
