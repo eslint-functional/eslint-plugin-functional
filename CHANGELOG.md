@@ -1,6 +1,18 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+# [9.0.0](https://github.com/eslint-functional/eslint-plugin-functional/compare/v8.0.0...v9.0.0) (2025-02-23)
+
+
+### Features
+
+* **immutable-data:** add support for detecting map and set mutations ([#935](https://github.com/eslint-functional/eslint-plugin-functional/issues/935)) ([0386f3a](https://github.com/eslint-functional/eslint-plugin-functional/commit/0386f3a3a44457dcab78df3f6583e8c3aa6194c4)), closes [#934](https://github.com/eslint-functional/eslint-plugin-functional/issues/934)
+
+
+### BREAKING CHANGES
+
+* **immutable-data:** map and set mutations will now be reported
+
 # [8.0.0](https://github.com/eslint-functional/eslint-plugin-functional/compare/v7.3.0...v8.0.0) (2025-01-14)
 
 
