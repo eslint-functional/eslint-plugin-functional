@@ -23,13 +23,6 @@ import {
 export const ruleNameScope = "functional";
 
 /**
- * Higher order function to check if the two given values are the same.
- */
-export function isExpected<T>(expected: T): (actual: T) => boolean {
-  return (actual) => actual === expected;
-}
-
-/**
  * Does the given ExpressionStatement specify directive prologues.
  */
 export function isDirectivePrologue(node: TSESTree.ExpressionStatement): boolean {

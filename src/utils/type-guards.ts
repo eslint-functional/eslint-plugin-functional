@@ -324,11 +324,27 @@ export function isArrayType(context: RuleContext<string, ReadonlyArray<unknown>>
   return typeMatches(context, "Array", type);
 }
 
+export function isMapType(context: RuleContext<string, ReadonlyArray<unknown>>, type: Type | null): boolean {
+  return typeMatches(context, "Map", type);
+}
+
+export function isSetType(context: RuleContext<string, ReadonlyArray<unknown>>, type: Type | null): boolean {
+  return typeMatches(context, "Set", type);
+}
+
 export function isArrayConstructorType(
   context: RuleContext<string, ReadonlyArray<unknown>>,
   type: Type | null,
 ): boolean {
   return typeMatches(context, "ArrayConstructor", type);
+}
+
+export function isMapConstructorType(context: RuleContext<string, ReadonlyArray<unknown>>, type: Type | null): boolean {
+  return typeMatches(context, "MapConstructor", type);
+}
+
+export function isSetConstructorType(context: RuleContext<string, ReadonlyArray<unknown>>, type: Type | null): boolean {
+  return typeMatches(context, "SetConstructor", type);
 }
 
 export function isObjectConstructorType(

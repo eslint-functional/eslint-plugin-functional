@@ -67,6 +67,7 @@ This rule accepts an options object of the following type:
 ```ts
 type Options = {
   ignoreClasses: boolean | "fieldsOnly";
+  ignoreMapsAndSets: boolean;
   ignoreImmediateMutation: boolean;
   ignoreNonConstDeclarations:
     | boolean
@@ -113,6 +114,7 @@ type Options = {
 ```ts
 type Options = {
   ignoreClasses: false;
+  ignoreMapsAndSets: false;
   ignoreImmediateMutation: true;
   ignoreNonConstDeclarations: false;
 };
@@ -158,6 +160,10 @@ If true, parameters won't be ignored, while other non-const variables will be.
 Ignore mutations inside classes.
 
 Classes already aren't functional so ignore mutations going on inside them.
+
+### `ignoreMapsAndSets`
+
+Ignore mutations of builtin `Map`s and `Set`s.
 
 ### `ignoreIdentifierPattern`
 

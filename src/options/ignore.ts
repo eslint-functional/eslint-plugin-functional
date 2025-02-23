@@ -96,6 +96,22 @@ export const ignoreClassesOptionSchema: JSONSchema4ObjectSchema["properties"] = 
 };
 
 /**
+ * The option to ignore mapsAndSets.
+ */
+export type IgnoreMapsAndSetsOption = Readonly<{
+  ignoreMapsAndSets: boolean;
+}>;
+
+/**
+ * The schema for the option to ignore maps and sets.
+ */
+export const ignoreMapsAndSetsOptionSchema: JSONSchema4ObjectSchema["properties"] = {
+  ignoreMapsAndSets: {
+    type: "boolean",
+  },
+};
+
+/**
  * The option to ignore prefix selector.
  */
 export type IgnorePrefixSelectorOption = Readonly<{

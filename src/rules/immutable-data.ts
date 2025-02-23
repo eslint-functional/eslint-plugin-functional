@@ -7,17 +7,19 @@ import {
   type IgnoreAccessorPatternOption,
   type IgnoreClassesOption,
   type IgnoreIdentifierPatternOption,
+  type IgnoreMapsAndSetsOption,
   type OverridableOptions,
   type RawOverridableOptions,
   getCoreOptions,
   ignoreAccessorPatternOptionSchema,
   ignoreClassesOptionSchema,
   ignoreIdentifierPatternOptionSchema,
+  ignoreMapsAndSetsOptionSchema,
   shouldIgnoreClasses,
   shouldIgnorePattern,
   upgradeRawOverridableOptions,
 } from "#/options";
-import { isExpected, ruleNameScope } from "#/utils/misc";
+import { ruleNameScope } from "#/utils/misc";
 import { type NamedCreateRuleCustomMeta, type Rule, type RuleResult, createRule, getTypeOfNode } from "#/utils/rule";
 import { overridableOptionsSchema } from "#/utils/schemas";
 import { findRootIdentifier, isDefinedByMutableVariable, isInConstructor } from "#/utils/tree";
@@ -27,9 +29,13 @@ import {
   isArrayType,
   isCallExpression,
   isIdentifier,
+  isMapConstructorType,
+  isMapType,
   isMemberExpression,
   isNewExpression,
   isObjectConstructorType,
+  isSetConstructorType,
+  isSetType,
   isTSAsExpression,
 } from "#/utils/type-guards";
 
@@ -45,6 +51,7 @@ export const fullName: `${typeof ruleNameScope}/${typeof name}` = `${ruleNameSco
 
 type CoreOptions = IgnoreAccessorPatternOption &
   IgnoreClassesOption &
+  IgnoreMapsAndSetsOption &
   IgnoreIdentifierPatternOption & {
     ignoreImmediateMutation: boolean;
     ignoreNonConstDeclarations:
@@ -64,6 +71,7 @@ const coreOptionsPropertiesSchema = deepmerge(
   ignoreIdentifierPatternOptionSchema,
   ignoreAccessorPatternOptionSchema,
   ignoreClassesOptionSchema,
+  ignoreMapsAndSetsOptionSchema,
   {
     ignoreImmediateMutation: {
       type: "boolean",
@@ -98,6 +106,7 @@ const schema: JSONSchema4[] = [overridableOptionsSchema(coreOptionsPropertiesSch
 const defaultOptions = [
   {
     ignoreClasses: false,
+    ignoreMapsAndSets: false,
     ignoreImmediateMutation: true,
     ignoreNonConstDeclarations: false,
   },
@@ -110,6 +119,8 @@ const errorMessages = {
   generic: "Modifying an existing object/array is not allowed.",
   object: "Modifying properties of existing object not allowed.",
   array: "Modifying an array is not allowed.",
+  map: "Modifying a map is not allowed.",
+  set: "Modifying a set is not allowed.",
 } as const;
 
 /**
@@ -151,14 +162,38 @@ const arrayMutatorMethods = new Set([
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/prototype#Methods#Accessor_methods
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/prototype#Iteration_methods
  */
-const arrayNewObjectReturningMethods = ["concat", "slice", "filter", "map", "reduce", "reduceRight"];
+const arrayNewObjectReturningMethods = new Set(["concat", "slice", "filter", "map", "reduce", "reduceRight"]);
 
 /**
  * Array constructor functions that create a new array.
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array#Methods
  */
-const arrayConstructorFunctions = ["from", "of"];
+const arrayConstructorFunctions = new Set(["from", "of"]);
+
+/**
+ * Map methods that mutate an map.
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map
+ */
+const mapMutatorMethods = new Set(["clear", "delete", "set"]);
+
+/**
+ * Map methods that return a new object without mutating the original.
+ */
+const mapNewObjectReturningMethods = new Set<string>([]);
+
+/**
+ * Set methods that mutate an set.
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
+ */
+const setMutatorMethods = new Set(["add", "clear", "delete"]);
+
+/**
+ * Set methods that return a new object without mutating the original.
+ */
+const setNewObjectReturningMethods = new Set(["difference", "intersection", "symmetricDifference", "union"]);
 
 /**
  * Object constructor functions that mutate an object.
@@ -170,7 +205,7 @@ const objectConstructorMutatorFunctions = new Set(["assign", "defineProperties",
 /**
  * Object constructor functions that return new objects.
  */
-const objectConstructorNewObjectReturningMethods = [
+const objectConstructorNewObjectReturningMethods = new Set([
   "create",
   "entries",
   "fromEntries",
@@ -181,14 +216,14 @@ const objectConstructorNewObjectReturningMethods = [
   "groupBy",
   "keys",
   "values",
-];
+]);
 
 /**
  * String constructor functions that return new objects.
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String#Methods
  */
-const stringConstructorNewObjectReturningMethods = ["split"];
+const stringConstructorNewObjectReturningMethods = new Set(["split"]);
 
 /**
  * Check if the given assignment expression violates this rule.
@@ -391,27 +426,41 @@ function isInChainCallAndFollowsNew(
   }
 
   // Check for: new Array()
-  if (isNewExpression(node) && isArrayConstructorType(context, getTypeOfNode(node.callee, context))) {
-    return true;
+  if (isNewExpression(node)) {
+    const type = getTypeOfNode(node.callee, context);
+    return (
+      isArrayConstructorType(context, type) ||
+      isMapConstructorType(context, type) ||
+      isSetConstructorType(context, type)
+    );
   }
 
   if (isCallExpression(node) && isMemberExpression(node.callee) && isIdentifier(node.callee.property)) {
     // Check for: Array.from(iterable)
     if (
-      arrayConstructorFunctions.some(isExpected(node.callee.property.name)) &&
+      arrayConstructorFunctions.has(node.callee.property.name) &&
       isArrayConstructorType(context, getTypeOfNode(node.callee.object, context))
     ) {
       return true;
     }
 
     // Check for: array.slice(0)
-    if (arrayNewObjectReturningMethods.some(isExpected(node.callee.property.name))) {
+    if (arrayNewObjectReturningMethods.has(node.callee.property.name)) {
+      return true;
+    }
+
+    if (mapNewObjectReturningMethods.has(node.callee.property.name)) {
+      return true;
+    }
+
+    // Check for: set.difference(otherSet)
+    if (setNewObjectReturningMethods.has(node.callee.property.name)) {
       return true;
     }
 
     // Check for: Object.entries(object)
     if (
-      objectConstructorNewObjectReturningMethods.some(isExpected(node.callee.property.name)) &&
+      objectConstructorNewObjectReturningMethods.has(node.callee.property.name) &&
       isObjectConstructorType(context, getTypeOfNode(node.callee.object, context))
     ) {
       return true;
@@ -419,7 +468,7 @@ function isInChainCallAndFollowsNew(
 
     // Check for: "".split("")
     if (
-      stringConstructorNewObjectReturningMethods.some(isExpected(node.callee.property.name)) &&
+      stringConstructorNewObjectReturningMethods.has(node.callee.property.name) &&
       getTypeOfNode(node.callee.object, context).isStringLiteral()
     ) {
       return true;
@@ -506,6 +555,68 @@ function checkCallExpression(
       return {
         context,
         descriptors: [{ node, messageId: "array" }],
+      };
+    }
+  }
+
+  // Set mutation?
+  if (
+    setMutatorMethods.has(node.callee.property.name) &&
+    (!ignoreImmediateMutation || !isInChainCallAndFollowsNew(node.callee, context)) &&
+    isSetType(context, getTypeOfNode(node.callee.object, context))
+  ) {
+    if (ignoreNonConstDeclarations === false) {
+      return {
+        context,
+        descriptors: [{ node, messageId: "set" }],
+      };
+    }
+    const rootIdentifier = findRootIdentifier(node.callee.object);
+    if (
+      rootIdentifier === undefined ||
+      !isDefinedByMutableVariable(
+        rootIdentifier,
+        context,
+        (variableNode) =>
+          ignoreNonConstDeclarations === true ||
+          !ignoreNonConstDeclarations.treatParametersAsConst ||
+          shouldIgnorePattern(variableNode, context, ignoreIdentifierPattern, ignoreAccessorPattern),
+      )
+    ) {
+      return {
+        context,
+        descriptors: [{ node, messageId: "set" }],
+      };
+    }
+  }
+
+  // Map mutation?
+  if (
+    mapMutatorMethods.has(node.callee.property.name) &&
+    (!ignoreImmediateMutation || !isInChainCallAndFollowsNew(node.callee, context)) &&
+    isMapType(context, getTypeOfNode(node.callee.object, context))
+  ) {
+    if (ignoreNonConstDeclarations === false) {
+      return {
+        context,
+        descriptors: [{ node, messageId: "map" }],
+      };
+    }
+    const rootIdentifier = findRootIdentifier(node.callee.object);
+    if (
+      rootIdentifier === undefined ||
+      !isDefinedByMutableVariable(
+        rootIdentifier,
+        context,
+        (variableNode) =>
+          ignoreNonConstDeclarations === true ||
+          !ignoreNonConstDeclarations.treatParametersAsConst ||
+          shouldIgnorePattern(variableNode, context, ignoreIdentifierPattern, ignoreAccessorPattern),
+      )
+    ) {
+      return {
+        context,
+        descriptors: [{ node, messageId: "map" }],
       };
     }
   }
