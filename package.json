@@ -108,7 +108,7 @@
     "@types/node": "18.19.70",
     "@typescript-eslint/eslint-plugin": "8.22.0",
     "@typescript-eslint/parser": "8.22.0",
-    "@vitest/coverage-v8": "2.1.8",
+    "@vitest/coverage-v8": "3.0.7",
     "@vitest/eslint-plugin": "1.1.25",
     "cspell": "8.17.3",
     "dedent": "1.5.3",
@@ -153,7 +153,7 @@
     "tsx": "4.19.2",
     "typescript": "5.7.3",
     "vite-tsconfig-paths": "5.1.4",
-    "vitest": "2.1.8",
+    "vitest": "3.0.7",
     "yaml-eslint-parser": "1.2.3"
   },
   "peerDependencies": {
