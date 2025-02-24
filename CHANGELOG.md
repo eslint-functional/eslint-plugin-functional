@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+## [9.0.1](https://github.com/eslint-functional/eslint-plugin-functional/compare/v9.0.0...v9.0.1) (2025-02-24)
+
+
+### Bug Fixes
+
+* **immutable-data:** make ignoreMapsAndSets option actually work ([#936](https://github.com/eslint-functional/eslint-plugin-functional/issues/936)) ([2bcc407](https://github.com/eslint-functional/eslint-plugin-functional/commit/2bcc407a4e0c20885fec91ec007993d1818e63d6))
+
 # [9.0.0](https://github.com/eslint-functional/eslint-plugin-functional/compare/v8.0.0...v9.0.0) (2025-02-23)
 
 
