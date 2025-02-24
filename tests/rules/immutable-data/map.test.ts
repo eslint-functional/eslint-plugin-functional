@@ -28,6 +28,22 @@ describe(name, () => {
       expect(invalidResult.messages).toMatchSnapshot();
     });
 
+    it("doesn't report mutating map methods when ignoring maps and sets", () => {
+      valid({
+        code: dedent`
+          const x = new Map([[5, 6]]);
+          x.set(4, 8);
+          x.delete(4);
+          x.clear();
+        `,
+        options: [
+          {
+            ignoreMapsAndSets: true,
+          },
+        ],
+      });
+    });
+
     it("doesn't report non-mutating map methods", () => {
       valid(dedent`
         const x = new Map([[5, 6]]);

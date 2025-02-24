@@ -526,7 +526,7 @@ function checkCallExpression(
     };
   }
 
-  const { ignoreImmediateMutation } = optionsToUse;
+  const { ignoreImmediateMutation, ignoreMapsAndSets } = optionsToUse;
 
   // Array mutation?
   if (
@@ -559,65 +559,67 @@ function checkCallExpression(
     }
   }
 
-  // Set mutation?
-  if (
-    setMutatorMethods.has(node.callee.property.name) &&
-    (!ignoreImmediateMutation || !isInChainCallAndFollowsNew(node.callee, context)) &&
-    isSetType(context, getTypeOfNode(node.callee.object, context))
-  ) {
-    if (ignoreNonConstDeclarations === false) {
-      return {
-        context,
-        descriptors: [{ node, messageId: "set" }],
-      };
-    }
-    const rootIdentifier = findRootIdentifier(node.callee.object);
+  if (!ignoreMapsAndSets) {
+    // Set mutation?
     if (
-      rootIdentifier === undefined ||
-      !isDefinedByMutableVariable(
-        rootIdentifier,
-        context,
-        (variableNode) =>
-          ignoreNonConstDeclarations === true ||
-          !ignoreNonConstDeclarations.treatParametersAsConst ||
-          shouldIgnorePattern(variableNode, context, ignoreIdentifierPattern, ignoreAccessorPattern),
-      )
+      setMutatorMethods.has(node.callee.property.name) &&
+      (!ignoreImmediateMutation || !isInChainCallAndFollowsNew(node.callee, context)) &&
+      isSetType(context, getTypeOfNode(node.callee.object, context))
     ) {
-      return {
-        context,
-        descriptors: [{ node, messageId: "set" }],
-      };
+      if (ignoreNonConstDeclarations === false) {
+        return {
+          context,
+          descriptors: [{ node, messageId: "set" }],
+        };
+      }
+      const rootIdentifier = findRootIdentifier(node.callee.object);
+      if (
+        rootIdentifier === undefined ||
+        !isDefinedByMutableVariable(
+          rootIdentifier,
+          context,
+          (variableNode) =>
+            ignoreNonConstDeclarations === true ||
+            !ignoreNonConstDeclarations.treatParametersAsConst ||
+            shouldIgnorePattern(variableNode, context, ignoreIdentifierPattern, ignoreAccessorPattern),
+        )
+      ) {
+        return {
+          context,
+          descriptors: [{ node, messageId: "set" }],
+        };
+      }
     }
-  }
 
-  // Map mutation?
-  if (
-    mapMutatorMethods.has(node.callee.property.name) &&
-    (!ignoreImmediateMutation || !isInChainCallAndFollowsNew(node.callee, context)) &&
-    isMapType(context, getTypeOfNode(node.callee.object, context))
-  ) {
-    if (ignoreNonConstDeclarations === false) {
-      return {
-        context,
-        descriptors: [{ node, messageId: "map" }],
-      };
-    }
-    const rootIdentifier = findRootIdentifier(node.callee.object);
+    // Map mutation?
     if (
-      rootIdentifier === undefined ||
-      !isDefinedByMutableVariable(
-        rootIdentifier,
-        context,
-        (variableNode) =>
-          ignoreNonConstDeclarations === true ||
-          !ignoreNonConstDeclarations.treatParametersAsConst ||
-          shouldIgnorePattern(variableNode, context, ignoreIdentifierPattern, ignoreAccessorPattern),
-      )
+      mapMutatorMethods.has(node.callee.property.name) &&
+      (!ignoreImmediateMutation || !isInChainCallAndFollowsNew(node.callee, context)) &&
+      isMapType(context, getTypeOfNode(node.callee.object, context))
     ) {
-      return {
-        context,
-        descriptors: [{ node, messageId: "map" }],
-      };
+      if (ignoreNonConstDeclarations === false) {
+        return {
+          context,
+          descriptors: [{ node, messageId: "map" }],
+        };
+      }
+      const rootIdentifier = findRootIdentifier(node.callee.object);
+      if (
+        rootIdentifier === undefined ||
+        !isDefinedByMutableVariable(
+          rootIdentifier,
+          context,
+          (variableNode) =>
+            ignoreNonConstDeclarations === true ||
+            !ignoreNonConstDeclarations.treatParametersAsConst ||
+            shouldIgnorePattern(variableNode, context, ignoreIdentifierPattern, ignoreAccessorPattern),
+        )
+      ) {
+        return {
+          context,
+          descriptors: [{ node, messageId: "map" }],
+        };
+      }
     }
   }
 
