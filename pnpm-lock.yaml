@@ -31,8 +31,8 @@ importers:
         version: 1.0.5(typescript@5.7.3)
     devDependencies:
       '@babel/eslint-parser':
-        specifier: 7.26.5
-        version: 7.26.5(@babel/core@7.26.0)(eslint@9.19.0(jiti@2.4.2))
+        specifier: 7.26.8
+        version: 7.26.8(@babel/core@7.26.0)(eslint@9.19.0(jiti@2.4.2))
       '@cspell/dict-cryptocurrencies':
         specifier: 5.0.4
         version: 5.0.4
@@ -254,8 +254,8 @@ packages:
       '@babel/core': ^7.11.0
       eslint: ^7.5.0 || ^8.0.0 || ^9.0.0
 
-  '@babel/eslint-parser@7.26.5':
-    resolution: {integrity: sha512-Kkm8C8uxI842AwQADxl0GbcG1rupELYLShazYEZO/2DYjhyWXJIOUVOE3tBYm6JXzUCNJOZEzqc4rCW/jsEQYQ==}
+  '@babel/eslint-parser@7.26.8':
+    resolution: {integrity: sha512-3tBctaHRW6xSub26z7n8uyOTwwUsCdvIug/oxBH9n6yCO5hMj2vwDJAo7RbBMKrM7P+W2j61zLKviJQFGOYKMg==}
     engines: {node: ^10.13.0 || ^12.13.0 || >=14.0.0}
     peerDependencies:
       '@babel/core': ^7.11.0
@@ -5290,7 +5290,7 @@ snapshots:
       eslint-visitor-keys: 2.1.0
       semver: 6.3.1
 
-  '@babel/eslint-parser@7.26.5(@babel/core@7.26.0)(eslint@9.19.0(jiti@2.4.2))':
+  '@babel/eslint-parser@7.26.8(@babel/core@7.26.0)(eslint@9.19.0(jiti@2.4.2))':
     dependencies:
       '@babel/core': 7.26.0
       '@nicolo-ribaudo/eslint-scope-5-internals': 5.1.1-v1
