@@ -2,7 +2,7 @@ import rollupPluginReplace from "@rollup/plugin-replace";
 import rollupPluginTypescript from "@rollup/plugin-typescript";
 import type { RollupOptions } from "rollup";
 import rollupPluginDeassert from "rollup-plugin-deassert";
-import { generateDtsBundle } from "rollup-plugin-dts-bundle-generator";
+import generateDtsBundle from "rollup-plugin-dts-bundle-generator-2";
 
 import pkg from "./package.json" with { type: "json" };
 
@@ -19,26 +19,18 @@ const externalDependencies = [
 export default {
   input: "src/index.ts",
 
-  output: {
-    file: pkg.exports.default,
-    format: "esm",
-    sourcemap: false,
-    generatedCode: {
-      preset: "es2015",
+  output: [
+    {
+      file: pkg.exports.default,
+      format: "esm",
+      sourcemap: false,
+      importAttributesKey: "with",
     },
-    plugins: [
-      generateDtsBundle({
-        compilation: {
-          preferredConfigPath: "tsconfig.build.types.json",
-        },
-        outFile: pkg.exports.types,
-      }) as any,
-    ],
-  },
+  ],
 
   plugins: [
     rollupPluginTypescript({
-      tsconfig: "tsconfig.build.json",
+      tsconfig: "src/tsconfig.build.json",
     }),
     rollupPluginReplace({
       values: {
@@ -48,6 +40,15 @@ export default {
     }),
     rollupPluginDeassert({
       include: ["**/*.{js,ts}"],
+    }),
+    generateDtsBundle({
+      compilation: {
+        preferredConfigPath: "src/tsconfig.build.json",
+      },
+      output: {
+        exportReferencedTypes: false,
+        inlineDeclareExternals: true,
+      },
     }),
   ],
 
@@ -59,7 +60,10 @@ export default {
   },
 
   external: (source) => {
-    if (source.startsWith("node:") || externalDependencies.some((dep) => source.startsWith(dep))) {
+    if (
+      source.startsWith("node:") ||
+      externalDependencies.some((dep) => dep === source || source.startsWith(`${dep}/`))
+    ) {
       return true;
     }
     return undefined;

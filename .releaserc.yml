@@ -21,6 +21,10 @@ plugins:
         - type: perf
           release: patch
         - type: build
+          scope: deps-major
+          breaking: true
+          release: major
+        - type: build
           scope: deps
           release: patch
         - type: build

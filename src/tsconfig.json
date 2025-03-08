@@ -1,0 +1,10 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "allowJs": false,
+    "declaration": true,
+    "isolatedDeclarations": true,
+    "rootDir": "."
+  },
+  "include": [".", ".*", "../typings"]
+}

@@ -20,10 +20,8 @@ jobs:
     uses: ./.github/workflows/lint-js.yml
   lint_docs:
     uses: ./.github/workflows/lint-docs.yml
-  lint_knip_dev:
-    uses: ./.github/workflows/lint-knip-dev.yml
-  lint_knip_prod:
-    uses: ./.github/workflows/lint-knip-prod.yml
+  lint_knip:
+    uses: ./.github/workflows/lint-knip.yml
   lint_markdown:
     uses: ./.github/workflows/lint-markdown.yml
   lint_packages:
@@ -41,8 +39,7 @@ jobs:
     needs:
       - lint_js
       - lint_docs
-      - lint_knip_dev
-      - lint_knip_prod
+      - lint_knip
       - lint_markdown
       - lint_packages
       - lint_spelling

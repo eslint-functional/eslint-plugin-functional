@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noCheck": true,
+    "declaration": false,
+    "isolatedDeclarations": false
+  }
+}

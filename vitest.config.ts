@@ -7,6 +7,7 @@ export default defineConfig({
   test: {
     include: ["./**/*.test.ts"],
     exclude: ["lib", "node_modules"],
+    testTimeout: 10_000,
     coverage: {
       all: true,
       include: ["src"],

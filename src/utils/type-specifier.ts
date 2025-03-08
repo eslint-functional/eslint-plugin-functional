@@ -30,7 +30,7 @@ export function typeMatchesPattern(
   typeNode: TypeNode | null,
   include: ReadonlyArray<TypePattern>,
   exclude: ReadonlyArray<TypePattern> = [],
-) {
+): boolean {
   assert(ts !== undefined);
 
   if (include.length === 0) {

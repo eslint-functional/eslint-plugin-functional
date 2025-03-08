@@ -88,6 +88,9 @@
 - name: "Resolution: Invalid"
   color: e6e6e6
   description: ""
+- name: "Resolution: Limitation"
+  color: e6e6e6
+  description: "The bug cannot be fix due to limitations."
 - name: "Resolution: Not Applicable"
   color: e6e6e6
   description: "The issue is not relevant to code in this repo and is not an external issue. (Out of scope)"

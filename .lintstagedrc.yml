@@ -5,7 +5,12 @@
 "*.?([cm])[jt]s?(x)":
   - eslint --fix
   - cspell lint --no-progress --show-suggestions --show-context --no-must-find-files --dot
-  - tsc-files -p tsconfig.build.json --noEmit
+
+"src/**/*.?([cm])[jt]s?(x)":
+  - tsc-files -p src/tsconfig.json --noEmit
+
+"./*.?([cm])[jt]s?(x)":
+  - tsc-files -p tsconfig.json --noEmit
 
 "*.md":
   - markdownlint-cli2 --fix
