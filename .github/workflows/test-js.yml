@@ -40,7 +40,7 @@ jobs:
         run: pnpm test:js-run
 
       - name: Report coverage
-        uses: codecov/codecov-action@v5.1.2
+        uses: codecov/codecov-action@v5.4.0
         with:
           file: coverage/lcov.info
           flags: ${{ matrix.ts_version }}
