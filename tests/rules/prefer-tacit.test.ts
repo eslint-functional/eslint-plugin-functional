@@ -97,6 +97,23 @@ describe(name, () => {
       `);
     });
 
+    it("doesn't report getters", () => {
+      valid(dedent`
+        const foo = () => {
+          const getBar = () => 1;
+          const setBar = (value: number) => {};
+          return {
+            get baz() {
+              return getBar();
+            },
+            set baz(value) {
+              setBar(value);
+            },
+          };
+        };
+      `);
+    });
+
     describe("options", () => {
       describe("checkMemberExpressions", () => {
         it("doesn't report member expressions when disabled", () => {

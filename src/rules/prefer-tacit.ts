@@ -119,6 +119,18 @@ function isCallerViolation(
 }
 
 /**
+ * Is the given node a direct child of a getter.
+ */
+function isDirectChildOfGetter(node: TSESTree.Node): boolean {
+  const { parent } = node;
+  if (parent?.type !== TSESTree.AST_NODE_TYPES.Property) {
+    return false;
+  }
+
+  return parent.kind === 'get';
+}
+
+/**
  * Get the fixes for a call to a reference violation.
  */
 function fixFunctionCallToReference(
@@ -260,6 +272,13 @@ function checkFunction(
   context: Readonly<RuleContext<keyof typeof errorMessages, RawOptions>>,
   options: RawOptions,
 ): RuleResult<keyof typeof errorMessages, RawOptions> {
+  if (isDirectChildOfGetter(node)) {
+    return {
+      context,
+      descriptors: [],
+    };
+  }
+
   return {
     context,
     descriptors: [
