@@ -1,6 +1,14 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+## [9.0.2](https://github.com/eslint-functional/eslint-plugin-functional/compare/v9.0.1...v9.0.2) (2025-06-02)
+
+
+### Bug Fixes
+
+* mark no-throw-statements rule as requiring type checking ([#963](https://github.com/eslint-functional/eslint-plugin-functional/issues/963)) ([b06c25c](https://github.com/eslint-functional/eslint-plugin-functional/commit/b06c25c02a7ad8a01951841e1df7f5eef6c26a71))
+* prevent to report `prefer-tacit` in direct child of getter ([#965](https://github.com/eslint-functional/eslint-plugin-functional/issues/965)) ([afe34c2](https://github.com/eslint-functional/eslint-plugin-functional/commit/afe34c25d12db76ec3e0eed39ee004cb6c708444))
+
 ## [9.0.1](https://github.com/eslint-functional/eslint-plugin-functional/compare/v9.0.0...v9.0.1) (2025-02-24)
 
 
