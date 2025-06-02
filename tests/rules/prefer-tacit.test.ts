@@ -14,84 +14,84 @@ describe(name, () => {
       configs: typescriptConfig,
     });
 
-    it('reports functions that can "safely" be changed', () => {
-      const invalidResult1 = invalid({
+    it('reports functions that can "safely" be changed', async () => {
+      const invalidResult1 = await invalid({
         code: dedent`
           function f(x) {}
           const foo = x => f(x);
         `,
         errors: ["generic"],
       });
-      expect(invalidResult1.messages).toMatchSnapshot();
+      expect(invalidResult1.result).toMatchSnapshot();
 
-      const invalidResult2 = invalid({
+      const invalidResult2 = await invalid({
         code: dedent`
           const foo = [1, 2, 3].map(x => Boolean(x));
         `,
         errors: ["generic"],
       });
-      expect(invalidResult2.messages).toMatchSnapshot();
+      expect(invalidResult2.result).toMatchSnapshot();
     });
 
-    it("reports functions that are just instantiations", () => {
-      const invalidResult = invalid({
+    it("reports functions that are just instantiations", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           function f<T>(x: T): T {}
           function foo(x) { return f<number>(x); }
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
-    it("doesn't report functions without type defs", () => {
-      valid(dedent`
+    it("doesn't report functions without type defs", async () => {
+      await valid(dedent`
         function foo(x) {
           f(x);
         }
       `);
 
-      valid(dedent`
+      await valid(dedent`
         const foo = function (x) {
           f(x);
         };
       `);
 
-      valid(dedent`
+      await valid(dedent`
         const foo = (x) => {
           f(x);
         };
       `);
     });
 
-    it("doesn't report functions using a different number of parameters", () => {
-      valid(dedent`
+    it("doesn't report functions using a different number of parameters", async () => {
+      await valid(dedent`
         function f(x, y) {}
         const foo = x => f(x);
       `);
 
-      valid(dedent`
+      await valid(dedent`
         const a = ['1', '2'];
         a.map((x) => Number.parseInt(x));
       `);
     });
 
-    it("doesn't report functions using default parameters", () => {
-      valid(dedent`
+    it("doesn't report functions using default parameters", async () => {
+      await valid(dedent`
         function f(x, y = 1) {}
         const foo = x => f(x);
       `);
     });
 
-    it("doesn't report functions with optional parameters", () => {
-      valid(dedent`
+    it("doesn't report functions with optional parameters", async () => {
+      await valid(dedent`
         function f(x: number, y?: nunber) {}
         const foo = x => f(x);
       `);
     });
 
-    it("doesn't report instantiation expressions", () => {
-      valid(dedent`
+    it("doesn't report instantiation expressions", async () => {
+      await valid(dedent`
         function f(x) {}
         const foo = f<number>;
       `);
@@ -116,8 +116,8 @@ describe(name, () => {
 
     describe("options", () => {
       describe("checkMemberExpressions", () => {
-        it("doesn't report member expressions when disabled", () => {
-          valid({
+        it("doesn't report member expressions when disabled", async () => {
+          await valid({
             code: dedent`
               declare const a: { b(arg: string): string; };
               function foo(x) { return a.b(x); }
@@ -125,7 +125,7 @@ describe(name, () => {
             options: [{ checkMemberExpressions: false }],
           });
 
-          valid({
+          await valid({
             code: dedent`
               [''].filter(str => /a/.test(str))
             `,
@@ -133,8 +133,8 @@ describe(name, () => {
           });
         });
 
-        it("report member expressions when enabled", () => {
-          const invalidResult1 = invalid({
+        it("report member expressions when enabled", async () => {
+          const invalidResult1 = await invalid({
             code: dedent`
               declare const a: { b(arg: string): string; };
               function foo(x) { return a.b(x); }
@@ -142,16 +142,16 @@ describe(name, () => {
             options: [{ checkMemberExpressions: true }],
             errors: ["generic"],
           });
-          expect(invalidResult1.messages).toMatchSnapshot();
+          expect(invalidResult1.result).toMatchSnapshot();
 
-          const invalidResult2 = invalid({
+          const invalidResult2 = await invalid({
             code: dedent`
               [''].filter(str => /a/.test(str))
             `,
             options: [{ checkMemberExpressions: true }],
             errors: ["generic"],
           });
-          expect(invalidResult2.messages).toMatchSnapshot();
+          expect(invalidResult2.result).toMatchSnapshot();
         });
       });
     });

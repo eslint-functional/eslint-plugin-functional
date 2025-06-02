@@ -1,146 +1,332 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`prefer-tacit > typescript > options > checkMemberExpressions > report member expressions when enabled 1`] = `
-[
-  {
-    "column": 1,
-    "endColumn": 35,
-    "endLine": 2,
-    "line": 2,
-    "message": "Potentially unnecessary function wrapper.",
-    "messageId": "generic",
-    "nodeType": "FunctionDeclaration",
-    "ruleId": "prefer-tacit",
-    "severity": 2,
-    "suggestions": [
-      {
-        "desc": "Remove unnecessary function wrapper.",
-        "fix": {
-          "range": [
-            46,
-            80,
-          ],
-          "text": "const foo = a.b.bind(a);",
+{
+  "fixed": false,
+  "messages": [
+    {
+      "column": 1,
+      "endColumn": 35,
+      "endLine": 2,
+      "line": 2,
+      "message": "Potentially unnecessary function wrapper.",
+      "messageId": "generic",
+      "nodeType": "FunctionDeclaration",
+      "ruleId": "prefer-tacit",
+      "severity": 2,
+      "suggestions": [
+        {
+          "desc": "Remove unnecessary function wrapper.",
+          "fix": {
+            "range": [
+              46,
+              80,
+            ],
+            "text": "const foo = a.b.bind(a);",
+          },
+          "messageId": "genericSuggestion",
         },
-        "messageId": "genericSuggestion",
-      },
-    ],
-  },
-]
+      ],
+    },
+  ],
+  "output": "declare const a: { b(arg: string): string; };
+function foo(x) { return a.b(x); }",
+  "steps": [
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 1,
+          "endColumn": 35,
+          "endLine": 2,
+          "line": 2,
+          "message": "Potentially unnecessary function wrapper.",
+          "messageId": "generic",
+          "nodeType": "FunctionDeclaration",
+          "ruleId": "rule-to-test/prefer-tacit",
+          "severity": 2,
+          "suggestions": [
+            {
+              "desc": "Remove unnecessary function wrapper.",
+              "fix": {
+                "range": [
+                  46,
+                  80,
+                ],
+                "text": "const foo = a.b.bind(a);",
+              },
+              "messageId": "genericSuggestion",
+            },
+          ],
+        },
+      ],
+      "output": "declare const a: { b(arg: string): string; };
+function foo(x) { return a.b(x); }",
+    },
+  ],
+}
 `;
 
 exports[`prefer-tacit > typescript > options > checkMemberExpressions > report member expressions when enabled 2`] = `
-[
-  {
-    "column": 13,
-    "endColumn": 33,
-    "endLine": 1,
-    "line": 1,
-    "message": "Potentially unnecessary function wrapper.",
-    "messageId": "generic",
-    "nodeType": "ArrowFunctionExpression",
-    "ruleId": "prefer-tacit",
-    "severity": 2,
-    "suggestions": [
-      {
-        "desc": "Remove unnecessary function wrapper.",
-        "fix": {
-          "range": [
-            12,
-            32,
-          ],
-          "text": "/a/.test.bind(/a/)",
+{
+  "fixed": false,
+  "messages": [
+    {
+      "column": 13,
+      "endColumn": 33,
+      "endLine": 1,
+      "line": 1,
+      "message": "Potentially unnecessary function wrapper.",
+      "messageId": "generic",
+      "nodeType": "ArrowFunctionExpression",
+      "ruleId": "prefer-tacit",
+      "severity": 2,
+      "suggestions": [
+        {
+          "desc": "Remove unnecessary function wrapper.",
+          "fix": {
+            "range": [
+              12,
+              32,
+            ],
+            "text": "/a/.test.bind(/a/)",
+          },
+          "messageId": "genericSuggestion",
         },
-        "messageId": "genericSuggestion",
-      },
-    ],
-  },
-]
+      ],
+    },
+  ],
+  "output": "[''].filter(str => /a/.test(str))",
+  "steps": [
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 13,
+          "endColumn": 33,
+          "endLine": 1,
+          "line": 1,
+          "message": "Potentially unnecessary function wrapper.",
+          "messageId": "generic",
+          "nodeType": "ArrowFunctionExpression",
+          "ruleId": "rule-to-test/prefer-tacit",
+          "severity": 2,
+          "suggestions": [
+            {
+              "desc": "Remove unnecessary function wrapper.",
+              "fix": {
+                "range": [
+                  12,
+                  32,
+                ],
+                "text": "/a/.test.bind(/a/)",
+              },
+              "messageId": "genericSuggestion",
+            },
+          ],
+        },
+      ],
+      "output": "[''].filter(str => /a/.test(str))",
+    },
+  ],
+}
 `;
 
 exports[`prefer-tacit > typescript > reports functions that are just instantiations 1`] = `
-[
-  {
-    "column": 1,
-    "endColumn": 41,
-    "endLine": 2,
-    "line": 2,
-    "message": "Potentially unnecessary function wrapper.",
-    "messageId": "generic",
-    "nodeType": "FunctionDeclaration",
-    "ruleId": "prefer-tacit",
-    "severity": 2,
-    "suggestions": [
-      {
-        "desc": "Remove unnecessary function wrapper.",
-        "fix": {
-          "range": [
-            26,
-            66,
-          ],
-          "text": "const foo = f<number>;",
+{
+  "fixed": false,
+  "messages": [
+    {
+      "column": 1,
+      "endColumn": 41,
+      "endLine": 2,
+      "line": 2,
+      "message": "Potentially unnecessary function wrapper.",
+      "messageId": "generic",
+      "nodeType": "FunctionDeclaration",
+      "ruleId": "prefer-tacit",
+      "severity": 2,
+      "suggestions": [
+        {
+          "desc": "Remove unnecessary function wrapper.",
+          "fix": {
+            "range": [
+              26,
+              66,
+            ],
+            "text": "const foo = f<number>;",
+          },
+          "messageId": "genericSuggestion",
         },
-        "messageId": "genericSuggestion",
-      },
-    ],
-  },
-]
+      ],
+    },
+  ],
+  "output": "function f<T>(x: T): T {}
+function foo(x) { return f<number>(x); }",
+  "steps": [
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 1,
+          "endColumn": 41,
+          "endLine": 2,
+          "line": 2,
+          "message": "Potentially unnecessary function wrapper.",
+          "messageId": "generic",
+          "nodeType": "FunctionDeclaration",
+          "ruleId": "rule-to-test/prefer-tacit",
+          "severity": 2,
+          "suggestions": [
+            {
+              "desc": "Remove unnecessary function wrapper.",
+              "fix": {
+                "range": [
+                  26,
+                  66,
+                ],
+                "text": "const foo = f<number>;",
+              },
+              "messageId": "genericSuggestion",
+            },
+          ],
+        },
+      ],
+      "output": "function f<T>(x: T): T {}
+function foo(x) { return f<number>(x); }",
+    },
+  ],
+}
 `;
 
 exports[`prefer-tacit > typescript > reports functions that can "safely" be changed 1`] = `
-[
-  {
-    "column": 13,
-    "endColumn": 22,
-    "endLine": 2,
-    "line": 2,
-    "message": "Potentially unnecessary function wrapper.",
-    "messageId": "generic",
-    "nodeType": "ArrowFunctionExpression",
-    "ruleId": "prefer-tacit",
-    "severity": 2,
-    "suggestions": [
-      {
-        "desc": "Remove unnecessary function wrapper.",
-        "fix": {
-          "range": [
-            29,
-            38,
-          ],
-          "text": "f",
+{
+  "fixed": false,
+  "messages": [
+    {
+      "column": 13,
+      "endColumn": 22,
+      "endLine": 2,
+      "line": 2,
+      "message": "Potentially unnecessary function wrapper.",
+      "messageId": "generic",
+      "nodeType": "ArrowFunctionExpression",
+      "ruleId": "prefer-tacit",
+      "severity": 2,
+      "suggestions": [
+        {
+          "desc": "Remove unnecessary function wrapper.",
+          "fix": {
+            "range": [
+              29,
+              38,
+            ],
+            "text": "f",
+          },
+          "messageId": "genericSuggestion",
         },
-        "messageId": "genericSuggestion",
-      },
-    ],
-  },
-]
+      ],
+    },
+  ],
+  "output": "function f(x) {}
+const foo = x => f(x);",
+  "steps": [
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 13,
+          "endColumn": 22,
+          "endLine": 2,
+          "line": 2,
+          "message": "Potentially unnecessary function wrapper.",
+          "messageId": "generic",
+          "nodeType": "ArrowFunctionExpression",
+          "ruleId": "rule-to-test/prefer-tacit",
+          "severity": 2,
+          "suggestions": [
+            {
+              "desc": "Remove unnecessary function wrapper.",
+              "fix": {
+                "range": [
+                  29,
+                  38,
+                ],
+                "text": "f",
+              },
+              "messageId": "genericSuggestion",
+            },
+          ],
+        },
+      ],
+      "output": "function f(x) {}
+const foo = x => f(x);",
+    },
+  ],
+}
 `;
 
 exports[`prefer-tacit > typescript > reports functions that can "safely" be changed 2`] = `
-[
-  {
-    "column": 27,
-    "endColumn": 42,
-    "endLine": 1,
-    "line": 1,
-    "message": "Potentially unnecessary function wrapper.",
-    "messageId": "generic",
-    "nodeType": "ArrowFunctionExpression",
-    "ruleId": "prefer-tacit",
-    "severity": 2,
-    "suggestions": [
-      {
-        "desc": "Remove unnecessary function wrapper.",
-        "fix": {
-          "range": [
-            26,
-            41,
-          ],
-          "text": "Boolean",
+{
+  "fixed": false,
+  "messages": [
+    {
+      "column": 27,
+      "endColumn": 42,
+      "endLine": 1,
+      "line": 1,
+      "message": "Potentially unnecessary function wrapper.",
+      "messageId": "generic",
+      "nodeType": "ArrowFunctionExpression",
+      "ruleId": "prefer-tacit",
+      "severity": 2,
+      "suggestions": [
+        {
+          "desc": "Remove unnecessary function wrapper.",
+          "fix": {
+            "range": [
+              26,
+              41,
+            ],
+            "text": "Boolean",
+          },
+          "messageId": "genericSuggestion",
         },
-        "messageId": "genericSuggestion",
-      },
-    ],
-  },
-]
+      ],
+    },
+  ],
+  "output": "const foo = [1, 2, 3].map(x => Boolean(x));",
+  "steps": [
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 27,
+          "endColumn": 42,
+          "endLine": 1,
+          "line": 1,
+          "message": "Potentially unnecessary function wrapper.",
+          "messageId": "generic",
+          "nodeType": "ArrowFunctionExpression",
+          "ruleId": "rule-to-test/prefer-tacit",
+          "severity": 2,
+          "suggestions": [
+            {
+              "desc": "Remove unnecessary function wrapper.",
+              "fix": {
+                "range": [
+                  26,
+                  41,
+                ],
+                "text": "Boolean",
+              },
+              "messageId": "genericSuggestion",
+            },
+          ],
+        },
+      ],
+      "output": "const foo = [1, 2, 3].map(x => Boolean(x));",
+    },
+  ],
+}
 `;

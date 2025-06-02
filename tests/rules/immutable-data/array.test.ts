@@ -14,8 +14,8 @@ describe(name, () => {
       configs: typescriptConfig,
     });
 
-    it("reports array mutations", () => {
-      const invalidResult = invalid({
+    it("reports array mutations", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           var x = [5, 6];
           var y = [{ z: [3, 7] }];
@@ -52,11 +52,11 @@ describe(name, () => {
           "generic",
         ],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
-    it("report mutating array methods", () => {
-      const invalidResult = invalid({
+    it("report mutating array methods", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           var x = [5, 6];
           x.copyWithin(0, 1, 2);
@@ -100,11 +100,11 @@ describe(name, () => {
           "array",
         ],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
-    it("doesn't report non-mutating array methods", () => {
-      valid(dedent`
+    it("doesn't report non-mutating array methods", async () => {
+      await valid(dedent`
         var x = [5, 6];
         var y = [{ z: [3, 7] }];
 
@@ -128,8 +128,8 @@ describe(name, () => {
       `);
     });
 
-    it("allows mutating array methods to be chained to array accessor/iteration methods", () => {
-      valid(dedent`
+    it("allows mutating array methods to be chained to array accessor/iteration methods", async () => {
+      await valid(dedent`
         x.slice().copyWithin(0, 1, 2);
         x.slice().fill(3);
         x.slice().pop();
@@ -192,8 +192,8 @@ describe(name, () => {
       `);
     });
 
-    it("doesn't report mutating array methods on non-array objects", () => {
-      valid(dedent`
+    it("doesn't report mutating array methods on non-array objects", async () => {
+      await valid(dedent`
         var z = {
           copyWithin: function () {},
           fill: function () {},
@@ -220,8 +220,8 @@ describe(name, () => {
 
     describe("options", () => {
       describe("ignoreNonConstDeclarations", () => {
-        it("reports variables declared as const", () => {
-          const invalidResult = invalid({
+        it("reports variables declared as const", async () => {
+          const invalidResult = await invalid({
             code: dedent`
               const arr = [0, 1];
               arr[0] += 1;
@@ -257,11 +257,11 @@ describe(name, () => {
               "array",
             ],
           });
-          expect(invalidResult.messages).toMatchSnapshot();
+          expect(invalidResult.result).toMatchSnapshot();
         });
 
-        it("doesn't report variables not declared as const", () => {
-          valid({
+        it("doesn't report variables not declared as const", async () => {
+          await valid({
             code: dedent`
               let arr = [0, 1];
               arr[0] += 1;
@@ -284,7 +284,7 @@ describe(name, () => {
             ],
           });
 
-          valid({
+          await valid({
             code: dedent`
               let arr = [0];
               for (const x of [1, 2]) {
@@ -311,7 +311,7 @@ describe(name, () => {
             ],
           });
 
-          valid({
+          await valid({
             code: dedent`
               const constArr = [[0, 1], [2, 3]];
               let arr = constArr[0];
@@ -338,8 +338,8 @@ describe(name, () => {
       });
 
       describe("ignoreImmediateMutation", () => {
-        it("doesn't report immediately mutation when enabled", () => {
-          valid({
+        it("doesn't report immediately mutation when enabled", async () => {
+          await valid({
             code: dedent`
               [0, 1, 2].copyWithin(0, 1, 2);
               [0, 1, 2].fill(3);
@@ -388,7 +388,7 @@ describe(name, () => {
             ],
           });
 
-          valid({
+          await valid({
             code: dedent`
               Object.entries({}).sort();
               Object.keys({}).sort();
@@ -401,7 +401,7 @@ describe(name, () => {
             ],
           });
 
-          valid({
+          await valid({
             code: dedent`
               "foo".split("").sort();
               const bar = "bar";
@@ -416,8 +416,8 @@ describe(name, () => {
           });
         });
 
-        it("reports immediately mutation when disabled", () => {
-          const invalidResult = invalid({
+        it("reports immediately mutation when disabled", async () => {
+          const invalidResult = await invalid({
             code: dedent`
               [0, 1, 2].sort();
               new Array(5).sort();
@@ -431,7 +431,7 @@ describe(name, () => {
             ],
             errors: ["array", "array", "array", "array"],
           });
-          expect(invalidResult.messages).toMatchSnapshot();
+          expect(invalidResult.result).toMatchSnapshot();
         });
       });
     });

@@ -14,16 +14,16 @@ describe(name, () => {
       configs: esLatestConfig,
     });
 
-    it("doesn't report non-issues", () => {
-      valid(dedent`
+    it("doesn't report non-issues", async () => {
+      await valid(dedent`
         function foo() {
           bar();
         }
       `);
     });
 
-    it("reports throw statements of strings", () => {
-      const invalidResult = invalid({
+    it("reports throw statements of strings", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           function foo() {
             throw 'error';
@@ -31,11 +31,11 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
-    it("reports throw statements of Errors", () => {
-      const invalidResult = invalid({
+    it("reports throw statements of Errors", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           function foo() {
             throw new Error();
@@ -43,11 +43,11 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
-    it("reports throw statements in async functions", () => {
-      const invalidResult = invalid({
+    it("reports throw statements in async functions", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           async function foo() {
             throw new Error();
@@ -55,13 +55,13 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     describe("options", () => {
       describe("allowToRejectPromises", () => {
-        it("doesn't report throw statements in async functions", () => {
-          valid({
+        it("doesn't report throw statements in async functions", async () => {
+          await valid({
             code: dedent`
               async function foo() {
                 throw new Error();
@@ -71,8 +71,8 @@ describe(name, () => {
           });
         });
 
-        it("doesn't report throw statements in try without catch in async functions", () => {
-          valid({
+        it("doesn't report throw statements in try without catch in async functions", async () => {
+          await valid({
             code: dedent`
               async function foo() {
                 try {
@@ -86,8 +86,8 @@ describe(name, () => {
           });
         });
 
-        it("reports throw statements in try with catch in async functions", () => {
-          const invalidResult = invalid({
+        it("reports throw statements in try with catch in async functions", async () => {
+          const invalidResult = await invalid({
             code: dedent`
               async function foo() {
                 try {
@@ -100,11 +100,11 @@ describe(name, () => {
             errors: ["generic"],
             options: [{ allowToRejectPromises: true }],
           });
-          expect(invalidResult.messages).toMatchSnapshot();
+          expect(invalidResult.result).toMatchSnapshot();
         });
 
-        it("reports throw statements in functions nested in async functions", () => {
-          const invalidResult = invalid({
+        it("reports throw statements in functions nested in async functions", async () => {
+          const invalidResult = await invalid({
             code: dedent`
               async function foo() {
                 function bar() {
@@ -115,7 +115,7 @@ describe(name, () => {
             errors: ["generic"],
             options: [{ allowToRejectPromises: true }],
           });
-          expect(invalidResult.messages).toMatchSnapshot();
+          expect(invalidResult.result).toMatchSnapshot();
         });
       });
     });
@@ -130,8 +130,8 @@ describe(name, () => {
 
     describe("options", () => {
       describe("allowToRejectPromises", () => {
-        it("doesn't report throw statements in promise then handlers", () => {
-          valid({
+        it("doesn't report throw statements in promise then handlers", async () => {
+          await valid({
             code: dedent`
               function foo() {
                 Promise.resolve().then(() => {
@@ -143,8 +143,8 @@ describe(name, () => {
           });
         });
 
-        it("doesn't report throw statements in promise catch handlers", () => {
-          valid({
+        it("doesn't report throw statements in promise catch handlers", async () => {
+          await valid({
             code: dedent`
               function foo() {
                 Promise.resolve().catch(() => {
@@ -156,8 +156,8 @@ describe(name, () => {
           });
         });
 
-        it("doesn't report throw statements in promise handlers", () => {
-          valid({
+        it("doesn't report throw statements in promise handlers", async () => {
+          await valid({
             code: dedent`
               function foo() {
                 Promise.resolve().then(() => {

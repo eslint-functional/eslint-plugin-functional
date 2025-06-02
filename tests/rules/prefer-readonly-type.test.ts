@@ -14,8 +14,8 @@ describe(name, () => {
       configs: typescriptConfig,
     });
 
-    it("reports mutable array (non-generic)", () => {
-      const invalidResult = invalid({
+    it("reports mutable array (non-generic)", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           function foo(a: number[], b: Promise<number[]>) {
             console.log(a, b);
@@ -23,11 +23,11 @@ describe(name, () => {
         `,
         errors: ["array", "array"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
-    it("reports mutable arrays (generic)", () => {
-      const invalidResult = invalid({
+    it("reports mutable arrays (generic)", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           function foo(a: Array<number>, b: Promise<Array<number>>) {
             console.log(a, b);
@@ -35,11 +35,11 @@ describe(name, () => {
         `,
         errors: ["type", "type"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
-    it("reports mutable sets", () => {
-      const invalidResult = invalid({
+    it("reports mutable sets", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           function foo(a: Set<number>, b: Promise<Set<number>>) {
             console.log(a, b);
@@ -47,11 +47,11 @@ describe(name, () => {
         `,
         errors: ["type", "type"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
-    it("reports mutable maps", () => {
-      const invalidResult = invalid({
+    it("reports mutable maps", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           function foo(a: Map<number>, b: Promise<Map<number>>) {
             console.log(a, b);
@@ -59,11 +59,11 @@ describe(name, () => {
         `,
         errors: ["type", "type"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
-    it("reports issue inside interfaces", () => {
-      const invalidResult = invalid({
+    it("reports issue inside interfaces", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           interface Foo {
             readonly bar: Array<string>;
@@ -72,11 +72,11 @@ describe(name, () => {
         `,
         errors: ["type", "type"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
-    it("reports issues with index signatures", () => {
-      const invalidResult = invalid({
+    it("reports issues with index signatures", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           interface Foo {
             readonly [key: string]: {
@@ -93,11 +93,11 @@ describe(name, () => {
         `,
         errors: ["type", "type", "property", "property", "property"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
-    it("reports non-readonly class properties", () => {
-      const invalidResult = invalid({
+    it("reports non-readonly class properties", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           class Klass {
             foo: number;
@@ -108,11 +108,11 @@ describe(name, () => {
         `,
         errors: ["property", "property", "property", "property"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
-    it("reports non-readonly class parameter properties", () => {
-      const invalidResult = invalid({
+    it("reports non-readonly class parameter properties", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           class Klass {
             constructor (
@@ -124,11 +124,11 @@ describe(name, () => {
         `,
         errors: ["property", "property", "property"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
-    it("reports literals without readonly modifiers", () => {
-      const invalidResult = invalid({
+    it("reports literals without readonly modifiers", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           let foo: {
             a: number,
@@ -158,55 +158,55 @@ describe(name, () => {
           "property",
         ],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
-    it("reports issues with mapped types", () => {
-      const invalidResult = invalid({
+    it("reports issues with mapped types", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           const func = (x: { [key in string]: number }) => {}
         `,
         errors: ["property"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
-    it("doesn't report explicit readonly parameter types", () => {
-      valid(dedent`
+    it("doesn't report explicit readonly parameter types", async () => {
+      await valid(dedent`
         function foo(...a: ReadonlyArray<number>) {
           console.log(a);
         }
       `);
 
-      valid(dedent`
+      await valid(dedent`
         const foo = (...a: readonly number[]) => {
           console.log(a);
         }
       `);
 
-      valid(dedent`
+      await valid(dedent`
         const foo = (tuple: readonly [number, string, readonly [number, string]]) => {
           console.log(a);
         }
       `);
     });
 
-    it("doesn't report explicit readonly return types", () => {
-      valid(dedent`
+    it("doesn't report explicit readonly return types", async () => {
+      await valid(dedent`
         function foo(): ReadonlyArray<number> {
           return [1, 2, 3];
         }
       `);
 
-      valid(dedent`
+      await valid(dedent`
         const foo = (): readonly number[] => {
           return [1, 2, 3];
         }
       `);
     });
 
-    it("doesn't report implicit readonly arrays", () => {
-      valid({
+    it("doesn't report implicit readonly arrays", async () => {
+      await valid({
         code: dedent`
           const foo = [1, 2, 3];
           function bar(param = [1, 2, 3]) {}
@@ -214,22 +214,22 @@ describe(name, () => {
       });
     });
 
-    it("doesn't report readonly local types", () => {
-      valid(dedent`
+    it("doesn't report readonly local types", async () => {
+      await valid(dedent`
         function foo() {
           type Foo = ReadonlyArray<string>;
         }
       `);
     });
 
-    it("doesn't report readonly variable declarations", () => {
-      valid(dedent`
+    it("doesn't report readonly variable declarations", async () => {
+      await valid(dedent`
         const foo: ReadonlyArray<string> = [];
       `);
     });
 
-    it("doesn't report interfaces with readonly modifiers", () => {
-      valid(dedent`
+    it("doesn't report interfaces with readonly modifiers", async () => {
+      await valid(dedent`
         interface Foo {
           readonly a: number,
           readonly b: ReadonlyArray<string>,
@@ -239,7 +239,7 @@ describe(name, () => {
         }
       `);
 
-      valid(dedent`
+      await valid(dedent`
         interface Foo {
           readonly a: number,
           readonly b: ReadonlyArray<string>,
@@ -257,8 +257,8 @@ describe(name, () => {
       `);
     });
 
-    it("doesn't report call signatures and method signatures", () => {
-      valid(dedent`
+    it("doesn't report call signatures and method signatures", async () => {
+      await valid(dedent`
         interface Foo {
           (): void
           foo(): void
@@ -266,20 +266,20 @@ describe(name, () => {
       `);
     });
 
-    it("doesn't report literal with readonly index signature", () => {
-      valid(dedent`
+    it("doesn't report literal with readonly index signature", async () => {
+      await valid(dedent`
         let foo: { readonly [key: string]: number };
       `);
     });
 
-    it("doesn't report type literals elements with a readonly modifer in an array", () => {
-      valid(dedent`
+    it("doesn't report type literals elements with a readonly modifer in an array", async () => {
+      await valid(dedent`
         type foo = ReadonlyArray<{ readonly type: string, readonly code: string }>;
       `);
     });
 
-    it("doesn't report type literals with readonly on members", () => {
-      valid(dedent`
+    it("doesn't report type literals with readonly on members", async () => {
+      await valid(dedent`
         let foo: {
           readonly a: number,
           readonly b: ReadonlyArray<string>,
@@ -290,8 +290,8 @@ describe(name, () => {
       `);
     });
 
-    it("doesn't report class parameter properties", () => {
-      valid(dedent`
+    it("doesn't report class parameter properties", async () => {
+      await valid(dedent`
         class Klass {
           constructor (
             nonParameterProp: string,
@@ -304,16 +304,16 @@ describe(name, () => {
       `);
     });
 
-    it("doesn't report mapped types with readonly on members", () => {
-      valid(dedent`
+    it("doesn't report mapped types with readonly on members", async () => {
+      await valid(dedent`
         const func = (x: { readonly [key in string]: number }) => {}
       `);
     });
 
     describe("options", () => {
       describe("allowMutableReturnType", () => {
-        it("doesn't report mutable return types", () => {
-          valid({
+        it("doesn't report mutable return types", async () => {
+          await valid({
             code: dedent`
               function foo(...numbers: ReadonlyArray<number>): Array<number> {}
               function bar(...numbers: readonly number[]): number[] {}
@@ -321,7 +321,7 @@ describe(name, () => {
             options: [{ allowMutableReturnType: true }],
           });
 
-          valid({
+          await valid({
             code: dedent`
               const foo = (...numbers: ReadonlyArray<number>): Array<number> =>  {}
               const bar = (...numbers: readonly number[]): number[] =>  {}
@@ -329,7 +329,7 @@ describe(name, () => {
             options: [{ allowMutableReturnType: true }],
           });
 
-          valid({
+          await valid({
             code: dedent`
               class Foo {
                 foo(...numbers: ReadonlyArray<number>): Array<number> {
@@ -343,7 +343,7 @@ describe(name, () => {
             options: [{ allowMutableReturnType: true }],
           });
 
-          valid({
+          await valid({
             code: dedent`
               function foo(...numbers: ReadonlyArray<number>): Promise<Array<number>> {}
               function foo(...numbers: ReadonlyArray<number>): Promise<number[]> {}
@@ -351,7 +351,7 @@ describe(name, () => {
             options: [{ allowMutableReturnType: true }],
           });
 
-          valid({
+          await valid({
             code: dedent`
               function foo(...numbers: ReadonlyArray<number>): Promise<Foo<Array<number>>> {}
               function foo(...numbers: ReadonlyArray<number>): Promise<Foo<number[]>> {}
@@ -359,14 +359,14 @@ describe(name, () => {
             options: [{ allowMutableReturnType: true }],
           });
 
-          valid({
+          await valid({
             code: dedent`
               function foo(...numbers: ReadonlyArray<number>): { readonly a: Array<number> } | { readonly b: string[] } {}
             `,
             options: [{ allowMutableReturnType: true }],
           });
 
-          valid({
+          await valid({
             code: dedent`
               type Foo<T> = { readonly x: T; };
               function foo(...numbers: ReadonlyArray<number>): Promise<Foo<Array<number>>> {}
@@ -375,21 +375,21 @@ describe(name, () => {
             options: [{ allowMutableReturnType: true }],
           });
 
-          valid({
+          await valid({
             code: dedent`
               function foo(...numbers: ReadonlyArray<number>): { readonly a: Array<number> } & { readonly b: string[] } {}
             `,
             options: [{ allowMutableReturnType: true }],
           });
 
-          valid({
+          await valid({
             code: dedent`
               function foo<T>(x: T): T extends Array<number> ? string : number[] {}
             `,
             options: [{ allowMutableReturnType: true }],
           });
 
-          valid({
+          await valid({
             code: dedent`
               function foo(bar: string): { baz: number } {
                 return 1 as any;
@@ -401,8 +401,8 @@ describe(name, () => {
       });
 
       describe("checkImplicit", () => {
-        it("doesn't report implicit readonly array variables", () => {
-          valid({
+        it("doesn't report implicit readonly array variables", async () => {
+          await valid({
             code: dedent`
               const numbers = [1, 2, 3] as const;
             `,
@@ -410,8 +410,8 @@ describe(name, () => {
           });
         });
 
-        it("doesn't report implicit readonly return types", () => {
-          valid({
+        it("doesn't report implicit readonly return types", async () => {
+          await valid({
             code: dedent`
               function foo() {
                 return [1, 2, 3] as const;
@@ -420,9 +420,9 @@ describe(name, () => {
             options: [{ checkImplicit: true }],
           });
 
-          valid({
+          await valid({
             code: dedent`
-              const foo = () => {
+              const foo = async () => {
                 return [1, 2, 3] as const;
               };
             `,
@@ -432,8 +432,8 @@ describe(name, () => {
       });
 
       describe("ignoreClass", () => {
-        it("doesn't report classes", () => {
-          valid({
+        it("doesn't report classes", async () => {
+          await valid({
             code: dedent`
               class Klass {
                 foo: number;
@@ -446,8 +446,8 @@ describe(name, () => {
           });
         });
 
-        it("doesn't report classes - fieldsOnly", () => {
-          valid({
+        it("doesn't report classes - fieldsOnly", async () => {
+          await valid({
             code: dedent`
               class Klass {
                 foo: number;
@@ -460,8 +460,8 @@ describe(name, () => {
           });
         });
 
-        it("reports non-field issues in classes - fieldsOnly", () => {
-          const invalidResult = invalid({
+        it("reports non-field issues in classes - fieldsOnly", async () => {
+          const invalidResult = await invalid({
             code: dedent`
               class Klass {
                 foo: number;
@@ -479,13 +479,13 @@ describe(name, () => {
             options: [{ ignoreClass: "fieldsOnly" }],
             errors: ["property"],
           });
-          expect(invalidResult.messages).toMatchSnapshot();
+          expect(invalidResult.result).toMatchSnapshot();
         });
       });
 
       describe("ignoreInterface", () => {
-        it("doesn't report interfaces", () => {
-          valid({
+        it("doesn't report interfaces", async () => {
+          await valid({
             code: dedent`
               interface Foo {
                 foo: number,
@@ -500,8 +500,8 @@ describe(name, () => {
       });
 
       describe("ignorePattern", () => {
-        it("doesn't report matching identifiers", () => {
-          valid({
+        it("doesn't report matching identifiers", async () => {
+          await valid({
             code: dedent`
               let mutableFoo: string[] = [];
             `,
@@ -511,8 +511,8 @@ describe(name, () => {
       });
 
       describe("allowLocalMutation", () => {
-        it("doesn't report mutable local variables", () => {
-          valid({
+        it("doesn't report mutable local variables", async () => {
+          await valid({
             code: dedent`
               function foo() {
                 let foo: {
@@ -537,22 +537,22 @@ describe(name, () => {
       });
 
       describe("ignoreCollections", () => {
-        it("doesn't report mutable arrays", () => {
-          valid({
+        it("doesn't report mutable arrays", async () => {
+          await valid({
             code: dedent`
               type Foo = Array<string>;
             `,
             options: [{ ignoreCollections: true }],
           });
 
-          valid({
+          await valid({
             code: dedent`
               const foo: number[] = [];
             `,
             options: [{ ignoreCollections: true }],
           });
 
-          valid({
+          await valid({
             code: dedent`
               const foo = [];
             `,
@@ -560,22 +560,22 @@ describe(name, () => {
           });
         });
 
-        it("doesn't report mutable tuples", () => {
-          valid({
+        it("doesn't report mutable tuples", async () => {
+          await valid({
             code: dedent`
               type Foo = [string, string];
             `,
             options: [{ ignoreCollections: true }],
           });
 
-          valid({
+          await valid({
             code: dedent`
               const foo: [string, string] = ['foo', 'bar'];
             `,
             options: [{ ignoreCollections: true }],
           });
 
-          valid({
+          await valid({
             code: dedent`
               const foo = ['foo', 'bar'];
             `,
@@ -583,15 +583,15 @@ describe(name, () => {
           });
         });
 
-        it("doesn't report mutable sets", () => {
-          valid({
+        it("doesn't report mutable sets", async () => {
+          await valid({
             code: dedent`
               type Foo = Set<string, string>;
             `,
             options: [{ ignoreCollections: true }],
           });
 
-          valid({
+          await valid({
             code: dedent`
               const foo: Set<string, string> = new Set();
             `,
@@ -599,15 +599,15 @@ describe(name, () => {
           });
         });
 
-        it("doesn't report mutable maps", () => {
-          valid({
+        it("doesn't report mutable maps", async () => {
+          await valid({
             code: dedent`
               type Foo = Map<string, string>;
             `,
             options: [{ ignoreCollections: true }],
           });
 
-          valid({
+          await valid({
             code: dedent`
               const foo: Map<string, string> = new Map();
             `,

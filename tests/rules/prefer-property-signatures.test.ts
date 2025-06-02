@@ -14,24 +14,24 @@ describe(name, () => {
       configs: typescriptConfig,
     });
 
-    it("doesn't report property signatures in interfaces", () => {
-      valid(dedent`
+    it("doesn't report property signatures in interfaces", async () => {
+      await valid(dedent`
         interface Foo {
           bar: (a: number, b: string) => number;
         }
       `);
     });
 
-    it("doesn't report property signatures in type literals", () => {
-      valid(dedent`
+    it("doesn't report property signatures in type literals", async () => {
+      await valid(dedent`
         type Foo = {
           bar: (a: number, b: string) => number;
         }
       `);
     });
 
-    it("reports method signatures in interfaces", () => {
-      const invalidResult = invalid({
+    it("reports method signatures in interfaces", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           interface Foo {
             bar(a: number, b: string): number;
@@ -39,11 +39,11 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
-    it("reports method signatures in type literals", () => {
-      const invalidResult = invalid({
+    it("reports method signatures in type literals", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           type Foo = {
             bar(a: number, b: string): number;
@@ -51,13 +51,13 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     describe("options", () => {
       describe("ignoreIfReadonlyWrapped", () => {
-        it("doesn't report method signatures wrapped in Readonly in interfaces", () => {
-          valid({
+        it("doesn't report method signatures wrapped in Readonly in interfaces", async () => {
+          await valid({
             code: dedent`
               interface Foo extends Readonly<{
                 methodSignature(): void
@@ -67,8 +67,8 @@ describe(name, () => {
           });
         });
 
-        it("doesn't report method signatures wrapped in Readonly in type literals", () => {
-          valid({
+        it("doesn't report method signatures wrapped in Readonly in type literals", async () => {
+          await valid({
             code: dedent`
               type Foo = Readonly<{
                 methodSignature(): void
@@ -78,8 +78,8 @@ describe(name, () => {
           });
         });
 
-        it("doesn't report method signatures wrapped in Readonly that are intersepted", () => {
-          valid({
+        it("doesn't report method signatures wrapped in Readonly that are intersepted", async () => {
+          await valid({
             code: dedent`
               type Foo = Bar & Readonly<Baz & {
                 methodSignature(): void
@@ -89,8 +89,8 @@ describe(name, () => {
           });
         });
 
-        it("doesn't report method signatures wrapped in Readonly that are intersepted and nested", () => {
-          valid({
+        it("doesn't report method signatures wrapped in Readonly that are intersepted and nested", async () => {
+          await valid({
             code: dedent`
               type Foo = Bar & Readonly<Baz & {
                 nested: Readonly<{
@@ -102,8 +102,8 @@ describe(name, () => {
           });
         });
 
-        it("doesn't report method signatures wrapped in Readonly that are intersepted and deeply nested", () => {
-          valid({
+        it("doesn't report method signatures wrapped in Readonly that are intersepted and deeply nested", async () => {
+          await valid({
             code: dedent`
               interface Foo extends Bar, Readonly<Baz & {
                 readonly nested: {

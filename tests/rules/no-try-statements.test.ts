@@ -14,14 +14,14 @@ describe(name, () => {
       configs: esLatestConfig,
     });
 
-    it("doesn't report non-issues", () => {
-      valid(dedent`
+    it("doesn't report non-issues", async () => {
+      await valid(dedent`
         foo();
       `);
     });
 
-    it("reports try statements", () => {
-      const invalidResult = invalid({
+    it("reports try statements", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           try {
             foo();
@@ -31,13 +31,13 @@ describe(name, () => {
         `,
         errors: ["catch"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     describe("options", () => {
       describe("allowCatch", () => {
-        it("doesn't report try statements with catch", () => {
-          valid({
+        it("doesn't report try statements with catch", async () => {
+          await valid({
             code: dedent`
               try {
                 foo();
@@ -49,8 +49,8 @@ describe(name, () => {
           });
         });
 
-        it("reports try statements with catch and finally", () => {
-          const invalidResult = invalid({
+        it("reports try statements with catch and finally", async () => {
+          const invalidResult = await invalid({
             code: dedent`
               try {
                 foo();
@@ -63,13 +63,13 @@ describe(name, () => {
             errors: ["finally"],
             options: [{ allowCatch: true, allowFinally: false }],
           });
-          expect(invalidResult.messages).toMatchSnapshot();
+          expect(invalidResult.result).toMatchSnapshot();
         });
       });
 
       describe("allowFinally", () => {
-        it("doesn't report try statements with finally", () => {
-          valid({
+        it("doesn't report try statements with finally", async () => {
+          await valid({
             code: dedent`
               try {
                 foo();
@@ -81,8 +81,8 @@ describe(name, () => {
           });
         });
 
-        it("reports try statements with catch and finally", () => {
-          const invalidResult = invalid({
+        it("reports try statements with catch and finally", async () => {
+          const invalidResult = await invalid({
             code: dedent`
               try {
                 foo();
@@ -95,12 +95,12 @@ describe(name, () => {
             errors: ["catch"],
             options: [{ allowCatch: false, allowFinally: true }],
           });
-          expect(invalidResult.messages).toMatchSnapshot();
+          expect(invalidResult.result).toMatchSnapshot();
         });
       });
 
-      it("doesn't report try statements with catch and finally if both are allowed", () => {
-        valid({
+      it("doesn't report try statements with catch and finally if both are allowed", async () => {
+        await valid({
           code: dedent`
             try {
               foo();
