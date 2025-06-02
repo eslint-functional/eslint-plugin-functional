@@ -100,7 +100,7 @@
     "@semantic-release/github": "11.0.2",
     "@semantic-release/npm": "12.0.1",
     "@semantic-release/release-notes-generator": "14.0.3",
-    "@stylistic/eslint-plugin": "4.2.0",
+    "@stylistic/eslint-plugin": "4.4.0",
     "@types/node": "18.19.100",
     "@typescript-eslint/eslint-plugin": "8.31.1",
     "@typescript-eslint/parser": "8.31.1",
