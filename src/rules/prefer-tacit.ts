@@ -127,7 +127,7 @@ function isDirectChildOfGetter(node: TSESTree.Node): boolean {
     return false;
   }
 
-  return parent.kind === 'get';
+  return parent.kind === "get";
 }
 
 /**

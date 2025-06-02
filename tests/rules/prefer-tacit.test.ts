@@ -97,8 +97,8 @@ describe(name, () => {
       `);
     });
 
-    it("doesn't report getters", () => {
-      valid(dedent`
+    it("doesn't report getters", async () => {
+      await valid(dedent`
         const foo = () => {
           const getBar = () => 1;
           const setBar = (value: number) => {};
