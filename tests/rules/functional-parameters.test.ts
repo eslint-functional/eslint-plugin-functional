@@ -14,67 +14,67 @@ describe(name, () => {
       configs: esLatestConfig,
     });
 
-    it("doesn't report non-issues", () => {
-      valid(dedent`
+    it("doesn't report non-issues", async () => {
+      await valid(dedent`
         var foo = {
           arguments: 2
         };
         foo.arguments = 3
       `);
 
-      valid(dedent`
+      await valid(dedent`
         (function() {
           console.log("hello world");
         })();
       `);
 
-      valid(dedent`
+      await valid(dedent`
         (() => {
           console.log("hello world");
         })();
       `);
 
-      valid(dedent`
+      await valid(dedent`
         function foo([bar, ...baz]) {
           console.log(bar, baz);
         }
       `);
     });
 
-    it("reports rest parameter violations", () => {
+    it("reports rest parameter violations", async () => {
       const code = dedent`
         function foo(...bar) {
           console.log(bar);
         }
       `;
 
-      const result = invalid({
+      const result = await invalid({
         code,
         errors: ["restParam"],
       });
 
-      expect(result.messages).toMatchSnapshot();
+      expect(result.result.messages).toMatchSnapshot();
     });
 
-    it("reports arguments keyword violations", () => {
+    it("reports arguments keyword violations", async () => {
       const code = dedent`
         function foo(bar) {
           console.log(arguments);
         }
       `;
 
-      const result = invalid({
+      const result = await invalid({
         code,
         errors: ["arguments"],
       });
 
-      expect(result.messages).toMatchSnapshot();
+      expect(result.result.messages).toMatchSnapshot();
     });
 
     describe("options", () => {
       describe("enforceParameterCount", () => {
-        it("atLeastOne", () => {
-          valid({
+        it("atLeastOne", async () => {
+          await valid({
             code: dedent`
               function foo(bar) {
                 console.log(bar);
@@ -83,7 +83,7 @@ describe(name, () => {
             options: [{ enforceParameterCount: "atLeastOne" }],
           });
 
-          valid({
+          await valid({
             code: dedent`
               function foo(bar, baz) {
                 console.log(bar, baz);
@@ -92,7 +92,7 @@ describe(name, () => {
             options: [{ enforceParameterCount: "atLeastOne" }],
           });
 
-          valid({
+          await valid({
             code: dedent`
               const foo = {
                 get bar() {
@@ -110,7 +110,7 @@ describe(name, () => {
             ],
           });
 
-          valid({
+          await valid({
             code: dedent`
               const foo = {
                 set bar(baz) {
@@ -128,7 +128,7 @@ describe(name, () => {
             ],
           });
 
-          const invalidResult = invalid({
+          const invalidResult = await invalid({
             code: dedent`
               function foo() {
                 console.log("hello world");
@@ -137,11 +137,11 @@ describe(name, () => {
             options: [{ enforceParameterCount: "atLeastOne" }],
             errors: ["paramCountAtLeastOne"],
           });
-          expect(invalidResult.messages).toMatchSnapshot();
+          expect(invalidResult.result.messages).toMatchSnapshot();
         });
 
-        it("exactlyOne", () => {
-          valid({
+        it("exactlyOne", async () => {
+          await valid({
             code: dedent`
               function foo(bar) {
                 console.log(bar);
@@ -150,7 +150,7 @@ describe(name, () => {
             options: [{ enforceParameterCount: "exactlyOne" }],
           });
 
-          valid({
+          await valid({
             code: dedent`
               const foo = {
                 get bar() {
@@ -168,7 +168,7 @@ describe(name, () => {
             ],
           });
 
-          valid({
+          await valid({
             code: dedent`
               const foo = {
                 set bar(baz) {
@@ -186,7 +186,7 @@ describe(name, () => {
             ],
           });
 
-          const invalidResult1 = invalid({
+          const invalidResult1 = await invalid({
             code: dedent`
               function foo(bar, baz) {
                 console.log(bar, baz);
@@ -195,9 +195,9 @@ describe(name, () => {
             options: [{ enforceParameterCount: "exactlyOne" }],
             errors: ["paramCountExactlyOne"],
           });
-          expect(invalidResult1.messages).toMatchSnapshot();
+          expect(invalidResult1.result.messages).toMatchSnapshot();
 
-          const invalidResult2 = invalid({
+          const invalidResult2 = await invalid({
             code: dedent`
               function foo() {
                 console.log("hello world");
@@ -206,11 +206,11 @@ describe(name, () => {
             options: [{ enforceParameterCount: "exactlyOne" }],
             errors: ["paramCountExactlyOne"],
           });
-          expect(invalidResult2.messages).toMatchSnapshot();
+          expect(invalidResult2.result.messages).toMatchSnapshot();
         });
 
-        it("ignoreLambdaExpression", () => {
-          valid({
+        it("ignoreLambdaExpression", async () => {
+          await valid({
             code: dedent`
               function foo(param) {}
               foo(function () {});
@@ -218,7 +218,7 @@ describe(name, () => {
             options: [{ enforceParameterCount: { ignoreLambdaExpression: true } }],
           });
 
-          valid({
+          await valid({
             code: dedent`
               function foo(param) {}
               foo(() => 1);
@@ -226,7 +226,7 @@ describe(name, () => {
             options: [{ enforceParameterCount: { ignoreLambdaExpression: true } }],
           });
 
-          const invalidResult = invalid({
+          const invalidResult = await invalid({
             code: dedent`
               function foo() {}
             `,
@@ -240,11 +240,11 @@ describe(name, () => {
             ],
             errors: ["paramCountAtLeastOne"],
           });
-          expect(invalidResult.messages).toMatchSnapshot();
+          expect(invalidResult.result.messages).toMatchSnapshot();
         });
 
-        it("ignoreIIFE", () => {
-          valid({
+        it("ignoreIIFE", async () => {
+          await valid({
             code: dedent`
               (() => {
                 console.log("hello world");
@@ -260,7 +260,7 @@ describe(name, () => {
             ],
           });
 
-          const invalidResult = invalid({
+          const invalidResult = await invalid({
             code: dedent`
               (() => {
                 console.log("hello world");
@@ -276,12 +276,12 @@ describe(name, () => {
             ],
             errors: ["paramCountAtLeastOne"],
           });
-          expect(invalidResult.messages).toMatchSnapshot();
+          expect(invalidResult.result.messages).toMatchSnapshot();
         });
       });
 
-      it("ignoreIdentifierPattern", () => {
-        valid({
+      it("ignoreIdentifierPattern", async () => {
+        await valid({
           code: dedent`
             function foo(...bar) {
               console.log(bar);
@@ -290,7 +290,7 @@ describe(name, () => {
           options: [{ ignoreIdentifierPattern: "^foo" }],
         });
 
-        valid({
+        await valid({
           code: dedent`
             const baz = {
               foo(...bar) {
@@ -301,7 +301,7 @@ describe(name, () => {
           options: [{ ignoreIdentifierPattern: "^foo" }],
         });
 
-        const invalidResult = invalid({
+        const invalidResult = await invalid({
           code: dedent`
             function foo(...bar) {
               console.log(bar);
@@ -310,11 +310,11 @@ describe(name, () => {
           options: [{ ignoreIdentifierPattern: "^bar" }],
           errors: ["restParam"],
         });
-        expect(invalidResult.messages).toMatchSnapshot();
+        expect(invalidResult.result.messages).toMatchSnapshot();
       });
 
-      it("ignorePrefixSelector", () => {
-        valid({
+      it("ignorePrefixSelector", async () => {
+        await valid({
           code: dedent`
             [1, 2, 3].reduce(
               function(carry, current) {
@@ -331,7 +331,7 @@ describe(name, () => {
           ],
         });
 
-        valid({
+        await valid({
           code: dedent`
             [1, 2, 3].map(
               function(element, index) {
@@ -348,7 +348,7 @@ describe(name, () => {
           ],
         });
 
-        valid({
+        await valid({
           code: dedent`
             [1, 2, 3]
               .map(
@@ -374,7 +374,7 @@ describe(name, () => {
           ],
         });
 
-        valid({
+        await valid({
           code: dedent`
             [1, 2, 3].reduce(
               (carry, current) => carry + current,
@@ -389,7 +389,7 @@ describe(name, () => {
           ],
         });
 
-        valid({
+        await valid({
           code: dedent`
             [1, 2, 3].map(
               (element, index) => element + index,
@@ -404,7 +404,7 @@ describe(name, () => {
           ],
         });
 
-        valid({
+        await valid({
           code: dedent`
             [1, 2, 3]
               .map(
@@ -436,14 +436,14 @@ describe(name, () => {
     });
 
     describe("overrides", () => {
-      it('override value works - "allowRestParameter"', () => {
+      it('override value works - "allowRestParameter"', async () => {
         const code = dedent`
           function foo(...bar: string[]) {
             console.log(bar);
           }
         `;
 
-        valid({
+        await valid({
           code,
           options: {
             allowRestParameter: false,
@@ -461,14 +461,14 @@ describe(name, () => {
         });
       });
 
-      it('override value works - "allowArgumentsKeyword"', () => {
+      it('override value works - "allowArgumentsKeyword"', async () => {
         const code = dedent`
           function foo(bar: string[]) {
             console.log(arguments);
           }
         `;
 
-        valid({
+        await valid({
           code,
           options: {
             allowArgumentsKeyword: false,
@@ -486,14 +486,14 @@ describe(name, () => {
         });
       });
 
-      it('disbale override works - "allowRestParameter"', () => {
+      it('disbale override works - "allowRestParameter"', async () => {
         const code = dedent`
           function foo(...bar: string[]) {
             console.log(bar);
           }
         `;
 
-        valid({
+        await valid({
           code,
           options: {
             allowRestParameter: false,
@@ -509,14 +509,14 @@ describe(name, () => {
         });
       });
 
-      it('disbale override works - "allowArgumentsKeyword"', () => {
+      it('disbale override works - "allowArgumentsKeyword"', async () => {
         const code = dedent`
           function foo(bar: string[]) {
             console.log(arguments);
           }
         `;
 
-        valid({
+        await valid({
           code,
           options: {
             allowArgumentsKeyword: false,

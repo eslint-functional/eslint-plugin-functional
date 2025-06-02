@@ -15,8 +15,8 @@ describe(name, () => {
     });
 
     describe("if statements", () => {
-      it("reports if statements", () => {
-        const invalidResult = invalid({
+      it("reports if statements", async () => {
+        const invalidResult = await invalid({
           code: dedent`
             if (true) {
               console.log("hello world");
@@ -24,14 +24,14 @@ describe(name, () => {
           `,
           errors: ["unexpectedIf"],
         });
-        expect(invalidResult.messages).toMatchSnapshot();
+        expect(invalidResult.result.messages).toMatchSnapshot();
       });
 
       describe("options", () => {
         describe("allowReturningBranches", () => {
           describe("true", () => {
-            it("allows return", () => {
-              valid({
+            it("allows return", async () => {
+              await valid({
                 code: dedent`
                   function foo(i) {
                     if (i === 1) {
@@ -43,8 +43,8 @@ describe(name, () => {
               });
             });
 
-            it("supports break and continue as returning", () => {
-              valid({
+            it("supports break and continue as returning", async () => {
+              await valid({
                 code: dedent`
                   for(var i = 0; i < j; i++) {
                     if (e === 1) {
@@ -59,8 +59,8 @@ describe(name, () => {
               });
             });
 
-            it("supports throw as returning", () => {
-              valid({
+            it("supports throw as returning", async () => {
+              await valid({
                 code: dedent`
                   function foo(i) {
                     if (i === 1) {
@@ -72,8 +72,8 @@ describe(name, () => {
               });
             });
 
-            it("supports never as returning", () => {
-              valid({
+            it("supports never as returning", async () => {
+              await valid({
                 code: dedent`
                   declare function neverReturn(): never;
                   function foo(i) {
@@ -88,8 +88,8 @@ describe(name, () => {
           });
 
           describe("ifExhaustive", () => {
-            it("else required", () => {
-              valid({
+            it("else required", async () => {
+              await valid({
                 code: dedent`
                   function foo(i) {
                     if (i === 1) {
@@ -102,7 +102,7 @@ describe(name, () => {
                 options: [{ allowReturningBranches: "ifExhaustive" }],
               });
 
-              const invalidResult = invalid({
+              const invalidResult = await invalid({
                 code: dedent`
                   function foo(i) {
                     if (i === 1) {
@@ -113,11 +113,11 @@ describe(name, () => {
                 options: [{ allowReturningBranches: "ifExhaustive" }],
                 errors: ["incompleteIf"],
               });
-              expect(invalidResult.messages).toMatchSnapshot();
+              expect(invalidResult.result.messages).toMatchSnapshot();
             });
 
-            it("supports break and continue as returning", () => {
-              valid({
+            it("supports break and continue as returning", async () => {
+              await valid({
                 code: dedent`
                   for(var i = 0; i < j; i++) {
                     if (e === 1) {
@@ -134,8 +134,8 @@ describe(name, () => {
         });
 
         describe("ignoreCodePattern", () => {
-          it("ignores matching conditionals", () => {
-            valid({
+          it("ignores matching conditionals", async () => {
+            await valid({
               code: dedent`
                 if (import.meta.vitest) {
                   const { it, expect } = import.meta.vitest;
@@ -149,8 +149,8 @@ describe(name, () => {
     });
 
     describe("switch statements", () => {
-      it("reports switch statements", () => {
-        const invalidResult = invalid({
+      it("reports switch statements", async () => {
+        const invalidResult = await invalid({
           code: dedent`
             switch(i) {
               case "a":
@@ -162,14 +162,14 @@ describe(name, () => {
           `,
           errors: ["unexpectedSwitch"],
         });
-        expect(invalidResult.messages).toMatchSnapshot();
+        expect(invalidResult.result.messages).toMatchSnapshot();
       });
 
       describe("options", () => {
         describe("allowReturningBranches", () => {
           describe("true", () => {
-            it("allows return", () => {
-              valid({
+            it("allows return", async () => {
+              await valid({
                 code: dedent`
                   function foo(i) {
                     switch(i) {
@@ -186,8 +186,8 @@ describe(name, () => {
               });
             });
 
-            it("supports break and continue as returning", () => {
-              valid({
+            it("supports break and continue as returning", async () => {
+              await valid({
                 code: dedent`
                   label: for(var i = 0; i < j; i++) {
                     switch(i) {
@@ -202,8 +202,8 @@ describe(name, () => {
               });
             });
 
-            it("supports throw as returning", () => {
-              valid({
+            it("supports throw as returning", async () => {
+              await valid({
                 code: dedent`
                   function foo(i) {
                     switch(i) {
@@ -218,8 +218,8 @@ describe(name, () => {
               });
             });
 
-            it("supports never as returning", () => {
-              valid({
+            it("supports never as returning", async () => {
+              await valid({
                 code: dedent`
                   declare function neverReturn(): never;
                   function foo(i) {
@@ -237,8 +237,8 @@ describe(name, () => {
           });
 
           describe("ifExhaustive", () => {
-            it("requires default case", () => {
-              valid({
+            it("requires default case", async () => {
+              await valid({
                 code: dedent`
                   function foo(i) {
                     switch(i) {
@@ -254,7 +254,7 @@ describe(name, () => {
                 options: [{ allowReturningBranches: "ifExhaustive" }],
               });
 
-              const invalidResult = invalid({
+              const invalidResult = await invalid({
                 code: dedent`
                   function foo(i) {
                     switch(i) {
@@ -268,11 +268,11 @@ describe(name, () => {
                 options: [{ allowReturningBranches: "ifExhaustive" }],
                 errors: ["incompleteSwitch"],
               });
-              expect(invalidResult.messages).toMatchSnapshot();
+              expect(invalidResult.result.messages).toMatchSnapshot();
             });
 
-            it("supports exhaustive type testing", () => {
-              valid({
+            it("supports exhaustive type testing", async () => {
+              await valid({
                 code: dedent`
                   type T = "a" | "b";
                   function foo(i: T) {

@@ -14,8 +14,8 @@ describe(name, () => {
       configs: esLatestConfig,
     });
 
-    it("doesn't report non-issues", () => {
-      valid({
+    it("doesn't report non-issues", async () => {
+      await valid({
         code: dedent`
           if (true) {
             console.log("hello world");
@@ -24,8 +24,8 @@ describe(name, () => {
       });
     });
 
-    it("reports while loop statements", () => {
-      const invalidResult = invalid({
+    it("reports while loop statements", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           while (true) {
             console.log("hello world");
@@ -33,11 +33,11 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result.messages).toMatchSnapshot();
     });
 
-    it("reports do while loop statements", () => {
-      const invalidResult = invalid({
+    it("reports do while loop statements", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           do {
             console.log("hello world");
@@ -45,11 +45,11 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result.messages).toMatchSnapshot();
     });
 
-    it("reports for loop statements", () => {
-      const invalidResult = invalid({
+    it("reports for loop statements", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           for (let i = 0; i < 10; i++) {
             console.log("hello world");
@@ -57,11 +57,11 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result.messages).toMatchSnapshot();
     });
 
-    it("reports for in loop statements", () => {
-      const invalidResult = invalid({
+    it("reports for in loop statements", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           for (let i in []) {
             console.log("hello world");
@@ -69,11 +69,11 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result.messages).toMatchSnapshot();
     });
 
-    it("reports for of loop statements", () => {
-      const invalidResult = invalid({
+    it("reports for of loop statements", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           for (let i of []) {
             console.log("hello world");
@@ -81,11 +81,11 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result.messages).toMatchSnapshot();
     });
 
-    it("reports for await loop statements", () => {
-      const invalidResult = invalid({
+    it("reports for await loop statements", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           for await (let i of []) {
             console.log("hello world");
@@ -93,7 +93,7 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result.messages).toMatchSnapshot();
     });
   });
 });

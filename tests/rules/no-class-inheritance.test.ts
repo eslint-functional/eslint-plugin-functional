@@ -14,22 +14,22 @@ describe(name, () => {
       configs: esLatestConfig,
     });
 
-    it("doesn't report non-issues", () => {
-      valid("class Foo {}");
+    it("doesn't report non-issues", async () => {
+      await valid("class Foo {}");
     });
 
-    it("reports class inheritance", () => {
-      const invalidResult1 = invalid({
+    it("reports class inheritance", async () => {
+      const invalidResult1 = await invalid({
         code: "class Foo extends Bar {}",
         errors: ["extends"],
       });
-      expect(invalidResult1.messages).toMatchSnapshot();
+      expect(invalidResult1.result.messages).toMatchSnapshot();
     });
 
     describe("options", () => {
       describe("ignoreIdentifierPattern", () => {
-        it("should not report class inheritance with matching identifiers", () => {
-          valid({
+        it("should not report class inheritance with matching identifiers", async () => {
+          await valid({
             code: dedent`
               class Foo extends Bar {}
             `,
@@ -37,22 +37,22 @@ describe(name, () => {
           });
         });
 
-        it("should report class inheritance with non-matching identifiers", () => {
-          const invalidResult = invalid({
+        it("should report class inheritance with non-matching identifiers", async () => {
+          const invalidResult = await invalid({
             code: dedent`
               class Bar extends Foo {}
             `,
             options: [{ ignoreIdentifierPattern: "^Foo$" }],
             errors: ["extends"],
           });
-          expect(invalidResult.messages).toMatchSnapshot();
+          expect(invalidResult.result.messages).toMatchSnapshot();
         });
       });
     });
 
     describe("ignoreCodePattern", () => {
-      it("should not report class inheritance with matching identifiers", () => {
-        valid({
+      it("should not report class inheritance with matching identifiers", async () => {
+        await valid({
           code: dedent`
             class Foo extends Bar {}
           `,
@@ -60,15 +60,15 @@ describe(name, () => {
         });
       });
 
-      it("should report class inheritance with non-matching identifiers", () => {
-        const invalidResult = invalid({
+      it("should report class inheritance with non-matching identifiers", async () => {
+        const invalidResult = await invalid({
           code: dedent`
             class Bar extends Foo {}
           `,
           options: [{ ignoreCodePattern: "class Foo" }],
           errors: ["extends"],
         });
-        expect(invalidResult.messages).toMatchSnapshot();
+        expect(invalidResult.result.messages).toMatchSnapshot();
       });
     });
   });
@@ -80,30 +80,30 @@ describe(name, () => {
       configs: typescriptConfig,
     });
 
-    it("doesn't report non-issues", () => {
-      valid("class Foo {}");
-      valid("class Foo implements Bar {}");
-      valid("interface Foo extends Bar {}");
+    it("doesn't report non-issues", async () => {
+      await valid("class Foo {}");
+      await valid("class Foo implements Bar {}");
+      await valid("interface Foo extends Bar {}");
     });
 
-    it("reports class inheritance", () => {
-      const invalidResult1 = invalid({
+    it("reports class inheritance", async () => {
+      const invalidResult1 = await invalid({
         code: "abstract class Foo {}",
         errors: ["abstract"],
       });
-      expect(invalidResult1.messages).toMatchSnapshot();
+      expect(invalidResult1.result.messages).toMatchSnapshot();
 
-      const invalidResult2 = invalid({
+      const invalidResult2 = await invalid({
         code: "abstract class Foo extends Bar {}",
         errors: ["abstract", "extends"],
       });
-      expect(invalidResult2.messages).toMatchSnapshot();
+      expect(invalidResult2.result.messages).toMatchSnapshot();
     });
 
     describe("options", () => {
       describe("ignoreIdentifierPattern", () => {
-        it("should not report class inheritance with matching identifiers", () => {
-          valid({
+        it("should not report class inheritance with matching identifiers", async () => {
+          await valid({
             code: dedent`
               abstract class Foo {}
             `,
@@ -111,22 +111,22 @@ describe(name, () => {
           });
         });
 
-        it("should report class inheritance with non-matching identifiers", () => {
-          const invalidResult = invalid({
+        it("should report class inheritance with non-matching identifiers", async () => {
+          const invalidResult = await invalid({
             code: dedent`
               abstract class Bar {}
             `,
             options: [{ ignoreIdentifierPattern: "^Foo$" }],
             errors: ["abstract"],
           });
-          expect(invalidResult.messages).toMatchSnapshot();
+          expect(invalidResult.result.messages).toMatchSnapshot();
         });
       });
     });
 
     describe("ignoreCodePattern", () => {
-      it("should not report class inheritance with matching identifiers", () => {
-        valid({
+      it("should not report class inheritance with matching identifiers", async () => {
+        await valid({
           code: dedent`
             abstract class Foo {}
           `,
@@ -134,15 +134,15 @@ describe(name, () => {
         });
       });
 
-      it("should report class inheritance with non-matching identifiers", () => {
-        const invalidResult = invalid({
+      it("should report class inheritance with non-matching identifiers", async () => {
+        const invalidResult = await invalid({
           code: dedent`
             abstract class Bar {}
           `,
           options: [{ ignoreCodePattern: "class Foo" }],
           errors: ["abstract"],
         });
-        expect(invalidResult.messages).toMatchSnapshot();
+        expect(invalidResult.result.messages).toMatchSnapshot();
       });
     });
   });

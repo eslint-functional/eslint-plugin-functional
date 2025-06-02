@@ -14,35 +14,35 @@ describe(name, () => {
       configs: esLatestConfig,
     });
 
-    it("reports expression statements", () => {
-      const invalidResult = invalid({
+    it("reports expression statements", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           var x = [];
           x.push(1);
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result.messages).toMatchSnapshot();
     });
 
-    it("doesn't report variable declarations", () => {
-      valid(dedent`
+    it("doesn't report variable declarations", async () => {
+      await valid(dedent`
         var x = [];
         let y = [];
         const z = [];
       `);
     });
 
-    it("doesn't report directive prologues", () => {
-      valid(dedent`
+    it("doesn't report directive prologues", async () => {
+      await valid(dedent`
         "use strict";
         "use server";
         "use client";
       `);
     });
 
-    it("doesn't report yield", () => {
-      valid(dedent`
+    it("doesn't report yield", async () => {
+      await valid(dedent`
         export function* foo() {
           yield "hello";
           return "world";
@@ -51,8 +51,8 @@ describe(name, () => {
     });
 
     describe("options", () => {
-      it("ignoreCodePattern", () => {
-        valid({
+      it("ignoreCodePattern", async () => {
+        await valid({
           code: dedent`
             console.log("yo");
             console.error("yo");
@@ -60,19 +60,19 @@ describe(name, () => {
           options: [{ ignoreCodePattern: "^console\\." }],
         });
 
-        valid({
+        await valid({
           code: dedent`
             assert(1 !== 2);
           `,
           options: [{ ignoreCodePattern: "^assert" }],
         });
 
-        const invalidResult = invalid({
+        const invalidResult = await invalid({
           code: `console.trace();`,
           options: [{ ignoreCodePattern: "^console\\.log" }],
           errors: ["generic"],
         });
-        expect(invalidResult.messages).toMatchSnapshot();
+        expect(invalidResult.result.messages).toMatchSnapshot();
       });
     });
   });
@@ -85,8 +85,8 @@ describe(name, () => {
     });
 
     describe("options", () => {
-      it("ignoreVoid", () => {
-        valid({
+      it("ignoreVoid", async () => {
+        await valid({
           code: dedent`
             console.log("yo");
             console.error("yo");
@@ -94,7 +94,7 @@ describe(name, () => {
           options: [{ ignoreVoid: true }],
         });
 
-        valid({
+        await valid({
           code: dedent`
             function foo() { return Promise.resolve(); }
             foo();
@@ -103,8 +103,8 @@ describe(name, () => {
         });
       });
 
-      it("ignoreSelfReturning", () => {
-        valid({
+      it("ignoreSelfReturning", async () => {
+        await valid({
           code: dedent`
             function foo() { return this; }
             foo();
@@ -112,7 +112,7 @@ describe(name, () => {
           options: [{ ignoreSelfReturning: true }],
         });
 
-        valid({
+        await valid({
           code: dedent`
             const foo = { bar() { return this; }};
             foo.bar();
@@ -120,7 +120,7 @@ describe(name, () => {
           options: [{ ignoreSelfReturning: true }],
         });
 
-        valid({
+        await valid({
           code: dedent`
             class Foo { bar() { return this; }};
             const foo = new Foo();
@@ -129,7 +129,7 @@ describe(name, () => {
           options: [{ ignoreSelfReturning: true }],
         });
 
-        const invalidResult = invalid({
+        const invalidResult = await invalid({
           code: dedent`
             const foo = () => { return this; };
             foo();
@@ -137,7 +137,7 @@ describe(name, () => {
           options: [{ ignoreSelfReturning: true }],
           errors: ["generic"],
         });
-        expect(invalidResult.messages).toMatchSnapshot();
+        expect(invalidResult.result.messages).toMatchSnapshot();
       });
     });
   });

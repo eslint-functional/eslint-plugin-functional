@@ -14,8 +14,8 @@ describe(name, () => {
       configs: typescriptConfig,
     });
 
-    it("report mutating map methods", () => {
-      const invalidResult = invalid({
+    it("report mutating map methods", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           const x = new Map([[5, 6]]);
           x.set(4, 8);
@@ -25,11 +25,11 @@ describe(name, () => {
         options: [],
         errors: ["map", "map", "map"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result.messages).toMatchSnapshot();
     });
 
-    it("doesn't report mutating map methods when ignoring maps and sets", () => {
-      valid({
+    it("doesn't report mutating map methods when ignoring maps and sets", async () => {
+      await valid({
         code: dedent`
           const x = new Map([[5, 6]]);
           x.set(4, 8);
@@ -44,8 +44,8 @@ describe(name, () => {
       });
     });
 
-    it("doesn't report non-mutating map methods", () => {
-      valid(dedent`
+    it("doesn't report non-mutating map methods", async () => {
+      await valid(dedent`
         const x = new Map([[5, 6]]);
         x.size;
         x.has(4);
@@ -55,8 +55,8 @@ describe(name, () => {
       `);
     });
 
-    it("doesn't report mutating map methods on non-map objects", () => {
-      valid(dedent`
+    it("doesn't report mutating map methods on non-map objects", async () => {
+      await valid(dedent`
         const z = {
           set: function () {},
           delete: function () {},
@@ -71,8 +71,8 @@ describe(name, () => {
 
     describe("options", () => {
       describe("ignoreNonConstDeclarations", () => {
-        it("reports variables declared as const", () => {
-          const invalidResult = invalid({
+        it("reports variables declared as const", async () => {
+          const invalidResult = await invalid({
             code: dedent`
               const x = new Map([[5, 6]]);
               x.set(4, 8);
@@ -86,11 +86,11 @@ describe(name, () => {
             ],
             errors: ["map", "map", "map"],
           });
-          expect(invalidResult.messages).toMatchSnapshot();
+          expect(invalidResult.result.messages).toMatchSnapshot();
         });
 
-        it("doesn't report variables not declared as const", () => {
-          valid({
+        it("doesn't report variables not declared as const", async () => {
+          await valid({
             code: dedent`
               let x = new Map([[5, 6]]);
               x.set(4, 8);
@@ -107,8 +107,8 @@ describe(name, () => {
       });
 
       describe("ignoreImmediateMutation", () => {
-        it("doesn't report immediately mutation when enabled", () => {
-          valid({
+        it("doesn't report immediately mutation when enabled", async () => {
+          await valid({
             code: dedent`
               new Map([[5, 6]]).set(4, 8);
               new Map([[5, 6]]).delete(4);
@@ -122,8 +122,8 @@ describe(name, () => {
           });
         });
 
-        it("reports immediately mutation when disabled", () => {
-          const invalidResult = invalid({
+        it("reports immediately mutation when disabled", async () => {
+          const invalidResult = await invalid({
             code: dedent`
               new Map([[5, 6]]).set(4, 8);
               new Map([[5, 6]]).delete(4);
@@ -136,7 +136,7 @@ describe(name, () => {
             ],
             errors: ["map", "map", "map"],
           });
-          expect(invalidResult.messages).toMatchSnapshot();
+          expect(invalidResult.result.messages).toMatchSnapshot();
         });
       });
     });

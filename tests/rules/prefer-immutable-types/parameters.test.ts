@@ -14,44 +14,44 @@ describe(name, () => {
       configs: typescriptConfig,
     });
 
-    it("reports non-immutable set parameters", () => {
-      const invalidResult = invalid({
+    it("reports non-immutable set parameters", async () => {
+      const invalidResult = await invalid({
         code: "function foo(arg: ReadonlySet<string>) {}",
         errors: ["parameter"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result.messages).toMatchSnapshot();
     });
 
-    it("reports non-immutable map parameters", () => {
-      const invalidResult = invalid({
+    it("reports non-immutable map parameters", async () => {
+      const invalidResult = await invalid({
         code: "function foo(arg: ReadonlyMap<string, string>) {}",
         errors: ["parameter"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result.messages).toMatchSnapshot();
     });
 
-    it("reports mutable records parameters", () => {
-      const invalidResult = invalid({
+    it("reports mutable records parameters", async () => {
+      const invalidResult = await invalid({
         code: "function foo(arg1: { foo: string }, arg2: { foo: number }) {}",
         errors: ["parameter", "parameter"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result.messages).toMatchSnapshot();
     });
 
-    it("reports mutable records parameters and suggests a fix for ReadonlyShallow", () => {
-      const invalidResult = invalid({
+    it("reports mutable records parameters and suggests a fix for ReadonlyShallow", async () => {
+      const invalidResult = await invalid({
         code: "function foo(arg1: { foo: string }, arg2: { foo: number }) {}",
         options: [{ parameters: "ReadonlyShallow" }],
         errors: ["parameter", "parameter"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
-      for (const message of invalidResult.messages) {
+      expect(invalidResult.result.messages).toMatchSnapshot();
+      for (const message of invalidResult.result.messages) {
         expect(message.suggestions).toHaveLength(1);
       }
     });
 
-    it("reports mutable class parameter properties", () => {
-      const invalidResult = invalid({
+    it("reports mutable class parameter properties", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           class Klass {
             constructor (
@@ -63,11 +63,11 @@ describe(name, () => {
         `,
         errors: ["propertyModifier", "propertyModifier", "propertyModifier"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result.messages).toMatchSnapshot();
     });
 
-    it("reports mutable class parameter properties and suggests a fix for ReadonlyShallow", () => {
-      const invalidResult = invalid({
+    it("reports mutable class parameter properties and suggests a fix for ReadonlyShallow", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           class Klass {
             constructor (
@@ -80,26 +80,26 @@ describe(name, () => {
         options: [{ parameters: "ReadonlyShallow" }],
         errors: ["propertyModifier", "propertyModifier", "propertyModifier"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
-      for (const message of invalidResult.messages) {
+      expect(invalidResult.result.messages).toMatchSnapshot();
+      for (const message of invalidResult.result.messages) {
         expect(message.suggestions).toHaveLength(1);
       }
     });
 
-    it("doesn't report type assertion parameters", () => {
-      const invalidResult = invalid({
+    it("doesn't report type assertion parameters", async () => {
+      const invalidResult = await invalid({
         code: "function foo(arg0: { foo: string | number }, arg1: { foo: string | number }): arg0 is { foo: number } {}",
         options: [{ parameters: "ReadonlyShallow" }],
         errors: ["parameter"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
-      for (const message of invalidResult.messages) {
+      expect(invalidResult.result.messages).toMatchSnapshot();
+      for (const message of invalidResult.result.messages) {
         expect(message.suggestions).toHaveLength(1);
       }
     });
 
-    it("suggest multiple fixes for collections for ReadonlyShallow", () => {
-      const invalidResult = invalid({
+    it("suggest multiple fixes for collections for ReadonlyShallow", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           function foo(arg: Array<string>) {}
           function foo(arg: string[]) {}
@@ -113,14 +113,14 @@ describe(name, () => {
         options: [{ parameters: "ReadonlyShallow" }],
         errors: ["parameter", "parameter", "parameter", "parameter"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
-      for (const message of invalidResult.messages) {
+      expect(invalidResult.result.messages).toMatchSnapshot();
+      for (const message of invalidResult.result.messages) {
         expect(message.suggestions).toHaveLength(2);
       }
     });
 
-    it("allows for user suggestions", () => {
-      const invalidResult = invalid({
+    it("allows for user suggestions", async () => {
+      const invalidResult = await invalid({
         code: "function foo(arg1: { foo: string }) {}",
         options: [
           {
@@ -139,14 +139,14 @@ describe(name, () => {
         ],
         errors: ["parameter"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
-      for (const message of invalidResult.messages) {
+      expect(invalidResult.result.messages).toMatchSnapshot();
+      for (const message of invalidResult.result.messages) {
         expect(message.suggestions).toHaveLength(1);
       }
     });
 
-    it("allows for user fixes", () => {
-      const invalidResult = invalid({
+    it("allows for user fixes", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           function foo(arg: Array<string>) {}
           function foo(arg: string[]) {}
@@ -182,35 +182,35 @@ describe(name, () => {
         ],
         verifyAfterFix: false, // "fix" doesn't fix arrays so they will still report.
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result.messages).toMatchSnapshot();
     });
 
     it.each([
       [[{ parameters: "ReadonlyShallow" }]],
       [[{ parameters: "ReadonlyDeep" }]],
       [[{ parameters: "Immutable" }]],
-    ])("doesn't reports valid parameters", (options) => {
-      valid({
+    ])("doesn't reports valid parameters", async (options) => {
+      await valid({
         code: "function foo(arg: boolean) {}",
         options,
       });
-      valid({
+      await valid({
         code: "function foo(arg: true) {}",
         options,
       });
-      valid({
+      await valid({
         code: "function foo(arg: string) {}",
         options,
       });
-      valid({
+      await valid({
         code: "function foo(arg: 'bar') {}",
         options,
       });
-      valid({
+      await valid({
         code: "function foo(arg: undefined) {}",
         options,
       });
-      valid({
+      await valid({
         code: "function foo(arg: readonly string[]) {}",
         options,
         settings: {
@@ -224,57 +224,57 @@ describe(name, () => {
           },
         },
       });
-      valid({
+      await valid({
         code: "function foo(arg: { readonly foo: string }) {}",
         options,
       });
-      valid({
+      await valid({
         code: "function foo(arg: { readonly foo: { readonly bar: number } }) {}",
         options,
       });
-      valid({
+      await valid({
         code: "function foo(arg: Readonly<ReadonlySet<string>>) {}",
         options,
       });
-      valid({
+      await valid({
         code: "function foo(arg: Readonly<ReadonlyMap<string, string>>) {}",
         options,
       });
-      valid({
+      await valid({
         code: "function foo(arg: { foo: string | number }): arg is { foo: number } {}",
         options,
       });
 
       if (options[0]!.parameters !== "Immutable") {
-        valid({
+        await valid({
           code: "function foo(arg: { foo(): void }) {}",
           options,
         });
-        valid({
+        await valid({
           code: "function foo(arg: ReadonlyArray<string>) {}",
           options,
         });
-        valid({
+        await valid({
           code: "function foo(arg: readonly [string, number]) {}",
           options,
         });
-        valid({
+        await valid({
           code: "function foo(arg: Readonly<[string, number]>) {}",
           options,
         });
-        valid({
+        await valid({
           code: "function foo(arg: { foo: () => void }) {}",
           options,
         });
-        valid({
+        await valid({
           code: "function foo(arg: ReadonlySet<string>) {}",
           options,
         });
-        valid({
+        await valid({
           code: "function foo(arg: ReadonlyMap<string, string>) {}",
           options,
         });
-        valid({
+        await valid({
           code: dedent`
             class Foo {
               constructor(
@@ -287,7 +287,7 @@ describe(name, () => {
           `,
           options,
         });
-        valid({
+        await valid({
           code: dedent`
             interface Foo {
               (arg: readonly string[]): void;
@@ -295,7 +295,7 @@ describe(name, () => {
           `,
           options,
         });
-        valid({
+        await valid({
           code: dedent`
             interface Foo {
               new (arg: readonly string[]): void;

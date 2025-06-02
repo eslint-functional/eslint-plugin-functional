@@ -14,8 +14,8 @@ describe(name, () => {
       configs: typescriptConfig,
     });
 
-    it("doesn't report non-void returning functions", () => {
-      valid({
+    it("doesn't report non-void returning functions", async () => {
+      await valid({
         code: dedent`
           function foo(bar: number): number {
             return bar + 1;
@@ -24,8 +24,8 @@ describe(name, () => {
       });
     });
 
-    it("doesn't report non-void returning functions with inferred return type", () => {
-      valid({
+    it("doesn't report non-void returning functions with inferred return type", async () => {
+      await valid({
         code: dedent`
           function foo(bar: number) {
             return bar + 1;
@@ -34,8 +34,8 @@ describe(name, () => {
       });
     });
 
-    it("reports void returning functions", () => {
-      const invalidResult = invalid({
+    it("reports void returning functions", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           function foo(bar: number): void {
             console.log(bar);
@@ -43,11 +43,11 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result.messages).toMatchSnapshot();
     });
 
-    it("reports void returning functions with inferred return type", () => {
-      const invalidResult = invalid({
+    it("reports void returning functions with inferred return type", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           function foo(bar: number) {
             console.log(bar);
@@ -55,13 +55,13 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result.messages).toMatchSnapshot();
     });
 
     describe("options", () => {
       describe("allowNull", () => {
-        it("doesn't report null returning functions when allowed", () => {
-          valid({
+        it("doesn't report null returning functions when allowed", async () => {
+          await valid({
             code: dedent`
               function foo(bar: number): null {
                 return null;
@@ -71,8 +71,8 @@ describe(name, () => {
           });
         });
 
-        it("doesn't report null returning functions with inferred return type when allowed", () => {
-          valid({
+        it("doesn't report null returning functions with inferred return type when allowed", async () => {
+          await valid({
             code: dedent`
               function foo(bar: number) {
                 return null;
@@ -82,8 +82,8 @@ describe(name, () => {
           });
         });
 
-        it("reports null returning functions when disallowed", () => {
-          const invalidResult = invalid({
+        it("reports null returning functions when disallowed", async () => {
+          const invalidResult = await invalid({
             code: dedent`
               function foo(bar: number): null {
                 return null;
@@ -92,11 +92,11 @@ describe(name, () => {
             options: [{ allowNull: false }],
             errors: ["generic"],
           });
-          expect(invalidResult.messages).toMatchSnapshot();
+          expect(invalidResult.result.messages).toMatchSnapshot();
         });
 
-        it("reports null returning functions with inferred return type when disallowed", () => {
-          const invalidResult = invalid({
+        it("reports null returning functions with inferred return type when disallowed", async () => {
+          const invalidResult = await invalid({
             code: dedent`
               function foo(bar: number) {
                 return null;
@@ -105,13 +105,13 @@ describe(name, () => {
             options: [{ allowNull: false }],
             errors: ["generic"],
           });
-          expect(invalidResult.messages).toMatchSnapshot();
+          expect(invalidResult.result.messages).toMatchSnapshot();
         });
       });
 
       describe("allowUndefined", () => {
-        it("doesn't report undefined returning functions when allowed", () => {
-          valid({
+        it("doesn't report undefined returning functions when allowed", async () => {
+          await valid({
             code: dedent`
               function foo(bar: number): undefined {
                 return undefined;
@@ -121,8 +121,8 @@ describe(name, () => {
           });
         });
 
-        it("doesn't report undefined returning functions with inferred return type when allowed", () => {
-          valid({
+        it("doesn't report undefined returning functions with inferred return type when allowed", async () => {
+          await valid({
             code: dedent`
               function foo(bar: number) {
                 return undefined;
@@ -132,8 +132,8 @@ describe(name, () => {
           });
         });
 
-        it("reports undefined returning functions when disallowed", () => {
-          const invalidResult = invalid({
+        it("reports undefined returning functions when disallowed", async () => {
+          const invalidResult = await invalid({
             code: dedent`
               function foo(bar: number): undefined {
                 return undefined;
@@ -142,11 +142,11 @@ describe(name, () => {
             options: [{ allowUndefined: false }],
             errors: ["generic"],
           });
-          expect(invalidResult.messages).toMatchSnapshot();
+          expect(invalidResult.result.messages).toMatchSnapshot();
         });
 
-        it("reports undefined returning functions with inferred return type when disallowed", () => {
-          const invalidResult = invalid({
+        it("reports undefined returning functions with inferred return type when disallowed", async () => {
+          const invalidResult = await invalid({
             code: dedent`
               function foo(bar: number) {
                 return undefined;
@@ -155,13 +155,13 @@ describe(name, () => {
             options: [{ allowUndefined: false }],
             errors: ["generic"],
           });
-          expect(invalidResult.messages).toMatchSnapshot();
+          expect(invalidResult.result.messages).toMatchSnapshot();
         });
       });
 
       describe("ignoreInferredTypes", () => {
-        it("doesn't report inferred void return type", () => {
-          valid({
+        it("doesn't report inferred void return type", async () => {
+          await valid({
             code: dedent`
               function foo(bar: number) {
                 console.log(bar);
@@ -171,8 +171,8 @@ describe(name, () => {
           });
         });
 
-        it("doesn't report inferred null return type", () => {
-          valid({
+        it("doesn't report inferred null return type", async () => {
+          await valid({
             code: dedent`
               function foo(bar: number) {
                 return null;
@@ -182,8 +182,8 @@ describe(name, () => {
           });
         });
 
-        it("doesn't report inferred undefined return type", () => {
-          valid({
+        it("doesn't report inferred undefined return type", async () => {
+          await valid({
             code: dedent`
               function foo(bar: number) {
                 return undefined;

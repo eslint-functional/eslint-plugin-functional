@@ -14,8 +14,8 @@ describe(name, () => {
       configs: typescriptConfig,
     });
 
-    it("doesn't report non-issues", () => {
-      valid({
+    it("doesn't report non-issues", async () => {
+      await valid({
         code: dedent`
           type Foo = {
             bar: string;
@@ -24,7 +24,7 @@ describe(name, () => {
         `,
       });
 
-      valid({
+      await valid({
         code: dedent`
           interface Foo {
             bar: string;
@@ -33,7 +33,7 @@ describe(name, () => {
         `,
       });
 
-      valid({
+      await valid({
         code: dedent`
           type Foo = {
             bar: () =>string;
@@ -42,7 +42,7 @@ describe(name, () => {
         `,
       });
 
-      valid({
+      await valid({
         code: dedent`
           interface Foo {
             bar: () => string;
@@ -52,8 +52,8 @@ describe(name, () => {
       });
     });
 
-    it("reports mixed types in interfaces", () => {
-      const invalidResult = invalid({
+    it("reports mixed types in interfaces", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           interface Foo {
             bar: string;
@@ -62,11 +62,11 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result.messages).toMatchSnapshot();
     });
 
-    it("reports mixed types in type literals", () => {
-      const invalidResult = invalid({
+    it("reports mixed types in type literals", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           type Foo = {
             bar: string;
@@ -75,13 +75,13 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result.messages).toMatchSnapshot();
     });
 
     describe("options", () => {
       describe("checkTypeLiterals", () => {
-        it("should report mixed types in type literals when enabled", () => {
-          const invalidResult = invalid({
+        it("should report mixed types in type literals when enabled", async () => {
+          const invalidResult = await invalid({
             code: dedent`
               type Foo = {
                 bar: string;
@@ -91,11 +91,11 @@ describe(name, () => {
             options: [{ checkTypeLiterals: true }],
             errors: ["generic"],
           });
-          expect(invalidResult.messages).toMatchSnapshot();
+          expect(invalidResult.result.messages).toMatchSnapshot();
         });
 
-        it("should not report mixed types in type literals when disabled", () => {
-          valid({
+        it("should not report mixed types in type literals when disabled", async () => {
+          await valid({
             code: dedent`
               type Foo = {
                 bar: string;
@@ -108,19 +108,19 @@ describe(name, () => {
       });
 
       describe("checkInterfaces", () => {
-        it("should report mixed types in interfaces when enabled", () => {
-          const invalidResult = invalid({
+        it("should report mixed types in interfaces when enabled", async () => {
+          const invalidResult = await invalid({
             code: dedent`
               interface Foo { bar: string; baz(): number; }
             `,
             options: [{ checkInterfaces: true }],
             errors: ["generic"],
           });
-          expect(invalidResult.messages).toMatchSnapshot();
+          expect(invalidResult.result.messages).toMatchSnapshot();
         });
 
-        it("should not report mixed types in interfaces when disabled", () => {
-          valid({
+        it("should not report mixed types in interfaces when disabled", async () => {
+          await valid({
             code: dedent`
               interface Foo {
                 bar: string;

@@ -14,18 +14,20 @@ describe(name, () => {
       configs: esLatestConfig,
     });
 
-    it("reports this expressions", () => {
+    it("reports this expressions", async () => {
       const code = dedent`
         function foo() {
           this.bar();
         }
       `;
 
-      expect(invalid(code)).toMatchSnapshot();
+      const { result } = await invalid(code);
+
+      expect(result).toMatchSnapshot();
     });
 
-    it("doesn't report non-issues", () => {
-      valid(dedent`
+    it("doesn't report non-issues", async () => {
+      await valid(dedent`
         function foo() {
           bar();
         }
