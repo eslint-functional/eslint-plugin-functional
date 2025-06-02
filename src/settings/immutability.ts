@@ -13,7 +13,7 @@ declare module "@typescript-eslint/utils" {
     from?: Immutability | keyof typeof Immutability;
   };
 
-  // eslint-disable-next-line ts/consistent-type-definitions, ts/no-shadow
+  // eslint-disable-next-line ts/consistent-type-definitions
   interface SharedConfigurationSettings {
     immutability?: {
       overrides?:
