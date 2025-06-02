@@ -66,7 +66,7 @@ const meta: NamedCreateRuleCustomMeta<keyof typeof errorMessages, RawOptions> = 
     description: "Disallow throwing exceptions.",
     recommended: "recommended",
     recommendedSeverity: "error",
-    requiresTypeChecking: false,
+    requiresTypeChecking: true,
   },
   messages: errorMessages,
   schema,
