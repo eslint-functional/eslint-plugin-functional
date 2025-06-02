@@ -33,7 +33,7 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports do while loop statements", async () => {
@@ -45,7 +45,7 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports for loop statements", async () => {
@@ -57,7 +57,7 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports for in loop statements", async () => {
@@ -69,7 +69,7 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports for of loop statements", async () => {
@@ -81,7 +81,7 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports for await loop statements", async () => {
@@ -93,7 +93,7 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
   });
 });

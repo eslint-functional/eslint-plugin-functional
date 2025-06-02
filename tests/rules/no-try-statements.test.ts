@@ -31,7 +31,7 @@ describe(name, () => {
         `,
         errors: ["catch"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     describe("options", () => {
@@ -63,7 +63,7 @@ describe(name, () => {
             errors: ["finally"],
             options: [{ allowCatch: true, allowFinally: false }],
           });
-          expect(invalidResult.result.messages).toMatchSnapshot();
+          expect(invalidResult.result).toMatchSnapshot();
         });
       });
 
@@ -95,7 +95,7 @@ describe(name, () => {
             errors: ["catch"],
             options: [{ allowCatch: false, allowFinally: true }],
           });
-          expect(invalidResult.result.messages).toMatchSnapshot();
+          expect(invalidResult.result).toMatchSnapshot();
         });
       });
 

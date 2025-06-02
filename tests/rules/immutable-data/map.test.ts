@@ -25,7 +25,7 @@ describe(name, () => {
         options: [],
         errors: ["map", "map", "map"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("doesn't report mutating map methods when ignoring maps and sets", async () => {
@@ -86,7 +86,7 @@ describe(name, () => {
             ],
             errors: ["map", "map", "map"],
           });
-          expect(invalidResult.result.messages).toMatchSnapshot();
+          expect(invalidResult.result).toMatchSnapshot();
         });
 
         it("doesn't report variables not declared as const", async () => {
@@ -136,7 +136,7 @@ describe(name, () => {
             ],
             errors: ["map", "map", "map"],
           });
-          expect(invalidResult.result.messages).toMatchSnapshot();
+          expect(invalidResult.result).toMatchSnapshot();
         });
       });
     });

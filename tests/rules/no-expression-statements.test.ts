@@ -22,7 +22,7 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("doesn't report variable declarations", async () => {
@@ -72,7 +72,7 @@ describe(name, () => {
           options: [{ ignoreCodePattern: "^console\\.log" }],
           errors: ["generic"],
         });
-        expect(invalidResult.result.messages).toMatchSnapshot();
+        expect(invalidResult.result).toMatchSnapshot();
       });
     });
   });
@@ -137,7 +137,7 @@ describe(name, () => {
           options: [{ ignoreSelfReturning: true }],
           errors: ["generic"],
         });
-        expect(invalidResult.result.messages).toMatchSnapshot();
+        expect(invalidResult.result).toMatchSnapshot();
       });
     });
   });

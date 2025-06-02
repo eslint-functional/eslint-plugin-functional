@@ -52,7 +52,7 @@ describe(name, () => {
         options,
         errors: ["AtLeast"],
       });
-      expect(invalidResult1.result.messages).toMatchSnapshot();
+      expect(invalidResult1.result).toMatchSnapshot();
 
       const invalidResult2 = await invalid({
         code: dedent`
@@ -66,7 +66,7 @@ describe(name, () => {
         options,
         errors: ["AtLeast"],
       });
-      expect(invalidResult2.result.messages).toMatchSnapshot();
+      expect(invalidResult2.result).toMatchSnapshot();
     });
 
     it("reports invalid immutable/deep records", async () => {
@@ -82,7 +82,7 @@ describe(name, () => {
         options,
         errors: ["AtLeast"],
       });
-      expect(invalidResult1.result.messages).toMatchSnapshot();
+      expect(invalidResult1.result).toMatchSnapshot();
 
       const invalidResult2 = await invalid({
         code: dedent`
@@ -96,7 +96,7 @@ describe(name, () => {
         options,
         errors: ["AtLeast"],
       });
-      expect(invalidResult2.result.messages).toMatchSnapshot();
+      expect(invalidResult2.result).toMatchSnapshot();
     });
 
     it("reports invalid shallow arrays", async () => {
@@ -105,7 +105,7 @@ describe(name, () => {
         options,
         errors: ["AtLeast"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports invalid deep arrays", async () => {
@@ -114,7 +114,7 @@ describe(name, () => {
         options,
         errors: ["AtLeast"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports invalid immutable arrays", async () => {
@@ -123,7 +123,7 @@ describe(name, () => {
         options,
         errors: ["AtLeast"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports invalid shallow sets", async () => {
@@ -132,7 +132,7 @@ describe(name, () => {
         options,
         errors: ["AtLeast"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports invalid deep sets", async () => {
@@ -141,7 +141,7 @@ describe(name, () => {
         options,
         errors: ["AtLeast"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports invalid immutable sets", async () => {
@@ -150,7 +150,7 @@ describe(name, () => {
         options,
         errors: ["AtLeast"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports invalid shallow maps", async () => {
@@ -159,7 +159,7 @@ describe(name, () => {
         options,
         errors: ["AtLeast"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports invalid deep maps", async () => {
@@ -168,7 +168,7 @@ describe(name, () => {
         options,
         errors: ["AtLeast"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports invalid immutable maps", async () => {
@@ -177,7 +177,7 @@ describe(name, () => {
         options,
         errors: ["AtLeast"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports non-mutable primitives", async () => {
@@ -186,7 +186,7 @@ describe(name, () => {
         options,
         errors: ["AtMost"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports non-mutable records", async () => {
@@ -199,7 +199,7 @@ describe(name, () => {
         options,
         errors: ["AtMost"],
       });
-      expect(invalidResult1.result.messages).toMatchSnapshot();
+      expect(invalidResult1.result).toMatchSnapshot();
 
       const invalidResult2 = await invalid({
         code: dedent`
@@ -210,7 +210,7 @@ describe(name, () => {
         options,
         errors: ["AtMost"],
       });
-      expect(invalidResult2.result.messages).toMatchSnapshot();
+      expect(invalidResult2.result).toMatchSnapshot();
     });
 
     it("doesn't report mutable sets", async () => {
@@ -377,7 +377,7 @@ describe(name, () => {
         },
         errors: ["AtMost"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
   });
 });

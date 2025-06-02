@@ -23,7 +23,7 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports new Promise(reject)", async () => {
@@ -37,7 +37,7 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports throw in async functions", async () => {
@@ -49,7 +49,7 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports throw in try without catch in async functions", async () => {
@@ -65,7 +65,7 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("doesn't report Promise.resolve", async () => {

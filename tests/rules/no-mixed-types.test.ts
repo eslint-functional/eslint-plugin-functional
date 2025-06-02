@@ -62,7 +62,7 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports mixed types in type literals", async () => {
@@ -75,7 +75,7 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     describe("options", () => {
@@ -91,7 +91,7 @@ describe(name, () => {
             options: [{ checkTypeLiterals: true }],
             errors: ["generic"],
           });
-          expect(invalidResult.result.messages).toMatchSnapshot();
+          expect(invalidResult.result).toMatchSnapshot();
         });
 
         it("should not report mixed types in type literals when disabled", async () => {
@@ -116,7 +116,7 @@ describe(name, () => {
             options: [{ checkInterfaces: true }],
             errors: ["generic"],
           });
-          expect(invalidResult.result.messages).toMatchSnapshot();
+          expect(invalidResult.result).toMatchSnapshot();
         });
 
         it("should not report mixed types in interfaces when disabled", async () => {

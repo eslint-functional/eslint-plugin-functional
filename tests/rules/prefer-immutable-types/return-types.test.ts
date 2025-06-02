@@ -19,7 +19,7 @@ describe(name, () => {
         code: "function foo(): ReadonlySet<string> {}",
         errors: ["returnType"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports non-immutable map return types", async () => {
@@ -27,7 +27,7 @@ describe(name, () => {
         code: "function foo(): ReadonlyMap<string, string> {}",
         errors: ["returnType"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports mutable records return types", async () => {
@@ -35,7 +35,7 @@ describe(name, () => {
         code: "function foo(): { foo: string } {}",
         errors: ["returnType"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports mutable records return types and suggests a fix for ReadonlyShallow", async () => {
@@ -44,7 +44,7 @@ describe(name, () => {
         options: [{ returnTypes: "ReadonlyShallow" }],
         errors: ["returnType"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
       for (const message of invalidResult.result.messages) {
         expect(message.suggestions).toHaveLength(1);
       }
@@ -77,7 +77,7 @@ describe(name, () => {
         options: [{ returnTypes: "ReadonlyShallow" }],
         errors: ["returnType", "returnType", "returnType", "returnType"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
       for (const message of invalidResult.result.messages) {
         expect(message.suggestions).toHaveLength(2);
       }
@@ -103,7 +103,7 @@ describe(name, () => {
         ],
         errors: ["returnType"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
       for (const message of invalidResult.result.messages) {
         expect(message.suggestions).toHaveLength(1);
       }
@@ -146,7 +146,7 @@ describe(name, () => {
         ],
         verifyAfterFix: false, // "fix" doesn't fix arrays so they will still report.
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it.each([

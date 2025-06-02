@@ -39,7 +39,7 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports method signatures in type literals", async () => {
@@ -51,7 +51,7 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     describe("options", () => {

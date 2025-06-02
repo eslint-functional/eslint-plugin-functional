@@ -19,7 +19,7 @@ describe(name, () => {
         code: "function foo(arg: ReadonlySet<string>) {}",
         errors: ["parameter"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports non-immutable map parameters", async () => {
@@ -27,7 +27,7 @@ describe(name, () => {
         code: "function foo(arg: ReadonlyMap<string, string>) {}",
         errors: ["parameter"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports mutable records parameters", async () => {
@@ -35,7 +35,7 @@ describe(name, () => {
         code: "function foo(arg1: { foo: string }, arg2: { foo: number }) {}",
         errors: ["parameter", "parameter"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports mutable records parameters and suggests a fix for ReadonlyShallow", async () => {
@@ -44,7 +44,7 @@ describe(name, () => {
         options: [{ parameters: "ReadonlyShallow" }],
         errors: ["parameter", "parameter"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
       for (const message of invalidResult.result.messages) {
         expect(message.suggestions).toHaveLength(1);
       }
@@ -63,7 +63,7 @@ describe(name, () => {
         `,
         errors: ["propertyModifier", "propertyModifier", "propertyModifier"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports mutable class parameter properties and suggests a fix for ReadonlyShallow", async () => {
@@ -80,7 +80,7 @@ describe(name, () => {
         options: [{ parameters: "ReadonlyShallow" }],
         errors: ["propertyModifier", "propertyModifier", "propertyModifier"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
       for (const message of invalidResult.result.messages) {
         expect(message.suggestions).toHaveLength(1);
       }
@@ -92,7 +92,7 @@ describe(name, () => {
         options: [{ parameters: "ReadonlyShallow" }],
         errors: ["parameter"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
       for (const message of invalidResult.result.messages) {
         expect(message.suggestions).toHaveLength(1);
       }
@@ -113,7 +113,7 @@ describe(name, () => {
         options: [{ parameters: "ReadonlyShallow" }],
         errors: ["parameter", "parameter", "parameter", "parameter"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
       for (const message of invalidResult.result.messages) {
         expect(message.suggestions).toHaveLength(2);
       }
@@ -139,7 +139,7 @@ describe(name, () => {
         ],
         errors: ["parameter"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
       for (const message of invalidResult.result.messages) {
         expect(message.suggestions).toHaveLength(1);
       }
@@ -182,7 +182,7 @@ describe(name, () => {
         ],
         verifyAfterFix: false, // "fix" doesn't fix arrays so they will still report.
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it.each([

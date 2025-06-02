@@ -52,7 +52,7 @@ describe(name, () => {
           "generic",
         ],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("report mutating array methods", async () => {
@@ -100,7 +100,7 @@ describe(name, () => {
           "array",
         ],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("doesn't report non-mutating array methods", async () => {
@@ -257,7 +257,7 @@ describe(name, () => {
               "array",
             ],
           });
-          expect(invalidResult.result.messages).toMatchSnapshot();
+          expect(invalidResult.result).toMatchSnapshot();
         });
 
         it("doesn't report variables not declared as const", async () => {
@@ -431,7 +431,7 @@ describe(name, () => {
             ],
             errors: ["array", "array", "array", "array"],
           });
-          expect(invalidResult.result.messages).toMatchSnapshot();
+          expect(invalidResult.result).toMatchSnapshot();
         });
       });
     });

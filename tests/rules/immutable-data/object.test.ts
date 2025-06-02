@@ -71,7 +71,7 @@ describe(name, () => {
           "generic",
         ],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports Object.assign() on identifiers", async () => {
@@ -84,7 +84,7 @@ describe(name, () => {
         `,
         errors: ["object", "object"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports object mutating methods", async () => {
@@ -97,7 +97,7 @@ describe(name, () => {
         `,
         errors: ["object", "object", "object"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports field mutation in class methods", async () => {
@@ -118,7 +118,7 @@ describe(name, () => {
         `,
         errors: ["generic", "generic"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("doesn't report non-object mutating patterns", async () => {
@@ -228,7 +228,7 @@ describe(name, () => {
               "generic",
             ],
           });
-          expect(invalidResult.result.messages).toMatchSnapshot();
+          expect(invalidResult.result).toMatchSnapshot();
         });
 
         it("report parameters", async () => {
@@ -296,7 +296,7 @@ describe(name, () => {
               "generic",
             ],
           });
-          expect(invalidResult.result.messages).toMatchSnapshot();
+          expect(invalidResult.result).toMatchSnapshot();
         });
 
         it("doesn't report variables not declared as const", async () => {

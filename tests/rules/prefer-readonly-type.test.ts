@@ -23,7 +23,7 @@ describe(name, () => {
         `,
         errors: ["array", "array"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports mutable arrays (generic)", async () => {
@@ -35,7 +35,7 @@ describe(name, () => {
         `,
         errors: ["type", "type"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports mutable sets", async () => {
@@ -47,7 +47,7 @@ describe(name, () => {
         `,
         errors: ["type", "type"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports mutable maps", async () => {
@@ -59,7 +59,7 @@ describe(name, () => {
         `,
         errors: ["type", "type"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports issue inside interfaces", async () => {
@@ -72,7 +72,7 @@ describe(name, () => {
         `,
         errors: ["type", "type"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports issues with index signatures", async () => {
@@ -93,7 +93,7 @@ describe(name, () => {
         `,
         errors: ["type", "type", "property", "property", "property"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports non-readonly class properties", async () => {
@@ -108,7 +108,7 @@ describe(name, () => {
         `,
         errors: ["property", "property", "property", "property"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports non-readonly class parameter properties", async () => {
@@ -124,7 +124,7 @@ describe(name, () => {
         `,
         errors: ["property", "property", "property"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports literals without readonly modifiers", async () => {
@@ -158,7 +158,7 @@ describe(name, () => {
           "property",
         ],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports issues with mapped types", async () => {
@@ -168,7 +168,7 @@ describe(name, () => {
         `,
         errors: ["property"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("doesn't report explicit readonly parameter types", async () => {
@@ -479,7 +479,7 @@ describe(name, () => {
             options: [{ ignoreClass: "fieldsOnly" }],
             errors: ["property"],
           });
-          expect(invalidResult.result.messages).toMatchSnapshot();
+          expect(invalidResult.result).toMatchSnapshot();
         });
       });
 

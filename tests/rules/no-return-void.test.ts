@@ -43,7 +43,7 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports void returning functions with inferred return type", async () => {
@@ -55,7 +55,7 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     describe("options", () => {
@@ -92,7 +92,7 @@ describe(name, () => {
             options: [{ allowNull: false }],
             errors: ["generic"],
           });
-          expect(invalidResult.result.messages).toMatchSnapshot();
+          expect(invalidResult.result).toMatchSnapshot();
         });
 
         it("reports null returning functions with inferred return type when disallowed", async () => {
@@ -105,7 +105,7 @@ describe(name, () => {
             options: [{ allowNull: false }],
             errors: ["generic"],
           });
-          expect(invalidResult.result.messages).toMatchSnapshot();
+          expect(invalidResult.result).toMatchSnapshot();
         });
       });
 
@@ -142,7 +142,7 @@ describe(name, () => {
             options: [{ allowUndefined: false }],
             errors: ["generic"],
           });
-          expect(invalidResult.result.messages).toMatchSnapshot();
+          expect(invalidResult.result).toMatchSnapshot();
         });
 
         it("reports undefined returning functions with inferred return type when disallowed", async () => {
@@ -155,7 +155,7 @@ describe(name, () => {
             options: [{ allowUndefined: false }],
             errors: ["generic"],
           });
-          expect(invalidResult.result.messages).toMatchSnapshot();
+          expect(invalidResult.result).toMatchSnapshot();
         });
       });
 

@@ -25,7 +25,7 @@ describe(name, () => {
         options: [],
         errors: ["set", "set", "set"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("doesn't report mutating set methods when ignoring maps and sets", async () => {
@@ -136,7 +136,7 @@ describe(name, () => {
             ],
             errors: ["set", "set", "set"],
           });
-          expect(invalidResult.result.messages).toMatchSnapshot();
+          expect(invalidResult.result).toMatchSnapshot();
         });
 
         it("doesn't report variables not declared as const", async () => {
@@ -186,7 +186,7 @@ describe(name, () => {
             ],
             errors: ["set", "set", "set"],
           });
-          expect(invalidResult.result.messages).toMatchSnapshot();
+          expect(invalidResult.result).toMatchSnapshot();
         });
       });
     });

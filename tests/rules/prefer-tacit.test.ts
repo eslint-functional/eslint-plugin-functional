@@ -22,7 +22,7 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult1.result.messages).toMatchSnapshot();
+      expect(invalidResult1.result).toMatchSnapshot();
 
       const invalidResult2 = await invalid({
         code: dedent`
@@ -30,7 +30,7 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult2.result.messages).toMatchSnapshot();
+      expect(invalidResult2.result).toMatchSnapshot();
     });
 
     it("reports functions that are just instantiations", async () => {
@@ -41,7 +41,7 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("doesn't report functions without type defs", async () => {
@@ -125,7 +125,7 @@ describe(name, () => {
             options: [{ checkMemberExpressions: true }],
             errors: ["generic"],
           });
-          expect(invalidResult1.result.messages).toMatchSnapshot();
+          expect(invalidResult1.result).toMatchSnapshot();
 
           const invalidResult2 = await invalid({
             code: dedent`
@@ -134,7 +134,7 @@ describe(name, () => {
             options: [{ checkMemberExpressions: true }],
             errors: ["generic"],
           });
-          expect(invalidResult2.result.messages).toMatchSnapshot();
+          expect(invalidResult2.result).toMatchSnapshot();
         });
       });
     });

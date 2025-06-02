@@ -24,7 +24,7 @@ describe(name, () => {
           `,
           errors: ["unexpectedIf"],
         });
-        expect(invalidResult.result.messages).toMatchSnapshot();
+        expect(invalidResult.result).toMatchSnapshot();
       });
 
       describe("options", () => {
@@ -113,7 +113,7 @@ describe(name, () => {
                 options: [{ allowReturningBranches: "ifExhaustive" }],
                 errors: ["incompleteIf"],
               });
-              expect(invalidResult.result.messages).toMatchSnapshot();
+              expect(invalidResult.result).toMatchSnapshot();
             });
 
             it("supports break and continue as returning", async () => {
@@ -162,7 +162,7 @@ describe(name, () => {
           `,
           errors: ["unexpectedSwitch"],
         });
-        expect(invalidResult.result.messages).toMatchSnapshot();
+        expect(invalidResult.result).toMatchSnapshot();
       });
 
       describe("options", () => {
@@ -268,7 +268,7 @@ describe(name, () => {
                 options: [{ allowReturningBranches: "ifExhaustive" }],
                 errors: ["incompleteSwitch"],
               });
-              expect(invalidResult.result.messages).toMatchSnapshot();
+              expect(invalidResult.result).toMatchSnapshot();
             });
 
             it("supports exhaustive type testing", async () => {

@@ -26,7 +26,7 @@ describe(name, () => {
         `,
         errors: ["generic", "generic", "generic"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     describe("options", () => {
@@ -50,7 +50,7 @@ describe(name, () => {
             options: [{ allowInFunctions: true }],
             errors: ["generic", "generic"],
           });
-          expect(invalidResult.result.messages).toMatchSnapshot();
+          expect(invalidResult.result).toMatchSnapshot();
         });
 
         it("should not report let declarations in arrow function declarations", async () => {
@@ -72,7 +72,7 @@ describe(name, () => {
             options: [{ allowInFunctions: true }],
             errors: ["generic", "generic"],
           });
-          expect(invalidResult.result.messages).toMatchSnapshot();
+          expect(invalidResult.result).toMatchSnapshot();
         });
 
         it("should not report let declarations in method declarations", async () => {
@@ -96,7 +96,7 @@ describe(name, () => {
             options: [{ allowInFunctions: true }],
             errors: ["generic", "generic"],
           });
-          expect(invalidResult.result.messages).toMatchSnapshot();
+          expect(invalidResult.result).toMatchSnapshot();
         });
       });
 
@@ -115,7 +115,7 @@ describe(name, () => {
             options: [{ allowInFunctions: true }],
             errors: ["generic", "generic"],
           });
-          expect(invalidResult.result.messages).toMatchSnapshot();
+          expect(invalidResult.result).toMatchSnapshot();
         });
       });
 

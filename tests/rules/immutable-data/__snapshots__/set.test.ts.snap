@@ -1,115 +1,266 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`immutable-data > typescript > options > ignoreImmediateMutation > reports immediately mutation when disabled 1`] = `
-[
-  {
-    "column": 1,
-    "endColumn": 23,
-    "endLine": 1,
-    "line": 1,
-    "message": "Modifying a set is not allowed.",
-    "messageId": "set",
-    "nodeType": "CallExpression",
-    "ruleId": "immutable-data",
-    "severity": 2,
-  },
-  {
-    "column": 1,
-    "endColumn": 26,
-    "endLine": 2,
-    "line": 2,
-    "message": "Modifying a set is not allowed.",
-    "messageId": "set",
-    "nodeType": "CallExpression",
-    "ruleId": "immutable-data",
-    "severity": 2,
-  },
-  {
-    "column": 1,
-    "endColumn": 24,
-    "endLine": 3,
-    "line": 3,
-    "message": "Modifying a set is not allowed.",
-    "messageId": "set",
-    "nodeType": "CallExpression",
-    "ruleId": "immutable-data",
-    "severity": 2,
-  },
-]
+{
+  "fixed": false,
+  "messages": [
+    {
+      "column": 1,
+      "endColumn": 23,
+      "endLine": 1,
+      "line": 1,
+      "message": "Modifying a set is not allowed.",
+      "messageId": "set",
+      "nodeType": "CallExpression",
+      "ruleId": "immutable-data",
+      "severity": 2,
+    },
+    {
+      "column": 1,
+      "endColumn": 26,
+      "endLine": 2,
+      "line": 2,
+      "message": "Modifying a set is not allowed.",
+      "messageId": "set",
+      "nodeType": "CallExpression",
+      "ruleId": "immutable-data",
+      "severity": 2,
+    },
+    {
+      "column": 1,
+      "endColumn": 24,
+      "endLine": 3,
+      "line": 3,
+      "message": "Modifying a set is not allowed.",
+      "messageId": "set",
+      "nodeType": "CallExpression",
+      "ruleId": "immutable-data",
+      "severity": 2,
+    },
+  ],
+  "output": "new Set([5, 6]).add(4);
+new Set([5, 6]).delete(4);
+new Set([5, 6]).clear();",
+  "steps": [
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 1,
+          "endColumn": 23,
+          "endLine": 1,
+          "line": 1,
+          "message": "Modifying a set is not allowed.",
+          "messageId": "set",
+          "nodeType": "CallExpression",
+          "ruleId": "rule-to-test/immutable-data",
+          "severity": 2,
+        },
+        {
+          "column": 1,
+          "endColumn": 26,
+          "endLine": 2,
+          "line": 2,
+          "message": "Modifying a set is not allowed.",
+          "messageId": "set",
+          "nodeType": "CallExpression",
+          "ruleId": "rule-to-test/immutable-data",
+          "severity": 2,
+        },
+        {
+          "column": 1,
+          "endColumn": 24,
+          "endLine": 3,
+          "line": 3,
+          "message": "Modifying a set is not allowed.",
+          "messageId": "set",
+          "nodeType": "CallExpression",
+          "ruleId": "rule-to-test/immutable-data",
+          "severity": 2,
+        },
+      ],
+      "output": "new Set([5, 6]).add(4);
+new Set([5, 6]).delete(4);
+new Set([5, 6]).clear();",
+    },
+  ],
+}
 `;
 
 exports[`immutable-data > typescript > options > ignoreNonConstDeclarations > reports variables declared as const 1`] = `
-[
-  {
-    "column": 1,
-    "endColumn": 9,
-    "endLine": 2,
-    "line": 2,
-    "message": "Modifying a set is not allowed.",
-    "messageId": "set",
-    "nodeType": "CallExpression",
-    "ruleId": "immutable-data",
-    "severity": 2,
-  },
-  {
-    "column": 1,
-    "endColumn": 12,
-    "endLine": 3,
-    "line": 3,
-    "message": "Modifying a set is not allowed.",
-    "messageId": "set",
-    "nodeType": "CallExpression",
-    "ruleId": "immutable-data",
-    "severity": 2,
-  },
-  {
-    "column": 1,
-    "endColumn": 10,
-    "endLine": 4,
-    "line": 4,
-    "message": "Modifying a set is not allowed.",
-    "messageId": "set",
-    "nodeType": "CallExpression",
-    "ruleId": "immutable-data",
-    "severity": 2,
-  },
-]
+{
+  "fixed": false,
+  "messages": [
+    {
+      "column": 1,
+      "endColumn": 9,
+      "endLine": 2,
+      "line": 2,
+      "message": "Modifying a set is not allowed.",
+      "messageId": "set",
+      "nodeType": "CallExpression",
+      "ruleId": "immutable-data",
+      "severity": 2,
+    },
+    {
+      "column": 1,
+      "endColumn": 12,
+      "endLine": 3,
+      "line": 3,
+      "message": "Modifying a set is not allowed.",
+      "messageId": "set",
+      "nodeType": "CallExpression",
+      "ruleId": "immutable-data",
+      "severity": 2,
+    },
+    {
+      "column": 1,
+      "endColumn": 10,
+      "endLine": 4,
+      "line": 4,
+      "message": "Modifying a set is not allowed.",
+      "messageId": "set",
+      "nodeType": "CallExpression",
+      "ruleId": "immutable-data",
+      "severity": 2,
+    },
+  ],
+  "output": "const x = new Set([5, 6]);
+x.add(4);
+x.delete(4);
+x.clear();",
+  "steps": [
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 1,
+          "endColumn": 9,
+          "endLine": 2,
+          "line": 2,
+          "message": "Modifying a set is not allowed.",
+          "messageId": "set",
+          "nodeType": "CallExpression",
+          "ruleId": "rule-to-test/immutable-data",
+          "severity": 2,
+        },
+        {
+          "column": 1,
+          "endColumn": 12,
+          "endLine": 3,
+          "line": 3,
+          "message": "Modifying a set is not allowed.",
+          "messageId": "set",
+          "nodeType": "CallExpression",
+          "ruleId": "rule-to-test/immutable-data",
+          "severity": 2,
+        },
+        {
+          "column": 1,
+          "endColumn": 10,
+          "endLine": 4,
+          "line": 4,
+          "message": "Modifying a set is not allowed.",
+          "messageId": "set",
+          "nodeType": "CallExpression",
+          "ruleId": "rule-to-test/immutable-data",
+          "severity": 2,
+        },
+      ],
+      "output": "const x = new Set([5, 6]);
+x.add(4);
+x.delete(4);
+x.clear();",
+    },
+  ],
+}
 `;
 
 exports[`immutable-data > typescript > report mutating set methods 1`] = `
-[
-  {
-    "column": 1,
-    "endColumn": 9,
-    "endLine": 2,
-    "line": 2,
-    "message": "Modifying a set is not allowed.",
-    "messageId": "set",
-    "nodeType": "CallExpression",
-    "ruleId": "immutable-data",
-    "severity": 2,
-  },
-  {
-    "column": 1,
-    "endColumn": 12,
-    "endLine": 3,
-    "line": 3,
-    "message": "Modifying a set is not allowed.",
-    "messageId": "set",
-    "nodeType": "CallExpression",
-    "ruleId": "immutable-data",
-    "severity": 2,
-  },
-  {
-    "column": 1,
-    "endColumn": 10,
-    "endLine": 4,
-    "line": 4,
-    "message": "Modifying a set is not allowed.",
-    "messageId": "set",
-    "nodeType": "CallExpression",
-    "ruleId": "immutable-data",
-    "severity": 2,
-  },
-]
+{
+  "fixed": false,
+  "messages": [
+    {
+      "column": 1,
+      "endColumn": 9,
+      "endLine": 2,
+      "line": 2,
+      "message": "Modifying a set is not allowed.",
+      "messageId": "set",
+      "nodeType": "CallExpression",
+      "ruleId": "immutable-data",
+      "severity": 2,
+    },
+    {
+      "column": 1,
+      "endColumn": 12,
+      "endLine": 3,
+      "line": 3,
+      "message": "Modifying a set is not allowed.",
+      "messageId": "set",
+      "nodeType": "CallExpression",
+      "ruleId": "immutable-data",
+      "severity": 2,
+    },
+    {
+      "column": 1,
+      "endColumn": 10,
+      "endLine": 4,
+      "line": 4,
+      "message": "Modifying a set is not allowed.",
+      "messageId": "set",
+      "nodeType": "CallExpression",
+      "ruleId": "immutable-data",
+      "severity": 2,
+    },
+  ],
+  "output": "const x = new Set([5, 6]);
+x.add(4);
+x.delete(4);
+x.clear();",
+  "steps": [
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 1,
+          "endColumn": 9,
+          "endLine": 2,
+          "line": 2,
+          "message": "Modifying a set is not allowed.",
+          "messageId": "set",
+          "nodeType": "CallExpression",
+          "ruleId": "rule-to-test/immutable-data",
+          "severity": 2,
+        },
+        {
+          "column": 1,
+          "endColumn": 12,
+          "endLine": 3,
+          "line": 3,
+          "message": "Modifying a set is not allowed.",
+          "messageId": "set",
+          "nodeType": "CallExpression",
+          "ruleId": "rule-to-test/immutable-data",
+          "severity": 2,
+        },
+        {
+          "column": 1,
+          "endColumn": 10,
+          "endLine": 4,
+          "line": 4,
+          "message": "Modifying a set is not allowed.",
+          "messageId": "set",
+          "nodeType": "CallExpression",
+          "ruleId": "rule-to-test/immutable-data",
+          "severity": 2,
+        },
+      ],
+      "output": "const x = new Set([5, 6]);
+x.add(4);
+x.delete(4);
+x.clear();",
+    },
+  ],
+}
 `;

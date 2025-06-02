@@ -23,13 +23,13 @@ describe(name, () => {
         code: "class Foo {}",
         errors: ["generic"],
       });
-      expect(invalidResult1.result.messages).toMatchSnapshot();
+      expect(invalidResult1.result).toMatchSnapshot();
 
       const invalidResult2 = await invalid({
         code: "const klass = class {}",
         errors: ["generic"],
       });
-      expect(invalidResult2.result.messages).toMatchSnapshot();
+      expect(invalidResult2.result).toMatchSnapshot();
     });
 
     describe("options", () => {
@@ -51,7 +51,7 @@ describe(name, () => {
             options: [{ ignoreIdentifierPattern: "^Foo$" }],
             errors: ["generic"],
           });
-          expect(invalidResult.result.messages).toMatchSnapshot();
+          expect(invalidResult.result).toMatchSnapshot();
         });
       });
     });
@@ -74,7 +74,7 @@ describe(name, () => {
           options: [{ ignoreCodePattern: "class Foo" }],
           errors: ["generic"],
         });
-        expect(invalidResult.result.messages).toMatchSnapshot();
+        expect(invalidResult.result).toMatchSnapshot();
       });
     });
   });

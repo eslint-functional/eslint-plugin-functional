@@ -19,7 +19,7 @@ describe(name, () => {
         code: "const foo: ReadonlySet<string> = {} as any;",
         errors: ["variable"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports non-immutable map variables", async () => {
@@ -27,7 +27,7 @@ describe(name, () => {
         code: "const foo: ReadonlyMap<string, string> = {} as any;",
         errors: ["variable"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports mutable records variables", async () => {
@@ -35,7 +35,7 @@ describe(name, () => {
         code: "const foo: { foo: string } = {} as any;",
         errors: ["variable"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports mutable records variables and suggests a fix for ReadonlyShallow", async () => {
@@ -44,7 +44,7 @@ describe(name, () => {
         options: [{ variables: "ReadonlyShallow" }],
         errors: ["variable"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
       for (const message of invalidResult.result.messages) {
         expect(message.suggestions).toHaveLength(1);
       }
@@ -77,7 +77,7 @@ describe(name, () => {
         options: [{ variables: "ReadonlyShallow" }],
         errors: ["variable", "variable", "variable", "variable"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
       for (const message of invalidResult.result.messages) {
         expect(message.suggestions).toHaveLength(2);
       }
@@ -95,7 +95,7 @@ describe(name, () => {
         `,
         errors: ["propertyImmutability", "propertyImmutability", "propertyImmutability", "propertyImmutability"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("allows for user suggestions", async () => {
@@ -118,7 +118,7 @@ describe(name, () => {
         ],
         errors: ["variable"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
       for (const message of invalidResult.result.messages) {
         expect(message.suggestions).toHaveLength(1);
       }
@@ -152,7 +152,7 @@ describe(name, () => {
         errors: ["variable", "variable", "variable", "variable", "variable", "variable", "variable", "variable"],
         verifyAfterFix: false, // "fix" doesn't fix arrays so they will still report.
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it.each([[[{ variables: "ReadonlyShallow" }]], [[{ variables: "ReadonlyDeep" }]], [[{ variables: "Immutable" }]]])(

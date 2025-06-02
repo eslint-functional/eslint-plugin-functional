@@ -53,7 +53,7 @@ describe(name, () => {
         errors: ["restParam"],
       });
 
-      expect(result.result.messages).toMatchSnapshot();
+      expect(result.result).toMatchSnapshot();
     });
 
     it("reports arguments keyword violations", async () => {
@@ -68,7 +68,7 @@ describe(name, () => {
         errors: ["arguments"],
       });
 
-      expect(result.result.messages).toMatchSnapshot();
+      expect(result.result).toMatchSnapshot();
     });
 
     describe("options", () => {
@@ -137,7 +137,7 @@ describe(name, () => {
             options: [{ enforceParameterCount: "atLeastOne" }],
             errors: ["paramCountAtLeastOne"],
           });
-          expect(invalidResult.result.messages).toMatchSnapshot();
+          expect(invalidResult.result).toMatchSnapshot();
         });
 
         it("exactlyOne", async () => {
@@ -195,7 +195,7 @@ describe(name, () => {
             options: [{ enforceParameterCount: "exactlyOne" }],
             errors: ["paramCountExactlyOne"],
           });
-          expect(invalidResult1.result.messages).toMatchSnapshot();
+          expect(invalidResult1.result).toMatchSnapshot();
 
           const invalidResult2 = await invalid({
             code: dedent`
@@ -206,7 +206,7 @@ describe(name, () => {
             options: [{ enforceParameterCount: "exactlyOne" }],
             errors: ["paramCountExactlyOne"],
           });
-          expect(invalidResult2.result.messages).toMatchSnapshot();
+          expect(invalidResult2.result).toMatchSnapshot();
         });
 
         it("ignoreLambdaExpression", async () => {
@@ -240,7 +240,7 @@ describe(name, () => {
             ],
             errors: ["paramCountAtLeastOne"],
           });
-          expect(invalidResult.result.messages).toMatchSnapshot();
+          expect(invalidResult.result).toMatchSnapshot();
         });
 
         it("ignoreIIFE", async () => {
@@ -276,7 +276,7 @@ describe(name, () => {
             ],
             errors: ["paramCountAtLeastOne"],
           });
-          expect(invalidResult.result.messages).toMatchSnapshot();
+          expect(invalidResult.result).toMatchSnapshot();
         });
       });
 
@@ -310,7 +310,7 @@ describe(name, () => {
           options: [{ ignoreIdentifierPattern: "^bar" }],
           errors: ["restParam"],
         });
-        expect(invalidResult.result.messages).toMatchSnapshot();
+        expect(invalidResult.result).toMatchSnapshot();
       });
 
       it("ignorePrefixSelector", async () => {

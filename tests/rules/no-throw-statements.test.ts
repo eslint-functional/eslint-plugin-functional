@@ -31,7 +31,7 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports throw statements of Errors", async () => {
@@ -43,7 +43,7 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it("reports throw statements in async functions", async () => {
@@ -55,7 +55,7 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.result.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     describe("options", () => {
@@ -100,7 +100,7 @@ describe(name, () => {
             errors: ["generic"],
             options: [{ allowToRejectPromises: true }],
           });
-          expect(invalidResult.result.messages).toMatchSnapshot();
+          expect(invalidResult.result).toMatchSnapshot();
         });
 
         it("reports throw statements in functions nested in async functions", async () => {
@@ -115,7 +115,7 @@ describe(name, () => {
             errors: ["generic"],
             options: [{ allowToRejectPromises: true }],
           });
-          expect(invalidResult.result.messages).toMatchSnapshot();
+          expect(invalidResult.result).toMatchSnapshot();
         });
       });
     });
