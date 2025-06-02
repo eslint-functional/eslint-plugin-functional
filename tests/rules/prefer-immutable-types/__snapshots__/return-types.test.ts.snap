@@ -1,403 +1,867 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`prefer-immutable-types > typescript > allows for user fixes 1`] = `
-[
-  {
-    "column": 15,
-    "endColumn": 30,
-    "endLine": 1,
-    "line": 1,
-    "message": "Return type should have an immutability of at least "Immutable" (actual: "Mutable").",
-    "messageId": "returnType",
-    "nodeType": "TSTypeAnnotation",
-    "ruleId": "prefer-immutable-types",
-    "severity": 2,
-  },
-  {
-    "column": 15,
-    "endColumn": 25,
-    "endLine": 2,
-    "line": 2,
-    "message": "Return type should have an immutability of at least "Immutable" (actual: "Mutable").",
-    "messageId": "returnType",
-    "nodeType": "TSTypeAnnotation",
-    "ruleId": "prefer-immutable-types",
-    "severity": 2,
-  },
-  {
-    "column": 15,
-    "endColumn": 28,
-    "endLine": 3,
-    "fix": {
-      "range": [
-        77,
-        88,
-      ],
-      "text": "Readonly<ReadonlySet<string>>",
+{
+  "fixed": true,
+  "messages": [
+    {
+      "column": 15,
+      "endColumn": 30,
+      "endLine": 1,
+      "line": 1,
+      "message": "Return type should have an immutability of at least "Immutable" (actual: "Mutable").",
+      "messageId": "returnType",
+      "nodeType": "TSTypeAnnotation",
+      "ruleId": "prefer-immutable-types",
+      "severity": 2,
     },
-    "line": 3,
-    "message": "Return type should have an immutability of at least "Immutable" (actual: "Mutable").",
-    "messageId": "returnType",
-    "nodeType": "TSTypeAnnotation",
-    "ruleId": "prefer-immutable-types",
-    "severity": 2,
-  },
-  {
-    "column": 15,
-    "endColumn": 36,
-    "endLine": 4,
-    "fix": {
-      "range": [
-        108,
-        127,
-      ],
-      "text": "Readonly<ReadonlyMap<string, string>>",
+    {
+      "column": 15,
+      "endColumn": 25,
+      "endLine": 2,
+      "line": 2,
+      "message": "Return type should have an immutability of at least "Immutable" (actual: "Mutable").",
+      "messageId": "returnType",
+      "nodeType": "TSTypeAnnotation",
+      "ruleId": "prefer-immutable-types",
+      "severity": 2,
     },
-    "line": 4,
-    "message": "Return type should have an immutability of at least "Immutable" (actual: "Mutable").",
-    "messageId": "returnType",
-    "nodeType": "TSTypeAnnotation",
-    "ruleId": "prefer-immutable-types",
-    "severity": 2,
-  },
-  {
-    "column": 15,
-    "endColumn": 38,
-    "endLine": 5,
-    "line": 5,
-    "message": "Return type should have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
-    "messageId": "returnType",
-    "nodeType": "TSTypeAnnotation",
-    "ruleId": "prefer-immutable-types",
-    "severity": 2,
-  },
-  {
-    "column": 15,
-    "endColumn": 34,
-    "endLine": 6,
-    "line": 6,
-    "message": "Return type should have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
-    "messageId": "returnType",
-    "nodeType": "TSTypeAnnotation",
-    "ruleId": "prefer-immutable-types",
-    "severity": 2,
-  },
-  {
-    "column": 15,
-    "endColumn": 36,
-    "endLine": 7,
-    "fix": {
-      "range": [
-        225,
-        244,
-      ],
-      "text": "Readonly<ReadonlySet<string>>",
+    {
+      "column": 15,
+      "endColumn": 28,
+      "endLine": 3,
+      "fix": {
+        "range": [
+          77,
+          88,
+        ],
+        "text": "Readonly<ReadonlySet<string>>",
+      },
+      "line": 3,
+      "message": "Return type should have an immutability of at least "Immutable" (actual: "Mutable").",
+      "messageId": "returnType",
+      "nodeType": "TSTypeAnnotation",
+      "ruleId": "prefer-immutable-types",
+      "severity": 2,
     },
-    "line": 7,
-    "message": "Return type should have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
-    "messageId": "returnType",
-    "nodeType": "TSTypeAnnotation",
-    "ruleId": "prefer-immutable-types",
-    "severity": 2,
-  },
-  {
-    "column": 15,
-    "endColumn": 44,
-    "endLine": 8,
-    "fix": {
-      "range": [
-        264,
-        291,
-      ],
-      "text": "Readonly<ReadonlyMap<string, string>>",
+    {
+      "column": 15,
+      "endColumn": 36,
+      "endLine": 4,
+      "fix": {
+        "range": [
+          108,
+          127,
+        ],
+        "text": "Readonly<ReadonlyMap<string, string>>",
+      },
+      "line": 4,
+      "message": "Return type should have an immutability of at least "Immutable" (actual: "Mutable").",
+      "messageId": "returnType",
+      "nodeType": "TSTypeAnnotation",
+      "ruleId": "prefer-immutable-types",
+      "severity": 2,
     },
-    "line": 8,
-    "message": "Return type should have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
-    "messageId": "returnType",
-    "nodeType": "TSTypeAnnotation",
-    "ruleId": "prefer-immutable-types",
-    "severity": 2,
-  },
-]
+    {
+      "column": 15,
+      "endColumn": 38,
+      "endLine": 5,
+      "line": 5,
+      "message": "Return type should have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
+      "messageId": "returnType",
+      "nodeType": "TSTypeAnnotation",
+      "ruleId": "prefer-immutable-types",
+      "severity": 2,
+    },
+    {
+      "column": 15,
+      "endColumn": 34,
+      "endLine": 6,
+      "line": 6,
+      "message": "Return type should have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
+      "messageId": "returnType",
+      "nodeType": "TSTypeAnnotation",
+      "ruleId": "prefer-immutable-types",
+      "severity": 2,
+    },
+    {
+      "column": 15,
+      "endColumn": 36,
+      "endLine": 7,
+      "fix": {
+        "range": [
+          225,
+          244,
+        ],
+        "text": "Readonly<ReadonlySet<string>>",
+      },
+      "line": 7,
+      "message": "Return type should have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
+      "messageId": "returnType",
+      "nodeType": "TSTypeAnnotation",
+      "ruleId": "prefer-immutable-types",
+      "severity": 2,
+    },
+    {
+      "column": 15,
+      "endColumn": 44,
+      "endLine": 8,
+      "fix": {
+        "range": [
+          264,
+          291,
+        ],
+        "text": "Readonly<ReadonlyMap<string, string>>",
+      },
+      "line": 8,
+      "message": "Return type should have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
+      "messageId": "returnType",
+      "nodeType": "TSTypeAnnotation",
+      "ruleId": "prefer-immutable-types",
+      "severity": 2,
+    },
+  ],
+  "output": "function foo(): Array<string> {}
+function foo(): string[] {}
+function foo(): Readonly<ReadonlySet<string>> {}
+function foo(): Readonly<ReadonlyMap<string, string>> {}
+function foo(): ReadonlyArray<string> {}
+function foo(): readonly string[] {}
+function foo(): Readonly<ReadonlySet<string>> {}
+function foo(): Readonly<ReadonlyMap<string, string>> {}",
+  "steps": [
+    {
+      "fixed": true,
+      "messages": [
+        {
+          "column": 15,
+          "endColumn": 30,
+          "endLine": 1,
+          "line": 1,
+          "message": "Return type should have an immutability of at least "Immutable" (actual: "Mutable").",
+          "messageId": "returnType",
+          "nodeType": "TSTypeAnnotation",
+          "ruleId": "rule-to-test/prefer-immutable-types",
+          "severity": 2,
+        },
+        {
+          "column": 15,
+          "endColumn": 25,
+          "endLine": 2,
+          "line": 2,
+          "message": "Return type should have an immutability of at least "Immutable" (actual: "Mutable").",
+          "messageId": "returnType",
+          "nodeType": "TSTypeAnnotation",
+          "ruleId": "rule-to-test/prefer-immutable-types",
+          "severity": 2,
+        },
+        {
+          "column": 15,
+          "endColumn": 38,
+          "endLine": 5,
+          "line": 5,
+          "message": "Return type should have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
+          "messageId": "returnType",
+          "nodeType": "TSTypeAnnotation",
+          "ruleId": "rule-to-test/prefer-immutable-types",
+          "severity": 2,
+        },
+        {
+          "column": 15,
+          "endColumn": 34,
+          "endLine": 6,
+          "line": 6,
+          "message": "Return type should have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
+          "messageId": "returnType",
+          "nodeType": "TSTypeAnnotation",
+          "ruleId": "rule-to-test/prefer-immutable-types",
+          "severity": 2,
+        },
+      ],
+      "output": "function foo(): Array<string> {}
+function foo(): string[] {}
+function foo(): Readonly<ReadonlySet<string>> {}
+function foo(): Readonly<ReadonlyMap<string, string>> {}
+function foo(): ReadonlyArray<string> {}
+function foo(): readonly string[] {}
+function foo(): Readonly<ReadonlySet<string>> {}
+function foo(): Readonly<ReadonlyMap<string, string>> {}",
+    },
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 15,
+          "endColumn": 30,
+          "endLine": 1,
+          "line": 1,
+          "message": "Return type should have an immutability of at least "Immutable" (actual: "Mutable").",
+          "messageId": "returnType",
+          "nodeType": "TSTypeAnnotation",
+          "ruleId": "rule-to-test/prefer-immutable-types",
+          "severity": 2,
+        },
+        {
+          "column": 15,
+          "endColumn": 25,
+          "endLine": 2,
+          "line": 2,
+          "message": "Return type should have an immutability of at least "Immutable" (actual: "Mutable").",
+          "messageId": "returnType",
+          "nodeType": "TSTypeAnnotation",
+          "ruleId": "rule-to-test/prefer-immutable-types",
+          "severity": 2,
+        },
+        {
+          "column": 15,
+          "endColumn": 38,
+          "endLine": 5,
+          "line": 5,
+          "message": "Return type should have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
+          "messageId": "returnType",
+          "nodeType": "TSTypeAnnotation",
+          "ruleId": "rule-to-test/prefer-immutable-types",
+          "severity": 2,
+        },
+        {
+          "column": 15,
+          "endColumn": 34,
+          "endLine": 6,
+          "line": 6,
+          "message": "Return type should have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
+          "messageId": "returnType",
+          "nodeType": "TSTypeAnnotation",
+          "ruleId": "rule-to-test/prefer-immutable-types",
+          "severity": 2,
+        },
+      ],
+      "output": "function foo(): Array<string> {}
+function foo(): string[] {}
+function foo(): Readonly<ReadonlySet<string>> {}
+function foo(): Readonly<ReadonlyMap<string, string>> {}
+function foo(): ReadonlyArray<string> {}
+function foo(): readonly string[] {}
+function foo(): Readonly<ReadonlySet<string>> {}
+function foo(): Readonly<ReadonlyMap<string, string>> {}",
+    },
+  ],
+}
 `;
 
 exports[`prefer-immutable-types > typescript > allows for user suggestions 1`] = `
-[
-  {
-    "column": 15,
-    "endColumn": 32,
-    "endLine": 1,
-    "line": 1,
-    "message": "Return type should have an immutability of at least "ReadonlyDeep" (actual: "Mutable").",
-    "messageId": "returnType",
-    "nodeType": "TSTypeAnnotation",
-    "ruleId": "prefer-immutable-types",
-    "severity": 2,
-    "suggestions": [
-      {
-        "data": {
-          "message": "Replace with: ReadonlyDeep<{ foo: string }>",
+{
+  "fixed": false,
+  "messages": [
+    {
+      "column": 15,
+      "endColumn": 32,
+      "endLine": 1,
+      "line": 1,
+      "message": "Return type should have an immutability of at least "ReadonlyDeep" (actual: "Mutable").",
+      "messageId": "returnType",
+      "nodeType": "TSTypeAnnotation",
+      "ruleId": "prefer-immutable-types",
+      "severity": 2,
+      "suggestions": [
+        {
+          "data": {
+            "message": "Replace with: ReadonlyDeep<{ foo: string }>",
+          },
+          "desc": "Replace with: ReadonlyDeep<{ foo: string }>",
+          "fix": {
+            "range": [
+              16,
+              31,
+            ],
+            "text": "ReadonlyDeep<{ foo: string }>",
+          },
+          "messageId": "userDefined",
         },
-        "desc": "Replace with: ReadonlyDeep<{ foo: string }>",
-        "fix": {
-          "range": [
-            16,
-            31,
+      ],
+    },
+  ],
+  "output": "function foo(): { foo: string } {}",
+  "steps": [
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 15,
+          "endColumn": 32,
+          "endLine": 1,
+          "line": 1,
+          "message": "Return type should have an immutability of at least "ReadonlyDeep" (actual: "Mutable").",
+          "messageId": "returnType",
+          "nodeType": "TSTypeAnnotation",
+          "ruleId": "rule-to-test/prefer-immutable-types",
+          "severity": 2,
+          "suggestions": [
+            {
+              "data": {
+                "message": "Replace with: ReadonlyDeep<{ foo: string }>",
+              },
+              "desc": "Replace with: ReadonlyDeep<{ foo: string }>",
+              "fix": {
+                "range": [
+                  16,
+                  31,
+                ],
+                "text": "ReadonlyDeep<{ foo: string }>",
+              },
+              "messageId": "userDefined",
+            },
           ],
-          "text": "ReadonlyDeep<{ foo: string }>",
         },
-        "messageId": "userDefined",
-      },
-    ],
-  },
-]
+      ],
+      "output": "function foo(): { foo: string } {}",
+    },
+  ],
+}
 `;
 
 exports[`prefer-immutable-types > typescript > reports mutable records return types 1`] = `
-[
-  {
-    "column": 15,
-    "endColumn": 32,
-    "endLine": 1,
-    "line": 1,
-    "message": "Return type should have an immutability of at least "Immutable" (actual: "Mutable").",
-    "messageId": "returnType",
-    "nodeType": "TSTypeAnnotation",
-    "ruleId": "prefer-immutable-types",
-    "severity": 2,
-  },
-]
+{
+  "fixed": false,
+  "messages": [
+    {
+      "column": 15,
+      "endColumn": 32,
+      "endLine": 1,
+      "line": 1,
+      "message": "Return type should have an immutability of at least "Immutable" (actual: "Mutable").",
+      "messageId": "returnType",
+      "nodeType": "TSTypeAnnotation",
+      "ruleId": "prefer-immutable-types",
+      "severity": 2,
+    },
+  ],
+  "output": "function foo(): { foo: string } {}",
+  "steps": [
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 15,
+          "endColumn": 32,
+          "endLine": 1,
+          "line": 1,
+          "message": "Return type should have an immutability of at least "Immutable" (actual: "Mutable").",
+          "messageId": "returnType",
+          "nodeType": "TSTypeAnnotation",
+          "ruleId": "rule-to-test/prefer-immutable-types",
+          "severity": 2,
+        },
+      ],
+      "output": "function foo(): { foo: string } {}",
+    },
+  ],
+}
 `;
 
 exports[`prefer-immutable-types > typescript > reports mutable records return types and suggests a fix for ReadonlyShallow 1`] = `
-[
-  {
-    "column": 15,
-    "endColumn": 32,
-    "endLine": 1,
-    "line": 1,
-    "message": "Return type should have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
-    "messageId": "returnType",
-    "nodeType": "TSTypeAnnotation",
-    "ruleId": "prefer-immutable-types",
-    "severity": 2,
-    "suggestions": [
-      {
-        "data": {
-          "message": "Surround with Readonly.",
+{
+  "fixed": false,
+  "messages": [
+    {
+      "column": 15,
+      "endColumn": 32,
+      "endLine": 1,
+      "line": 1,
+      "message": "Return type should have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
+      "messageId": "returnType",
+      "nodeType": "TSTypeAnnotation",
+      "ruleId": "prefer-immutable-types",
+      "severity": 2,
+      "suggestions": [
+        {
+          "data": {
+            "message": "Surround with Readonly.",
+          },
+          "desc": "Surround with Readonly.",
+          "fix": {
+            "range": [
+              16,
+              31,
+            ],
+            "text": "Readonly<{ foo: string }>",
+          },
+          "messageId": "userDefined",
         },
-        "desc": "Surround with Readonly.",
-        "fix": {
-          "range": [
-            16,
-            31,
+      ],
+    },
+  ],
+  "output": "function foo(): { foo: string } {}",
+  "steps": [
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 15,
+          "endColumn": 32,
+          "endLine": 1,
+          "line": 1,
+          "message": "Return type should have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
+          "messageId": "returnType",
+          "nodeType": "TSTypeAnnotation",
+          "ruleId": "rule-to-test/prefer-immutable-types",
+          "severity": 2,
+          "suggestions": [
+            {
+              "data": {
+                "message": "Surround with Readonly.",
+              },
+              "desc": "Surround with Readonly.",
+              "fix": {
+                "range": [
+                  16,
+                  31,
+                ],
+                "text": "Readonly<{ foo: string }>",
+              },
+              "messageId": "userDefined",
+            },
           ],
-          "text": "Readonly<{ foo: string }>",
         },
-        "messageId": "userDefined",
-      },
-    ],
-  },
-]
+      ],
+      "output": "function foo(): { foo: string } {}",
+    },
+  ],
+}
 `;
 
 exports[`prefer-immutable-types > typescript > reports non-immutable map return types 1`] = `
-[
-  {
-    "column": 15,
-    "endColumn": 44,
-    "endLine": 1,
-    "line": 1,
-    "message": "Return type should have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
-    "messageId": "returnType",
-    "nodeType": "TSTypeAnnotation",
-    "ruleId": "prefer-immutable-types",
-    "severity": 2,
-  },
-]
+{
+  "fixed": false,
+  "messages": [
+    {
+      "column": 15,
+      "endColumn": 44,
+      "endLine": 1,
+      "line": 1,
+      "message": "Return type should have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
+      "messageId": "returnType",
+      "nodeType": "TSTypeAnnotation",
+      "ruleId": "prefer-immutable-types",
+      "severity": 2,
+    },
+  ],
+  "output": "function foo(): ReadonlyMap<string, string> {}",
+  "steps": [
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 15,
+          "endColumn": 44,
+          "endLine": 1,
+          "line": 1,
+          "message": "Return type should have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
+          "messageId": "returnType",
+          "nodeType": "TSTypeAnnotation",
+          "ruleId": "rule-to-test/prefer-immutable-types",
+          "severity": 2,
+        },
+      ],
+      "output": "function foo(): ReadonlyMap<string, string> {}",
+    },
+  ],
+}
 `;
 
 exports[`prefer-immutable-types > typescript > reports non-immutable set return types 1`] = `
-[
-  {
-    "column": 15,
-    "endColumn": 36,
-    "endLine": 1,
-    "line": 1,
-    "message": "Return type should have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
-    "messageId": "returnType",
-    "nodeType": "TSTypeAnnotation",
-    "ruleId": "prefer-immutable-types",
-    "severity": 2,
-  },
-]
+{
+  "fixed": false,
+  "messages": [
+    {
+      "column": 15,
+      "endColumn": 36,
+      "endLine": 1,
+      "line": 1,
+      "message": "Return type should have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
+      "messageId": "returnType",
+      "nodeType": "TSTypeAnnotation",
+      "ruleId": "prefer-immutable-types",
+      "severity": 2,
+    },
+  ],
+  "output": "function foo(): ReadonlySet<string> {}",
+  "steps": [
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 15,
+          "endColumn": 36,
+          "endLine": 1,
+          "line": 1,
+          "message": "Return type should have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
+          "messageId": "returnType",
+          "nodeType": "TSTypeAnnotation",
+          "ruleId": "rule-to-test/prefer-immutable-types",
+          "severity": 2,
+        },
+      ],
+      "output": "function foo(): ReadonlySet<string> {}",
+    },
+  ],
+}
 `;
 
 exports[`prefer-immutable-types > typescript > suggest multiple fixes for collections for ReadonlyShallow 1`] = `
-[
-  {
-    "column": 15,
-    "endColumn": 30,
-    "endLine": 1,
-    "line": 1,
-    "message": "Return type should have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
-    "messageId": "returnType",
-    "nodeType": "TSTypeAnnotation",
-    "ruleId": "prefer-immutable-types",
-    "severity": 2,
-    "suggestions": [
-      {
-        "data": {
-          "message": "Use ReadonlyArray instead of Array.",
+{
+  "fixed": false,
+  "messages": [
+    {
+      "column": 15,
+      "endColumn": 30,
+      "endLine": 1,
+      "line": 1,
+      "message": "Return type should have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
+      "messageId": "returnType",
+      "nodeType": "TSTypeAnnotation",
+      "ruleId": "prefer-immutable-types",
+      "severity": 2,
+      "suggestions": [
+        {
+          "data": {
+            "message": "Use ReadonlyArray instead of Array.",
+          },
+          "desc": "Use ReadonlyArray instead of Array.",
+          "fix": {
+            "range": [
+              16,
+              29,
+            ],
+            "text": "ReadonlyArray<string>",
+          },
+          "messageId": "userDefined",
         },
-        "desc": "Use ReadonlyArray instead of Array.",
-        "fix": {
-          "range": [
-            16,
-            29,
+        {
+          "data": {
+            "message": "Surround with Readonly.",
+          },
+          "desc": "Surround with Readonly.",
+          "fix": {
+            "range": [
+              16,
+              29,
+            ],
+            "text": "Readonly<Array<string>>",
+          },
+          "messageId": "userDefined",
+        },
+      ],
+    },
+    {
+      "column": 15,
+      "endColumn": 25,
+      "endLine": 2,
+      "line": 2,
+      "message": "Return type should have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
+      "messageId": "returnType",
+      "nodeType": "TSTypeAnnotation",
+      "ruleId": "prefer-immutable-types",
+      "severity": 2,
+      "suggestions": [
+        {
+          "data": {
+            "message": "Prepend with readonly.",
+          },
+          "desc": "Prepend with readonly.",
+          "fix": {
+            "range": [
+              49,
+              57,
+            ],
+            "text": "readonly string[]",
+          },
+          "messageId": "userDefined",
+        },
+        {
+          "data": {
+            "message": "Surround with Readonly.",
+          },
+          "desc": "Surround with Readonly.",
+          "fix": {
+            "range": [
+              49,
+              57,
+            ],
+            "text": "Readonly<string[]>",
+          },
+          "messageId": "userDefined",
+        },
+      ],
+    },
+    {
+      "column": 15,
+      "endColumn": 28,
+      "endLine": 3,
+      "line": 3,
+      "message": "Return type should have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
+      "messageId": "returnType",
+      "nodeType": "TSTypeAnnotation",
+      "ruleId": "prefer-immutable-types",
+      "severity": 2,
+      "suggestions": [
+        {
+          "data": {
+            "message": "Use ReadonlySet instead of Set.",
+          },
+          "desc": "Use ReadonlySet instead of Set.",
+          "fix": {
+            "range": [
+              77,
+              88,
+            ],
+            "text": "ReadonlySet<string>",
+          },
+          "messageId": "userDefined",
+        },
+        {
+          "data": {
+            "message": "Surround with Readonly.",
+          },
+          "desc": "Surround with Readonly.",
+          "fix": {
+            "range": [
+              77,
+              88,
+            ],
+            "text": "Readonly<Set<string>>",
+          },
+          "messageId": "userDefined",
+        },
+      ],
+    },
+    {
+      "column": 15,
+      "endColumn": 36,
+      "endLine": 4,
+      "line": 4,
+      "message": "Return type should have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
+      "messageId": "returnType",
+      "nodeType": "TSTypeAnnotation",
+      "ruleId": "prefer-immutable-types",
+      "severity": 2,
+      "suggestions": [
+        {
+          "data": {
+            "message": "Use ReadonlyMap instead of Map.",
+          },
+          "desc": "Use ReadonlyMap instead of Map.",
+          "fix": {
+            "range": [
+              108,
+              127,
+            ],
+            "text": "ReadonlyMap<string, string>",
+          },
+          "messageId": "userDefined",
+        },
+        {
+          "data": {
+            "message": "Surround with Readonly.",
+          },
+          "desc": "Surround with Readonly.",
+          "fix": {
+            "range": [
+              108,
+              127,
+            ],
+            "text": "Readonly<Map<string, string>>",
+          },
+          "messageId": "userDefined",
+        },
+      ],
+    },
+  ],
+  "output": "function foo(): Array<string> {}
+function foo(): string[] {}
+function foo(): Set<string> {}
+function foo(): Map<string, string> {}
+function foo(): ReadonlyArray<string> {}
+function foo(): readonly string[] {}
+function foo(): ReadonlySet<string> {}
+function foo(): ReadonlyMap<string, string> {}",
+  "steps": [
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 15,
+          "endColumn": 30,
+          "endLine": 1,
+          "line": 1,
+          "message": "Return type should have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
+          "messageId": "returnType",
+          "nodeType": "TSTypeAnnotation",
+          "ruleId": "rule-to-test/prefer-immutable-types",
+          "severity": 2,
+          "suggestions": [
+            {
+              "data": {
+                "message": "Use ReadonlyArray instead of Array.",
+              },
+              "desc": "Use ReadonlyArray instead of Array.",
+              "fix": {
+                "range": [
+                  16,
+                  29,
+                ],
+                "text": "ReadonlyArray<string>",
+              },
+              "messageId": "userDefined",
+            },
+            {
+              "data": {
+                "message": "Surround with Readonly.",
+              },
+              "desc": "Surround with Readonly.",
+              "fix": {
+                "range": [
+                  16,
+                  29,
+                ],
+                "text": "Readonly<Array<string>>",
+              },
+              "messageId": "userDefined",
+            },
           ],
-          "text": "ReadonlyArray<string>",
         },
-        "messageId": "userDefined",
-      },
-      {
-        "data": {
-          "message": "Surround with Readonly.",
-        },
-        "desc": "Surround with Readonly.",
-        "fix": {
-          "range": [
-            16,
-            29,
+        {
+          "column": 15,
+          "endColumn": 25,
+          "endLine": 2,
+          "line": 2,
+          "message": "Return type should have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
+          "messageId": "returnType",
+          "nodeType": "TSTypeAnnotation",
+          "ruleId": "rule-to-test/prefer-immutable-types",
+          "severity": 2,
+          "suggestions": [
+            {
+              "data": {
+                "message": "Prepend with readonly.",
+              },
+              "desc": "Prepend with readonly.",
+              "fix": {
+                "range": [
+                  49,
+                  57,
+                ],
+                "text": "readonly string[]",
+              },
+              "messageId": "userDefined",
+            },
+            {
+              "data": {
+                "message": "Surround with Readonly.",
+              },
+              "desc": "Surround with Readonly.",
+              "fix": {
+                "range": [
+                  49,
+                  57,
+                ],
+                "text": "Readonly<string[]>",
+              },
+              "messageId": "userDefined",
+            },
           ],
-          "text": "Readonly<Array<string>>",
         },
-        "messageId": "userDefined",
-      },
-    ],
-  },
-  {
-    "column": 15,
-    "endColumn": 25,
-    "endLine": 2,
-    "line": 2,
-    "message": "Return type should have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
-    "messageId": "returnType",
-    "nodeType": "TSTypeAnnotation",
-    "ruleId": "prefer-immutable-types",
-    "severity": 2,
-    "suggestions": [
-      {
-        "data": {
-          "message": "Prepend with readonly.",
-        },
-        "desc": "Prepend with readonly.",
-        "fix": {
-          "range": [
-            49,
-            57,
+        {
+          "column": 15,
+          "endColumn": 28,
+          "endLine": 3,
+          "line": 3,
+          "message": "Return type should have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
+          "messageId": "returnType",
+          "nodeType": "TSTypeAnnotation",
+          "ruleId": "rule-to-test/prefer-immutable-types",
+          "severity": 2,
+          "suggestions": [
+            {
+              "data": {
+                "message": "Use ReadonlySet instead of Set.",
+              },
+              "desc": "Use ReadonlySet instead of Set.",
+              "fix": {
+                "range": [
+                  77,
+                  88,
+                ],
+                "text": "ReadonlySet<string>",
+              },
+              "messageId": "userDefined",
+            },
+            {
+              "data": {
+                "message": "Surround with Readonly.",
+              },
+              "desc": "Surround with Readonly.",
+              "fix": {
+                "range": [
+                  77,
+                  88,
+                ],
+                "text": "Readonly<Set<string>>",
+              },
+              "messageId": "userDefined",
+            },
           ],
-          "text": "readonly string[]",
         },
-        "messageId": "userDefined",
-      },
-      {
-        "data": {
-          "message": "Surround with Readonly.",
-        },
-        "desc": "Surround with Readonly.",
-        "fix": {
-          "range": [
-            49,
-            57,
+        {
+          "column": 15,
+          "endColumn": 36,
+          "endLine": 4,
+          "line": 4,
+          "message": "Return type should have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
+          "messageId": "returnType",
+          "nodeType": "TSTypeAnnotation",
+          "ruleId": "rule-to-test/prefer-immutable-types",
+          "severity": 2,
+          "suggestions": [
+            {
+              "data": {
+                "message": "Use ReadonlyMap instead of Map.",
+              },
+              "desc": "Use ReadonlyMap instead of Map.",
+              "fix": {
+                "range": [
+                  108,
+                  127,
+                ],
+                "text": "ReadonlyMap<string, string>",
+              },
+              "messageId": "userDefined",
+            },
+            {
+              "data": {
+                "message": "Surround with Readonly.",
+              },
+              "desc": "Surround with Readonly.",
+              "fix": {
+                "range": [
+                  108,
+                  127,
+                ],
+                "text": "Readonly<Map<string, string>>",
+              },
+              "messageId": "userDefined",
+            },
           ],
-          "text": "Readonly<string[]>",
         },
-        "messageId": "userDefined",
-      },
-    ],
-  },
-  {
-    "column": 15,
-    "endColumn": 28,
-    "endLine": 3,
-    "line": 3,
-    "message": "Return type should have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
-    "messageId": "returnType",
-    "nodeType": "TSTypeAnnotation",
-    "ruleId": "prefer-immutable-types",
-    "severity": 2,
-    "suggestions": [
-      {
-        "data": {
-          "message": "Use ReadonlySet instead of Set.",
-        },
-        "desc": "Use ReadonlySet instead of Set.",
-        "fix": {
-          "range": [
-            77,
-            88,
-          ],
-          "text": "ReadonlySet<string>",
-        },
-        "messageId": "userDefined",
-      },
-      {
-        "data": {
-          "message": "Surround with Readonly.",
-        },
-        "desc": "Surround with Readonly.",
-        "fix": {
-          "range": [
-            77,
-            88,
-          ],
-          "text": "Readonly<Set<string>>",
-        },
-        "messageId": "userDefined",
-      },
-    ],
-  },
-  {
-    "column": 15,
-    "endColumn": 36,
-    "endLine": 4,
-    "line": 4,
-    "message": "Return type should have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
-    "messageId": "returnType",
-    "nodeType": "TSTypeAnnotation",
-    "ruleId": "prefer-immutable-types",
-    "severity": 2,
-    "suggestions": [
-      {
-        "data": {
-          "message": "Use ReadonlyMap instead of Map.",
-        },
-        "desc": "Use ReadonlyMap instead of Map.",
-        "fix": {
-          "range": [
-            108,
-            127,
-          ],
-          "text": "ReadonlyMap<string, string>",
-        },
-        "messageId": "userDefined",
-      },
-      {
-        "data": {
-          "message": "Surround with Readonly.",
-        },
-        "desc": "Surround with Readonly.",
-        "fix": {
-          "range": [
-            108,
-            127,
-          ],
-          "text": "Readonly<Map<string, string>>",
-        },
-        "messageId": "userDefined",
-      },
-    ],
-  },
-]
+      ],
+      "output": "function foo(): Array<string> {}
+function foo(): string[] {}
+function foo(): Set<string> {}
+function foo(): Map<string, string> {}
+function foo(): ReadonlyArray<string> {}
+function foo(): readonly string[] {}
+function foo(): ReadonlySet<string> {}
+function foo(): ReadonlyMap<string, string> {}",
+    },
+  ],
+}
 `;

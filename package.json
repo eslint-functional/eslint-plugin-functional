@@ -131,7 +131,7 @@
     "eslint-plugin-sonarjs": "3.0.2",
     "eslint-plugin-unicorn": "59.0.1",
     "eslint-plugin-yml": "1.18.0",
-    "eslint-vitest-rule-tester": "1.1.0",
+    "eslint-vitest-rule-tester": "2.2.0",
     "fast-glob": "3.3.3",
     "husky": "9.1.7",
     "jsonc-eslint-parser": "2.4.0",

@@ -14,8 +14,8 @@ describe(name, () => {
       configs: esLatestConfig,
     });
 
-    it("reports Promise.reject", () => {
-      const invalidResult = invalid({
+    it("reports Promise.reject", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           function foo() {
             return Promise.reject("hello world");
@@ -23,11 +23,11 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
-    it("reports new Promise(reject)", () => {
-      const invalidResult = invalid({
+    it("reports new Promise(reject)", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           function foo() {
             return new Promise((resolve, reject) => {
@@ -37,11 +37,11 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
-    it("reports throw in async functions", () => {
-      const invalidResult = invalid({
+    it("reports throw in async functions", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           async function foo() {
             throw new Error("hello world");
@@ -49,11 +49,11 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
-    it("reports throw in try without catch in async functions", () => {
-      const invalidResult = invalid({
+    it("reports throw in try without catch in async functions", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           async function foo() {
             try {
@@ -65,11 +65,11 @@ describe(name, () => {
         `,
         errors: ["generic"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
-    it("doesn't report Promise.resolve", () => {
-      valid({
+    it("doesn't report Promise.resolve", async () => {
+      await valid({
         code: dedent`
           function foo() {
             return Promise.resolve("hello world");
@@ -78,8 +78,8 @@ describe(name, () => {
       });
     });
 
-    it("doesn't report new Promise(resolve)", () => {
-      valid({
+    it("doesn't report new Promise(resolve)", async () => {
+      await valid({
         code: dedent`
           function foo() {
             return new Promise((resolve) => {
@@ -90,8 +90,8 @@ describe(name, () => {
       });
     });
 
-    it("doesn't report throw in try in async functions", () => {
-      valid({
+    it("doesn't report throw in try in async functions", async () => {
+      await valid({
         code: dedent`
           async function foo() {
             try {

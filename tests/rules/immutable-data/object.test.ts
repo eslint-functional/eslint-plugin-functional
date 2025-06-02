@@ -14,8 +14,8 @@ describe(name, () => {
       configs: typescriptConfig,
     });
 
-    it("report object mutating patterns", () => {
-      const invalidResult = invalid({
+    it("report object mutating patterns", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           var x = {a: 1};
           x.foo = "bar";
@@ -71,11 +71,11 @@ describe(name, () => {
           "generic",
         ],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
-    it("reports Object.assign() on identifiers", () => {
-      const invalidResult = invalid({
+    it("reports Object.assign() on identifiers", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           var x = { msg1: "hello", obj: { a: 1, b: 2} };
 
@@ -84,11 +84,11 @@ describe(name, () => {
         `,
         errors: ["object", "object"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
-    it("reports object mutating methods", () => {
-      const invalidResult = invalid({
+    it("reports object mutating methods", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           var foo = { a: 1 };
           Object.defineProperties(foo, { b: { value: 2, writable: false }});
@@ -97,11 +97,11 @@ describe(name, () => {
         `,
         errors: ["object", "object", "object"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
-    it("reports field mutation in class methods", () => {
-      const invalidResult = invalid({
+    it("reports field mutation in class methods", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           class Klass {
             bar = 1;
@@ -118,11 +118,11 @@ describe(name, () => {
         `,
         errors: ["generic", "generic"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
-    it("doesn't report non-object mutating patterns", () => {
-      valid(dedent`
+    it("doesn't report non-object mutating patterns", async () => {
+      await valid(dedent`
         var foo = function () {};
         var bar = {
           x: 1,
@@ -146,8 +146,8 @@ describe(name, () => {
       `);
     });
 
-    it("doesn't report Object.assign() on non-identifiers", () => {
-      valid(dedent`
+    it("doesn't report Object.assign() on non-identifiers", async () => {
+      await valid(dedent`
         var x = { msg1: "hello", obj: { a: 1, b: 2}, func: function() {} };
         var bar = function(a, b, c) { return { a: a, b: b, c: c }; };
 
@@ -157,8 +157,8 @@ describe(name, () => {
       `);
     });
 
-    it("doesn't report initialization of class members in constructor", () => {
-      valid(dedent`
+    it("doesn't report initialization of class members in constructor", async () => {
+      await valid(dedent`
         class Klass {
           bar = 1;
           constructor() {
@@ -170,8 +170,8 @@ describe(name, () => {
 
     describe("options", () => {
       describe("ignoreNonConstDeclarations", () => {
-        it("report variables declared as const", () => {
-          const invalidResult = invalid({
+        it("report variables declared as const", async () => {
+          const invalidResult = await invalid({
             code: dedent`
               const x = {a: 1, b:{}};
               x.foo = "bar";
@@ -228,11 +228,11 @@ describe(name, () => {
               "generic",
             ],
           });
-          expect(invalidResult.messages).toMatchSnapshot();
+          expect(invalidResult.result).toMatchSnapshot();
         });
 
-        it("report parameters", () => {
-          const invalidResult = invalid({
+        it("report parameters", async () => {
+          const invalidResult = await invalid({
             code: dedent`
               function y(x: {a: 1, b: object}) {
                 x.foo = "bar";
@@ -296,11 +296,11 @@ describe(name, () => {
               "generic",
             ],
           });
-          expect(invalidResult.messages).toMatchSnapshot();
+          expect(invalidResult.result).toMatchSnapshot();
         });
 
-        it("doesn't report variables not declared as const", () => {
-          valid({
+        it("doesn't report variables not declared as const", async () => {
+          await valid({
             code: dedent`
               let x = {a: 1, b:{}};
               x.foo = "bar";
@@ -335,8 +335,8 @@ describe(name, () => {
           });
         });
 
-        it("doesn't report parameters", () => {
-          valid({
+        it("doesn't report parameters", async () => {
+          await valid({
             code: dedent`
               function y(x: {a: 1, b: object}) {
                 x.foo = "bar";
@@ -380,8 +380,8 @@ describe(name, () => {
       });
 
       describe("ignoreIdentifierPattern", () => {
-        it("ignores variables declared as mutable", () => {
-          valid({
+        it("ignores variables declared as mutable", async () => {
+          await valid({
             code: dedent`
               var mutableVar = { a: 1 };
               delete mutableVar.a;
@@ -393,8 +393,8 @@ describe(name, () => {
       });
 
       describe("ignoreAccessorPattern", () => {
-        it("ignores variables declared as mutable", () => {
-          valid({
+        it("ignores variables declared as mutable", async () => {
+          await valid({
             code: dedent`
               function y(mutable_x: {a: 1, b: object}) {
                 mutable_x.foo = "bar";
@@ -437,8 +437,8 @@ describe(name, () => {
           });
         });
 
-        it("ignores class fields", () => {
-          valid({
+        it("ignores class fields", async () => {
+          await valid({
             code: dedent`
               class Klass {
                 mutate() {

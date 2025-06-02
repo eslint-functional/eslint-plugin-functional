@@ -1,273 +1,706 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`type-declaration-immutability > typescript > reports invalid deep arrays 1`] = `
-[
-  {
-    "column": 6,
-    "endColumn": 25,
-    "endLine": 1,
-    "line": 1,
-    "message": "This type is declare to have an immutability of at least "ReadonlyDeep" (actual: "ReadonlyShallow").",
-    "messageId": "AtLeast",
-    "nodeType": "Identifier",
-    "ruleId": "type-declaration-immutability",
-    "severity": 2,
-  },
-]
+{
+  "fixed": false,
+  "messages": [
+    {
+      "column": 6,
+      "endColumn": 25,
+      "endLine": 1,
+      "line": 1,
+      "message": "This type is declare to have an immutability of at least "ReadonlyDeep" (actual: "ReadonlyShallow").",
+      "messageId": "AtLeast",
+      "nodeType": "Identifier",
+      "ruleId": "type-declaration-immutability",
+      "severity": 2,
+    },
+  ],
+  "output": "type ReadonlyDeepMyArray = ReadonlyArray<{ foo: string; }>;",
+  "steps": [
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 6,
+          "endColumn": 25,
+          "endLine": 1,
+          "line": 1,
+          "message": "This type is declare to have an immutability of at least "ReadonlyDeep" (actual: "ReadonlyShallow").",
+          "messageId": "AtLeast",
+          "nodeType": "Identifier",
+          "ruleId": "rule-to-test/type-declaration-immutability",
+          "severity": 2,
+        },
+      ],
+      "output": "type ReadonlyDeepMyArray = ReadonlyArray<{ foo: string; }>;",
+    },
+  ],
+}
 `;
 
 exports[`type-declaration-immutability > typescript > reports invalid deep maps 1`] = `
-[
-  {
-    "column": 6,
-    "endColumn": 23,
-    "endLine": 1,
-    "line": 1,
-    "message": "This type is declare to have an immutability of at least "ReadonlyDeep" (actual: "ReadonlyShallow").",
-    "messageId": "AtLeast",
-    "nodeType": "Identifier",
-    "ruleId": "type-declaration-immutability",
-    "severity": 2,
-  },
-]
+{
+  "fixed": false,
+  "messages": [
+    {
+      "column": 6,
+      "endColumn": 23,
+      "endLine": 1,
+      "line": 1,
+      "message": "This type is declare to have an immutability of at least "ReadonlyDeep" (actual: "ReadonlyShallow").",
+      "messageId": "AtLeast",
+      "nodeType": "Identifier",
+      "ruleId": "type-declaration-immutability",
+      "severity": 2,
+    },
+  ],
+  "output": "type ReadonlyDeepMyMap = ReadonlyMap<string, { foo: string; }>;",
+  "steps": [
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 6,
+          "endColumn": 23,
+          "endLine": 1,
+          "line": 1,
+          "message": "This type is declare to have an immutability of at least "ReadonlyDeep" (actual: "ReadonlyShallow").",
+          "messageId": "AtLeast",
+          "nodeType": "Identifier",
+          "ruleId": "rule-to-test/type-declaration-immutability",
+          "severity": 2,
+        },
+      ],
+      "output": "type ReadonlyDeepMyMap = ReadonlyMap<string, { foo: string; }>;",
+    },
+  ],
+}
 `;
 
 exports[`type-declaration-immutability > typescript > reports invalid deep sets 1`] = `
-[
-  {
-    "column": 6,
-    "endColumn": 23,
-    "endLine": 1,
-    "line": 1,
-    "message": "This type is declare to have an immutability of at least "ReadonlyDeep" (actual: "ReadonlyShallow").",
-    "messageId": "AtLeast",
-    "nodeType": "Identifier",
-    "ruleId": "type-declaration-immutability",
-    "severity": 2,
-  },
-]
+{
+  "fixed": false,
+  "messages": [
+    {
+      "column": 6,
+      "endColumn": 23,
+      "endLine": 1,
+      "line": 1,
+      "message": "This type is declare to have an immutability of at least "ReadonlyDeep" (actual: "ReadonlyShallow").",
+      "messageId": "AtLeast",
+      "nodeType": "Identifier",
+      "ruleId": "type-declaration-immutability",
+      "severity": 2,
+    },
+  ],
+  "output": "type ReadonlyDeepMySet = ReadonlySet<{ foo: string; }>;",
+  "steps": [
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 6,
+          "endColumn": 23,
+          "endLine": 1,
+          "line": 1,
+          "message": "This type is declare to have an immutability of at least "ReadonlyDeep" (actual: "ReadonlyShallow").",
+          "messageId": "AtLeast",
+          "nodeType": "Identifier",
+          "ruleId": "rule-to-test/type-declaration-immutability",
+          "severity": 2,
+        },
+      ],
+      "output": "type ReadonlyDeepMySet = ReadonlySet<{ foo: string; }>;",
+    },
+  ],
+}
 `;
 
 exports[`type-declaration-immutability > typescript > reports invalid immutable arrays 1`] = `
-[
-  {
-    "column": 6,
-    "endColumn": 22,
-    "endLine": 1,
-    "line": 1,
-    "message": "This type is declare to have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
-    "messageId": "AtLeast",
-    "nodeType": "Identifier",
-    "ruleId": "type-declaration-immutability",
-    "severity": 2,
-  },
-]
+{
+  "fixed": false,
+  "messages": [
+    {
+      "column": 6,
+      "endColumn": 22,
+      "endLine": 1,
+      "line": 1,
+      "message": "This type is declare to have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
+      "messageId": "AtLeast",
+      "nodeType": "Identifier",
+      "ruleId": "type-declaration-immutability",
+      "severity": 2,
+    },
+  ],
+  "output": "type ImmutableMyArray = ReadonlyArray<{ readonly foo: string; }>;",
+  "steps": [
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 6,
+          "endColumn": 22,
+          "endLine": 1,
+          "line": 1,
+          "message": "This type is declare to have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
+          "messageId": "AtLeast",
+          "nodeType": "Identifier",
+          "ruleId": "rule-to-test/type-declaration-immutability",
+          "severity": 2,
+        },
+      ],
+      "output": "type ImmutableMyArray = ReadonlyArray<{ readonly foo: string; }>;",
+    },
+  ],
+}
 `;
 
 exports[`type-declaration-immutability > typescript > reports invalid immutable maps 1`] = `
-[
-  {
-    "column": 6,
-    "endColumn": 20,
-    "endLine": 1,
-    "line": 1,
-    "message": "This type is declare to have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
-    "messageId": "AtLeast",
-    "nodeType": "Identifier",
-    "ruleId": "type-declaration-immutability",
-    "severity": 2,
-  },
-]
+{
+  "fixed": false,
+  "messages": [
+    {
+      "column": 6,
+      "endColumn": 20,
+      "endLine": 1,
+      "line": 1,
+      "message": "This type is declare to have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
+      "messageId": "AtLeast",
+      "nodeType": "Identifier",
+      "ruleId": "type-declaration-immutability",
+      "severity": 2,
+    },
+  ],
+  "output": "type ImmutableMyMap = ReadonlyMap<string, { readonly foo: string; }>;",
+  "steps": [
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 6,
+          "endColumn": 20,
+          "endLine": 1,
+          "line": 1,
+          "message": "This type is declare to have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
+          "messageId": "AtLeast",
+          "nodeType": "Identifier",
+          "ruleId": "rule-to-test/type-declaration-immutability",
+          "severity": 2,
+        },
+      ],
+      "output": "type ImmutableMyMap = ReadonlyMap<string, { readonly foo: string; }>;",
+    },
+  ],
+}
 `;
 
 exports[`type-declaration-immutability > typescript > reports invalid immutable sets 1`] = `
-[
-  {
-    "column": 6,
-    "endColumn": 20,
-    "endLine": 1,
-    "line": 1,
-    "message": "This type is declare to have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
-    "messageId": "AtLeast",
-    "nodeType": "Identifier",
-    "ruleId": "type-declaration-immutability",
-    "severity": 2,
-  },
-]
+{
+  "fixed": false,
+  "messages": [
+    {
+      "column": 6,
+      "endColumn": 20,
+      "endLine": 1,
+      "line": 1,
+      "message": "This type is declare to have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
+      "messageId": "AtLeast",
+      "nodeType": "Identifier",
+      "ruleId": "type-declaration-immutability",
+      "severity": 2,
+    },
+  ],
+  "output": "type ImmutableMySet = ReadonlySet<{ readonly foo: string; }>;",
+  "steps": [
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 6,
+          "endColumn": 20,
+          "endLine": 1,
+          "line": 1,
+          "message": "This type is declare to have an immutability of at least "Immutable" (actual: "ReadonlyDeep").",
+          "messageId": "AtLeast",
+          "nodeType": "Identifier",
+          "ruleId": "rule-to-test/type-declaration-immutability",
+          "severity": 2,
+        },
+      ],
+      "output": "type ImmutableMySet = ReadonlySet<{ readonly foo: string; }>;",
+    },
+  ],
+}
 `;
 
 exports[`type-declaration-immutability > typescript > reports invalid immutable/deep records 1`] = `
-[
-  {
-    "column": 6,
-    "endColumn": 21,
-    "endLine": 1,
-    "line": 1,
-    "message": "This type is declare to have an immutability of at least "ReadonlyDeep" (actual: "ReadonlyShallow").",
-    "messageId": "AtLeast",
-    "nodeType": "Identifier",
-    "ruleId": "type-declaration-immutability",
-    "severity": 2,
-  },
-]
+{
+  "fixed": false,
+  "messages": [
+    {
+      "column": 6,
+      "endColumn": 21,
+      "endLine": 1,
+      "line": 1,
+      "message": "This type is declare to have an immutability of at least "ReadonlyDeep" (actual: "ReadonlyShallow").",
+      "messageId": "AtLeast",
+      "nodeType": "Identifier",
+      "ruleId": "type-declaration-immutability",
+      "severity": 2,
+    },
+  ],
+  "output": "type ReadonlyDeepFoo = {
+            readonly foo: number;
+            readonly bar: {
+              baz: string;
+            };
+          };",
+  "steps": [
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 6,
+          "endColumn": 21,
+          "endLine": 1,
+          "line": 1,
+          "message": "This type is declare to have an immutability of at least "ReadonlyDeep" (actual: "ReadonlyShallow").",
+          "messageId": "AtLeast",
+          "nodeType": "Identifier",
+          "ruleId": "rule-to-test/type-declaration-immutability",
+          "severity": 2,
+        },
+      ],
+      "output": "type ReadonlyDeepFoo = {
+            readonly foo: number;
+            readonly bar: {
+              baz: string;
+            };
+          };",
+    },
+  ],
+}
 `;
 
 exports[`type-declaration-immutability > typescript > reports invalid immutable/deep records 2`] = `
-[
-  {
-    "column": 6,
-    "endColumn": 18,
-    "endLine": 1,
-    "line": 1,
-    "message": "This type is declare to have an immutability of at least "Immutable" (actual: "ReadonlyShallow").",
-    "messageId": "AtLeast",
-    "nodeType": "Identifier",
-    "ruleId": "type-declaration-immutability",
-    "severity": 2,
-  },
-]
+{
+  "fixed": false,
+  "messages": [
+    {
+      "column": 6,
+      "endColumn": 18,
+      "endLine": 1,
+      "line": 1,
+      "message": "This type is declare to have an immutability of at least "Immutable" (actual: "ReadonlyShallow").",
+      "messageId": "AtLeast",
+      "nodeType": "Identifier",
+      "ruleId": "type-declaration-immutability",
+      "severity": 2,
+    },
+  ],
+  "output": "type ImmutableFoo = {
+            readonly foo: number;
+            readonly bar: {
+              baz: string;
+            };
+          };",
+  "steps": [
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 6,
+          "endColumn": 18,
+          "endLine": 1,
+          "line": 1,
+          "message": "This type is declare to have an immutability of at least "Immutable" (actual: "ReadonlyShallow").",
+          "messageId": "AtLeast",
+          "nodeType": "Identifier",
+          "ruleId": "rule-to-test/type-declaration-immutability",
+          "severity": 2,
+        },
+      ],
+      "output": "type ImmutableFoo = {
+            readonly foo: number;
+            readonly bar: {
+              baz: string;
+            };
+          };",
+    },
+  ],
+}
 `;
 
 exports[`type-declaration-immutability > typescript > reports invalid shallow arrays 1`] = `
-[
-  {
-    "column": 6,
-    "endColumn": 21,
-    "endLine": 1,
-    "line": 1,
-    "message": "This type is declare to have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
-    "messageId": "AtLeast",
-    "nodeType": "Identifier",
-    "ruleId": "type-declaration-immutability",
-    "severity": 2,
-  },
-]
+{
+  "fixed": false,
+  "messages": [
+    {
+      "column": 6,
+      "endColumn": 21,
+      "endLine": 1,
+      "line": 1,
+      "message": "This type is declare to have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
+      "messageId": "AtLeast",
+      "nodeType": "Identifier",
+      "ruleId": "type-declaration-immutability",
+      "severity": 2,
+    },
+  ],
+  "output": "type ReadonlyMyArray = Array<string>;",
+  "steps": [
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 6,
+          "endColumn": 21,
+          "endLine": 1,
+          "line": 1,
+          "message": "This type is declare to have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
+          "messageId": "AtLeast",
+          "nodeType": "Identifier",
+          "ruleId": "rule-to-test/type-declaration-immutability",
+          "severity": 2,
+        },
+      ],
+      "output": "type ReadonlyMyArray = Array<string>;",
+    },
+  ],
+}
 `;
 
 exports[`type-declaration-immutability > typescript > reports invalid shallow maps 1`] = `
-[
-  {
-    "column": 6,
-    "endColumn": 19,
-    "endLine": 1,
-    "line": 1,
-    "message": "This type is declare to have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
-    "messageId": "AtLeast",
-    "nodeType": "Identifier",
-    "ruleId": "type-declaration-immutability",
-    "severity": 2,
-  },
-]
+{
+  "fixed": false,
+  "messages": [
+    {
+      "column": 6,
+      "endColumn": 19,
+      "endLine": 1,
+      "line": 1,
+      "message": "This type is declare to have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
+      "messageId": "AtLeast",
+      "nodeType": "Identifier",
+      "ruleId": "type-declaration-immutability",
+      "severity": 2,
+    },
+  ],
+  "output": "type ReadonlyMyMap = Map<string, string>;",
+  "steps": [
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 6,
+          "endColumn": 19,
+          "endLine": 1,
+          "line": 1,
+          "message": "This type is declare to have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
+          "messageId": "AtLeast",
+          "nodeType": "Identifier",
+          "ruleId": "rule-to-test/type-declaration-immutability",
+          "severity": 2,
+        },
+      ],
+      "output": "type ReadonlyMyMap = Map<string, string>;",
+    },
+  ],
+}
 `;
 
 exports[`type-declaration-immutability > typescript > reports invalid shallow records 1`] = `
-[
-  {
-    "column": 6,
-    "endColumn": 17,
-    "endLine": 1,
-    "line": 1,
-    "message": "This type is declare to have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
-    "messageId": "AtLeast",
-    "nodeType": "Identifier",
-    "ruleId": "type-declaration-immutability",
-    "severity": 2,
-  },
-]
+{
+  "fixed": false,
+  "messages": [
+    {
+      "column": 6,
+      "endColumn": 17,
+      "endLine": 1,
+      "line": 1,
+      "message": "This type is declare to have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
+      "messageId": "AtLeast",
+      "nodeType": "Identifier",
+      "ruleId": "type-declaration-immutability",
+      "severity": 2,
+    },
+  ],
+  "output": "type ReadonlyFoo = {
+  foo: number;
+};",
+  "steps": [
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 6,
+          "endColumn": 17,
+          "endLine": 1,
+          "line": 1,
+          "message": "This type is declare to have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
+          "messageId": "AtLeast",
+          "nodeType": "Identifier",
+          "ruleId": "rule-to-test/type-declaration-immutability",
+          "severity": 2,
+        },
+      ],
+      "output": "type ReadonlyFoo = {
+  foo: number;
+};",
+    },
+  ],
+}
 `;
 
 exports[`type-declaration-immutability > typescript > reports invalid shallow records 2`] = `
-[
-  {
-    "column": 6,
-    "endColumn": 17,
-    "endLine": 1,
-    "line": 1,
-    "message": "This type is declare to have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
-    "messageId": "AtLeast",
-    "nodeType": "Identifier",
-    "ruleId": "type-declaration-immutability",
-    "severity": 2,
-  },
-]
+{
+  "fixed": false,
+  "messages": [
+    {
+      "column": 6,
+      "endColumn": 17,
+      "endLine": 1,
+      "line": 1,
+      "message": "This type is declare to have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
+      "messageId": "AtLeast",
+      "nodeType": "Identifier",
+      "ruleId": "type-declaration-immutability",
+      "severity": 2,
+    },
+  ],
+  "output": "type ReadonlyFoo = {
+  readonly foo: number;
+  bar: {
+    baz: string;
+  };
+}",
+  "steps": [
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 6,
+          "endColumn": 17,
+          "endLine": 1,
+          "line": 1,
+          "message": "This type is declare to have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
+          "messageId": "AtLeast",
+          "nodeType": "Identifier",
+          "ruleId": "rule-to-test/type-declaration-immutability",
+          "severity": 2,
+        },
+      ],
+      "output": "type ReadonlyFoo = {
+  readonly foo: number;
+  bar: {
+    baz: string;
+  };
+}",
+    },
+  ],
+}
 `;
 
 exports[`type-declaration-immutability > typescript > reports invalid shallow sets 1`] = `
-[
-  {
-    "column": 6,
-    "endColumn": 19,
-    "endLine": 1,
-    "line": 1,
-    "message": "This type is declare to have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
-    "messageId": "AtLeast",
-    "nodeType": "Identifier",
-    "ruleId": "type-declaration-immutability",
-    "severity": 2,
-  },
-]
+{
+  "fixed": false,
+  "messages": [
+    {
+      "column": 6,
+      "endColumn": 19,
+      "endLine": 1,
+      "line": 1,
+      "message": "This type is declare to have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
+      "messageId": "AtLeast",
+      "nodeType": "Identifier",
+      "ruleId": "type-declaration-immutability",
+      "severity": 2,
+    },
+  ],
+  "output": "type ReadonlyMySet = Set<string>;",
+  "steps": [
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 6,
+          "endColumn": 19,
+          "endLine": 1,
+          "line": 1,
+          "message": "This type is declare to have an immutability of at least "ReadonlyShallow" (actual: "Mutable").",
+          "messageId": "AtLeast",
+          "nodeType": "Identifier",
+          "ruleId": "rule-to-test/type-declaration-immutability",
+          "severity": 2,
+        },
+      ],
+      "output": "type ReadonlyMySet = Set<string>;",
+    },
+  ],
+}
 `;
 
 exports[`type-declaration-immutability > typescript > reports non-mutable primitives 1`] = `
-[
-  {
-    "column": 6,
-    "endColumn": 19,
-    "endLine": 1,
-    "line": 1,
-    "message": "This type is declare to have an immutability of at most "Mutable" (actual: "Immutable").",
-    "messageId": "AtMost",
-    "nodeType": "Identifier",
-    "ruleId": "type-declaration-immutability",
-    "severity": 2,
-  },
-]
+{
+  "fixed": false,
+  "messages": [
+    {
+      "column": 6,
+      "endColumn": 19,
+      "endLine": 1,
+      "line": 1,
+      "message": "This type is declare to have an immutability of at most "Mutable" (actual: "Immutable").",
+      "messageId": "AtMost",
+      "nodeType": "Identifier",
+      "ruleId": "type-declaration-immutability",
+      "severity": 2,
+    },
+  ],
+  "output": "type MutableString = string;",
+  "steps": [
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 6,
+          "endColumn": 19,
+          "endLine": 1,
+          "line": 1,
+          "message": "This type is declare to have an immutability of at most "Mutable" (actual: "Immutable").",
+          "messageId": "AtMost",
+          "nodeType": "Identifier",
+          "ruleId": "rule-to-test/type-declaration-immutability",
+          "severity": 2,
+        },
+      ],
+      "output": "type MutableString = string;",
+    },
+  ],
+}
 `;
 
 exports[`type-declaration-immutability > typescript > reports non-mutable records 1`] = `
-[
-  {
-    "column": 6,
-    "endColumn": 16,
-    "endLine": 1,
-    "line": 1,
-    "message": "This type is declare to have an immutability of at most "Mutable" (actual: "Immutable").",
-    "messageId": "AtMost",
-    "nodeType": "Identifier",
-    "ruleId": "type-declaration-immutability",
-    "severity": 2,
-  },
-]
+{
+  "fixed": false,
+  "messages": [
+    {
+      "column": 6,
+      "endColumn": 16,
+      "endLine": 1,
+      "line": 1,
+      "message": "This type is declare to have an immutability of at most "Mutable" (actual: "Immutable").",
+      "messageId": "AtMost",
+      "nodeType": "Identifier",
+      "ruleId": "type-declaration-immutability",
+      "severity": 2,
+    },
+  ],
+  "output": "type MutableFoo = {
+  readonly foo: number;
+};",
+  "steps": [
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 6,
+          "endColumn": 16,
+          "endLine": 1,
+          "line": 1,
+          "message": "This type is declare to have an immutability of at most "Mutable" (actual: "Immutable").",
+          "messageId": "AtMost",
+          "nodeType": "Identifier",
+          "ruleId": "rule-to-test/type-declaration-immutability",
+          "severity": 2,
+        },
+      ],
+      "output": "type MutableFoo = {
+  readonly foo: number;
+};",
+    },
+  ],
+}
 `;
 
 exports[`type-declaration-immutability > typescript > reports non-mutable records 2`] = `
-[
-  {
-    "column": 6,
-    "endColumn": 16,
-    "endLine": 1,
-    "line": 1,
-    "message": "This type is declare to have an immutability of at most "Mutable" (actual: "Immutable").",
-    "messageId": "AtMost",
-    "nodeType": "Identifier",
-    "ruleId": "type-declaration-immutability",
-    "severity": 2,
-  },
-]
+{
+  "fixed": false,
+  "messages": [
+    {
+      "column": 6,
+      "endColumn": 16,
+      "endLine": 1,
+      "line": 1,
+      "message": "This type is declare to have an immutability of at most "Mutable" (actual: "Immutable").",
+      "messageId": "AtMost",
+      "nodeType": "Identifier",
+      "ruleId": "type-declaration-immutability",
+      "severity": 2,
+    },
+  ],
+  "output": "type MutableFoo = Readonly<{
+  foo: number;
+}>;",
+  "steps": [
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 6,
+          "endColumn": 16,
+          "endLine": 1,
+          "line": 1,
+          "message": "This type is declare to have an immutability of at most "Mutable" (actual: "Immutable").",
+          "messageId": "AtMost",
+          "nodeType": "Identifier",
+          "ruleId": "rule-to-test/type-declaration-immutability",
+          "severity": 2,
+        },
+      ],
+      "output": "type MutableFoo = Readonly<{
+  foo: number;
+}>;",
+    },
+  ],
+}
 `;
 
 exports[`type-declaration-immutability > typescript > respects override settings 1`] = `
-[
-  {
-    "column": 6,
-    "endColumn": 16,
-    "endLine": 1,
-    "line": 1,
-    "message": "This type is declare to have an immutability of at most "Mutable" (actual: "Immutable").",
-    "messageId": "AtMost",
-    "nodeType": "Identifier",
-    "ruleId": "type-declaration-immutability",
-    "severity": 2,
-  },
-]
+{
+  "fixed": false,
+  "messages": [
+    {
+      "column": 6,
+      "endColumn": 16,
+      "endLine": 1,
+      "line": 1,
+      "message": "This type is declare to have an immutability of at most "Mutable" (actual: "Immutable").",
+      "messageId": "AtMost",
+      "nodeType": "Identifier",
+      "ruleId": "type-declaration-immutability",
+      "severity": 2,
+    },
+  ],
+  "output": "type MutableSet = Set<string>;",
+  "steps": [
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 6,
+          "endColumn": 16,
+          "endLine": 1,
+          "line": 1,
+          "message": "This type is declare to have an immutability of at most "Mutable" (actual: "Immutable").",
+          "messageId": "AtMost",
+          "nodeType": "Identifier",
+          "ruleId": "rule-to-test/type-declaration-immutability",
+          "severity": 2,
+        },
+      ],
+      "output": "type MutableSet = Set<string>;",
+    },
+  ],
+}
 `;

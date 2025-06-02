@@ -1,49 +1,122 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`no-expression-statements > javascript - es latest > options > ignoreCodePattern 1`] = `
-[
-  {
-    "column": 1,
-    "endColumn": 17,
-    "endLine": 1,
-    "line": 1,
-    "message": "Using expressions to cause side-effects not allowed.",
-    "messageId": "generic",
-    "nodeType": "ExpressionStatement",
-    "ruleId": "no-expression-statements",
-    "severity": 2,
-  },
-]
+{
+  "fixed": false,
+  "messages": [
+    {
+      "column": 1,
+      "endColumn": 17,
+      "endLine": 1,
+      "line": 1,
+      "message": "Using expressions to cause side-effects not allowed.",
+      "messageId": "generic",
+      "nodeType": "ExpressionStatement",
+      "ruleId": "no-expression-statements",
+      "severity": 2,
+    },
+  ],
+  "output": "console.trace();",
+  "steps": [
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 1,
+          "endColumn": 17,
+          "endLine": 1,
+          "line": 1,
+          "message": "Using expressions to cause side-effects not allowed.",
+          "messageId": "generic",
+          "nodeType": "ExpressionStatement",
+          "ruleId": "rule-to-test/no-expression-statements",
+          "severity": 2,
+        },
+      ],
+      "output": "console.trace();",
+    },
+  ],
+}
 `;
 
 exports[`no-expression-statements > javascript - es latest > reports expression statements 1`] = `
-[
-  {
-    "column": 1,
-    "endColumn": 11,
-    "endLine": 2,
-    "line": 2,
-    "message": "Using expressions to cause side-effects not allowed.",
-    "messageId": "generic",
-    "nodeType": "ExpressionStatement",
-    "ruleId": "no-expression-statements",
-    "severity": 2,
-  },
-]
+{
+  "fixed": false,
+  "messages": [
+    {
+      "column": 1,
+      "endColumn": 11,
+      "endLine": 2,
+      "line": 2,
+      "message": "Using expressions to cause side-effects not allowed.",
+      "messageId": "generic",
+      "nodeType": "ExpressionStatement",
+      "ruleId": "no-expression-statements",
+      "severity": 2,
+    },
+  ],
+  "output": "var x = [];
+x.push(1);",
+  "steps": [
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 1,
+          "endColumn": 11,
+          "endLine": 2,
+          "line": 2,
+          "message": "Using expressions to cause side-effects not allowed.",
+          "messageId": "generic",
+          "nodeType": "ExpressionStatement",
+          "ruleId": "rule-to-test/no-expression-statements",
+          "severity": 2,
+        },
+      ],
+      "output": "var x = [];
+x.push(1);",
+    },
+  ],
+}
 `;
 
 exports[`no-expression-statements > typescript > options > ignoreSelfReturning 1`] = `
-[
-  {
-    "column": 1,
-    "endColumn": 7,
-    "endLine": 2,
-    "line": 2,
-    "message": "Using expressions to cause side-effects not allowed.",
-    "messageId": "generic",
-    "nodeType": "ExpressionStatement",
-    "ruleId": "no-expression-statements",
-    "severity": 2,
-  },
-]
+{
+  "fixed": false,
+  "messages": [
+    {
+      "column": 1,
+      "endColumn": 7,
+      "endLine": 2,
+      "line": 2,
+      "message": "Using expressions to cause side-effects not allowed.",
+      "messageId": "generic",
+      "nodeType": "ExpressionStatement",
+      "ruleId": "no-expression-statements",
+      "severity": 2,
+    },
+  ],
+  "output": "const foo = () => { return this; };
+foo();",
+  "steps": [
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 1,
+          "endColumn": 7,
+          "endLine": 2,
+          "line": 2,
+          "message": "Using expressions to cause side-effects not allowed.",
+          "messageId": "generic",
+          "nodeType": "ExpressionStatement",
+          "ruleId": "rule-to-test/no-expression-statements",
+          "severity": 2,
+        },
+      ],
+      "output": "const foo = () => { return this; };
+foo();",
+    },
+  ],
+}
 `;

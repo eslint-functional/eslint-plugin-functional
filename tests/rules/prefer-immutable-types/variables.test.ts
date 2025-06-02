@@ -14,44 +14,44 @@ describe(name, () => {
       configs: typescriptConfig,
     });
 
-    it("reports non-immutable set variables", () => {
-      const invalidResult = invalid({
+    it("reports non-immutable set variables", async () => {
+      const invalidResult = await invalid({
         code: "const foo: ReadonlySet<string> = {} as any;",
         errors: ["variable"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
-    it("reports non-immutable map variables", () => {
-      const invalidResult = invalid({
+    it("reports non-immutable map variables", async () => {
+      const invalidResult = await invalid({
         code: "const foo: ReadonlyMap<string, string> = {} as any;",
         errors: ["variable"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
-    it("reports mutable records variables", () => {
-      const invalidResult = invalid({
+    it("reports mutable records variables", async () => {
+      const invalidResult = await invalid({
         code: "const foo: { foo: string } = {} as any;",
         errors: ["variable"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
-    it("reports mutable records variables and suggests a fix for ReadonlyShallow", () => {
-      const invalidResult = invalid({
+    it("reports mutable records variables and suggests a fix for ReadonlyShallow", async () => {
+      const invalidResult = await invalid({
         code: "const foo: { foo: string } = {} as any;",
         options: [{ variables: "ReadonlyShallow" }],
         errors: ["variable"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
-      for (const message of invalidResult.messages) {
+      expect(invalidResult.result).toMatchSnapshot();
+      for (const message of invalidResult.result.messages) {
         expect(message.suggestions).toHaveLength(1);
       }
     });
 
-    it("doesn't report type assertion variables", () => {
-      valid({
+    it("doesn't report type assertion variables", async () => {
+      await valid({
         code: "function foo(arg0: { foo: string | number }, arg1: { foo: string | number }): arg0 is { foo: number } {}",
         options: [
           {
@@ -62,8 +62,8 @@ describe(name, () => {
       });
     });
 
-    it("suggest multiple fixes for collections for ReadonlyShallow", () => {
-      const invalidResult = invalid({
+    it("suggest multiple fixes for collections for ReadonlyShallow", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           const foo: Array<string> = {} as any;
           const foo: string[] = {} as any;
@@ -77,14 +77,14 @@ describe(name, () => {
         options: [{ variables: "ReadonlyShallow" }],
         errors: ["variable", "variable", "variable", "variable"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
-      for (const message of invalidResult.messages) {
+      expect(invalidResult.result).toMatchSnapshot();
+      for (const message of invalidResult.result.messages) {
         expect(message.suggestions).toHaveLength(2);
       }
     });
 
-    it("reports mutable class parameter properties", () => {
-      const invalidResult = invalid({
+    it("reports mutable class parameter properties", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           class Klass {
             readonly foo: { foo: number };
@@ -95,11 +95,11 @@ describe(name, () => {
         `,
         errors: ["propertyImmutability", "propertyImmutability", "propertyImmutability", "propertyImmutability"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
-    it("allows for user suggestions", () => {
-      const invalidResult = invalid({
+    it("allows for user suggestions", async () => {
+      const invalidResult = await invalid({
         code: "const foo: { foo: string } = {} as any;",
         options: [
           {
@@ -118,14 +118,14 @@ describe(name, () => {
         ],
         errors: ["variable"],
       });
-      expect(invalidResult.messages).toMatchSnapshot();
-      for (const message of invalidResult.messages) {
+      expect(invalidResult.result).toMatchSnapshot();
+      for (const message of invalidResult.result.messages) {
         expect(message.suggestions).toHaveLength(1);
       }
     });
 
-    it("allows for user fixes", () => {
-      const invalidResult = invalid({
+    it("allows for user fixes", async () => {
+      const invalidResult = await invalid({
         code: dedent`
           const foo: Array<string> = {} as any;
           const foo: string[] = {} as any;
@@ -152,33 +152,33 @@ describe(name, () => {
         errors: ["variable", "variable", "variable", "variable", "variable", "variable", "variable", "variable"],
         verifyAfterFix: false, // "fix" doesn't fix arrays so they will still report.
       });
-      expect(invalidResult.messages).toMatchSnapshot();
+      expect(invalidResult.result).toMatchSnapshot();
     });
 
     it.each([[[{ variables: "ReadonlyShallow" }]], [[{ variables: "ReadonlyDeep" }]], [[{ variables: "Immutable" }]]])(
       "doesn't reports valid variables",
-      (options) => {
-        valid({
+      async (options) => {
+        await valid({
           code: "const foo: boolean = {} as any;",
           options,
         });
-        valid({
+        await valid({
           code: "const foo: true = {} as any;",
           options,
         });
-        valid({
+        await valid({
           code: "const foo: string = {} as any;",
           options,
         });
-        valid({
+        await valid({
           code: "const foo: 'bar' = {} as any;",
           options,
         });
-        valid({
+        await valid({
           code: "const foo: undefined = {} as any;",
           options,
         });
-        valid({
+        await valid({
           code: "const foo: readonly string[] = {} as any;",
           options,
           settings: {
@@ -192,61 +192,61 @@ describe(name, () => {
             },
           },
         });
-        valid({
+        await valid({
           code: "const foo: { readonly foo: string } = {} as any;",
           options,
         });
-        valid({
+        await valid({
           code: "const foo: { readonly foo: { readonly bar: number } } = {} as any;",
           options,
         });
-        valid({
+        await valid({
           code: "const foo: Readonly<ReadonlySet<string>> = {} as any;",
           options,
         });
-        valid({
+        await valid({
           code: "const foo: Readonly<ReadonlyMap<string, string>> = {} as any;",
           options,
         });
-        valid({
+        await valid({
           code: "function foo(arg: { foo: string | number }): arg is { foo: number } {}",
           options,
         });
-        valid({
+        await valid({
           code: "const [a, b] = [1, 2];",
           options,
         });
-        valid({
+        await valid({
           code: "const { a, b } = { a: 1, b: 2 };",
           options,
         });
 
         if (options[0]!.variables !== "Immutable") {
-          valid({
+          await valid({
             code: "const foo: { foo(): void } = {} as any;",
             options,
           });
-          valid({
+          await valid({
             code: "const foo: ReadonlyArray<string> = {} as any;",
             options,
           });
-          valid({
+          await valid({
             code: "const foo: readonly [string, number] = {} as any;",
             options,
           });
-          valid({
+          await valid({
             code: "const foo: Readonly<[string, number]> = {} as any;",
             options,
           });
-          valid({
+          await valid({
             code: "const foo: { foo: () => void } = {} as any;",
             options,
           });
-          valid({
+          await valid({
             code: "const foo: ReadonlySet<string> = {} as any;",
             options,
           });
-          valid({
+          await valid({
             code: "const foo: ReadonlyMap<string, string> = {} as any;",
             options,
           });
@@ -256,8 +256,8 @@ describe(name, () => {
 
     describe("options", () => {
       describe("ignoreClasses", () => {
-        it("doesn't report class fields", () => {
-          valid({
+        it("doesn't report class fields", async () => {
+          await valid({
             code: dedent`
               class Klass {
                 foo: number;
@@ -272,8 +272,8 @@ describe(name, () => {
       });
 
       describe("ignoreInFunctions", () => {
-        it("doesn't report variables in functions", () => {
-          valid({
+        it("doesn't report variables in functions", async () => {
+          await valid({
             code: dedent`
               function foo() {
                 let foo: {
@@ -290,8 +290,8 @@ describe(name, () => {
       });
 
       describe("ignoreNamePattern", () => {
-        it("doesn't report ignored names", () => {
-          valid({
+        it("doesn't report ignored names", async () => {
+          await valid({
             code: "let mutableFoo: string[] = [];",
             options: [{ ignoreNamePattern: "^mutable" }],
           });
@@ -299,8 +299,8 @@ describe(name, () => {
       });
 
       describe("ignoreTypePattern", () => {
-        it("doesn't report ignored types", () => {
-          valid({
+        it("doesn't report ignored types", async () => {
+          await valid({
             code: dedent`
               let fooMutable: Readonly<
                 string[]
