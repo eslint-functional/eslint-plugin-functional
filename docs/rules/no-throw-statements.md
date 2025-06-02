@@ -3,7 +3,9 @@
 
 # Disallow throwing exceptions (`functional/no-throw-statements`)
 
-💼 This rule is enabled in the following configs: ☑️ `lite`, `noExceptions`, ✅ `recommended`, 🔒 `strict`.
+💼🚫 This rule is enabled in the following configs: ☑️ `lite`, `noExceptions`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the `disableTypeChecked` config.
+
+💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 
 <!-- end auto-generated rule header -->
 <!-- markdownlint-restore -->

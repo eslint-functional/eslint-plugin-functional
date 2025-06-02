@@ -117,11 +117,11 @@ The [below section](#rules) gives details on which rules are enabled by each rul
 
 ### No Exceptions
 
-| Name                                                     | Description                                            | 💼                               | ⚠️  | 🚫    | 🔧  | 💡  | 💭  | ❌  |
-| :------------------------------------------------------- | :----------------------------------------------------- | :------------------------------- | :-- | :---- | :-- | :-- | :-- | :-- |
-| [no-promise-reject](docs/rules/no-promise-reject.md)     | Disallow rejecting promises.                           |                                  |     |       |     |     |     |     |
-| [no-throw-statements](docs/rules/no-throw-statements.md) | Disallow throwing exceptions.                          | ☑️ ✅ 🔒 ![badge-noExceptions][] |     |       |     |     |     |     |
-| [no-try-statements](docs/rules/no-try-statements.md)     | Disallow try-catch[-finally] and try-finally patterns. | 🔒 ![badge-noExceptions][]       |     | ☑️ ✅ |     |     |     |     |
+| Name                                                     | Description                                            | 💼                               | ⚠️  | 🚫                            | 🔧  | 💡  | 💭  | ❌  |
+| :------------------------------------------------------- | :----------------------------------------------------- | :------------------------------- | :-- | :---------------------------- | :-- | :-- | :-- | :-- |
+| [no-promise-reject](docs/rules/no-promise-reject.md)     | Disallow rejecting promises.                           |                                  |     |                               |     |     |     |     |
+| [no-throw-statements](docs/rules/no-throw-statements.md) | Disallow throwing exceptions.                          | ☑️ ✅ 🔒 ![badge-noExceptions][] |     | ![badge-disableTypeChecked][] |     |     | 💭  |     |
+| [no-try-statements](docs/rules/no-try-statements.md)     | Disallow try-catch[-finally] and try-finally patterns. | 🔒 ![badge-noExceptions][]       |     | ☑️ ✅                         |     |     |     |     |
 
 ### No Mutations
 
