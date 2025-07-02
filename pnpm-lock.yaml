@@ -38,7 +38,7 @@ importers:
         version: 1.2.9(eslint@9.28.0(jiti@2.4.2))
       '@rebeccastevens/eslint-config':
         specifier: 3.7.1
-        version: 3.7.1(76ac8defa9cacc533b8da1bd2946a647)
+        version: 3.7.1(4d23c6ac8565203e11e71e5d97f62895)
       '@rollup/plugin-replace':
         specifier: 6.0.2
         version: 6.0.2(rollup@4.41.1)
@@ -64,8 +64,8 @@ importers:
         specifier: 14.0.3
         version: 14.0.3(semantic-release@24.2.5(typescript@5.8.3))
       '@stylistic/eslint-plugin':
-        specifier: 4.4.0
-        version: 4.4.0(eslint@9.28.0(jiti@2.4.2))(typescript@5.8.3)
+        specifier: 4.4.1
+        version: 4.4.1(eslint@9.28.0(jiti@2.4.2))(typescript@5.8.3)
       '@types/node':
         specifier: 18.19.110
         version: 18.19.110
@@ -1437,8 +1437,8 @@ packages:
     resolution: {integrity: sha512-tlqY9xq5ukxTUZBmoOp+m61cqwQD5pHJtFY3Mn8CA8ps6yghLH/Hw8UPdqg4OLmFW3IFlcXnQNmo/dh8HzXYIQ==}
     engines: {node: '>=18'}
 
-  '@stylistic/eslint-plugin@4.4.0':
-    resolution: {integrity: sha512-bIh/d9X+OQLCAMdhHtps+frvyjvAM4B1YlSJzcEEhl7wXLIqPar3ngn9DrHhkBOrTA/z9J0bUMtctAspe0dxdQ==}
+  '@stylistic/eslint-plugin@4.4.1':
+    resolution: {integrity: sha512-CEigAk7eOLyHvdgmpZsKFwtiqS2wFwI1fn4j09IU9GmD4euFM4jEBAViWeCqaNLlbX2k2+A/Fq9cje4HQBXuJQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: '>=9.0.0'
@@ -5632,7 +5632,7 @@ snapshots:
       '@pnpm/network.ca-file': 1.0.2
       config-chain: 1.1.13
 
-  '@rebeccastevens/eslint-config@3.7.1(76ac8defa9cacc533b8da1bd2946a647)':
+  '@rebeccastevens/eslint-config@3.7.1(4d23c6ac8565203e11e71e5d97f62895)':
     dependencies:
       '@antfu/install-pkg': 1.0.0
       '@clack/prompts': 0.10.0
@@ -5641,7 +5641,7 @@ snapshots:
       local-pkg: 1.1.1
       semver: 7.7.2
     optionalDependencies:
-      '@stylistic/eslint-plugin': 4.4.0(eslint@9.28.0(jiti@2.4.2))(typescript@5.8.3)
+      '@stylistic/eslint-plugin': 4.4.1(eslint@9.28.0(jiti@2.4.2))(typescript@5.8.3)
       '@typescript-eslint/eslint-plugin': 8.33.1(@typescript-eslint/parser@8.33.1(eslint@9.28.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.28.0(jiti@2.4.2))(typescript@5.8.3)
       '@typescript-eslint/parser': 8.33.1(eslint@9.28.0(jiti@2.4.2))(typescript@5.8.3)
       '@typescript-eslint/utils': 8.33.1(eslint@9.28.0(jiti@2.4.2))(typescript@5.8.3)
@@ -5866,7 +5866,7 @@ snapshots:
 
   '@sindresorhus/merge-streams@4.0.0': {}
 
-  '@stylistic/eslint-plugin@4.4.0(eslint@9.28.0(jiti@2.4.2))(typescript@5.8.3)':
+  '@stylistic/eslint-plugin@4.4.1(eslint@9.28.0(jiti@2.4.2))(typescript@5.8.3)':
     dependencies:
       '@typescript-eslint/utils': 8.33.1(eslint@9.28.0(jiti@2.4.2))(typescript@5.8.3)
       eslint: 9.28.0(jiti@2.4.2)
