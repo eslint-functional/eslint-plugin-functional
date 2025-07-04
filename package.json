@@ -119,7 +119,7 @@
     "eslint-plugin-format": "1.0.1",
     "eslint-plugin-functional": "link:.",
     "eslint-plugin-import-x": "4.15.0",
-    "eslint-plugin-jsdoc": "50.7.1",
+    "eslint-plugin-jsdoc": "51.3.3",
     "eslint-plugin-jsonc": "2.20.1",
     "eslint-plugin-markdown": "5.1.0",
     "eslint-plugin-n": "17.19.0",
