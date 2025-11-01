@@ -28,8 +28,8 @@ importers:
         version: 1.0.7(typescript@5.8.3)
     devDependencies:
       '@babel/eslint-parser':
-        specifier: 7.28.0
-        version: 7.28.0(@babel/core@7.26.0)(eslint@9.36.0(jiti@2.4.2))
+        specifier: 7.28.5
+        version: 7.28.5(@babel/core@7.26.0)(eslint@9.36.0(jiti@2.4.2))
       '@cspell/dict-cryptocurrencies':
         specifier: 5.0.4
         version: 5.0.4
@@ -238,8 +238,8 @@ packages:
     resolution: {integrity: sha512-i1SLeK+DzNnQ3LL/CswPCa/E5u4lh1k6IAEphON8F+cXt0t9euTshDru0q7/IqMa1PMPz5RnHuHscF8/ZJsStg==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/eslint-parser@7.28.0':
-    resolution: {integrity: sha512-N4ntErOlKvcbTt01rr5wj3y55xnIdx1ymrfIr8C2WnM1Y9glFgWaGDEULJIazOX3XM9NRzhfJ6zZnQ1sBNWU+w==}
+  '@babel/eslint-parser@7.28.5':
+    resolution: {integrity: sha512-fcdRcWahONYo+JRnJg1/AekOacGvKx12Gu0qXJXFi2WBqQA1i7+O5PaxRB7kxE/Op94dExnCiiar6T09pvdHpA==}
     engines: {node: ^10.13.0 || ^12.13.0 || >=14.0.0}
     peerDependencies:
       '@babel/core': ^7.11.0
@@ -4900,7 +4900,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@babel/eslint-parser@7.28.0(@babel/core@7.26.0)(eslint@9.36.0(jiti@2.4.2))':
+  '@babel/eslint-parser@7.28.5(@babel/core@7.26.0)(eslint@9.36.0(jiti@2.4.2))':
     dependencies:
       '@babel/core': 7.26.0
       '@nicolo-ribaudo/eslint-scope-5-internals': 5.1.1-v1
