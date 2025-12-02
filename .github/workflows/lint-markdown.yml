@@ -9,7 +9,7 @@ jobs:
   lint_markdown:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: ./.github/actions/prepare
       - run: pnpm run build:node
       - run: pnpm run lint:md-full
