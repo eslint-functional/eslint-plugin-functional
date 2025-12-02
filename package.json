@@ -90,7 +90,7 @@
   "devDependencies": {
     "@babel/eslint-parser": "7.28.5",
     "@cspell/dict-cryptocurrencies": "5.0.4",
-    "@eslint/compat": "1.2.9",
+    "@eslint/compat": "2.0.0",
     "@rebeccastevens/eslint-config": "3.7.1",
     "@rollup/plugin-replace": "6.0.2",
     "@rollup/plugin-typescript": "12.1.2",
