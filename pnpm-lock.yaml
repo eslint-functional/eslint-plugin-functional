@@ -38,7 +38,7 @@ importers:
         version: 2.0.0(eslint@9.39.2(jiti@2.4.2))
       '@rebeccastevens/eslint-config':
         specifier: 3.7.1
-        version: 3.7.1(11959fa37512474404351d7b42597505)
+        version: 3.7.1(dd646f39aa7e949be49d8828bcbd9af2)
       '@rollup/plugin-replace':
         specifier: 6.0.2
         version: 6.0.2(rollup@4.41.1)
@@ -145,8 +145,8 @@ importers:
         specifier: 7.2.1
         version: 7.2.1(eslint@9.39.2(jiti@2.4.2))
       eslint-plugin-regexp:
-        specifier: 2.7.0
-        version: 2.7.0(eslint@9.39.2(jiti@2.4.2))
+        specifier: 3.0.0
+        version: 3.0.0(eslint@9.39.2(jiti@2.4.2))
       eslint-plugin-sonarjs:
         specifier: 3.0.2
         version: 3.0.2(eslint@9.39.2(jiti@2.4.2))
@@ -2642,11 +2642,11 @@ packages:
     peerDependencies:
       eslint: ^7.0.0 || ^8.0.0 || ^9.0.0
 
-  eslint-plugin-regexp@2.7.0:
-    resolution: {integrity: sha512-U8oZI77SBtH8U3ulZ05iu0qEzIizyEDXd+BWHvyVxTOjGwcDcvy/kEpgFG4DYca2ByRLiVPFZ2GeH7j1pdvZTA==}
-    engines: {node: ^18 || >=20}
+  eslint-plugin-regexp@3.0.0:
+    resolution: {integrity: sha512-iW7hgAV8NOG6E2dz+VeKpq67YLQ9jaajOKYpoOSic2/q8y9BMdXBKkSR9gcMtbqEhNQzdW41E3wWzvhp8ExYwQ==}
+    engines: {node: ^20.19.0 || ^22.13.0 || >=24}
     peerDependencies:
-      eslint: '>=8.44.0'
+      eslint: '>=9.38.0'
 
   eslint-plugin-sonarjs@3.0.2:
     resolution: {integrity: sha512-LxjbfwI7ypENeTmGyKmDyNux3COSkMi7H/6Cal5StSLQ6edf0naP45SZR43OclaNR7WfhVTZdhOn63q3/Y6puQ==}
@@ -3406,10 +3406,6 @@ packages:
   js-yaml@4.1.0:
     resolution: {integrity: sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==}
     hasBin: true
-
-  jsdoc-type-pratt-parser@4.1.0:
-    resolution: {integrity: sha512-Hicd6JK5Njt2QB6XYFS7ok9e37O8AYk3jTcppG4YVQnYjOemymvTcmc7OWsmq/Qqj5TdRFO5/x/tIPmBeRtGHg==}
-    engines: {node: '>=12.0.0'}
 
   jsdoc-type-pratt-parser@7.1.0:
     resolution: {integrity: sha512-SX7q7XyCwzM/MEDCYz0l8GgGbJAACGFII9+WfNYr5SLEKukHWRy2Jk3iWRe7P+lpYJNs7oQ+OSei4JtKGUjd7A==}
@@ -5794,7 +5790,7 @@ snapshots:
       '@pnpm/network.ca-file': 1.0.2
       config-chain: 1.1.13
 
-  '@rebeccastevens/eslint-config@3.7.1(11959fa37512474404351d7b42597505)':
+  '@rebeccastevens/eslint-config@3.7.1(dd646f39aa7e949be49d8828bcbd9af2)':
     dependencies:
       '@antfu/install-pkg': 1.0.0
       '@clack/prompts': 0.10.0
@@ -5826,7 +5822,7 @@ snapshots:
       eslint-plugin-optimize-regex: 1.2.1
       eslint-plugin-prettier: 5.4.1(@types/eslint@9.6.1)(eslint-config-prettier@10.1.5(eslint@9.39.2(jiti@2.4.2)))(eslint@9.39.2(jiti@2.4.2))(prettier@3.5.3)
       eslint-plugin-promise: 7.2.1(eslint@9.39.2(jiti@2.4.2))
-      eslint-plugin-regexp: 2.7.0(eslint@9.39.2(jiti@2.4.2))
+      eslint-plugin-regexp: 3.0.0(eslint@9.39.2(jiti@2.4.2))
       eslint-plugin-sonarjs: 3.0.2(eslint@9.39.2(jiti@2.4.2))
       eslint-plugin-unicorn: 62.0.0(eslint@9.39.2(jiti@2.4.2))
       eslint-plugin-yml: 1.18.0(eslint@9.39.2(jiti@2.4.2))
@@ -7488,13 +7484,13 @@ snapshots:
       '@eslint-community/eslint-utils': 4.9.0(eslint@9.39.2(jiti@2.4.2))
       eslint: 9.39.2(jiti@2.4.2)
 
-  eslint-plugin-regexp@2.7.0(eslint@9.39.2(jiti@2.4.2)):
+  eslint-plugin-regexp@3.0.0(eslint@9.39.2(jiti@2.4.2)):
     dependencies:
       '@eslint-community/eslint-utils': 4.9.0(eslint@9.39.2(jiti@2.4.2))
       '@eslint-community/regexpp': 4.12.1
       comment-parser: 1.4.5
       eslint: 9.39.2(jiti@2.4.2)
-      jsdoc-type-pratt-parser: 4.1.0
+      jsdoc-type-pratt-parser: 7.1.0
       refa: 0.12.1
       regexp-ast-analysis: 0.7.1
       scslre: 0.3.0
@@ -8333,8 +8329,6 @@ snapshots:
   js-yaml@4.1.0:
     dependencies:
       argparse: 2.0.1
-
-  jsdoc-type-pratt-parser@4.1.0: {}
 
   jsdoc-type-pratt-parser@7.1.0: {}
 
