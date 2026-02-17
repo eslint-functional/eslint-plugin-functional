@@ -1,6 +1,5 @@
 import path from "node:path";
 
-import * as babelParser from "@babel/eslint-parser";
 import * as typescriptParser from "@typescript-eslint/parser";
 import type { ParserOptions } from "@typescript-eslint/parser";
 import type { Linter } from "eslint";
@@ -20,16 +19,12 @@ export const typescriptConfig = {
   languageOptions: { parserOptions: ParserOptions };
 };
 
+// Use ESLint's default parser (espree) for JavaScript tests.
+// Note: @babel/eslint-parser is not compatible with ESLint 10 yet.
+// See: https://github.com/babel/babel/issues/17791
 export const esLatestConfig = {
   languageOptions: {
-    parser: babelParser as NonNullable<Linter.Config["languageOptions"]>["parser"],
-    parserOptions: {
-      ecmaVersion: "latest",
-      requireConfigFile: false,
-      babelOptions: {
-        babelrc: false,
-        configFile: false,
-      },
-    },
+    ecmaVersion: "latest",
+    sourceType: "module",
   },
 } satisfies Linter.Config;
