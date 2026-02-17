@@ -9,7 +9,7 @@ export default defineConfig({
     exclude: ["lib", "node_modules"],
     testTimeout: 10_000,
     coverage: {
-      all: true,
+      provider: "v8",
       include: ["src"],
       exclude: ["lib"],
       reporter: ["lcov", "text"],

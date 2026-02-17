@@ -1,6 +1,5 @@
 // @ts-check
 import rsEslint from "@rebeccastevens/eslint-config";
-// @ts-expect-error - Untyped.
 import pluginEslint from "eslint-plugin-eslint-plugin";
 import glob from "fast-glob";
 import { tsImport } from "tsx/esm/api";
