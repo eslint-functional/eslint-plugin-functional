@@ -3,7 +3,7 @@
 
 # Prefer readonly types over mutable types (`functional/prefer-readonly-type`)
 
-❌ This rule is deprecated. It was replaced by [`functional/prefer-immutable-types`](prefer-immutable-types.md),[`functional/type-declaration-immutability`](type-declaration-immutability.md).
+❌ This rule is deprecated. It was replaced by [`functional/prefer-immutable-types`](prefer-immutable-types.md), [`functional/type-declaration-immutability`](type-declaration-immutability.md).
 
 🚫 This rule is _disabled_ in the `disableTypeChecked` config.
 
