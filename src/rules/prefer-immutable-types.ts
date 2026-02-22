@@ -660,7 +660,7 @@ function getReturnTypeViolations(
   }
 
   const returnTypes = getReturnTypesOfFunction(node, context);
-  if (returnTypes === null || returnTypes.length !== 1 || isImplementationOfOverload(node, context)) {
+  if (returnTypes?.length !== 1 || isImplementationOfOverload(node, context)) {
     return [];
   }
 
