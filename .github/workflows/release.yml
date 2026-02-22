@@ -52,8 +52,6 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
       - uses: ./.github/actions/prepare
-        with:
-          node-version: v20
 
       - name: Build
         run: pnpm run build
