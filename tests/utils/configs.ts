@@ -1,5 +1,8 @@
 import path from "node:path";
 
+// eslint-disable-next-line ts/ban-ts-comment -- Issue should hopefully go await - don't need compain when it does.
+// @ts-ignore - https://github.com/babel/babel/issues/17821
+import * as babelParser from "@babel/eslint-parser";
 import * as typescriptParser from "@typescript-eslint/parser";
 import type { ParserOptions } from "@typescript-eslint/parser";
 import type { Linter } from "eslint";
@@ -19,12 +22,16 @@ export const typescriptConfig = {
   languageOptions: { parserOptions: ParserOptions };
 };
 
-// Use ESLint's default parser (espree) for JavaScript tests.
-// Note: @babel/eslint-parser is not compatible with ESLint 10 yet.
-// See: https://github.com/babel/babel/issues/17791
 export const esLatestConfig = {
   languageOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
+    parser: babelParser,
+    parserOptions: {
+      ecmaVersion: "latest",
+      requireConfigFile: false,
+      babelOptions: {
+        babelrc: false,
+        configFile: false,
+      },
+    },
   },
 } satisfies Linter.Config;

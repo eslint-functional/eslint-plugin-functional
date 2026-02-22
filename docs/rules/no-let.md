@@ -1,9 +1,11 @@
 <!-- markdownlint-disable -->
 <!-- begin auto-generated rule header -->
 
-# Disallow mutable variables (`functional/no-let`)
+# functional/no-let
 
-💼 This rule is enabled in the following configs: ☑️ `lite`, `noMutations`, ✅ `recommended`, 🔒 `strict`.
+📝 Disallow mutable variables.
+
+💼 This rule is enabled in the following configs: ☑️ `lite`, ![badge-noMutations](https://img.shields.io/badge/-noMutations-orange.svg) `noMutations`, ✅ `recommended`, 🔒 `strict`.
 
 <!-- end auto-generated rule header -->
 <!-- markdownlint-restore -->

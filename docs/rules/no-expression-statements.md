@@ -1,9 +1,11 @@
 <!-- markdownlint-disable -->
 <!-- begin auto-generated rule header -->
 
-# Disallow expression statements (`functional/no-expression-statements`)
+# functional/no-expression-statements
 
-💼🚫 This rule is enabled in the following configs: `noStatements`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the following configs: `disableTypeChecked`, ☑️ `lite`.
+📝 Disallow expression statements.
+
+💼🚫 This rule is enabled in the following configs: ![badge-noStatements](https://img.shields.io/badge/-noStatements-purple.svg) `noStatements`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the following configs: ![badge-disableTypeChecked](https://img.shields.io/badge/-disableTypeChecked-navy.svg) `disableTypeChecked`, ☑️ `lite`.
 
 💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 
@@ -16,7 +18,8 @@ This rule checks that the value of an expression is assigned to a variable and t
 
 ## Rule Details
 
-When you call a function and don’t use it’s return value, chances are high that it is being called for its side effect. e.g.
+When you call a function and don’t use it’s return value, chances are high that it is being called for its side effect.
+e.g.
 
 ### ❌ Incorrect
 

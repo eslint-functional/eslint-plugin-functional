@@ -1,9 +1,11 @@
 <!-- markdownlint-disable -->
 <!-- begin auto-generated rule header -->
 
-# Disallow inheritance in classes (`functional/no-class-inheritance`)
+# functional/no-class-inheritance
 
-💼 This rule is enabled in the following configs: ☑️ `lite`, `noOtherParadigms`, ✅ `recommended`, 🔒 `strict`.
+📝 Disallow inheritance in classes.
+
+💼 This rule is enabled in the following configs: ☑️ `lite`, ![badge-noOtherParadigms](https://img.shields.io/badge/-noOtherParadigms-yellow.svg) `noOtherParadigms`, ✅ `recommended`, 🔒 `strict`.
 
 <!-- end auto-generated rule header -->
 <!-- markdownlint-restore -->

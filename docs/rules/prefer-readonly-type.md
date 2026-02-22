@@ -1,11 +1,13 @@
 <!-- markdownlint-disable -->
 <!-- begin auto-generated rule header -->
 
-# Prefer readonly types over mutable types (`functional/prefer-readonly-type`)
+# functional/prefer-readonly-type
 
-❌ This rule is deprecated. It was replaced by [`functional/prefer-immutable-types`](prefer-immutable-types.md),[`functional/type-declaration-immutability`](type-declaration-immutability.md).
+📝 Prefer readonly types over mutable types.
 
-🚫 This rule is _disabled_ in the `disableTypeChecked` config.
+❌ This rule is deprecated. It was replaced by [`functional/prefer-immutable-types`](prefer-immutable-types.md), [`functional/type-declaration-immutability`](type-declaration-immutability.md).
+
+🚫 This rule is _disabled_ in the ![badge-disableTypeChecked](https://img.shields.io/badge/-disableTypeChecked-navy.svg) `disableTypeChecked` config.
 
 🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
 

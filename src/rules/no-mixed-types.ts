@@ -145,8 +145,7 @@ function checkTSTypeAliasDeclaration(
       // TypeLiteral inside `Readonly<>`.
       (isTSTypeReference(node.typeAnnotation) &&
         isIdentifier(node.typeAnnotation.typeName) &&
-        node.typeAnnotation.typeArguments !== undefined &&
-        node.typeAnnotation.typeArguments.params.length === 1 &&
+        node.typeAnnotation.typeArguments?.params.length === 1 &&
         isTSTypeLiteral(node.typeAnnotation.typeArguments.params[0]!) &&
         hasTypeElementViolations(node.typeAnnotation.typeArguments.params[0].members, context))
         ? [{ node, messageId: "generic" }]

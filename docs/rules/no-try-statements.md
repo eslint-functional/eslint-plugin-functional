@@ -1,9 +1,11 @@
 <!-- markdownlint-disable -->
 <!-- begin auto-generated rule header -->
 
-# Disallow try-catch[-finally] and try-finally patterns (`functional/no-try-statements`)
+# functional/no-try-statements
 
-💼🚫 This rule is enabled in the following configs: `noExceptions`, 🔒 `strict`. This rule is _disabled_ in the following configs: ☑️ `lite`, ✅ `recommended`.
+📝 Disallow try-catch[-finally] and try-finally patterns.
+
+💼🚫 This rule is enabled in the following configs: ![badge-noExceptions](https://img.shields.io/badge/-noExceptions-blue.svg) `noExceptions`, 🔒 `strict`. This rule is _disabled_ in the following configs: ☑️ `lite`, ✅ `recommended`.
 
 <!-- end auto-generated rule header -->
 <!-- markdownlint-restore -->

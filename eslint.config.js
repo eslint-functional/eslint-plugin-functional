@@ -123,16 +123,34 @@ const configs = await rsEslint(
     },
   },
   {
-    files: ["**/*.md", "**/*.md/*"],
+    files: ["**/*.md"],
     rules: {
       "format/prettier": [
         "error",
         {
+          parser: "markdown",
           embeddedLanguageFormatting: "off",
         },
       ],
+    },
+  },
+  {
+    files: ["**/*.md/*"],
+    rules: {
+      "format/prettier": "off",
       "max-classes-per-file": "off",
       "ts/no-extraneous-class": "off",
+    },
+  },
+  // Rules not supported in eslint v10 yet.
+  {
+    files: ["**/*"],
+    rules: {
+      "comments/disable-enable-pair": "off",
+      "comments/no-aggregating-enable": "off",
+      "comments/no-duplicate-disable": "off",
+      "comments/no-unlimited-disable": "off",
+      "comments/no-unused-enable": "off",
     },
   },
 );
