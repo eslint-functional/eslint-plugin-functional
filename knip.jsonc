@@ -9,7 +9,6 @@
     "@semantic-release/github",
     "@semantic-release/npm",
     "@semantic-release/release-notes-generator",
-    "eslint-plugin-functional",
     "tsc-files",
   ],
   "exclude": ["exports", "nsExports", "types", "nsTypes"],
