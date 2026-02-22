@@ -42,5 +42,5 @@ jobs:
       - name: Report coverage
         uses: codecov/codecov-action@v5.5.2
         with:
-          file: coverage/lcov.info
+          files: coverage/lcov.info
           flags: ${{ matrix.ts_version }}
