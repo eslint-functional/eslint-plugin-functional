@@ -124,14 +124,21 @@ const configs = await rsEslint(
     },
   },
   {
-    files: ["**/*.md", "**/*.md/*"],
+    files: ["**/*.md"],
     rules: {
       "format/prettier": [
         "error",
         {
+          parser: "markdown",
           embeddedLanguageFormatting: "off",
         },
       ],
+    },
+  },
+  {
+    files: ["**/*.md/*"],
+    rules: {
+      "format/prettier": "off",
       "max-classes-per-file": "off",
       "ts/no-extraneous-class": "off",
     },
