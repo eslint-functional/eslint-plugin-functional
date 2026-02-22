@@ -1,9 +1,11 @@
 <!-- markdownlint-disable -->
 <!-- begin auto-generated rule header -->
 
-# Require function parameters to be typed as certain immutability (`functional/prefer-immutable-types`)
+# functional/prefer-immutable-types
 
-💼🚫 This rule is enabled in the following configs: ☑️ `lite`, `noMutations`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the `disableTypeChecked` config.
+📝 Require function parameters to be typed as certain immutability.
+
+💼🚫 This rule is enabled in the following configs: ☑️ `lite`, ![badge-noMutations][https://img.shields.io/badge/-noMutations-orange.svg] `noMutations`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the ![badge-disableTypeChecked][https://img.shields.io/badge/-disableTypeChecked-navy.svg] `disableTypeChecked` config.
 
 🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 

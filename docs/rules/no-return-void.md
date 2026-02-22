@@ -1,9 +1,11 @@
 <!-- markdownlint-disable -->
 <!-- begin auto-generated rule header -->
 
-# Disallow functions that don't return anything (`functional/no-return-void`)
+# functional/no-return-void
 
-💼🚫 This rule is enabled in the following configs: ☑️ `lite`, `noStatements`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the `disableTypeChecked` config.
+📝 Disallow functions that don't return anything.
+
+💼🚫 This rule is enabled in the following configs: ☑️ `lite`, ![badge-noStatements][https://img.shields.io/badge/-noStatements-purple.svg] `noStatements`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the ![badge-disableTypeChecked][https://img.shields.io/badge/-disableTypeChecked-navy.svg] `disableTypeChecked` config.
 
 💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 

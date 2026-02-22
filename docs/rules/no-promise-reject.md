@@ -1,7 +1,9 @@
 <!-- markdownlint-disable -->
 <!-- begin auto-generated rule header -->
 
-# Disallow rejecting promises (`functional/no-promise-reject`)
+# functional/no-promise-reject
+
+📝 Disallow rejecting promises.
 
 <!-- end auto-generated rule header -->
 <!-- markdownlint-restore -->

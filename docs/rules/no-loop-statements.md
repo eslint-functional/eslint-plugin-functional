@@ -1,9 +1,11 @@
 <!-- markdownlint-disable -->
 <!-- begin auto-generated rule header -->
 
-# Disallow imperative loops (`functional/no-loop-statements`)
+# functional/no-loop-statements
 
-💼 This rule is enabled in the following configs: ☑️ `lite`, `noStatements`, ✅ `recommended`, 🔒 `strict`.
+📝 Disallow imperative loops.
+
+💼 This rule is enabled in the following configs: ☑️ `lite`, ![badge-noStatements][https://img.shields.io/badge/-noStatements-purple.svg] `noStatements`, ✅ `recommended`, 🔒 `strict`.
 
 <!-- end auto-generated rule header -->
 <!-- markdownlint-restore -->

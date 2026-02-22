@@ -1,9 +1,11 @@
 <!-- markdownlint-disable -->
 <!-- begin auto-generated rule header -->
 
-# Disallow throwing exceptions (`functional/no-throw-statements`)
+# functional/no-throw-statements
 
-💼🚫 This rule is enabled in the following configs: ☑️ `lite`, `noExceptions`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the `disableTypeChecked` config.
+📝 Disallow throwing exceptions.
+
+💼🚫 This rule is enabled in the following configs: ☑️ `lite`, ![badge-noExceptions][https://img.shields.io/badge/-noExceptions-blue.svg] `noExceptions`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the ![badge-disableTypeChecked][https://img.shields.io/badge/-disableTypeChecked-navy.svg] `disableTypeChecked` config.
 
 💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 
