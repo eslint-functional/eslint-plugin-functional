@@ -5,7 +5,7 @@
 
 📝 Disallow classes.
 
-💼🚫 This rule is enabled in the following configs: ![badge-noOtherParadigms][https://img.shields.io/badge/-noOtherParadigms-yellow.svg] `noOtherParadigms`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the ☑️ `lite` config.
+💼🚫 This rule is enabled in the following configs: ![badge-noOtherParadigms](https://img.shields.io/badge/-noOtherParadigms-yellow.svg) `noOtherParadigms`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the ☑️ `lite` config.
 
 <!-- end auto-generated rule header -->
 <!-- markdownlint-restore -->

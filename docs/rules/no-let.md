@@ -5,7 +5,7 @@
 
 📝 Disallow mutable variables.
 
-💼 This rule is enabled in the following configs: ☑️ `lite`, ![badge-noMutations][https://img.shields.io/badge/-noMutations-orange.svg] `noMutations`, ✅ `recommended`, 🔒 `strict`.
+💼 This rule is enabled in the following configs: ☑️ `lite`, ![badge-noMutations](https://img.shields.io/badge/-noMutations-orange.svg) `noMutations`, ✅ `recommended`, 🔒 `strict`.
 
 <!-- end auto-generated rule header -->
 <!-- markdownlint-restore -->

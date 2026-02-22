@@ -5,7 +5,7 @@
 
 📝 Disallow imperative loops.
 
-💼 This rule is enabled in the following configs: ☑️ `lite`, ![badge-noStatements][https://img.shields.io/badge/-noStatements-purple.svg] `noStatements`, ✅ `recommended`, 🔒 `strict`.
+💼 This rule is enabled in the following configs: ☑️ `lite`, ![badge-noStatements](https://img.shields.io/badge/-noStatements-purple.svg) `noStatements`, ✅ `recommended`, 🔒 `strict`.
 
 <!-- end auto-generated rule header -->
 <!-- markdownlint-restore -->

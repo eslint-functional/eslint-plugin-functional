@@ -5,7 +5,7 @@
 
 📝 Disallow conditional statements.
 
-💼🚫 This rule is enabled in the following configs: ![badge-noStatements][https://img.shields.io/badge/-noStatements-purple.svg] `noStatements`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the following configs: ![badge-disableTypeChecked][https://img.shields.io/badge/-disableTypeChecked-navy.svg] `disableTypeChecked`, ☑️ `lite`.
+💼🚫 This rule is enabled in the following configs: ![badge-noStatements](https://img.shields.io/badge/-noStatements-purple.svg) `noStatements`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the following configs: ![badge-disableTypeChecked](https://img.shields.io/badge/-disableTypeChecked-navy.svg) `disableTypeChecked`, ☑️ `lite`.
 
 💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 
