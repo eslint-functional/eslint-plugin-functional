@@ -39,7 +39,6 @@ jobs:
     needs:
       - lint_js
       - lint_docs
-      - lint_knip
       - lint_markdown
       - lint_packages
       - lint_spelling
