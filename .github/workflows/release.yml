@@ -8,6 +8,7 @@ on:
 
 permissions:
   contents: write
+  id-token: write
   issues: write
   pull-requests: write
 
@@ -39,7 +40,6 @@ jobs:
     needs:
       - lint_js
       - lint_docs
-      - lint_knip
       - lint_markdown
       - lint_packages
       - lint_spelling
@@ -53,8 +53,6 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
       - uses: ./.github/actions/prepare
-        with:
-          node-version: v20
 
       - name: Build
         run: pnpm run build
@@ -63,4 +61,3 @@ jobs:
         run: pnpm run release
         env:
           GITHUB_TOKEN: ${{ github.token }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

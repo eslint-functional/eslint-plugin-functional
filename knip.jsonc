@@ -3,13 +3,6 @@
   "entry": ["src/index.ts!"],
   "project": ["src/**/*.ts!", "tests/**/*.{js,ts}"],
   "ignore": ["tests/fixture/file.ts"],
-  "ignoreDependencies": [
-    "@eslint/compat",
-    "@semantic-release/commit-analyzer",
-    "@semantic-release/github",
-    "@semantic-release/npm",
-    "@semantic-release/release-notes-generator",
-    "tsc-files",
-  ],
+  "ignoreDependencies": ["@eslint/compat", "tsc-files"],
   "exclude": ["exports", "nsExports", "types", "nsTypes"],
 }
