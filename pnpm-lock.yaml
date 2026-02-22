@@ -37,8 +37,8 @@ importers:
         specifier: 2.0.2
         version: 2.0.2(eslint@9.39.2(jiti@2.6.1))
       '@rebeccastevens/eslint-config':
-        specifier: 3.9.0
-        version: 3.9.0(d508b45d44f3bd5c1b9fb1e6609807a9)
+        specifier: 3.9.1
+        version: 3.9.1(319c35e5246a3ef98661a5173c323e0d)
       '@rollup/plugin-replace':
         specifier: 6.0.3
         version: 6.0.3(rollup@4.58.0)
@@ -1208,11 +1208,12 @@ packages:
     resolution: {integrity: sha512-UA91GwWPhFExt3IizW6bOeY/pQ0BkuNwKjk9iQW9KqxluGCrg4VenZ0/L+2Y0+ZOtme72EVvg6v0zo3AMQRCeA==}
     engines: {node: '>=12'}
 
-  '@rebeccastevens/eslint-config@3.9.0':
-    resolution: {integrity: sha512-5elVHiE3ZQxooW+12Q9NwQHY/vDR6BME/OR8DiOuU2K8qLzUw7jNH66SMFZgZP4aRO1DjxdIfU+V3VTuDvONuA==}
+  '@rebeccastevens/eslint-config@3.9.1':
+    resolution: {integrity: sha512-/keTcjC+t54e7FaN+0Cuw9C74fLKykEuFCf4qNnE39uva1bAVQVTziBAIpUH3Vuq/qZSVeJRVlF5qCVA/3FzMQ==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
       '@eslint-react/eslint-plugin': '*'
+      '@eslint/markdown': '*'
       '@stylistic/eslint-plugin': '*'
       '@typescript-eslint/eslint-plugin': '*'
       '@typescript-eslint/parser': '*'
@@ -1234,7 +1235,6 @@ packages:
       eslint-plugin-jsdoc: '*'
       eslint-plugin-jsonc: '*'
       eslint-plugin-jsx-a11y: '*'
-      eslint-plugin-markdown: '*'
       eslint-plugin-n: '*'
       eslint-plugin-no-only-tests: '*'
       eslint-plugin-optimize-regex: '*'
@@ -1257,6 +1257,8 @@ packages:
       yaml-eslint-parser: '*'
     peerDependenciesMeta:
       '@eslint-react/eslint-plugin':
+        optional: true
+      '@eslint/markdown':
         optional: true
       '@stylistic/eslint-plugin':
         optional: true
@@ -1297,8 +1299,6 @@ packages:
       eslint-plugin-jsonc:
         optional: true
       eslint-plugin-jsx-a11y:
-        optional: true
-      eslint-plugin-markdown:
         optional: true
       eslint-plugin-n:
         optional: true
@@ -6064,7 +6064,7 @@ snapshots:
       '@pnpm/network.ca-file': 1.0.2
       config-chain: 1.1.13
 
-  '@rebeccastevens/eslint-config@3.9.0(d508b45d44f3bd5c1b9fb1e6609807a9)':
+  '@rebeccastevens/eslint-config@3.9.1(319c35e5246a3ef98661a5173c323e0d)':
     dependencies:
       '@antfu/install-pkg': 1.1.0
       '@clack/prompts': 1.0.1
@@ -6072,6 +6072,7 @@ snapshots:
       globals: 17.3.0
       local-pkg: 1.1.1
     optionalDependencies:
+      '@eslint/markdown': 7.5.1
       '@stylistic/eslint-plugin': 4.4.1(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
       '@typescript-eslint/eslint-plugin': 8.45.0(@typescript-eslint/parser@8.45.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
       '@typescript-eslint/parser': 8.45.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
@@ -6089,7 +6090,6 @@ snapshots:
       eslint-plugin-jsdoc: 62.7.0(eslint@9.39.2(jiti@2.6.1))
       eslint-plugin-jsonc: 2.21.1(eslint@9.39.2(jiti@2.6.1))
       eslint-plugin-jsx-a11y: 6.10.0(eslint@9.39.2(jiti@2.6.1))
-      eslint-plugin-markdown: 5.1.0(eslint@9.39.2(jiti@2.6.1))
       eslint-plugin-n: 17.24.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
       eslint-plugin-no-only-tests: 3.3.0
       eslint-plugin-optimize-regex: 1.2.1

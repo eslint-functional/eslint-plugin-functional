@@ -91,7 +91,7 @@
     "@babel/eslint-parser": "7.28.6",
     "@cspell/dict-cryptocurrencies": "5.0.5",
     "@eslint/compat": "2.0.2",
-    "@rebeccastevens/eslint-config": "3.9.0",
+    "@rebeccastevens/eslint-config": "3.9.1",
     "@rollup/plugin-replace": "6.0.3",
     "@rollup/plugin-typescript": "12.3.0",
     "@semantic-release/changelog": "6.0.3",
