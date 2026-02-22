@@ -1,9 +1,11 @@
 <!-- markdownlint-disable -->
 <!-- begin auto-generated rule header -->
 
-# Disallow this access (`functional/no-this-expressions`)
+# functional/no-this-expressions
 
-💼🚫 This rule is enabled in the following configs: `noOtherParadigms`, 🔒 `strict`. This rule is _disabled_ in the following configs: ☑️ `lite`, ✅ `recommended`.
+📝 Disallow this access.
+
+💼🚫 This rule is enabled in the following configs: ![badge-noOtherParadigms][https://img.shields.io/badge/-noOtherParadigms-yellow.svg] `noOtherParadigms`, 🔒 `strict`. This rule is _disabled_ in the following configs: ☑️ `lite`, ✅ `recommended`.
 
 <!-- end auto-generated rule header -->
 <!-- markdownlint-restore -->

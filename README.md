@@ -100,7 +100,13 @@ The [below section](#rules) gives details on which rules are enabled by each rul
 💼 Configurations enabled in.\
 ⚠️ Configurations set to warn in.\
 🚫 Configurations disabled in.\
+![badge-currying][https://img.shields.io/badge/-currying-red.svg] Set in the `currying` configuration.\
+![badge-disableTypeChecked][https://img.shields.io/badge/-disableTypeChecked-navy.svg] Set in the `disableTypeChecked` configuration.\
 ☑️ Set in the `lite` configuration.\
+![badge-noExceptions][https://img.shields.io/badge/-noExceptions-blue.svg] Set in the `noExceptions` configuration.\
+![badge-noMutations][https://img.shields.io/badge/-noMutations-orange.svg] Set in the `noMutations` configuration.\
+![badge-noOtherParadigms][https://img.shields.io/badge/-noOtherParadigms-yellow.svg] Set in the `noOtherParadigms` configuration.\
+![badge-noStatements][https://img.shields.io/badge/-noStatements-purple.svg] Set in the `noStatements` configuration.\
 ✅ Set in the `recommended` configuration.\
 🔒 Set in the `strict` configuration.\
 🎨 Set in the `stylistic` configuration.\
@@ -111,63 +117,56 @@ The [below section](#rules) gives details on which rules are enabled by each rul
 
 ### Currying
 
-| Name                                                         | Description                    | 💼                           | ⚠️  | 🚫                            | 🔧  | 💡  | 💭  | ❌  |
-| :----------------------------------------------------------- | :----------------------------- | :--------------------------- | :-- | :---------------------------- | :-- | :-- | :-- | :-- |
-| [functional-parameters](docs/rules/functional-parameters.md) | Enforce functional parameters. | ☑️ ✅ 🔒 ![badge-currying][] |     | ![badge-disableTypeChecked][] |     |     | 💭  |     |
+| Name                                                         | Description                    | 💼                                                                         | ⚠️  | 🚫                                                                                     | 🔧  | 💡  | 💭  | ❌  |
+| :----------------------------------------------------------- | :----------------------------- | :------------------------------------------------------------------------- | :-- | :------------------------------------------------------------------------------------- | :-- | :-- | :-- | :-- |
+| [functional-parameters](docs/rules/functional-parameters.md) | Enforce functional parameters. | ![badge-currying][https://img.shields.io/badge/-currying-red.svg] ☑️ ✅ 🔒 |     | ![badge-disableTypeChecked][https://img.shields.io/badge/-disableTypeChecked-navy.svg] |     |     | 💭  |     |
 
 ### No Exceptions
 
-| Name                                                     | Description                                            | 💼                               | ⚠️  | 🚫                            | 🔧  | 💡  | 💭  | ❌  |
-| :------------------------------------------------------- | :----------------------------------------------------- | :------------------------------- | :-- | :---------------------------- | :-- | :-- | :-- | :-- |
-| [no-promise-reject](docs/rules/no-promise-reject.md)     | Disallow rejecting promises.                           |                                  |     |                               |     |     |     |     |
-| [no-throw-statements](docs/rules/no-throw-statements.md) | Disallow throwing exceptions.                          | ☑️ ✅ 🔒 ![badge-noExceptions][] |     | ![badge-disableTypeChecked][] |     |     | 💭  |     |
-| [no-try-statements](docs/rules/no-try-statements.md)     | Disallow try-catch[-finally] and try-finally patterns. | 🔒 ![badge-noExceptions][]       |     | ☑️ ✅                         |     |     |     |     |
+| Name                                                     | Description                                            | 💼                                                                                  | ⚠️  | 🚫                                                                                     | 🔧  | 💡  | 💭  | ❌  |
+| :------------------------------------------------------- | :----------------------------------------------------- | :---------------------------------------------------------------------------------- | :-- | :------------------------------------------------------------------------------------- | :-- | :-- | :-- | :-- |
+| [no-promise-reject](docs/rules/no-promise-reject.md)     | Disallow rejecting promises.                           |                                                                                     |     |                                                                                        |     |     |     |     |
+| [no-throw-statements](docs/rules/no-throw-statements.md) | Disallow throwing exceptions.                          | ☑️ ![badge-noExceptions][https://img.shields.io/badge/-noExceptions-blue.svg] ✅ 🔒 |     | ![badge-disableTypeChecked][https://img.shields.io/badge/-disableTypeChecked-navy.svg] |     |     | 💭  |     |
+| [no-try-statements](docs/rules/no-try-statements.md)     | Disallow try-catch[-finally] and try-finally patterns. | ![badge-noExceptions][https://img.shields.io/badge/-noExceptions-blue.svg] 🔒       |     | ☑️ ✅                                                                                  |     |     |     |     |
 
 ### No Mutations
 
-| Name                                                                         | Description                                                     | 💼                              | ⚠️  | 🚫                            | 🔧  | 💡  | 💭  | ❌  |
-| :--------------------------------------------------------------------------- | :-------------------------------------------------------------- | :------------------------------ | :-- | :---------------------------- | :-- | :-- | :-- | :-- |
-| [immutable-data](docs/rules/immutable-data.md)                               | Enforce treating data as immutable.                             | ☑️ ✅ 🔒 ![badge-noMutations][] |     | ![badge-disableTypeChecked][] |     |     | 💭  |     |
-| [no-let](docs/rules/no-let.md)                                               | Disallow mutable variables.                                     | ☑️ ✅ 🔒 ![badge-noMutations][] |     |                               |     |     |     |     |
-| [prefer-immutable-types](docs/rules/prefer-immutable-types.md)               | Require function parameters to be typed as certain immutability | ☑️ ✅ 🔒 ![badge-noMutations][] |     | ![badge-disableTypeChecked][] | 🔧  | 💡  | 💭  |     |
-| [prefer-readonly-type](docs/rules/prefer-readonly-type.md)                   | Prefer readonly types over mutable types.                       |                                 |     | ![badge-disableTypeChecked][] | 🔧  |     | 💭  | ❌  |
-| [type-declaration-immutability](docs/rules/type-declaration-immutability.md) | Enforce the immutability of types based on patterns.            | ☑️ ✅ 🔒 ![badge-noMutations][] |     | ![badge-disableTypeChecked][] | 🔧  | 💡  | 💭  |     |
+| Name                                                                         | Description                                                     | 💼                                                                                  | ⚠️  | 🚫                                                                                     | 🔧  | 💡  | 💭  | ❌  |
+| :--------------------------------------------------------------------------- | :-------------------------------------------------------------- | :---------------------------------------------------------------------------------- | :-- | :------------------------------------------------------------------------------------- | :-- | :-- | :-- | :-- |
+| [immutable-data](docs/rules/immutable-data.md)                               | Enforce treating data as immutable.                             | ☑️ ![badge-noMutations][https://img.shields.io/badge/-noMutations-orange.svg] ✅ 🔒 |     | ![badge-disableTypeChecked][https://img.shields.io/badge/-disableTypeChecked-navy.svg] |     |     | 💭  |     |
+| [no-let](docs/rules/no-let.md)                                               | Disallow mutable variables.                                     | ☑️ ![badge-noMutations][https://img.shields.io/badge/-noMutations-orange.svg] ✅ 🔒 |     |                                                                                        |     |     |     |     |
+| [prefer-immutable-types](docs/rules/prefer-immutable-types.md)               | Require function parameters to be typed as certain immutability | ☑️ ![badge-noMutations][https://img.shields.io/badge/-noMutations-orange.svg] ✅ 🔒 |     | ![badge-disableTypeChecked][https://img.shields.io/badge/-disableTypeChecked-navy.svg] | 🔧  | 💡  | 💭  |     |
+| [prefer-readonly-type](docs/rules/prefer-readonly-type.md)                   | Prefer readonly types over mutable types.                       |                                                                                     |     | ![badge-disableTypeChecked][https://img.shields.io/badge/-disableTypeChecked-navy.svg] | 🔧  |     | 💭  | ❌  |
+| [type-declaration-immutability](docs/rules/type-declaration-immutability.md) | Enforce the immutability of types based on patterns.            | ☑️ ![badge-noMutations][https://img.shields.io/badge/-noMutations-orange.svg] ✅ 🔒 |     | ![badge-disableTypeChecked][https://img.shields.io/badge/-disableTypeChecked-navy.svg] | 🔧  | 💡  | 💭  |     |
 
 ### No Other Paradigms
 
-| Name                                                       | Description                                                               | 💼                                   | ⚠️  | 🚫                            | 🔧  | 💡  | 💭  | ❌  |
-| :--------------------------------------------------------- | :------------------------------------------------------------------------ | :----------------------------------- | :-- | :---------------------------- | :-- | :-- | :-- | :-- |
-| [no-class-inheritance](docs/rules/no-class-inheritance.md) | Disallow inheritance in classes.                                          | ☑️ ✅ 🔒 ![badge-noOtherParadigms][] |     |                               |     |     |     |     |
-| [no-classes](docs/rules/no-classes.md)                     | Disallow classes.                                                         | ✅ 🔒 ![badge-noOtherParadigms][]    |     | ☑️                            |     |     |     |     |
-| [no-mixed-types](docs/rules/no-mixed-types.md)             | Restrict types so that only members of the same kind are allowed in them. | ☑️ ✅ 🔒 ![badge-noOtherParadigms][] |     | ![badge-disableTypeChecked][] |     |     | 💭  |     |
-| [no-this-expressions](docs/rules/no-this-expressions.md)   | Disallow this access.                                                     | 🔒 ![badge-noOtherParadigms][]       |     | ☑️ ✅                         |     |     |     |     |
+| Name                                                       | Description                                                               | 💼                                                                                            | ⚠️  | 🚫                                                                                     | 🔧  | 💡  | 💭  | ❌  |
+| :--------------------------------------------------------- | :------------------------------------------------------------------------ | :-------------------------------------------------------------------------------------------- | :-- | :------------------------------------------------------------------------------------- | :-- | :-- | :-- | :-- |
+| [no-class-inheritance](docs/rules/no-class-inheritance.md) | Disallow inheritance in classes.                                          | ☑️ ![badge-noOtherParadigms][https://img.shields.io/badge/-noOtherParadigms-yellow.svg] ✅ 🔒 |     |                                                                                        |     |     |     |     |
+| [no-classes](docs/rules/no-classes.md)                     | Disallow classes.                                                         | ![badge-noOtherParadigms][https://img.shields.io/badge/-noOtherParadigms-yellow.svg] ✅ 🔒    |     | ☑️                                                                                     |     |     |     |     |
+| [no-mixed-types](docs/rules/no-mixed-types.md)             | Restrict types so that only members of the same kind are allowed in them. | ☑️ ![badge-noOtherParadigms][https://img.shields.io/badge/-noOtherParadigms-yellow.svg] ✅ 🔒 |     | ![badge-disableTypeChecked][https://img.shields.io/badge/-disableTypeChecked-navy.svg] |     |     | 💭  |     |
+| [no-this-expressions](docs/rules/no-this-expressions.md)   | Disallow this access.                                                     | ![badge-noOtherParadigms][https://img.shields.io/badge/-noOtherParadigms-yellow.svg] 🔒       |     | ☑️ ✅                                                                                  |     |     |     |     |
 
 ### No Statements
 
-| Name                                                                 | Description                                    | 💼                               | ⚠️  | 🚫                               | 🔧  | 💡  | 💭  | ❌  |
-| :------------------------------------------------------------------- | :--------------------------------------------- | :------------------------------- | :-- | :------------------------------- | :-- | :-- | :-- | :-- |
-| [no-conditional-statements](docs/rules/no-conditional-statements.md) | Disallow conditional statements.               | ✅ 🔒 ![badge-noStatements][]    |     | ☑️ ![badge-disableTypeChecked][] |     |     | 💭  |     |
-| [no-expression-statements](docs/rules/no-expression-statements.md)   | Disallow expression statements.                | ✅ 🔒 ![badge-noStatements][]    |     | ☑️ ![badge-disableTypeChecked][] |     |     | 💭  |     |
-| [no-loop-statements](docs/rules/no-loop-statements.md)               | Disallow imperative loops.                     | ☑️ ✅ 🔒 ![badge-noStatements][] |     |                                  |     |     |     |     |
-| [no-return-void](docs/rules/no-return-void.md)                       | Disallow functions that don't return anything. | ☑️ ✅ 🔒 ![badge-noStatements][] |     | ![badge-disableTypeChecked][]    |     |     | 💭  |     |
+| Name                                                                 | Description                                    | 💼                                                                                    | ⚠️  | 🚫                                                                                        | 🔧  | 💡  | 💭  | ❌  |
+| :------------------------------------------------------------------- | :--------------------------------------------- | :------------------------------------------------------------------------------------ | :-- | :---------------------------------------------------------------------------------------- | :-- | :-- | :-- | :-- |
+| [no-conditional-statements](docs/rules/no-conditional-statements.md) | Disallow conditional statements.               | ![badge-noStatements][https://img.shields.io/badge/-noStatements-purple.svg] ✅ 🔒    |     | ![badge-disableTypeChecked][https://img.shields.io/badge/-disableTypeChecked-navy.svg] ☑️ |     |     | 💭  |     |
+| [no-expression-statements](docs/rules/no-expression-statements.md)   | Disallow expression statements.                | ![badge-noStatements][https://img.shields.io/badge/-noStatements-purple.svg] ✅ 🔒    |     | ![badge-disableTypeChecked][https://img.shields.io/badge/-disableTypeChecked-navy.svg] ☑️ |     |     | 💭  |     |
+| [no-loop-statements](docs/rules/no-loop-statements.md)               | Disallow imperative loops.                     | ☑️ ![badge-noStatements][https://img.shields.io/badge/-noStatements-purple.svg] ✅ 🔒 |     |                                                                                           |     |     |     |     |
+| [no-return-void](docs/rules/no-return-void.md)                       | Disallow functions that don't return anything. | ☑️ ![badge-noStatements][https://img.shields.io/badge/-noStatements-purple.svg] ✅ 🔒 |     | ![badge-disableTypeChecked][https://img.shields.io/badge/-disableTypeChecked-navy.svg]    |     |     | 💭  |     |
 
 ### Stylistic
 
-| Name                                                                   | Description                                                            | 💼  | ⚠️  | 🚫                            | 🔧  | 💡  | 💭  | ❌  |
-| :--------------------------------------------------------------------- | :--------------------------------------------------------------------- | :-- | :-- | :---------------------------- | :-- | :-- | :-- | :-- |
-| [prefer-property-signatures](docs/rules/prefer-property-signatures.md) | Prefer property signatures over method signatures.                     | 🎨  |     | ![badge-disableTypeChecked][] |     |     | 💭  |     |
-| [prefer-tacit](docs/rules/prefer-tacit.md)                             | Replaces `x => f(x)` with just `f`.                                    |     | 🎨  | ![badge-disableTypeChecked][] |     | 💡  | 💭  |     |
-| [readonly-type](docs/rules/readonly-type.md)                           | Require consistently using either `readonly` keywords or `Readonly<T>` | 🎨  |     | ![badge-disableTypeChecked][] | 🔧  |     | 💭  |     |
+| Name                                                                   | Description                                                            | 💼  | ⚠️  | 🚫                                                                                     | 🔧  | 💡  | 💭  | ❌  |
+| :--------------------------------------------------------------------- | :--------------------------------------------------------------------- | :-- | :-- | :------------------------------------------------------------------------------------- | :-- | :-- | :-- | :-- |
+| [prefer-property-signatures](docs/rules/prefer-property-signatures.md) | Prefer property signatures over method signatures.                     | 🎨  |     | ![badge-disableTypeChecked][https://img.shields.io/badge/-disableTypeChecked-navy.svg] |     |     | 💭  |     |
+| [prefer-tacit](docs/rules/prefer-tacit.md)                             | Replaces `x => f(x)` with just `f`.                                    |     | 🎨  | ![badge-disableTypeChecked][https://img.shields.io/badge/-disableTypeChecked-navy.svg] |     | 💡  | 💭  |     |
+| [readonly-type](docs/rules/readonly-type.md)                           | Require consistently using either `readonly` keywords or `Readonly<T>` | 🎨  |     | ![badge-disableTypeChecked][https://img.shields.io/badge/-disableTypeChecked-navy.svg] | 🔧  |     | 💭  |     |
 
 <!-- end auto-generated rules list -->
 <!-- markdownlint-restore -->
-
-[badge-currying]: https://img.shields.io/badge/-currying-red.svg
-[badge-noExceptions]: https://img.shields.io/badge/-noExceptions-blue.svg
-[badge-noMutations]: https://img.shields.io/badge/-noMutations-orange.svg
-[badge-noOtherParadigms]: https://img.shields.io/badge/-noOtherParadigms-yellow.svg
-[badge-noStatements]: https://img.shields.io/badge/-noStatements-purple.svg
-[badge-disableTypeChecked]: https://img.shields.io/badge/-disableTypeChecked-navy.svg
 
 ## External Recommended Rules
 
