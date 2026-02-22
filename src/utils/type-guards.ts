@@ -313,7 +313,7 @@ export function isDefined<T>(value: T | null | undefined): value is T {
  */
 
 export function isUnionType(type: Type): type is UnionType {
-  return typescript !== undefined && type.flags === typescript.TypeFlags.Union;
+  return type.flags === typescript?.TypeFlags.Union;
 }
 
 export function isFunctionLikeType(type: Type | null): boolean {
