@@ -36,27 +36,40 @@ In your `eslint.config.js` file, import `typescript-eslint` and `eslint-plugin-f
 
 ```js
 // eslint.config.js
+import eslint from '@eslint/js';
+import { defineConfig } from 'eslint/config';
 import functional from "eslint-plugin-functional";
 import tseslint from "typescript-eslint";
 
-export default tseslint.config({
-  files: ["**/*.ts"],
-  extends: [
-    functional.configs.externalTypeScriptRecommended,
-    functional.configs.recommended,
-    functional.configs.stylistic,
-    // your other plugin configs here
-  ],
-  languageOptions: {
-    parser: tseslint.parser,
-    parserOptions: {
-      projectService: true,
+export default defineConfig(
+  eslint.configs.recommended,
+  tseslint.configs.recommendedTypeChecked,
+  functional.configs.externalTypeScriptRecommended,
+  functional.configs.recommended,
+  functional.configs.stylistic,
+  // any other plugin configs here
+  {
+    rules: {
+      // any rule configs here
     },
   },
-  rules: {
-    // any rule configs here
+  {
+    // enable types for type-aware linting
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+      },
+    },
   },
-});
+  {
+    // disable type-aware linting on JS files
+    files: ['**/*.js'],
+    extends: [
+      tseslint.configs.disableTypeChecked,
+      functional.configs.disableTypeChecked,
+    ],
+  },
+);
 ```
 
 ### Without TypeScript
@@ -68,18 +81,21 @@ disable rules that require TypeScript.
 
 ```js
 // eslint.config.js
+import eslint from '@eslint/js';
+import { defineConfig } from 'eslint/config';
 import functional from "eslint-plugin-functional";
 
-export default [
+export default defineConfig(
+  eslint.configs.recommended,
   functional.configs.externalVanillaRecommended,
   functional.configs.recommended,
   functional.configs.stylistic,
   functional.configs.disableTypeChecked,
-  // your other plugin configs here
+  // any other plugin configs here
   {
     rules: {
       // any rule configs here
     },
   },
-];
+);
 ```
