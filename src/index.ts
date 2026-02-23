@@ -1,4 +1,4 @@
-import type { FlatConfig } from "@typescript-eslint/utils/ts-eslint";
+import type { ESLint, Linter } from "eslint";
 
 import all from "#/configs/all";
 import currying from "#/configs/currying";
@@ -22,28 +22,28 @@ const meta = {
   version: __VERSION__ as string,
 } as const;
 
-const functional = {
+const functional: ESLint.Plugin = {
   meta,
   rules,
-} satisfies FlatConfig.Plugin;
+} as unknown as ESLint.Plugin;
 
 const plugins = { functional } as const;
 
 const configs: Readonly<{
-  all: FlatConfig.Config;
-  lite: FlatConfig.Config;
-  recommended: FlatConfig.Config;
-  strict: FlatConfig.Config;
-  off: FlatConfig.Config;
-  disableTypeChecked: FlatConfig.Config;
-  externalVanillaRecommended: FlatConfig.Config;
-  externalTypeScriptRecommended: FlatConfig.Config;
-  currying: FlatConfig.Config;
-  noExceptions: FlatConfig.Config;
-  noMutations: FlatConfig.Config;
-  noOtherParadigms: FlatConfig.Config;
-  noStatements: FlatConfig.Config;
-  stylistic: FlatConfig.Config;
+  all: Linter.Config;
+  lite: Linter.Config;
+  recommended: Linter.Config;
+  strict: Linter.Config;
+  off: Linter.Config;
+  disableTypeChecked: Linter.Config;
+  externalVanillaRecommended: Linter.Config;
+  externalTypeScriptRecommended: Linter.Config;
+  currying: Linter.Config;
+  noExceptions: Linter.Config;
+  noMutations: Linter.Config;
+  noOtherParadigms: Linter.Config;
+  noStatements: Linter.Config;
+  stylistic: Linter.Config;
 }> = {
   all: { plugins, rules: all },
   lite: { plugins, rules: lite },
@@ -71,9 +71,16 @@ const configs: Readonly<{
   },
   noStatements: { plugins, rules: noStatements },
   stylistic: { plugins, rules: stylistic },
-} satisfies Record<string, FlatConfig.Config>;
+} satisfies Record<
+  string,
+  Linter.Config & {
+    extends?: Array<string | Linter.Config | InfiniteArray<Linter.Config>>;
+  }
+>;
 
-type EslintPluginFunctional = FlatConfig.Plugin & {
+type InfiniteArray<T> = T | Array<InfiniteArray<T>>;
+
+type EslintPluginFunctional = typeof functional & {
   meta: typeof meta;
   rules: typeof rules;
   configs: typeof configs;
