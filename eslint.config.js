@@ -142,6 +142,17 @@ const configs = await rsEslint(
       "ts/no-extraneous-class": "off",
     },
   },
+  // Rules not supported in eslint v10 yet.
+  {
+    files: ["**/*"],
+    rules: {
+      "comments/disable-enable-pair": "off",
+      "comments/no-aggregating-enable": "off",
+      "comments/no-duplicate-disable": "off",
+      "comments/no-unlimited-disable": "off",
+      "comments/no-unused-enable": "off",
+    },
+  },
 );
 
 // Use our local version of the plugin.
