@@ -5,7 +5,7 @@
 
 📝 Restrict types so that only members of the same kind are allowed in them.
 
-💼🚫 This rule is enabled in the following configs: ☑️ `lite`, ![badge-noOtherParadigms](https://img.shields.io/badge/-noOtherParadigms-yellow.svg) `noOtherParadigms`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the ![badge-disableTypeChecked](https://img.shields.io/badge/-disableTypeChecked-navy.svg) `disableTypeChecked` config.
+💼 This rule is enabled in the following configs: ☑️ `lite`, ![badge-noOtherParadigms](https://img.shields.io/badge/-noOtherParadigms-yellow.svg) `noOtherParadigms`, ✅ `recommended`, 🔒 `strict`.
 
 💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 

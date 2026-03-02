@@ -5,7 +5,7 @@
 
 📝 Enforce functional parameters.
 
-💼🚫 This rule is enabled in the following configs: ![badge-currying](https://img.shields.io/badge/-currying-red.svg) `currying`, ☑️ `lite`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the ![badge-disableTypeChecked](https://img.shields.io/badge/-disableTypeChecked-navy.svg) `disableTypeChecked` config.
+💼 This rule is enabled in the following configs: ![badge-currying](https://img.shields.io/badge/-currying-red.svg) `currying`, ☑️ `lite`, ✅ `recommended`, 🔒 `strict`.
 
 💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 
