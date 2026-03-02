@@ -1,6 +1,9 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
+    "mergeConfidence:age-confidence-badges",
+    "docker:pinDigests",
+    "security:minimumReleaseAgeNpm",
     ":ignoreModulesAndTests",
     ":prConcurrentLimitNone",
     ":prHourlyLimitNone",
@@ -9,24 +12,39 @@
     "group:monorepos",
     "group:recommended",
     "helpers:disableTypesNodeMajor",
+    "helpers:githubDigestChangelogs",
+    "helpers:pinGitHubActionDigests",
     "replacements:all",
     "schedule:monthly",
     "workarounds:all"
   ],
   "automerge": true,
-  "automergeStrategy": "fast-forward",
-  "automergeType": "branch",
+  "automergeStrategy": "squash",
+  "automergeType": "pr",
+  "configMigration": true,
   "labels": ["Type: Maintenance", ":blue_heart:"],
   "rebaseWhen": "conflicted",
   "postUpdateOptions": ["pnpmDedupe"],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "extends": ["schedule:monthly"],
+    "semanticCommitScope": "deps",
+    "semanticCommitType": "chore"
+  },
   "packageRules": [
     {
+      "abandonmentThreshold": "2 year",
+      "matchPackageNames": ["*"]
+    },
+    {
       "major": {
+        "enabled": true,
         "automerge": false,
         "semanticCommitType": "build",
         "semanticCommitScope": "deps-major",
         "rebaseWhen": "behind-base-branch"
       },
+      "enabled": false,
       "matchDepTypes": ["dependencies"],
       "matchManagers": ["npm"],
       "rangeStrategy": "update-lockfile",

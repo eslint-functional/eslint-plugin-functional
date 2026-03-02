@@ -64,4 +64,4 @@ overrides:
 
   - filename: ".github/(actions|workflows)/*.yml"
     ignoreRegExpList:
-      - /\b(?:[A-Za-z0-9\-_])+\/(?:[A-Za-z0-9\-_])+@v\d+(?:\.\d+){0,2}\b/ui # ignore action
+      - /\b(?:[A-Za-z0-9\-_])+\/(?:[A-Za-z0-9\-_])+@(?:v\d+(?:\.\d+){0,2}\b|[a-z0-9]{6,})/ui # ignore action

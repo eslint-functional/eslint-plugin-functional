@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import type { TSESTree } from "@typescript-eslint/utils";
 import { type NamedCreateRuleMeta, RuleCreator, getParserServices } from "@typescript-eslint/utils/eslint-utils";
 import type { ReportDescriptor, RuleContext, RuleListener, RuleModule } from "@typescript-eslint/utils/ts-eslint";
+import type { Rule as EslintRule } from "eslint";
 import { Immutability, type ImmutabilityOverrides, getTypeImmutability } from "is-immutable-type";
 import { isIntrinsicErrorType } from "ts-api-utils";
 import type { Node as TSNode, Type, TypeNode } from "typescript";
@@ -40,13 +41,10 @@ export type NamedCreateRuleCustomMeta<T extends string, Options extends Readonly
 /**
  * The definition of a rule.
  */
-export type Rule<MessageIds extends string, Options extends ReadonlyArray<unknown>> = RuleModule<
-  MessageIds,
-  Options,
-  Docs
-> & {
-  meta: NamedCreateRuleCustomMeta<MessageIds, Options>;
-};
+export type Rule<MessageIds extends string, Options extends ReadonlyArray<unknown>> = EslintRule.RuleModule &
+  RuleModule<MessageIds, Options, Docs> & {
+    meta: NamedCreateRuleCustomMeta<MessageIds, Options>;
+  };
 
 /**
  * All options must extends this type.

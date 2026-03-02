@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+## [9.0.4](https://github.com/eslint-functional/eslint-plugin-functional/compare/v9.0.3...v9.0.4) (2026-02-23)
+
+
+### Bug Fixes
+
+* type errors for consumers ([5947b54](https://github.com/eslint-functional/eslint-plugin-functional/commit/5947b54ce359137db787d4949cdf9fcdb6ccc074))
+
 ## [9.0.3](https://github.com/eslint-functional/eslint-plugin-functional/compare/v9.0.2...v9.0.3) (2026-02-22)
 
 

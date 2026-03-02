@@ -12,10 +12,12 @@ lcov
 litecoin
 markdownlint
 noreply
+Rebecca
 rebeccastevens
 ruleset
 rulesets
 sonarjs
+Stevens
 treeshake
 TSES
 uncompiled

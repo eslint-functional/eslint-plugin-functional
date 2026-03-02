@@ -60,6 +60,8 @@ plugins:
               numMatches: 1
               numReplacements: 1
           countMatches: true
+  - - "semantic-release-publint"
+    - strict: true
   - - "@semantic-release/git"
     - assets:
         - CHANGELOG.md
