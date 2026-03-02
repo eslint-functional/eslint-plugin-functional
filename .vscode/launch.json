@@ -8,27 +8,22 @@
       "name": "Debug Current Test File",
       "type": "node",
       "request": "launch",
-
       // Run tester.
       "program": "${workspaceRoot}/node_modules/vitest/vitest.mjs",
       "args": ["run", "${relativeFile}"],
       "autoAttachChildProcesses": true,
-
       "smartStep": true,
       "sourceMaps": true,
-
       /*
        * Open terminal when debugging starts.
        * Useful to see console.logs
        */
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
-
       // Files to exclude from debugger.
       "skipFiles": [
         // Node.js internal core modules.
         "<node_internals>/**",
-
         // Ignore all dependencies.
         "${workspaceFolder}/node_modules/**"
       ]

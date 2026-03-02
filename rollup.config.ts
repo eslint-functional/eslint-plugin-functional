@@ -31,6 +31,7 @@ export default {
   plugins: [
     rollupPluginTypescript({
       tsconfig: "src/tsconfig.build.json",
+      outDir: "lib",
     }),
     rollupPluginReplace({
       values: {

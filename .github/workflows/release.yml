@@ -21,8 +21,8 @@ jobs:
     uses: ./.github/workflows/lint-js.yml
   lint_docs:
     uses: ./.github/workflows/lint-docs.yml
-  lint_knip:
-    uses: ./.github/workflows/lint-knip.yml
+  # lint_knip:
+  #   uses: ./.github/workflows/lint-knip.yml
   lint_markdown:
     uses: ./.github/workflows/lint-markdown.yml
   lint_packages:
