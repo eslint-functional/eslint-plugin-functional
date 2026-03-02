@@ -9,9 +9,8 @@ export default {
     ["noMutations", "![badge-noMutations](https://img.shields.io/badge/-noMutations-orange.svg)"],
     ["noOtherParadigms", "![badge-noOtherParadigms](https://img.shields.io/badge/-noOtherParadigms-yellow.svg)"],
     ["noStatements", "![badge-noStatements](https://img.shields.io/badge/-noStatements-purple.svg)"],
-    ["disableTypeChecked", "![badge-disableTypeChecked](https://img.shields.io/badge/-disableTypeChecked-navy.svg)"],
   ],
-  ignoreConfig: ["all", "off", "disable-type-checked"],
+  ignoreConfig: ["all", "off", "disableTypeChecked"],
   ruleDocSectionInclude: ["Rule Details"],
   ruleListSplit: "meta.docs.category",
   postprocess: (doc) =>
