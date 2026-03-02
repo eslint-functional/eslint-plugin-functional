@@ -1,5 +1,7 @@
 import path from "node:path";
 
+// eslint-disable-next-line ts/ban-ts-comment -- Issue should hopefully go await - don't need compain when it does.
+// @ts-ignore - https://github.com/babel/babel/issues/17821
 import * as babelParser from "@babel/eslint-parser";
 import * as typescriptParser from "@typescript-eslint/parser";
 import type { ParserOptions } from "@typescript-eslint/parser";
@@ -22,7 +24,7 @@ export const typescriptConfig = {
 
 export const esLatestConfig = {
   languageOptions: {
-    parser: babelParser as NonNullable<Linter.Config["languageOptions"]>["parser"],
+    parser: babelParser,
     parserOptions: {
       ecmaVersion: "latest",
       requireConfigFile: false,
