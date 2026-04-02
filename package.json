@@ -94,7 +94,7 @@
     "@cspell/dict-cryptocurrencies": "5.0.5",
     "@eslint-community/eslint-plugin-eslint-comments": "4.7.1",
     "@eslint/compat": "2.0.3",
-    "@eslint/markdown": "7.5.1",
+    "@eslint/markdown": "8.0.0",
     "@rebeccastevens/eslint-config": "3.9.7",
     "@rollup/plugin-replace": "6.0.3",
     "@rollup/plugin-typescript": "12.3.0",
