@@ -125,7 +125,7 @@
     "eslint-plugin-promise": "7.2.1",
     "eslint-plugin-regexp": "3.1.0",
     "eslint-plugin-sonarjs": "4.0.2",
-    "eslint-plugin-unicorn": "63.0.0",
+    "eslint-plugin-unicorn": "64.0.0",
     "eslint-plugin-yml": "3.3.1",
     "eslint-vitest-rule-tester": "3.1.0",
     "fast-glob": "3.3.3",
