@@ -132,7 +132,7 @@
     "husky": "9.1.7",
     "jsonc-eslint-parser": "3.1.0",
     "knip": "6.14.2",
-    "lint-staged": "16.4.0",
+    "lint-staged": "17.0.6",
     "markdownlint-cli2": "0.22.1",
     "prettier": "3.8.3",
     "publint": "0.3.21",
