@@ -99,7 +99,7 @@
     "@rollup/plugin-replace": "6.0.3",
     "@rollup/plugin-typescript": "12.3.0",
     "@stylistic/eslint-plugin": "5.10.0",
-    "@types/node": "18.19.130",
+    "@types/node": "20.19.33",
     "@typescript-eslint/eslint-plugin": "8.58.1",
     "@typescript-eslint/parser": "8.58.1",
     "@vitest/coverage-v8": "3.2.4",
@@ -159,7 +159,7 @@
   },
   "packageManager": "pnpm@10.34.1",
   "engines": {
-    "node": ">=v18.18.0"
+    "node": ">=v20.0.0"
   },
   "overrides": {
     "eslint-plugin-functional": "link:."
