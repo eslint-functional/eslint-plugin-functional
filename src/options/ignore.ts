@@ -53,6 +53,25 @@ export const ignoreCodePatternOptionSchema: JSONSchema4ObjectSchema["properties"
 };
 
 /**
+ * The option to ignore types matching a pattern.
+ */
+export type IgnoreTypePatternOption = Readonly<{
+  ignoreTypePattern?: ReadonlyArray<string> | string;
+}>;
+
+/**
+ * The schema for the option to ignore types matching a pattern.
+ */
+export const ignoreTypePatternOptionSchema: JSONSchema4ObjectSchema["properties"] = {
+  ignoreTypePattern: {
+    type: ["string", "array"],
+    items: {
+      type: "string",
+    },
+  },
+};
+
+/**
  * The option to ignore accessor patterns.
  */
 export type IgnoreAccessorPatternOption = Readonly<{
@@ -245,5 +264,21 @@ export function shouldIgnorePattern(
       texts.every((text) => shouldIgnoreViaAccessorPattern(text, ignoreAccessorPattern))) ||
     // Ignore if ignoreCodePattern is set and a code pattern matches.
     (ignoreCodePattern !== undefined && shouldIgnoreViaPattern(getNodeCode(node, context), ignoreCodePattern))
+  );
+}
+
+/**
+ * Should the given type node be allowed based off the IgnoreTypePatternOption?
+ *
+ * The pattern is matched against the type's source text with whitespace removed.
+ */
+export function shouldIgnoreTypePattern(
+  node: TSESTree.Node,
+  context: Readonly<RuleContext<string, BaseOptions>>,
+  ignoreTypePattern: Readonly<Partial<IgnoreTypePatternOption>["ignoreTypePattern"]>,
+): boolean {
+  return (
+    ignoreTypePattern !== undefined &&
+    shouldIgnoreViaPattern(getNodeCode(node, context).replaceAll(/\s+/gu, ""), ignoreTypePattern)
   );
 }

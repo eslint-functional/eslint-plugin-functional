@@ -1,5 +1,83 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`type-declaration-immutability > typescript > ignoreTypePattern > still reports object literals and array types 1`] = `
+{
+  "fixed": false,
+  "messages": [
+    {
+      "column": 6,
+      "endColumn": 17,
+      "endLine": 1,
+      "line": 1,
+      "message": "This type is declare to have an immutability of at least "Immutable" (actual: "Mutable").",
+      "messageId": "AtLeast",
+      "nodeType": "Identifier",
+      "ruleId": "type-declaration-immutability",
+      "severity": 2,
+    },
+  ],
+  "output": "type ReadonlyFoo = { a: string };",
+  "steps": [
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 6,
+          "endColumn": 17,
+          "endLine": 1,
+          "line": 1,
+          "message": "This type is declare to have an immutability of at least "Immutable" (actual: "Mutable").",
+          "messageId": "AtLeast",
+          "nodeType": "Identifier",
+          "ruleId": "rule-to-test/type-declaration-immutability",
+          "severity": 2,
+        },
+      ],
+      "output": "type ReadonlyFoo = { a: string };",
+    },
+  ],
+}
+`;
+
+exports[`type-declaration-immutability > typescript > ignoreTypePattern > still reports object literals and array types 2`] = `
+{
+  "fixed": false,
+  "messages": [
+    {
+      "column": 6,
+      "endColumn": 17,
+      "endLine": 1,
+      "line": 1,
+      "message": "This type is declare to have an immutability of at least "Immutable" (actual: "Mutable").",
+      "messageId": "AtLeast",
+      "nodeType": "Identifier",
+      "ruleId": "type-declaration-immutability",
+      "severity": 2,
+    },
+  ],
+  "output": "type ReadonlyFoo = string[];",
+  "steps": [
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 6,
+          "endColumn": 17,
+          "endLine": 1,
+          "line": 1,
+          "message": "This type is declare to have an immutability of at least "Immutable" (actual: "Mutable").",
+          "messageId": "AtLeast",
+          "nodeType": "Identifier",
+          "ruleId": "rule-to-test/type-declaration-immutability",
+          "severity": 2,
+        },
+      ],
+      "output": "type ReadonlyFoo = string[];",
+    },
+  ],
+}
+`;
+
 exports[`type-declaration-immutability > typescript > reports invalid deep arrays 1`] = `
 {
   "fixed": false,
