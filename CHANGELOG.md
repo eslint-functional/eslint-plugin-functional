@@ -1,6 +1,24 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+# [10.0.0](https://github.com/eslint-functional/eslint-plugin-functional/compare/v9.0.5...v10.0.0) (2026-06-03)
+
+
+### Build System
+
+* drop node 18 ([#1030](https://github.com/eslint-functional/eslint-plugin-functional/issues/1030)) ([c6d3d3b](https://github.com/eslint-functional/eslint-plugin-functional/commit/c6d3d3bab6e69613871dce6871967a97da7b3ef8))
+
+
+### Features
+
+* add option `ignoreTypePattern` to `type-declaration-immutability` ([#1070](https://github.com/eslint-functional/eslint-plugin-functional/issues/1070)) ([abd6d51](https://github.com/eslint-functional/eslint-plugin-functional/commit/abd6d51a1cfad0a6648688cc681187c33ac22b08))
+* support ESLint 10 ([#1028](https://github.com/eslint-functional/eslint-plugin-functional/issues/1028)) ([07e0256](https://github.com/eslint-functional/eslint-plugin-functional/commit/07e0256f30dd687d33f41cca4f9ab3f25824acf0))
+
+
+### BREAKING CHANGES
+
+* drop node 18 (#1030)
+
 ## [9.0.5](https://github.com/eslint-functional/eslint-plugin-functional/compare/v9.0.4...v9.0.5) (2026-05-20)
 
 
