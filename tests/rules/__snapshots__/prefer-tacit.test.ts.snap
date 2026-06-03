@@ -11,7 +11,6 @@ exports[`prefer-tacit > typescript > options > checkMemberExpressions > report m
       "line": 2,
       "message": "Potentially unnecessary function wrapper.",
       "messageId": "generic",
-      "nodeType": "FunctionDeclaration",
       "ruleId": "prefer-tacit",
       "severity": 2,
       "suggestions": [
@@ -42,7 +41,6 @@ function foo(x) { return a.b(x); }",
           "line": 2,
           "message": "Potentially unnecessary function wrapper.",
           "messageId": "generic",
-          "nodeType": "FunctionDeclaration",
           "ruleId": "rule-to-test/prefer-tacit",
           "severity": 2,
           "suggestions": [
@@ -78,7 +76,6 @@ exports[`prefer-tacit > typescript > options > checkMemberExpressions > report m
       "line": 1,
       "message": "Potentially unnecessary function wrapper.",
       "messageId": "generic",
-      "nodeType": "ArrowFunctionExpression",
       "ruleId": "prefer-tacit",
       "severity": 2,
       "suggestions": [
@@ -108,7 +105,6 @@ exports[`prefer-tacit > typescript > options > checkMemberExpressions > report m
           "line": 1,
           "message": "Potentially unnecessary function wrapper.",
           "messageId": "generic",
-          "nodeType": "ArrowFunctionExpression",
           "ruleId": "rule-to-test/prefer-tacit",
           "severity": 2,
           "suggestions": [
@@ -143,7 +139,6 @@ exports[`prefer-tacit > typescript > reports functions that are just instantiati
       "line": 2,
       "message": "Potentially unnecessary function wrapper.",
       "messageId": "generic",
-      "nodeType": "FunctionDeclaration",
       "ruleId": "prefer-tacit",
       "severity": 2,
       "suggestions": [
@@ -174,7 +169,6 @@ function foo(x) { return f<number>(x); }",
           "line": 2,
           "message": "Potentially unnecessary function wrapper.",
           "messageId": "generic",
-          "nodeType": "FunctionDeclaration",
           "ruleId": "rule-to-test/prefer-tacit",
           "severity": 2,
           "suggestions": [
@@ -210,7 +204,6 @@ exports[`prefer-tacit > typescript > reports functions that can "safely" be chan
       "line": 2,
       "message": "Potentially unnecessary function wrapper.",
       "messageId": "generic",
-      "nodeType": "ArrowFunctionExpression",
       "ruleId": "prefer-tacit",
       "severity": 2,
       "suggestions": [
@@ -241,7 +234,6 @@ const foo = x => f(x);",
           "line": 2,
           "message": "Potentially unnecessary function wrapper.",
           "messageId": "generic",
-          "nodeType": "ArrowFunctionExpression",
           "ruleId": "rule-to-test/prefer-tacit",
           "severity": 2,
           "suggestions": [
@@ -277,7 +269,6 @@ exports[`prefer-tacit > typescript > reports functions that can "safely" be chan
       "line": 1,
       "message": "Potentially unnecessary function wrapper.",
       "messageId": "generic",
-      "nodeType": "ArrowFunctionExpression",
       "ruleId": "prefer-tacit",
       "severity": 2,
       "suggestions": [
@@ -307,7 +298,6 @@ exports[`prefer-tacit > typescript > reports functions that can "safely" be chan
           "line": 1,
           "message": "Potentially unnecessary function wrapper.",
           "messageId": "generic",
-          "nodeType": "ArrowFunctionExpression",
           "ruleId": "rule-to-test/prefer-tacit",
           "severity": 2,
           "suggestions": [

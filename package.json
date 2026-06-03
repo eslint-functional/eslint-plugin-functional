@@ -90,7 +90,7 @@
     "ts-declaration-location": "^1.0.6"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "7.29.7",
+    "@babel/eslint-parser": "8.0.0-rc.6",
     "@cspell/dict-cryptocurrencies": "5.0.5",
     "@eslint-community/eslint-plugin-eslint-comments": "4.7.2",
     "@eslint/compat": "2.1.0",
@@ -106,11 +106,10 @@
     "@vitest/eslint-plugin": "1.6.18",
     "cspell": "10.0.0",
     "dedent": "1.7.2",
-    "eslint": "9.39.4",
+    "eslint": "10.0.1",
     "eslint-config-prettier": "10.1.8",
     "eslint-doc-generator": "3.6.0",
     "eslint-flat-config-utils": "3.2.0",
-    "eslint-import-resolver-typescript": "4.4.4",
     "eslint-merge-processors": "2.0.0",
     "eslint-plugin-eslint-plugin": "7.3.3",
     "eslint-plugin-format": "2.0.1",
