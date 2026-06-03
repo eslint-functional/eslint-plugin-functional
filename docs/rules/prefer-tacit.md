@@ -5,7 +5,7 @@
 
 📝 Replaces `x => f(x)` with just `f`.
 
-⚠️🚫 This rule _warns_ in the 🎨 `stylistic` config. This rule is _disabled_ in the ![badge-disableTypeChecked](https://img.shields.io/badge/-disableTypeChecked-navy.svg) `disableTypeChecked` config.
+⚠️ This rule _warns_ in the 🎨 `stylistic` config.
 
 💡 This rule is manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 

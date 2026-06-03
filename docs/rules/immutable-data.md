@@ -5,7 +5,7 @@
 
 📝 Enforce treating data as immutable.
 
-💼🚫 This rule is enabled in the following configs: ☑️ `lite`, ![badge-noMutations](https://img.shields.io/badge/-noMutations-orange.svg) `noMutations`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the ![badge-disableTypeChecked](https://img.shields.io/badge/-disableTypeChecked-navy.svg) `disableTypeChecked` config.
+💼 This rule is enabled in the following configs: ☑️ `lite`, ![badge-noMutations](https://img.shields.io/badge/-noMutations-orange.svg) `noMutations`, ✅ `recommended`, 🔒 `strict`.
 
 💭 This rule requires [type information](https://typescript-eslint.io/linting/typed-linting).
 

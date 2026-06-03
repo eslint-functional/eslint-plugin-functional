@@ -5,7 +5,7 @@
 
 📝 Enforce the immutability of types based on patterns.
 
-💼🚫 This rule is enabled in the following configs: ☑️ `lite`, ![badge-noMutations](https://img.shields.io/badge/-noMutations-orange.svg) `noMutations`, ✅ `recommended`, 🔒 `strict`. This rule is _disabled_ in the ![badge-disableTypeChecked](https://img.shields.io/badge/-disableTypeChecked-navy.svg) `disableTypeChecked` config.
+💼 This rule is enabled in the following configs: ☑️ `lite`, ![badge-noMutations](https://img.shields.io/badge/-noMutations-orange.svg) `noMutations`, ✅ `recommended`, 🔒 `strict`.
 
 🔧💡 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix) and manually fixable by [editor suggestions](https://eslint.org/docs/latest/use/core-concepts#rule-suggestions).
 
@@ -95,6 +95,7 @@ type Options = {
   }>;
   ignoreInterfaces: boolean;
   ignoreIdentifierPattern: string[] | string;
+  ignoreTypePattern: string[] | string;
 };
 ```
 
@@ -206,3 +207,25 @@ A boolean to specify whether interfaces should be exempt from these rules.
 
 This option takes a RegExp string or an array of RegExp strings.
 It allows for the ability to ignore violations based on a type's name.
+
+### `ignoreTypePattern`
+
+This option takes a `RegExp` string or an array of `RegExp` strings.
+It allows for the ability to ignore violations based on the type alias's
+right-hand side (as written, with whitespace removed).
+
+This is useful for skipping aliases whose right-hand side is purely a
+named-reference composition that no consumer-side annotation can make
+`ReadonlyShallow` — for example a union of third-party class types, a
+utility-type composition, or a namespaced inferred type:
+
+<!-- eslint-skip -->
+
+```ts
+type UnderlyingServer = Http2SecureServer | Http2Server | Server;
+type UploadResult = Awaited<ReturnType<Uploader["upload"]>>;
+```
+
+This option only applies to type alias declarations. Interfaces have no
+right-hand side, so it has no effect on them; use `ignoreInterfaces` or
+`ignoreIdentifierPattern` for those.

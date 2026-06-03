@@ -92,5 +92,5 @@ function loadImmutabilityOverrides(
 
   const keepDefault = Array.isArray(overridesSetting) || overridesSetting.keepDefault !== false;
 
-  return keepDefault ? [...getDefaultImmutabilityOverrides(), ...upgraded] : upgraded;
+  return keepDefault ? [...upgraded, ...getDefaultImmutabilityOverrides()] : upgraded;
 }

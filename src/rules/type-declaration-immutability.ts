@@ -6,8 +6,11 @@ import { Immutability } from "is-immutable-type";
 
 import {
   type IgnoreIdentifierPatternOption,
+  type IgnoreTypePatternOption,
   ignoreIdentifierPatternOptionSchema,
+  ignoreTypePatternOptionSchema,
   shouldIgnorePattern,
+  shouldIgnoreTypePattern,
 } from "#/options";
 import { getNodeIdentifierTexts, ruleNameScope } from "#/utils/misc";
 import type { ESTypeDeclaration } from "#/utils/node-types";
@@ -59,16 +62,17 @@ type SuggestionsConfig = FixerConfig[];
  * The options this rule can take.
  */
 type RawOptions = [
-  IgnoreIdentifierPatternOption & {
-    rules: Array<{
-      identifiers: string | string[];
-      immutability: Exclude<Immutability | keyof typeof Immutability, "Unknown">;
-      comparator?: RuleEnforcementComparator | keyof typeof RuleEnforcementComparator;
-      fixer?: FixerConfigRaw | FixerConfigRaw[] | false;
-      suggestions?: FixerConfigRaw[] | false;
-    }>;
-    ignoreInterfaces: boolean;
-  },
+  IgnoreIdentifierPatternOption &
+    IgnoreTypePatternOption & {
+      rules: Array<{
+        identifiers: string | string[];
+        immutability: Exclude<Immutability | keyof typeof Immutability, "Unknown">;
+        comparator?: RuleEnforcementComparator | keyof typeof RuleEnforcementComparator;
+        fixer?: FixerConfigRaw | FixerConfigRaw[] | false;
+        suggestions?: FixerConfigRaw[] | false;
+      }>;
+      ignoreInterfaces: boolean;
+    },
 ];
 
 /**
@@ -128,7 +132,7 @@ const suggestionsSchema: JSONSchema4 = {
 const schema: JSONSchema4[] = [
   {
     type: "object",
-    properties: deepmerge(ignoreIdentifierPatternOptionSchema, {
+    properties: deepmerge(ignoreIdentifierPatternOptionSchema, ignoreTypePatternOptionSchema, {
       rules: {
         type: "array",
         items: {
@@ -409,10 +413,11 @@ function checkTypeDeclaration(
   options: Readonly<RawOptions>,
 ): RuleResult<keyof typeof errorMessages, RawOptions> {
   const [optionsObject] = options;
-  const { ignoreInterfaces, ignoreIdentifierPattern } = optionsObject;
+  const { ignoreInterfaces, ignoreIdentifierPattern, ignoreTypePattern } = optionsObject;
   if (
     shouldIgnorePattern(node, context, ignoreIdentifierPattern) ||
-    (ignoreInterfaces && isTSInterfaceDeclaration(node))
+    (ignoreInterfaces && isTSInterfaceDeclaration(node)) ||
+    (!isTSInterfaceDeclaration(node) && shouldIgnoreTypePattern(node.typeAnnotation, context, ignoreTypePattern))
   ) {
     return {
       context,

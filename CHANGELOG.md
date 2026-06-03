@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+## [9.0.5](https://github.com/eslint-functional/eslint-plugin-functional/compare/v9.0.4...v9.0.5) (2026-05-20)
+
+
+### Bug Fixes
+
+* let user immutability overrides win over defaults ([#1060](https://github.com/eslint-functional/eslint-plugin-functional/issues/1060)) ([90ca86e](https://github.com/eslint-functional/eslint-plugin-functional/commit/90ca86e1af574fdf0075eb4abc6596ffc91346f8))
+
 ## [9.0.4](https://github.com/eslint-functional/eslint-plugin-functional/compare/v9.0.3...v9.0.4) (2026-02-23)
 
 

@@ -340,6 +340,81 @@ describe(name, () => {
       });
     });
 
+    describe("ignoreTypePattern", () => {
+      it("doesn't report a union of named references", async () => {
+        await valid({
+          code: "type ReadonlyServer = Http2SecureServer | Http2Server | Server;",
+          options: [
+            {
+              ignoreTypePattern: "^[A-Za-z0-9.]+(\\|[A-Za-z0-9.]+)+$",
+            },
+          ],
+        });
+      });
+
+      it("doesn't report a utility-type composition over a named reference", async () => {
+        await valid({
+          code: "type ReadonlyUploadResult = Awaited<ReturnType<Uploader['upload']>>;",
+          options: [
+            {
+              ignoreTypePattern: "^Awaited<",
+            },
+          ],
+        });
+      });
+
+      it("doesn't report a namespaced reference", async () => {
+        await valid({
+          code: "type ReadonlyInferredValue = z.infer<typeof schema>;",
+          options: [
+            {
+              ignoreTypePattern: "^z\\.infer<",
+            },
+          ],
+        });
+      });
+
+      it("still reports object literals and array types", async () => {
+        const invalidResult1 = await invalid({
+          code: "type ReadonlyFoo = { a: string };",
+          options: [
+            {
+              ignoreTypePattern: "^z\\.infer<",
+            },
+          ],
+          errors: ["AtLeast"],
+        });
+        expect(invalidResult1.result).toMatchSnapshot();
+
+        const invalidResult2 = await invalid({
+          code: "type ReadonlyFoo = string[];",
+          options: [
+            {
+              ignoreTypePattern: "^z\\.infer<",
+            },
+          ],
+          errors: ["AtLeast"],
+        });
+        expect(invalidResult2.result).toMatchSnapshot();
+      });
+
+      it("has no effect on interfaces", async () => {
+        await invalid({
+          code: dedent`
+            interface ReadonlyFoo {
+              foo: number;
+            }
+          `,
+          options: [
+            {
+              ignoreTypePattern: ".*",
+            },
+          ],
+          errors: ["AtLeast"],
+        });
+      });
+    });
+
     it("respects override settings", async () => {
       await valid({
         code: dedent`
