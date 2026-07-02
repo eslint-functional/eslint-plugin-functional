@@ -90,7 +90,7 @@
     "ts-declaration-location": "^1.0.6"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "8.0.0-rc.6",
+    "@babel/eslint-parser": "8.0.1",
     "@cspell/dict-cryptocurrencies": "5.0.5",
     "@eslint-community/eslint-plugin-eslint-comments": "4.7.2",
     "@eslint/compat": "2.1.0",

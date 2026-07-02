@@ -28,8 +28,8 @@ importers:
         version: 1.0.7(typescript@5.9.3)
     devDependencies:
       '@babel/eslint-parser':
-        specifier: 8.0.0-rc.6
-        version: 8.0.0-rc.6(@babel/core@7.26.0)(eslint@10.0.1(jiti@2.7.0))
+        specifier: 8.0.1
+        version: 8.0.1(@babel/core@7.26.0)(eslint@10.0.1(jiti@2.7.0))
       '@cspell/dict-cryptocurrencies':
         specifier: 5.0.5
         version: 5.0.5
@@ -217,11 +217,11 @@ packages:
     resolution: {integrity: sha512-i1SLeK+DzNnQ3LL/CswPCa/E5u4lh1k6IAEphON8F+cXt0t9euTshDru0q7/IqMa1PMPz5RnHuHscF8/ZJsStg==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/eslint-parser@8.0.0-rc.6':
-    resolution: {integrity: sha512-qVHD7K5PyUXj57bsJWbyT5V9JtOX/4dtX9QSQpqGfBG4xiVE/mrCYCT25Ih+wHvISR98Lctl9BtvEUtGyYsrvA==}
+  '@babel/eslint-parser@8.0.1':
+    resolution: {integrity: sha512-2javO8pAQv/ld6sS6OcxoLAlzZEZy+xm99bnoAfMhzKSumKhdF5wylpbZB7XTorWr3KLPtx5K95eduJPOy1mzA==}
     engines: {node: ^22.18.0 || >=24.11.0}
     peerDependencies:
-      '@babel/core': ^8.0.0-rc.6
+      '@babel/core': ^8.0.0
       eslint: ^9.0.0 || ^10.0.0
 
   '@babel/generator@7.29.1':
@@ -4168,6 +4168,7 @@ packages:
   tsconfck@3.1.1:
     resolution: {integrity: sha512-00eoI6WY57SvZEVjm13stEVE90VkEdJAFGgpFLTsZbJyW/LwFQ7uQxJHWpZ2hzSWgCPKc9AnBnNP+0X7o3hAmQ==}
     engines: {node: ^18 || >=20}
+    deprecated: unmaintained
     hasBin: true
     peerDependencies:
       typescript: ^5.0.0
@@ -4482,7 +4483,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@babel/eslint-parser@8.0.0-rc.6(@babel/core@7.26.0)(eslint@10.0.1(jiti@2.7.0))':
+  '@babel/eslint-parser@8.0.1(@babel/core@7.26.0)(eslint@10.0.1(jiti@2.7.0))':
     dependencies:
       '@babel/core': 7.26.0
       eslint: 10.0.1(jiti@2.7.0)
