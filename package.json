@@ -104,7 +104,7 @@
     "@typescript-eslint/parser": "8.58.1",
     "@vitest/coverage-v8": "4.0.18",
     "@vitest/eslint-plugin": "1.6.18",
-    "cspell": "10.0.0",
+    "cspell": "10.0.1",
     "dedent": "1.7.2",
     "eslint": "10.0.1",
     "eslint-config-prettier": "10.1.8",
