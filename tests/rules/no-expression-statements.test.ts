@@ -101,6 +101,38 @@ describe(name, () => {
           `,
           options: [{ ignoreVoid: true }],
         });
+
+        await valid({
+          code: dedent`
+            function foo(): Promise<void> { return Promise.resolve(); }
+            async function bar() {
+              await foo();
+            }
+          `,
+          options: [{ ignoreVoid: true }],
+        });
+
+        await valid({
+          code: dedent`
+            function foo(): void {}
+            async function bar() {
+              await foo();
+            }
+          `,
+          options: [{ ignoreVoid: true }],
+        });
+
+        const invalidResult = await invalid({
+          code: dedent`
+            function foo(): Promise<number> { return Promise.resolve(1); }
+            async function bar() {
+              await foo();
+            }
+          `,
+          options: [{ ignoreVoid: true }],
+          errors: ["generic"],
+        });
+        expect(invalidResult.result).toMatchSnapshot();
       });
 
       it("ignoreSelfReturning", async () => {
@@ -125,6 +157,17 @@ describe(name, () => {
             class Foo { bar() { return this; }};
             const foo = new Foo();
             foo.bar();
+          `,
+          options: [{ ignoreSelfReturning: true }],
+        });
+
+        await valid({
+          code: dedent`
+            class Foo { bar() { return this; }};
+            const foo = new Foo();
+            async function baz() {
+              await foo.bar();
+            }
           `,
           options: [{ ignoreSelfReturning: true }],
         });
