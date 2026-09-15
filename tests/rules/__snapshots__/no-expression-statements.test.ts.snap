@@ -114,3 +114,46 @@ foo();",
   ],
 }
 `;
+
+exports[`no-expression-statements > typescript > options > ignoreVoid 1`] = `
+{
+  "fixed": false,
+  "messages": [
+    {
+      "column": 3,
+      "endColumn": 15,
+      "endLine": 3,
+      "line": 3,
+      "message": "Using expressions to cause side-effects not allowed.",
+      "messageId": "generic",
+      "ruleId": "no-expression-statements",
+      "severity": 2,
+    },
+  ],
+  "output": "function foo(): Promise<number> { return Promise.resolve(1); }
+async function bar() {
+  await foo();
+}",
+  "steps": [
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 3,
+          "endColumn": 15,
+          "endLine": 3,
+          "line": 3,
+          "message": "Using expressions to cause side-effects not allowed.",
+          "messageId": "generic",
+          "ruleId": "rule-to-test/no-expression-statements",
+          "severity": 2,
+        },
+      ],
+      "output": "function foo(): Promise<number> { return Promise.resolve(1); }
+async function bar() {
+  await foo();
+}",
+    },
+  ],
+}
+`;
