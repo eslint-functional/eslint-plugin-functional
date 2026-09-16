@@ -83,7 +83,7 @@
   },
   "dependencies": {
     "@typescript-eslint/utils": "^8.26.0",
-    "deepmerge-ts": "^7.1.5",
+    "deepmerge-ts": "^8.0.0",
     "escape-string-regexp": "^5.0.0",
     "is-immutable-type": "^5.0.1",
     "ts-api-utils": "^2.0.1",
