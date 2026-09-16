@@ -1,6 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file. Dates are displayed in UTC.
 
+## [10.0.1](https://github.com/eslint-functional/eslint-plugin-functional/compare/v10.0.0...v10.0.1) (2026-09-16)
+
+
+### Bug Fixes
+
+* **no-expression-statements:** ignore awaited void calls when ignoreVoid is enabled ([#1103](https://github.com/eslint-functional/eslint-plugin-functional/issues/1103)) ([2516a81](https://github.com/eslint-functional/eslint-plugin-functional/commit/2516a81a4b7c98651b3d1cde6d2757c5650647dc))
+
 # [10.0.0](https://github.com/eslint-functional/eslint-plugin-functional/compare/v9.0.5...v10.0.0) (2026-06-03)
 
 
