@@ -55,6 +55,10 @@ export function isAssignmentPattern(node: TSESTree.Node): node is TSESTree.Assig
   return node.type === AST_NODE_TYPES.AssignmentPattern;
 }
 
+export function isAwaitExpression(node: TSESTree.Node): node is TSESTree.AwaitExpression {
+  return node.type === AST_NODE_TYPES.AwaitExpression;
+}
+
 export function isBlockStatement(node: TSESTree.Node): node is TSESTree.BlockStatement {
   return node.type === AST_NODE_TYPES.BlockStatement;
 }

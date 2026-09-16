@@ -9,7 +9,7 @@ import typescript from "#/conditional-imports/typescript";
 import { type IgnoreCodePatternOption, ignoreCodePatternOptionSchema, shouldIgnorePattern } from "#/options";
 import { isDirectivePrologue, ruleNameScope } from "#/utils/misc";
 import { type NamedCreateRuleCustomMeta, type Rule, type RuleResult, createRule, getTypeOfNode } from "#/utils/rule";
-import { isCallExpression, isPromiseType, isYieldExpression } from "#/utils/type-guards";
+import { isAwaitExpression, isCallExpression, isPromiseType, isYieldExpression } from "#/utils/type-guards";
 
 /**
  * The name of this rule.
@@ -110,8 +110,11 @@ function checkExpressionStatement(
 
   const { ignoreVoid, ignoreSelfReturning } = optionsObject;
 
-  if ((ignoreVoid || ignoreSelfReturning) && isCallExpression(node.expression)) {
-    const returnType = getTypeOfNode(node.expression, context);
+  // Treat `await foo()` the same as `foo()`.
+  const expression = isAwaitExpression(node.expression) ? node.expression.argument : node.expression;
+
+  if ((ignoreVoid || ignoreSelfReturning) && isCallExpression(expression)) {
+    const returnType = getTypeOfNode(expression, context);
     if (returnType === null) {
       return {
         context,
@@ -134,7 +137,7 @@ function checkExpressionStatement(
     }
 
     if (ignoreSelfReturning) {
-      const type = getTypeOfNode(node.expression.callee, context);
+      const type = getTypeOfNode(expression.callee, context);
       if (type !== null) {
         const declaration = type.getSymbol()?.valueDeclaration;
         if (
