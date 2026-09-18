@@ -1,5 +1,50 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`prefer-property-signatures > typescript > options > ignoreIfReadonlyWrapped > reports method signatures in type literals nested in a property of a Readonly type 1`] = `
+{
+  "fixed": false,
+  "messages": [
+    {
+      "column": 5,
+      "endColumn": 28,
+      "endLine": 3,
+      "line": 3,
+      "message": "Use a property signature instead of a method signature",
+      "messageId": "generic",
+      "ruleId": "prefer-property-signatures",
+      "severity": 2,
+    },
+  ],
+  "output": "type Foo = Readonly<{
+  nested: {
+    methodSignature(): void
+  }
+}>",
+  "steps": [
+    {
+      "fixed": false,
+      "messages": [
+        {
+          "column": 5,
+          "endColumn": 28,
+          "endLine": 3,
+          "line": 3,
+          "message": "Use a property signature instead of a method signature",
+          "messageId": "generic",
+          "ruleId": "rule-to-test/prefer-property-signatures",
+          "severity": 2,
+        },
+      ],
+      "output": "type Foo = Readonly<{
+  nested: {
+    methodSignature(): void
+  }
+}>",
+    },
+  ],
+}
+`;
+
 exports[`prefer-property-signatures > typescript > reports method signatures in interfaces 1`] = `
 {
   "fixed": false,

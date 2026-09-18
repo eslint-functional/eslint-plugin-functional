@@ -236,6 +236,10 @@ export function isTSInterfaceHeritage(node: TSESTree.Node): node is TSESTree.TSI
   return node.type === AST_NODE_TYPES.TSInterfaceHeritage;
 }
 
+export function isTSIntersectionType(node: TSESTree.Node): node is TSESTree.TSIntersectionType {
+  return node.type === AST_NODE_TYPES.TSIntersectionType;
+}
+
 export function isTSNonNullExpression(node: TSESTree.Node): node is TSESTree.TSNonNullExpression {
   return node.type === AST_NODE_TYPES.TSNonNullExpression;
 }
@@ -268,6 +272,10 @@ export function isTSTypeOperator(node: TSESTree.Node): node is TSESTree.TSTypeOp
   return node.type === AST_NODE_TYPES.TSTypeOperator;
 }
 
+export function isTSTypeParameterInstantiation(node: TSESTree.Node): node is TSESTree.TSTypeParameterInstantiation {
+  return node.type === AST_NODE_TYPES.TSTypeParameterInstantiation;
+}
+
 export function isTSTypePredicate(node: TSESTree.Node): node is TSESTree.TSTypePredicate {
   return node.type === AST_NODE_TYPES.TSTypePredicate;
 }
@@ -278,6 +286,10 @@ export function isTSTypeReference(node: TSESTree.Node): node is TSESTree.TSTypeR
 
 export function isTSUndefinedKeyword(node: TSESTree.Node): node is TSESTree.TSUndefinedKeyword {
   return node.type === AST_NODE_TYPES.TSUndefinedKeyword;
+}
+
+export function isTSUnionType(node: TSESTree.Node): node is TSESTree.TSUnionType {
+  return node.type === AST_NODE_TYPES.TSUnionType;
 }
 
 export function isTSVoidKeyword(node: TSESTree.Node): node is TSESTree.TSVoidKeyword {
