@@ -28,8 +28,8 @@ importers:
         version: 1.0.7(typescript@5.9.3)
     devDependencies:
       '@babel/eslint-parser':
-        specifier: 8.0.1
-        version: 8.0.1(@babel/core@7.26.0)(eslint@10.9.1(jiti@2.7.0))
+        specifier: 8.0.7
+        version: 8.0.7(@babel/core@7.26.0)(eslint@10.9.1(jiti@2.7.0))
       '@cspell/dict-cryptocurrencies':
         specifier: 5.0.5
         version: 5.0.5
@@ -217,8 +217,8 @@ packages:
     resolution: {integrity: sha512-i1SLeK+DzNnQ3LL/CswPCa/E5u4lh1k6IAEphON8F+cXt0t9euTshDru0q7/IqMa1PMPz5RnHuHscF8/ZJsStg==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/eslint-parser@8.0.1':
-    resolution: {integrity: sha512-2javO8pAQv/ld6sS6OcxoLAlzZEZy+xm99bnoAfMhzKSumKhdF5wylpbZB7XTorWr3KLPtx5K95eduJPOy1mzA==}
+  '@babel/eslint-parser@8.0.7':
+    resolution: {integrity: sha512-ik5I+U64QuQQPohw0A1wVWPR+vTRYVfWBDLOLc1KwZQ2SKayQLD52DgoB3W/kmwc4MP1E37qh7nZuDD9xsKYcA==}
     engines: {node: ^22.18.0 || >=24.11.0}
     peerDependencies:
       '@babel/core': ^8.0.0
@@ -4338,6 +4338,10 @@ packages:
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
 
+  verkit@0.5.0:
+    resolution: {integrity: sha512-u4J1hr6Y+C/hit34GwL3eIcUf3wngT8TlYUjK7tk0jxydKLAq3sYvifjdTDA6U3KCKRcQCQDGf/srjxfZF3l7g==}
+    engines: {node: '>=18.12.0'}
+
   vite-tsconfig-paths@6.1.1:
     resolution: {integrity: sha512-2cihq7zliibCCZ8P9cKJrQBkfgdvcFkOOc3Y02o3GWUDLgqjWsZudaoiuOwO/gzTzy17cS5F7ZPo4bsnS4DGkg==}
     peerDependencies:
@@ -4560,13 +4564,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@babel/eslint-parser@8.0.1(@babel/core@7.26.0)(eslint@10.9.1(jiti@2.7.0))':
+  '@babel/eslint-parser@8.0.7(@babel/core@7.26.0)(eslint@10.9.1(jiti@2.7.0))':
     dependencies:
       '@babel/core': 7.26.0
       eslint: 10.9.1(jiti@2.7.0)
       eslint-scope: 9.1.2
       eslint-visitor-keys: 5.0.1
-      semver: 7.8.5
+      verkit: 0.5.0
 
   '@babel/generator@7.29.1':
     dependencies:
@@ -9022,6 +9026,8 @@ snapshots:
   uri-js@4.4.1:
     dependencies:
       punycode: 2.3.1
+
+  verkit@0.5.0: {}
 
   vite-tsconfig-paths@6.1.1(typescript@5.9.3)(vite@7.3.5(@types/node@20.19.33)(jiti@2.7.0)(tsx@4.22.3)(yaml@2.9.0)):
     dependencies:
