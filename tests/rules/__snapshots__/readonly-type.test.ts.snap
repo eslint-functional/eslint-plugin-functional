@@ -1,0 +1,497 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`readonly-type > typescript > generic > keeps deeply nested type literals readonly when fixing 1`] = `
+{
+  "fixed": true,
+  "messages": [
+    {
+      "column": 12,
+      "endColumn": 66,
+      "endLine": 1,
+      "fix": {
+        "range": [
+          11,
+          65,
+        ],
+        "text": "Readonly<{ a: { readonly b: { readonly c: number } } }>",
+      },
+      "line": 1,
+      "message": "Readonly type using 'readonly' keyword is forbidden. Use 'Readonly<T>' instead.",
+      "messageId": "generic",
+      "ruleId": "readonly-type",
+      "severity": 2,
+    },
+    {
+      "column": 26,
+      "endColumn": 64,
+      "endLine": 1,
+      "fix": {
+        "range": [
+          25,
+          63,
+        ],
+        "text": "Readonly<{ b: { readonly c: number } }>",
+      },
+      "line": 1,
+      "message": "Readonly type using 'readonly' keyword is forbidden. Use 'Readonly<T>' instead.",
+      "messageId": "generic",
+      "ruleId": "readonly-type",
+      "severity": 2,
+    },
+    {
+      "column": 40,
+      "endColumn": 62,
+      "endLine": 1,
+      "fix": {
+        "range": [
+          39,
+          61,
+        ],
+        "text": "Readonly<{ c: number }>",
+      },
+      "line": 1,
+      "message": "Readonly type using 'readonly' keyword is forbidden. Use 'Readonly<T>' instead.",
+      "messageId": "generic",
+      "ruleId": "readonly-type",
+      "severity": 2,
+    },
+  ],
+  "output": "type Foo = Readonly<{ a: Readonly<{ b: Readonly<{ c: number }> }> }>;",
+  "steps": [
+    {
+      "fixed": true,
+      "messages": [
+        {
+          "column": 26,
+          "endColumn": 64,
+          "endLine": 1,
+          "fix": {
+            "range": [
+              25,
+              63,
+            ],
+            "text": "Readonly<{ b: { readonly c: number } }>",
+          },
+          "line": 1,
+          "message": "Readonly type using 'readonly' keyword is forbidden. Use 'Readonly<T>' instead.",
+          "messageId": "generic",
+          "ruleId": "rule-to-test/readonly-type",
+          "severity": 2,
+        },
+        {
+          "column": 40,
+          "endColumn": 62,
+          "endLine": 1,
+          "fix": {
+            "range": [
+              39,
+              61,
+            ],
+            "text": "Readonly<{ c: number }>",
+          },
+          "line": 1,
+          "message": "Readonly type using 'readonly' keyword is forbidden. Use 'Readonly<T>' instead.",
+          "messageId": "generic",
+          "ruleId": "rule-to-test/readonly-type",
+          "severity": 2,
+        },
+      ],
+      "output": "type Foo = Readonly<{ a: { readonly b: { readonly c: number } } }>;",
+    },
+    {
+      "fixed": true,
+      "messages": [
+        {
+          "column": 40,
+          "endColumn": 62,
+          "endLine": 1,
+          "fix": {
+            "range": [
+              39,
+              61,
+            ],
+            "text": "Readonly<{ c: number }>",
+          },
+          "line": 1,
+          "message": "Readonly type using 'readonly' keyword is forbidden. Use 'Readonly<T>' instead.",
+          "messageId": "generic",
+          "ruleId": "rule-to-test/readonly-type",
+          "severity": 2,
+        },
+      ],
+      "output": "type Foo = Readonly<{ a: Readonly<{ b: { readonly c: number } }> }>;",
+    },
+    {
+      "fixed": true,
+      "messages": [],
+      "output": "type Foo = Readonly<{ a: Readonly<{ b: Readonly<{ c: number }> }> }>;",
+    },
+    {
+      "fixed": false,
+      "messages": [],
+      "output": "type Foo = Readonly<{ a: Readonly<{ b: Readonly<{ c: number }> }> }>;",
+    },
+  ],
+}
+`;
+
+exports[`readonly-type > typescript > generic > keeps nested type literals readonly when fixing 1`] = `
+{
+  "fixed": true,
+  "messages": [
+    {
+      "column": 12,
+      "endColumn": 50,
+      "endLine": 1,
+      "fix": {
+        "range": [
+          11,
+          49,
+        ],
+        "text": "Readonly<{ a: { readonly x: number } }>",
+      },
+      "line": 1,
+      "message": "Readonly type using 'readonly' keyword is forbidden. Use 'Readonly<T>' instead.",
+      "messageId": "generic",
+      "ruleId": "readonly-type",
+      "severity": 2,
+    },
+    {
+      "column": 26,
+      "endColumn": 48,
+      "endLine": 1,
+      "fix": {
+        "range": [
+          25,
+          47,
+        ],
+        "text": "Readonly<{ x: number }>",
+      },
+      "line": 1,
+      "message": "Readonly type using 'readonly' keyword is forbidden. Use 'Readonly<T>' instead.",
+      "messageId": "generic",
+      "ruleId": "readonly-type",
+      "severity": 2,
+    },
+  ],
+  "output": "type Foo = Readonly<{ a: Readonly<{ x: number }> }>;",
+  "steps": [
+    {
+      "fixed": true,
+      "messages": [
+        {
+          "column": 26,
+          "endColumn": 48,
+          "endLine": 1,
+          "fix": {
+            "range": [
+              25,
+              47,
+            ],
+            "text": "Readonly<{ x: number }>",
+          },
+          "line": 1,
+          "message": "Readonly type using 'readonly' keyword is forbidden. Use 'Readonly<T>' instead.",
+          "messageId": "generic",
+          "ruleId": "rule-to-test/readonly-type",
+          "severity": 2,
+        },
+      ],
+      "output": "type Foo = Readonly<{ a: { readonly x: number } }>;",
+    },
+    {
+      "fixed": true,
+      "messages": [],
+      "output": "type Foo = Readonly<{ a: Readonly<{ x: number }> }>;",
+    },
+    {
+      "fixed": false,
+      "messages": [],
+      "output": "type Foo = Readonly<{ a: Readonly<{ x: number }> }>;",
+    },
+  ],
+}
+`;
+
+exports[`readonly-type > typescript > generic > reports readonly keywords 1`] = `
+{
+  "fixed": true,
+  "messages": [
+    {
+      "column": 12,
+      "endColumn": 54,
+      "endLine": 1,
+      "fix": {
+        "range": [
+          11,
+          53,
+        ],
+        "text": "Readonly<{ a: number; b: string }>",
+      },
+      "line": 1,
+      "message": "Readonly type using 'readonly' keyword is forbidden. Use 'Readonly<T>' instead.",
+      "messageId": "generic",
+      "ruleId": "readonly-type",
+      "severity": 2,
+    },
+  ],
+  "output": "type Foo = Readonly<{ a: number; b: string }>;",
+  "steps": [
+    {
+      "fixed": true,
+      "messages": [],
+      "output": "type Foo = Readonly<{ a: number; b: string }>;",
+    },
+    {
+      "fixed": false,
+      "messages": [],
+      "output": "type Foo = Readonly<{ a: number; b: string }>;",
+    },
+  ],
+}
+`;
+
+exports[`readonly-type > typescript > generic > reports redundant readonly keywords directly inside Readonly 1`] = `
+{
+  "fixed": true,
+  "messages": [
+    {
+      "column": 32,
+      "endColumn": 33,
+      "endLine": 1,
+      "fix": {
+        "range": [
+          22,
+          40,
+        ],
+        "text": "x: number",
+      },
+      "line": 1,
+      "message": "Readonly type using 'readonly' keyword is forbidden. Use 'Readonly<T>' instead.",
+      "messageId": "generic",
+      "ruleId": "readonly-type",
+      "severity": 2,
+    },
+  ],
+  "output": "type Foo = Readonly<{ x: number }>;",
+  "steps": [
+    {
+      "fixed": true,
+      "messages": [],
+      "output": "type Foo = Readonly<{ x: number }>;",
+    },
+    {
+      "fixed": false,
+      "messages": [],
+      "output": "type Foo = Readonly<{ x: number }>;",
+    },
+  ],
+}
+`;
+
+exports[`readonly-type > typescript > generic > reports redundant readonly keywords inside an intersection inside Readonly 1`] = `
+{
+  "fixed": true,
+  "messages": [
+    {
+      "column": 32,
+      "endColumn": 33,
+      "endLine": 1,
+      "fix": {
+        "range": [
+          22,
+          40,
+        ],
+        "text": "x: number",
+      },
+      "line": 1,
+      "message": "Readonly type using 'readonly' keyword is forbidden. Use 'Readonly<T>' instead.",
+      "messageId": "generic",
+      "ruleId": "readonly-type",
+      "severity": 2,
+    },
+    {
+      "column": 57,
+      "endColumn": 58,
+      "endLine": 1,
+      "fix": {
+        "range": [
+          47,
+          65,
+        ],
+        "text": "y: string",
+      },
+      "line": 1,
+      "message": "Readonly type using 'readonly' keyword is forbidden. Use 'Readonly<T>' instead.",
+      "messageId": "generic",
+      "ruleId": "readonly-type",
+      "severity": 2,
+    },
+  ],
+  "output": "type Foo = Readonly<{ x: number } & { y: string }>;",
+  "steps": [
+    {
+      "fixed": true,
+      "messages": [],
+      "output": "type Foo = Readonly<{ x: number } & { y: string }>;",
+    },
+    {
+      "fixed": false,
+      "messages": [],
+      "output": "type Foo = Readonly<{ x: number } & { y: string }>;",
+    },
+  ],
+}
+`;
+
+exports[`readonly-type > typescript > generic > wraps nested type literals that aren't inside Readonly 1`] = `
+{
+  "fixed": true,
+  "messages": [
+    {
+      "column": 17,
+      "endColumn": 39,
+      "endLine": 1,
+      "fix": {
+        "range": [
+          16,
+          38,
+        ],
+        "text": "Readonly<{ x: number }>",
+      },
+      "line": 1,
+      "message": "Readonly type using 'readonly' keyword is forbidden. Use 'Readonly<T>' instead.",
+      "messageId": "generic",
+      "ruleId": "readonly-type",
+      "severity": 2,
+    },
+  ],
+  "output": "type Foo = { a: Readonly<{ x: number }> };",
+  "steps": [
+    {
+      "fixed": true,
+      "messages": [],
+      "output": "type Foo = { a: Readonly<{ x: number }> };",
+    },
+    {
+      "fixed": false,
+      "messages": [],
+      "output": "type Foo = { a: Readonly<{ x: number }> };",
+    },
+  ],
+}
+`;
+
+exports[`readonly-type > typescript > generic > wraps type literals nested in a property of a Readonly type 1`] = `
+{
+  "fixed": true,
+  "messages": [
+    {
+      "column": 26,
+      "endColumn": 48,
+      "endLine": 1,
+      "fix": {
+        "range": [
+          25,
+          47,
+        ],
+        "text": "Readonly<{ x: number }>",
+      },
+      "line": 1,
+      "message": "Readonly type using 'readonly' keyword is forbidden. Use 'Readonly<T>' instead.",
+      "messageId": "generic",
+      "ruleId": "readonly-type",
+      "severity": 2,
+    },
+  ],
+  "output": "type Foo = Readonly<{ a: Readonly<{ x: number }> }>;",
+  "steps": [
+    {
+      "fixed": true,
+      "messages": [],
+      "output": "type Foo = Readonly<{ a: Readonly<{ x: number }> }>;",
+    },
+    {
+      "fixed": false,
+      "messages": [],
+      "output": "type Foo = Readonly<{ a: Readonly<{ x: number }> }>;",
+    },
+  ],
+}
+`;
+
+exports[`readonly-type > typescript > keyword > doesn't treat type literals nested in a property as Readonly wrapped 1`] = `
+{
+  "fixed": true,
+  "messages": [
+    {
+      "column": 12,
+      "endColumn": 20,
+      "endLine": 1,
+      "fix": {
+        "range": [
+          11,
+          41,
+        ],
+        "text": "{ readonly a: { x: number } }",
+      },
+      "line": 1,
+      "message": "Readonly type using 'Readonly<T>' is forbidden. Use 'readonly' keyword instead.",
+      "messageId": "keyword",
+      "ruleId": "readonly-type",
+      "severity": 2,
+    },
+  ],
+  "output": "type Foo = { readonly a: { x: number } };",
+  "steps": [
+    {
+      "fixed": true,
+      "messages": [],
+      "output": "type Foo = { readonly a: { x: number } };",
+    },
+    {
+      "fixed": false,
+      "messages": [],
+      "output": "type Foo = { readonly a: { x: number } };",
+    },
+  ],
+}
+`;
+
+exports[`readonly-type > typescript > keyword > reports Readonly wrapped types 1`] = `
+{
+  "fixed": true,
+  "messages": [
+    {
+      "column": 12,
+      "endColumn": 20,
+      "endLine": 1,
+      "fix": {
+        "range": [
+          11,
+          34,
+        ],
+        "text": "{ readonly x: number }",
+      },
+      "line": 1,
+      "message": "Readonly type using 'Readonly<T>' is forbidden. Use 'readonly' keyword instead.",
+      "messageId": "keyword",
+      "ruleId": "readonly-type",
+      "severity": 2,
+    },
+  ],
+  "output": "type Foo = { readonly x: number };",
+  "steps": [
+    {
+      "fixed": true,
+      "messages": [],
+      "output": "type Foo = { readonly x: number };",
+    },
+    {
+      "fixed": false,
+      "messages": [],
+      "output": "type Foo = { readonly x: number };",
+    },
+  ],
+}
+`;

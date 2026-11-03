@@ -116,6 +116,21 @@ describe(name, () => {
             options: [{ ignoreIfReadonlyWrapped: true }],
           });
         });
+
+        it("reports method signatures in type literals nested in a property of a Readonly type", async () => {
+          const invalidResult = await invalid({
+            code: dedent`
+              type Foo = Readonly<{
+                nested: {
+                  methodSignature(): void
+                }
+              }>
+            `,
+            errors: ["generic"],
+            options: [{ ignoreIfReadonlyWrapped: true }],
+          });
+          expect(invalidResult.result).toMatchSnapshot();
+        });
       });
     });
   });

@@ -24,9 +24,11 @@ import {
   isProperty,
   isTSInterfaceBody,
   isTSInterfaceHeritage,
-  isTSTypeAnnotation,
+  isTSIntersectionType,
   isTSTypeLiteral,
+  isTSTypeParameterInstantiation,
   isTSTypeReference,
+  isTSUnionType,
   isTryStatement,
   isVariableDeclaration,
 } from "./type-guards";
@@ -122,29 +124,41 @@ export function isInPromiseHandlerFunction<Context extends RuleContext<string, B
 }
 
 /**
+ * Walk up through any union / intersection types the given node is a member of.
+ */
+function getOutermostUnionOrIntersectionMember(node: TSESTree.Node): TSESTree.Node {
+  return isDefined(node.parent) && (isTSUnionType(node.parent) || isTSIntersectionType(node.parent))
+    ? getOutermostUnionOrIntersectionMember(node.parent)
+    : node;
+}
+
+/**
  * Test if the given node is shallowly inside a `Readonly<{...}>`.
+ *
+ * `Readonly<T>` is shallow, so only a type literal that is the type argument
+ * itself (or a member of a union / intersection that is) is covered by it.
+ * A type literal used as the type of a property inside of `T` is not.
  */
 export function getReadonly(node: TSESTree.Node): TSESTree.TSTypeReference | TSESTree.TSInterfaceHeritage | null {
-  // For nested cases, we shouldn't look for any parent, but the immediate parent.
-  if (
-    isDefined(node.parent) &&
-    isTSTypeLiteral(node.parent) &&
-    isDefined(node.parent.parent) &&
-    isTSTypeAnnotation(node.parent.parent)
-  ) {
+  // For members (such as method signatures), check the type literal they are in.
+  const typeNode =
+    !isTSTypeLiteral(node) && isDefined(node.parent) && isTSTypeLiteral(node.parent) ? node.parent : node;
+  const current = getOutermostUnionOrIntersectionMember(typeNode);
+
+  if (!isDefined(current.parent) || !isTSTypeParameterInstantiation(current.parent)) {
     return null;
   }
 
-  const typeRef = getAncestorOfType(isTSTypeReference, node);
-  const intHeritage = getAncestorOfType(isTSInterfaceHeritage, node);
+  const wrapper = current.parent.parent;
+  const isReadonlyName = (name: TSESTree.Node) => isIdentifier(name) && name.name === "Readonly";
 
-  const expressionOrTypeName = typeRef?.typeName ?? intHeritage?.expression;
-
-  return expressionOrTypeName !== undefined &&
-    isIdentifier(expressionOrTypeName) &&
-    expressionOrTypeName.name === "Readonly"
-    ? (typeRef ?? intHeritage)
-    : null;
+  if (isTSTypeReference(wrapper)) {
+    return isReadonlyName(wrapper.typeName) ? wrapper : null;
+  }
+  if (isTSInterfaceHeritage(wrapper)) {
+    return isReadonlyName(wrapper.expression) ? wrapper : null;
+  }
+  return null;
 }
 
 /**
