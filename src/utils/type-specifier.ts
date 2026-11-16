@@ -104,7 +104,7 @@ function getTypeAliasName(type: Type, typeNode: TypeNode | null) {
   assert(ts !== undefined);
 
   if (typeNode === null) {
-    const t = "target" in type ? (type.target as Type) : type;
+    const t = ("target" in type ? (type.target as Type | undefined) : undefined) ?? type;
     return t.aliasSymbol?.getName() ?? null;
   }
 

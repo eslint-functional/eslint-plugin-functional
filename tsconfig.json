@@ -48,17 +48,16 @@
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
 
-    "baseUrl": ".",
     "paths": {
-      "#": ["src/index.ts"],
-      "#/configs/*": ["src/configs/*"],
-      "#/options": ["src/options"],
-      "#/rules": ["src/rules"],
-      "#/rules/*": ["src/rules/*"],
-      "#/settings": ["src/settings"],
-      "#/utils/*": ["src/utils/*"],
-      "#/conditional-imports/*": ["src/utils/conditional-imports/*"],
-      "#/tests/*": ["tests/*"]
+      "#": ["./src/index.ts"],
+      "#/configs/*": ["./src/configs/*"],
+      "#/options": ["./src/options"],
+      "#/rules": ["./src/rules"],
+      "#/rules/*": ["./src/rules/*"],
+      "#/settings": ["./src/settings"],
+      "#/utils/*": ["./src/utils/*"],
+      "#/conditional-imports/*": ["./src/utils/conditional-imports/*"],
+      "#/tests/*": ["./tests/*"]
     }
   },
   "include": [".", ".*"]
