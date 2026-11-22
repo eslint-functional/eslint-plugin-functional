@@ -65,6 +65,7 @@ This rule accepts an options object of the following type:
 type Options = {
   allowInFunctions: boolean;
   ignoreIdentifierPattern?: string[] | string;
+  ignoreCodePattern?: string[] | string;
 };
 ```
 
@@ -130,3 +131,8 @@ If true, the rule will not flag any statements that are inside of function bodie
 
 This option takes a RegExp string or an array of RegExp strings.
 It allows for the ability to ignore violations based on a variable's name.
+
+### `ignoreCodePattern`
+
+This option takes a RegExp string or an array of RegExp strings.
+It allows for the ability to ignore violations based on the code itself.
