@@ -376,6 +376,31 @@ describe(name, () => {
           });
         });
       });
+
+      describe("ignoreCodePattern", () => {
+        it("should not report let declarations with matching code", async () => {
+          await valid({
+            code: `let { a } = $props();`,
+            options: [{ ignoreCodePattern: "\\$props\\(\\)" }],
+          });
+
+          await valid({
+            code: dedent`
+              let { a } = $props();
+              let b = $state(0);
+            `,
+            options: [{ ignoreCodePattern: ["\\$props\\(\\)", "\\$state\\("] }],
+          });
+        });
+
+        it("should report let declarations with non-matching code", async () => {
+          await invalid({
+            code: `let { a } = foo();`,
+            options: [{ ignoreCodePattern: "\\$props\\(\\)" }],
+            errors: ["generic"],
+          });
+        });
+      });
     });
   });
 });

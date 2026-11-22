@@ -4,7 +4,9 @@ import type { RuleContext } from "@typescript-eslint/utils/ts-eslint";
 import { deepmerge } from "deepmerge-ts";
 
 import {
+  type IgnoreCodePatternOption,
   type IgnoreIdentifierPatternOption,
+  ignoreCodePatternOptionSchema,
   ignoreIdentifierPatternOptionSchema,
   shouldIgnoreInFunction,
   shouldIgnorePattern,
@@ -27,10 +29,11 @@ export const fullName: `${typeof ruleNameScope}/${typeof name}` = `${ruleNameSco
  * The options this rule can take.
  */
 type RawOptions = [
-  IgnoreIdentifierPatternOption & {
-    allowInForLoopInit: boolean;
-    allowInFunctions: boolean;
-  },
+  IgnoreCodePatternOption &
+    IgnoreIdentifierPatternOption & {
+      allowInForLoopInit: boolean;
+      allowInFunctions: boolean;
+    },
 ];
 
 /**
@@ -39,7 +42,7 @@ type RawOptions = [
 const schema: JSONSchema4[] = [
   {
     type: "object",
-    properties: deepmerge(ignoreIdentifierPatternOptionSchema, {
+    properties: deepmerge(ignoreIdentifierPatternOptionSchema, ignoreCodePatternOptionSchema, {
       allowInForLoopInit: {
         type: "boolean",
       },
@@ -93,12 +96,12 @@ function checkVariableDeclaration(
   options: Readonly<RawOptions>,
 ): RuleResult<keyof typeof errorMessages, RawOptions> {
   const [optionsObject] = options;
-  const { allowInForLoopInit, ignoreIdentifierPattern, allowInFunctions } = optionsObject;
+  const { allowInForLoopInit, ignoreIdentifierPattern, ignoreCodePattern, allowInFunctions } = optionsObject;
 
   if (
     node.kind !== "let" ||
     shouldIgnoreInFunction(node, context, allowInFunctions) ||
-    shouldIgnorePattern(node, context, ignoreIdentifierPattern) ||
+    shouldIgnorePattern(node, context, ignoreIdentifierPattern, undefined, ignoreCodePattern) ||
     (allowInForLoopInit && isInForLoopInitializer(node))
   ) {
     return {
